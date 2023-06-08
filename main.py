@@ -1,24 +1,35 @@
-from fastapi import FastAPI, HTTPException, Depends, Request, Body, Response
+from fastapi import FastAPI, HTTPException, Depends, Request, Body
+from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from pydantic import BaseModel
 from typing import Dict
-from api.auth import authenticate, secure
+from api.auth import authenticate_user, secure
 from api.shop import products, product
 from api.method import create_method
 from api.user import modify_user
 from api.huey import ez_hue
 from api.stream import generate_frames
+from api.auto import ez_auto
 from datetime import datetime
-from db.models import *
-from app import app, sessionmaker, engine
-
+import subprocess
+import re
+import logging
+# from starlette.responses import JSONResponse
+import socket
+import netifaces
 #  POSTGRESQL IMPORTS
+from db.userAgent.serializers import CreateUserAgent
+from db.userAgent.views import create_user_agent_object
+from app import app, get_db
 from pydantic import BaseModel
 from db.session import SessionLocal
-#  POSTGRESQL IMPORTS
+from EzGram.login import ezgram_login
 
+
+#  POSTGRESQL IMPORTS
+# from api.auto import 
 
 curr = datetime.now()
 
@@ -27,83 +38,54 @@ curr = datetime.now()
 
 db = SessionLocal()
 
-def get_all_user_agents():
-    Session = sessionmaker(bind=engine)
-    session = Session()
 
-    try:
-        # Query the database using the UserAgent SQLAlchemy model
-        user_agents = session.query(UserAgent).all()
 
-        # Convert SQLAlchemy instances to Pydantic models for the response
-        user_agents_pydantic = [UserAgent(brands=[Brand(brand=brand.brand, version=brand.version) for brand in user_agent.brands], mobile=user_agent.mobile, platform=user_agent.platform, ip_addr=user_agent.ip_addr) for user_agent in user_agents]
-        
-        return user_agents_pydantic
-    finally:
-        session.close()
 
-@app.get("/user-agents", response_model=List[UserAgentOut])
-async def get_user_agents():
-    # Create tables if they don't exist
-    Base.metadata.create_all(bind=engine)
-    db_user_agents = get_all_user_agents()  # should return a list of SQLAlchemy models
 
-    # Convert SQLAlchemy models to Pydantic models
-    user_agents = [UserAgentOut(
-        id=db_user_agent.id,
-        mobile=db_user_agent.mobile,
-        platform=db_user_agent.platform,
-        brands=[BrandOut(
-            id=db_brand.id,
-            brand=db_brand.brand,
-            version=db_brand.version,
-        ) for db_brand in db_user_agent.brands]
-    ) for db_user_agent in db_user_agents]
+# @app.post("api/user-agent")
 
-    return user_agents
 
-@app.post("/user-agent", response_model=ResponseModel)
-async def process_user_agent(user_agent: UserAgentIn):
-    # Create tables if they don't exist
-    Base.metadata.create_all(bind=engine)
-    db_brands = []
-    for brand in user_agent.brands:
-        # Create a new brand instance
-        db_brand = Brand(**brand.dict())
-        db.add(db_brand)
-        db_brands.append(db_brand)
-    db.commit()
-    for db_brand in db_brands:
-        db.refresh(db_brand)
+# async def process_user_agent(user_agent: UserAgentData):
+#     # Create tables if they don't exist
+#     Base.metadata.create_all(bind=engine)
+#     db_brands = []
+#     for brand in user_agent.brands:
+#         # Create a new brand instance
+#         db_brand = Brand(**brand.dict())
+#         db.add(db_brand)
+#         db_brands.append(db_brand)
+#     db.commit()
+#     for db_brand in db_brands:
+#         db.refresh(db_brand)
 
-    # Create a new user agent instance
-    db_user_agent = UserAgent(
-        mobile=user_agent.mobile,
-        platform=user_agent.platform,
-        ip_addr=user_agent.ip_addr,
-        brands=db_brands,
-    )
-    db.add(db_user_agent)
-    db.commit()
-    db.refresh(db_user_agent)
+#     # Create a new user agent instance
+#     db_user_agent = UserAgent(
+#         mobile=user_agent.mobile,
+#         platform=user_agent.platform,
+#         ip_addr=user_agent.ip_addr,
+#         brands=db_brands,
+#     )
+#     db.add(db_user_agent)
+#     db.commit()
+#     db.refresh(db_user_agent)
 
-    # Construct the response
-    response = ResponseModel(
-        message="User agent data processed successfully",
-        data=UserAgentOut(
-            id=db_user_agent.id,
-            mobile=db_user_agent.mobile,
-            platform=db_user_agent.platform,
-            ip_addr=db_user_agent.ip_addr,
-            brands=[BrandOut(
-                id=db_brand.id,
-                brand=db_brand.brand,
-                version=db_brand.version,
-            ) for db_brand in db_user_agent.brands]
-        )
-    )
+#     # # Construct the response
+#     # response = ResponseModel(
+#     #     message="User agent data processed successfully",
+#     #     data=UserAgentOut(
+#     #         id=db_user_agent.id,
+#     #         mobile=db_user_agent.mobile,
+#     #         platform=db_user_agent.platform,
+#     #         ip_addr=db_user_agent.ip_addr,
+#     #         brands=[BrandOut(
+#     #             id=db_brand.id,
+#     #             brand=db_brand.brand,
+#     #             version=db_brand.version,
+#     #         ) for db_brand in db_user_agent.brands]
+#     #     )
+#     # )
 
-    return response
+#     # return response
 
 
 
@@ -119,6 +101,7 @@ class User(BaseModel):
     name: str | None = None
     password: str | None = None
     customer_id: str | None = None
+    user_agent: Dict
 
 class ProductId(BaseModel):
     id: str
@@ -146,18 +129,79 @@ def authjwt_exception_handler(request: Request, exc: AuthJWTException):
         content={"detail": exc.message}
     )
 
-
-
 @app.get("/", tags=["Root"])
 async def read_root():
     return {"title": f"Deepturn {curr.strftime('%Y-%m-%d %H:%M:%S')}"}
 
-@app.post('/authenticate')
-def _authenticate(user: User, Authorize: AuthJWT = Depends()):
-    auth = authenticate(user, Authorize)
-    # print(dict(auth))
-    return auth
+
+
+
+def create_user_agent_route(user_agent_data: CreateUserAgent, db: Session = Depends(get_db)):
+    obj = create_user_agent_object(db, user_agent_data)
+    return obj
+
+def get_router_ip():
+    try:
+        # Execute the 'ip' command to get the default gateway
+        ip_output = subprocess.check_output(['ip', 'route', 'show', 'default']).decode()
+        gateway_match = re.search(r'default via ([\d.]+)', ip_output)
+        if gateway_match:
+            gateway_ip = gateway_match.group(1)
+            return gateway_ip
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        pass  # Ignore any error and return None
+
+    return None
+
+
+
+def get_local_ip():
+    try:
+        # Get a list of all network interfaces
+        interfaces = netifaces.interfaces()
+
+        # Iterate over the interfaces and find the one with an IPv4 address
+        for iface in interfaces:
+            ifaddresses = netifaces.ifaddresses(iface)
+            if socket.AF_INET in ifaddresses:
+                addresses = ifaddresses[socket.AF_INET]
+                for address in addresses:
+                    if 'addr' in address:
+                        local_ip = address['addr']
+                        return local_ip
+    except netifaces.error:
+        pass
+
+    return None 
  
+ 
+# Create a logger instance
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.ERROR)
+
+# Create a file handler and set the logging format
+file_handler = logging.FileHandler('logs/auth-error.log')
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+
+# Add the file handler to the logger
+logger.addHandler(file_handler)
+
+@app.post('/authenticate')
+def authenticate(user: User, Authorize: AuthJWT = Depends(), db: Session = Depends(get_db)):
+    try:
+        auth = authenticate_user(user, Authorize)
+        local = get_local_ip()
+        router = get_router_ip()
+        user.user_agent['local_ip'] = local if local else str(user.name)
+        user.user_agent['router_ip'] = router if router else str(user.email)
+        create_user_agent_object(db, user.user_agent)
+        return auth
+    except Exception as e:
+        logger.error("Error occurred during authentication", exc_info=True)
+        raise
+
+
 @app.get('/user')
 def _user(Authorize: AuthJWT = Depends()):
     Authorize.jwt_required()
@@ -233,9 +277,6 @@ async def video_feed(camera_id: str):
 
 
 
-@app.post("/authentication/sign-in/")
-def sign_in(credentials: dict = Body()):
-    # print("CREDENTIALS ] ", credentials)
-    return True 
-
-
+@app.get("/auto/vehicles")
+def autoRoute():
+    return ez_auto().vehicles.details()

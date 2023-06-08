@@ -6,7 +6,7 @@ env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
 class Settings:
-    PROJECT_NAME:str = "deepturns1"
+    PROJECT_NAME:str = os.getenv("POSTGRES_DB")
     PROJECT_VERSION: str = "1.0.0"
 
     POSTGRES_USER : str = os.getenv("POSTGRES_USER")

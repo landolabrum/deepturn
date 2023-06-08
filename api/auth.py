@@ -12,7 +12,7 @@ ez=ez_stripe()
 
 
 
-def authenticate(user, Authorize):
+def authenticate_user(user, Authorize):
   context={}
   if not user.name:
     response = ez.customer.retrieve(email=user.email)

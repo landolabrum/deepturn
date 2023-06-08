@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from config import settings
+from db.userAgent.models import Base
+
 #  POSTGRES
 
 from sqlalchemy import create_engine
@@ -31,6 +33,8 @@ origins = [
 
 DATABASE_URL = settings.DATABASE_URL
 engine = create_engine(DATABASE_URL)
+Base.metadata.create_all(bind=engine)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 def get_db():
     db = SessionLocal()
