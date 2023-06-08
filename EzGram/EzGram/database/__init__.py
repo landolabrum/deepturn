@@ -2,8 +2,8 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-from EzGram.database.accounts.views import Accounts, AccountSettingsView
-from EzGram.database.accounts.models import  get_account_models
+from .accounts.views import Accounts, AccountSettingsView
+from .accounts.models import  get_account_models
 Base = declarative_base()
 
 # Ensure that the Account model is known to SQLAlchemy's ORM.
@@ -19,8 +19,8 @@ class DB(object):
     def __init__(self):
         host = 'localhost'
         port = '5432'
-        dbname = 'ezgram'
-        user = 'postgres'
+        dbname = 'deepturnS1'
+        user = 'deepturn'
         password = 'burrito'
 
         db_url = f"postgresql://{user}:{password}@{host}:{port}/{dbname}"

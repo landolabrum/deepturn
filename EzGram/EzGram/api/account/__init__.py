@@ -6,7 +6,7 @@ import re
 import random
 from instagrapi.mixins.challenge import ChallengeChoice
 from instagrapi.exceptions import LoginRequired
-from EzGram.api.account.get_account import GetAccount
+from ..account.get_account import GetAccount
 class Account:
     def __init__(self, uri):
         self.client = uri.client

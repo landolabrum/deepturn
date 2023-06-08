@@ -1,7 +1,7 @@
 
 
 from EzGram import EzGram
-from EzGram.database import DB
+from .EzGram.database import DB
 db = DB()
 
 # import json

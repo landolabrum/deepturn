@@ -1,13 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from config import settings
+from db.database_create.config import settings
 from db.userAgent.models import Base
 
 #  POSTGRES
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from pydantic import BaseModel
 
 #  POSTGRES
 

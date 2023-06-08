@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends, Request, Body
+from fastapi import FastAPI, HTTPException, Depends, Request, Body, Query
 from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi_jwt_auth import AuthJWT
@@ -28,8 +28,6 @@ from db.session import SessionLocal
 from EzGram.login import ezgram_login
 
 
-#  POSTGRESQL IMPORTS
-# from api.auto import 
 
 curr = datetime.now()
 
@@ -37,56 +35,6 @@ curr = datetime.now()
 # POSTGRESQL
 
 db = SessionLocal()
-
-
-
-
-
-# @app.post("api/user-agent")
-
-
-# async def process_user_agent(user_agent: UserAgentData):
-#     # Create tables if they don't exist
-#     Base.metadata.create_all(bind=engine)
-#     db_brands = []
-#     for brand in user_agent.brands:
-#         # Create a new brand instance
-#         db_brand = Brand(**brand.dict())
-#         db.add(db_brand)
-#         db_brands.append(db_brand)
-#     db.commit()
-#     for db_brand in db_brands:
-#         db.refresh(db_brand)
-
-#     # Create a new user agent instance
-#     db_user_agent = UserAgent(
-#         mobile=user_agent.mobile,
-#         platform=user_agent.platform,
-#         ip_addr=user_agent.ip_addr,
-#         brands=db_brands,
-#     )
-#     db.add(db_user_agent)
-#     db.commit()
-#     db.refresh(db_user_agent)
-
-#     # # Construct the response
-#     # response = ResponseModel(
-#     #     message="User agent data processed successfully",
-#     #     data=UserAgentOut(
-#     #         id=db_user_agent.id,
-#     #         mobile=db_user_agent.mobile,
-#     #         platform=db_user_agent.platform,
-#     #         ip_addr=db_user_agent.ip_addr,
-#     #         brands=[BrandOut(
-#     #             id=db_brand.id,
-#     #             brand=db_brand.brand,
-#     #             version=db_brand.version,
-#     #         ) for db_brand in db_user_agent.brands]
-#     #     )
-#     # )
-
-#     # return response
-
 
 
 class ModUser(BaseModel):
@@ -220,6 +168,12 @@ def _product(id:  ProductId):
     return product(id)
 
 
+@app.post('/api/social')
+def social_instagram_login_route(app: str = Query(...), exe: str = Query(...), credentials: dict = Body()):
+    print("[ CREDENTIALS ]", credentials, app, exe)
+    return True
+
+
 @app.post('/create-method')
 def _create_method(method: dict = Body()):
     return create_method(method)
@@ -275,8 +229,8 @@ async def video_feed(camera_id: str):
 
     return StreamingResponse(generate_frames(rtsp_url), media_type="multipart/x-mixed-replace;boundary=frame")
 
-
-
 @app.get("/auto/vehicles")
 def autoRoute():
-    return ez_auto().vehicles.details()
+    context = ez_auto().vehicles.details()
+    print("[ AUTO ]", context)
+    return context
