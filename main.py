@@ -1,10 +1,12 @@
+# fastapi-nginx-gunicorn/main.py
+
 from fastapi import FastAPI, HTTPException, Depends, Request, Body, Query
 from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from pydantic import BaseModel
-from typing import Dict
+from typing import Dict, Optional
 from api.auth import authenticate_user, secure
 from api.shop import products, product
 from api.method import create_method
@@ -170,8 +172,11 @@ def _product(id:  ProductId):
 
 @app.post('/api/social')
 def social_instagram_login_route(app: str = Query(...), exe: str = Query(...), credentials: dict = Body()):
+    context=False
     print("[ CREDENTIALS ]", credentials, app, exe)
-    return True
+    if app == 'ig' and exe == 'login':
+        context = ezgram_login(username=credentials['username'], password=credentials['password'])
+    return context
 
 
 @app.post('/create-method')
@@ -221,16 +226,19 @@ def _light(light: dict = Body()):
 async def video_feed(camera_id: str):
     rtsp_url = ""
     if camera_id == "cam-1":
-        rtsp_url = "rtsp://192.168.86.28:554/snl/live/1/1"
+        rtsp_url = "rtsp://192.168.86.209:554/snl/live/1/1"
     elif camera_id == "cam-2":
         rtsp_url = "rtsp://admin:1Wasatch!@192.168.86.27:554/cam/realmonitor?channel=1&subtype=0"
+    elif camera_id == "cam-3":
+        rtsp_url = "rtsp://admin:123456@192.168.86.200:554/cam/realmonitor?channel=1&subtype=0"
     else:
         return JSONResponse({"error": "Invalid camera ID"})
 
     return StreamingResponse(generate_frames(rtsp_url), media_type="multipart/x-mixed-replace;boundary=frame")
 
-@app.get("/auto/vehicles")
-def autoRoute():
-    context = ez_auto().vehicles.details()
-    print("[ AUTO ]", context)
+@app.post("/auto/vehicles")
+def autoRoute(access: Optional[Dict] = Body(None)):
+    auto = ez_auto()
+    auto.initialize(access)
+    context = auto.vehicles
     return context

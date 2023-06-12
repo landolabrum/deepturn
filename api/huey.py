@@ -2,7 +2,7 @@ from huesdk import Hue
 import colorsys
 
 username="poftbnmZkTKgQVQt8XnIXijo-CcSOiJI1ewiVWYK"
-bridge_ip="192.168.86.34"
+bridge_ip="192.168.86.128"
 
 class ez_hue:
     def __init__(self):
@@ -27,7 +27,7 @@ class ez_hue:
     def light(self,lite):
       id=lite['id']
       lit=self.get_light(id)
-      print("[ LIT ]", vars(lit))
+      # print("[ LIT ]", vars(lit))
       lit.hex = ez_hue.hsv_to_hex(lit.hue, lit.sat, lit.bri)
       if not "function" in lite:
         is_on = lit.is_on
@@ -42,7 +42,7 @@ class ez_hue:
         if "bri" in lite:
           bri = int(int(lite['bri']) * 254 / 100)
           lit.set_brightness(bri)
-      print("[ LIT RESP ]", vars(lit))
+      # print("[ LIT RESP ]", vars(lit))
       return lit
 
     @staticmethod

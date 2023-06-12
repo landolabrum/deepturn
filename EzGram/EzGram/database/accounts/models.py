@@ -1,5 +1,5 @@
 
-# EzGram/database/accounts/models.py
+# EzGram/database/ig_accounts/models.py
 
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy import Column, Integer, String, Boolean, JSON, Float, ForeignKey
@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 
 def get_account_models(Base):
     class AccountModel(Base):
-        __tablename__ = 'accounts'
+        __tablename__ = 'ig_accounts'
         id = Column(String, primary_key=True, unique=True)
         username = Column(String)
         full_name = Column(String)
@@ -23,7 +23,7 @@ def get_account_models(Base):
         gender = Column(Integer)
         email = Column(String)
         password = Column(String)
-        account_settings = relationship(
+        ig_account_settings = relationship(
             'AccountSettingsModel', uselist=False, back_populates='account')
 
         @property
@@ -43,8 +43,8 @@ def get_account_models(Base):
         tray_session_id = Column(String)
         # add other fields...
         account_settings_id = Column(
-            Integer, ForeignKey('account_settings.id'))
-        account_settings = relationship(
+            Integer, ForeignKey('ig_account_settings.id'))
+        ig_account_settings = relationship(
             'AccountSettingsModel', back_populates='uuids')
 
     class AuthorizationDataModel(Base):
@@ -55,8 +55,8 @@ def get_account_models(Base):
         sessionid = Column(String)
         # add other fields...
         account_settings_id = Column(
-            Integer, ForeignKey('account_settings.id'))
-        account_settings = relationship(
+            Integer, ForeignKey('ig_account_settings.id'))
+        ig_account_settings = relationship(
             'AccountSettingsModel', back_populates='authorization_data')
 
     class DeviceSettingsModel(Base):
@@ -75,12 +75,12 @@ def get_account_models(Base):
         version_code = Column(String)
         # add other fields...
         account_settings_id = Column(
-            Integer, ForeignKey('account_settings.id'))
-        account_settings = relationship(
+            Integer, ForeignKey('ig_account_settings.id'))
+        ig_account_settings = relationship(
             'AccountSettingsModel', back_populates='device_settings')
 
     class AccountSettingsModel(Base):
-        __tablename__ = 'account_settings'
+        __tablename__ = 'ig_account_settings'
 
         id = Column(Integer, primary_key=True)
         mid = Column(String)
@@ -96,14 +96,14 @@ def get_account_models(Base):
         # add other fields...
 
         uuids = relationship('UuidsModel', uselist=False,
-                             back_populates='account_settings')
+                             back_populates='ig_account_settings')
         authorization_data = relationship(
-            'AuthorizationDataModel', uselist=False, back_populates='account_settings')
+            'AuthorizationDataModel', uselist=False, back_populates='ig_account_settings')
         device_settings = relationship(
-            'DeviceSettingsModel', uselist=False, back_populates='account_settings')
+            'DeviceSettingsModel', uselist=False, back_populates='ig_account_settings')
 
         account = relationship('AccountModel', uselist=False,
-                               back_populates='account_settings')
+                               back_populates='ig_account_settings')
         # Assuming 'Account' is the class name for Account model
         account_id = Column(String, ForeignKey(AccountModel.id))
 
