@@ -7,7 +7,6 @@ class GetAccount:
     def login_info(self):
         account = self.client.account_info().__dict__
         account['password']=self.password
-      
         return {
             "settings": self.client.get_settings(),
             "news_inbox_v1": self.client.news_inbox_v1(),
