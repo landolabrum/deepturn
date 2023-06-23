@@ -1,0 +1,17 @@
+.adapt-container{
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-gray-100);
+    .adapt-container__content{
+        width: 100%;
+        display: flex;
+        height: inherit;
+    }
+    .adapt-container__btn{
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        pointer-events: all;
+        touch-action: none;
+    }
+}

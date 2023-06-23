@@ -1,0 +1,116 @@
+$hite: 600px;
+$timeDesktop: 1s forwards reverse;
+$timeMobile: 1s forwards;
+@keyframes fadeIn {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(70deg);
+  }
+  100% {
+    transform: rotate(90deg) translate(300px);
+  }
+}
+@keyframes scale {
+  0% {
+    width: auto;
+    transform: scale(1);
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  70% {
+    width: 1100px;
+    transform: scale(0.8);
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  100% {
+    width: 1200px;
+    transform: scale(0.7);
+    margin-left: -200px;
+    padding-right: 200px;
+  }
+}
+
+.auto {
+  margin: 80px 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  .auto__status {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    line-height: 1;
+
+    .auto__status-lock {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      --ui-icon-color: var(--color-primary);
+    }
+    .auto__status-vin {
+      font-size: 24px;
+      line-height: 2;
+      text-transform: capitalize;
+    }
+  }
+  .auto__gauges {
+    display: flex;
+    width: 100%;
+    @media(max-width:1100px){
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+  .auto_vehicle {
+    animation: rotate $timeDesktop;
+    @media (max-width: 1100px) {
+      animation: rotate $timeMobile;
+    }
+  }
+  .auto__place-grid {
+    animation: scale $timeDesktop;
+    @media (max-width: 1100px) {
+      animation: scale $timeMobile;
+    }
+  }
+}
+.auto__vehicle-indicator {
+  text-align: center;
+  padding: 2px 7px;
+  width: 50px;
+  color: white;
+  font-size: 12px;
+  border-radius: 4px;
+}
+.auto__remote-start {
+  margin: 20px 20px 20px 40px;
+  height: 90px;
+  @media(max-width: 1100px){
+    width: 140px;
+    margin: 20px;
+  }
+  border-radius: 50px;
+  border: solid 1px var(--color-orange);
+  outline: solid 1px var(--color-blue);
+  aspect-ratio: 1/1;
+  background-color: #f30;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  color: white;
+}

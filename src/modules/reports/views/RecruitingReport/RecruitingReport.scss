@@ -1,0 +1,41 @@
+$activityPadding: 20px;
+$activityHeaderHite: 50px;
+
+
+.recruiting-report__recruiting-report__summary{
+  background-color: var(--color-gray-80);
+  border-radius: var(--default-border-radius);
+  padding:15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.recruiting-report__activity-history {
+  aspect-ratio: 9/3;
+  padding: $activityPadding;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top:10px;
+  max-width: 100%;
+  background-color: var(--color-gray-80);
+  border-radius: var(--default-border-radius);
+  @media(max-width: 900px){
+    aspect-ratio: 6/4;
+  }
+  .recruiting-report__activity-history-header {
+    padding:0 20px;
+    width: 100%;
+    .recruiting-report__activity-history-title {
+      font-size: 19px;
+      text-transform: capitalize
+    }
+    .recruiting-report__activity-history-sub-title {
+      color: var(--color-gray-50);
+      line-height: 2;
+    }
+  }
+}
+.recruiting-report__recent-enrollments{
+  padding: 10px 0;
+}

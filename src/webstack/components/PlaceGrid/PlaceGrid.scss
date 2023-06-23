@@ -1,0 +1,13 @@
+.grid-container{
+    align-content: start;
+    grid-auto-rows: min-content;
+    @media(max-width: 900px){
+        
+    }
+    .grid-element{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: visible;
+    }
+}

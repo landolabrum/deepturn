@@ -1,68 +1,34 @@
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-server {
-        server_name deepturn.com www.deepturn.com;
-        listen [::]:443 ssl ipv6only=on; # managed by Certbot
-        listen 443 ssl; # managed by Certbot
-        ssl_certificate /etc/letsencrypt/live/deepturn.com/fullchain.pem; # managed by Cert>
-        ssl_certificate_key /etc/letsencrypt/live/deepturn.com/privkey.pem; # managed by Ce>
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+## Getting Started
 
-        gzip on;
-        gzip_proxied any;
-        gzip_types application/javascript application/x-javascript text/css text/javascript;
-        gzip_comp_level 6;
-        gzip_buffers 16 8k;
-        gzip_min_length 256;
+First, run the development server:
 
-        root /home/fastapi-user/deepturn/.next/server/pages;
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-        location = / {
-                rewrite ^ /en.html last;
-                alias /home/fastapi-user/deepturn/.next/server/pages/en/;
-        }
-        location / {
-                try_files $uri $uri/ =404;
-        }
-        location /_next/static/ {
-                alias /home/fastapi-user/deepturn/.next/static/;
-                expires 365d;
-        }
-        location /_next/server/pages/ {
-                alias /home/fastapi-user/deepturn/.next/server/pages/;
-                expires 365d;
-                access_log off;
-        }
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-# DEV
-#        location / {
-#                proxy_pass http://0.0.0.0:3000;
-#                proxy_http_version 1.1;
-#                proxy_set_header Upgrade $http_upgrade;
-#                proxy_set_header Connection 'upgrade';
-#                proxy_set_header Host $host;
-#                proxy_cache_bypass $http_upgrade;
-#        }
-#        error_page 404 /404.html;
-#        location = /en/404.html {
-#        internal;
-#        }
-    # CORS configuration
-#    add_header 'Access-Control-Allow-Origin' '*';
-#    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
-#    add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified>
-#    add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range';
-}
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-server {
-        if ($host = deepturn.com) {
-                return 301 https://$host$request_uri;
-        } # managed by Certbot
-        listen 80 default_server;
-        listen [::]:80 default_server;
-        server_name deepturn.com www.deepturn.com;
-        return 404; # managed by Certbot
-}
-# deepturn-server1
-# deepturn-server1
-# deepturn
-# deepturn
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

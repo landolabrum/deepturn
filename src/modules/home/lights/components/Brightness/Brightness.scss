@@ -1,0 +1,54 @@
+$sliderW: 100px;
+$sliderH: 480px;
+.brightness{
+  position: relative;
+  border: solid 1px white;
+  transform: rotate(-90deg);
+  width: $sliderH;
+  border-radius: 25px;
+  overflow: hidden;
+  .brightness__content{
+    position: relative;
+    width: max-content;
+    
+  }
+}
+.legend{
+  font-size: 25px;
+}
+input[type=range] {
+  appearance: unset;
+  -webkit-appearance: unset; /* Hides the slider so that custom slider can be made */
+  // width: 50vh; /* Specific width is required for Firefox. */
+  background-color: #525252; /* Otherwise white in Chrome */
+  height: $sliderW;
+  display: flex;
+  flex-direction: column;
+  padding:0;
+  margin:0;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  height: $sliderW;
+  width: $sliderH;
+  background-color: white;
+  // height: 100px;
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-ms-track {
+  height: 100px;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  // background: transparent; 
+  // border-color: transparent;
+  // color: transparent;
+}
+
+

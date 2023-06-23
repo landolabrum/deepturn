@@ -1,0 +1,240 @@
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.4);
+  }
+
+  90% {
+    transform: scale(1.01);
+  }
+}
+
+.date-range-menu {
+  @media (max-width: 900px) {
+    position: fixed;
+    top: 5vh;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+  }
+
+  .date-range-menu__options {
+    z-index: 2;
+    position: absolute;
+    &.date-range-menu__options-full-screen {
+      @extend .full-screen-calendar;
+    }
+    @media (max-width: 900px) {
+      position: relative;
+      width: calc(100% - var(--default-height));
+      min-width: unset;
+      margin: auto;
+    }
+
+    top: calc(100% + 5px);
+    right: 0;
+    min-width: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-gray-60);
+    background-color: var(--color-gray-70);
+    border-radius: var(--default-border-radius);
+    box-shadow: var(--input-box-shadow);
+
+    .date-range-menu__grid-control {
+      margin: 20px;
+
+      @media (max-width: 900px) {
+        width: calc(100% - var(--default-height));
+        aspect-ratio: 5/4;
+      }
+
+      .date-range-menu__date-range-header {
+        color: var(--color-gray-30);
+        font-weight: 600;
+        flex-wrap: wrap;
+        text-transform: capitalize;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .date-range-menu__month-controls {
+          margin: auto;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+
+          .date-range-menu__current-month-year {
+            font-size: 22px;
+            text-align: center;
+          }
+        }
+
+        .date-range-menu__date-range-tools {
+          --ui-icon-width: 16px;
+          --ui-icon-height: 16px;
+          --ui-icon-color: var(--color-gray-60);
+          position: absolute;
+          top: 20px;
+          right: 16px;
+          cursor: pointer;
+          display: flex;
+          gap: 10px;
+          @media (max-width: 900px) {
+            & > div:first-child {
+              display: none;
+            }
+          }
+          & > div:hover {
+            --ui-icon-color: white;
+          }
+        }
+
+        .date-range-menu__date-range-state {
+          padding: 15px 0;
+          font-weight: 300;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: var(--default-element-height);
+          font-size: 19px;
+          .date-range-menu__date-range-label {
+            color: var(--color-gray-40);
+          }
+        }
+
+        @media (max-width: 900px) {
+          min-height: calc(var(--default-element-height) * 2);
+        }
+      }
+
+      .date-range-menu__day-name {
+        color: var(--color-gray-30);
+        text-transform: capitalize;
+        font-weight: 600;
+        border: solid 1px none;
+      }
+
+      .date-range-menu__calendar-day,
+      .date-range-menu__day-name {
+        text-align: center;
+        aspect-ratio: 1/1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: var(--default-element-height);
+        margin: 5px;
+        font-size: 16px;
+      }
+
+      .date-range-menu__calendar-day {
+        position: relative;
+        cursor: pointer;
+        border-radius: 50%;
+        border: solid 1px transparent;
+
+        @media (max-width: 900px) {
+          height: unset;
+          margin: 10%;
+        }
+
+        &.start,
+        &.end {
+          color: white;
+          border-style: solid;
+        }
+
+        &.start {
+          background-color: #4f96ff50;
+        }
+
+        &.end {
+          border-color: #4f96ff50;
+        }
+
+        &.available {
+          color: white;
+        }
+        &.current {
+          color: var(--color-blue);
+        }
+        &.before-start {
+          &:hover {
+            &::after {
+              position: absolute;
+              content: "cannot select before start date";
+              top: -40%;
+              left: 0;
+              background-color: var(--color-gray-30);
+              color: var(--color-gray-90);
+              font-size: 12px;
+              padding: 6px;
+              border-radius: 4px;
+              z-index: 3;
+            }
+          }
+        }
+        &:hover {
+          border: solid 1px var(--color-gray-60);
+        }
+      }
+    }
+  }
+}
+@media (min-width: 900px) {
+  .full-screen-calendar {
+    position: fixed;
+    width: 80vw;
+    left: 0;
+    top: 190px;
+    min-width: unset;
+    margin: auto;
+    animation: scaleUp 2s forwards;
+    .date-range-menu__grid-control {
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 5em);
+      width: calc(100% - 5em);
+      gap: var(--default-element-height);
+      .date-range-menu__date-range-header {
+        margin: 35px auto 0;
+        width: inherit;
+        min-height: 100px;
+        .date-range-menu__month-controls {
+          margin: 0 auto;
+          .date-range-menu__current-month-year {
+            font-size: 2.5rem;
+            font-weight: 300;
+          }
+        }
+        .date-range-menu__date-range-tools {
+          margin: 7px 9px;
+          --ui-icon-width: 2rem;
+          gap: 1.5rem;
+          --ui-icon-height: 2rem;
+        }
+        .date-range-menu__date-range-state {
+          margin-left: 0;
+          margin-right: auto;
+          flex-direction: column;
+          gap: 16px;
+          padding: 0;
+          font-size: 1.5rem;
+          height: max-content;
+          align-items: flex-start;
+        }
+      }
+      .date-range-menu__day-name,
+      .date-range-menu__calendar-day {
+        height: 4em;
+        aspect-ratio: 1/1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1em auto;
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

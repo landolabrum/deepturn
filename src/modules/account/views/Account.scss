@@ -1,0 +1,31 @@
+.account{
+    display: flex;
+    .account__actions{
+        width: 30%;
+    }
+    .account__content{
+        font-family: 'Atkinson Hyperlegible', sans-serif;
+        display: flex;
+        flex-direction: column;
+        
+        gap:10px;
+        // border: solid 1px #09f;
+        margin: 15px;
+        border-radius: 5px;
+        width: calc(100% - 40px);
+        .account__line-item{
+            &.is-child{
+                padding-left: 15px;
+                color: #f30;
+            }
+            strong{
+                text-transform: capitalize;
+                font-style: italic;
+                color: #09f;
+                &::after{
+                    content:":"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,51 @@
+.partner-icon {
+    width: 20px;
+    height: 20px;
+    --ui-icon-width: 100%;
+    --ui-icon-height: 100%;
+    border-radius: 10%;
+    &.galvan-smart-node {
+        background-color: var(--color-galvan-smart-node, --color-gray-50);
+    }
+
+    &.galvan-lite-node {
+        background-color: var(--color-galvan-lite-node, --color-gray-50);
+    }
+
+    &.switch-smart-node {
+        background-color: var(--color-switch-smart-node, --color-gray-50);
+    }
+
+    &.switch-lite-node {
+        background-color: var(--color-switch-lite-node, --color-gray-50);
+    }
+
+    &.pixll-smart-node {
+        background-color: var(--color-pixll-smart-node, --color-gray-50);
+    }
+
+    &.pixll-lite-node {
+        background-color: var(--color-pixll-lite-node, --color-gray-50);
+    }
+
+    &.element-smart-node {
+        background-color: var(--color-element-smart-node, --color-gray-50);
+    }
+
+    &.element-lite-node {
+        --ui-icon-color:#fff;
+        background-color: var(--color-element-lite-node, --color-gray-50);
+    }
+
+    &.win-smart-node {
+        background-color: var(--color-win-smart-node, --color-gray-50);
+    }
+
+    &.win-lite-node {
+        background-color: var(--color-win-lite-node, --color-gray-50);
+    }
+
+    // &.smart-node-bundle {
+    //     background-image: linear-gradient(to right, #5096ff, #5096ff 16.67%, #0f9c9d60 16.67%, #0f9c9d60 33.33%, #e9ff0060 33.33%, #e9ff0060 50%, #0088cd60 50%, #0088cd60 66.67%, #f0004160 66.67%, #f0004160 83.33%, #ff780060 83.33%);
+    // }
+}

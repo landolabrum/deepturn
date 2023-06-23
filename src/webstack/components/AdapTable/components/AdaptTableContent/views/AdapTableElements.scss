@@ -1,0 +1,211 @@
+// Define variables for repeated values
+$gray60: var(--color-gray-60);
+$gray70: var(--color-gray-70);
+$gray90: var(--color-gray-90);
+$gray20: var(--color-gray-20);
+$gray50: var(--color-gray-50);
+$gray40: var(--color-gray-40);
+$blue: var(--color-blue);
+$verySmall: 450px;
+$break: 900px;
+$defaultPadding: 5px 10px;
+$bRad: 5px;
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 0;
+  }
+  85% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@mixin mobileTr($bRad: 5px) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: max-content;
+  border-radius: $bRad;
+  background-color: var(--color-gray-70);
+  padding: 10px;
+  width: inherit;
+  gap: 5px;
+  margin: 10px;
+  min-height: max-content;
+  height: max-content;
+  &.mini {
+    margin: 0;
+    padding: 0 8px;
+  }
+  &:hover {
+    background-color: var(--color-gray-60);
+  }
+  @media (max-width: $verySmall) {
+    max-width: calc(100% - 8px);
+    margin: 5px 10px;
+  }
+}
+
+@mixin mobileTd($defaultPadding: 10px) {
+  width: 100%;
+  max-width: 100%;
+  padding: $defaultPadding;
+  border-bottom: none;
+  &:not(:last-child) {
+    border-right: none;
+  }
+  justify-content: space-between;
+  display: flex;
+  @media (max-width: $verySmall) {
+    flex-direction: column;
+    gap: 10px;
+  }
+  &::before {
+    display: flex;
+    text-transform: capitalize;
+    content: attr(data-key);
+    align-items: center;
+    color: var(--color-gray-50);
+  }
+
+}
+table {
+  margin-bottom: auto;
+  width: 100%;
+  border-spacing: unset;
+  display: none;
+  &.table-show{
+    display: table;
+  }
+  &.table-mini {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: solid 1px $gray60;
+
+    tr {
+      td,
+      th {
+        border: none !important;
+        &:last-child {
+          .th-content.mini,
+          .td-content {
+            display: flex;
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+  thead {
+    @media (max-width: 900px) {
+      display: none;
+    }
+    tr {
+      background-color: $gray70;
+      th {
+        text-transform: capitalize;
+      }
+    }
+  }
+  thead,
+  tbody {
+    tr {
+      height: 50px;
+      width: 100%;
+      &:hover {
+        background-color: $gray70;
+      }
+
+      &.mobile-tr {
+        @include mobileTr();
+      }
+
+      @media (max-width: $break) {
+        @include mobileTr();
+      }
+
+      &.mini {
+        max-width: inherit;
+        cursor: default;
+
+        td:last-child {
+          text-align: right;
+        }
+      }
+
+      :last-child {
+        td {
+          border-bottom-color: transparent;
+
+          :first-child {
+            border-radius: 0 0 0 $bRad;
+          }
+
+          :last-child {
+            border-radius: 0 0 $bRad 0;
+          }
+        }
+      }
+      th {
+        cursor: default;
+      }
+      th,
+      td {
+        padding: $defaultPadding;
+        position: relative;
+        max-width: max-content;
+        @media (min-width: 900px) {
+          .td-content {
+            overflow-x: hidden;
+            overflow-y: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+
+        &:not(:last-child) {
+          border-right: solid 1px $gray60;
+        }
+
+        border-bottom: solid 1px $gray60;
+
+        &.mobile-td {
+          @include mobileTd();
+        }
+
+        @media (max-width: $break) {
+          @include mobileTd();
+        }
+
+        &.index {
+          min-width: 20px;
+          text-align: center;
+          width: 25px;
+        }
+
+        
+        .td-hover {
+          display: none;
+        }
+        .td-content {
+          position: relative;
+        }
+        &.hoverable {
+          // pointer-events: none;
+            &:hover {
+              .td-hover {
+                display: flex;
+            }
+          }
+        }
+
+        
+      }
+    }
+  }
+}
