@@ -16,7 +16,7 @@ type HeaderInfo = {
 
 const HeaderContext = createContext<[HeaderProps | null, (header: HeaderProps) => any]>([
   null,
-  () => { },
+  () => {},
 ]);
 
 export const useHeader = () => useContext(HeaderContext);

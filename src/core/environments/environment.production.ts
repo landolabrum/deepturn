@@ -12,6 +12,9 @@ const prodEnvironment: IEnvironment = {
   },
   serviceEndpoints: {
     membership: "https://tiktok.soy",
+    distributor: "",
+    shopping: "",
+    licensing: "",
   },
   firebase: {
     webApiKey: '',

@@ -33,6 +33,7 @@ const PlaceGrid = ({
   elements,
   backgroundImage,
 }: PlaceGridProps) => {
+  const width = useWindow().width;
   const getColumnStart = (location: LocationProps, breakpoint: any) => {
     if (breakpoint && location[breakpoint]) {
       return location[breakpoint].column;
@@ -48,7 +49,6 @@ const PlaceGrid = ({
   };
 
   const renderElements = () => {
-    const width = useWindow().width;
     return elements.map((element: any, index: number) => {
       const { element: ElementComponent, locations } = element;
       return Object.keys(breakpoints).map((breakpoint) => (
@@ -75,21 +75,19 @@ const PlaceGrid = ({
 
   const gridContainerStyle = backgroundImage
     ? {
-        display: "grid",
         gridTemplateColumns: `repeat(${columns}, 1fr)`,
         gridTemplateRows: `repeat(${rows}, 1fr)`,
-        width: gridWidth,
-        height: gridHeight,
+        // width: gridWidth,
+        // height: gridHeight,
         backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        // backgroundSize: "cover",
+        // backgroundPosition: "center",
       }
     : {
-        display: "grid",
         gridTemplateColumns: `repeat(${columns}, 1fr)`,
         gridTemplateRows: `repeat(${rows}, 1fr)`,
-        width: gridWidth,
-        height: gridHeight,
+        // width: gridWidth,
+        // height: gridHeight,
       };
 
   return (

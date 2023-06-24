@@ -2,7 +2,7 @@ import { NewInfluencersRequest, NewInfluencersResponse } from "~/src/models/dist
 
 
 export default interface IDistributorService {
-  newInfluencers(request: NewInfluencersRequest): Promise<NewInfluencersResponse>;
+  // newInfluencers(request: NewInfluencersRequest): Promise<NewInfluencersResponse>;
   // getConnectPayReport(request: GetConnectPayRequest): Promise<GetConnectPayResponse>;
   // getBalanceReport(): Promise<GetBalanceResponse>;
   // manualTransferRequest(request: ManualTransferRequest): Promise<ManualTransferResponse>;

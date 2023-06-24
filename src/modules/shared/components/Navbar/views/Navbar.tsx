@@ -20,7 +20,19 @@ const Navbar = () => {
     if (width < 900) setSideNav(false);
     setOpen(null);
   }
-
+  function handleHide() {
+    const header = document.getElementById("header");
+    const navbar = document.getElementById("nav-bar");
+    if (navbar) {
+      if (navbar.style.visibility === "hidden") {
+        if(header)header.style.visibility = "visible";
+        navbar.style.visibility = "visible";
+      } else {
+        if(header)header.style.visibility = "hidden";
+        navbar.style.visibility = "hidden";
+      }
+    }
+  }
   const displayName = useMemo(() => {
     if (user) {
       const [firstName, lastName] = user.name.split(" ");
@@ -39,15 +51,19 @@ const Navbar = () => {
     return (
       <>
         <style jsx>{styles}</style>
+        <div className="navbar__hide_show">
+                <UiIcon onClick={handleHide} icon="deepturn-logo" />
+        </div>
         <nav id="nav-bar" style={sideNav ? { bottom: "0" } : {}}>
           <div className="navbar__nav-content">
             <div className="navbar__nav-trigger" onClick={() => setOpen(open !== "sidenav" ? "sidenav" : "!sidenav")}>
               {sideNav ? <UiIcon icon="fa-xmark" /> : <UiIcon icon="fa-bars" />}
             </div>
             <div className="navbar__brand-logo">
-            <UiButton variant="nav-item" onClick={() => handleRoute({ href: "/" })}>
-            <UiIcon icon="deepturn-logo" /> {environment?.brand?.name}
-            </UiButton>
+           
+              <UiButton variant="flat" onClick={() => handleRoute({ href: "/" })}>
+                {environment?.brand?.name}
+              </UiButton>
             </div>
             <div className={`navbar__nav-items ${sideNav ? "navbar__nav-items-show" : ""}`}>
               <div className="navbar__side-nav-overlay" onClick={() => setOpen("!sidenav")} />
@@ -57,9 +73,15 @@ const Navbar = () => {
                     <span key={key} className="navbar__nav-item-container">
                       {item?.items && (
                         <UiSelect
-                          variant={open === item?.label ? "nav-itemactive" : route.replaceAll("/","") === item?.label ?"nav-itemactive":"nav-item"}
-                          title={item.label === "account"?`${displayName}`:item.label?.toString()}
-                          traits={{beforeIcon: item?.icon}}
+                          variant={
+                            open === item?.label
+                              ? "nav-itemactive"
+                              : route.replaceAll("/", "") === item?.label
+                              ? "nav-itemactive"
+                              : "nav-item"
+                          }
+                          title={item.label === "account" ? `${displayName}` : item.label?.toString()}
+                          traits={{ beforeIcon: item?.icon }}
                           options={item.items}
                           onSelect={(value) => handleRoute({ href: value })}
                           openDirection="down"

@@ -120,19 +120,20 @@ export default class MemberService
   ): Promise<GetMemberProfileInformationResponse | null> {
     return this.post(`/reports/profile-info/${memberId}`);
   }
-  // public async getVehicles(
-  //   access: any
-  //   ): Promise<any> {
-  //     return await this.get<any>(
-  //       "/auto/vehicles", 
-  //     );
-  //   }
     public async getVehicles(
       access: any
     ): Promise<GetRecruitesResponse> {
       return this.post<any, any>(
         "/auto/vehicles",
         access
+      );
+    }
+    public async startVehicle(
+      request: any
+    ): Promise<GetRecruitesResponse> {
+      return this.post<any, any>(
+        "/auto/vehicle/start",
+        request
       );
     }
   async getSignInIdToken(

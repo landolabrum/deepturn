@@ -35,5 +35,6 @@ export default interface IMemberService {
   recentEnrollmentActivity(): Promise<EnrollmentActivityResponse>;
   recentEnrollments(request: RecentEnrollmentRequest): Promise<RecentEnrollmentResponse>;
   getVehicles(access: any): Promise<any>;
+  startVehicle(request: any): Promise<any>;
 }
 

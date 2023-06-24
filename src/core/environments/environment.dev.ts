@@ -11,11 +11,10 @@ const devEnvironment: IEnvironment = {
     // domain: "dev.connectunited.com",
   },
   serviceEndpoints: {
-    membership: "http://localhost:8000"
-    // membership: "http://localhost:8000"
-    // shopping: "https://shopping.api.dev.connectunited.com",
-    // licensing: "https://licensing.api.dev.connectunited.com",
-    // distributor: "https://distributor.dev.connectunited.com",
+    membership: "http://localhost:8000",
+    distributor: "",
+    shopping: "",
+    licensing: "",
   },
   firebase: {
     webApiKey: '',

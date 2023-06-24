@@ -1,6 +1,12 @@
 .grid-container{
     align-content: start;
-    grid-auto-rows: min-content;
+    display: grid;
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: visible;
     @media(max-width: 900px){
         
     }
@@ -8,6 +14,5 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        overflow: visible;
     }
 }

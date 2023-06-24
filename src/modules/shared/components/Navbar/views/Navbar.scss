@@ -1,3 +1,18 @@
+.navbar__hide_show {
+  position: fixed;
+  height: 70px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  top: 0;
+  left: 10px;
+  --ui-icon-color: var(--color-gray-40);
+  &:hover{
+    --ui-icon-color: var(--color-secondary);
+  }
+}
 nav {
   display: flex;
   justify-content: center;
@@ -23,13 +38,14 @@ nav {
       cursor: pointer;
       --ui-icon-color: var(--color-gray-60);
     }
-    .navbar__brand-logo{
-      @media(max-width:900px){
-          width: inherit;
-          display: flex;
-          justify-content: center;
-        }
+    .navbar__brand-logo {
+      margin-left: 20px;
+      display: flex;
+      @media (max-width: 900px) {
+        width: inherit;
+        justify-content: center;
       }
+    }
     .navbar__side-nav-overlay {
       position: absolute;
       z-index: -1;
@@ -38,7 +54,7 @@ nav {
       width: 100vw;
       height: 100%;
       cursor: pointer;
-      @media(min-width:900px){
+      @media (min-width: 900px) {
         display: none;
       }
     }
@@ -49,7 +65,7 @@ nav {
       flex-direction: var(--nav-items-flex-direction);
       gap: 10px;
       width: 100%;
-      & > *:last-child{
+      & > *:last-child {
         margin-left: auto;
         // @media(max-width: 990px){
         //   margin-top: auto;
@@ -77,12 +93,5 @@ nav {
         }
       }
     }
-    // .navbar__nav-right {
-    //   width: 33%;
-    //   height: 100%;
-    //   display: flex;
-    //   align-items: center;
-    //   justify-content: flex-end;
-    // }
   }
 }

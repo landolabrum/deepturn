@@ -30,23 +30,28 @@ export default function Auto() {
   }
   const router = useRouter();
   const query = router.query?.id;
-  const [resp, setResp] = useState<any>({ ...mock });
+  const [resp, setResp] = useState<any>({});
+  const [start, setStart] = useState<any>({ });
   const memberService = getService<IMemberService>("IMemberService");
   const body = resp?.access ? resp?.access : null;
   const status = resp.vehicles && Object.entries(resp.vehicles)?.length && resp.vehicles[0]?.vehiclestatus;
 
-  async function fetchV() {
+  async function getVehicles() {
     const respv = await memberService.getVehicles(body);
     if (respv) setResp(respv);
   }
+  async function startVehicle() {
+    body.vin = status?.vin
+    console.log(body)
+    const respv = await memberService.startVehicle(body);
+    if (respv) setStart(respv);
+  }
   useEffect(() => {
-    // if (Object.entries(resp).length === 0) fetchV();
-  }, [fetchV, setResp]);
+    if (Object.entries(resp).length === 0) getVehicles();
+  }, [getVehicles, setResp]);
   const props = {
-    gridWidth: "100%",
-    gridHeight: "500px",
-    columns: 30,
-    rows: 30,
+    columns: 15,
+    rows: 15,
     breakpoints: {
       xs: 500,
       md: 900,
@@ -58,6 +63,7 @@ export default function Auto() {
     return (
       <>
         <style jsx>{styles}</style>
+        start: {JSON.stringify(start)}
         <div className="auto">
           <div className="auto__status">
             <div className="auto__status-vin">
@@ -67,7 +73,7 @@ export default function Auto() {
             <div className="auto__status-lock"><strong>Lock Status:</strong> {status?.lockStatus?.value} {status?.lockStatus?.value === "LOCKED"?<UiIcon icon="fa-lock"/>:<UiIcon color="#f90" icon="fa-unlock"/>}</div>
           </div>
           <div className="auto__gauges">
-            <div className="auto__remote-start">Start</div>
+            <div onClick={startVehicle} className="auto__remote-start">{status.ignitionStatus.value === "Off"?"start":"stop"}</div>
 
             <UiBar
               barCount={4}
@@ -91,9 +97,7 @@ export default function Auto() {
               icon="fa-battery-half"
             />
           </div>
-          <div className="auto_vehicle">
-            <div className="auto_vehicle-img">
-              <div className="auto__place-grid">
+          <div className="auto__vehicle">
                 <PlaceGrid
                   backgroundImage="/assets/auto/top.png"
                   elements={[
@@ -101,20 +105,20 @@ export default function Auto() {
                       element: (
                         <Indicator
                           rotate={-90}
-                          text={`${status?.doorStatus?.hoodDoor?.value}`}
+                          text={`hood ${status?.doorStatus?.hoodDoor?.value}`}
                         />
                       ),
-                      locations: { row: 15, column: 1 },
+                      locations: { row: 8, column: 1 },
                     },
                     {
-                      element: <Indicator text={`${status?.TPMS?.rightFrontTirePressure}`}  />,
-                      locations: { row: 2, column: 4 },
+                      element: <Indicator text={`RFT ${status?.TPMS?.rightFrontTirePressure}`}  />,
+                      locations: { row: 5, column: 3 },
                     },
                     {
                       element: (
-                        <Indicator text={`${status?.doorStatus?.passengerDoor?.value}`}  />
+                        <Indicator text={`PD ${status?.doorStatus?.passengerDoor?.value}`}  />
                       ),
-                      locations: { row: 2, column: 11 },
+                      locations: { row: 5, column: 6 },
                     },
                     {
                       element: (
@@ -122,13 +126,13 @@ export default function Auto() {
                           text={`${underScoreLess(status?.windowPosition.passWindowPosition.value)}`}
                         />
                       ),
-                      locations: { row: 5, column: 11 },
+                      locations: { row: 6, column: 6 },
                     },
                     {
                       element: (
                         <Indicator text={`${status?.doorStatus?.rightRearDoor?.value}`}  />
                       ),
-                      locations: { row: 2, column: 16 },
+                      locations: { row: 5, column: 9 },
                     },
                     {
                       element: (
@@ -136,11 +140,11 @@ export default function Auto() {
                           text={`${underScoreLess(status?.windowPosition?.rearPassWindowPos?.value)}`}
                         />
                       ),
-                      locations: { row: 5, column: 16 },
+                      locations: { row: 6, column: 9 },
                     },
                     {
                       element: <Indicator text={`${status?.TPMS.innerRightRearTirePressure}`} />,
-                      locations: { row: 2, column: 24 },
+                      locations: { row: 5, column: 13 },
                     },
                     {
                       element: (
@@ -149,15 +153,11 @@ export default function Auto() {
                           rotate={-90}
                         />
                       ),
-                      locations: { row: 15, column: 30 },
+                      locations: { row: 8, column: 16 },
                     },
                     {
                       element: <Indicator text={`${status?.TPMS.leftFrontTirePressure}`}  />,
-                      locations: { row: 29, column: 4 },
-                    },
-                    {
-                      element: <Indicator text={`${status?.doorStatus?.driverDoor?.value}`}  />,
-                      locations: { row: 29, column: 11 },
+                      locations: { row: 11, column: 3 },
                     },
                     {
                       element: (
@@ -166,11 +166,11 @@ export default function Auto() {
                           
                         />
                       ),
-                      locations: { row: 26, column: 11 },
+                      locations: { row: 10, column: 6 },
                     },
                     {
-                      element: <Indicator text={`${status?.doorStatus?.leftRearDoor?.value}`}  />,
-                      locations: { row: 29, column: 16 },
+                      element: <Indicator text={`${status?.doorStatus?.driverDoor?.value}`}  />,
+                      locations: { row: 11, column: 6 },
                     },
                     {
                       element: (
@@ -179,21 +179,23 @@ export default function Auto() {
                           
                         />
                       ),
-                      locations: { row: 26, column: 16 },
+                        locations: { row: 10, column: 9 },
+                      },
+                    {
+                      element: <Indicator text={`${status?.doorStatus?.leftRearDoor?.value}`}  />,
+                      locations: { row: 11, column: 9 },
                     },
                     {
                       element: <Indicator text={status?.TPMS?.innerLeftRearTirePressure}  />,
-                      locations: { row: 29, column: 24 },
+                      locations: { row: 11, column: 13 },
                     },
                   ]}
                   {...props}
                 />
               </div>
-            </div>
-          </div>
         </div>
         {/* {JSON.stringify(resp)} */}
-        {/* <div>
+        <div>
           {status &&
             Object.entries(resp.vehicles[0].vehiclestatus).map(([k, v]) => {
               return (
@@ -204,7 +206,7 @@ export default function Auto() {
                 </>
               );
             })}
-        </div> */}
+        </div>
       </>
     );
   return (

@@ -10,7 +10,6 @@ export default class MyDocument extends Document {
           <Head>
             <link rel="stylesheet" href="/styles/global.css" />
             <link rel="stylesheet" href="/styles/theme.css" />
-            <link href="//db.onlinewebfonts.com/c/643e59524d730ce6c6f2384eebf945f8?family=Microsoft+Sans+Serif" rel="stylesheet" type="text/css"/>
           </Head>
         <body id="app-body">
           <Main />

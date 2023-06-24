@@ -2,7 +2,6 @@ import type { NextComponentType, NextPageContext } from "next";
 import styles from "./AdaptTableCell.scss";
 import { useEffect, useState } from "react";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
-import PartnerIcon from "@shared/components/PartnerIcon/PartnerIcon";
 import { dateFormat } from "@webstack/helpers/userExperienceFormats";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 
@@ -116,7 +115,6 @@ const AdaptTableCell: NextComponentType<NextPageContext, {}, Props> = ({ cell, d
           <div className="adaptable-cell__product">
             <div className="adaptable-cell__product-description">{data}</div>
             <div className="adaptable-cell__product-icon">
-              <PartnerIcon icon={data} />
             </div>
           </div>
         )}

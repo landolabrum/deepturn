@@ -24,9 +24,9 @@ export interface IEnvironment {
 
   serviceEndpoints: {
     membership: string;
-    // shopping: string;
-    // distributor: string;
-    // licensing: string;
+    shopping: string;
+    distributor: string;
+    licensing: string;
   };
 
   firebase: {

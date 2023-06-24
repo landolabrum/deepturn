@@ -9,6 +9,9 @@ $agg: 5px;
 .bar {
   width: 140px;
   margin: 20px;
+  @media(max-width:900px){
+    margin: 20px 5px;
+  }
   .bar__container {
     border-radius: $agg;
     border: solid 1px var(--color-gray-60);
