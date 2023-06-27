@@ -4,10 +4,11 @@ import UiToggle from "@webstack/components/UiToggle/UiToggle";
 import type { NextComponentType, NextPageContext } from "next";
 import { useEffect, useState } from "react";
 import IMemberService from "~/src/core/services/MemberService/IMemberService";
-import ColorChanger from "./components/Color/ColorChanger";
-import BrightnessSlider from "./components/Brightness/Brightness";
+import ColorChanger from "../components/Color/ColorChanger";
+import BrightnessSlider from "../components/Brightness/Brightness";
 import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import styles from "./lights.scss";
 
 interface Props {}
 const Lights: NextComponentType<NextPageContext, {}, Props> = (props: Props) => {
@@ -27,12 +28,12 @@ const Lights: NextComponentType<NextPageContext, {}, Props> = (props: Props) => 
     setLLd(false);
   }
   function handleLight(l:any){
-    if (l.bri === 0)toggleOne(l.id);
-    setLight(l);
-    setShow(false);
+    console.log("[ HANDLE LIGHT ] ", l)
+    // if (l.bri === 0)toggleOne(l.id);
+    // setLight(l);
+    // setShow(false);
   }
   function updateLight(r: any) {
-    // console.log(Math.round(r.bri * 100/254))
     r.light = `${r.name} - ${r.id_}`
     r.status = <UiToggle checked={r.is_on} onChange={() => toggleOne(r.id)} />;
     r.bri = Math.round((r.bri * 100) / 254);
@@ -42,7 +43,6 @@ const Lights: NextComponentType<NextPageContext, {}, Props> = (props: Props) => 
     r.color = <ColorChanger hexCode={r.hex} id={r.id_} onChange={setLight} />;
     delete r.sdk;
     delete r.id_;
-    // delete Object.assign(r, { id: r.id_ })["id_"];
     delete r.hex;
     delete r.sat;
     delete r.hue;
@@ -82,49 +82,7 @@ const Lights: NextComponentType<NextPageContext, {}, Props> = (props: Props) => 
   }, [setLLd, show === false]);
   return (
     <>
-      <style jsx>{`
-        .all-lites {
-          width: max-content;
-          margin: 10px 0;
-          @media (max-width: 900px) {
-            width: 100%;
-          }
-        }
-        .light {
-          display: flex;
-          flex-direction: column;
-          padding: 10px;
-          width: calc(100% - 20px);
-          gap: 20px;
-          height: max-content;
-          @media (max-width: 900px) {
-            height: inherit;
-            justify-content: space-around;
-          }
-        }
-        .show {
-          position: fixed;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          top: 15vh;
-          left: 20vw;
-          right: 20vw;
-          background-color: #e0e0e050;
-          backdrop-filter: blur(10px);
-          z-index: 4;
-          height: 80vh;
-          border-radius: 10px;
-          gap:50px;
-          .close {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            --ui-icon-size: 30px;
-          }
-        }
-      `}</style>
+      <style jsx>{styles}</style>
       <h1>Lights</h1>
       <div className="all-lites">
         <UiButton traits={{ width: "100%" }} onClick={toggleAll}>

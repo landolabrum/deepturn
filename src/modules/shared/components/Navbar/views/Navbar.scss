@@ -1,16 +1,20 @@
 .navbar__hide_show {
-  position: fixed;
-  height: 70px;
-  width: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
-  top: 0;
-  left: 10px;
   --ui-icon-color: var(--color-gray-40);
   &:hover{
     --ui-icon-color: var(--color-secondary);
+  }
+}
+.navbar__brand-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+  @media (max-width: 900px) {
+    width: inherit;
+    justify-content: center;
   }
 }
 nav {
@@ -38,14 +42,7 @@ nav {
       cursor: pointer;
       --ui-icon-color: var(--color-gray-60);
     }
-    .navbar__brand-logo {
-      margin-left: 20px;
-      display: flex;
-      @media (max-width: 900px) {
-        width: inherit;
-        justify-content: center;
-      }
-    }
+
     .navbar__side-nav-overlay {
       position: absolute;
       z-index: -1;

@@ -13,7 +13,7 @@ const Navbar = () => {
 
   const [sideNav, setSideNav] = useState(false);
   const [open, setOpen] = useState<string | null | undefined | number>(null);
-
+  const [hide, setHide] = useState<boolean>(false);
   const [user, route, handleRoute]: any = useRoute(closeSideNavOnWidthChange);
 
   function closeSideNavOnWidthChange() {
@@ -21,17 +21,18 @@ const Navbar = () => {
     setOpen(null);
   }
   function handleHide() {
-    const header = document.getElementById("header");
-    const navbar = document.getElementById("nav-bar");
-    if (navbar) {
-      if (navbar.style.visibility === "hidden") {
-        if(header)header.style.visibility = "visible";
-        navbar.style.visibility = "visible";
-      } else {
-        if(header)header.style.visibility = "hidden";
-        navbar.style.visibility = "hidden";
-      }
-    }
+    setHide(!hide);
+    // const header = document.getElementById("header");
+    // const navbar = document.getElementById("nav-bar");
+    // if (navbar) {
+    //   if (navbar.style.visibility === "hidden") {
+    //     if(header)header.style.visibility = "visible";
+    //     navbar.style.visibility = "visible";
+    //   } else {
+    //     if(header)header.style.visibility = "hidden";
+    //     navbar.style.visibility = "hidden";
+    //   }
+    // }
   }
   const displayName = useMemo(() => {
     if (user) {
@@ -47,20 +48,20 @@ const Navbar = () => {
   useEffect(() => {
     sideNav && closeSideNavOnWidthChange();
   }, [width > 900]);
-  if (user) {
+  if (user && !hide) {
     return (
       <>
         <style jsx>{styles}</style>
-        <div className="navbar__hide_show">
-                <UiIcon onClick={handleHide} icon="deepturn-logo" />
-        </div>
+
         <nav id="nav-bar" style={sideNav ? { bottom: "0" } : {}}>
           <div className="navbar__nav-content">
             <div className="navbar__nav-trigger" onClick={() => setOpen(open !== "sidenav" ? "sidenav" : "!sidenav")}>
               {sideNav ? <UiIcon icon="fa-xmark" /> : <UiIcon icon="fa-bars" />}
             </div>
             <div className="navbar__brand-logo">
-           
+              <div className="navbar__hide_show">
+                <UiIcon onClick={handleHide} icon="deepturn-logo" />
+              </div>
               <UiButton variant="flat" onClick={() => handleRoute({ href: "/" })}>
                 {environment?.brand?.name}
               </UiButton>
@@ -114,6 +115,20 @@ const Navbar = () => {
       </>
     );
   }
+  if (hide)
+    return (
+      <>
+        <style jsx>{styles}</style>
+        <div className="navbar__brand-logo">
+        <div className="navbar__hide_show">
+          <UiIcon onClick={handleHide} icon="deepturn-logo" />
+        </div>
+          <UiButton variant="flat" onClick={() => handleRoute({ href: "/" })}>
+            {environment?.brand?.name}
+          </UiButton>
+        </div>
+      </>
+    );
   return <></>;
 };
 export default Navbar;

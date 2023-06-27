@@ -19,10 +19,10 @@ const AdaptContainer = (props: any): React.ReactElement => {
 
     const handleResize = (e: any) => {
       if (!isResizing) return;
-      const newHeight = e.clientY;
+      let newHeight = e.clientY || e.touches[0].clientY;
       setContainerHeight(newHeight);
     };
-    
+
     if (!buttonRef?.current) return;
     const btnCurr: any = buttonRef.current;
     btnCurr.addEventListener("mousedown", handleResizeStart);

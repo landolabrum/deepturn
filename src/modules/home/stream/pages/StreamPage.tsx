@@ -4,6 +4,7 @@ import styles from "./StreamPage.scss";
 import UiLoader from "@webstack/components/UiLoader/UiLoader";
 import AdaptContainer from "@webstack/components/AdaptContainer/AdaptContainer";
 import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
+const MAX_TIMEOUT = 23000;
 
 const Stream = () => {
   const myRef = useRef<any>([]);
@@ -13,10 +14,8 @@ const Stream = () => {
   const [load, setLoad] = useState<boolean>(false);
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("fd");
       const images = myRef.current;
       let allImagesLoaded = true;
-
       images.forEach((img: any) => {
         if (img?.complete && !loadedImages.includes(img.src)) {
           img.classList.add("show");
@@ -35,7 +34,7 @@ const Stream = () => {
     const timeout = setTimeout(() => {
       clearInterval(interval);
       setLoad(true);
-    }, 20000);
+    }, MAX_TIMEOUT);
 
     return () => {
       clearInterval(interval);
@@ -55,22 +54,17 @@ const Stream = () => {
   );
 
   function handleMain(el: any) {
-    console.log(mainRef);
-    // if(!mainRef.current)return;
     const clickedImg = el.target;
     const clonedImg = clickedImg.cloneNode();
-
     clonedImg.onclick = function () {
       this.remove();
     };
-
     if (mainRef.current?.hasChildNodes()) {
       mainRef.current.replaceChild(clonedImg, mainRef.current.firstChild);
     } else {
       mainRef.current.appendChild(clonedImg);
     }
   }
-
   return (
     <>
       <style jsx>{styles}</style>

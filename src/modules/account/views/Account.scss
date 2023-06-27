@@ -1,7 +1,16 @@
 .account{
     display: flex;
-    .account__actions{
-        width: 30%;
+    .account__views{
+        width: 33%;
+        .account__views-mobile{
+            display: none;
+        }
+        @media(max-width:900px){
+            .account__views-desktop{
+                display: none;
+            }
+            width: 100%;
+        }
     }
     .account__content{
         font-family: 'Atkinson Hyperlegible', sans-serif;
