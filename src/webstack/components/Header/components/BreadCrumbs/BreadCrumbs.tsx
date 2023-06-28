@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import styles from "./BreadCrumbs.scss";
 import capitalize from "@webstack/helpers/Capitalize";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
-import useWindow from "@webstack/helpers/useWindow";
+import useWindow from "@webstack/hooks/useWindow";
 import environment from "~/src/environment";
 
 export type BreadCrumbLinkProps = {

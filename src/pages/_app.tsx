@@ -11,6 +11,7 @@ import { useState } from "react";
 import Navbar from "@shared/components/Navbar/views/Navbar";
 import { OverlayProvider } from "@webstack/components/Overlay/Overlay";
 import { HeaderProvider } from "@webstack/components/Header/views/Header";
+import useDarkMode from "@webstack/hooks/useDarkMode";
 
 
 const ZENDESK_KEY = "73bedd9b-0cdd-46a4-ad2e-b2ea5b72699d"
@@ -53,6 +54,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {useDarkMode() ? <link rel="shortcut icon" href="/assets/favicon-dark.ico" />:<link rel="shortcut icon" href="/assets/favicon-lite.ico" />}
       </Head>
       <style jsx>{styles}</style>
         <ServiceContainer />

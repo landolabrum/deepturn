@@ -4,7 +4,7 @@ import tableStyles from "./AdapTableElements.scss";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import AdapTableAlternateView from "../components/AdapTableAlternateView/AdapTableAlternateView";
-import useScroll from "@webstack/helpers/useScroll";
+import useScroll from "@webstack/hooks/useScroll";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import { TableOptions } from "@webstack/components/AdapTable/views/AdapTable";
 import { VariantProps } from "@webstack/components/AdapTable/models/IVariant";

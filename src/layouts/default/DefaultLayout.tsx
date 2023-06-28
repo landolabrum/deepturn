@@ -9,7 +9,6 @@ interface IProps {
 
 export default function DefaultLayout(props: IProps) {
   return <>
-    <Title/>
     <style jsx>{styles}</style>
     <main>{props.children}</main>
   </>;

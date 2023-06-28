@@ -28,16 +28,18 @@
     line-height: 1;
     height: calc(var(--default-element-height) - 2px);
     white-space: nowrap;
-    color: var(--color-blue);
+    color: var(--color-gray-60);
     --ui-icon-color: var(--color-gray-40);
 
-    background: var(--color-gray-20);
-
-
+    background: var(--color-gray-30);
     outline: solid 1px var(--color-gray-60);
     --ui-icon-height: 18px;
     --ui-icon-width: 18px;
     border-radius: var(--default-border-radius);
+    &:focus-within{
+      color: var(--color-gray-90);
+      background-color: var(--color-gray-20);
+    }
     // &:hover {
     //   color: var(--color-gray-20);
     //   --ui-icon-color: var(--color-gray-20);
@@ -73,7 +75,11 @@
         justify-content: flex-start;
       }
       outline: solid 1px transparent;
-      background-color: transparent;
+      &:hover{
+        --ui-icon-color: var(--color-blue-10);
+        color: var(--color-blue-10);
+        border-bottom: solid 1px var(--color-blue-10);
+      }
     }
     &[class$="-select__disabled"] {
       background-color: transparent;
@@ -109,6 +115,7 @@
     &[class$="-flat"],
     &[class$="-nav-item"],
     &[class$="-nav-itemactive"] {
+      border-radius: 0;
       --ui-icon-height: 20px;
       --ui-icon-width: 20px;
     }
@@ -158,9 +165,11 @@
     }
     &[class$="-nav-itemactive"] {
       cursor: default;
-      color: var(--color-gray-20);
-      --ui-icon-color: var(--color-gray-20);
-      background-color: var(--color-gray-70, --background-color);
+      color: var(--color-blue-10);
+      --ui-icon-color: var(--color-blue-10);
+      background-color: transparent;
+      border-bottom: solid 1px var(--color-blue-10);
+      // background-color: var(--color-gray-70, --background-color);
       outline: none;
       @media (max-width: 900px) {
         background-color: transparent;

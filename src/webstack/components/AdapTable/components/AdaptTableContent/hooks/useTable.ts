@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { isTextOverflowing } from "@webstack/helpers/isTextOverflowing";
-import useWindow from "@webstack/helpers/useWindow";
+import useWindow from "@webstack/hooks/useWindow";
 export type TableStateProps = "show" | "hide" | "error" | "loading" | "empty";
 
 const useTable = ({ data, variant, rowClickable, options, loading }: any) => {

@@ -43,11 +43,14 @@
   .authentication__authentication-content{
     z-index: 1;
     // background-color: #ffffff50;
-    background-color: var(--color-primary-opaque);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--color-secondary);
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    // background-color: var(--color-primary-opaque);
+    // backdrop-filter: blur(10px);
+    // border: 1px solid var(--color-secondary);
+    // border-radius: 10px;
+    // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to bottom, #54E3FF, #1E88E5);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 
     padding: 50px 25px 50px;
     border-radius: 5px;

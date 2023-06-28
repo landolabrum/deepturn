@@ -16,7 +16,6 @@ $el_gap: 7px;
   font-size: inherit;
   font-weight: inherit;
   gap: $el_gap;
-  padding: 0 10px;
   &:hover {
     color: inherit;
   }
@@ -41,8 +40,8 @@ $el_gap: 7px;
     }
   }
 
-
   .select__selected {
+    padding: 0 10px;
     color: inherit;
     height: inherit;
     line-height: inherit;
@@ -54,7 +53,7 @@ $el_gap: 7px;
     --ui-icon-width: inherit;
     text-transform: capitalize;
     align-items: center;
-
+    width: 100%;
     // &:hover {
     //   color: var(--color-gray-30);
     //   --ui-icon-color: var(--color-gray-30);
@@ -68,8 +67,9 @@ $el_gap: 7px;
     left: 0;
     position: absolute;
     margin-top: $el_spacing;
+    box-shadow: var(--default-box-shadow);
     z-index: 3;
-    &.right{
+    &.right {
       left: auto;
       right: 0;
     }
@@ -77,7 +77,7 @@ $el_gap: 7px;
     min-width: 100%;
     width: max-content;
     &.nav-itemactive {
-      left:auto;
+      left: auto;
       right: 0;
       @media (max-width: 900px) {
         z-index: 3;

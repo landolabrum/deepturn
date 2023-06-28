@@ -1,9 +1,10 @@
+
+import useDarkMode from "@webstack/hooks/useDarkMode";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 // import { GA_TRACKING_ID } from "../utils/gtag";
 // import favicon from "../static/favicon/fav-32x32.ico"
 {/* <link rel="shortcut icon" href={favicon.src}/> */ }
 export default class MyDocument extends Document {
-  
   render() {
     return (
       <Html>

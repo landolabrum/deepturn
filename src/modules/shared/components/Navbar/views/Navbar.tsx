@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import styles from "./Navbar.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { RouteProps, routes } from "../data/routes";
-import useWindow from "@webstack/helpers/useWindow";
+import useWindow from "@webstack/hooks/useWindow";
 import useRoute from "~/src/core/authentication/hooks/useRoute";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import UiButton from "@webstack/components/UiButton/UiButton";
@@ -73,23 +73,25 @@ const Navbar = () => {
                   return (
                     <span key={key} className="navbar__nav-item-container">
                       {item?.items && (
-                        <UiSelect
-                          variant={
-                            open === item?.label
-                              ? "nav-itemactive"
-                              : route.replaceAll("/", "") === item?.label
-                              ? "nav-itemactive"
-                              : "nav-item"
-                          }
-                          title={item.label === "account" ? `${displayName}` : item.label?.toString()}
-                          traits={{ beforeIcon: item?.icon }}
-                          options={item.items}
-                          onSelect={(value) => handleRoute({ href: value })}
-                          openDirection="down"
-                          // openDirection={item?.label === "account" && width < 900 ? "up" : "down"}
-                          onToggle={(isOpen) => setOpen(isOpen ? item?.label : null)}
-                          openState={open === item?.label}
-                        />
+                        <>
+                          <UiSelect
+                            variant={
+                              open === item?.label
+                                ? "nav-itemactive"
+                                : route.replaceAll("/", "") === item?.label
+                                ? "nav-itemactive"
+                                : "nav-item"
+                            }
+                            title={item.label === "account" ? `${displayName}` : item.label?.toString()}
+                            traits={{ beforeIcon: item?.icon }}
+                            options={item.items}
+                            onSelect={(value) => handleRoute({ href: value })}
+                            openDirection="down"
+                            // openDirection={item?.label === "account" && width < 900 ? "up" : "down"}
+                            onToggle={(isOpen) => setOpen(isOpen ? item?.label : null)}
+                            openState={open === item?.label}
+                          />
+                        </>
                       )}
                       {!item.items && (
                         <UiButton
@@ -120,9 +122,9 @@ const Navbar = () => {
       <>
         <style jsx>{styles}</style>
         <div className="navbar__brand-logo">
-        <div className="navbar__hide_show">
-          <UiIcon onClick={handleHide} icon="deepturn-logo" />
-        </div>
+          <div className="navbar__hide_show">
+            <UiIcon onClick={handleHide} icon="deepturn-logo" />
+          </div>
           <UiButton variant="flat" onClick={() => handleRoute({ href: "/" })}>
             {environment?.brand?.name}
           </UiButton>

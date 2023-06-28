@@ -2,12 +2,120 @@ import { PhoneNumberUtil, PhoneNumberFormat } from "google-libphonenumber";
 import { InvalidCell, NaCell } from "@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell";
 type dateProps = string | number | Date;
 type returnType = "string" | "object";
+
+
+
 interface OptionsProps {
   time?: boolean;
   returnType?: returnType;
   format?: "MM-DD-YYYY" | "MM-YYYY";
   server?: boolean;
 }
+
+
+export const countries = {
+  us: "🇺🇸 USA",
+  ca: "🇨🇦 Canada",
+  mx: "🇲🇽 Mexico",
+  de: "🇩🇪 Germany",
+  gb: "🇬🇧 United Kingdom",
+  fr: "🇫🇷 France",
+  es: "🇪🇸 Spain",
+  it: "🇮🇹 Italy",
+  nl: "🇳🇱 Netherlands",
+  be: "🇧🇪 Belgium",
+  dk: "🇩🇰 Denmark",
+  se: "🇸🇪 Sweden",
+  no: "🇳🇴 Norway",
+  fi: "🇫🇮 Finland",
+  ee: "🇪🇪 Estonia",
+  lv: "🇱🇻 Latvia",
+  lt: "🇱🇹 Lithuania",
+  pl: "🇵🇱 Poland",
+  cz: "🇨🇿 Czechia",
+  sk: "🇸🇰 Slovakia",
+  hu: "🇭🇺 Hungary",
+  at: "🇦🇹 Austria",
+  ch: "🇨🇭 Switzerland",
+  pt: "🇵🇹 Portugal",
+  ie: "🇮🇪 Ireland",
+  is: "🇮🇸 Iceland",
+  gr: "🇬🇷 Greece",
+  tr: "🇹🇷 Turkey",
+  ru: "🇷🇺 Russia",
+  sa: "🇸🇦 Saudi Arabia",
+  ae: "🇦🇪 United Arab Emirates",
+  qa: "🇶🇦 Qatar",
+  kw: "🇰🇼 Kuwait",
+  om: "🇴🇲 Oman",
+  bh: "🇧🇭 Bahrain",
+  in: "🇮🇳 India",
+  cn: "🇨🇳 China",
+  jp: "🇯🇵 Japan",
+  kr: "🇰🇷 South Korea",
+  hk: "🇭🇰 Hong Kong",
+  tw: "🇹🇼 Taiwan",
+  sg: "🇸🇬 Singapore",
+  id: "🇮🇩 Indonesia",
+  th: "🇹🇭 Thailand",
+  ph: "🇵🇭 Philippines",
+  au: "🇦🇺 Australia",
+  nz: "🇳🇿 New Zealand",
+  ar: "🇦🇷 Argentina",
+  br: "🇧🇷 Brazil",
+  cl: "🇨🇱 Chile",
+  co: "🇨🇴 Colombia",
+  ec: "🇪🇨 Ecuador",
+  pe: "🇵🇪 Peru",
+  uy: "🇺🇾 Uruguay",
+  ve: "🇻🇪 Venezuela",
+  bo: "🇧🇴 Bolivia",
+  py: "🇵🇾 Paraguay",
+  cr: "🇨🇷 Costa Rica",
+  do: "🇩🇴 Dominican Republic",
+  sv: "🇸🇻 El Salvador",
+  gt: "🇬🇹 Guatemala",
+  hn: "🇭🇳 Honduras",
+  ni: "🇳🇮 Nicaragua",
+  pa: "🇵🇦 Panama",
+  bs: "🇧🇸 Bahamas",
+  bb: "🇧🇧 Barbados",
+  cu: "🇨🇺 Cuba",
+  jm: "🇯🇲 Jamaica",
+  ht: "🇭🇹 Haiti",
+  tt: "🇹🇹 Trinidad & Tobago",
+  ag: "🇦🇬 Antigua & Barbuda",
+  dm: "🇩🇲 Dominica",
+  gd: "🇬🇩 Grenada",
+  kn: "🇰🇳 St. Kitts & Nevis",
+  lc: "🇱🇨 St. Lucia",
+  vc: "🇻🇨 St. Vincent & Grenadines",
+  ai: "🇦🇮 Anguilla",
+  bm: "🇧🇲 Bermuda",
+  ky: "🇰🇾 Cayman Islands",
+  ms: "🇲🇸 Montserrat",
+  tc: "🇹🇨 Turks & Caicos Islands",
+  vg: "🇻🇬 British Virgin Islands",
+
+  // NON EMOJIS
+  cf: "Central Africa Republic",
+  cm: "Camaroon",
+  ly: "Libya",
+  am: "Armenia",
+  ao: "Angola",
+  aq: "Antarctica",
+  bi: "Burundi",
+  bw: "Botswana",
+  bz: "Belize",
+  ga: "Gabon",
+  ge: "Georgia",
+  gh: "Ghana",
+  jo: "Jordan",
+  la: "Laos",
+  lu:"Luxembourg",
+  // add more country codes and their corresponding names as needed
+};
+
 export function stringToKebab(str?: string) {
   if (!str) return "";
   return str.toLowerCase().replaceAll(" ", "-");
@@ -17,9 +125,9 @@ export function stringToKebab(str?: string) {
 export const phoneFormat = (
   phoneNumber: string,
   countryCode: string
-): string | React.ReactElement => {
+): string => {
   const phoneUtil = PhoneNumberUtil.getInstance();
-  let formattedNumber:string | React.ReactElement = phoneNumber;
+  let formattedNumber:string = phoneNumber;
   try {
     const parsedNumber = phoneUtil.parseAndKeepRawInput(
       phoneNumber,
@@ -30,115 +138,14 @@ export const phoneFormat = (
       PhoneNumberFormat.NATIONAL
     );
   } catch (e) {
-    formattedNumber = NaCell();
+    return "n/a";
   }
   return formattedNumber;
 };
 
 // COUNTRY
 export function countryFormat(countryISO: string) {
-  const countries = {
-    us: "🇺🇸 USA",
-    ca: "🇨🇦 Canada",
-    mx: "🇲🇽 Mexico",
-    de: "🇩🇪 Germany",
-    gb: "🇬🇧 United Kingdom",
-    fr: "🇫🇷 France",
-    es: "🇪🇸 Spain",
-    it: "🇮🇹 Italy",
-    nl: "🇳🇱 Netherlands",
-    be: "🇧🇪 Belgium",
-    dk: "🇩🇰 Denmark",
-    se: "🇸🇪 Sweden",
-    no: "🇳🇴 Norway",
-    fi: "🇫🇮 Finland",
-    ee: "🇪🇪 Estonia",
-    lv: "🇱🇻 Latvia",
-    lt: "🇱🇹 Lithuania",
-    pl: "🇵🇱 Poland",
-    cz: "🇨🇿 Czechia",
-    sk: "🇸🇰 Slovakia",
-    hu: "🇭🇺 Hungary",
-    at: "🇦🇹 Austria",
-    ch: "🇨🇭 Switzerland",
-    pt: "🇵🇹 Portugal",
-    ie: "🇮🇪 Ireland",
-    is: "🇮🇸 Iceland",
-    gr: "🇬🇷 Greece",
-    tr: "🇹🇷 Turkey",
-    ru: "🇷🇺 Russia",
-    sa: "🇸🇦 Saudi Arabia",
-    ae: "🇦🇪 United Arab Emirates",
-    qa: "🇶🇦 Qatar",
-    kw: "🇰🇼 Kuwait",
-    om: "🇴🇲 Oman",
-    bh: "🇧🇭 Bahrain",
-    in: "🇮🇳 India",
-    cn: "🇨🇳 China",
-    jp: "🇯🇵 Japan",
-    kr: "🇰🇷 South Korea",
-    hk: "🇭🇰 Hong Kong",
-    tw: "🇹🇼 Taiwan",
-    sg: "🇸🇬 Singapore",
-    id: "🇮🇩 Indonesia",
-    th: "🇹🇭 Thailand",
-    ph: "🇵🇭 Philippines",
-    au: "🇦🇺 Australia",
-    nz: "🇳🇿 New Zealand",
-    ar: "🇦🇷 Argentina",
-    br: "🇧🇷 Brazil",
-    cl: "🇨🇱 Chile",
-    co: "🇨🇴 Colombia",
-    ec: "🇪🇨 Ecuador",
-    pe: "🇵🇪 Peru",
-    uy: "🇺🇾 Uruguay",
-    ve: "🇻🇪 Venezuela",
-    bo: "🇧🇴 Bolivia",
-    py: "🇵🇾 Paraguay",
-    cr: "🇨🇷 Costa Rica",
-    do: "🇩🇴 Dominican Republic",
-    sv: "🇸🇻 El Salvador",
-    gt: "🇬🇹 Guatemala",
-    hn: "🇭🇳 Honduras",
-    ni: "🇳🇮 Nicaragua",
-    pa: "🇵🇦 Panama",
-    bs: "🇧🇸 Bahamas",
-    bb: "🇧🇧 Barbados",
-    cu: "🇨🇺 Cuba",
-    jm: "🇯🇲 Jamaica",
-    ht: "🇭🇹 Haiti",
-    tt: "🇹🇹 Trinidad & Tobago",
-    ag: "🇦🇬 Antigua & Barbuda",
-    dm: "🇩🇲 Dominica",
-    gd: "🇬🇩 Grenada",
-    kn: "🇰🇳 St. Kitts & Nevis",
-    lc: "🇱🇨 St. Lucia",
-    vc: "🇻🇨 St. Vincent & Grenadines",
-    ai: "🇦🇮 Anguilla",
-    bm: "🇧🇲 Bermuda",
-    ky: "🇰🇾 Cayman Islands",
-    ms: "🇲🇸 Montserrat",
-    tc: "🇹🇨 Turks & Caicos Islands",
-    vg: "🇻🇬 British Virgin Islands",
-
-    // NON EMOJIS
-    cf: "Central Africa Republic",
-    cm: "Camaroon",
-    ly: "Libya",
-    am: "Armenia",
-    ao: "Angola",
-    aq: "Antarctica",
-    bi: "Burundi",
-    bw: "Botswana",
-    bz: "Belize",
-    ga: "Gabon",
-    ge: "Georgia",
-    gh: "Ghana",
-    jo: "Jordan",
-    la: "Laos",
-    lu:"Luxembourg",
-    // add more country codes and their corresponding names as needed
-  };
+ 
   const countryCodes: { [key: string]: string } = countries;
   if (countryISO?.toLowerCase() in countries) {
     countryISO = countryCodes[countryISO?.toLowerCase()];

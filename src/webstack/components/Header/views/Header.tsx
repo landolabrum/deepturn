@@ -2,6 +2,7 @@ import BreadCrumbs, {BreadCrumbLinkProps} from "../components/BreadCrumbs/BreadC
 import styles from "./Header.scss";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { capitalize } from "lodash";
 
 
 export type HeaderDispatch = React.Dispatch<React.SetStateAction<HeaderProps | null>>;
@@ -40,6 +41,12 @@ const Header: React.FC = () => {
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
   const [route, setRoute] = useState<string | null>(null);
   const router = useRouter();
+  const h = (t: string): any => {
+    return t
+      .split(" ")
+      .map((str: string) => capitalize(str))
+      .join(" ");
+  };
   // Update headerState when context changes
   useEffect(() => {
     setHeaderState(context);
@@ -58,9 +65,9 @@ const Header: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
-    
         {headerState === null && <div className="no-header"/>}
         {headerState && <>
+      <title>{`Deepturn ${headerState.title ? "| " + h(headerState.title) : ""}`}</title>
       <div className="header" id="header">
           <div className="header-content">
             <div className="header-left">
