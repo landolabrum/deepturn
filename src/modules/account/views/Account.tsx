@@ -9,7 +9,8 @@ import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import useWindow from "@webstack/hooks/useWindow";
 import { useHeader } from "@webstack/components/Header/views/Header";
 import Input from "@webstack/components/UiInput/UiInput";
-import { countries, phoneFormat } from "@webstack/helpers/userExperienceFormats";
+import { phoneFormat } from "@webstack/helpers/userExperienceFormats";
+import { countries, states } from "@webstack/models/location";
 interface Props {}
 
 const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
@@ -28,9 +29,9 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
     // HANDLE ADDRESS
     if (["city", "country", "line1", "line2", "postal_code", "state"].includes(name)) {
       let addr = user.address;
-      if(name === "country"){
-        const contArr = Object.entries(countries).find(([iso,nam])=> nam === value);
-        if(contArr)value=contArr[0].toUpperCase();
+      if (name === "country") {
+        const contArr = Object.entries(countries).find(([iso, nam]) => nam === value);
+        if (contArr) value = contArr[0].toUpperCase();
       }
       addr[name] = value;
       setUser({ ...user, addr });
@@ -66,11 +67,16 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
         );
       });
   }
-  const userCountry = (country: string):string =>{
-    const contArr = Object.entries(countries).find(([iso,name])=> iso === country.toLowerCase());
-    if(contArr)return contArr[1];
-    return "select"
-  }
+  const userCountry = (country: string): string => {
+    const contArr = Object.entries(countries).find(([iso, name]) => iso === country.toLowerCase());
+    if (contArr) return contArr[1];
+    return "select";
+  };
+  const userState = (state: string): string => {
+    const contArr = Object.entries(states).find(([iso, name]) => iso === state.toLowerCase());
+    if (contArr) return contArr[1];
+    return "select";
+  };
   if (loaded)
     return (
       <>
@@ -101,8 +107,6 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
           </div>
           <div className="account__content">
             view: {view}
-
-
             {view === views[0] && (
               <>
                 <AdaptGrid xs={1} sm={2} gap={10}>
@@ -133,13 +137,7 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
                     onChange={handleUser}
                   />
                 </AdaptGrid>
-                <AdaptGrid xs={1} sm={2} gap={10}>
-                  <Input
-                    name="city"
-                    label="city"
-                    value={user?.address?.city !== undefined ? user?.address?.city : "city"}
-                    onChange={handleUser}
-                  />
+                <AdaptGrid xs={1} sm={3} gap={10}>
                   <Input
                     name="line1"
                     label="line1"
@@ -153,11 +151,32 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
                     onChange={handleUser}
                   />
                   <Input
-                    name="state"
-                    label="state"
-                    value={user?.address?.state !== undefined ? user?.address?.state : "state"}
+                    name="city"
+                    label="city"
+                    value={user?.address?.city !== undefined ? user?.address?.city : "city"}
                     onChange={handleUser}
                   />
+
+                  {user?.address.country === "US" ? (
+                    <UiSelect
+                      search={true}
+                      setSearch={setSearch}
+                      traits={{ height: "500px" }}
+                      options={Object.values(states).map((v) => {
+                        return v;
+                      })}
+                      label="state"
+                      title={userState(user?.address?.state)}
+                      onSelect={(v) => handleUser({ target: { name: "country", value: v } })}
+                    />
+                  ) : (
+                    <Input
+                      name="state"
+                      label="state"
+                      value={user?.address?.state !== undefined ? user?.address?.state : "state"}
+                      onChange={handleUser}
+                    />
+                  )}
                   <Input
                     name="postal_code"
                     label="zip code"
@@ -167,14 +186,13 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
                   <UiSelect
                     search={true}
                     setSearch={setSearch}
-                    traits={{ height: "500px" }}
                     options={Object.values(countries).map((v) => {
                       return v;
                     })}
                     label="country"
                     title={userCountry(user?.address?.country)}
-                    onSelect={(v)=>handleUser({target:{name:"country",value:v}})}
-                    />
+                    onSelect={(v) => handleUser({ target: { name: "country", value: v } })}
+                  />
                 </AdaptGrid>
               </>
             )}

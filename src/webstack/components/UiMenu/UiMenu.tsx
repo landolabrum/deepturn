@@ -9,9 +9,10 @@ export interface UiMenuProps extends FormControlProps {
   value?: string;
   search?: boolean;
   setSearch?: (value: string) => void;
+  traits?: any;
 }
 
-const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, setSearch }) => {
+const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, setSearch, traits }) => {
   const [searchValue, setSearchValue] = useState("");
   const typesBypass: any = options;
   const hasOptions = !Boolean(typesBypass?.every((element: any) => element === undefined));
@@ -46,7 +47,7 @@ const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, se
   return (
     <>
       <style jsx>{styles}</style>
-      <div className={`menu ${variant ? `menu__${variant}` : ""}`}>
+      <div className={`menu ${variant ? `menu__${variant}` : ""}`} style={traits && traits?.height?{...traits, overflowY:"auto"}:traits?traits:{}}>
       {search && (
         <div className="menu__search">
           <Input type="text" variant={variant} value={searchValue} placeholder="Search" name="search" onChange={handleSearch}/>

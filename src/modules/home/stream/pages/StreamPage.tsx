@@ -1,10 +1,29 @@
+// deepturn/src/modules/home/stream/pages/StreamPage.tsx
+
 import { useEffect, useRef, useState } from "react";
 import environment from "~/src/environment";
 import styles from "./StreamPage.scss";
 import UiLoader from "@webstack/components/UiLoader/UiLoader";
 import AdaptContainer from "@webstack/components/AdaptContainer/AdaptContainer";
 import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
-const MAX_TIMEOUT = 23000;
+const MAX_TIMEOUT = 35000;
+
+
+const ImageLoader = ({ src, alt, onClick, handleImageLoad, handleImageError }:any) => {
+  return (
+    <>
+    <style jsx>{styles}</style>
+    <img 
+      onClick={onClick}
+      onLoad={handleImageLoad}
+      onError={handleImageError}
+      src={src} 
+      alt={alt}
+    />
+    </>
+  );
+};
+
 
 const Stream = () => {
   const myRef = useRef<any>([]);
@@ -12,6 +31,22 @@ const Stream = () => {
   const streamUrl = environment.serviceEndpoints.membership + "/stream/cam-";
   const [loadedImages, setLoadedImages] = useState<string[]>([]);
   const [load, setLoad] = useState<boolean>(false);
+
+  const [errorImages, setErrorImages] = useState<string[]>([]);
+  
+  const handleImageLoad = (event:any) => {
+    const img = event.target;
+    img.classList.add("show");
+    setLoadedImages((prevLoadedImages) => [...prevLoadedImages, img.src]);
+  };
+
+  const handleImageError = (event:any) => {
+    const img = event.target;
+    setErrorImages((prevErrorImages) => [...prevErrorImages, img.src]);
+  };
+
+
+
   useEffect(() => {
     const interval = setInterval(() => {
       const images = myRef.current;
@@ -71,49 +106,63 @@ const Stream = () => {
       <div className="stream">
         <AdaptContainer>
           <div ref={mainRef} className="stream__main-container">
-            {loadedImages.includes(`${streamUrl}3`) ? (
-              <img className="living" onClick={handleMain} src={`${streamUrl}3`} alt="cam-3" />
-            ) : (
-              <UiLoader height="auto" width="100%" position="unset" />
-            )}
+            <ImageLoader 
+              src={`${streamUrl}3`} 
+              alt="cam-3"
+              onClick={handleMain} 
+              handleImageLoad={handleImageLoad}
+              handleImageError={handleImageError}
+            />
+            {loadedImages.includes(`${streamUrl}3`) ? null : <Loading text="cam 3" />}
           </div>
         </AdaptContainer>
         <div className="stream__tray">
           <AdaptGrid xs={2} sm={3}>
-            <img
-              ref={(el) => {
-                if (el && !myRef.current.includes(el)) {
-                  myRef.current.push(el);
-                }
-              }}
-              onClick={handleMain}
-              src={`${streamUrl}1`}
-              alt="cam-1"
+          <ImageLoader 
+              src={`${streamUrl}1`} 
+              alt={`cam-1`}
+              onClick={handleMain} 
+              handleImageLoad={handleImageLoad}
+              handleImageError={handleImageError}
             />
-            {loadedImages.includes(`${streamUrl}1`) ? null : <Loading text="cam 1" />}
-            <img
-              ref={(el) => {
-                if (el && !myRef.current.includes(el)) {
-                  myRef.current.push(el);
-                }
-              }}
-              onClick={handleMain}
-              src={`${streamUrl}2`}
-              alt="cam-2"
+            {loadedImages.includes(`${streamUrl}1`) ? null : <Loading text={`cam ${1}`} />}
+          <ImageLoader 
+              src={`${streamUrl}2`} 
+              alt={`cam-2`}
+              onClick={handleMain} 
+              handleImageLoad={handleImageLoad}
+              handleImageError={handleImageError}
             />
-            {loadedImages.includes(`${streamUrl}2`) ? null : <Loading text="cam 2" />}
-            <img
-              className="living"
-              ref={(el) => {
-                if (el && !myRef.current.includes(el)) {
-                  myRef.current.push(el);
-                }
-              }}
-              onClick={handleMain}
-              src={`${streamUrl}3`}
-              alt="cam-3"
+            {loadedImages.includes(`${streamUrl}2`) ? null : <Loading text={`cam ${2}`} />}
+            <ImageLoader 
+              src={`${streamUrl}3`} 
+              alt={`cam-${3}`}
+              onClick={handleMain} 
+              handleImageLoad={handleImageLoad}
+              handleImageError={handleImageError}
             />
-            {loadedImages.includes(`${streamUrl}3`) ? null : <Loading text="cam 3" />}
+            {loadedImages.includes(`${streamUrl}3`) ? null : <Loading text={`cam ${3}`} />}
+            <ImageLoader 
+              src={`${streamUrl}4`} 
+              alt={`cam-${4}`}
+              onClick={handleMain} 
+              handleImageLoad={handleImageLoad}
+              handleImageError={handleImageError}
+            />
+            {loadedImages.includes(`${streamUrl}4`) ? null : <Loading text={`cam ${4}`} />}
+            {/* {Array.from([1,2,3,4]).map(n=>{
+              return <>
+                        <ImageLoader 
+              src={`${streamUrl}{n}`} 
+              alt={`cam-${n}`}
+              onClick={handleMain} 
+              handleImageLoad={handleImageLoad}
+              handleImageError={handleImageError}
+            />
+            {loadedImages.includes(`${streamUrl}${n}`) ? null : <Loading text={`cam ${n}`} />}
+              </>
+              })} */}
+
           </AdaptGrid>
         </div>
       </div>

@@ -71,6 +71,7 @@ $el_gap: 7px;
       display: flex;
       align-items: center;
       width: 100%;
+      height: var(--default-element-height);
     }
 
     .menu__option-selected {
