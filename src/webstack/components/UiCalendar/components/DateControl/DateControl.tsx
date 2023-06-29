@@ -3,7 +3,7 @@ import styles from "./DateControl.scss";
 import UiCalendar from "@webstack/components/UiCalendar/UiCalendar";
 import { useEffect, useRef, useState } from "react";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
-import useWindow from "@webstack/helpers/useWindow";
+import useWindow from "@webstack/hooks/useWindow";
 import { VariantProps } from "@webstack/components/AdapTable/models/IVariant";
 
 export type DateRangeProps = {
