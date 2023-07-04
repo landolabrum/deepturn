@@ -1,0 +1,36 @@
+.img-ref {
+  width: 100%;
+  height: auto;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.living {
+  aspect-ratio: 16/7;
+}
+
+img {
+  display: none;
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+}
+img.show {
+  display: flex;
+}
+.living {
+  aspect-ratio: 16/7;
+}
+
+
+.stream__loading {
+  margin: 5px 0;
+  @extend .d-flex;
+  width: 100%;
+  height: 300px;
+  background-color: var(--color-gray-100);
+}

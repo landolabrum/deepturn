@@ -142,13 +142,14 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
             {signInResponse.message !== "" && (
               <div className="authentication__signin-response">
                 {signInResponse.message}
-                {/* Don`t have access yet? <Button variant="link">Get Access</Button> */}
               </div>
             )}
           </div>
+          <div className="authentication__submit">
           <UiButton onClick={handleSignIn} busy={isSubmitting}>
             login
           </UiButton>
+          </div>
         </div>
         <div className="authentication__authentication-footer">
           Existence is not something to be grasped or understood with precision; it is a flowing, mysterious dance of

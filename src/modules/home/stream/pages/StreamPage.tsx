@@ -3,49 +3,32 @@
 import { useEffect, useRef, useState } from "react";
 import environment from "~/src/environment";
 import styles from "./StreamPage.scss";
-import UiLoader from "@webstack/components/UiLoader/UiLoader";
 import AdaptContainer from "@webstack/components/AdaptContainer/AdaptContainer";
 import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
+import RtspCam from "../views/RtspCam";
+import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+
 const MAX_TIMEOUT = 35000;
-
-
-const ImageLoader = ({ src, alt, onClick, handleImageLoad, handleImageError }:any) => {
-  return (
-    <>
-    <style jsx>{styles}</style>
-    <img 
-      onClick={onClick}
-      onLoad={handleImageLoad}
-      onError={handleImageError}
-      src={src} 
-      alt={alt}
-    />
-    </>
-  );
-};
-
+const CAMS = 5;
 
 const Stream = () => {
   const myRef = useRef<any>([]);
   const mainRef = useRef<any>(null);
-  const streamUrl = environment.serviceEndpoints.membership + "/stream/cam-";
   const [loadedImages, setLoadedImages] = useState<string[]>([]);
   const [load, setLoad] = useState<boolean>(false);
 
   const [errorImages, setErrorImages] = useState<string[]>([]);
-  
-  const handleImageLoad = (event:any) => {
+
+  const handleImageLoad = (event: any) => {
     const img = event.target;
     img.classList.add("show");
     setLoadedImages((prevLoadedImages) => [...prevLoadedImages, img.src]);
   };
 
-  const handleImageError = (event:any) => {
+  const handleImageError = (event: any) => {
     const img = event.target;
     setErrorImages((prevErrorImages) => [...prevErrorImages, img.src]);
   };
-
-
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -77,20 +60,12 @@ const Stream = () => {
     };
   }, [setLoadedImages]);
 
-  const Loading = ({ text }: any) => (
-    <>
-      <style jsx>{styles}</style>
-      <div className="stream__loading">
-        <div>
-          <UiLoader text={!load ? text : `${text}, Fail`} height="auto" dots={!load} width="100%" position="unset" />
-        </div>
-      </div>
-    </>
-  );
-
   function handleMain(el: any) {
     const clickedImg = el.target;
     const clonedImg = clickedImg.cloneNode();
+    // clonedImg.classList.add("main");
+    clonedImg.style.height = "100%";
+    clonedImg.style.width = "auto";
     clonedImg.onclick = function () {
       this.remove();
     };
@@ -100,25 +75,28 @@ const Stream = () => {
       mainRef.current.appendChild(clonedImg);
     }
   }
+  const RtspProps = { handleMain, handleImageLoad, handleImageError, loadedImages, load };
   return (
     <>
       <style jsx>{styles}</style>
       <div className="stream">
         <AdaptContainer>
           <div ref={mainRef} className="stream__main-container">
-            <ImageLoader 
-              src={`${streamUrl}3`} 
-              alt="cam-3"
-              onClick={handleMain} 
-              handleImageLoad={handleImageLoad}
-              handleImageError={handleImageError}
-            />
-            {loadedImages.includes(`${streamUrl}3`) ? null : <Loading text="cam 3" />}
+            <div className="stream__main-logo">
+            <UiIcon icon="deepturn-logo"/>
+          </div>
           </div>
         </AdaptContainer>
         <div className="stream__tray">
           <AdaptGrid xs={2} sm={3}>
-          <ImageLoader 
+            {Array.from(Array(5), (_, i) => i + 1).map((n) => {
+              return (
+                <span key={n}>
+                  <RtspCam {...RtspProps} camera={n} />
+                </span>
+              );
+            })}
+            {/* <ImageLoader 
               src={`${streamUrl}1`} 
               alt={`cam-1`}
               onClick={handleMain} 
@@ -149,20 +127,15 @@ const Stream = () => {
               handleImageLoad={handleImageLoad}
               handleImageError={handleImageError}
             />
-            {loadedImages.includes(`${streamUrl}4`) ? null : <Loading text={`cam ${4}`} />}
-            {/* {Array.from([1,2,3,4]).map(n=>{
-              return <>
-                        <ImageLoader 
-              src={`${streamUrl}{n}`} 
-              alt={`cam-${n}`}
+            {loadedImages.includes(`${streamUrl}4`) ? null : <Loading text={`cam ${4}`} />} 
+            <ImageLoader 
+              src={`${streamUrl}5`} 
+              alt={`cam-5`}
               onClick={handleMain} 
               handleImageLoad={handleImageLoad}
               handleImageError={handleImageError}
             />
-            {loadedImages.includes(`${streamUrl}${n}`) ? null : <Loading text={`cam ${n}`} />}
-              </>
-              })} */}
-
+            {loadedImages.includes(`${streamUrl}5`) ? null : <Loading text={`cam ${5}`} />} */}
           </AdaptGrid>
         </div>
       </div>
@@ -171,3 +144,16 @@ const Stream = () => {
 };
 
 export default Stream;
+
+//  {/* {Array.from([1,2,3,4]).map(n=>{
+//       return <>
+//                 <ImageLoader
+//       src={`${streamUrl}{n}`}
+//       alt={`cam-${n}`}
+//       onClick={handleMain}
+//       handleImageLoad={handleImageLoad}
+//       handleImageError={handleImageError}
+//     />
+//     {loadedImages.includes(`${streamUrl}${n}`) ? null : <Loading text={`cam ${n}`} />}
+//       </>
+//       })}
