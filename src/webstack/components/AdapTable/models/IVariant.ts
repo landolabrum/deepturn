@@ -1,0 +1,38 @@
+export type VariantProps =
+  | ""
+  | "inherit"
+  | "left"
+  | "right"
+  | "dark"
+  | "account"
+  | "active"
+  | "blue"
+  | "center"
+  | "disabled"
+  | "select__disabled"
+  | "disabled-icon"
+  | "false"
+  | "flat"
+  | "gray"
+  | "hide-sort"
+  | "icon"
+  | "icon-blue"
+  | "invalid"
+  | "link"
+  | "mini"
+  | "miniactive"
+  | "nav-item"
+  | "nav-itemactive"
+  | "null"
+  | "undefined"
+  | "wordmark"
+  // UiCal
+  | "daily"
+  | "custom"
+  | "monthly"
+  ;
+
+export type OverlayVariantProps =
+  | "blur"
+  | "blur-disabled"
+  | "disabled";

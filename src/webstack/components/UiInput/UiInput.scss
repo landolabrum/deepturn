@@ -1,0 +1,197 @@
+input {
+  // Define your custom styles for the input elements/
+  width: inherit;
+  height: inherit;
+  font-size: inherit;
+  outline: none;
+  color: inherit;
+  text-indent: inherit;
+  border: none;
+  background-color: inherit;
+  text-indent: 12px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+
+  // Override the autofilled input styles
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active,
+  &:-internal-autofill-selected {
+    -webkit-text-fill-color: var(--color-primary) !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+  }
+  &.center{
+    text-align: center;
+    text-indent: 0;
+  }
+       // VARIANTS
+    &.invalid {
+      background-color: #370002;
+      border-width: 0px 0px 2px 0px;
+      border-bottom-color: #E34150;
+    }
+}
+
+input::placeholder {
+  font-style: italic;
+  color: var(--default-placeholder-color);
+  padding: 0;
+  font-size: 16px;
+}
+
+// input,
+// input:-webkit-autofill,
+// input:-webkit-autofill:hover,
+// input:-webkit-autofill:focus  {
+//   width: inherit;
+//   height: inherit;
+//   padding: 0 16px;
+//   font-size: inherit;
+//   outline: none;
+//   color: inherit;
+//   border: none;
+//   background-color: inherit;
+//   -webkit-text-fill-color: var(--color-gray-30);
+//   -webkit-box-shadow: 0 0 0px 1000px #ffffff00 inset;
+//   transition-property: background-color, font-size, line-height, height;
+//   transition-duration: 5000s;
+//   transition-timing-function: forwards 0s;
+//   transition: background-color font-size, line-height, height 5000s ease-in-out 0s;
+// }
+
+// input::placeholder {
+//   font-style: italic;
+//   color: var(--default-placeholder-color);
+// }
+
+
+
+
+
+
+
+// $iconSize: 14px;
+// .form-control {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: flex-start;
+//   position: relative;
+//   gap: 11px;
+//   border: none;
+//   label,
+//   legend {
+//     // color: var(--color-gray-30);
+//     text-transform: capitalize;
+//     font-weight: 300;
+//   }
+
+//   legend {
+//     position: absolute;
+//     bottom: calc(var(--default-height) + 15px);
+//     left: 20px;
+//     font-size: 12px;
+//     font-style: italic;
+//     color: var(--invalid-background-color);
+//     height: 12px;
+//     line-height: 1;
+//   }
+
+//   .input {
+//     display: flex;
+//     align-items: center;
+//     height: calc(var(--default-height) - 2px);
+//     width: 100%;
+//     border: solid 1px var(--default-border-color);
+//     color: var(--default-color);
+//     background-color: var(--default-background-color);
+//     border-radius: var(--input-border-radius);
+//     outline: solid 1px transparent;
+
+//     // VARIANTS
+//     &.invalid {
+//       background-color: #370002;
+//       border-width: 0px 0px 2px 0px;
+//       border-bottom-color: #E34150;
+//     }
+
+//     // INPUT STATES
+//     &:focus-within {
+//       background-color: var(--focus-background-color);
+//       --ui-icon-color: var(--focus-color);
+//       color: var(--focus-color);
+//       outline: solid 1px var(--focus-border-color);
+//     }
+
+//     &.center {
+//       input {
+//         text-align: center;
+//       }
+
+//       ;
+//     }
+
+//     ;
+
+//     .icon-placeholder {
+//       width: calc($iconSize * .66);
+//     }
+
+//     .icon-wrapper {
+//       --ui-icon-height: 16px;
+//       --ui-icon-width: 16px;
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       padding: 0 10px;
+//       cursor: pointer;
+//     }
+
+    input[type="password" i] {
+      letter-spacing: 4px;
+    }
+
+//     input:-webkit-autofill,
+//     input:-webkit-autofill:hover,
+//     input:-webkit-autofill:focus,
+//     textarea:-webkit-autofill,
+//     textarea:-webkit-autofill:hover,
+//     textarea:-webkit-autofill:focus,
+//     select:-webkit-autofill,
+//     select:-webkit-autofill:hover,
+//     select:-webkit-autofill:focus {
+//       background-color: transparent;
+//       font-size: 16px;
+//       line-height: 1;
+//       height: 100%;
+//       -webkit-text-fill-color: var(--default-placeholder-color);
+//       -webkit-box-shadow: 0 0 0px 1000px #ffffff00 inset;
+//       transition-property: background-color, font-size, line-height, height;
+//       transition-duration: 5000s;
+//       transition-timing-function: forwards 0s;
+//       // transition: background-color font-size, line-height, height 5000s ease-in-out 0s;
+//       padding: 0 8px;
+//       margin: 0;
+//     }
+
+//     input {
+//       color: inherit;
+//       outline: none;
+//       border: none;
+//       background-color: transparent;
+//       width: 100%;
+//       line-height: 20px;
+//       font-size: 16px;
+//     }
+
+//     input::placeholder {
+//       font-style: italic;
+//       color: var(--default-placeholder-color);
+//       padding: 0;
+//       font-size: 16px;
+//     }
+
+//   }
+// }

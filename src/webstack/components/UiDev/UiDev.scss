@@ -1,0 +1,31 @@
+.dev{
+    min-width: 200px;
+    position: relative;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    padding: 35px 15px 10px;
+    margin: 15px;
+    background-color: #000000;
+    border:solid 1px  #0f9;
+    color: #0f9;
+    border-radius: 5px;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    cursor:pointer;
+    &::before{
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        content: "Development";
+      font-style: italic;
+      font-weight: 500;
+      text-decoration: underline;
+      }
+    .dev-item{
+        display: flex;
+        justify-content: space-between;
+        gap:20px;
+    }
+}

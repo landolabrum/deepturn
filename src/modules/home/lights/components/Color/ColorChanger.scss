@@ -1,0 +1,21 @@
+.hex-color-item{
+    height: 20px;
+    aspect-ratio: 1/1;
+} 
+.color-choice{
+    border: none;
+    padding:0;
+    display: flex;
+    outline: none;
+    min-width: 200px;
+    height: 35px;
+    box-sizing: unset;
+    appearance: none;
+    --webkit-appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+    --webkit-box-shadow: none;
+    box-shadow: none;
+    cursor:pointer;
+}

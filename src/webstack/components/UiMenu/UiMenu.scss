@@ -1,0 +1,121 @@
+$defSize: 10px;
+$el_spacing: 12px;
+$el_gap: 7px;
+.menu {
+  padding: $el_gap;
+  color: var(--color-gray-70);
+  --ui-icon-color: var(--color-gray-70);
+  background-color: var(--color-gray-30);
+  outline: solid 1px var(--color-gray-80);
+  border: solid 1px var(--color-gray-60);
+  border-radius: var(--default-border-radius);
+  height: max-content;
+  min-width: calc(100% - calc($el_gap * 2));
+  font-weight: 400;
+  display: flex;
+  white-space: nowrap;
+  flex-direction: column;
+  width: inherit;
+  .menu__search{
+    padding:12px;
+  }
+  .menu__no-results{
+    height: var(--default-element-height);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+  }
+  &.menu__nav-itemactive,  &.menu__nav-item {
+    @media (max-width: 900px) {
+      padding: 0 $el_gap;
+      border: none;
+      outline: none;
+      background-color: var(--color-gray-90);
+      color: var(--color-gray-30);
+      --ui-icon-color: var(--color-gray-30);
+      .menu__option {
+        &:hover {
+          color: var(--color-gray-20);
+          --ui-icon-color: var(--color-gray-20);
+          background-color: var(--color-gray-70);
+        }
+      }
+    }
+  }
+  &.menu__dark {
+    background-color: var(--color-gray-80);
+    color: var(--color-gray-30);
+    .menu__option {
+      &:hover {
+        color: var(--color-blue);
+        --ui-icon-color: var(--color-blue);
+        background-color: var(--color-gray-70);
+      }
+    }
+  }
+  .menu__option {
+    border-radius: var(--default-border-radius);
+    display: flex;
+    gap: $el_gap;
+    align-items: center;
+    height: var(--default-element-height);
+    --ui-icon-width: 16px;
+    line-height: 1;
+    padding: 0 $el_spacing;
+    cursor: pointer;
+    text-transform: capitalize;
+    justify-content: space-between;
+
+    .menu__option-label {
+      gap: $el_gap;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: var(--default-element-height);
+    }
+
+    .menu__option-selected {
+      --ui-icon-width: 12px;
+      --ui-icon-height: 12px;
+      --ui-icon-color: var(--color-blue);
+    }
+    &:hover {
+      color: var(--color-blue);
+      --ui-icon-color: var(--color-blue);
+      background-color: var(--color-gray-40);
+    }
+    &.disabled {
+      --ui-icon-color: var(--color-gray-50);
+      color: var(--color-gray-50);
+      // cursor: not-allowed;
+      cursor: default;
+      position: relative;
+      overflow: visible;
+
+      &:hover {
+        --ui-icon-color: var(--color-gray-40);
+        color: var(--color-gray-40);
+        background-color: transparent;
+        &::after {
+          content: "COMING SOON";
+          width: auto;
+          height: 1.3rem;
+          line-height: 1;
+          background-color: var(--color-gray-50);
+          color: var(--color-gray-40);
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          right: 0;
+          top: 0;
+          font-size: .8rem;
+          font-weight: 600;
+          font-style: italic;
+          border-radius: .7rem;
+          padding:0 10px;
+        }
+      }
+    }
+  }
+}

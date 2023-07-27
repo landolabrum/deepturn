@@ -1,0 +1,23 @@
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  height: 45px;
+  .crumb {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    --ui-icon-width: 26px;
+    --ui-icon-height: 14px;
+    --ui-icon-color: var(--color-gray-50);
+    color: var(--color-gray-50);
+    text-transform: capitalize;
+    font-weight: 300;
+    cursor: pointer;
+    &:last-child{
+      cursor: default;
+    }
+    &.active {
+      color: white;
+    }
+  }
+}

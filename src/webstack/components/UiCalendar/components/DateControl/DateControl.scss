@@ -1,0 +1,38 @@
+.date-control{
+  &.date-control__mobile-bottom{
+    @media(max-width:900px){
+      border-top: solid 1px var(--color-gray-80);
+      position: fixed;
+      bottom:0;
+      background-color: var(--color-gray-100);
+      left:0;
+      width: calc(100% - 40px);
+      padding:20px;
+      margin:0;
+      z-index: 3;
+    }
+  }
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 10px auto;
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+  h5{
+    text-transform: capitalize;
+    margin:26px 0 0;
+    @media(max-width:900px){
+      font-size: 1.3rem;
+      display: none;
+      // margin:0;
+    }
+  }
+  .date-control__filters{
+    display: flex;
+    gap:10px;
+    @media(max-width: 900px){
+      justify-content: space-between;
+      margin: auto;
+      width: 100%;    
+    }
+  }
+}
