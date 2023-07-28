@@ -40,3 +40,4 @@ yarn-error.log*
 /bin
 /.vscode
 /lib
+/env
