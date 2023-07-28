@@ -10,7 +10,7 @@ import { MemberSignInResponse } from "~/src/models/membership/MemberSignInRespon
 import MemberToken from "~/src/models/MemberToken";
 import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
-import IMemberService from "./IMemberService";
+import IMemberService, { ProductRequestProps } from "./IMemberService";
 import { GetPersonalInformationResponse } from "~/src/models/membership/GetPersonalInformationResponse";
 import { GetMemberProfileInformationResponse } from "~/src/models/membership/GetMemberProfileInformationResponse";
 import {
@@ -42,6 +42,16 @@ export default class MemberService
   ): Promise<any> {
     return await this.get<any>(
       "/api/products",
+    );
+  }
+  public async getProduct({id, pri}:ProductRequestProps ): Promise<any> {
+    if(pri){
+      return this.get<any>(
+        `/api/product?id=${id}&pri=${pri}`,
+      );
+    }
+    return this.get<any>(
+      `/api/product?id=${id}`,
     );
   }
   public async lights(

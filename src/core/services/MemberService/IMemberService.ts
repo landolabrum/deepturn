@@ -5,9 +5,14 @@ import { GetMemberProfileInformationResponse } from "~/src/models/membership/Get
 import { GetRecruitesRequest, GetRecruitesResponse } from "~/src/models/membership/Recruites";
 import { EnrollmentActivityResponse, RecentEnrollmentRequest, RecentEnrollmentResponse } from "~/src/models/membership/Enrollments";
 
+export interface ProductRequestProps{
+  id?: string
+  pri?: string
+}
 
 export default interface IMemberService {
   getProducts(): Promise<any>;
+  getProduct({id, pri}:ProductRequestProps): Promise<any>;
   lights(): Promise<any>;
   light(request: any): Promise<any >;
   lightsOff(): Promise<any>;

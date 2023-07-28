@@ -42,8 +42,10 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
       <style jsx>{styles}</style>
       <div ref={ref} className="ui-loader">
         <div className="ui-loader__loading">
+          <div className="ui-loader__icon-container">
           <div className="ui-loader__icon">
-            <UiIcon icon="connect-logo" />
+            <UiIcon icon="deepturn-logo" />
+          </div>
           </div>
           <div className="ui-loader__loading-text-container">
             <div className="ui-loader__loading-text">{text}</div>
