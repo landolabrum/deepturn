@@ -9,7 +9,7 @@ import { dateFormat } from "@webstack/helpers/userExperienceFormats";
 const DEFAULT_LIMIT = 10;
 
 export type TableOptions = {
-  hide?: "footer" | "header" | ["footer", "header"] | ["header", "footer"];
+  hide?: "footer" | "header" | ["footer", "header"] | ["header", "footer"] | "entries";
   index?: number;
   cellHeight?: number;
   tableTitle?: string;
@@ -149,6 +149,7 @@ const AdapTable = ({
             endIndex={endIndex}
             totalPages={totalPages}
             visibleData={visibleData}
+            options={options}
             total={total ? total : visibleData.length}
           />
         )}

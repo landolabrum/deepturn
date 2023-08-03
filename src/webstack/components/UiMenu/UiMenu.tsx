@@ -72,7 +72,17 @@ const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, se
                     <div className="menu__option-label">
                       {option.icon && <UiIcon icon={option.icon} />} {label}{" "}
                     </div>
-                    {currentValue === selectedOption && variant && !["nav-item", "flat"].includes(variant) && (
+                    {/* {currentValue === selectedOption && variant && !["nav-item", "flat"].includes(variant) && (
+                      <div className="menu__option-selected">
+                        <UiIcon icon="fa-check" />
+                      </div>
+                    )} */}
+                    {value?.includes(currentValue) && (
+                      <div className="menu__option-selected">
+                        <UiIcon icon="fa-check" />
+                      </div>
+                    )}
+                    {value === "all"  && (
                       <div className="menu__option-selected">
                         <UiIcon icon="fa-check" />
                       </div>

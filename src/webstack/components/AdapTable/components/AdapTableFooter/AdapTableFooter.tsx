@@ -6,6 +6,7 @@ import Input from "@webstack/components/UiInput/UiInput";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import { NaCell } from "../AdaptTableContent/components/AdaptTableCell/AdaptTableCell";
+import { TableOptions } from "../../views/AdapTable";
 
 interface IProps {
   totalPages: number;
@@ -18,6 +19,7 @@ interface IProps {
   setPage: Dispatch<SetStateAction<number>>;
   setLimit?: Dispatch<SetStateAction<number>>;
   visibleData: any;
+  options?: TableOptions
 }
 export default function AdapTableFooter({
   startIndex,

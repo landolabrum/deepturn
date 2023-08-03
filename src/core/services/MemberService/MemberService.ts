@@ -10,7 +10,7 @@ import { MemberSignInResponse } from "~/src/models/membership/MemberSignInRespon
 import MemberToken from "~/src/models/MemberToken";
 import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
-import IMemberService, { ProductRequestProps } from "./IMemberService";
+import IMemberService, { ProductRequestProps, ProductsRequestProps } from "./IMemberService";
 import { GetPersonalInformationResponse } from "~/src/models/membership/GetPersonalInformationResponse";
 import { GetMemberProfileInformationResponse } from "~/src/models/membership/GetMemberProfileInformationResponse";
 import {
@@ -39,9 +39,14 @@ export default class MemberService
   public userChanged = new EventEmitter<UserContext | undefined>();
 
   public async getProducts(
+    request?: any
   ): Promise<any> {
+    console.log("[ REQ ]:",request)
+    if(request === undefined)  return await this.get<any>(
+      `/api/products`,
+    );
     return await this.get<any>(
-      "/api/products",
+      `/api/products${request}`,
     );
   }
   public async getProduct({id, pri}:ProductRequestProps ): Promise<any> {
@@ -201,7 +206,7 @@ export default class MemberService
       throw new ApiError("Password is required", 400, "MS.SI.02");
     }
     const res = await this.post<{},any>(
-      "flows/auth",
+      "usage/auth",
       {email:email, password:password, code:code, user_agent:user_agent},
     );
     const memberJwt = await res;

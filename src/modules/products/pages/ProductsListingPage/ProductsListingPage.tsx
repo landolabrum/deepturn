@@ -10,6 +10,9 @@ import { MemberContext } from "~/src/models/MemberContext";
 import AdapTable from "@webstack/components/AdapTable/views/AdapTable";
 import { dateFormat, numberToUsd } from "@webstack/helpers/userExperienceFormats";
 import ProductDescriptionPage from "../ProductDescriptionPage/ProductDescriptionPage";
+import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
+import ProductTable from "../../components/ProductTable/ProductTable";
+import UiLoader from "@webstack/components/UiLoader/UiLoader";
 
 const INITIAL_LIMIT = 50;
 
@@ -23,8 +26,10 @@ const ProductsListingPage: NextPage = () => {
   const router = useRouter();
   const memberId = router.query?.memberId ? router.query?.memberId.toString() : null;
   const [products, setProducts] = useState<MemberContext[]>([]);
+  const [firstPage, setFirstPage] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(false);
+  
   const memberService = getService<IMemberService>("IMemberService");
-  const [totalRecords, setTotalRecords] = useState<number>(20);
   const [loading, setLoading] = useState<boolean>(false);
   const [header, setHeader] = useHeader();
   const [page, setPage] = useState<number>(1);
@@ -34,10 +39,10 @@ const ProductsListingPage: NextPage = () => {
   };
 
   const searchProducts = useCallback(
-    async (req: any) => {
+    async (req?: any) => {
       setLoading(true);
-      // const theRequest = req ? req : request;
-      const memberResponse = await memberService.getProducts();
+      setFirstPage(req == undefined);
+      const memberResponse = await memberService.getProducts(req);
       const products: any = memberResponse?.data
       if (products) {
         const formatted = products.map((product: any) => {
@@ -49,13 +54,15 @@ const ProductsListingPage: NextPage = () => {
             description: product.description,
             name: product.name,
             created: dateFormat(product.price.created, { isTimestamp: true }),
-            images: product.images,
+            images: <img  width="60px" src={product.images[0]} alt={product.images[0]}/>,
             price_object: product.price,
             type: product.type,
-            price: numberToUsd(product.price?.unit_amount)
+            price: numberToUsd(product.price?.unit_amount),
+            metadata: product.metadata
           }
           return formatted_product
         })
+        setHasMore(memberResponse.has_more)
         setProducts(formatted);
       };
 
@@ -72,33 +79,20 @@ const ProductsListingPage: NextPage = () => {
 
   useEffect(() => {
     setHeader({ title: "products", breadcrumbs: [{ label: "products" }] });
-    searchProducts(DEFAULT_REQUEST);
+    searchProducts();
   }, []);
-  return (
+  if(!loading)return (
     <>
-      <AdapTable
-
-        page={page}
-        setPage={handlePage}
-        total={totalRecords}
-        options={{ tableTitle: "products", placeholder: "Search Members", hideColumns: ['id', 'images', 'price_object', 'description'] }}
-        data={products}
-        loading={loading}
-        onRowClick={(product) => { router.push({
-          pathname:"/product",
-          query:{
-            id: product.id,
-            pri: product.price_object.id
-          }
-        }) }}
-        // onRowClick={(e: any) => !memberId && e?.memberId && router.push(`/members?memberId=${e.memberId}`)}
-        search={request.searchCriteria !== "   " ? request.searchCriteria : ""}
-        setSearch={(searchCriteria) => handleRequest({ ...request, searchCriteria: searchCriteria })}
-        limit={request.limit}
-        setLimit={(limit) => handleRequest({ ...request, limit: limit })}
+    {/* {JSON.stringify(products)} */}
+      <ProductTable
+        products={products}
+        onClick={(req:string)=>searchProducts(req)}
+        hasMore={hasMore}
+        firstPage={firstPage}
       />
     </>
   );
+  return <UiLoader/>
 };
 
 export default ProductsListingPage;

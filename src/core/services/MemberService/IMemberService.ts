@@ -9,9 +9,13 @@ export interface ProductRequestProps{
   id?: string
   pri?: string
 }
+export type ProductsRequestProps={
+  ending_before?: string | undefined,
+  starting_after?: string | undefined
+}
 
 export default interface IMemberService {
-  getProducts(): Promise<any>;
+  getProducts(request?: any): Promise<any>; 
   getProduct({id, pri}:ProductRequestProps): Promise<any>;
   lights(): Promise<any>;
   light(request: any): Promise<any >;
