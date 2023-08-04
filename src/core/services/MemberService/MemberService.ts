@@ -157,12 +157,12 @@ export default class MemberService
     firebaseAPIKey: string
   ): Promise<any> {
     const client = new FirebaseClient(
-      {
-        apiKey: firebaseAPIKey,
-        authDomain: "",
-        projectId: "",
-      },
-      firebaseAPIKey
+      // {
+      //   apiKey: firebaseAPIKey,
+      //   authDomain: "",
+      //   projectId: "",
+      // },
+      // firebaseAPIKey
     );
     try {
       const tkn = await client.signUp(email, password);

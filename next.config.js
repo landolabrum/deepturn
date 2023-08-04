@@ -17,6 +17,14 @@ const nextConfig = {
     return config;
   },
   output: "standalone",
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
   // redirects: () => {
   //   return [
   //     { source: '/r/:sponsor', destination: '/enroll/:sponsor', permanent: false },

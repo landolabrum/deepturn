@@ -49,6 +49,7 @@ export const routes: RouteProps[] = [
       { href: "/authentication/signout", label: "logout" },
     ],
   },
+  { label: "", href: "/cart", icon: "fal-bag-shopping", active: false },
 ];
 
 export const pruneRoutes = ( pruneLabels : string[]) => {

@@ -3,6 +3,8 @@ import styles from './ProductTable.scss';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import UiSelect from '@webstack/components/UiSelect/UiSelect';
 import UiButton from '@webstack/components/UiButton/UiButton';
+import { useRouter } from 'next/router';
+import ProductSlider from '../ProductSlider/ProductSlider';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ProductTableProps {
@@ -18,6 +20,16 @@ const ProductTable = ({ products, onClick, hasMore, firstPage }: ProductTablePro
         types:{
         }
     });
+    const router = useRouter()
+    const handleProductDescription = ({id, pri}:{id: string | null, pri: string | null})=>{
+        router.push({
+            pathname:"/product",
+            query:{
+                id: id,
+                pri: pri
+            }
+        })
+    }
     const metaMaker = () => {
 
         products.map((element: { metadata:any }) => {
@@ -52,7 +64,6 @@ const ProductTable = ({ products, onClick, hasMore, firstPage }: ProductTablePro
         if (entries.length === selectedEntries.length) {
             return "all";
         }
-    
         return selectedEntries.map(([key, value]) => key).join(', ');
     }
     useEffect(() => {
@@ -61,7 +72,7 @@ const ProductTable = ({ products, onClick, hasMore, firstPage }: ProductTablePro
     return (
         <>
             <style jsx>{styles}</style>
-            {/* {JSON.stringify(filters)} */}
+                <ProductSlider products={products}/>
             <div className="product-table">
               <div className='product-table__header'>
                     <div className='product-table__filters'>
@@ -87,10 +98,13 @@ const ProductTable = ({ products, onClick, hasMore, firstPage }: ProductTablePro
                         />
                     </div>
                 </div>
-                  <AdaptGrid xs={1} md={3} gap={10}>
+            
+                  {/* <AdaptGrid xs={1} md={3} gap={10}>
                     {Object.entries(products).length && Object.entries(products).map(([key, product]: any) => {
                         if (filters.categories[product.metadata.category]?.selected && filters.types[product.metadata.type]?.selected  ) {
-                            return <div className="product-table__product" key={key}>
+                            const product_id: string = product?.id
+                            const price_id: string = product?.price_object?.id
+                            return <div className="product-table__product" key={key} onClick={(product: any)=>handleProductDescription({id:product_id, pri: price_id})}>
                                 {product?.id}
                                 {product?.images}
                                 {product?.name}
@@ -99,7 +113,7 @@ const ProductTable = ({ products, onClick, hasMore, firstPage }: ProductTablePro
                             </div>
                         }
                     })}
-                </AdaptGrid>
+                </AdaptGrid> */}
                 <div className="product-table__footer">
                     {!firstPage && <UiButton onClick={()=>onClick(`?ending_before=${products[0].price_object.id}`)} >Previous</UiButton>}
                     {hasMore && <UiButton onClick={()=>onClick(`?starting_after=${products[products.length - 1].price_object.id}`)} >Next</UiButton>}
