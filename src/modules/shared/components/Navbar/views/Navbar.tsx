@@ -7,7 +7,7 @@ import useRoute from "~/src/core/authentication/hooks/useRoute";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import environment from "~/src/environment";
-import CookieHelper from "@webstack/helpers/CookieHelper";
+import NavButton from "./NavButton/NavButton";
 
 const Navbar = () => {
   const width = useWindow().width;
@@ -29,11 +29,6 @@ const Navbar = () => {
     }
     return "";
   }, [user]);
-  const hasCart = (item: any)=>{
-    const hC =  item?.icon === "fal-bag-shopping" && Boolean(CookieHelper.getCookie("cart")) 
-    console.log("[ HAS C ]: ", hC)
-    return hC
-  }
   useEffect(() => {
     if (open === "sidenav") setSideNav(true);
     if (open === "!sidenav") setSideNav(false);
@@ -41,29 +36,9 @@ const Navbar = () => {
   useEffect(() => {
     sideNav && closeSideNavOnWidthChange();
   }, [width > 900]);
-  const cart = CookieHelper.getCookie("cart");
-  const NavButton = ({ item }: any) => {
-    const shouldRenderButton =
-      item?.icon !== "fal-bag-shopping" ||
-      (item?.icon === "fal-bag-shopping" && cart);
-  
-    if (!shouldRenderButton) return null;
-  
-    return (
-      <UiButton
-        onClick={() => {
-          handleRoute(item);
-          setOpen(item?.label);
-        }}
-        variant={open === item?.label ? "nav-itemactive" : "nav-item"}
-        traits={{ beforeIcon: item?.icon }}
-      >
-        {item.label}
-        {item?.icon === "fal-bag-shopping" ? Object(JSON.parse(cart).items).length:''}
-      </UiButton>
-    );
-  };
-  
+
+
+
   if (user && !hide) {
     return (
       <>
@@ -109,7 +84,11 @@ const Navbar = () => {
                           />
                         </>
                       )}
-                      {!item.items && <NavButton item={item} />}
+                      {!item.items && <NavButton
+                        item={item}
+                        handleRoute={handleRoute}
+                        setOpen={setOpen}
+                      />}
                     </span>
                   );
                 })}

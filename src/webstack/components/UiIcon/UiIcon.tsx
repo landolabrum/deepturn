@@ -282,9 +282,9 @@ export class UiIcon extends React.Component<Props, State> {
   }
 
   private getDataTestId() {
-    if(this.props.icon) {
+    if (this.props.icon) {
       return `${this.props.icon}-icon`;
-    } else if(this.props.faIcon) {
+    } else if (this.props.faIcon) {
       return `${this.props.faIcon.prefix}-${this.props.faIcon.iconName}`
     }
   }

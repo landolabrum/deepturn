@@ -27,7 +27,7 @@ export default interface IMemberService {
   getCurrentUser(): UserContext | undefined;
   userChanged: EventEmitter<UserContext | undefined>;
   // authedResetPassword(newPassword: string): Promise<{}>;
-  signInWithLegacyToken(legacyCustomToken: string): Promise<UserContext | null>;
+  // signInWithLegacyToken(legacyCustomToken: string): Promise<UserContext | null>;
   signIn(  { email,
     password,
     code,

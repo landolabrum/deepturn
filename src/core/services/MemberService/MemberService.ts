@@ -41,7 +41,7 @@ export default class MemberService
   public async getProducts(
     request?: any
   ): Promise<any> {
-    console.log("[ REQ ]:",request)
+    // console.log("[ REQ ]:",request)
     if(request === undefined)  return await this.get<any>(
       `/api/products`,
     );
@@ -164,12 +164,12 @@ export default class MemberService
       // },
       // firebaseAPIKey
     );
-    try {
-      const tkn = await client.signUp(email, password);
-      return tkn;
-    } catch (err) {
-      return "Email was in use or failed to sign up.";
-    }
+    // try {
+    //   const tkn = await client.signUp(email, password);
+    //   return tkn;
+    // } catch (err) {
+    //   return "Email was in use or failed to sign up.";
+    // }
   }
 
   private saveLegacyCookie(customJwt: string) {
@@ -198,7 +198,7 @@ export default class MemberService
     user_agent: user_agent
   }:any
   ): Promise<UserContext> {
-    console.log({email, password, user_agent})
+    // console.log({email, password, user_agent})
     if (!email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
@@ -269,42 +269,42 @@ export default class MemberService
 
     return this._userContext;
   }
-  public async signInWithLegacyToken(
-    legacyCustomToken: string
-  ): Promise<UserContext | null> {
-    try {
-      const customToken = this.parseCustomToken(legacyCustomToken);
-      if (customToken == null) {
-        return null;
-      }
-      if (customToken.claims.memberId) {
-        return null;
-      } // This is a new platform token (don't use for SSO)
-      const idToken = await firebaseClient.signInWithToken(legacyCustomToken);
-      if (!idToken) {
-        return null;
-      }
-      const response = await this.post<{}, MemberSignInResponse>(
-        "/authentication/sign-in",
-        {},
-        { Authorization: "Bearer " + idToken }
-      );
-      if (!response) {
-        return null;
-      } // note: API should throw an error
-      const memberJwt = await firebaseClient.signInWithToken(
-        response.customToken
-      );
-      if (!memberJwt) {
-        return null;
-      }
-      this.saveMemberToken(memberJwt);
-      // this.saveLegacyCookie(response.customToken);
-      return this._getCurrentUser(true)!;
-    } catch (error) {
-      return null;
-    }
-  }
+  // public async signInWithLegacyToken(
+  //   legacyCustomToken: string
+  // ): Promise<UserContext | null> {
+  //   try {
+  //     const customToken = this.parseCustomToken(legacyCustomToken);
+  //     if (customToken == null) {
+  //       return null;
+  //     }
+  //     if (customToken.claims.memberId) {
+  //       return null;
+  //     } // This is a new platform token (don't use for SSO)
+  //     // const idToken = await firebaseClient.signInWithToken(legacyCustomToken);
+  //     // if (!idToken) {
+  //     //   return null;
+  //     // }
+  //     const response = await this.post<{}, MemberSignInResponse>(
+  //       "/authentication/sign-in",
+  //       {},
+  //       { Authorization: "Bearer " + idToken }
+  //     );
+  //     if (!response) {
+  //       return null;
+  //     } // note: API should throw an error
+  //     const memberJwt = await firebaseClient.signInWithToken(
+  //       response.customToken
+  //     );
+  //     if (!memberJwt) {
+  //       return null;
+  //     }
+  //     this.saveMemberToken(memberJwt);
+  //     // this.saveLegacyCookie(response.customToken);
+  //     return this._getCurrentUser(true)!;
+  //   } catch (error) {
+  //     return null;
+  //   }
+  // }
   private saveMemberToken(memberJwt: string) {
     if (this.isBrowser) {
       sessionStorage?.setItem(STORAGE_TOKEN_NAME, memberJwt);

@@ -19,15 +19,27 @@ export default class CookieHelper {
     const cookies = this.getCookies();
     return cookies[name];
   }
-
   public static setCookie(name: string, value: string, props:{[key: string]:string}) {
     const propArray: string[] = [];
     propArray.push(`${name}=${value}`);
-
+  
     for (let key in props) {
       propArray.push(`${key}=${props[key]}`);
     }
     document.cookie = propArray.join(';');
+    
+    // Dispatch a custom event when a cookie is set
+    const event = new CustomEvent('cookieChange', { detail: { cookieName: name } });
+    window.dispatchEvent(event);
   }
+  // public static setCookie(name: string, value: string, props:{[key: string]:string}) {
+  //   const propArray: string[] = [];
+  //   propArray.push(`${name}=${value}`);
+
+  //   for (let key in props) {
+  //     propArray.push(`${key}=${props[key]}`);
+  //   }
+  //   document.cookie = propArray.join(';');
+  // }
 
 }

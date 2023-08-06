@@ -21,6 +21,7 @@ $pad: 18px;
   overscroll-behavior-x: contain;
   margin: 10px 0;
   height: $hite;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -29,12 +30,14 @@ $pad: 18px;
     position: absolute;
     @extend .d-flex;
     gap: $pad;
+
     .product-slider__product {
       @extend .d-flex;
       aspect-ratio: 3/4;
       border-radius: $pad;
       background-color: var(--color-gray-80);
       height: $hite;
+
       .product-slider__product-content {
         height: calc(100% - 40px);
         margin: $pad;
@@ -42,63 +45,29 @@ $pad: 18px;
         width: 100%;
         justify-content: space-between;
         flex-direction: column;
+
         .product-slider__product-header {
           // background-color: #e0e0e0;
           height: calc($hite * .25);
           width: inherit;
-          .product-slider__product-title {
-            font-size: 22px;
-          }
-          .product-slider__product-title {
-            font-size: 22px;
-          }
-        }
-        
-        
-        .product-slider__product-image {
-          @extend .d-flex;
-          height: calc($hite * .5);
-          width: 100%;
-          position: relative; // Add relative positioning
-          .product-slider__product-placeholder {
-            height: calc($hite * .5);
-            top: auto;
-            bottom: auto;
-            position: absolute;
-            @extend .d-flex;
-            width: 100%;
-            --ui-icon-width: 100%;
-            --ui-icon-height: calc($hite * .5);
-          }
-          }
-        }
 
-        .product-slider__product-footer {
-          height: calc($hite * .25);
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
+          .product-slider__product-title {
+            font-size: 22px;
+          }
+
+          .product-slider__product-title {
+            font-size: 22px;
+          }
         }
+      }
+      
+      .product-slider__product-footer {
+        height: calc($hite * .25);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
       }
     }
   }
-
-
-          // transition: height $dur ease; // Adding the transition property
-          // height: 26%;
-          // width: 100%;
-          // /* Optional: Center the image within the container */
-          // display: flex;
-          // justify-content: center;
-          // align-items: center;
-          // .product-slider__product-placeholder {
-            // @extend .d-flex;
-            // height: 100%;
-            // width: 100%;
-            // /* Optional: Center the image within the container */
-            // display: flex;
-            // justify-content: center;
-            // align-items: center;
-            // --ui-icon-size: 30%;
-            // --ui-icon-height: 100%;
+}

@@ -1,0 +1,25 @@
+$size: 19px;
+.d-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ui-pill{
+    @extend .d-flex;
+    height: var(--default-element-height);
+    padding: 0 10px;
+    gap:8px;
+    border: solid 1px;
+    border-radius: calc(var(--default-element-height) * .5);
+    font-size: $size;
+    div{
+        flex: 1;
+        text-align: center;
+        @extend .d-flex;
+    }
+    .ui-pill__action{
+        padding: 0 7px;
+        cursor: pointer;
+        font-weight: 900;
+    }
+}
