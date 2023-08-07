@@ -32,6 +32,13 @@ export default class CookieHelper {
     const event = new CustomEvent('cookieChange', { detail: { cookieName: name } });
     window.dispatchEvent(event);
   }
+  public static deleteCookie(name: string) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    
+    // Dispatch a custom event when a cookie is deleted
+    const event = new CustomEvent('cookieChange', { detail: { cookieName: name } });
+    window.dispatchEvent(event);
+  }
   // public static setCookie(name: string, value: string, props:{[key: string]:string}) {
   //   const propArray: string[] = [];
   //   propArray.push(`${name}=${value}`);

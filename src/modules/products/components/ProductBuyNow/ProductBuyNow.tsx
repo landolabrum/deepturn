@@ -10,7 +10,7 @@ const ProductBuyNow: React.FC<any> = ({ product }: any) => {
     const [attention, setAttention] = useState<boolean>(false);
     const router = useRouter();
     const addToCart = () => {
-        if (attention) { router.push(`/cart?ref=${router.pathname}`); return "" }
+        if (attention) { router.push(`/cart?ref=${router.pathname.split("/")[1]}`); return "" }
         let cart: any = CookieHelper.getCookie("cart");
         if (typeof (CookieHelper.getCookie("cart")) === 'string') cart = JSON.parse(cart);
 
@@ -23,13 +23,12 @@ const ProductBuyNow: React.FC<any> = ({ product }: any) => {
                     item.price_object.qty += 1;
                     break;
                 }
-                if (addItem) cart.items.push(product)
+                if (addItem) {
+                    product.price_object.qty = 1;
+                    cart.items.push(product)
+                }
             };
-            // ADD NEW ITEM TO EXISTING CART
-            if (addItem) {
-                product.price_object.qty = 1;
-                cart.items.push(product);
-            }
+       
         }
         // NEW CART
         if (!cart) {

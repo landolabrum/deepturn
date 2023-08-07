@@ -1,0 +1,91 @@
+
+$brdr: 14px;
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.d-flex-col {
+  @extend .d-flex;
+  flex-direction: column;
+}
+
+.cart__empty-cart {
+    @extend .d-flex-col;
+    box-shadow: var(--color-gray-100) -1px 1px 10px 10px;
+    border-width: $brdr;
+    border-style: outset;
+    border-color: #737272 #838383 #989898 #8e8e8e;
+    aspect-ratio: 1/1;
+    border-radius: 6px;
+    margin: 0;
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    background-color: var(--color-gray-50);
+
+    &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 4px 7px;
+        line-height: 1;
+        transform: translateX(50%);
+        height: 15px;
+        z-index: 4;
+        background-color: #f30;
+        content: "Your cart is empty"
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: calc(100% - 28px);
+        height: calc(100% - 28px);
+        pointer-events: none;
+        left: 0;
+        top: 0;
+        border-width: $brdr;
+        border-style: inset;
+        border-color: #aaa9a9 #8f8f8f #686767 #949494;
+        box-shadow: inset var(--color-gray-100) -1px 1px 5px 2px;
+        background-repeat: repeat;
+        background-size: cover;
+        background-image: url("assets/textures/canvas-texture.png");
+    }
+    
+    .cart__emtpy-cart-canvas {
+        mix-blend-mode: hard-light;
+        filter: blur(2px);
+        width: 100%;
+        z-index: 1;
+        @extend .d-flex;
+        --ui-icon-color: var(--color-gray-80);
+        --ui-icon-height: 90%;
+        overflow: hidden;
+        --ui-icon-width: 100%;
+        aspect-ratio: 1/1;
+        width: calc(100% - calc($brdr * 2));
+        // animation: fade 1s forwards;
+        // animation-play-state: paused;
+
+        // &:hover {
+        //     animation-play-state: running;
+        // }
+
+        &.skull {
+            // opacity: 0;
+            // animation: fade 1s forwards reverse;
+            // animation-play-state: running;
+            // &:hover {
+            //     opacity: 1;
+            //     animation: unset;
+            //     animation-play-state: paused;
+            // }
+            --ui-icon-height: 70%;
+            --ui-icon-width: 70%;
+        }
+    }
+}
