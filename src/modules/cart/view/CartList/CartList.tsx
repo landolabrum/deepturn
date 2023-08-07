@@ -16,30 +16,32 @@ const CartList: React.FC<any> = ({ cart, handleQty }: { cart: ICartItem[], handl
             <AdaptGrid xs={1}>
                 {cart &&
                     cart.map((item, key) => (
-                        <div className="cart__item" key={key}>
-                            <div className="cart__item-product">
-                                {typeof (item?.images) === "string" && <ProductImage image={item.images} options={{ size: 100 }} />}
-                                <div className="cart__item-info">
-                                    <div className="cart__item-product-info">
-                                        <div className="cart__item-name">
-                                            {item?.name}
+                        <div className="cart-list" key={key}>
+                            <div className="cart-list-content" >
+                                <div className="cart-list-product">
+                                    {typeof (item?.images) === "string" && <div className="cart-list__product-image"><ProductImage image={item.images} options={{ size: 100 }} /></div>}
+                                    <div className="cart-list-info">
+                                        <div className="cart-list-product-info">
+                                            <div className="cart-list-name">
+                                                {item?.name}
+                                            </div>
+                                            <div className="cart-list-description">
+                                                {item?.description}
+                                            </div>
                                         </div>
-                                        <div className="cart__item-description">
-                                            {item?.description}
+                                        <div className="cart-list-price">
+                                            {item?.price}
                                         </div>
-                                    </div>
-                                    <div className="cart__item-price">
-                                        {item?.price}
                                     </div>
                                 </div>
-                            </div>
-                            <div className="cart__item-qty">
-                                <UiPill
-                                    amount={item?.price_object?.qty}
-                                    setAmount={(qty) => {
-                                        handleQty(item, qty);
-                                    }}
-                                />
+                                <div className="cart-list-qty">
+                                    <UiPill
+                                        amount={item?.price_object?.qty}
+                                        setAmount={(qty) => {
+                                            handleQty(item, qty);
+                                        }}
+                                    />
+                                </div>
                             </div>
                         </div>
                     ))

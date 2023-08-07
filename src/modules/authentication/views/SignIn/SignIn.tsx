@@ -23,8 +23,24 @@ const SignIn: NextComponentType<NextPageContext, {}, SignInProps> = (
     <>
       <style jsx>{styles}</style>
       <form className="sign-in">
-        <Input type="email" autoComplete="username" name="email" variant={`${["bad-email", 'email required', "no credentials provided"].includes(response) && "invalid"}`} placeholder="email" label="email" value={credentials?.email} onChange={handleCredentials} />
-        <Input autoComplete="current-password" name="password" type="password" variant={`${["bad-email", 'password required', "no credentials provided"].includes(response) && "invalid"}`} placeholder="password" label="password" value={credentials?.password} onChange={handleCredentials} />
+        <Input
+          type="email"
+          autoComplete="username"
+          name="email"
+          variant={`${[
+            "bad-email",
+            'email required',
+            "no credentials provided"
+          ].includes(response) ? "invalid dark":"dark"}`}
+          placeholder="email"
+          label="email"
+          value={credentials?.email}
+          onChange={handleCredentials}
+        />
+        <Input
+          autoComplete="current-password"
+          name="password" type="password"
+          variant={`${["bad-email", 'password required', "no credentials provided"].includes(response) ? "invalid dark":"dark"}`} placeholder="password" label="password" value={credentials?.password} onChange={handleCredentials} />
         {/* <div className="sign-in__forgot-password-link" onClick={() => alert("To Bad")} >forgot password</div> */}
         {response === "Two Factor Authenication code required" &&
           <TwoFactorAuth code={credentials.code} setCode={(e) => { handleCredentials({ target: { value: e, name: "code" } }) }} />

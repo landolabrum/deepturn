@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from "./ProductSlider.scss";
 import ProductBuyNow from '../ProductBuyNow/ProductBuyNow';
 import ProductImage from '../ProductImage/ProductImage';
@@ -16,6 +16,8 @@ interface ProductSliderProps {
 
 const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
 
+
+useEffect(() => {}, [products]);
 
   return (
     <>

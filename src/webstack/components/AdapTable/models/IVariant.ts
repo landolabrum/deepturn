@@ -30,9 +30,20 @@ export type VariantProps =
   | "daily"
   | "custom"
   | "monthly"
+  | "dark invalid"
+  | "invalid dark"
+  | "dark account"
+  | "account dark"
+  // Add other combinations as needed
   ;
 
 export type OverlayVariantProps =
   | "blur"
   | "blur-disabled"
-  | "disabled";
+  | "disabled"
+  | "dark invalid"
+  | "invalid dark"
+  | "dark disabled"
+  | "disabled dark"
+  // Add other combinations as needed
+  ;

@@ -14,9 +14,12 @@ $shadow-size: 10px;
 
   label {
     color: var(--color-gray-40);
-    line-height: 2;
+    line-height: 3;
     font-size: 14px;
     font-weight: 300;
+    font-size: 11px;
+    font-style: italic;
+    letter-spacing: 3px;
   }
 
   .form-control__element {
@@ -50,14 +53,22 @@ $shadow-size: 10px;
       height: inherit;
     }
 
-    &[class$="-dark"] {
-      background-color: var(--color-gray-100);
-      color: white;
-
+    &[class$="-dark"], &[class$="dark"] {
+      color: var(--color-gray-50);
+      background-color: #17171750;
+  
+      .form-control_after-icon {
+        height: calc(var(--default-element-height) * .8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-left: solid 1px var(--color-gray-70);
+        border-radius: 5px;
+      }
       &:hover,
       &:focus,
       &:active {
-        background-color: var(--color-primary-opaque);
+        color: var(--color-gray-20);
       }
     }
 

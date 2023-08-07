@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import styles from './ProductImage.scss';
 import Image from 'next/image';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import useWindow from '@webstack/hooks/useWindow';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const ProductImage: React.FC<{ image?: string | undefined, options?: any }> = ({ image, options }) => {
     const [imageLoadError, setImageLoadError] = useState<boolean>(false);
-    const minImg = options?.size ? options?.size : 200;
-    const maxImg = options?.size ? options?.size * 1.2 : 220;
+    const window = useWindow();
+    const minImg = options?.size ? options?.size : window.width > 900?200:100;
+    const maxImg = options?.size ? options?.size * 1.2 : window.width > 900?110:220;
     const animateScale = (e: any) => {
         const min = `${minImg}px`
         const max = `${maxImg}px`
@@ -20,9 +22,11 @@ const ProductImage: React.FC<{ image?: string | undefined, options?: any }> = ({
             e.target.style.transition = "width 1s, height 1s"; e.target.style.width = min; e.target.style.height = min;
         }
     }
+    useEffect(()=>{},[window?.width]);
     return (
         <>
             <style jsx>{styles}</style>
+            {/* {JSON.stringify(window)} */}
             {image && !imageLoadError ? (
                 <div className='product-image'>
                     <Image

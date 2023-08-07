@@ -5,12 +5,9 @@ import { getService } from "@webstack/common";
 import { useRouter } from "next/router";
 import { useHeader } from "@webstack/components/Header/views/Header";
 import { useRequest } from "@webstack/components/AdapTable/hooks/useRequest";
-import styles from "./ProductsListingPage.scss";
 import { MemberContext } from "~/src/models/MemberContext";
-import AdapTable from "@webstack/components/AdapTable/views/AdapTable";
 import { dateFormat, numberToUsd } from "@webstack/helpers/userExperienceFormats";
-import ProductDescriptionPage from "../ProductDescriptionPage/ProductDescriptionPage";
-import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
+
 import ProductTable from "../../components/ProductTable/ProductTable";
 import UiLoader from "@webstack/components/UiLoader/UiLoader";
 

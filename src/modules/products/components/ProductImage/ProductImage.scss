@@ -4,20 +4,15 @@ $hite: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
+    --ui-icon-height: calc(100% - 22px);
+    --ui-icon-width: calc(100% - 22px);
+    
 }
 
 .product-image {
     @extend .d-flex;
-    // height: calc($hite * .5);
-    // width: 100%;
-    // position: relative; // Add relative positioning
+   
 }
 .product-image__placeholder{
-    top: auto;
-    bottom: auto;
-    // position: absolute;
     @extend .d-flex;
-    --ui-icon-size: 100%;
-    --ui-icon-height: calc(100% - 22px);
-    --ui-icon-width: calc(100% - 22px);
 }

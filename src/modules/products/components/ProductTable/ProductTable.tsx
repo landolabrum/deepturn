@@ -6,21 +6,17 @@ import UiButton from '@webstack/components/UiButton/UiButton';
 import { useRouter } from 'next/router';
 import ProductSlider from '../ProductSlider/ProductSlider';
 
-// Remember to create a sibling SCSS file with the same name as this component
 interface ProductTableProps {
     products: any;
     hasMore?: boolean;
     firstPage?: boolean;
     onClick?: any;
 }
+
 const ProductTable = ({ products, onClick, hasMore, firstPage }: ProductTableProps) => {
-    const [filters, setFilters] = useState<any>({
-        categories: {
-        },
-        types:{
-        }
-    });
-    const router = useRouter()
+    const [filters, setFilters] = useState<any>({"categories":{"test":{"selected":true},"social":{"selected":true}},"types":{"undefined":{"selected":false},"saas":{"selected":true}}});
+    const [visibleProducts, setVisibleProducts] = useState<any>(products); // Added this state
+    const router = useRouter();
     const handleProductDescription = ({id, pri}:{id: string | null, pri: string | null})=>{
         router.push({
             pathname:"/product",
@@ -60,7 +56,6 @@ const ProductTable = ({ products, onClick, hasMore, firstPage }: ProductTablePro
     function getSelectedCategories(filter:any) {
         const entries = Object.entries(filter);
         const selectedEntries = entries.filter(([key, value]:any) => value.selected);
-    
         if (entries.length === selectedEntries.length) {
             return "all";
         }
@@ -68,11 +63,17 @@ const ProductTable = ({ products, onClick, hasMore, firstPage }: ProductTablePro
     }
     useEffect(() => {
         metaMaker()
-    }, [ hasMore ])
+    }, [ hasMore ]);
+    useEffect(() => {
+        const filteredProducts = products.filter((product: any) => {
+            return filters.categories[product.metadata.category]?.selected && filters.types[product.metadata.type]?.selected;
+        });
+
+        setVisibleProducts(filteredProducts);
+    }, [filters, products]);
     return (
         <>
             <style jsx>{styles}</style>
-                <ProductSlider products={products}/>
             <div className="product-table">
               <div className='product-table__header'>
                     <div className='product-table__filters'>
@@ -98,7 +99,8 @@ const ProductTable = ({ products, onClick, hasMore, firstPage }: ProductTablePro
                         />
                     </div>
                 </div>
-            
+                <ProductSlider products={visibleProducts}/>
+            {JSON.stringify(filters)}
                   {/* <AdaptGrid xs={1} md={3} gap={10}>
                     {Object.entries(products).length && Object.entries(products).map(([key, product]: any) => {
                         if (filters.categories[product.metadata.category]?.selected && filters.types[product.metadata.type]?.selected  ) {

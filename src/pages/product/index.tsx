@@ -1,3 +1,3 @@
-import ProductDescriptionPage from "~/src/modules/products/pages/ProductDescriptionPage/ProductDescriptionPage";
+import ProductDescriptionPage from "~/src/modules/products/controller/ProductDescription/ProductDescriptionPage";
 
 export default ProductDescriptionPage;

@@ -146,7 +146,7 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
             )}
           </div>
           <div className="authentication__submit">
-          <UiButton onClick={handleSignIn} busy={isSubmitting}>
+          <UiButton variant="dark" onClick={handleSignIn} busy={isSubmitting}>
             login
           </UiButton>
           </div>

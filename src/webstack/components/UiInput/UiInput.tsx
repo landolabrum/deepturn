@@ -2,6 +2,7 @@ import styles from "./UiInput.scss";
 import type { NextComponentType, NextPageContext } from "next";
 import FormControl, { FormControlProps } from "../FormControl/FormControl";
 import { useEffect, useState } from "react";
+import { VariantProps } from "../AdapTable/models/IVariant";
 
 type ValueType = string;
 
@@ -16,14 +17,14 @@ interface InputProps extends FormControlProps {
   onKeyDown?: (e: any) => void;
   onKeyUp?: (e: any) => void;
   placeholder?: string;
-
+  variant?: VariantProps
   min?: number;
   max?: number;
   autoComplete?: string;
 }
 // UiInput component, used site-wide, FormControl.tsx is always parent
 const Input: NextComponentType<NextPageContext, {}, InputProps> = (props: InputProps) => {
-  const {  onPaste, onKeyDown, onKeyUp, min, max, name, type, disabled, variant, value, label, onChange, placeholder, traits, autoComplete, defaultValue } = props;
+  const { onPaste, onKeyDown, onKeyUp, min, max, name, type, disabled, variant, value, label, onChange, placeholder, traits, autoComplete, defaultValue } = props;
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -47,9 +48,9 @@ const Input: NextComponentType<NextPageContext, {}, InputProps> = (props: InputP
   return (
     <>
       <style jsx>{styles}</style>
-      <FormControl label={label} variant={variant} traits={{...traits, beforeIcon:traits?.beforeIcon, afterIcon:type === "password" ? { icon: eyeIcon, onClick: () => setShow(!show) } : traits?.afterIcon}}>
+      <FormControl label={label} variant={variant} traits={{ ...traits, beforeIcon: traits?.beforeIcon, afterIcon: type === "password" ? { icon: eyeIcon, onClick: () => setShow(!show) } : traits?.afterIcon }}>
         <input
-          className={`${typeof variant ==='string'?variant:""} ${validatedClass}`}
+          className={`${typeof variant === 'string' ? variant : ""} ${validatedClass}`}
           name={name}
           disabled={disabled}
           type={inputType}
