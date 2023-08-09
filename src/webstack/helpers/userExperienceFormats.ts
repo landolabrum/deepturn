@@ -121,3 +121,12 @@ export function numberToUsd(amount: number) {
   const formattedAmount = (amount / 100).toFixed(2);
   return `$${formattedAmount}`;
 }
+export function calculateCartTotal(cart: any) {
+  let total = 0;
+  for (let product of cart) {
+      if (product.price_object && product.price_object.unit_amount && product.price_object.qty) {
+          total += product.price_object.unit_amount * product.price_object.qty;
+      }
+  }
+  return numberToUsd(total);
+}

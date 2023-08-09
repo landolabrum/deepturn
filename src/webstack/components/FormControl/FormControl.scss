@@ -80,13 +80,13 @@ $shadow-size: 10px;
       &:hover {
         animation: glow 2s ease-in; // Use the glow animation, duration is 2 seconds.
         background: var(--color-primary-opaque-1);
-        box-shadow: 0 0 $shadow-size / 2 var(--color-primary), 0 0 $shadow-size var(--color-primary);
+        box-shadow: 0 0 calc($shadow-size / 2 ) var(--color-primary) 0 0 $shadow-size var(--color-primary);
       }
     }
     
     @keyframes glow {
       0% {
-        box-shadow: 0 0 $shadow-size / 4 var(--color-primary), 0 0 $shadow-size / 2 var(--color-primary);
+        box-shadow: 0 0 calc($shadow-size / 4 ) var(--color-primary), 0 0 calc($shadow-size / 2 ) var(--color-primary);
       }
     
       50% {
@@ -94,7 +94,7 @@ $shadow-size: 10px;
       }
     
       100% {
-        box-shadow: 0 0 $shadow-size / 4 var(--color-primary), 0 0 $shadow-size / 2 var(--color-primary);
+        box-shadow: 0 0 calc($shadow-size / 4 ) var(--color-primary), 0 0 calc($shadow-size / 2 ) var(--color-primary);
       }
     }
     

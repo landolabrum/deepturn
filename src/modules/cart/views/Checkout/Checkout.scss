@@ -1,0 +1,22 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.checkout {
+    @extend .d-flex;
+    flex-direction: column;
+    .checkout__title{
+        line-height: 3;
+        gap:7px;
+        @extend .d-flex;
+    }
+}
+
+.checkout-modal {
+    @extend .d-flex;
+    height: 100%;
+    width: 100%;
+}

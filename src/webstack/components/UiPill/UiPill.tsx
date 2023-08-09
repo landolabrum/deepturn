@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import styles from "./UiPill.scss";
+import { UiIcon } from '../UiIcon/UiIcon';
 
 
 const UiPill = ({ amount, setAmount }: { amount: number, setAmount: (qty: number) => void }) => {
@@ -11,7 +12,7 @@ const UiPill = ({ amount, setAmount }: { amount: number, setAmount: (qty: number
       <>
         <style jsx>{styles}</style>
         <div className='ui-pill'>
-          <div className='ui-pill__action' id="minus" onClick={handleAmount}>-</div>
+          <div className='ui-pill__action' id="minus" onClick={handleAmount}>{amount>1?"-":<UiIcon icon="fa-trash-can"/>}</div>
           <div>{amount}</div>
           <div className='ui-pill__action' id="plus" onClick={handleAmount}>+</div>
         </div>

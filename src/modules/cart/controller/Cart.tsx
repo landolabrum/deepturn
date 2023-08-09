@@ -1,15 +1,14 @@
 import styles from './Cart.scss';
 import React, { useEffect, useState } from 'react';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import CookieHelper from '@webstack/helpers/CookieHelper';
-import ProductImage from '../../products/components/ProductImage/ProductImage';
 import { useHeader } from '@webstack/components/Header/views/Header';
 import { useRouter } from 'next/router';
-import UiPill from '@webstack/components/UiPill/UiPill';
-import EmptyCart from '../view/EmptyCart/EmptyCart';
+import EmptyCart from '../views/EmptyCart/EmptyCart';
 import { ICartItem } from '../model/ICartItem';
-import CartList from '../view/CartList/CartList';
+import CartList from '../views/CartList/CartList';
 import UiButton from '@webstack/components/UiButton/UiButton';
+import Checkout from '../views/Checkout/Checkout';
+import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
 
 
 const Cart: React.FC = () => {
@@ -76,6 +75,7 @@ const Cart: React.FC = () => {
                     <div className='cart__header-title'></div>
                 </div>
                 { cart?  <CartList cart={cart} handleQty={handleQty}/>:<EmptyCart/>}
+                {cart && <CheckoutButton cart={cart}/>}
             </div>
         </>
     );
