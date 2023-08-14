@@ -12,10 +12,10 @@ export default function DefaultLayout(props: IProps) {
   return <>
     <style jsx>{styles}</style>
     <main>
-      <ModalProvider>
+      {/* <ModalProvider> */}
         {props.children}
-        <ModalOverlay/>
-      </ModalProvider>
+        {/* <ModalOverlay/> */}
+      {/* </ModalProvider> */}
       </main>
   </>;
 }
