@@ -29,7 +29,7 @@ const RtspCam: React.FC<any> = ({ camera, handleMain, handleImageLoad, handleIma
   return (
     <>
       <style jsx>{styles}</style>
-      <span onClick={()=>setOd(!od)}>object detection</span>
+      {/* <span onClick={()=>setOd(!od)}>object detection</span> */}
       <ImageLoader
         src={`${streamUrl}`}
         alt={`rtsp-camera-feed-${camera}`}

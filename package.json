@@ -1,5 +1,5 @@
 {
-  "name": "customer-app",
+  "name": "deept",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "firebase": "^8.6.8",
     "google-libphonenumber": "^3.2.32",
     "lodash": "^4.17.21",
     "next": "^13.2.3",
