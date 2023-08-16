@@ -71,6 +71,17 @@ $pad: 18px;
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
+        .product-slider__product-footer__price-info{
+          @extend .d-flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+          color: var(--color-gray-40);
+          .product-slider__product-footer__price-info__price{
+            font-size: 19px;
+            color: var(--color-gray-50);
+          }
+        }
       }
     }
   }

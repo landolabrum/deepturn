@@ -68,7 +68,6 @@ const ProductTable = ({ products, onClick, hasMore, firstPage }: ProductTablePro
         const filteredProducts = products.filter((product: any) => {
             return filters.categories[product.metadata.category]?.selected && filters.types[product.metadata.type]?.selected;
         });
-
         setVisibleProducts(filteredProducts);
     }, [filters, products]);
     return (

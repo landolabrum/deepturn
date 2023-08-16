@@ -131,6 +131,7 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
         <video autoPlay loop muted playsInline className="authentication_video">
           <source src="./assets/beeple.mp4" type="video/mp4" />
         </video>
+        <div className="authentication__authentication-body">
         <div className="authentication__authentication-header">
           <div className="authentication__authentication-logo">
             <UiIcon icon="deepturn-logo" />
@@ -145,15 +146,14 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
               </div>
             )}
           </div>
-          <div className="authentication__submit">
-          <UiButton variant="dark" onClick={handleSignIn} busy={isSubmitting}>
+          <UiButton traits={{width: "100%"}} variant="dark" onClick={handleSignIn} busy={isSubmitting}>
             login
           </UiButton>
-          </div>
         </div>
         <div className="authentication__authentication-footer">
-          Existence is not something to be grasped or understood with precision; it is a flowing, mysterious dance of
-          interwoven energies, where the beauty lies in its ineffable ambiguity.
+          {/* Existence is not something to be grasped or understood with precision; it is a flowing, mysterious dance of
+          interwoven energies, where the beauty lies in its ineffable ambiguity. */}
+        </div>
         </div>
       </div>
     </>

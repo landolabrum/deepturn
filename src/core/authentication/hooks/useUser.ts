@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Subscription } from "rxjs";
 import UserContext from "~/src/models/UserContext";
 import IMemberService from "../../services/MemberService/IMemberService";
+import useUserAgent from "./useUserAgent";
 
 export const useUser = () => {
   const memberService = getService<IMemberService>('IMemberService');

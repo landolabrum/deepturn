@@ -4,6 +4,7 @@ import UserContext, { UserProps } from "~/src/models/UserContext";
 import { useRouter } from "next/router";
 import { useHeader } from "@webstack/components/Header/views/Header";
 import { RouteProps } from "@shared/components/Navbar/data/routes";
+import useUserAgent from "./useUserAgent";
 
 const AUTHED_LANDING = "/dashboard";
 const UNAUTHED_LANDING = "/authentication"
@@ -17,6 +18,7 @@ export default function useRoute(handleSideNav?: () => void){
   const userResponse = useUser();
   const [user, setUser] = useState<UserContext | null>(null);
   const [header, setHeader] = useHeader();
+  const userAgentData = useUserAgent();
   const router = useRouter();
   const handleRoute = useCallback(
     (option: RouteOptionProps) => {
@@ -28,6 +30,7 @@ export default function useRoute(handleSideNav?: () => void){
     );
     
   useEffect(() => {
+    console.log("UA: ",userAgentData);
     if ( !userResponse && router.pathname !== UNAUTHED_LANDING) {
       setUser(null);
       setHeader(null);
@@ -36,7 +39,7 @@ export default function useRoute(handleSideNav?: () => void){
       userResponse&&setUser(userResponse);
       [UNAUTHED_LANDING,"/"].includes(router.pathname) && handleRoute({href:AUTHED_LANDING});
     }
-  }, [userResponse]);
+  }, [userResponse, userAgentData]);
   
   if (typeof user !== "string" && handleSideNav)
     return [user, router.pathname, handleRoute];

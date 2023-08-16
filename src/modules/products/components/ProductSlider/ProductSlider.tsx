@@ -36,7 +36,12 @@ useEffect(() => {}, [products]);
                     <ProductImage image={product?.images} options={{animate: true}}/>
                   </div>
                   <div className='product-slider__product-footer'>
-                    <div>{product?.price}</div>
+                  <div className='product-slider__product-footer__price-info'>
+                    <div>{product?.price_object?.nickname}</div>
+                    <div className="product-slider__product-footer__price-info__price">
+                      {product?.price}
+                    </div>
+                  </div>
                     <ProductBuyNow product={product} />
                   </div>
                 </div>
