@@ -1,2 +1,2 @@
-import Authentication from "~/src/modules/authentication/pages/Authentication";
+import Authentication from "~/src/modules/authentication/controller/Authentication";
 export default Authentication;

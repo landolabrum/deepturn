@@ -34,6 +34,8 @@ export type VariantProps =
   | "invalid dark"
   | "dark account"
   | "account dark"
+  | "primary"
+  | "secondary"
   // Add other combinations as needed
   ;
 

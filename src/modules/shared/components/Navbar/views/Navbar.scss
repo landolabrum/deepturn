@@ -62,11 +62,8 @@ nav {
       flex-direction: var(--nav-items-flex-direction);
       gap: 10px;
       width: 100%;
-      & > *:last-child {
+      & > *:nth-last-child(2) {
         margin-left: auto;
-        // @media(max-width: 990px){
-        //   margin-top: auto;
-        // }
       }
       @media (max-width: 900px) {
         border-radius: 0 5px 5px 0;

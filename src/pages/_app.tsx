@@ -8,6 +8,8 @@ import Navbar from "@shared/components/Navbar/views/Navbar";
 import { OverlayProvider } from "@webstack/components/Overlay/Overlay";
 import { HeaderProvider } from "@webstack/components/Header/views/Header";
 import useDarkMode from "@webstack/hooks/useDarkMode";
+import { ModalProvider } from "@webstack/modal/contexts/modalContext";
+import { ModalOverlay } from "@webstack/modal/views/modalOverlay";
 
 
 const ZENDESK_KEY = "73bedd9b-0cdd-46a4-ad2e-b2ea5b72699d"
@@ -55,11 +57,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <style jsx>{styles}</style>
       <ServiceContainer />
       <OverlayProvider>
-        <Navbar />
         <HeaderProvider>
+            <ModalProvider>
+              <ModalOverlay />
+          <Navbar />
           <DefaultLayout>
               <Component {...pageProps} />
           </DefaultLayout>
+            </ModalProvider>
 
         </HeaderProvider>
       </OverlayProvider>

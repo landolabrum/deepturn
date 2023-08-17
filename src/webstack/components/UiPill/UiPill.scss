@@ -7,22 +7,46 @@ $size: 19px;
 .ui-pill{
     @extend .d-flex;
     height: var(--default-element-height);
-    padding: 0 10px;
     gap:8px;
-    border: solid 1px;
-    border-radius: calc(var(--default-element-height) * .5);
-    font-size: $size;
     div{
         flex: 1;
         text-align: center;
         @extend .d-flex;
     }
     .ui-pill__action{
-        padding: 0 7px;
         cursor: pointer;
         font-weight: 900;
+        --ui-icon-color: var(--color-gray-60);
+        padding: 4px;
+        &:first-child{
+            border-radius: 5px 0 0 5px;
+        }
+        &:last-child{
+            border-radius: 0 5px 5px 0 ;
+        }
+        height: calc(100% - calc(var(--default-element-height) * .35));
+        margin: 2px 4px;
+        aspect-ratio: 1/1;
         &:hover{
+            background-color: var(--color-gray-60);
             --ui-icon-color: var(--color-red-60);
+            color: var(--color-gray-30);
+        }
+    }
+    .ui-pill__amount{
+        position: relative;
+        @extend .d-flex;
+        width: max-content;
+        min-width: 24px;
+        gap: 3px;
+        &::before{
+            font-size: 17px;
+            content: attr(data-value)
+        }
+        &::after{
+            font-size: 12px;
+            font-style: italic;
+            content: "x"
         }
     }
 }

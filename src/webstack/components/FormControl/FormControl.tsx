@@ -24,6 +24,7 @@ export interface FormControlProps {
     width?: number | string;
     height?: number | string;
     afterIcon?: FormIconProps;
+    badge?: any
   };
 }
 
@@ -88,6 +89,12 @@ const FormControl: NextComponentType<NextPageContext, {}, FormControlProps> = ({
           {Children.map(children, (child: any) => {
             return cloneElement(child, { ref: childRef, [cyprus_test_key]: testId });
           })}
+          {traits?.badge && <div className="form-control__badge">
+          <div className="form-control__badge-content">
+            {traits.badge}
+            </div>
+            </div>
+            }
           {traits?.afterIcon && (
             <div className="form-control_after-icon">
               <UiIcon

@@ -1,69 +1,66 @@
 import UiButton from "@webstack/components/UiButton/UiButton";
-import CookieHelper from "@webstack/helpers/CookieHelper";
 import { useEffect, useState } from "react";
 import { RouteProps } from "../../data/routes";
 import { useRouter } from "next/router";
+import useCart from "~/src/modules/ecommerce/cart/hooks/useCart";
 
-interface NavButtonProps{
+interface NavButtonProps {
   item: RouteProps;
   handleRoute: (e:any) => void;
   setOpen: (e:string | null | undefined | number) => void;
 }
- const NavButton = ({ item, handleRoute, setOpen }: NavButtonProps) => {
-    const [totalQty, setTotalQty] = useState<number>(0);
-    const cart = CookieHelper.getCookie("cart");
-    const cartIcon = "fal-bag-shopping";
-    const router = useRouter();
-    useEffect(() => {
-      // Function to update totalQty whenever cart cookie changes
-      const updateTotalQty = () => {
-        const cart = CookieHelper.getCookie("cart");
-        const cart_object = typeof (cart) === 'string' && JSON.parse(cart);
-        const newTotalQty = cart_object?.items
-          ? cart_object.items.reduce((sum: number, item: any) => sum + (item.price_object.qty || 0), 0)
-          : 0;
-        setTotalQty(newTotalQty);
-      };
 
-      // Initial update
-      updateTotalQty();
+const NavButton = ({ item, handleRoute, setOpen }: NavButtonProps) => {
+  const [totalQty, setTotalQty] = useState<number>(0);
+  const { getCartItems } = useCart();
+  const cartIcon = "fal-bag-shopping";
+  const router = useRouter();
+  let traits:any = { beforeIcon: item?.icon };
+  if(item?.icon === cartIcon)traits['badge']=totalQty;
 
-      // Function to handle the custom event
-      const cookieChangeHandler = (e: CustomEvent) => {
-        if (e.detail.cookieName === "cart") {
-          updateTotalQty();
-        }
+  useEffect(() => {
+    const updateTotalQty = () => {
+      const cartItems = getCartItems();
+      const newTotalQty = cartItems.reduce((sum: number, item: any) => sum + (item.price_object.qty || 0), 0);
+      setTotalQty(newTotalQty);
+    };
+
+    // Initial update
+    updateTotalQty();
+
+    // Function to handle the custom event
+    const cookieChangeHandler = (e: CustomEvent) => {
+      if (e.detail.cookieName === "cart") {
+        updateTotalQty();
       }
+    }
 
-      // Add event listener to observe changes in the "cart" cookie
-      window.addEventListener("cookieChange", cookieChangeHandler as EventListener);
+    // Add event listener to observe changes in the "cart" cookie
+    window.addEventListener("cookieChange", cookieChangeHandler as EventListener);
 
-      // Clean up the event listener when the component unmounts
-      return () => {
-        window.removeEventListener("cookieChange", cookieChangeHandler as EventListener);
-      };
-    }, []);
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("cookieChange", cookieChangeHandler as EventListener);
+    };
+  }, [getCartItems]);
 
+  const shouldRenderButton = item?.icon !== cartIcon || (item?.icon === cartIcon && totalQty > 0);
+  if (!shouldRenderButton) return null;
+  
+  return (
+    <UiButton
+      onClick={() => {
+        let route = item;
+        if(item?.icon === cartIcon) route.href = `${item?.href}?ref=${router.pathname.slice(1)}`
+        handleRoute(route);
+        setOpen(item?.label);
+      }}
+      variant={String(open) === item?.label ? "nav-itemactive" : "nav-item"}
+      traits={traits}
+    >
+      {item.label}
+    </UiButton>
+  );
+};
 
-    const shouldRenderButton =
-      item?.icon !== cartIcon ||
-      (item?.icon === cartIcon && cart);
-    if (!shouldRenderButton) return null;
-    return (
-      <UiButton
-        onClick={() => {
-          let route = item;
-
-          if(item?.icon === cartIcon)route.href= `${item?.href}?ref=${router.pathname.slice(1)}`
-          handleRoute(route);
-          setOpen(item?.label);
-        }}
-        variant={ String(open) === item?.label ? "nav-itemactive" : "nav-item"}
-        traits={{ beforeIcon: item?.icon }}
-      >
-        {item.label}
-        {item?.icon === cartIcon ? totalQty : ''}
-      </UiButton>
-    );
-  };
-  export default NavButton;
+export default NavButton;

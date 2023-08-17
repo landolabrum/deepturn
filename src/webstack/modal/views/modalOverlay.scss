@@ -1,7 +1,7 @@
 .d-flex {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .p-fix {
@@ -17,19 +17,25 @@
 .modal-overlay {
     @extend .d-flex;
     @extend .p-fix;
+    
     background-color: var(--color-primary-opaque);
     z-index: 999;
 
     .modal-overlay__content {
         @extend .d-flex;
+        transform: translateY(15%);
         flex-direction: column;
         background-color: var(--color-gray-80);
-        aspect-ratio: 1/1;
+        min-height: 50vw;
         width: 50vw;
         border-radius: var(--default-border-radius);
         padding: var(--default-padding);
         justify-content: space-between;
         gap: var(--default-padding);
+        @media(max-width:900px){
+            width: calc(100vw - 60px);
+            min-height: 100vw;
+        }
         .modal-overlay__header {
             @extend .d-flex;
             align-self: flex-start;

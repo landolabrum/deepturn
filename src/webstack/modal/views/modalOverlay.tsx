@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import styles from './ModalOverlay.scss'; // or use your preferred way of styling
 import { ModalContext } from '@webstack/modal/contexts/modalContext';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import styles from "@webstack/modal/views/modalOverlay.scss"; // or use your preferred way of styling
 
 
 const ModalOverlay: React.FC = () => {
   const { isModalOpen, closeModal, modalContent }: any = useContext(ModalContext);
-
+  
   if (!isModalOpen) {
     return null;
   }
@@ -27,6 +27,8 @@ const ModalOverlay: React.FC = () => {
 
           <div className='modal-overlay__body' >
             {modalContent}
+          </div>
+          <div className='modal-overlay__footer' >
           </div>
 
         </div>

@@ -17,14 +17,23 @@ body {
   
   /* COLORS */
   --color-gray-20: #f5f5f5;
+  --color-gray-20-opaque: #f5f5f550;
   --color-gray-30: #e0e0e0;
+  --color-gray-30-opaque: #e0e0e050;
   --color-gray-40: #d4d4d4;
+  --color-gray-40-opaque: #d4d4d450;
   --color-gray-50: #a3a3a3;
+  --color-gray-50-opaque: #a3a3a350;
   --color-gray-60: #737373;
+  --color-gray-60-opaque: #73737350;
   --color-gray-70: #525252;
+  --color-gray-70-opaque: #52525250;
   --color-gray-80: #404040;
+  --color-gray-80-opaque: #40404050;
   --color-gray-90: #262626;
+  --color-gray-90-opaque: #26262650;
   --color-gray-100: #171717;
+  --color-gray-100-opaque: #17171750;
   
   --color-orange: #f90;
   --color-green-60: #22c553;

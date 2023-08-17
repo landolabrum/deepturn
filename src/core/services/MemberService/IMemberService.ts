@@ -13,7 +13,7 @@ export type ProductsRequestProps={
   ending_before?: string | undefined,
   starting_after?: string | undefined
 }
-
+ 
 export default interface IMemberService {
   getProducts(request?: any): Promise<any>; 
   getProduct({id, pri}:ProductRequestProps): Promise<any>;
@@ -32,7 +32,13 @@ export default interface IMemberService {
     password,
     code,
     user_agent
-  }:any): Promise<UserContext>
+  }:any): Promise<UserContext>;
+  signUp({ 
+    name,
+    email,
+    password,
+    user_agent
+  }:any): Promise<any>;
   getSignInIdToken(email: string, password: string, firebaseAPIKey: string): Promise<any>;
   signOut(): Promise<string>;
   getCurrentUserToken(): string | undefined;

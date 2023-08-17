@@ -27,8 +27,7 @@ const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
 
 export default class MemberService
   extends ApiService
-  implements IMemberService
-{
+  implements IMemberService {
   constructor() {
     super(environment.serviceEndpoints.membership);
   }
@@ -38,19 +37,47 @@ export default class MemberService
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
 
+
+  public async signUp(
+    { 
+      name,
+      email,
+      password,
+      user_agent
+    }:any
+    ): Promise<UserContext> {
+      if (!email) {
+        throw new ApiError("Email is required", 400, "MS.SI.01");
+      }
+      if (!password) {
+        throw new ApiError("Password is required", 400, "MS.SI.02");
+      }
+      const res = await this.post<{},any>(
+        "usage/auth/sign-up",
+        {
+          name:name,
+          email:email,
+          password:password,
+          user_agent:user_agent
+        },
+      );
+        return res;
+    }
+
+
   public async getProducts(
     request?: any
   ): Promise<any> {
     // console.log("[ REQ ]:",request)
-    if(request === undefined)  return await this.get<any>(
+    if (request === undefined) return await this.get<any>(
       `/api/products`,
     );
     return await this.get<any>(
       `/api/products${request}`,
     );
   }
-  public async getProduct({id, pri}:ProductRequestProps ): Promise<any> {
-    if(pri){
+  public async getProduct({ id, pri }: ProductRequestProps): Promise<any> {
+    if (pri) {
       return this.get<any>(
         `/api/product?id=${id}&pri=${pri}`,
       );
@@ -62,7 +89,7 @@ export default class MemberService
   public async lights(
   ): Promise<any> {
     return await this.get<any>(
-      "/hue/lights", 
+      "/hue/lights",
     );
   }
   public async lightsOn(
@@ -135,22 +162,22 @@ export default class MemberService
   ): Promise<GetMemberProfileInformationResponse | null> {
     return this.post(`/reports/profile-info/${memberId}`);
   }
-    public async getVehicles(
-      access: any
-    ): Promise<GetRecruitesResponse> {
-      return this.post<any, any>(
-        "/auto/vehicles",
-        access
-      );
-    }
-    public async startVehicle(
-      request: any
-    ): Promise<GetRecruitesResponse> {
-      return this.post<any, any>(
-        "/auto/vehicle/start",
-        request
-      );
-    }
+  public async getVehicles(
+    access: any
+  ): Promise<GetRecruitesResponse> {
+    return this.post<any, any>(
+      "/auto/vehicles",
+      access
+    );
+  }
+  public async startVehicle(
+    request: any
+  ): Promise<GetRecruitesResponse> {
+    return this.post<any, any>(
+      "/auto/vehicle/start",
+      request
+    );
+  }
   async getSignInIdToken(
     email: string,
     password: string,
@@ -192,11 +219,11 @@ export default class MemberService
   }
 
   public async signIn(
-  { email,
-    password,
-    code,
-    user_agent: user_agent
-  }:any
+    { email,
+      password,
+      code,
+      user_agent: user_agent
+    }: any
   ): Promise<UserContext> {
     // console.log({email, password, user_agent})
     if (!email) {
@@ -205,9 +232,9 @@ export default class MemberService
     if (!password) {
       throw new ApiError("Password is required", 400, "MS.SI.02");
     }
-    const res = await this.post<{},any>(
-      "usage/auth",
-      {email:email, password:password, code:code, user_agent:user_agent},
+    const res = await this.post<{}, any>(
+      "usage/auth/sign-in",
+      { email: email, password: password, code: code, user_agent: user_agent },
     );
     const memberJwt = await res;
     this.saveMemberToken(memberJwt);
@@ -250,7 +277,7 @@ export default class MemberService
       this.updateContext(undefined, undefined);
       return;
     }
-    this.updateContext( {...user}, jwtString );
+    this.updateContext({ ...user }, jwtString);
 
     if (this._timeout != null) {
       clearTimeout(this._timeout);
@@ -344,7 +371,7 @@ export default class MemberService
         return null;
       }
       return customToken;
-    } catch (error) {}
+    } catch (error) { }
     return null;
   }
   private parseMemberToken(jwt: string): MemberToken | null {
@@ -365,7 +392,7 @@ export default class MemberService
       //   return null;
       // }
       return memberToken;
-    } catch (error) {}
+    } catch (error) { }
     return null;
   }
 

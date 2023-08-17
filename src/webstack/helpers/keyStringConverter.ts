@@ -5,7 +5,7 @@ export default function keyStringConverter(str: string, dashed = false, bypass =
   // replace all spaces with dashes
   if (dashed) result = result.replaceAll(" ", "-");
   // replace dashes with spaces
-  if (!dashed) result = result.replaceAll("-", " ");
+  if (!dashed) result = result.replaceAll("-", " ").replaceAll("_", " ");
   if (result === "id") return "ID";
   return result;
 }
