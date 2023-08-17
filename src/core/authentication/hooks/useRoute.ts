@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useUser } from "./useUser";
-import UserContext, { UserProps } from "~/src/models/UserContext";
+import UserContext from "~/src/models/UserContext";
 import { useRouter } from "next/router";
 import { useHeader } from "@webstack/components/Header/views/Header";
 import { RouteProps } from "@shared/components/Navbar/data/routes";
@@ -30,7 +30,7 @@ export default function useRoute(handleSideNav?: () => void){
     );
     
   useEffect(() => {
-    console.log("UA: ",userAgentData);
+    // console.log("UA: ",userAgentData);
     if ( !userResponse && router.pathname !== UNAUTHED_LANDING) {
       setUser(null);
       setHeader(null);
