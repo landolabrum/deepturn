@@ -1,0 +1,101 @@
+$pdg: 25px;
+
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.d-flex-col {
+    @extend .d-flex;
+    flex-direction: column;
+}
+
+.cart-list {
+    width: 100%;
+    @extend .d-flex-col;
+    gap: var(--default-element-height);
+
+    .cart-list__item {
+        @extend .d-flex;
+        
+        
+        margin: 6px 0;
+        padding: calc($pdg * .5) calc($pdg) calc($pdg * .77) calc($pdg * .77);
+        justify-content: space-between;
+        width: calc(100% - calc($pdg * 2));
+        // background-color: var(--color-gray-100);
+        
+        // border-radius: var(--default-border-radius);
+        min-height: var(--default-element-height);
+        @media (max-width:900px) {
+            flex-direction: column;
+            height: max-content;
+            width: calc(100% - calc($pdg / 3));
+            padding: calc($pdg / 4);
+        }
+        .cart-list-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+
+            @media (max-width:900px) {
+                flex-direction: column;
+            }
+        }
+
+        // background-color: #f30;
+        .cart-list-product {
+            @extend .d-flex;
+            gap: 20px;
+            height: 100%;
+            max-height: 200px;
+            justify-content: flex-start;
+            .cart-list-price {
+                @media (max-width:900px) {
+                    display: flex;
+                    align-items: flex-end;
+                    height: 80px;
+                    line-height: 2;
+                }
+            }
+
+            .cart-list-info {
+                @extend .d-flex-col;
+                height: 100%;
+                align-items: flex-start;
+                justify-content: space-between;
+                @media (max-width:900px) {
+                    flex-direction: row;
+                }
+                .cart-list-product-info {
+                    .cart-list-name {
+                        line-height: 1.5;
+                        color: var(--color-gray-30);
+                        font-size: 22px;
+
+                        @media (max-width:900px) {
+                            font-size: 18px;
+
+                        }
+                    }
+                    .cart-list-description {
+                        width: 77%;
+                        color: var(--color-gray-60);
+                    }
+                }
+            }
+        }
+        .cart-list-qty {
+            @media (max-width:900px) {
+                padding-top: 10px;
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+    }
+}

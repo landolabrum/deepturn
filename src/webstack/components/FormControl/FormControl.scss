@@ -5,10 +5,7 @@ $badge: 19px;
   position: relative;
   display: flex;
   flex-direction: column;
-
-  // font-family: "Atkinson Hyperlegible", sans-serif;
   text-transform: capitalize;
-
   &.form-control-inherit {
     @extend .inherit;
   }
@@ -45,6 +42,12 @@ $badge: 19px;
     --ui-icon-height: 18px;
     --ui-icon-width: 18px;
     border-radius: var(--default-border-radius);
+
+    // RESPONSIVE
+    &.form-control__element-responsive{
+      height: 100%;
+    }
+    // RESPONSIVE
 
     &:focus-within {
       color: var(--color-gray-90);

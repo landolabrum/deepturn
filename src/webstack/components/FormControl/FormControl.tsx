@@ -12,6 +12,14 @@ type FormIconProps =
       onClick: (e: any) => void;
     }
   | string;
+export type ITraits =  {
+  beforeIcon?: FormIconProps;
+  width?: number | string;
+  height?: number | string;
+  afterIcon?: FormIconProps;
+  badge?: any;
+  responsive?:boolean;
+};
 
 export interface FormControlProps {
   label?: string | React.ReactElement;
@@ -19,13 +27,7 @@ export interface FormControlProps {
   overlay?: boolean;
   setOverlay?: (e: OverlayProps) => void;
   children?: string | React.ReactElement | React.ReactFragment | number;
-  traits?: {
-    beforeIcon?: FormIconProps;
-    width?: number | string;
-    height?: number | string;
-    afterIcon?: FormIconProps;
-    badge?: any
-  };
+  traits?: ITraits;
 }
 
 // FormControl component for rendering form controls with label, icons, and overlay support
@@ -43,14 +45,17 @@ const FormControl: NextComponentType<NextPageContext, {}, FormControlProps> = ({
   const ref = useRef<any>(null);
   const childRef = useRef<any>(null);
   const [testId, setTestId] = useState<string>("");
+
   useEffect(() => {
+
     // Set width if provided
     if (traits?.width && ref.current) {
       if (typeof traits.width === "number") ref.current.style.width = `${traits.width}px`;
       if (typeof traits.width === "string") ref.current.style.width = traits.width;
     }
     if (traits?.height && ref.current) {
-      ref.current.style.height = `${traits.height}px`;
+      if (typeof traits.height === "number") ref.current.style.height = `${traits.height}px`;
+      if (typeof traits.height === "string") ref.current.style.height = traits.height;
     }
 
     // Manage overlay
@@ -69,14 +74,15 @@ const FormControl: NextComponentType<NextPageContext, {}, FormControlProps> = ({
 
   useEffect(() => {
     setTestId(createTestId(ref.current.parentNode, childRef.current));
-  }, [ref]);
+  }, []);
+  // }, [ref]);
   return (
     <>
       <style jsx>{styles}</style>
       <div className={`form-control ${variant === "inherit" ? " form-control-inherit" : ""}`} ref={ref}>
         {label && <label>{label}</label>}
         <div
-          className={`form-control__element${typeof variant === "string" ? " form-control__element-" + variant : ""}`}
+          className={`form-control__element${traits?.responsive?" form-control__element-responsive":""}${typeof variant === "string" ? ` form-control__element-${variant}` : ""}`}
         >
           {traits?.beforeIcon && (
             <div className="form-control_before-icon">

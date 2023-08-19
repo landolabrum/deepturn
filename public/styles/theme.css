@@ -49,6 +49,12 @@ body {
   --default-box-shadow: 2px 2px 10px var(--color-gray-100);
   --default-box-shadow-sm: 2px 2px 5px var(--color-gray-100);
 
+  /* SIZES */
+  --s-1: 33px;
+  --s-2: 26px;
+  --s-3: 23px;
+  --s-4: 19px;
+  --s-5: 16px;
 
 }
 body {

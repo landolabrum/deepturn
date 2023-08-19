@@ -16,7 +16,7 @@ const ProductBuyNow: React.FC<any> = ({ product, cart, setCart, label = "add" }:
         {qty == 0 ? (
             <UiButton variant='dark' onClick={() => handleCart(1 + qty)}>{label}</UiButton>
         ) : (
-            <UiPill variant="dark" amount={qty} setAmount={handleCart} />
+            <UiPill variant="dark" traits={{responsive: true}} amount={qty} setAmount={handleCart} />
         )
         }
     </>;

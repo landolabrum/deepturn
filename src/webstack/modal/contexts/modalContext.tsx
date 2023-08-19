@@ -1,20 +1,25 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
+export type IModalContent = {
+  children?: ReactNode | null | string;
+  variant?: "popup";
+} | ReactNode | null;
+
 interface ModalContextType {
   isModalOpen: boolean;
-  openModal: (content: ReactNode) => ModalContextType;
+  openModal: (content: any) => ModalContextType;
   closeModal: () => void;
-  modalContent: ReactNode | null;
+  modalContent: IModalContent;
 }
 
 export const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 interface Props {
-  children: ReactNode;
+  children: any;
 }
 
 export const ModalProvider: React.FC<Props> = ({ children }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
 
   const openModal = (content: ReactNode): ModalContextType => {
@@ -41,7 +46,7 @@ export const useModal = () => {
 
   const defaultContext: ModalContextType = {
     isModalOpen: false,
-    openModal: (content: ReactNode) => {
+    openModal: (content: IModalContent) => {
       console.warn('openModal called before ModalProvider is ready.');
       return defaultContext;
     },

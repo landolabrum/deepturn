@@ -4,11 +4,10 @@ import CookieHelper from "@webstack/helpers/CookieHelper";
 import { ICartItem } from "../model/ICartItem";
 
 const useCart = () => {
-    const [cart, setCart] = useState<ICartItem[] | null | []>([]);
+    const [cart, setCart] = useState<ICartItem[] | null>([]);
     const getCartItems = () => {
         let cartItems: string | undefined | object = CookieHelper.getCookie('cart');
         if (typeof (cartItems) === "string") cartItems = JSON.parse(cartItems)?.items;
-
         return cartItems ? (cartItems as ICartItem[]) : [];
     }
     const handleQtyChange = (item: ICartItem) => {
@@ -53,7 +52,6 @@ const useCart = () => {
 
 
     useEffect(() => {
-
         setCart(getCartItems());
     }, [setCart]);
 

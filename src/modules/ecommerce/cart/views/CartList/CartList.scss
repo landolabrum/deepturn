@@ -1,104 +1,75 @@
-$pdg: 25px;
+$gap: 10px;
 
 .d-flex {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-}
-
-.d-flex-col {
-    @extend .d-flex;
-    flex-direction: column;
 }
 
 .cart-list {
+    @extend .d-flex;
     width: 100%;
-    @extend .d-flex-col;
-    gap: var(--default-element-height);
 
     .cart-list__item {
         @extend .d-flex;
-        
-        @media (max-width:900px) {
-            height: max-content;
+        justify-content: flex-start;
+        width: 100%;
+
+        @media(max-width: 900px) {
+            flex-direction: column;
         }
 
-        margin: 6px 0;
-        padding: calc($pdg * .5) calc($pdg) calc($pdg * .77) calc($pdg * .77);
-        justify-content: space-between;
-        width: calc(100% - calc($pdg * 2));
-        background-color: var(--color-gray-100);
-        border: solid 1px var(--color-gray-70);
-        border-radius: var(--default-border-radius);
-        min-height: var(--default-element-height);
-        .cart-list-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
 
-            @media (max-width:900px) {
-                flex-direction: column;
-            }
-        }
-
-        // background-color: #f30;
-        .cart-list-product {
+        .cart-list__item-content {
             @extend .d-flex;
-            gap: 20px;
-            height: 100%;
-            max-height: 200px;
-            justify-content: flex-start;
-            .cart-list-price {
-                @media (max-width:900px) {
-                    display: flex;
-                    align-items: flex-end;
-                    height: 80px;
-                    line-height: 2;
-                }
-            }
 
-            .cart-list-info {
-                @extend .d-flex-col;
-                height: 100%;
-                align-items: flex-start;
-                justify-content: space-between;
-
-                @media (max-width:900px) {
-                    align-items: flex-end;
-                }
-
-                .cart-list-product-info {
-                    .cart-list-name {
-                        line-height: 1.5;
-                        color: var(--color-gray-30);
-                        font-size: 22px;
-
-                        @media (max-width:900px) {
-                            font-size: 18px;
-
-                        }
-                    }
-
-                    .cart-list-description {
-                        width: 77%;
-                        color: var(--color-gray-60);
-                    }
-                }
-            }
-        }
-
-        .cart-list-qty {
-            @media (max-width:900px) {
-                padding-top: 20px;
+            @media(max-width: 900px) {
                 width: 100%;
+            }
+
+            border: solid 1px;
+
+            .cart-list__item-image {
+                aspect-ratio: 1/1;
+            }
+
+            .cart-list__item-body {
                 display: flex;
-                justify-content: center;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
+                margin: auto auto auto $gap;
+
+                .cart-list__item-name,
+                .cart-list__item-description,
+                .cart-list__item-amount {
+                    display: flex;
+                    height: 100%;
+                    border: solid 1px;
+
+                    @media(max-width: 900px) {}
+                }
+
+                .cart-list__item-name {
+                    font-size: var(--s-2);
+                    text-transform: capitalize;
+                    @media(max-width: 900px) {
+                        font-size: var(--s-3);
+                    }
+                }
+
+                // .cart-list__item-description {}
+                .cart-list__item-amount {
+                }
+                .cart-list__item-action {
+                    @media(max-width: 900px) {
+                        margin: 10px 0;
+                        width: 100%;
+                    }
+                }
             }
         }
+
+
     }
-
-
 }

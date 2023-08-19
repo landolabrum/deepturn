@@ -1,0 +1,16 @@
+.nav-button{
+    position: relative;
+    .nav-button__cart{
+        position: absolute;
+        top:calc(100% + 10px);
+        right:0;
+        background-color: var(--color-gray-80);
+        border: solid 1px var(--color-gray-60);
+        padding: 10px 15px;
+        box-shadow: var( --default-box-shadow);
+        border-radius: 4px;
+        @media(max-width: 900px){
+            width: calc(100% - 20px);
+        }
+    }
+}

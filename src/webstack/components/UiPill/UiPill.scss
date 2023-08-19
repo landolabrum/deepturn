@@ -1,52 +1,112 @@
 $size: 19px;
-.d-flex{
+.d-flex {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.ui-pill{
+.ui-pill {
     @extend .d-flex;
     height: var(--default-element-height);
-    gap:8px;
-    div{
+
+    gap: 8px;
+ 
+    // border: 1px solid #b3b3b3; // Add the same border as the ui-pill__action hover state
+    // border-radius: 5px; // Add a border-radius to make the pill rounded
+    // box-shadow: 
+    //     inset 1px 1px 0px rgba(0, 0, 0, 0.2), // Add the same inner shadow as the ui-pill__action hover state
+    //     inset -1px -1px 0px rgba(255, 255, 255, 0.7); // Add the same inner shadow as the ui-pill__action hover state
+    // transition: 0.2s; // Add a transition effect
+
+
+    div {
         flex: 1;
         text-align: center;
         @extend .d-flex;
     }
-    .ui-pill__action{
+    .ui-pill__action {
         cursor: pointer;
         font-weight: 900;
+        font-size: 24px;
         --ui-icon-color: var(--color-gray-60);
         padding: 4px;
-        &:first-child{
+        &:first-child {
             border-radius: 5px 0 0 5px;
         }
-        &:last-child{
-            border-radius: 0 5px 5px 0 ;
+        &:last-child {
+            border-radius: 0 5px 5px 0;
         }
+        user-select: none;
         height: calc(100% - calc(var(--default-element-height) * .35));
         margin: 2px 4px;
         aspect-ratio: 1/1;
-        &:hover{
+        border: 1px solid transparent; // Outer border
+
+        &:active {
+            transform: translateY(2px); // Button push effect
+            background-color: #f30 !important;
+            color: #fff !important;
+            text-shadow:
+              0 0 7px #fff,
+              0 0 10px #fff,
+              0 0 21px #fff,
+              0 0 42px #0fa,
+              0 0 82px #0fa,
+              0 0 92px #0fa,
+              0 0 102px #0fa,
+              0 0 151px #0fa;
+            box-shadow:
+              inset -1px -1px 2px rgba(255, 255, 255, 0.7),
+              inset 1px 1px 2px rgba(0, 0, 0, 0.2); // Inner bottom right shadow
+        }
+        &:hover {
             background-color: var(--color-gray-60);
             --ui-icon-color: var(--color-red-60);
             color: var(--color-gray-30);
+            border: 1px solid #b3b3b3; // Outer border
+            box-shadow:
+              inset 1px 1px 0px rgba(0, 0, 0, 0.2), // Inner top left shadow
+              inset -1px -1px 0px rgba(255, 255, 255, 0.7); // Inner bottom right shadow
+            font-weight: bold;
+            user-select: none;
+            cursor: pointer;
+            transform: scale(1.05); // Slight enlargement effect
+            transition: 0.2s; // Transition effect
         }
     }
-    .ui-pill__amount{
+    .ui-pill__amount {
         position: relative;
         @extend .d-flex;
         width: max-content;
         min-width: 24px;
         gap: 3px;
-        &::before{
+        &::before {
             font-size: 17px;
-            content: attr(data-value)
+            content: attr(data-value);
         }
-        &::after{
+        &::after {
             font-size: 12px;
             font-style: italic;
-            content: "x"
+            content: "x";
         }
     }
+    // RESPONSIVE
+    &.ui-pill-responsive {
+        @media(max-width: 900px) {
+            height: 100%;
+            flex-direction: column-reverse;
+            .ui-pill__action {
+                aspect-ratio: 5/3;
+                width: var(--default-element-height);
+                margin: 5px 4px;
+                font-size: 24px;
+                &:first-child {
+                    border-radius: 0 0 5px 5px;
+                }
+                &:last-child {
+                    border-radius: 5px 5px 0 0;
+                }
+            }
+        }
+    }
+    // RESPONSIVE
 }
