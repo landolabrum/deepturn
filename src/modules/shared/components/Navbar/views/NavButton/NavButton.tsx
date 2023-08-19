@@ -13,49 +13,40 @@ interface NavButtonProps {
 const NavButton = ({ item, handleRoute, setOpen }: NavButtonProps) => {
   const [totalQty, setTotalQty] = useState<number>(0);
   const { getCartItems } = useCart();
-  const cartIcon = "fal-bag-shopping";
+  const isCartIcon = item?.icon === "fal-bag-shopping";
   const router = useRouter();
   let traits:any = { beforeIcon: item?.icon };
-  if(item?.icon === cartIcon)traits['badge']=totalQty;
-
+  if(isCartIcon)traits['badge']=totalQty;
   useEffect(() => {
     const updateTotalQty = () => {
       const cartItems = getCartItems();
       const newTotalQty = cartItems.reduce((sum: number, item: any) => sum + (item.price_object.qty || 0), 0);
+      // if(newTotalQty > 1)alert(newTotalQty)
       setTotalQty(newTotalQty);
     };
-
-    // Initial update
     updateTotalQty();
-
-    // Function to handle the custom event
     const cookieChangeHandler = (e: CustomEvent) => {
       if (e.detail.cookieName === "cart") {
         updateTotalQty();
       }
     }
-
-    // Add event listener to observe changes in the "cart" cookie
     window.addEventListener("cookieChange", cookieChangeHandler as EventListener);
-
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("cookieChange", cookieChangeHandler as EventListener);
     };
   }, [getCartItems]);
 
-  const shouldRenderButton = item?.icon !== cartIcon || (item?.icon === cartIcon && totalQty > 0);
+  const shouldRenderButton = !isCartIcon || (isCartIcon && totalQty > 0);
   if (!shouldRenderButton) return null;
   
   return (
     <UiButton
       onClick={() => {
-        let route = item;
-        if(item?.icon === cartIcon) route.href = `${item?.href}?ref=${router.pathname.slice(1)}`
-        handleRoute(route);
+        if(isCartIcon) item.href = `${item?.href}?ref=${router.pathname.slice(1)}`
+        handleRoute(item);
         setOpen(item?.label);
       }}
-      variant={String(open) === item?.label ? "nav-itemactive" : "nav-item"}
+      variant={ `nav-item${String(open) === item?.label?"__active" : ""}`}
       traits={traits}
     >
       {item.label}

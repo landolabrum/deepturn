@@ -1,0 +1,17 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.globe{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+    .globe__content{
+        width: 100%;
+        border-top: solid 1px;
+    }
+}

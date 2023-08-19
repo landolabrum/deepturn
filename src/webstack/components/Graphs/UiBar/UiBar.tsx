@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./UiBar.scss";
-import { UiIcon } from "../UiIcon/UiIcon";
+import { UiIcon } from "../../UiIcon/UiIcon";
 
 import { dateFormat } from "@webstack/helpers/userExperienceFormats";
 

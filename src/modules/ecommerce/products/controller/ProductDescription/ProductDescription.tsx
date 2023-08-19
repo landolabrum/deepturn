@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import styles from './ProductDescriptionPage.scss';
+import styles from './ProductDescription.scss';
 import { dateFormat, numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { useHeader } from '@webstack/components/Header/views/Header';
@@ -7,12 +7,14 @@ import { useRouter } from 'next/router';
 import UiLoader from '@webstack/components/UiLoader/UiLoader';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
-import ProductImage from '../../components/ProductImage/ProductImage';
-import ProductBuyNow from '../../components/ProductBuyNow/ProductBuyNow';
+import ProductImage from '../../views/ProductImage/ProductImage';
+import ProductBuyNow from '../../views/ProductBuyNow/ProductBuyNow';
 import { ICartItem } from '../../../cart/model/ICartItem';
 import useCart from '../../../cart/hooks/useCart';
 
-const ProductDescriptionPage = () => {
+const ProductDescription = () => {
+
+
   const [header, setHeader] = useHeader();
   const router = useRouter();
   const product_query_id: string | undefined = router?.query?.id != undefined ? router?.query?.id.toString() : undefined
@@ -58,8 +60,6 @@ const ProductDescriptionPage = () => {
   return (
     <>
     <style jsx>{styles}</style>
-    {/* {cart && JSON.stringify(Array.from(cart ).map((k,v)=>{return k.price_object.qty}))} */}
-      {/* <small style={{ whiteSpace: "pre-wrap" }}>{JSON.stringify(product?.price_object.recurring == null)}</small> */}
     <div className="product-description">
       <AdaptGrid
         sm={1}
@@ -88,4 +88,4 @@ const ProductDescriptionPage = () => {
   );
 };
 
-export default ProductDescriptionPage;
+export default ProductDescription;

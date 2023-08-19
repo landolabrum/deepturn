@@ -7,6 +7,7 @@ export default interface UserContext {
   sponsorId: string;
   memberStatus: string;
   memberType: string;
+  metadata?: any;
 }
 
 

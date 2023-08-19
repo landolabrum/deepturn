@@ -1,3 +1,3 @@
-import ProductDescriptionPage from "~/src/modules/ecommerce/products/controller/ProductDescription/ProductDescriptionPage";
+import ProductDescription from "~/src/modules/ecommerce/products/controller/ProductDescription/ProductDescription";
 
-export default ProductDescriptionPage;
+export default ProductDescription;

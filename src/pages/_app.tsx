@@ -4,7 +4,7 @@ import DefaultLayout from "../layouts/default/DefaultLayout";
 import ServiceContainer from "@webstack/components/ServiceContainer/ServiceContainer";
 import { appWithTranslation } from 'next-i18next';
 import styles from "~/src/layouts/default/DefaultLayout.scss"
-import Navbar from "@shared/components/Navbar/views/Navbar";
+import Navbar from "@shared/components/Navbar/controller/Navbar";
 import { OverlayProvider } from "@webstack/components/Overlay/Overlay";
 import { HeaderProvider } from "@webstack/components/Header/views/Header";
 import useDarkMode from "@webstack/hooks/useDarkMode";

@@ -168,7 +168,7 @@ $badge: 19px;
 
     &[class$="-flat"],
     &[class$="-nav-item"],
-    &[class$="-nav-itemactive"] {
+    &[class$="-nav-item__active"] {
       border-radius: 0;
       --ui-icon-height: 20px;
       --ui-icon-width: 20px;
@@ -230,7 +230,7 @@ $badge: 19px;
       outline: none;
     }
 
-    &[class$="-nav-itemactive"] {
+    &[class$="-nav-item__active"] {
       cursor: default;
       color: var(--color-blue-10);
       --ui-icon-color: var(--color-blue-10);

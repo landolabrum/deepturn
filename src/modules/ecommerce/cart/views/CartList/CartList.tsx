@@ -2,9 +2,9 @@ import styles from './CartList.scss';
 import { ICartItem } from '../../model/ICartItem';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import UiPill from '@webstack/components/UiPill/UiPill';
-import ProductImage from '~/src/modules/ecommerce/products/components/ProductImage/ProductImage';
+import ProductImage from '~/src/modules/ecommerce/products/views/ProductImage/ProductImage';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
-import ProductBuyNow from '../../../products/components/ProductBuyNow/ProductBuyNow';
+import ProductBuyNow from '../../../products/views/ProductBuyNow/ProductBuyNow';
 
 
 // Remember to create a sibling SCSS file with the same name as this component

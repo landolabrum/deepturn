@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Subscription } from "rxjs";
 import UserContext from "~/src/models/UserContext";
 import IMemberService from "../../services/MemberService/IMemberService";
-import useUserAgent from "./useUserAgent";
 
 export const useUser = () => {
   const memberService = getService<IMemberService>('IMemberService');
@@ -16,7 +15,11 @@ export const useUser = () => {
   }, [memberService.userChanged]);
   return userContext;
 }
-
+export const userAccessLevel = () =>{
+  const user = useUser();
+  if(user?.metadata?.clearance)return user?.metadata?.clearance;
+  return 0;
+}
 export const useRequiredUser = () => {
   const user = useUser();
   const router = useRouter();

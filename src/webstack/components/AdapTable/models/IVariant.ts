@@ -22,7 +22,7 @@ export type VariantProps =
   | "mini"
   | "miniactive"
   | "nav-item"
-  | "nav-itemactive"
+  | "nav-item__active"
   | "null"
   | "undefined"
   | "wordmark"

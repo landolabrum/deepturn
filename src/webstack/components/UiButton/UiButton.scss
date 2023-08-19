@@ -41,7 +41,7 @@ button {
   &.icon, &.disabled-icon{
     padding: 0 7px;
   }
-  &.nav-itemactive{
+  &.nav-item__active{
     @media(max-width:900px){
       justify-content: flex-start;
 

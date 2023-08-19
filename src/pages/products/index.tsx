@@ -1,2 +1,2 @@
-import ProductsListingPage from "~/src/modules/ecommerce/products/controller/ProductsListing/ProductsListingPage";
-export default ProductsListingPage;
+import ProductsListing from "~/src/modules/ecommerce/products/controller/ProductsListing/ProductsListing";
+export default ProductsListing;

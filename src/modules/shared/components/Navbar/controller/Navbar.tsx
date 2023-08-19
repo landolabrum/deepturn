@@ -1,20 +1,22 @@
 import React, { useEffect, useState, useMemo } from "react";
 import styles from "./Navbar.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
-import { RouteProps, routes } from "../data/routes";
+import { RouteProps, accessRoutes } from "../data/routes";
 import useWindow from "@webstack/hooks/useWindow";
 import useRoute from "~/src/core/authentication/hooks/useRoute";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import environment from "~/src/environment";
-import NavButton from "./NavButton/NavButton";
+import NavButton from "../views/NavButton/NavButton";
 
 const Navbar = () => {
+  const routes = accessRoutes()
   const width = useWindow().width;
   const [sideNav, setSideNav] = useState(false);
   const [open, setOpen] = useState<string | null | undefined | number>(null);
   const [hide, setHide] = useState<boolean>(false);
   const [user, route, handleRoute]: any = useRoute(closeSideNavOnWidthChange);
+
   function closeSideNavOnWidthChange() {
     if (width < 900) setSideNav(false);
     setOpen(null);
@@ -37,13 +39,12 @@ const Navbar = () => {
     sideNav && closeSideNavOnWidthChange();
   }, [width > 900]);
 
-
+  
 
   if (user && !hide) {
     return (
       <>
         <style jsx>{styles}</style>
-
         <nav id="nav-bar" style={sideNav ? { bottom: "0" } : {}}>
           <div className="navbar__nav-content">
             <div className="navbar__nav-trigger" onClick={() => setOpen(open !== "sidenav" ? "sidenav" : "!sidenav")}>
@@ -68,9 +69,9 @@ const Navbar = () => {
                           <UiSelect
                             variant={
                               open === item?.label
-                                ? "nav-itemactive"
+                                ? "nav-item__active"
                                 : route.replaceAll("/", "") === item?.label
-                                  ? "nav-itemactive"
+                                  ? "nav-item__active"
                                   : "nav-item"
                             }
                             title={item.label === "account" ? `${displayName}` : item.label?.toString()}

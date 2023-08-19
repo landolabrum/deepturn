@@ -49,7 +49,7 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
             </div>
           </div>
           <div className="authentication__authentication-content">
-          e{newCustomerEmail}
+          newCustomerEmail: {newCustomerEmail}
             <div className="authentication__authentication-view">
               {view == 'sign-in' && <SignIn email={newCustomerEmail}/>}
               {view == 'sign-up' && <SignUp setView={setView}/>}

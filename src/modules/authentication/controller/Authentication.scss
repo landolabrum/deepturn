@@ -31,10 +31,10 @@ $cPad: 15px;
   .authentication_video {
     position: fixed;
     top: 0;
-    filter: blur(14px);
+    filter: blur(4px);
     height: 100vh;
     overflow: hidden;
-
+    mix-blend-mode: luminosity;
     @media (max-width: 900px) {
       transform: rotate(90deg);
     }
