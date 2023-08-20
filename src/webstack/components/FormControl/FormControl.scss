@@ -6,6 +6,7 @@ $badge: 19px;
   display: flex;
   flex-direction: column;
   text-transform: capitalize;
+  height: max-content;
   &.form-control-inherit {
     @extend .inherit;
   }
@@ -43,34 +44,26 @@ $badge: 19px;
     --ui-icon-width: 18px;
     border-radius: var(--default-border-radius);
 
-    // RESPONSIVE
-    &.form-control__element-responsive{
-      height: 100%;
-    }
-    // RESPONSIVE
+
 
     &:focus-within {
       color: var(--color-gray-90);
       background-color: var(--color-gray-20);
     }
 
-    &[class$="-center"] {
-      height: inherit;
-    }
 
-    &[class$="-dark"],
     &[class$="dark"] {
       color: var(--color-gray-50);
       background-color: #17171750;
 
-      .form-control_after-icon {
-        height: calc(var(--default-element-height) * .8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-left: solid 1px var(--color-gray-70);
-        border-radius: 5px;
-      }
+      // .form-control_after-icon {
+      //   height: calc(var(--default-element-height) * .8);
+      //   display: flex;
+      //   align-items: center;
+      //   justify-content: center;
+      //   border-left: solid 1px var(--color-gray-70);
+      //   border-radius: 5px;
+      // }
 
       &:hover,
       &:focus,
@@ -79,6 +72,34 @@ $badge: 19px;
       }
     }
 
+    &.form-control__element-center {
+      gap: 0;
+
+      .form-control_before-icon,
+      .form-control_after-icon {
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: calc(var(--default-element-height) * 1);
+        height: 100%;
+        --ui-icon-height: var(--default-element-height);
+        --ui-icon-color: var(--color-gray-80);
+
+        &:hover {
+          --ui-icon-color: var(--color-gray-50);
+          background-color: var(--color-gray-60-opaque);
+          outline: solid 1px var(--color-gray-50);
+        }
+
+        &:focus,
+        &:active {
+          --ui-icon-color: var(--color-gray-20);
+          background-color: var(--color-gray-70);
+          outline: solid 1px var(--color-gray-20);
+        }
+      }
+    }
 
     &[class$="-glow"] {
       background-color: var(--color-gray-100);
@@ -210,6 +231,7 @@ $badge: 19px;
       color: var(--color-blue);
       text-transform: none;
     }
+
     &[class$="-primary"] {
       color: var(--color-white);
       background-color: var(--color-primary);
@@ -242,6 +264,7 @@ $badge: 19px;
       // background-color: var(--color-gray-70, --background-color);
       outline: none;
       overflow: visible;
+
       @media (max-width: 900px) {
         background-color: transparent;
         color: var(--color-blue);
@@ -262,15 +285,18 @@ $badge: 19px;
       --ui-icon-width: 12px;
     }
 
-    .form-control_before-icon {
-      padding-left: 14px;
-      margin-right: -7px;
-    }
+    // .form-control_after-icon {
+    //   margin-left: 9px;
+    // }
+    // .form-control_after-icon,
+    // .form-control_before-icon {
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    //   width: calc(var(--default-element-height) * 1.5);
+    //   --ui-icon-width: 100%;
+    // }
 
-    .form-control_after-icon {
-      margin-left: -7px;
-      padding: 0 14px;
-    }
 
     .form-control__badge {
       position: absolute;
@@ -287,13 +313,13 @@ $badge: 19px;
       display: flex;
       align-items: center;
       justify-content: center;
-    
+
       &::before {
         content: '';
         display: block;
         padding-bottom: 100%;
       }
-    
+
       .form-control__badge-content {
         font-size: calc($badge * .7);
         font-weight: 700;
@@ -303,7 +329,23 @@ $badge: 19px;
         display: block;
         font-variant-ligatures: no-common-ligatures;
       }
+
     }
+
+    // RESPONSIVE
+    &.form-control__element-responsive {
+        width: var(--default-element-height);
+        padding: 0;
+        height: max-content;
+        flex-direction: column-reverse;
+        .form-control_before-icon,
+        .form-control_after-icon {
+          height: var(--default-element-height);
+      }
+
+    }
+
+    // RESPONSIVE
   }
 }
 

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import CookieHelper from '@webstack/helpers/CookieHelper';
 import CartList from '../CartList/CartList';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import AccountInfo from '~/src/modules/account/views/AccountInfo/AccountInfo';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
@@ -15,6 +16,7 @@ interface ICheckout {
 const Checkout: React.FC<ICheckout> = ({ cart }) => {
     const router = useRouter();
     const [cartList, setCart] = useState([]);
+
     const handleCheckout = () => {
 
     };
@@ -33,6 +35,7 @@ const Checkout: React.FC<ICheckout> = ({ cart }) => {
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" />
             </div>
+            <AccountInfo collapse={true}/>
             <CartList cart={cartList} collapse={true} />
         </div>
     </>

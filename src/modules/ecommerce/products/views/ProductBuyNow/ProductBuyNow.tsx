@@ -4,7 +4,7 @@ import UiPill from '@webstack/components/UiPill/UiPill';
 import { ICartItem } from '../../../cart/model/ICartItem';
 
 
-const ProductBuyNow: React.FC<any> = ({ product, cart, setCart, label = "add" }: any) => {
+const ProductBuyNow: React.FC<any> = ({ product, cart, setCart, label = "add", traits }: any) => {
     let cookieProduct = cart?.find((item: ICartItem) => item.id === product.id);
     const qty = cookieProduct?.price_object?.qty ? cookieProduct.price_object.qty : 0;
     const handleCart = (newQty?: number) => {
@@ -16,7 +16,7 @@ const ProductBuyNow: React.FC<any> = ({ product, cart, setCart, label = "add" }:
         {qty == 0 ? (
             <UiButton variant='dark' onClick={() => handleCart(1 + qty)}>{label}</UiButton>
         ) : (
-            <UiPill variant="dark" traits={{responsive: true}} amount={qty} setAmount={handleCart} />
+            <UiPill traits={traits} variant="center dark" amount={qty} setAmount={handleCart} />
         )
         }
     </>;

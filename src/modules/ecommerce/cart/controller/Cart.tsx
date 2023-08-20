@@ -7,12 +7,11 @@ import EmptyCart from '../views/EmptyCart/EmptyCart';
 import { ICartItem } from '../model/ICartItem';
 import CartList from '../views/CartList/CartList';
 import UiButton from '@webstack/components/UiButton/UiButton';
-import Checkout from '../views/Checkout/Checkout';
 import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
 import useCart from '../hooks/useCart';
 
 
-const Cart: React.FC = () => {
+const Cart = ({variant, traits}: any) => {
   const { getCartItems, handleQtyChange } = useCart();
   const cart = getCartItems();
   const router = useRouter();
@@ -49,7 +48,7 @@ const Cart: React.FC = () => {
           <div className='cart__header-title'></div>
           {cart && cart.length != 0 && <CheckoutButton isModal cart={cart} />}
         </div>
-        {cart && cart.length != 0 ? <CartList cart={cart} handleQty={setCart} 
+        {cart && cart.length != 0 ? <CartList traits={traits} variant={variant} cart={cart} handleQty={setCart} 
         // collapse
          /> : <EmptyCart />}
       </div>

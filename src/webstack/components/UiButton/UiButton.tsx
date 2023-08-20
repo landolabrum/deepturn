@@ -27,9 +27,12 @@ export const LinkProvider: FC<LinkProviderProps> = ({ href, target, children, re
       </>
     );
   return (
-    <Link href={href} target={target} rel={rel ? rel : "noopener noreferrer"}>
+    <>
+    <style jsx>{styles}</style>
+    <Link href={href} target={target} rel={rel ? rel : "noopener noreferrer"} style={{width:"100%"}}>
       {children}
     </Link>
+    </>
   );
 };
 interface ButtonProps extends FormControlProps {

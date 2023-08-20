@@ -6,20 +6,21 @@ import { OverlayProps, useOverlay } from "@webstack/components/Overlay/Overlay";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import createTestId from "@webstack/helpers/createTestId";
 
-type FormIconProps =
-  | {
+type FormIconProps = {
       icon: string;
       onClick: (e: any) => void;
-    }
-  | string;
+      color?: string;
+    } | string;
 export type ITraits =  {
   beforeIcon?: FormIconProps;
+  afterIcon?: FormIconProps;
   width?: number | string;
   height?: number | string;
-  afterIcon?: FormIconProps;
   badge?: any;
   responsive?:boolean;
-};
+  backgroundColor?:string;
+  outline?:string;
+} | undefined;
 
 export interface FormControlProps {
   label?: string | React.ReactElement;
@@ -47,11 +48,27 @@ const FormControl: NextComponentType<NextPageContext, {}, FormControlProps> = ({
   const [testId, setTestId] = useState<string>("");
 
   useEffect(() => {
+    if(!traits)return;
+    const elemenet_ref = ref.current.querySelector('.form-control__element');
 
     // Set width if provided
     if (traits?.width && ref.current) {
       if (typeof traits.width === "number") ref.current.style.width = `${traits.width}px`;
       if (typeof traits.width === "string") ref.current.style.width = traits.width;
+    }
+    if (traits?.height && ref.current) {
+      if (typeof traits.height === "number") ref.current.style.height = `${traits.height}px`;
+      if (typeof traits.height === "string") ref.current.style.height = traits.height;
+    }
+    if (traits?.backgroundColor && ref.current) {
+      if (typeof traits.backgroundColor === "string") elemenet_ref.style.backgroundColor = traits.backgroundColor;
+    }
+    if (traits?.outline && ref.current) {
+      if (typeof traits.outline === "string") {
+        if (elemenet_ref) {
+          elemenet_ref.style.outline = traits.outline;
+        }
+      }
     }
     if (traits?.height && ref.current) {
       if (typeof traits.height === "number") ref.current.style.height = `${traits.height}px`;
@@ -70,7 +87,7 @@ const FormControl: NextComponentType<NextPageContext, {}, FormControlProps> = ({
     if (overlay === false && overlay_.active) {
       setOverlay_({ active: false });
     }
-  }, [overlay, setOverlay_, traits?.width, traits?.height]);
+  }, [overlay, setOverlay_, traits]);
 
   useEffect(() => {
     setTestId(createTestId(ref.current.parentNode, childRef.current));
@@ -87,6 +104,7 @@ const FormControl: NextComponentType<NextPageContext, {}, FormControlProps> = ({
           {traits?.beforeIcon && (
             <div className="form-control_before-icon">
               <UiIcon
+                color={typeof traits?.beforeIcon !== "string" ? traits.beforeIcon?.color:undefined}
                 onClick={(typeof traits?.beforeIcon !== "string" && traits?.beforeIcon?.onClick) || (() => null)}
                 icon={typeof traits?.beforeIcon === "string" ? traits?.beforeIcon : traits?.beforeIcon?.icon}
               />

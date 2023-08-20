@@ -47,6 +47,7 @@ $pad: 18px;
       height: $hite;
       border: solid 1px var(--color-gray-70-opaque);
       @media(max-width:900px){
+        height: auto;
         width: calc(100% - 4px);
       }
       &:hover{
@@ -58,6 +59,7 @@ $pad: 18px;
         height: calc(100% - 40px);
         margin: $pad;
         @media(max-width:900px){
+          margin:0 10px;
          padding: 10px;
         }
         @extend .d-flex;

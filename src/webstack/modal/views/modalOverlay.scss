@@ -30,7 +30,7 @@
         width: 50vw;
         border-radius: var(--default-border-radius);
         padding: var(--default-padding);
-        justify-content: space-between;
+        justify-content: flex-start;
         gap: var(--default-padding);
         @media(max-width:900px){
             width: calc(100vw - 60px);

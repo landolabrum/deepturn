@@ -23,11 +23,16 @@ $hite: calc(100% - 20px);
 .product-image {
     @extend .d-flex;
     overflow: hidden;
-    aspect-ratio: 1/1;
     .product-image__content {
         @extend .d-flex;
-        --ui-icon-height: calc(100% - 22px);
         --ui-icon-width: calc(100% - 22px);
+        --ui-icon-height: calc(100% - 22px);
+        @media(max-width:900px){
+            --ui-icon-width: inherit;
+            --ui-icon-height: 100px;
+            width: 100%;
+            height: auto;
+        }
         &:hover{
             animation: scale 1s forwards;
         }

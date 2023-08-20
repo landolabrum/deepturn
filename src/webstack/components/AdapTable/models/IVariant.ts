@@ -4,6 +4,7 @@ export type VariantProps =
   | "left"
   | "right"
   | "dark"
+  | "center dark"
   | "account"
   | "active"
   | "blue"

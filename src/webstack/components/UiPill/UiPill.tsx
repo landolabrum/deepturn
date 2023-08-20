@@ -1,32 +1,66 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import styles from "./UiPill.scss";
-import { UiIcon } from '../UiIcon/UiIcon';
 import { VariantProps } from '../AdapTable/models/IVariant';
-import FormControl, { ITraits } from '../FormControl/FormControl';
+import Input from '../UiInput/UiInput';
+import debounce from 'lodash/debounce';
+import { ITraits } from '../FormControl/FormControl';
 
 interface IPill {
   amount: number,
   setAmount: (qty: number) => void,
   variant?: VariantProps,
-  traits: ITraits
-
+  traits?: ITraits
 };
+
 const UiPill = ({ amount, setAmount, variant, traits }: IPill) => {
-  const handleAmount = useCallback((e: any) => {
-    setAmount(amount + (e.target.id === "plus" ? 1 : -1));
+  const [value,setValue]=useState<string>("0");
+  let _traits:any = {
+    beforeIcon:{
+      icon:amount > 1 ?"fas-minus": "fa-trash-can",
+      onClick:()=>handleAmount('minus'),
+      color:amount == 1?"red":""
+    },
+    afterIcon:{
+      icon:"fas-plus",
+      onClick:()=>handleAmount('plus')
+    },
+  }
+  if(traits){
+    Object.entries(traits).forEach(([traitKey, traitValue]:any) => {
+      _traits[traitKey]=traitValue;
+    });
+  }
+  const debouncedHandleInput = useRef(debounce((value: string) => {
+    const isNumber = !isNaN(Number(value));
+    isNumber && setAmount(Number(value));
+  }, 1500)).current;
+
+  const handleInput = useCallback((e: any) => {
+    setValue(e.target.value);
+    debouncedHandleInput(e.target.value);
+  }, [debouncedHandleInput]);
+
+  const handleAmount = useCallback((method: "plus" | "minus") => {
+    setAmount(amount + (method === "plus" ? 1 : -1));
   }, [amount, setAmount]);
 
+useEffect(() => {
+  amount && setValue(amount.toString());
+}, [amount]);
   return (
     <>
-      <style jsx>{styles}</style>
-      <FormControl traits={traits} variant={variant}>
+    <style jsx>{styles}</style>
         <div className={`ui-pill ${traits?.responsive?' ui-pill-responsive':''}`}>
-          <div className='ui-pill__action' id="minus" onClick={handleAmount}>{amount > 1 ? "-" : <UiIcon icon="fa-trash-can" />}</div>
-          <div className={`${amount ? "ui-pill__amount" : ""}`} data-value={amount} />
-          <div className='ui-pill__action' id="plus" onClick={handleAmount}>+</div>
+          <Input
+            name="ui-pill"
+            variant={variant} 
+            traits={_traits}
+            value={value}
+            onChange={handleInput}
+            />
         </div>
-      </FormControl>
     </>
   );
 }
+
 export default UiPill;

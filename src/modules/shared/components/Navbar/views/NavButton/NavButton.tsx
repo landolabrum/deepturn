@@ -56,7 +56,7 @@ const NavButton = ({ item, handleRoute, setOpen }: NavButtonProps) => {
   return (<>
   <style jsx>{styles}</style>
     <span className="nav-button">
-      {hasModal && <div className='nav-button__cart'><Cart /></div>}
+      {hasModal && <div className='nav-button__cart'><Cart variant="mini" traits={{responsive: true, width:"100%"}}/></div>}
       <UiButton
         onClick={() => {
           if (isCartIcon) item.href = `${item?.href}?ref=${router.pathname.slice(1)}`

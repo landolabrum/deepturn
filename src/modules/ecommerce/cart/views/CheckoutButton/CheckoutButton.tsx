@@ -6,14 +6,16 @@ import { calculateCartTotal } from '@webstack/helpers/userExperienceFormats';
 import { useModal } from '@webstack/modal/contexts/modalContext';
 import { useRouter } from 'next/router';
 import Checkout from '../Checkout/Checkout';
+import { ITraits } from '@webstack/components/FormControl/FormControl';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckoutButton {
     cart: any;
     label?: string;
     isModal?: boolean;
+    traits?: ITraits
 }
-const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false }) => {
+const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false, traits }) => {
     const { openModal, closeModal } = useModal();
     const router = useRouter();
     const handleCheckout = () => {
@@ -24,7 +26,7 @@ const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", i
     return <>
         <style jsx>{styles}</style>
         <div className='checkout'>
-            <UiButton variant="primary" onClick={handleCheckout} >{`${label} ${calculateCartTotal(cart)}`}</UiButton>
+            <UiButton traits={{width: "100%"}} variant="primary" onClick={handleCheckout} >{`${label} ${calculateCartTotal(cart)}`}</UiButton>
         </div>
     </>
 };
