@@ -11,7 +11,6 @@ export default class MyDocument extends Document {
           <Head>
             <link rel="stylesheet" href="/styles/global.css" />
             <link rel="stylesheet" href="/styles/theme.css" />
-            <script src="//unpkg.com/three-globe"></script>
           </Head>
         <body id="app-body">
           <Main />

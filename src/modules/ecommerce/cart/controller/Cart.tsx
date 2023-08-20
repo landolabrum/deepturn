@@ -1,6 +1,5 @@
 import styles from './Cart.scss';
 import React, { useEffect, useState } from 'react';
-import CookieHelper from '@webstack/helpers/CookieHelper';
 import { useHeader } from '@webstack/components/Header/views/Header';
 import { useRouter } from 'next/router';
 import EmptyCart from '../views/EmptyCart/EmptyCart';
@@ -9,6 +8,7 @@ import CartList from '../views/CartList/CartList';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
 import useCart from '../hooks/useCart';
+import UiLoader from '@webstack/components/UiLoader/UiLoader';
 
 
 const Cart = ({variant, traits}: any) => {
@@ -17,27 +17,26 @@ const Cart = ({variant, traits}: any) => {
   const router = useRouter();
   const [header, setHeader] = useHeader();
   const [loaded, setLoaded] = useState(false);
+  let query = String(router.query.ref);
 
   const setCart = (item: ICartItem) => {
     handleQtyChange(item);
   };
   
-  const handleProduct = (product: any) => {
-    router.push({ pathname: "/product", query: { id: product.id, pri: product.price_object.id } })
-  }
+  // const handleProduct = (product: any) => {
+  //   router.push({ pathname: "/product", query: { id: product.id, pri: product.price_object.id } })
+  // }
   
   function handleHeader() {
-    const query = String(router.query.ref);
-    const crumbs: any = query ? [{ label: query }, { label: "cart" }] : [{ label: "cart" }];
+    const crumbs: any = query ? [{ label: typeof query == 'undefined'?query:"products" }, { label: "cart" }] : [{ label: "cart" }];
     if (query) setHeader({ title: "cart", breadcrumbs: crumbs });
   }
-
   useEffect(() => {
     if (cart.length > 0) handleHeader();
     setLoaded(true);
-  }, []);
+  }, [query]);
   if (!loaded) {
-    return "null"; // Or return a loading spinner, or some other "loading" state component
+    return <UiLoader />; // Or return a loading spinner, or some other "loading" state component
   }
   return (
     <>

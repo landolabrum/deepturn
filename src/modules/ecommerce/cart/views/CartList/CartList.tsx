@@ -17,9 +17,13 @@ const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, t
                 <AdaptGrid xs={1}>
                     {cart && cart.map((item, key) => (
                         <div className="cart-list__item" key={key}>
-                            <div className={`cart-list__item-content ${variant == 'mini'?"cart-list__item-content-mini":''}`}>
+                            <div className={`cart-list__item-content ${variant == 'mini' ? "cart-list__item-content-mini" : ''}`}>
                                 <div className="cart-list__item-image" data-name={item?.name}>
-                                   <ProductImage image={item.images} options={{size: "100px"}}/>
+                                    <ProductImage image={item.images} options={{
+                                        size: "100px", style: {
+                                            borderRadius: "10px"
+                                        }
+                                    }} />
                                 </div>
                                 <div className={`cart-list__item-body`}>
                                     <div className="cart-list__item-name">
@@ -31,12 +35,12 @@ const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, t
                                     <div className="cart-list__item-amount">
                                         {item?.price}
                                     </div>
-                                    </div>
-                            <div className="cart-list__item-action">
-                                <ProductBuyNow traits={traits} product={item} cart={cart} setCart={(it: any) => {
-                                    handleQty(it);
-                                }} />
-                            </div>
+                                </div>
+                                <div className="cart-list__item-action">
+                                    <ProductBuyNow traits={traits} product={item} cart={cart} setCart={(it: any) => {
+                                        handleQty(it);
+                                    }} />
+                                </div>
                             </div>
                         </div>
                     ))

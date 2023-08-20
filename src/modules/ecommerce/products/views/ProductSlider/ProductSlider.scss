@@ -41,12 +41,13 @@ $pad: 18px;
     }
     .product-slider__product {
       @extend .d-flex;
-      aspect-ratio: 3/4;
       border-radius: $pad;
       background-color: var(--color-gray-70-opaque);
       height: $hite;
       border: solid 1px var(--color-gray-70-opaque);
+      aspect-ratio: 3/4;
       @media(max-width:900px){
+        aspect-ratio: unset;
         height: auto;
         width: calc(100% - 4px);
       }
@@ -59,6 +60,7 @@ $pad: 18px;
         height: calc(100% - 40px);
         margin: $pad;
         @media(max-width:900px){
+          width: 100%;
           margin:0 10px;
          padding: 10px;
         }

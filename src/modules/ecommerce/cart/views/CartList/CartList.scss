@@ -1,6 +1,7 @@
 $gap: 10px;
 $pad: 10px;
 
+$space: 14px;
 .d-flex {
     display: flex;
     justify-content: center;
@@ -9,23 +10,21 @@ $pad: 10px;
 
 .cart-list {
     @extend .d-flex;
-    margin-top: 10px;
-    width: calc(100% - $pad);
-    border: solid 1px var(--color-gray-70);
-    padding: calc($pad * 1.5) $pad;
-    border-radius: var(--default-border-radius);
+    margin-top: $pad;
+    width: calc(100% );
     .cart-list__item {
-        margin-bottom: 7px;
-        padding-bottom: 5px;
-        border-bottom: solid 1px var(--color-gray-70);
-        width: 100%;
+        border-radius: 7px;
+        background-color: var(--color-gray-80-opaque);
+        padding: $space;
+        &:not(:last-child) {
+            margin-bottom: calc($space * .75);
+        }
+        width: calc(100% - calc($space * 2));
         @extend .d-flex;
         justify-content: flex-start;
         @media(max-width: 900px) {
             flex-direction: column;
         }
-
-
         .cart-list__item-content {
             @extend .d-flex;
             gap: 7px;
@@ -34,6 +33,7 @@ $pad: 10px;
             justify-content: flex-start;
             width: calc(100% - 2px);
             &.cart-list__item-content-mini{
+                justify-content: space-between;
                     .cart-list__item-name,
                 .cart-list__item-description{
                     line-height: 1;

@@ -24,6 +24,7 @@ $hite: calc(100% - 20px);
     @extend .d-flex;
     overflow: hidden;
     .product-image__content {
+        overflow: hidden;
         @extend .d-flex;
         --ui-icon-width: calc(100% - 22px);
         --ui-icon-height: calc(100% - 22px);

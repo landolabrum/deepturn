@@ -86,6 +86,7 @@ const Navbar = () => {
                         </>
                       )}
                       {!item.items && <NavButton
+                        active={open === item?.label || route.replaceAll("/", "") === item?.label}
                         item={item}
                         handleRoute={handleRoute}
                         setOpen={setOpen}

@@ -8,7 +8,7 @@ const ProductImage: React.FC<{ image?: any, options?: any }> = ({ image, options
         <>
             <style jsx>{styles}</style>
             <div className="product-image">
-                <div className="product-image__content">
+                <div style={options?.style} className={`product-image__content`}>
                     {image && !imageLoadError ? (
                         <img
                             src={image}
@@ -25,4 +25,4 @@ const ProductImage: React.FC<{ image?: any, options?: any }> = ({ image, options
     );
 };
 
-export default ProductImage;
+export default ProductImage; 

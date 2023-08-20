@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-three/fiber": "^8.13.7",
     "axios": "^0.26.1",
+    "d3": "^7.8.5",
     "d3-fetch": "^3.0.1",
     "globe.gl": "^2.29.2",
     "google-libphonenumber": "^3.2.32",
@@ -22,6 +23,7 @@
     "react": "^18.2.0",
     "react-cookie": "^5.0.0",
     "react-dom": "^18.2.0",
+    "react-globe.gl": "^2.24.3",
     "react-slick": "^0.29.0",
     "rxjs": "^7.5.5",
     "slick-carousel": "^1.8.1",
