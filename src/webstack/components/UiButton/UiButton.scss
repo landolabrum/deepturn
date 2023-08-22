@@ -1,14 +1,14 @@
 button {
-  display: inherit;
+  display: flex;
   align-items: inherit;
-  justify-content: inherit;
+  justify-content: center;
   color: inherit;
-  background-color: inherit;
+  background-color: transparent;
   outline: none;
   border: none;
   height: inherit;
   line-height: inherit;
-  width: inherit;
+  width: 100%;
   gap: inherit;
   text-transform: inherit;
   font-size: inherit;
@@ -17,7 +17,7 @@ button {
   cursor: inherit;
   border-radius: inherit;
   overflow: hidden;
-  padding: 0 16px;
+  // padding: 0 16px;
   &.link {
     padding: 0;
   }
@@ -35,7 +35,7 @@ button {
     justify-content: center;
     align-items: center;
     border-radius: var(--input-border-radius);
-    background-color: #00000045;
+    // background-color: #00000045;
     --ui-icon-color: var(--color-blue);
   }
   &.icon, &.disabled-icon{

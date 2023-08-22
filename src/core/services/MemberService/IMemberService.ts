@@ -15,6 +15,7 @@ export type ProductsRequestProps={
 }
  
 export default interface IMemberService {
+  getCustomerMethods(request?: any): Promise<any>; 
   getProducts(request?: any): Promise<any>; 
   getProduct({id, pri}:ProductRequestProps): Promise<any>;
   lights(): Promise<any>;

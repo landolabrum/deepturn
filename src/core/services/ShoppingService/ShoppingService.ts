@@ -27,10 +27,6 @@ export default class ShoppingService extends ApiService implements IShoppingServ
     // return this.get('/admin/orders/export');
   }
   
-  orderHistory(memberId: string): Promise<any> {
-    return this.post(`/reports/order-history/${memberId}`);
-  }
-
   orderHistoryDetails(orderId: string ): Promise<any>{
     return this.post(`/reports/order-history/details/${orderId}`)
   }
@@ -39,4 +35,8 @@ export default class ShoppingService extends ApiService implements IShoppingServ
     const token = this.memberService.getCurrentUserToken();
     if (token) { headers['Authorization'] = `Bearer ${token}`; }
   }
+  orderHistory(memberId: string): Promise<any> {
+    return this.post(`/reports/order-history/${memberId}`);
+  }
+
 }

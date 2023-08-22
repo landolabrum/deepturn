@@ -35,7 +35,7 @@ const UiSelect: React.FC<SelectProps> = ({
   const [isOpen, setIsOpen] = useState<string>("closed");
   const [title_, setTitle] = useState<string | number>("");
   const typesBypass: any = options;
-  const hasOptions = !Boolean(typesBypass?.every((element: any) => element === undefined));
+  const hasOptions = Boolean(typesBypass?.every((element: any) => element !== undefined));
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const bOpen = isOpen === 'open';
   const handleSelect=(e:any)=>{

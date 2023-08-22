@@ -17,47 +17,70 @@
 .modal-overlay {
     @extend .d-flex;
     @extend .p-fix;
-    
-    background-color: var(--color-primary-opaque);
+
+    background-color: var(--color-gray-90-opaque);
     z-index: 999;
+
+    @media(max-width:900px) {
+        overflow-y: visible;
+        height: 80vh;
+    }
 
     .modal-overlay__content {
         @extend .d-flex;
-        transform: translateY(15%);
+        margin-top: 10%;
         flex-direction: column;
         background-color: var(--color-gray-80);
         min-height: 50vw;
         width: 50vw;
         border-radius: var(--default-border-radius);
-        padding: var(--default-padding);
+        padding: calc(var(--default-padding) * 1.5) var(--default-padding);
         justify-content: flex-start;
         gap: var(--default-padding);
-        @media(max-width:900px){
+        max-height: 100vh;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--color-blue);
+            border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar {
+            width: 10px;
+            aspect-ratio: 1/1;
+            background-color: #00000033;
+        }
+
+        @media(max-width:900px) {
             width: calc(100vw - 60px);
             min-height: 100vw;
+            margin-top: 100px;
         }
+
         .modal-overlay__header {
             @extend .d-flex;
             align-self: flex-start;
             justify-content: space-between;
             width: 100%;
-            
+
             .modal-overlay__title {
                 font-size: 21px;
             }
-            .modal-overlay__icon{
+
+            .modal-overlay__icon {
                 --ui-icon-color: var(--color-gray-60);
-                &:hover{
+
+                &:hover {
                     cursor: pointer;
                     --ui-icon-color: var(--color-gray-30);
                 }
-                
+
             }
         }
-        .modal-overlay__body{
-            word-wrap: break-word; 
-            width: 100%;
 
+        .modal-overlay__body {
+            word-wrap: break-word;
+            width: 100%;
         }
     }
 }

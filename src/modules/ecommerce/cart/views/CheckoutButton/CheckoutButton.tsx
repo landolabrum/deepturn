@@ -13,12 +13,17 @@ interface ICheckoutButton {
     cart: any;
     label?: string;
     isModal?: boolean;
-    traits?: ITraits
+    traits?: ITraits;
+    collect?: boolean;
 }
-const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false, traits }) => {
+const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false, traits, collect }) => {
     const { openModal, closeModal } = useModal();
+
     const router = useRouter();
     const handleCheckout = () => {
+        if(collect){
+            
+        }
         if (isModal) openModal(<Checkout cart={cart} />);
         if (!isModal) router.push("/checkout");
     };
@@ -26,7 +31,7 @@ const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", i
     return <>
         <style jsx>{styles}</style>
         <div className='checkout'>
-            <UiButton traits={{width: "100%"}} variant="primary" onClick={handleCheckout} >{`${label} ${calculateCartTotal(cart)}`}</UiButton>
+            <UiButton variant="primary" onClick={handleCheckout} >{`${label} ${calculateCartTotal(cart)}`}</UiButton>
         </div>
     </>
 };

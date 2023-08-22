@@ -13,8 +13,9 @@
   justify-content: center;
   height: 70px;
   @media (max-width: 900px) {
-    width: inherit;
+    width: max-content;
     justify-content: center;
+    margin: auto;
   }
 }
 nav {

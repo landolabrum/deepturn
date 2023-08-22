@@ -39,31 +39,42 @@ export default class MemberService
 
 
   public async signUp(
-    { 
+    {
       name,
       email,
       password,
       user_agent
-    }:any
-    ): Promise<UserContext> {
-      if (!email) {
-        throw new ApiError("Email is required", 400, "MS.SI.01");
-      }
-      if (!password) {
-        throw new ApiError("Password is required", 400, "MS.SI.02");
-      }
-      const res = await this.post<{},any>(
-        "usage/auth/sign-up",
-        {
-          name:name,
-          email:email,
-          password:password,
-          user_agent:user_agent
-        },
-      );
-        return res;
+    }: any
+  ): Promise<UserContext> {
+    if (!email) {
+      throw new ApiError("Email is required", 400, "MS.SI.01");
+    }
+    if (!password) {
+      throw new ApiError("Password is required", 400, "MS.SI.02");
+    }
+    const res = await this.post<{}, any>(
+      "usage/auth/sign-up",
+      {
+        name: name,
+        email: email,
+        password: password,
+        user_agent: user_agent
+      },
+    );
+    return res;
+  }
+  public async getCustomerMethods(
+    request?: any
+  ): Promise<any> {
+    let id:string = this._getCurrentUser(false)?.id;
+    if (id ) return await this.get<any>(
+      `/api/method/customer/?id=${id}`,
+    );
+    if (!id) {
+      throw new ApiError("Customer not logged in", 400, "MS.SI.02");
     }
 
+  }
 
   public async getProducts(
     request?: any

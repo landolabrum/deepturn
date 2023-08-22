@@ -35,6 +35,7 @@ body {
   --color-gray-100: #171717;
   --color-gray-100-opaque: #17171750;
   
+  --color-white: white;
   --color-orange: #f90;
   --color-green-60: #22c553;
   --color-red-60: #ef4444;
@@ -146,6 +147,9 @@ h6 {
 /* DIV */
 div{
   --default-padding: 20px;
+  @media(max-width: 900px){
+    --default-padding: 10px;
+  }
 }
 
 /* Forms */

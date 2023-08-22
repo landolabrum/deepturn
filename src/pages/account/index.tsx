@@ -1,2 +1,2 @@
-import Account from "~/src/modules/account/views/Account";
+import Account from "~/src/modules/account/controller/Account";
 export default Account;

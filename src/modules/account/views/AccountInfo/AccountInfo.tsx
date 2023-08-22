@@ -9,43 +9,64 @@ import Input from '@webstack/components/UiInput/UiInput';
 interface IAccountInfo {
     collapse?: boolean;
     form?: string;
+    customer: any
 }
-const AccountInfo: React.FC<any> = ({ collapse, form = "contact" }: IAccountInfo) => {
-    const AccountInfoContainer = () => {
-        const usr = useUser();
-        let user: any = usr;
-        const [form, setForm] = useState<any>({
-
-        })
-        if (user) user = {
-            first_name: user.name.split(" ")[0],
-            last_name: user.name.split(" ")[1],
-            email: user?.email,
-            phone: user?.phone,
-            line1: user?.address.line1,
-            line2: user?.address.line2,
-            city: user?.address.city,
-            state: user?.address.state,
-            postal_code: user?.address.postal_code,
+const AccountInfo: React.FC<any> = ({ collapse, form }: IAccountInfo) => {
+    const [loaded, setLoaded] = useState(false);
+    const [customer, setCustomer] = useState({});
+    const user: any = useUser();
+    function handleCustomer() {
+        loaded && setLoaded(!loaded);
+        if (user) {
+            const forms:any = {
+                profile:{
+                    first_name: user.name.split(" ")[0],
+                    last_name: user.name.split(" ")[1],
+                    email: user?.email,
+                    phone: user?.phone,
+                    line1: user?.address.line1,
+                    line2: user?.address.line2,
+                    city: user?.address.city,
+                    state: user?.address.state,
+                    postal_code: user?.address.postal_code,
+                }
+            };
+            setCustomer(
+                forms[form]
+            );
+            setLoaded(!loaded);
         }
-        return (
-            <>
-                <style jsx>{styles}</style>
-                <div className='account-info'>
-                    <h1>Account info</h1>
-                    <form className="account-info__form">
-                        {Object.entries(user).map(([field, value], key) => {
-                            return <Input name={field} label={field.replace("_", " ")} value={String(value)} variant='dark' />
-                        })}
-                    </form>
-                </div>
-            </>
-        );
     }
+    const [_form, setForm] = useState<any>({
+
+    })
+    useEffect(() => {
+        handleCustomer();
+    }, [form, setLoaded]);
+
+    if (!loaded) return <div >loading</div>
     if (collapse) return <UiCollapse label={`Account Info `}>
-        <AccountInfoContainer />
+        <>
+            <style jsx>{styles}</style>
+            <div className='account-info'>
+                <form className="account-info__form">
+                    {Object.entries(customer).map(([field, value], key) => {
+                        return <Input name={field} label={field.replace("_", " ")} value={value ? String(value) : ''} variant='dark' />
+                    })}
+                </form>
+            </div>
+        </>
     </UiCollapse>;
-    return <AccountInfoContainer />
+    return <>
+        <style jsx>{styles}</style>
+        <div className='account-info'>
+            <form className="account-info__form">
+                { Object.entries(customer).map(([field, value], key) => {
+                    return <Input name={field} label={field.replace("_", " ")} value={value ? String(value) : ''} variant='dark' />
+                })}
+            </form>
+        </div>
+    </>;
 };
 
 export default AccountInfo;

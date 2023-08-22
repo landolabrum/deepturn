@@ -10,27 +10,25 @@ interface ICollapse {
     children: React.ReactElement | string | undefined;
     label?: string;
 }
-const UiCollapse: React.FC<ICollapse> = ({ open, children, label="Collapse" }) => {
-    const [isOpen, setOpen] = useState<boolean>(false);
-    useEffect(() => {
-        if(open)setOpen(open);
-    }, []);
+const UiCollapse: React.FC<ICollapse> = ({ open, children, label = "Collapse" }) => {
+    const [isOpen, setOpen] = useState<number>(0);
+    const handleOpen = () =>{
+        if([0,1].includes(isOpen) )setOpen(isOpen + 1);
+        if(isOpen == 2)setOpen(1);
+    }
     return (
         <>
             <style jsx>{styles}</style>
-            <div className='collapse'>
-                <div className='collapse__button' onClick={() => setOpen(!isOpen)}>
-                    <div>
-                        {label}
-                    </div>
-                    <UiIcon icon={`fa-chevron-${isOpen ? "down" : "right"}`} />
+            <div className={`collapse ${isOpen == 1 ? "collapse-open" : isOpen == 2?"collapse-closed":""}`}>
+                <div className={`collapse__button`} onClick={handleOpen}>
+                    {label}
+                    <UiIcon icon={`fa-chevron-${isOpen == 1 ? "down" : "right"}`} />
                 </div>
-                <div className={`collapse__content ${isOpen ?"collapse__content-open":""}`}>
+                <div className={`collapse__content`}>
                     {children}
                 </div>
             </div>
         </>
     );
 };
-
 export default UiCollapse;

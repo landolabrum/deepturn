@@ -1,12 +1,14 @@
 $shadow-size: 10px;
 $badge: 19px;
-
+$elPad: 14px;
 .form-control {
   position: relative;
   display: flex;
   flex-direction: column;
   text-transform: capitalize;
   height: max-content;
+  width: 100%;
+  justify-content: center;
   &.form-control-inherit {
     @extend .inherit;
   }
@@ -22,49 +24,40 @@ $badge: 19px;
   }
 
   .form-control__element {
-    overflow: hidden;
+    // overflow: hidden;
     position: relative;
-    width: 100%;
     cursor: pointer;
     font-size: 16px;
     font-weight: 300;
-    gap: 7px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: flex-start;
     line-height: 1;
     height: calc(var(--default-element-height) - 2px);
     white-space: nowrap;
     color: var(--color-gray-60);
     --ui-icon-color: var(--color-gray-40);
-
+    padding: 0 $elPad;
     background: var(--color-gray-30);
     outline: solid 1px var(--color-gray-60);
     --ui-icon-height: 18px;
     --ui-icon-width: 18px;
     border-radius: var(--default-border-radius);
-
-
-
     &:focus-within {
       color: var(--color-gray-90);
       background-color: var(--color-gray-20);
     }
+    .form-control_before-icon{
+      margin-left: calc($elPad * -1);
+    }
+    .form-control_after-icon {
+      margin-right: calc($elPad * -1);
 
+    }
 
     &[class$="dark"] {
       color: var(--color-gray-50);
-      background-color: #17171750;
-
-      // .form-control_after-icon {
-      //   height: calc(var(--default-element-height) * .8);
-      //   display: flex;
-      //   align-items: center;
-      //   justify-content: center;
-      //   border-left: solid 1px var(--color-gray-70);
-      //   border-radius: 5px;
-      // }
-
+      background-color: var(--color-gray-90-opaque);
       &:hover,
       &:focus,
       &:active {
@@ -74,9 +67,10 @@ $badge: 19px;
 
     &.form-control__element-center {
       gap: 0;
-
+      
       .form-control_before-icon,
       .form-control_after-icon {
+        // padding:0 10px;
 
         display: flex;
         align-items: center;
@@ -285,17 +279,7 @@ $badge: 19px;
       --ui-icon-width: 12px;
     }
 
-    // .form-control_after-icon {
-    //   margin-left: 9px;
-    // }
-    // .form-control_after-icon,
-    // .form-control_before-icon {
-    //   display: flex;
-    //   align-items: center;
-    //   justify-content: center;
-    //   width: calc(var(--default-element-height) * 1.5);
-    //   --ui-icon-width: 100%;
-    // }
+
 
 
     .form-control__badge {
