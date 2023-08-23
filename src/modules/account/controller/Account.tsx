@@ -6,7 +6,7 @@ import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import useWindow from "@webstack/hooks/useWindow";
 import { useHeader } from "@webstack/components/Header/views/Header";
 import { countries, states } from "@webstack/models/location";
-import AccountInfo from "../views/AccountInfo/AccountInfo";
+import AccountForm from "../views/AccountForm/AccountForm";
 import AccountMethods from "../views/AccountMethods/AccountMethods";
 interface Props {}
 
@@ -15,7 +15,7 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
   const [header, setHeader] = useHeader();
   const [loaded, setLoaded] = useState(false);
   const views = ["edit profile", "email notification", "privacy & security", 'billing'];
-  const [view, setView] = useState<string>(views[0]);
+  const [view, setView] = useState<string>(views[3]);
 
   useEffect(() => {
       setLoaded(true);
@@ -40,9 +40,10 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
           <div className="account__views">
             <div className="account__views-desktop">
               <UiMenu
+                traits={{height: "100%"}}
                 options={views}
                 variant="dark"
-                value={views[0]}
+                value={view}
                 onSelect={(e) => {
                   setView(e);
                 }}
@@ -55,13 +56,13 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
                 }}
                 variant="dark"
                 title="Account Settings"
-                openState
+                // openState
                 options={views}
               />
             </div>
           </div>
           <div className="account__content">
-            {view !== 'billing' && <AccountInfo form={view.split(" ")[1]}/> }
+            {view !== 'billing' && <AccountForm form={view.split(" ")[1]}/> }
             {view === 'billing' && <AccountMethods/> }
           </div>
         </div>
@@ -71,17 +72,3 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
 };
 
 export default Account;
-// function Iterator(listOfStuff: any, isChild = false) {
-//   if (listOfStuff)
-//     return Object.entries(listOfStuff).map(([key, value]: any) => {
-//       return (
-//         <>
-//           <style jsx>{styles}</style>
-//           <div className={`account__line-item ${isChild ? " is-child" : ""}`} key={key}>
-//             <strong>{keyStringConverter(key)}</strong>{" "}
-//             {["string", "number"].includes(typeof value) ? value : Iterator(value, true)}
-//           </div>
-//         </>
-//       );
-//     });
-// }

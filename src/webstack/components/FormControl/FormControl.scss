@@ -51,8 +51,7 @@ $elPad: 14px;
       margin-left: calc($elPad * -1);
     }
     .form-control_after-icon {
-      margin-right: calc($elPad * -1);
-
+      margin-right: calc($elPad * -.33);
     }
 
     &[class$="dark"] {

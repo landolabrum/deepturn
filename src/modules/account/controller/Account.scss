@@ -1,19 +1,22 @@
 .account {
   display: flex;
   gap: 10px;
+  height: 100%;
   .account__views {
     width: 33%;
     .account__views-mobile {
       display: none;
     }
     .account__views-desktop {
-      display: unset;
+      display: flex;
+      height: 100%;
     }
   }
   @media (max-width: 900px) {
     flex-direction: column;
     gap: 15px;
     .account__views {
+      z-index: 4;
       .account__views-mobile {
         display: unset;
       }
@@ -24,10 +27,8 @@
     }
   }
   .account__content {
-    height: auto;
-    @media (min-width: 900px) {
-      width: 100%;
-    }
+    height: 100%;
+
     font-family: "Atkinson Hyperlegible", sans-serif;
     display: flex;
     flex-direction: column;
@@ -36,6 +37,9 @@
     padding: 15px;
     background-color: var(--color-gray-80);
     border: solid 1px var(--color-gray-60);
+    @media (min-width: 900px) {
+      width: 100%;
+    }
       .account__line-item {
         &.is-child {
           padding-left: 15px;

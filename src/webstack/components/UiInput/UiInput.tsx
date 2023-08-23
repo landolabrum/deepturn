@@ -45,6 +45,9 @@ const Input: NextComponentType<NextPageContext, {}, InputProps> = (props: InputP
   const inputType = show ? "" : type;
   const eyeIcon = show ? "fa-eye" : "fa-eye-slash";
   const validatedClass = validate(value) ? "" : " invalid";
+  const handleChange = (e:any) =>{
+    onChange && onChange(e);
+  }
   return (
     <>
       <style jsx>{styles}</style>
@@ -58,7 +61,7 @@ const Input: NextComponentType<NextPageContext, {}, InputProps> = (props: InputP
           placeholder={placeholder}
           min={min}
           max={max}
-          onChange={onChange}
+          onChange={handleChange}
           autoComplete={autoComplete}
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}

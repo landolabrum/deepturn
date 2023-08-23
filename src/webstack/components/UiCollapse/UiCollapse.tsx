@@ -9,17 +9,23 @@ interface ICollapse {
     open?: boolean;
     children: React.ReactElement | string | undefined;
     label?: string;
+    style?: {[key: string]: string};
 }
-const UiCollapse: React.FC<ICollapse> = ({ open, children, label = "Collapse" }) => {
+const UiCollapse: React.FC<ICollapse> = ({ open, children, label = "Collapse", style }) => {
     const [isOpen, setOpen] = useState<number>(0);
     const handleOpen = () =>{
         if([0,1].includes(isOpen) )setOpen(isOpen + 1);
         if(isOpen == 2)setOpen(1);
     }
+
+    useEffect(() => {
+        if(open === true)setOpen(1);
+        if(open === false)setOpen(0);
+    }, [open]);
     return (
         <>
             <style jsx>{styles}</style>
-            <div className={`collapse ${isOpen == 1 ? "collapse-open" : isOpen == 2?"collapse-closed":""}`}>
+            <div style={style} className={`collapse ${isOpen == 1 ? "collapse-open" : isOpen == 2?"collapse-closed":""}`}>
                 <div className={`collapse__button`} onClick={handleOpen}>
                     {label}
                     <UiIcon icon={`fa-chevron-${isOpen == 1 ? "down" : "right"}`} />
