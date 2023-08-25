@@ -56,8 +56,8 @@ const AccountMethods: React.FC = () => {
           </div>
         }
         ) :
-          (
-            <UiLoader position='relative' height={500} />)
+        (
+          <UiLoader position='relative' height={500} />)
         }
       </div>
     </>

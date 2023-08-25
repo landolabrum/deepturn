@@ -9,24 +9,25 @@ import maskInput from "./helpers/maskInput";
 
 
 
-const Input: NextComponentType<NextPageContext, {}, InputProps> = (props: InputProps) => {
+const UiInput: NextComponentType<NextPageContext, {}, InputProps> = (props: InputProps) => {
   const { type, value, onChange, onKeyDown, onKeyUp } = props;
 
   const [show, setShow] = useState<boolean>(false);
   const [formattedValue, setFormattedValue] = useState<string>(value?.toString() || "");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(props?.max && props.max < e.target.value.length)return;
+    let _e:any = e;
+    if(props?.max && props.max < _e.target.value.length)return;
     let [newV, extra] = maskInput(e, type);
     if(extra !== undefined){
       console.log('!extra: ',[newV, extra])
       setFormattedValue(value + newV)
-      e.target.value = [newV, extra];
+      _e.target.value = [newV, extra];
     }else{
-      e.target.value = newV;
+      _e.target.value = newV;
       setFormattedValue(e.target.value);
     }
-    if (onChange)onChange(e);
+    if (onChange)onChange(_e);
   };
   const inputClasses = `${typeof props.variant === 'string' ? props.variant : ""}${validateInput(value, type) ? "" : " invalid"}${props.disabled ? ' input-disabled' : ''}${props.traits?.beforeIcon ?' input__has-icons':''}`
   return (
@@ -61,7 +62,7 @@ const Input: NextComponentType<NextPageContext, {}, InputProps> = (props: InputP
   );
 };
 
-export default Input;
+export default UiInput;
 
 
 

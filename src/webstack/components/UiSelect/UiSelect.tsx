@@ -4,7 +4,7 @@ import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { RouteProps } from "@shared/components/Navbar/data/routes";
 import FormControl from "../FormControl/FormControl";
 import UiMenu, { UiMenuProps } from "../UiMenu/UiMenu";
-import Input from "../UiInput/UiInput";
+import UiInput from "../UiInput/UiInput";
 type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string } | string | React.ReactElement;
 
 export interface SelectProps extends UiMenuProps {
@@ -79,7 +79,7 @@ const UiSelect: React.FC<SelectProps> = ({
           style={traits?.width?{width:`${traits.width}px`}:{}}
           onClick={handleOpen}
           >
-          <Input 
+          <UiInput 
             disabled
             label={label} 
             variant={hasOptions && variant !== 'disabled'? variant:"select__disabled"}

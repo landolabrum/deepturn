@@ -2,7 +2,7 @@ import {
   UiIconSet,
   UiIconStrokeOptions,
 } from "../types/icons";
-import { themeReceipt, spinner, bundle } from "./html/theme";
+import {  spinner } from "./html/theme";
 import { emptyCart } from "./html/ecommerce/empty-cart";
 import { brandIcons } from "./categories/brand_icons";
 import { methodIcons } from "./categories/method_icons";

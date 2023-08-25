@@ -2,6 +2,7 @@
 import React from 'react';
 import styles from './Admin.scss';
 import dynamic from 'next/dynamic';
+import UiElements from '@webstack/views/UiElements/UiElements';
 
 
 const UiGlobe = dynamic(
@@ -15,8 +16,9 @@ const Admin = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      <h1>ADMIN</h1> 
-      <UiGlobe/>
+      {/* <h1>ADMIN</h1>  */}
+      <UiElements/>
+      {/* <UiGlobe/> */}
 
     </>
   );

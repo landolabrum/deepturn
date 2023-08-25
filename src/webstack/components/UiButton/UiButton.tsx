@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./UiButton.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import type { NextComponentType, NextPageContext } from "next";
-import FormControl, { FormControlProps } from "../FormControl/FormControl";
+import FormControl, { FormControlProps as IFormControl } from "../FormControl/FormControl";
 import Link from "next/link";
 import type { FC } from "react";
 
-interface LinkProviderProps {
+interface ILinkProvider {
   href?: string;
   target?: string;
   children?: React.ReactElement | React.ReactFragment;
@@ -14,7 +14,7 @@ interface LinkProviderProps {
   formControl?: boolean;
 }
 
-export const LinkProvider: FC<LinkProviderProps> = ({ href, target, children, rel, formControl = true }) => {
+export const LinkProvider: FC<ILinkProvider> = ({ href, target, children, rel, formControl = true }) => {
   if (!href) return <>NO HREF</>;
   if (formControl)
     return (<>
@@ -35,7 +35,7 @@ export const LinkProvider: FC<LinkProviderProps> = ({ href, target, children, re
     </>
   );
 };
-interface ButtonProps extends FormControlProps {
+interface IButton extends IFormControl {
   onClick?: (e: any) => void;
   disabled?: boolean;
   busy?: boolean;
@@ -43,11 +43,11 @@ interface ButtonProps extends FormControlProps {
   target?: string;
 }
 
-interface ButtonContextProps extends ButtonProps {
-  context: ButtonProps;
+interface IButtonContext extends IButton {
+  context: IButton;
 }
 
-const ButtonContext = ({ context }: ButtonContextProps) => {
+const ButtonContext = ({ context }: IButtonContext) => {
   let traits = context.traits ? context.traits : {};
   if (context.disabled) traits['disabled'] = true;
   return (
@@ -71,7 +71,7 @@ const ButtonContext = ({ context }: ButtonContextProps) => {
   );
 };
 
-const UiButton: NextComponentType<NextPageContext, {}, ButtonProps> = ({
+const UiButton: NextComponentType<NextPageContext, {}, IButton> = ({
   href,
   target,
   onClick,
@@ -81,7 +81,7 @@ const UiButton: NextComponentType<NextPageContext, {}, ButtonProps> = ({
   busy,
   traits,
   label,
-}: ButtonProps) => {
+}: IButton) => {
   if (href)
     return (
       <>

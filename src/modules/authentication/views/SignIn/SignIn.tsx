@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Input from "@webstack/components/UiInput/UiInput";
+import UiInput from "@webstack/components/UiInput/UiInput";
 import type { NextComponentType } from "next";
 import TwoFactorAuth from "./components/TwoFactorAuth/TwoFactorAuth";
 import UiButton from "@webstack/components/UiButton/UiButton";
@@ -93,7 +93,7 @@ const SignIn = ({email}:{email:string | undefined}) => {
       <form className="sign-in">
 
         {["email", "password"].map((field) => (
-          <Input
+          <UiInput
             key={field}
             type={field}
             autoComplete={field === "email" ? "username" : "current-password"}

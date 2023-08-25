@@ -11,6 +11,7 @@ export interface UiIconDefinition {
   height?: number; // viewbox height
   path?: string | string[]; // single path or path array
   stroke?: UiIconStrokeOptions; // single path or path array
+  glow?: string;
   // stroke?: boolean;
 
   // Option 2

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Input from '@webstack/components/UiInput/UiInput';
+import UiInput from '@webstack/components/UiInput/UiInput';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import styles from "./TwoFactorAuth.scss";
  
@@ -54,7 +54,7 @@ const TwoFactorInput: React.FC<TwoFactorProps> = ({code, setCode}) => {
                 <AdaptGrid xs={6} gap={10} focus={["input", focusIndex]}>
                     {Array.from(code).map((v, i) => {
                         return <span key={i} className='two-factor-auth__input'>
-                            <Input variant="center" name={`tfa-${i}`} value={v} type="tel" onKeyDown={handleKey} onPaste={handlePaste} />
+                            <UiInput variant="center" name={`tfa-${i}`} value={v} type="tel" onKeyDown={handleKey} onPaste={handlePaste} />
                         </span>;
                     })}
                 </AdaptGrid>

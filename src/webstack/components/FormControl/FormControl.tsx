@@ -71,18 +71,6 @@ const FormControl: NextComponentType<NextPageContext, {}, FormControlProps> = ({
     if (elemenet_ref) {
       if (typeof traits.outline === "string") elemenet_ref.style.outline = traits.outline;
       traits?.disabled && elemenet_ref.classList.add('form-control__element-disabled');
-      // if (typeof variant === "string") {
-      //   const variantArray = variant.split(' ');
-      //   // const beforeClasses = elemenet_ref.querySelector('#before_icon')?.classList;
-      //   // const afterClasses = elemenet_ref.querySelector('#before_icon')?.classList;
-      //   if (variantArray.length > 1) {
-      //     variantArray.forEach(vari => {
-      //       elemenet_ref.classList.add(`form-control__element-${vari}`);
-      //     });
-      //   } else {
-      //     elemenet_ref.classList.add(`form-control__element-${variant}`);
-      //   }
-      // }
       traits?.responsive && elemenet_ref.classList.add('form-control__element-responsive');
     }
     // Manage overlay
@@ -100,7 +88,7 @@ const FormControl: NextComponentType<NextPageContext, {}, FormControlProps> = ({
   }, [overlay, setOverlay_, traits]);
   const varClasses = (clzz: string) => {
     const varArr: any = variant?.split(' ');
-    if (varArr.length) {
+    if (varArr && varArr.length) {
       let initialValue = clzz;
       return varArr.reduce(
         (accumulator: string, currentValue: string) => 

@@ -1,0 +1,15 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.ui-elements{
+  .ui-elements__header{
+    .ui-elements__title{}
+  }
+  .ui-elements__content{
+
+    .ui-elements__body{}
+    .ui-elements__footer{}
+  }
+}

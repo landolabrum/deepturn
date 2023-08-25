@@ -1,7 +1,7 @@
 import { useCallback, useState, useRef, useEffect } from 'react';
 import styles from "./UiPill.scss";
 import { VariantProps } from '../AdapTable/models/IVariant';
-import Input from '../UiInput/UiInput';
+import UiInput from '../UiInput/UiInput';
 import debounce from 'lodash/debounce';
 import { ITraits } from '../FormControl/FormControl';
 
@@ -51,7 +51,7 @@ useEffect(() => {
     <>
     <style jsx>{styles}</style>
         <div className={`ui-pill ${traits?.responsive?' ui-pill-responsive':''}`}>
-          <Input
+          <UiInput
             name="ui-pill"
             variant={variant} 
             traits={_traits}

@@ -1,7 +1,7 @@
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { useEffect } from "react";
 import styles from "./AdapTableHeader.scss";
-import Input from "@webstack/components/UiInput/UiInput";
+import UiInput from "@webstack/components/UiInput/UiInput";
 import { TableFunctionProps } from "../AdaptTableContent/views/AdapTableContent";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
@@ -31,7 +31,7 @@ export default function AdapTableHeader({
     <div className='adaptable-header'>
       <div className='adaptable-header__table-title'>
         <div className='adaptable-header__logo'>
-          <UiIcon icon="connect-logo" />
+          <UiIcon icon="deepturn-logo" />
         </div>
         <div className='adaptable-header__title'>{traits?.tableTitle}</div>
       </div>
@@ -53,7 +53,7 @@ export default function AdapTableHeader({
       }
       {setSearch &&
         <div className="adaptable-header__search-input">
-          <Input
+          <UiInput
           name="search"
           variant={busy ?"icon-blue":""}
           placeholder={`${traits?.placeholder?traits.placeholder:"Search"}`}

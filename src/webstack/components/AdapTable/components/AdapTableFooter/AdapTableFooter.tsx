@@ -2,7 +2,7 @@ import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { SetStateAction, useState } from "react";
 import styles from "./AdapTableFooter.scss";
 import { Dispatch } from "react";
-import Input from "@webstack/components/UiInput/UiInput";
+import UiInput from "@webstack/components/UiInput/UiInput";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import { NaCell } from "../AdaptTableContent/components/AdaptTableCell/AdaptTableCell";
@@ -62,7 +62,7 @@ export default function AdapTableFooter({
         <div className="adaptable-footer__content">
           <div className="adaptable-footer__page-input">
             Page{" "}
-            <Input
+            <UiInput
               variant="center"
               name="page-input"
               traits={{width: 35, height: 43}}

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AccountCreateMethod.scss';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
-import Input from '@webstack/components/UiInput/UiInput';
+import UiInput from '@webstack/components/UiInput/UiInput';
 import { OPaymentMethod } from '../../model/IMethod';
 import formatCreditCard from '@webstack/helpers/userExperienceFormats';
 import UiButton from '@webstack/components/UiButton/UiButton';
@@ -40,10 +40,10 @@ const AccountCreateMethod: React.FC = () => {
         <>
             <style jsx>{styles}</style>
             <div className='account-create-method'>
-                {JSON.stringify(method)}
-                <UiCollapse open={true} style={{ minHeight: "80px" }} label='add payment method'>
+                {/* {JSON.stringify(method)} */}
+                <UiCollapse open={false}  label='add payment method'>
                     <div className='account-create-method__method'>
-                        <Input
+                        <UiInput
                             label={'number'}
                             name={'number'}
                             value={method.number}
@@ -58,7 +58,7 @@ const AccountCreateMethod: React.FC = () => {
                             }}
                         />
                         <div className='account-create-method__exp'>
-                            <Input
+                            <UiInput
                                 label={'expiration'}
                                 name={'expiry'}
                                 type={'expiry'}
@@ -67,7 +67,7 @@ const AccountCreateMethod: React.FC = () => {
                                 onChange={handleMethod}
                                 placeholder='MM / YY'
                             />
-                            <Input
+                            <UiInput
                                 label={'ccv'}
                                 name={'ccv'}
                                 type={'number'}

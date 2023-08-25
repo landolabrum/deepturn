@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './AccountForm.scss';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
-import Input from '@webstack/components/UiInput/UiInput';
+import UiInput from '@webstack/components/UiInput/UiInput';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import methodReduce from '../../helpers/methodReduce';
 
@@ -62,7 +62,7 @@ const AccountForm: React.FC<any> = ({ collapse, form }: IAccountInfo) => {
         if (!data) return;
         return Object.entries(data).map(([field, value]: any, key: number) => {
             if (typeof value == 'object') return <FormFields data={value} />;
-            return <Input name={field} label={field.replace("_", " ")} value={value ? String(value) : ''} variant='dark' />
+            return <UiInput name={field} label={field.replace("_", " ")} value={value ? String(value) : ''} variant='dark' />
         })
     }
     return <>

@@ -1,4 +1,4 @@
-$pad: 16px;
+$pad: 18px;
 $delW: 60px;
 $min: calc(100% - calc(calc($pad * 2) + $delW));
 $max: calc(100% - calc($pad * 2));
@@ -7,9 +7,9 @@ $color: var(--color-gray-50);
 $colorHover: var(--color-primary);
 $contentBackground: var(--color-gray-70);
 $contentBackgroundHover: var(--color-gray-70-opaque);
-$background: var(--color-gray-90-opaque);
+$background: var(--color-gray-90);
 $outlineColor: var(--color-gray-80);
-$borderColor: var(--color-gray-60);
+$borderColor: var(--color-gray-90);
 
 @keyframes show {
     0% { width: $max; }
@@ -31,7 +31,6 @@ $borderColor: var(--color-gray-60);
     @extend .d-flex;
     justify-content: flex-start;
     min-height: 500px;
-    position: relative;
     .account-methods__method {
         cursor: pointer;
         border-radius: 9px;
@@ -39,6 +38,9 @@ $borderColor: var(--color-gray-60);
         outline: solid 1px $outlineColor;
         background-color: $background;
         color: $color;
+        height: 45px;
+        position: relative;
+
         @extend .d-flex;
         flex-direction: row;
         justify-content: flex-start;
@@ -47,14 +49,14 @@ $borderColor: var(--color-gray-60);
         .account-methods__method-content{
             line-height: 1;
             font-size: var(--s-4);
-            height: var(--default-element-height);
+            // height: var(--default-element-height);
             background-color: $contentBackground;
             @extend .d-flex;
             flex-direction: row;
             border-radius: 7px;
             z-index: 2;
             justify-content: space-between;
-            padding: $pad;
+            padding: calc($pad * .66) $pad;
             width: calc(100% - calc($pad * 2));
             animation-play-state: paused;
             &.account-methods__method-content-show{
@@ -77,9 +79,8 @@ $borderColor: var(--color-gray-60);
                 justify-content: flex-start;
                 flex-direction: row;
                 gap: $pad;
-                height: inherit;
                 --ui-icon-width: max-content;
-                --ui-icon-height: 100%;
+                --ui-icon-height: 16px;
             }
             .account-methods__method-exp{
                 @extend .d-flex;
@@ -100,11 +101,13 @@ $borderColor: var(--color-gray-60);
             width: calc($delW + 10px);
             justify-content: center;
             align-items: center;
-            height: calc(var(--default-element-height) + calc($pad * 2));
+            height: 100%;
+            // height: calc(var(--default-element-height) + calc($pad * 2));
             border-radius: 9px;
             display: flex;
                 &:hover{
                     --ui-icon-color: var(--color-red);
+                    
                     background-color: $contentBackgroundHover;
                 }
             }

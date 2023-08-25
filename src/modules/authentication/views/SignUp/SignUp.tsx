@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./SignUp.scss";
 
-import Input from "@webstack/components/UiInput/UiInput";
+import UiInput from "@webstack/components/UiInput/UiInput";
 import type { NextComponentType } from "next";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import { useUser } from "~/src/core/authentication/hooks/useUser";
@@ -92,7 +92,7 @@ const SignUp = ({setView}:ISignUp) => {
     <style jsx>{styles}</style>
       <form className="sign-up">
         {fields.map((field) => (
-          <Input
+          <UiInput
             key={field}
             type={field.includes("password")?"password":"text"}
             autoComplete={field === "email" ? "username" : "current-password"}
