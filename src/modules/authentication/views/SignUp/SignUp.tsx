@@ -91,7 +91,6 @@ const SignUp = ({setView}:ISignUp) => {
     <>
     <style jsx>{styles}</style>
       <form className="sign-up">
-        <h4>Sign Up</h4>
         {fields.map((field) => (
           <Input
             key={field}

@@ -1,3 +1,28 @@
+
+@keyframes abled {
+  0%{
+    cursor: default;
+    position: relative;
+    color: transparent;
+    text-shadow: 0 0 2px var(--color-gray-60);
+  }
+  100%{
+    color: inherit;
+    text-shadow: none;
+  }
+}
+@keyframes disable {
+  0%{
+    color: inherit;
+    text-shadow: none;
+  }
+  100%{
+    cursor: default;
+    position: relative;
+    color: transparent;
+    text-shadow: 0 0 2px var(--color-gray-60);
+  }
+}
 button {
   display: flex;
   align-items: inherit;
@@ -48,7 +73,14 @@ button {
 
     }
   }
-
+  &:disabled{
+    animation: disable 1s forwards;
+    // animation-play-state: running;
+  }
+  &:not(disabled){
+    animation: abled 1s forwards;
+    // animation-play-state: paused;
+  }
 }
 .ui-button__link {
   color: inherit;

@@ -14,8 +14,8 @@ const outline2px: UiIconStrokeOptions = {
 
 const Icons: UiIconSet = {
   // PAYMENT METHODS
-  visa: methodIcons.visa,
-  //  theme"
+  ...methodIcons,
+  //  THEME
   spinner: { width: 100, height: 100, html: spinner },
   "deepturn-logo":brandIcons.deepturn_logo,
   "fmc-logo": brandIcons.fmc,

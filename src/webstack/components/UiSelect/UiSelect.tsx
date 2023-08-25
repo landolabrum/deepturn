@@ -4,10 +4,11 @@ import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { RouteProps } from "@shared/components/Navbar/data/routes";
 import FormControl from "../FormControl/FormControl";
 import UiMenu, { UiMenuProps } from "../UiMenu/UiMenu";
+import Input from "../UiInput/UiInput";
 type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string } | string | React.ReactElement;
 
 export interface SelectProps extends UiMenuProps {
-  options?: (string | RouteProps)[] | React.ReactElement[];
+  options?: (string | RouteProps | number)[] | React.ReactElement[];
   onSelect?: (value: any) => void;
   openDirection?: "up" | "down" | "left" | "right";
   onToggle?: (isOpen: boolean) => void;
@@ -72,16 +73,22 @@ const UiSelect: React.FC<SelectProps> = ({
   return (
     <>
       <style jsx>{styles}</style>
-      <FormControl label={label} variant={hasOptions && variant !== 'disabled'? variant:"select__disabled"} overlay={bOpen} setOverlay={handleOpen} traits={traits}>
-        <div className={`select ${openDirection}`}  style={traits?.width?{width:`${traits.width}px`}:{}}>
-          <div className={`select__selected ${variant ? " " + variant : ""}`} onClick={handleOpen}>
-            {isTitleObject(title) && title.preIcon && <UiIcon icon={title.preIcon} />}
-            {title_ || selectedOption || "Select"}
-            {isTitleObject(title) && title.postIcon && <UiIcon icon={title.postIcon} />}
-          </div>
-          <div className={`select__psuedo-icon`}>
-            {variant !== 'disabled' && <UiIcon icon={bOpen ? "fa-xmark" : `fa-chevron-${openDirection}`} />}
-          </div>
+      {/* <FormControl label={label} variant={hasOptions && variant !== 'disabled'? variant:"select__disabled"} overlay={bOpen} setOverlay={handleOpen} traits={traits}> */}
+        <div
+          className={`select ${openDirection}`}
+          style={traits?.width?{width:`${traits.width}px`}:{}}
+          onClick={handleOpen}
+          >
+          <Input 
+            disabled
+            label={label} 
+            variant={hasOptions && variant !== 'disabled'? variant:"select__disabled"}
+            value={title_ || selectedOption || "Select"}
+            traits={{
+              beforeIcon: isTitleObject(title) && title.preIcon ? title.preIcon: undefined,
+              afterIcon: isTitleObject(title) && title.postIcon ? title.postIcon: variant !== 'disabled' && bOpen ? "fa-xmark" : `fa-chevron-${openDirection}`
+            }}
+            />
           {bOpen && variant !== 'disabled' && (
             <div className={`select__options ${variant ? " " + variant : ""}`}>
               <UiMenu 
@@ -96,7 +103,7 @@ const UiSelect: React.FC<SelectProps> = ({
             </div>
           )}
         </div>
-      </FormControl>
+      {/* </FormControl> */}
     </>
   );
 };

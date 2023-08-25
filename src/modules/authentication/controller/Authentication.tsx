@@ -4,6 +4,7 @@ import SignIn from "../views/SignIn/SignIn";
 import styles from "./Authentication.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import SignUp from "../views/SignUp/SignUp";
+import keyStringConverter from "@webstack/helpers/keyStringConverter";
 
 
 interface Props { }
@@ -28,31 +29,39 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
         setView("sign-up")
     }
   }
-  useEffect(()=>{
-    if(view.includes("@")){
+  useEffect(() => {
+    if (view.includes("@")) {
       setNewCustomerEmail(view);
     }
-    if(newCustomerEmail != undefined)setView("sign-in");
-  },[setView, newCustomerEmail])
+    if (newCustomerEmail != undefined) setView("sign-in");
+  }, [setView, newCustomerEmail])
 
   return (
     <>
       <style jsx>{styles}</style>
-      <div className="authentication__authentication">
+      <div className="authentication">
         <video autoPlay loop muted playsInline className="authentication_video">
           <source src="./assets/beeple.mp4" type="video/mp4" />
         </video>
-        <div className="authentication__authentication-body">
-          <div className="authentication__authentication-header">
-            <div className="authentication__authentication-logo">
+        <div className="authentication-body">
+          <div className="authentication-header">
+            <div className="authentication-logo">
               <UiIcon icon="deepturn-logo" />
             </div>
           </div>
-          <div className="authentication__authentication-content">
-          newCustomerEmail: {newCustomerEmail}
-            <div className="authentication__authentication-view">
-              {view == 'sign-in' && <SignIn email={newCustomerEmail}/>}
-              {view == 'sign-up' && <SignUp setView={setView}/>}
+          <div className="authentication-content">
+            {/* newCustomerEmail: {newCustomerEmail} */}
+            <div className="authentication__view">
+              <div className='authentication__view-header'>
+                <div className="authentication__logo-mobile">
+                  <UiIcon icon="deepturn-logo" />
+                </div>
+                <div className='authentication__view-name'>
+                  {keyStringConverter(view)}
+                </div>
+              </div>
+              {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
+              {view == 'sign-up' && <SignUp setView={setView} />}
               <div className="authentication__view-action">
                 <label>{view == 'sign-in' ? "no account?" : "already have an account?"}</label>
                 <a onClick={handleView}>
@@ -62,7 +71,7 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
             </div>
 
           </div>
-          <div className="authentication__authentication-footer">
+          <div className="authentication-footer">
             {/* Existence is not something to be grasped or understood with precision; it is a flowing, mysterious dance of
           interwoven energies, where the beauty lies in its ineffable ambiguity. */}
           </div>

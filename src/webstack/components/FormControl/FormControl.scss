@@ -1,6 +1,44 @@
 $shadow-size: 10px;
 $badge: 19px;
 $elPad: 14px;
+
+.inherit {
+  --ui-icon-color: inherit;
+  --ui-icon-width: inherit;
+  --ui-icon-height: inherit;
+  text-decoration: inherit;
+  color: inherit;
+  background-color: inherit;
+  height: inherit;
+  min-height: inherit;
+  max-height: inherit;
+  width: inherit;
+  min-width: inherit;
+  max-width: inherit;
+  padding: inherit;
+  margin: inherit;
+  display: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+  flex-direction: inherit;
+  gap: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  border: inherit;
+  outline: inherit;
+  border-radius: inherit;
+  box-shadow: inherit;
+  aspect-ratio: inherit;
+  position: inherit;
+}
+
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .form-control {
   position: relative;
   display: flex;
@@ -9,10 +47,13 @@ $elPad: 14px;
   height: max-content;
   width: 100%;
   justify-content: center;
+
   &.form-control-inherit {
     @extend .inherit;
   }
-
+.form-control__header{
+  @extend .d-flex;
+  justify-content: space-between;
   label {
     color: var(--color-gray-40);
     line-height: 3;
@@ -22,6 +63,12 @@ $elPad: 14px;
     font-style: italic;
     letter-spacing: 3px;
   }
+  .form-control__header-invalid{
+    color: var(--color-secondary);
+    font-style: italic;
+    font-size: var(--s-7);
+  }
+}
 
   .form-control__element {
     // overflow: hidden;
@@ -37,36 +84,48 @@ $elPad: 14px;
     white-space: nowrap;
     color: var(--color-gray-60);
     --ui-icon-color: var(--color-gray-40);
-    padding: 0 $elPad;
-    background: var(--color-gray-30);
+    background-color: var(--color-gray-30);
     outline: solid 1px var(--color-gray-60);
     --ui-icon-height: 18px;
     --ui-icon-width: 18px;
     border-radius: var(--default-border-radius);
+
     &:focus-within {
       color: var(--color-gray-90);
       background-color: var(--color-gray-20);
     }
-    .form-control_before-icon{
-      margin-left: calc($elPad * -1);
-    }
-    .form-control_after-icon {
-      margin-right: calc($elPad * -.33);
+
+    .form-control__icon {
+      &:first-child {
+        border-radius: var(--default-border-radius) 0 0 var(--default-border-radius);
+      }
+
+      &:last-child {
+        border-radius: 0 var(--default-border-radius) var(--default-border-radius) 0;
+      }
+
+      @extend .d-flex;
+      height: 100%;
+      width: var(--default-element-height);
+
+      &.form-control__icon-dark {
+        background-color: var(--color-gray-90);
+      }
+      &.form-control__icon-invalid {
+        background-color: var(--color-invalid-bg);
+      }
     }
 
-    &[class$="dark"] {
-      color: var(--color-gray-50);
-      background-color: var(--color-gray-90-opaque);
-      &:hover,
-      &:focus,
-      &:active {
-        color: var(--color-gray-20);
-      }
+
+ 
+
+    .form-control__icon-placeholder {
+      width: calc(var(--default-element-height) * .5)
     }
 
     &.form-control__element-center {
       gap: 0;
-      
+
       .form-control_before-icon,
       .form-control_after-icon {
         // padding:0 10px;
@@ -127,6 +186,7 @@ $elPad: 14px;
     &[class$="-link"],
     &[class$="-disabled-icon"],
     &[class$="-icon"] {
+      pointer-events: none;
       background-color: transparent;
       outline: solid 1px transparent;
     }
@@ -187,8 +247,8 @@ $elPad: 14px;
     &[class$="-nav-item"],
     &[class$="-nav-item__active"] {
       border-radius: 0;
-      --ui-icon-height: 20px;
-      --ui-icon-width: 20px;
+      --ui-icon-height: var(--s-6);
+      --ui-icon-width: auto;
     }
 
     &[class$="-wordmark"] {
@@ -235,7 +295,7 @@ $elPad: 14px;
     }
 
     &[class$="-mini"] {
-      color: var(--color-gray-40); 
+      color: var(--color-gray-40);
       background-color: transparent;
       height: 35px;
       outline: none;
@@ -277,7 +337,19 @@ $elPad: 14px;
       --ui-icon-height: 12px;
       --ui-icon-width: 12px;
     }
+    &[class$="dark"] {
+      color: var(--color-gray-50);
+      background-color: var(--color-gray-90-opaque);
+      &:hover,
+      &:focus,
+      &:active {
+        color: var(--color-gray-20);
+      }
 
+      &.form-control__element-disabled {
+        color: var(--color-gray-60);
+      }
+    }
 
 
 
@@ -317,48 +389,18 @@ $elPad: 14px;
 
     // RESPONSIVE
     &.form-control__element-responsive {
-        width: var(--default-element-height);
-        padding: 0;
-        height: max-content;
-        flex-direction: column-reverse;
-        .form-control_before-icon,
-        .form-control_after-icon {
-          height: var(--default-element-height);
+      width: var(--default-element-height);
+      padding: 0;
+      height: max-content;
+      flex-direction: column-reverse;
+
+      .form-control_before-icon,
+      .form-control_after-icon {
+        height: var(--default-element-height);
       }
 
     }
 
     // RESPONSIVE
   }
-}
-
-.inherit {
-  --ui-icon-color: inherit;
-  --ui-icon-width: inherit;
-  --ui-icon-height: inherit;
-  text-decoration: inherit;
-  color: inherit;
-  background-color: inherit;
-  height: inherit;
-  min-height: inherit;
-  max-height: inherit;
-  width: inherit;
-  min-width: inherit;
-  max-width: inherit;
-  padding: inherit;
-  margin: inherit;
-  display: inherit;
-  justify-content: inherit;
-  align-items: inherit;
-  flex-direction: inherit;
-  gap: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  font-family: inherit;
-  border: inherit;
-  outline: inherit;
-  border-radius: inherit;
-  box-shadow: inherit;
-  aspect-ratio: inherit;
-  position: inherit;
 }

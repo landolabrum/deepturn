@@ -41,40 +41,104 @@ export const phoneFormat = (
   }
   return formattedNumber;
 };
-// type CardBrand = 'visa' | 'MasterCard' | 'amex';
-type CardBrand = 'amex' | 'diners' | 'discover' | 'eftpos_au' | 'jcb' | 'mastercard' | 'unionpay' | 'visa' | 'unknown'
+type CardBrand =
+  | 'amex'
+  | 'diners'
+  | 'discover'
+  | 'eftpos_au'
+  | 'jcb'
+  | 'mastercard'
+  | 'unionpay'
+  | 'visa'
+  | 'unknown';
 
-export default function formatCreditCard(cardNumber: string): string {
-    const cleaned = ('' + cardNumber).replace(/\D/g, ''); // Remove any non-numeric characters
-    
-    let brand: CardBrand = 'unknown';
-    if (/^3[47]/.test(cleaned)) brand = 'amex';
-    else if (/^3(?:0[0-5]|[68])/.test(cleaned)) brand = 'diners';
-    else if (/^6(?:011|5)/.test(cleaned)) brand = 'discover';
-    else if (/^4/.test(cleaned)) brand = 'visa';
-    else if (/^(?:2131|1800|35\d{3})/.test(cleaned)) brand = 'jcb';
-    else if (/^5[1-5]/.test(cleaned)) brand = 'mastercard';
-    // Add other patterns for 'eftpos_au', 'unionpay' if you have them.
-    
-    let formatted: any = '';
-    switch (brand) {
-        case 'visa':
-        case 'mastercard':
-            // Format: xxxx xxxx xxxx xxxx
-            formatted = cleaned.match(/(\d{0,4})(\d{0,4})(\d{0,4})(\d{0,4})/)!;
-            break;
+type FormattedCard = [
+  CardBrand,
+  string
+]
 
-        case 'amex':
-            // Format: 34xx xxxxxx xxxxx
-            formatted = cleaned.match(/(\d{0,4})(\d{0,6})(\d{0,5})/)!;
-            break;
+export default function formatCreditCard(cardNumber: string): FormattedCard {
+  const cleaned = ('' + cardNumber).replace(/\D/g, ''); // Remove any non-numeric characters
 
-        default:
-            return cleaned; // If an unknown brand, return the cleaned card number.
-    }
+  let brand: CardBrand = 'unknown';
+  if (/^3[47]/.test(cleaned)) brand = 'amex';
+  else if (/^30[0-5]|3[68]/.test(cleaned)) brand = 'diners';
+  else if (/^6(?:011|5)/.test(cleaned)) brand = 'discover';
+  else if (/^4/.test(cleaned)) brand = 'visa';
+  else if (/^(?:2131|1800|35\d{2})/.test(cleaned)) brand = 'jcb';
+  else if (/^5[1-5]/.test(cleaned)) brand = 'mastercard';
+  // Add other patterns for 'eftpos_au', 'unionpay' if you have them.
+  console.log("[ CARD-Brand ]:", brand)
+  let formatted: string[] = [];
+  switch (brand) {
+    case 'visa':
+    case 'mastercard':
+      // Format: xxxx xxxx xxxx xxxx
+      formatted = cleaned.match(/(\d{1,4})/g) || [];
+      break;
 
-    return formatted.slice(1).filter((n: string) => n).join(' '); // Filter and join
+    case 'amex':
+      // Format: 34xx xxxxxx xxxxx
+      formatted = cleaned.match(/(\d{1,4})(\d{1,6})(\d{1,5})/) || [];
+      break;
+
+    default:
+      return [ brand, cleaned ]; // If an unknown brand, return the cleaned card number.
+  }
+
+  const formattedNumber = formatted.filter((n: string) => n).join(' '); // Filter and join
+  return [ brand, formattedNumber ];
 }
+
+// type CardBrand =
+//   | 'amex'
+//   | 'diners'
+//   | 'discover'
+//   | 'eftpos_au'
+//   | 'jcb'
+//   | 'mastercard'
+//   | 'unionpay'
+//   | 'visa'
+//   | 'unknown';
+
+// interface FormattedCard {
+//   brand: CardBrand;
+//   formattedNumber: string;
+// }
+
+// export default function formatCreditCard(cardNumber: string): FormattedCard {
+//   const cleaned = ('' + cardNumber).replace(/\D/g, ''); // Remove any non-numeric characters
+
+//   let brand: CardBrand = 'unknown';
+//   if (/^3[47]/.test(cleaned)) brand = 'amex';
+//   else if (/^3(?:0[0-5]|[68])/.test(cleaned)) brand = 'diners';
+//   else if (/^6(?:011|5)/.test(cleaned)) brand = 'discover';
+//   else if (/^4/.test(cleaned)) brand = 'visa';
+//   else if (/^(?:2131|1800|35\d{3})/.test(cleaned)) brand = 'jcb';
+//   else if (/^5[1-5]/.test(cleaned)) brand = 'mastercard';
+//   // Add other patterns for 'eftpos_au', 'unionpay' if you have them.
+
+//   let formatted: any = '';
+//   switch (brand) {
+//     case 'visa':
+//     case 'mastercard':
+//       // Format: xxxx xxxx xxxx xxxx
+//       formatted = cleaned.match(/(\d{0,4})(\d{0,4})(\d{0,4})(\d{0,4})/)!.slice(1);
+//       break;
+
+//     case 'amex':
+//       // Format: 34xx xxxxxx xxxxx
+//       formatted = cleaned.match(/(\d{0,4})(\d{0,6})(\d{0,5})/)!.slice(1);
+//       break;
+
+//     default:
+//       return { brand, formattedNumber: cleaned }; // If an unknown brand, return the cleaned card number.
+//   }
+
+//   const formattedNumber = formatted.filter((n: string) => n).join(' '); // Filter and join
+//   return { brand, formattedNumber };
+// }
+
 // COUNTRY
 export function countryFormat(countryISO: string) {
  

@@ -12,7 +12,7 @@
 
 $cPad: 15px;
 
-.authentication__authentication {
+.authentication {
   position: absolute;
   top: 15vh;
   left: 0;
@@ -40,20 +40,26 @@ $cPad: 15px;
     }
   }
 
-  .authentication__authentication-body {
+  .authentication-body {
     z-index: 1;
     @extend .d-flex-col;
     width: 500px;
-
-    .authentication__authentication-header {
-      .authentication__authentication-logo {
+    @media (max-width: 900px) {
+      max-width: calc(100vw - 20px);
+    }
+    .authentication-header {
+      .authentication-logo {
         --ui-icon-height: 120px;
         --ui-icon-width: 70px;
         --ui-icon-color: rgba(255, 255, 255, 0.6);
+        @media(max-width:900px){
+          display: none;
+        }
       }
     }
-
-    .authentication__authentication-content {
+    
+    .authentication-content {
+      
 
       @extend .d-flex-col;
       justify-content: space-around;
@@ -64,11 +70,35 @@ $cPad: 15px;
       backdrop-filter: blur(10px);
       box-shadow: 0 0 10px 7px var(--color-gray-90);
       border-radius: var(--default-border-radius);
-      .authentication__authentication-view {
+      .authentication__view {
         @extend .d-flex-col;
         width: 100%;
         justify-content: flex-start;
-
+        .authentication__view-header{
+          @extend .d-flex;
+          width: 100%;
+          justify-content: flex-start;
+          gap: 9px;
+          .authentication__view-name{
+            text-transform: capitalize;
+            line-height: 1;
+            font-size: var(--s-3);
+            padding: var(--s-3) 0 var(--s-2);
+            white-space: nowrap;
+            width: max-content;
+          }
+          .authentication__logo-mobile {
+            display: none;
+            margin: 20px 0;
+            --ui-icon-height: var(--default-element-height);
+            --ui-icon-width: var(--default-element-height);
+            --ui-icon-color: rgba(255, 255, 255, 0.6);
+            @media(max-width: 900px){
+              display: flex;
+              width: max-content;
+            }
+          }
+        }
         .authentication__view-action {
           margin: 15px auto 25px;
           display: flex;
@@ -96,7 +126,7 @@ $cPad: 15px;
       }
     }
 
-    .authentication__authentication-footer {
+    .authentication-footer {
       padding: calc($cPad * 2) 0 0 0;
       color: var(--color-gray-20);
       width: 100%;

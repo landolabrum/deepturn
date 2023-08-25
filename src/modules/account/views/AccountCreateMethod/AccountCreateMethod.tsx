@@ -1,76 +1,86 @@
 // Relative Path: ./AccountCreateMethod.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './AccountCreateMethod.scss';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
-import AccountForm from '../AccountForm/AccountForm';
 import Input from '@webstack/components/UiInput/UiInput';
 import { OPaymentMethod } from '../../model/IMethod';
-import formatCreditCard, { getYearsArray } from '@webstack/helpers/userExperienceFormats';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
-import keyStringConverter from '@webstack/helpers/keyStringConverter';
-import UiSelect from '@webstack/components/UiSelect/UiSelect';
+import formatCreditCard from '@webstack/helpers/userExperienceFormats';
 import UiButton from '@webstack/components/UiButton/UiButton';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const AccountCreateMethod: React.FC = () => {
-    const placeholders: { [key: string]: string } = {
-        number: "**** **** **** ****",
-        exp_month: 'MM',
-        exp_year: 'YY',
-    }
+    const [brand, setBrand] = useState<string | null>(null);
+    const [isDisabled, setIsDisabled] = useState<boolean>(false);
+    const errorIcon = "fa-exclamation-triangle";
+    const numberMax = 19;
     const [method, setMethod] = useState<OPaymentMethod>({
         number: '',
-        exp_month: '',
-        exp_year: '',
+        expiry: '',
+        ccv: ''
     });
-    const handleMethod = (e: any) => {
-        setMethod({ ...method, [e.target.name]: formatCreditCard(e.target.value) });
+    const validate = () =>{
+        if(method.number.length < numberMax - 2)return;
+        if(method.number.length < numberMax - 2)return;
     }
-    const formComplete = false;
+    const handleMethod = (e: any) => {
+        validate()
+        if (e.target?.value == undefined) return;
+        if (e.target.name == 'number') {
+            console.log("CRES: ", e.target.value)
+            setBrand(e.target.value[0]);
+            setMethod({ ...method, [e.target.name]: e.target.value[0] });
+        } else{
+            setMethod({ ...method, [e.target.name]: e.target.value });
+        }
+    }
+    
+    useEffect(() => {}, [setIsDisabled]);
     return (
         <>
             <style jsx>{styles}</style>
             <div className='account-create-method'>
-                {/* {JSON.stringify(method)} */}
+                {JSON.stringify(method)}
                 <UiCollapse open={true} style={{ minHeight: "80px" }} label='add payment method'>
                     <div className='account-create-method__method'>
-                    <AdaptGrid xs={1} md={2} gap={10}>
                         <Input
                             label={'number'}
                             name={'number'}
                             value={method.number}
-                            placeholder={placeholders.number}
-                            variant='dark'
+                            max={numberMax}
+                            placeholder={"**** **** **** ****"}
+                            variant={`${brand == errorIcon && method?.number.length > 0 ?'invalid ':''}dark`}
                             onChange={handleMethod}
-                            traits={method.number.length?{afterIcon:{icon:'fa-xmark',onClick:()=>setMethod({...method, number:''})}}:{}}
+                            traits={{
+                                beforeIcon: brand && method?.number.length > 0 ? `${brand}` : undefined,
+                                afterIcon: method?.number?.length ? { icon: 'fa-xmark', onClick: () => setMethod({ ...method, number: '' }) } : undefined,
+                                errorMessage:'card number is invalid'
+                            }}
                         />
                         <div className='account-create-method__exp'>
-                            <UiSelect
+                            <Input
+                                label={'expiration'}
+                                name={'expiry'}
+                                type={'expiry'}
+                                value={method.expiry}
                                 variant='dark'
-                                options={Array.from({ length: 12 }, (_, i) => (i + 1).toString())}
-                                label='expire month'
-                                onSelect={(nV)=>{
-                                    let e = {target:{name: 'exp_month', value: nV}};
-                                    handleMethod(e)
-                                }} 
-                                title={method.exp_month}
+                                onChange={handleMethod}
+                                placeholder='MM / YY'
                             />
-                            <UiSelect
+                            <Input
+                                label={'ccv'}
+                                name={'ccv'}
+                                type={'number'}
+                                value={method.ccv}
                                 variant='dark'
-                                options={getYearsArray(15)}
-                                label='expire year'
-                                onSelect={(nV)=>{
-                                    let e = {target:{name: 'exp_year', value: nV}};
-                                    handleMethod(e)
-                                }}
-                                title={method.exp_year}
+                                onChange={handleMethod}
+                                max={5}
+                                placeholder='000'
                             />
                         </div>
-                        <div className={`account-create-method__action${formComplete ? ' account-create-method__action':''}`}>
-                            <UiButton variant='dark' onClick={console.log}>Submit</UiButton>
+                        <div className={`account-create-method__action${isDisabled ? ' account-create-method__action-show' : ''}`} onClick={() => setIsDisabled(!isDisabled)}>
+                            <UiButton disabled={isDisabled} variant='dark' onClick={console.log}>Submit</UiButton>
                         </div>
-                    </AdaptGrid>
                     </div>
                 </UiCollapse>
             </div>
@@ -79,3 +89,5 @@ const AccountCreateMethod: React.FC = () => {
 };
 
 export default AccountCreateMethod;
+
+

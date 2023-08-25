@@ -91,7 +91,7 @@ const SignIn = ({email}:{email:string | undefined}) => {
     <>
     <style jsx>{styles}</style>
       <form className="sign-in">
-        <h4>Sign in</h4>
+
         {["email", "password"].map((field) => (
           <Input
             key={field}

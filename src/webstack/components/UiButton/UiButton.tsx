@@ -24,14 +24,14 @@ export const LinkProvider: FC<LinkProviderProps> = ({ href, target, children, re
           {children}
         </Link>
       </FormControl>
-      </>
+    </>
     );
   return (
     <>
-    <style jsx>{styles}</style>
-    <Link href={href} target={target} rel={rel ? rel : "noopener noreferrer"} style={{width:"100%"}}>
-      {children}
-    </Link>
+      <style jsx>{styles}</style>
+      <Link href={href} target={target} rel={rel ? rel : "noopener noreferrer"} style={{ width: "100%" }}>
+        {children}
+      </Link>
     </>
   );
 };
@@ -48,10 +48,12 @@ interface ButtonContextProps extends ButtonProps {
 }
 
 const ButtonContext = ({ context }: ButtonContextProps) => {
+  let traits = context.traits ? context.traits : {};
+  if (context.disabled) traits['disabled'] = true;
   return (
     <>
       <style jsx>{styles}</style>
-      <FormControl label={context.label} variant={context.variant} traits={context.traits}>
+      <FormControl label={context.label} variant={context.variant} traits={traits}>
         <button
           className={context?.variant ? context?.variant : ""}
           onClick={context?.onClick}

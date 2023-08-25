@@ -1,7 +1,7 @@
 export interface OPaymentMethod{
     number: string;
-    exp_month: string;
-    exp_year: string;
+    ccv: string;
+    expiry: string;
 }
 export interface IPaymentMethod{
     brand: string;

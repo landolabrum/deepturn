@@ -3,6 +3,8 @@ $el_spacing: 12px;
 $el_gap: 7px;
 
 .select {
+  cursor: pointer;
+  position: relative;
   display: inherit;
   align-items: inherit;
   justify-content: space-between;
@@ -19,11 +21,7 @@ $el_gap: 7px;
   &:hover {
     color: inherit;
   }
-  .select__psuedo-icon {
-    padding-right:10px;
-    --ui-icon-width: 12px;
-    --ui-icon-height: 12px;
-  }
+
   &.nav-item {
     background-color: transparent;
 
@@ -42,7 +40,6 @@ $el_gap: 7px;
   }
 
   .select__selected {
-    padding: 0 10px;
     color: inherit;
     height: inherit;
     line-height: inherit;
@@ -55,11 +52,6 @@ $el_gap: 7px;
     text-transform: capitalize;
     align-items: center;
     width: 100%;
-    // &:hover {
-    //   color: var(--color-gray-30);
-    //   --ui-icon-color: var(--color-gray-30);
-    // }
-
     &.nav-item {
       width: 100%;
     }
