@@ -187,7 +187,9 @@ $elPad: 14px;
     &[class$="-disabled-icon"],
     &[class$="-icon"] {
       pointer-events: none;
-      background-color: transparent;
+      margin: 0 3px;
+      background-color: var(--color-gray-30-opaque);
+      border-radius: var(--default-border-radius) !important;
       outline: solid 1px transparent;
     }
 
@@ -339,7 +341,7 @@ $elPad: 14px;
     }
     &[class$="dark"] {
       color: var(--color-gray-50);
-      background-color: var(--color-gray-90-opaque);
+      background-color: var(--color-gray-80);
       &:hover,
       &:focus,
       &:active {
@@ -393,10 +395,14 @@ $elPad: 14px;
       padding: 0;
       height: max-content;
       flex-direction: column-reverse;
+      @media(min-width:900px){
+        height: 120px;
 
       .form-control_before-icon,
       .form-control_after-icon {
         height: var(--default-element-height);
+          // background-color: #f30;
+        }
       }
 
     }

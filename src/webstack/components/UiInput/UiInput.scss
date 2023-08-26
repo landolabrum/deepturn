@@ -8,17 +8,26 @@ input {
   border: none;
   background-color: transparent;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-
+  padding: 0;
+  margin: 0;
   // ARROWS for TYPE='number'
   /* Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
-  &.input-disabled {
-    user-select: none;
-    cursor: pointer;
+  &[type=button]{
+    display: flex;
+    justify-content: flex-start;
   }
+  // &.input-disabled {
+  //   user-select: none;
+  //   cursor: pointer;
+  //   &:focus {
+  //     caret-color: transparent;
+  //   }
+  // }
+  
 
   // Override the autofilled input styles
   &:-webkit-autofill,

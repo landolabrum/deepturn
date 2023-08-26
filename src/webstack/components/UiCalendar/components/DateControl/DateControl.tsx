@@ -4,7 +4,7 @@ import UiCalendar from "@webstack/components/UiCalendar/UiCalendar";
 import { useEffect, useRef, useState } from "react";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import useWindow from "@webstack/hooks/useWindow";
-import { VariantProps } from "@webstack/components/AdapTable/models/IVariant";
+import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
 
 export type DateRangeProps = {
   start: string;
@@ -31,7 +31,7 @@ const DateControl: NextComponentType<NextPageContext, {}, Props> = ({
     { href: "monthly", label: "monthly", icon: "fa-calendar-days" },
     { href: "custom", label: "custom", icon: "fa-calendar-pen" },
   ];
-  const [sort, setSort_] = useState<VariantProps>('daily');
+  const [sort, setSort_] = useState<IVariant>('daily');
 
   function handleDateChange(e: any) {
     e.preventDefault;
@@ -41,7 +41,7 @@ const DateControl: NextComponentType<NextPageContext, {}, Props> = ({
       setDateRange(e.is_start ? { ...dateRange, start: e.value } : { ...dateRange, end: e.value });
     }
   }
-  function handleSelect(sort: VariantProps) {
+  function handleSelect(sort: IVariant) {
     setSort_(sort);
     if (onSelect) onSelect(sort);
   }

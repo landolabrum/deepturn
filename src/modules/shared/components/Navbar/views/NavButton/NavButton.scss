@@ -1,6 +1,8 @@
 .nav-button{
     position: relative;
+    cursor: pointer;
     .nav-button__cart{
+        display: none;
         position: absolute;
         top:calc(100% + 10px);
         right:0;
@@ -11,6 +13,18 @@
         border-radius: 4px;
         @media(max-width: 900px){
             width: calc(100% - 20px);
+        }
+        &.nav-button__cart-show{
+            display: block;
+        }
+        &.nav-button__cart-hide{
+            display: none;
+        }
+        .nav-button__close{
+            height: var(--default-element-height);
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
         }
     }
 }

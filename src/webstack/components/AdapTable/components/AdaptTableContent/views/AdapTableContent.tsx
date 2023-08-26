@@ -7,7 +7,7 @@ import AdapTableAlternateView from "../components/AdapTableAlternateView/AdapTab
 import useScroll from "@webstack/hooks/useScroll";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import { TableOptions } from "@webstack/components/AdapTable/views/AdapTable";
-import { VariantProps } from "@webstack/components/AdapTable/models/IVariant";
+import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
 import useTable from "../hooks/useTable";
 import AdaptTableCellHover from "../components/AdaptTableCellHover/AdaptTableCellHover";
 
@@ -16,7 +16,7 @@ export interface TableContentProps extends TableFunctionProps {
   loading?: boolean;
   startIndex?: any;
   options?: TableOptions;
-  variant?: VariantProps;
+  variant?: IVariant;
   onRowClick?: (e: any) => void;
 }
 export interface TableFunctionProps {

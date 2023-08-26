@@ -1,4 +1,4 @@
-export type VariantProps =
+export type IVariant =
   | ""
   | "inherit"
   | "left"
@@ -40,7 +40,7 @@ export type VariantProps =
   // Add other combinations as needed
   ;
 
-export type OverlayVariantProps =
+export type IOverlayVariant =
   | "blur"
   | "blur-disabled"
   | "disabled"

@@ -6,7 +6,7 @@ import FormControl, { FormControlProps } from "../FormControl/FormControl";
 import { useCalendarState } from "./functions/calendarState";
 import DateRangeMenu from "./components/DateRangeMenu/DateRangeMenu";
 import generateDateId from "./functions/generateDateId";
-import { VariantProps } from "../AdapTable/models/IVariant";
+import { IVariant } from "../AdapTable/models/IVariant";
 
 type DateRangeProps = {
   start?: string;
@@ -141,7 +141,7 @@ export default function UiCalendar({ dateRange, setDateRange, label, open, setOp
       : "date not selected";
   const renderFormControl = (
     labelValue?: string | React.ReactElement,
-    variantValue?: VariantProps,
+    variantValue?: IVariant,
     condition?: boolean
   ) => (
     <>

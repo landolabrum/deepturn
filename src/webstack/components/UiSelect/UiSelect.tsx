@@ -80,8 +80,8 @@ const UiSelect: React.FC<SelectProps> = ({
           onClick={handleOpen}
           >
           <UiInput 
-            disabled
-            label={label} 
+            type="button"
+            label={label}
             variant={hasOptions && variant !== 'disabled'? variant:"select__disabled"}
             value={title_ || selectedOption || "Select"}
             traits={{

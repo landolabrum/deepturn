@@ -20,7 +20,7 @@ const Checkout: React.FC<ICheckout> = ({ cart }) => {
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" />
             </div>
-            <AccountForm collapse={true}/>
+            <AccountForm form='profile' collapse={true}/>
             <CartList cart={cart} collapse={true} />
         </div>
         <CheckoutButton cart={cart} collect/>

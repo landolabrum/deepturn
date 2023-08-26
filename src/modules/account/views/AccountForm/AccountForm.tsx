@@ -54,15 +54,20 @@ const AccountForm: React.FC<any> = ({ collapse, form }: IAccountInfo) => {
     })
     useEffect(() => {
         if(Object.entries(formData).length && !Boolean(Object.entries(visibleData).length))setVisible(formData);
-        handleCustomer();
-    }, [setFormData, setLoaded]);
+        if(!loaded)handleCustomer();
+    }, [loaded]);
 
     if (!loaded) return <div >loading</div>
     const FormFields = ({ data }: any) => {
         if (!data) return;
         return Object.entries(data).map(([field, value]: any, key: number) => {
-            if (typeof value == 'object') return <FormFields data={value} />;
-            return <UiInput name={field} label={field.replace("_", " ")} value={value ? String(value) : ''} variant='dark' />
+            return <span key={field} >
+                {typeof value == 'object'?(
+                    <FormFields data={value} />
+                ):(
+                    <UiInput name={field} label={field.replace("_", " ")} value={value ? String(value) : ''} variant='dark' />
+                )}
+            </span>;
         })
     }
     return <>

@@ -3,7 +3,7 @@ import styles from "./AdapTable.scss";
 import AdapTableContent, { TableFunctionProps } from "../components/AdaptTableContent/views/AdapTableContent";
 import AdapTableHeader from "../components/AdapTableHeader/AdapTableHeader";
 import AdapTableFooter from "../components/AdapTableFooter/AdapTableFooter";
-import { VariantProps } from "../models/IVariant";
+import { IVariant } from "../models/IVariant";
 import { dateFormat } from "@webstack/helpers/userExperienceFormats";
 
 const DEFAULT_LIMIT = 10;
@@ -24,7 +24,7 @@ interface TableProps extends TableFunctionProps {
   limit?: number;
   loading?: boolean;
   onRowClick?: (e: any) => void;
-  variant?: VariantProps;
+  variant?: IVariant;
   options?: TableOptions;
   page?: number;
   setPage?: (e: any) => void;

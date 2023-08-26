@@ -1,3 +1,60 @@
+// PROPS
+$bG: var(--color-gray-80);
+$bGhover: var(--color-gray-70);
+
+$contTransformClose: translateY(calc(-100% - var(--default-element-height)));
+$actColorClose: var(--color-gray-50);
+$actBrdr: 0 0 var(--default-element-height) 50% var(--color-gray-80);
+$actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-80);
+
+@keyframes openAction {
+    0% {
+        color: $actColorClose;
+        --ui-icon-color: $actColorClose;
+        box-shadow: $actBrdr;
+    }
+
+    50% {
+        color: var(--color-gray-60);
+        box-shadow: $actBrdr;
+    }
+
+    99% {
+        color: var(--color-gray-60);
+        box-shadow: $actBrdrT;
+    }
+
+    100% {
+        color: $actColorClose;
+        --ui-icon-color: $actColorClose;
+        box-sizing: none;
+    }
+}
+
+@keyframes closeAction {
+    0% {
+        color: $actColorClose;
+        --ui-icon-color: $actColorClose;
+        box-shadow: $actBrdr;
+    }
+
+    50% {
+        color: var(--color-gray-60);
+        box-shadow: $actBrdr;
+    }
+
+    99% {
+        color: var(--color-gray-60);
+        box-shadow: $actBrdrT;
+    }
+
+    100% {
+        color: $actColorClose;
+        --ui-icon-color: $actColorClose;
+        box-shadow: none;
+    }
+}
+
 .d-flex {
     display: flex;
     justify-content: center;
@@ -9,113 +66,68 @@
     flex-direction: column;
 }
 
+// STYLES
 .collapse {
     @extend .d-flex-col;
-    position: relative;
-    overflow: visible;
+    justify-content: flex-start;
+    margin: var(--default-padding) 0;
+    width: calc(100% - 4px);
     border-radius: var(--default-border-radius);
-    width: 100%;
-    background-color: var(--color-gray-70);
-    outline: solid 1px var(--color-gray-90);
-    color: var(--color-gray-50);
-    --ui-icon-color: var(--color-gray-60);
-    margin-bottom: 10px;
-    .collapse__content {
-        display: none;
-    }
-    &.collapse-open {
-        animation: btnBorder 1s forwards ease-in-out;
-        .collapse__content {
-            display: flex;
-            animation: open 1s forwards ease-out;
-            animation-play-state: running;
-        }
-        
-        
-    }
-    &.collapse-closed{
-        animation: btnBorder 1s forwards reverse ease-in-out;
-        .collapse__content {
-            display: none;
-            animation: close 1s forwards ease-in;
-            animation-play-state: running;
-        }
-    }
-    .collapse__button {
-        text-transform: capitalize;
-        background-color: var(--color-gray-70);
-        width: calc(100% - 20px);
-        z-index: 1;
-        height: var(--default-element-height);
+    overflow: hidden; // Changed from clip
+    position: relative;
+    z-index: 1;
+    outline: solid 1px var(--color-gray-60);
+    border: solid 1px var(--color-gray-80);
+    min-height: calc(var(--default-element-height) - 4px);
+    background-color: $bG;
+    .collapse__action {
+        background-color: $bG;
+        line-height:  calc(var(--default-element-height) - 4px);
+        position: absolute;
         @extend .d-flex;
         justify-content: space-between;
-        font-size: var(--s-4);
+        background-color: $bG;
+        text-transform: capitalize;
+        font-size: var(--s-5);
+        --ui-icon-size: var(--s-5);
+        width: calc(100% - calc(var(--default-padding) * 2));
+        padding: 0 var(--default-padding);
+        color: $actColorClose;
+        --ui-icon-color: $actColorClose;
+        z-index: 2;
+        animation: closeAction 1s forwards;
+        animation-play-state: paused;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: $actBrdr;
+
         &:hover {
-            cursor: pointer;
-            color: var(--color-primary);
-            --ui-icon-color: var(--color-primary);
+            background-color: $bGhover;
+        }
+
+        &.collapse__action-open {
+            animation: openAction 1s forwards;
+            animation-play-state: running;
+        }
+
+        &.collapse__action-closed {
+            animation: closeAction 1s forwards;
+            animation-play-state: running;
         }
     }
 
-    .collapse__content {
-        opacity: 1;
-        z-index: 3;
-        width: calc(100% - 28px);
-        transform: translateY(calc(-100% - 8px));
+    .collapse__body {
         @extend .d-flex-col;
-        height: 0px;
-        padding: 0 12px 0;
-      
-    }
-}
-
-@keyframes btnBorder {
-    0% {
-        color: var(--color-gray-60);
-        --ui-icon-color: var(--color-gray-60);
-    }
-    100% {
-        color: var(--color-white);
-        --ui-icon-color: var(--color-white);
-    }
-}
-
-@keyframes open {
-    0% {
-        opacity: 0;
-        height: 0;
-        transform: translateY(-100%);
-        padding-bottom: 0;
-    }
-    70% {
-        display: flex;
-        height: auto;
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-        height: auto;
-        transform: translateY(0);
-        padding-bottom: 25px;
-    }
-}
-
-@keyframes close {
-    0% {
-        opacity: 1;
-        display: flex;
-        height: auto;
-        transform: translateY(-15px);
-    }
-    70% {
-        display: flex;
-        height: 50px;
-        opacity: .2;
-    }
-    100% {
-        display: none;
-        height: 0;
-        transform: translateY(-100%);
-        opacity: 0;
+        width: calc(100% - 20px);
+        padding: var(--default-padding) 0;
+        transform: $contTransformClose;
+        max-height: 0; // Start with 0 height
+        transition: transform, max-height 1s ease-out; // animate the max-height
+        &.collapse__body-open {
+            transform: translateY(0);
+            max-height: 600px; // Assuming 500px as the expanded height. You can adjust.
+            transition: transform, max-height 2s ease-out; // animate the max-height
+        }
+   
     }
 }

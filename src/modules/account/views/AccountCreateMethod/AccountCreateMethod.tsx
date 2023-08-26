@@ -41,7 +41,7 @@ const AccountCreateMethod: React.FC = () => {
             <style jsx>{styles}</style>
             <div className='account-create-method'>
                 {/* {JSON.stringify(method)} */}
-                <UiCollapse open={false}  label='add payment method'>
+                <UiCollapse variant='dark' open={false} label='add payment method'>
                     <div className='account-create-method__method'>
                         <UiInput
                             label={'number'}

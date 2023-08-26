@@ -1,7 +1,7 @@
 import styles from "./AdapTableAlternateView.scss";
 
 import AdaptTableLoader from "../AdaptTableLoader/AdaptTableLoader";
-import { VariantProps } from "@webstack/components/AdapTable/models/IVariant";
+import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
 import { TableStateProps } from "../../hooks/useTable";
 import { useEffect, useState } from "react";
 
@@ -10,7 +10,7 @@ interface AdapTableAlternateViewProps {
   view: TableStateProps;
   search?: string | null | undefined;
   title?: string;
-  variant?: VariantProps;
+  variant?: IVariant;
 }
 
 const AdapTableAlternateView = (

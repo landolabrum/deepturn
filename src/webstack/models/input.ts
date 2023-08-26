@@ -1,4 +1,4 @@
-import { VariantProps } from "@webstack/components/AdapTable/models/IVariant";
+import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
 import { FormControlProps } from "@webstack/components/FormControl/FormControl";
 
 export type ValueType = string | number;
@@ -14,7 +14,7 @@ export interface InputProps extends FormControlProps {
   onKeyDown?: (e: any) => void;
   onKeyUp?: (e: any) => void;
   placeholder?: string;
-  variant?: VariantProps;
+  variant?: IVariant;
   min?: number;
   max?: number;
   autoComplete?: string;

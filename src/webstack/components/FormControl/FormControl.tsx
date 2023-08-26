@@ -1,6 +1,6 @@
 import type { NextComponentType, NextPageContext } from "next";
 import styles from "./FormControl.scss";
-import { VariantProps } from "@webstack/components/AdapTable/models/IVariant";
+import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
 import React, { Children, cloneElement, useEffect, useRef, useState } from "react";
 import { OverlayProps, useOverlay } from "@webstack/components/Overlay/Overlay";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
@@ -27,7 +27,7 @@ export type ITraits = {
 
 export interface FormControlProps {
   label?: string | React.ReactElement;
-  variant?: VariantProps;
+  variant?: IVariant;
   overlay?: boolean;
   setOverlay?: (e: OverlayProps) => void;
   children?: string | React.ReactElement | React.ReactFragment | number;

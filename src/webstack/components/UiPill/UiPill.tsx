@@ -1,6 +1,6 @@
 import { useCallback, useState, useRef, useEffect } from 'react';
 import styles from "./UiPill.scss";
-import { VariantProps } from '../AdapTable/models/IVariant';
+import { IVariant } from '../AdapTable/models/IVariant';
 import UiInput from '../UiInput/UiInput';
 import debounce from 'lodash/debounce';
 import { ITraits } from '../FormControl/FormControl';
@@ -8,7 +8,7 @@ import { ITraits } from '../FormControl/FormControl';
 interface IPill {
   amount: number,
   setAmount: (qty: number) => void,
-  variant?: VariantProps,
+  variant?: IVariant,
   traits?: ITraits
 };
 
