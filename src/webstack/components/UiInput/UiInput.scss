@@ -76,3 +76,17 @@ input::placeholder {
   padding: 0;
   font-size: 16px;
 }
+
+.input__message{
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  color: var(--color-orange);
+  height: var(--default-element-height);
+  line-height: 1;
+  display: none;
+  text-indent: var(--default-padding);
+  &.input__message-show{
+    display: flex;
+  }
+}

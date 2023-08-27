@@ -53,22 +53,25 @@ const AccountForm: React.FC<any> = ({ collapse, form }: IAccountInfo) => {
 
     })
     useEffect(() => {
-        if(Object.entries(formData).length && !Boolean(Object.entries(visibleData).length))setVisible(formData);
-        if(!loaded)handleCustomer();
+        if (Object.entries(formData).length && !Boolean(Object.entries(visibleData).length)) setVisible(formData);
+        if (!loaded) handleCustomer();
     }, [loaded]);
 
     if (!loaded) return <div >loading</div>
     const FormFields = ({ data }: any) => {
         if (!data) return;
-        return Object.entries(data).map(([field, value]: any, key: number) => {
-            return <span key={field} >
-                {typeof value == 'object'?(
-                    <FormFields data={value} />
-                ):(
-                    <UiInput name={field} label={field.replace("_", " ")} value={value ? String(value) : ''} variant='dark' />
-                )}
-            </span>;
-        })
+        return <>
+            <style jsx>{styles}</style>
+            {Object.entries(data).map(([field, value]: any, key: number) => {
+                return <div key={field} className='form-fields' >
+                    {typeof value == 'object' ? (
+                        <FormFields data={value} />
+                    ) : (
+                        <UiInput name={field} label={field.replace("_", " ")} value={value ? String(value) : ''} variant='dark' />
+                    )}
+                </div>;
+            })}
+        </>
     }
     return <>
         <style jsx>{styles}</style>
@@ -79,7 +82,7 @@ const AccountForm: React.FC<any> = ({ collapse, form }: IAccountInfo) => {
                         <UiCollapse label={`Account Info `}>
                             <FormFields data={visibleData} />
                         </UiCollapse>
-                    ) : ( <FormFields data={visibleData} /> )
+                    ) : (<FormFields data={visibleData} />)
                 }
             </form>
             <div className='account-info__action'>
@@ -90,3 +93,4 @@ const AccountForm: React.FC<any> = ({ collapse, form }: IAccountInfo) => {
 };
 
 export default AccountForm;
+

@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import { UiIcon } from "../UiIcon/UiIcon";
-import { FormControlProps } from "../FormControl/FormControl";
+import { IFormControl } from "../FormControl/FormControl";
 import styles from "./UiMenu.scss";
 import Input from "../UiInput/UiInput";
-export interface UiMenuProps extends FormControlProps {
+export interface UiMenuProps extends IFormControl {
   options?: any;
   onSelect?: (value: any) => void;
   value?: string;

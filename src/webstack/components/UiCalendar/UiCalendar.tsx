@@ -2,7 +2,7 @@ import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { useEffect, useCallback } from "react";
 import styles from "./UiCalendar.scss";
 import { dateFormat } from "@webstack/helpers/userExperienceFormats";
-import FormControl, { FormControlProps } from "../FormControl/FormControl";
+import FormControl, { IFormControl } from "../FormControl/FormControl";
 import { useCalendarState } from "./functions/calendarState";
 import DateRangeMenu from "./components/DateRangeMenu/DateRangeMenu";
 import generateDateId from "./functions/generateDateId";
@@ -20,7 +20,7 @@ export interface CalendarDay {
   val: string;
   value: string;
 }
-export interface CalendarProps extends FormControlProps {
+export interface CalendarProps extends IFormControl {
   dateRange: DateRangeProps;
   setDateRange: (value: any) => void;
   open?: boolean;

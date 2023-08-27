@@ -1,16 +1,16 @@
 import styles from "./UiInput.scss";
 import type { NextComponentType, NextPageContext } from "next";
 import FormControl from "../FormControl/FormControl";
-import { useState } from "react";
-import { InputProps } from "@webstack/models/input";
+import { useEffect, useState } from "react";
+import { IInput } from "@webstack/models/input";
 import { validateInput } from "./helpers/validateInput";
 import maskInput from "./helpers/maskInput";
 
 
 
 
-const UiInput: NextComponentType<NextPageContext, {}, InputProps> = (props: InputProps) => {
-  const { type, value, onChange, onKeyDown, onKeyUp } = props;
+const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
+  const { type, value, onChange, onKeyDown, onKeyUp, message } = props;
 
   const [show, setShow] = useState<boolean>(false);
   const [formattedValue, setFormattedValue] = useState<string>(value?.toString() || "");
@@ -30,6 +30,8 @@ const UiInput: NextComponentType<NextPageContext, {}, InputProps> = (props: Inpu
     if (onChange)onChange(_e);
   };
   const inputClasses = `${typeof props.variant === 'string' ? props.variant : ""}${validateInput(value, type) ? "" : " invalid"}${props.disabled ? ' input-disabled' : ''}${props.traits?.beforeIcon ?' input__has-icons':''}`
+  
+  useEffect(() => {}, [message]);
   return (
     <>
       <style jsx>{styles}</style>
@@ -40,7 +42,7 @@ const UiInput: NextComponentType<NextPageContext, {}, InputProps> = (props: Inpu
           afterIcon: type === "password" ? {
             icon: show ? "fa-eye" : "fa-eye-slash",
             onClick: () => setShow(!show) 
-          } : props.traits?.afterIcon 
+          } : props.traits?.afterIcon,
         }}>
         <input
           className={inputClasses}
@@ -58,6 +60,9 @@ const UiInput: NextComponentType<NextPageContext, {}, InputProps> = (props: Inpu
           defaultValue={props.defaultValue}
         />
       </FormControl>
+      <div className={`input__message ${message?' input__message-show':''}${props?.variant?' input__message-'+ props.variant:''}`}>
+          {message && message}
+      </div>
     </>
   );
 };

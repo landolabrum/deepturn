@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./UiButton.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import type { NextComponentType, NextPageContext } from "next";
-import FormControl, { FormControlProps as IFormControl } from "../FormControl/FormControl";
+import FormControl, { IFormControl as IFormControl } from "../FormControl/FormControl";
 import Link from "next/link";
 import type { FC } from "react";
 
@@ -41,6 +41,7 @@ interface IButton extends IFormControl {
   busy?: boolean;
   href?: string;
   target?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 interface IButtonContext extends IButton {
@@ -55,6 +56,7 @@ const ButtonContext = ({ context }: IButtonContext) => {
       <style jsx>{styles}</style>
       <FormControl label={context.label} variant={context.variant} traits={traits}>
         <button
+          type={context?.type && context?.type}
           className={context?.variant ? context?.variant : ""}
           onClick={context?.onClick}
           disabled={context?.disabled || context?.variant === "disabled"}
@@ -81,6 +83,7 @@ const UiButton: NextComponentType<NextPageContext, {}, IButton> = ({
   busy,
   traits,
   label,
+  type
 }: IButton) => {
   if (href)
     return (

@@ -25,7 +25,7 @@ export type ITraits = {
   errorMessage?: string | React.ReactElement;
 } | undefined;
 
-export interface FormControlProps {
+export interface IFormControl {
   label?: string | React.ReactElement;
   variant?: IVariant;
   overlay?: boolean;
@@ -35,14 +35,14 @@ export interface FormControlProps {
 }
 
 // FormControl component for rendering form controls with label, icons, and overlay support
-const FormControl: NextComponentType<NextPageContext, {}, FormControlProps> = ({
+const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   label,
   children,
   variant,
   overlay,
   setOverlay,
   traits,
-}: FormControlProps) => {
+}: IFormControl) => {
   const cyprus_test_key = "data-testid";
 
   const [overlay_, setOverlay_] = useOverlay();
@@ -72,6 +72,7 @@ const FormControl: NextComponentType<NextPageContext, {}, FormControlProps> = ({
       if (typeof traits.outline === "string") elemenet_ref.style.outline = traits.outline;
       traits?.disabled && elemenet_ref.classList.add('form-control__element-disabled');
       traits?.responsive && elemenet_ref.classList.add('form-control__element-responsive');
+      // console.log(elemenet_ref.querySelector('input')?.tagName === 'INPUT')
     }
     // Manage overlay
     if (overlay === true && !overlay_.active) {

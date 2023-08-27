@@ -1,9 +1,9 @@
 import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
-import { FormControlProps } from "@webstack/components/FormControl/FormControl";
+import { IFormControl } from "@webstack/components/FormControl/FormControl";
 
 export type ValueType = string | number;
 
-export interface InputProps extends FormControlProps {
+export interface IInput extends IFormControl {
   name?: string;
   type?: string;
   disabled?: boolean;
@@ -18,4 +18,5 @@ export interface InputProps extends FormControlProps {
   min?: number;
   max?: number;
   autoComplete?: string;
+  message?: string;
 }

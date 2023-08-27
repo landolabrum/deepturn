@@ -9,9 +9,10 @@ import UiButton from '@webstack/components/UiButton/UiButton';
 import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
 import useCart from '../hooks/useCart';
 import UiLoader from '@webstack/components/UiLoader/UiLoader';
+import UiForm from '@webstack/components/UiForm/UiForm';
 
 
-const Cart = ({variant, traits}: any) => {
+const Cart = ({ variant, traits }: any) => {
   const { getCartItems, handleQtyChange } = useCart();
   const cart = getCartItems();
   const router = useRouter();
@@ -22,13 +23,13 @@ const Cart = ({variant, traits}: any) => {
   const setCart = (item: ICartItem) => {
     handleQtyChange(item);
   };
-  
+
   // const handleProduct = (product: any) => {
   //   router.push({ pathname: "/product", query: { id: product.id, pri: product.price_object.id } })
   // }
-  
+
   function handleHeader() {
-    const crumbs: any = query ? [{ label: typeof query == 'undefined'?query:"products" }, { label: "cart" }] : [{ label: "cart" }];
+    const crumbs: any = query ? [{ label: typeof query == 'undefined' ? query : "products" }, { label: "cart" }] : [{ label: "cart" }];
     if (query) setHeader({ title: "cart", breadcrumbs: crumbs });
   }
   useEffect(() => {
@@ -41,7 +42,32 @@ const Cart = ({variant, traits}: any) => {
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='cart'>
+      <UiForm fields={[
+        {
+          name: 'name',
+          label: 'name',
+          placeholder: 'John Doe',
+          type: 'text', // takes in any from types found here: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#type"
+          validation: {
+            minLen: {
+              value: 5,
+              message: 'Your name is not long enough',
+            },
+            maxLen: {
+              value: 10,
+              message: 'Your name is too long',
+            },
+            required: true,
+            // required: {
+            //     message: 'Your name is required'
+            // }
+          }
+        }
+      ]}
+      onSubmit={console.log}
+      onError={console.log}
+      />
+      {/* <div className='cart'>
         <div className='cart__header'>
           <UiButton variant="dark" href='/products'>Keep Shopping</UiButton>
           <div className='cart__header-title'></div>
@@ -50,7 +76,7 @@ const Cart = ({variant, traits}: any) => {
         {cart && cart.length != 0 ? <CartList traits={traits} variant={variant} cart={cart} handleQty={setCart} 
         // collapse
          /> : <EmptyCart />}
-      </div>
+      </div> */}
     </>
   );
 };

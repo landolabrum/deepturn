@@ -5,7 +5,7 @@ $bGhover: var(--color-gray-70);
 $contTransformClose: translateY(calc(-100% - var(--default-element-height)));
 $actColorClose: var(--color-gray-50);
 $actBrdr: 0 0 var(--default-element-height) 50% var(--color-gray-80);
-$actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-80);
+$actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-100);
 
 @keyframes openAction {
     0% {
@@ -27,7 +27,7 @@ $actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-80);
     100% {
         color: $actColorClose;
         --ui-icon-color: $actColorClose;
-        box-sizing: none;
+        box-shadow: none;
     }
 }
 
@@ -124,6 +124,7 @@ $actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-80);
         max-height: 0; // Start with 0 height
         transition: transform, max-height 1s ease-out; // animate the max-height
         &.collapse__body-open {
+            margin-top: 50px;
             transform: translateY(0);
             max-height: 600px; // Assuming 500px as the expanded height. You can adjust.
             transition: transform, max-height 2s ease-out; // animate the max-height
