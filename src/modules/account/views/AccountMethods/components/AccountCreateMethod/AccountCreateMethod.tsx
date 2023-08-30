@@ -2,11 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AccountCreateMethod.scss';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
-import { OPaymentMethod } from '../../model/IMethod';
 import UiForm from '@webstack/components/UiForm/UiForm';
-import { getService } from '@webstack/common';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import UiLoader from '@webstack/components/UiLoader/UiLoader';
+import { OPaymentMethod } from '~/src/modules/account/model/IMethod';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IAccountCreateMethod {
@@ -16,7 +14,6 @@ interface IAccountCreateMethod {
 const AccountCreateMethod = ({ onSubmit, loading }: IAccountCreateMethod) => {
     const [brand, setBrand] = useState<string | null>(null);
     const errorIcon = "fa-exclamation-triangle";
-    const memberService = getService<IMemberService>("IMemberService");
     const [method, setMethod] = useState<OPaymentMethod>({
         number: '',
         expiry: '',
@@ -46,7 +43,7 @@ const AccountCreateMethod = ({ onSubmit, loading }: IAccountCreateMethod) => {
         <>
             <style jsx>{styles}</style>
             <div className='account-create-method'>
-                <UiCollapse variant='dark' open={false} label='add payment method'>
+                <UiCollapse variant='dark' open={true} label='add payment method'>
                     <div className='account-create-method__method'>
                         {loading != true && <UiForm
                             fields={[

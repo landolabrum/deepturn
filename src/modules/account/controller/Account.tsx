@@ -6,10 +6,9 @@ import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import { useHeader } from "@webstack/components/Header/views/Header";
 import { countries, states } from "@webstack/models/location";
 import AccountForm from "../views/AccountForm/AccountForm";
-import AccountMethods from "../views/AccountMethods/AccountMethods";
+import AccountMethods from "../views/AccountMethods/controller/AccountMethods";
 import { capitalizeAll } from "@webstack/helpers/Capitalize";
 import {default as Div} from "@webstack/components/UiDiv/UiDiv";
-import UiForm from "@webstack/components/UiForm/UiForm";
 
 interface Props {}
 

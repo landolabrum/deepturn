@@ -37,7 +37,6 @@ export default class MemberService
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
 
-
   public async signUp(
     {
       name,
@@ -63,18 +62,33 @@ export default class MemberService
     );
     return res;
   }
-  public async getCustomerMethods(
-    request?: any
-  ): Promise<any> {
+  public async getMethods(): Promise<any> {
     let id = this._getCurrentUser(false)?.id;
-    if (id) return await this.get<any>(
-      `/api/method/customer/?id=${id}`,
-    );
+    console.log('[ ID ]', id)
+    if (id){
+      const accountMethods = await this.get<any>(
+        `/api/method/customer/?id=${id}`,
+        );
+        console.log('[ IDa ]', accountMethods)
+       return accountMethods;
+      }
     if (!id) {
       throw new ApiError("Customer not logged in", 400, "MS.SI.02");
     }
   }
-    public async createCustomerMethod(id: string, method: any): Promise<any> {
+
+  public async deleteMethod(id: string): Promise<any> {
+    if (id) {
+      const deleted = await this.get<any>(`/api/method/delete?id=${id}`);
+      console.log('[ DEL ]: ', deleted)
+      return deleted
+    }
+    if (!id) {
+      throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
+    }
+
+  };
+  public async createCustomerMethod(id: string, method: any): Promise<any> {
     if (id && method) {
 
       const res = await this.post<any, any>(
@@ -95,7 +109,7 @@ export default class MemberService
       const res = await this.put<GetRecruitesRequest, GetRecruitesResponse>(
         `api/customer?id=${id}`,
         memberData);
-      const memberJwt:any = res;
+      const memberJwt: any = res;
       this.saveMemberToken(memberJwt);
       this.saveLegacyCookie(memberJwt);
       return this._getCurrentUser(true)!;
@@ -221,26 +235,26 @@ export default class MemberService
       request
     );
   }
-  async getSignInIdToken(
-    email: string,
-    password: string,
-    firebaseAPIKey: string
-  ): Promise<any> {
-    const client = new FirebaseClient(
-      // {
-      //   apiKey: firebaseAPIKey,
-      //   authDomain: "",
-      //   projectId: "",
-      // },
-      // firebaseAPIKey
-    );
-    // try {
-    //   const tkn = await client.signUp(email, password);
-    //   return tkn;
-    // } catch (err) {
-    //   return "Email was in use or failed to sign up.";
-    // }
-  }
+  // async getSignInIdToken(
+  //   email: string,
+  //   password: string,
+  //   firebaseAPIKey: string
+  // ): Promise<any> {
+  //   const client = new FirebaseClient(
+  //     // {
+  //     //   apiKey: firebaseAPIKey,
+  //     //   authDomain: "",
+  //     //   projectId: "",
+  //     // },
+  //     // firebaseAPIKey
+  //   );
+  //   // try {
+  //   //   const tkn = await client.signUp(email, password);
+  //   //   return tkn;
+  //   // } catch (err) {
+  //   //   return "Email was in use or failed to sign up.";
+  //   // }
+  // }
 
   private saveLegacyCookie(customJwt: string) {
     if (environment.legacyJwtCookie?.name) {

@@ -1,39 +1,35 @@
 // PROPS
 $bG: var(--color-gray-80);
-$bGhover: var(--color-gray-70);
+$bodyY: 275px;
+$actColorClose: var(--color-gray-30);
+$actBrdr: 0 0 calc($bodyY * .5) $bodyY var(--color-gray-90-opaque);
+$actBrdrT: 0 0 calc($bodyY * .5) calc($bodyY * .5) $bG;
 
-$actColorClose: var(--color-gray-50);
-$actBrdr: 0 0 var(--default-element-height) 50% var(--color-gray-80);
-$actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-100);
+$contTransformClose: translateY(calc(-100% - var(--default-element-height)));
 
 @keyframes openAction {
     0% {
         color: $actColorClose;
         --ui-icon-color: $actColorClose;
         box-shadow: $actBrdr;
-        background-color: var(--color-gray-80-opaque);
         border-bottom: solid 1px var(--color-gray-80-opaque);
     }
-    
+
     50% {
-        color: var(--color-gray-60);
-        box-shadow: $actBrdr;
-        background-color: var(--color-gray-70-opaque);
+        color: var(--color-gray-40);
+        box-shadow: $actBrdrT;
         border-bottom: solid 1px var(--color-gray-70-opaque);
     }
-    
+
     99% {
-        color: var(--color-gray-60);
-        box-shadow: $actBrdrT;
-        background-color: var(--color-gray-70-opaque);
+        color: var(--color-gray-40);
         border-bottom: solid 1px var(--color-gray-60-opaque);
     }
-    
+
     100% {
         color: $actColorClose;
         --ui-icon-color: $actColorClose;
         box-shadow: none;
-        background-color: var(--color-gray-70);
         border-bottom: solid 1px var(--color-gray-60);
     }
 }
@@ -87,13 +83,12 @@ $actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-100);
     border: solid 1px var(--color-gray-80);
     min-height: calc(var(--default-element-height) - 4px);
     background-color: $bG;
+
     .collapse__action {
-        background-color: $bG;
-        line-height:  calc(var(--default-element-height) - 4px);
+        line-height: calc(var(--default-element-height) - 4px);
         position: absolute;
         @extend .d-flex;
         justify-content: space-between;
-        background-color: $bG;
         text-transform: capitalize;
         font-size: var(--s-5);
         --ui-icon-size: var(--s-5);
@@ -102,16 +97,17 @@ $actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-100);
         color: $actColorClose;
         --ui-icon-color: $actColorClose;
         z-index: 2;
-        animation: closeAction 1s forwards;
-        animation-play-state: paused;
         font-size: 18px;
         cursor: pointer;
-        box-shadow: $actBrdr;
-        &:hover {
-            background-color: $bGhover;
-        }
+        background-color: var(--color-gray-60);
+
+        animation: closeAction 1s forwards;
+        animation-play-state: paused;
+
+        &:hover {background-color: var(--color-gray-70);}
 
         &.collapse__action-open {
+            box-shadow: $actBrdr;
             animation: openAction 1s forwards;
             animation-play-state: running;
         }
@@ -126,44 +122,58 @@ $actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-100);
         @extend .d-flex-col;
         width: calc(100% - 20px);
         padding: var(--default-padding) 0;
-        animation: openBody 1s forwards;        
+        z-index: 1;
+        transform: $contTransformClose;
         animation-play-state: paused;
+        animation: openBody 1s forwards;
         &.collapse__body-open {
-            animation: openBody 1s forwards;
+            animation: openBody 1s forwards ease-out;
         }
+
         &.collapse__body-closed {
-            animation: closeBody 1s forwards;        
+            animation: closeBody 1s forwards ease-in-out;
         }
-        
+
     }
 }
-$contTransformClose: translateY(calc(-100% - var(--default-element-height)));
+
+
 
 @keyframes closeBody {
-    0%{
+    0% {
         max-height: unset;
         transform: translateY(0);
         margin-top: 50px;
+        opacity: 1;
     }
-    70%{
-        translate: translateY(calc(-100%));
+
+    10% {
+        max-height: unset;
+        transform: translateY(20px);
+        margin-top: 50px;
+        opacity: 1;
     }
-    100%{
+
+    100% {
         margin-top: 0;
         max-height: 0;
         transform: $contTransformClose;
-  
+        opacity: 0;
     }
 }
+
 @keyframes openBody {
-    0%{
+    0% {
         margin-top: 0;
         max-height: 0;
         transform: $contTransformClose;
+        opacity: 0;
     }
-    100%{
+
+    100% {
         max-height: unset;
         transform: translateY(0);
         margin-top: 50px;
+        opacity: 1;
     }
 }

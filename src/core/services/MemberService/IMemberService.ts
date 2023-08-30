@@ -16,7 +16,9 @@ export type ProductsRequestProps = {
 
 export default interface IMemberService {
   // METHODS
-  getCustomerMethods(request?: any): Promise<any>;
+  getMethods(): Promise<any>;
+  deleteMethod(id: string): Promise<any>;
+
   createCustomerMethod(id: string, method: any): Promise<any>;
   getProducts(request?: any): Promise<any>;
   getProduct({ id, pri }: ProductRequestProps): Promise<any>;
@@ -42,7 +44,7 @@ export default interface IMemberService {
     password,
     user_agent
   }: any): Promise<any>;
-  getSignInIdToken(email: string, password: string, firebaseAPIKey: string): Promise<any>;
+  // getSignInIdToken(email: string, password: string, firebaseAPIKey: string): Promise<any>;
   signOut(): Promise<string>;
   getCurrentUserToken(): string | undefined;
   getPersonalInformation(): Promise<GetPersonalInformationResponse | null>;
