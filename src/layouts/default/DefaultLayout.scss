@@ -1,8 +1,34 @@
-main{
-  max-width:1260px;
+main {
+  max-width: 1260px;
   height: auto;
-  padding:20px;
+  padding: 20px;
   justify-content: center;
-  margin:auto;
+  margin: auto;
   overflow-y: visible;
+
+  // .default-layout__bg {
+  //   position: fixed;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   width: calc(100vw);
+  //   /* Adjust the image path as needed */
+  //   background-image: url('assets/backgrounds/lava1.jpeg');
+  //   /* Set the size of the image */
+  //   /* Set the position of the image */
+  //   background-repeat: no-repeat;
+  //   background-size: calc(100% + 20px);
+  //   filter: blur(2px);
+  //   background-position: center center;
+  //   /* This creates the parallax effect */
+  //   // background-attachment: fixed;
+  //   /* Set the height for the section with the background */
+  //   height: calc(100vh);
+  //   overflow: hidden;
+  //   mix-blend-mode: difference;
+  //   /* Optional: other styles to adjust the appearance and positioning */
+  //   margin: 0;
+  //   padding: 0;
+
+  // }
 }

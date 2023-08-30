@@ -41,7 +41,7 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
       <style jsx>{styles}</style>
       <div className="authentication">
         <video autoPlay loop muted playsInline className="authentication_video">
-          <source src="./assets/beeple.mp4" type="video/mp4" />
+          <source src="./assets/backgrounds/beeple.mp4" type="video/mp4" />
         </video>
         <div className="authentication-body">
           <div className="authentication-header">

@@ -28,13 +28,15 @@ $grid-gutter: 20px;
     }
   }
   &.dashboard__active {
-    color: white;
-    --ui-icon-color: white;
-    background-color: var(--color-gray-70);
+    color: var(--color-red);
+    --ui-icon-color: var(--color-orange);
+    background-clip: text;
+    mix-blend-mode: multiply;
+    background-color: var(--color-gray-80);
   }
   &:hover {
-    background-color: var(--color-gray-60);
     color: var(--hover-color);
+    background-color: var(--color-red-opaque);
   }
   &.dashboard__unavailable {
     position: relative;

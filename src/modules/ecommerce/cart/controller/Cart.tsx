@@ -42,32 +42,8 @@ const Cart = ({ variant, traits }: any) => {
   return (
     <>
       <style jsx>{styles}</style>
-      <UiForm fields={[
-        {
-          name: 'name',
-          label: 'name',
-          placeholder: 'John Doe',
-          type: 'text', // takes in any from types found here: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#type"
-          validation: {
-            minLen: {
-              value: 5,
-              message: 'Your name is not long enough',
-            },
-            maxLen: {
-              value: 10,
-              message: 'Your name is too long',
-            },
-            required: true,
-            // required: {
-            //     message: 'Your name is required'
-            // }
-          }
-        }
-      ]}
-      onSubmit={console.log}
-      onError={console.log}
-      />
-      {/* <div className='cart'>
+  
+      <div className='cart'>
         <div className='cart__header'>
           <UiButton variant="dark" href='/products'>Keep Shopping</UiButton>
           <div className='cart__header-title'></div>
@@ -76,7 +52,7 @@ const Cart = ({ variant, traits }: any) => {
         {cart && cart.length != 0 ? <CartList traits={traits} variant={variant} cart={cart} handleQty={setCart} 
         // collapse
          /> : <EmptyCart />}
-      </div> */}
+      </div>
     </>
   );
 };

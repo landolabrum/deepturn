@@ -2,56 +2,42 @@ import React, { useState } from 'react';
 import UiInput from '../UiInput/UiInput';
 import styles from './UiForm.scss';
 import UiButton from '../UiButton/UiButton';
-type IFormMinMax = {
-    value?: number;
-    message?: string;
-};
-type IFormField = {
-    name?: string;
-    value?: string;
-    label?: string;
-    placeholder?: string;
-    type?: string;
-    validation?: {
-        minLen?: IFormMinMax | number;
-        maxLen?: IFormMinMax | number;
-        required?: boolean | {
-            message?: string
-        };
-    }
-}
+import { IForm, IFormField } from './models/IFormModel';
+import handleConstraints from './services/FormConstraints';
+import UiSelect from '../UiSelect/UiSelect';
+import { countryFormat, stateFormat } from '@webstack/helpers/userExperienceFormats';
+import UiLoader from '../UiLoader/UiLoader';
+import { context } from '@react-three/fiber';
 
-interface IForm {
-    fields?: IFormField[];
-    title?: string | React.ReactElement;
-    btnText?: string | React.ReactElement;
-    onSubmit?: (e: any) => void;
-    onError?: (e: any) => void;
-}
-const UiForm = ({ fields, onSubmit, onError, title, btnText }: IForm) => {
+
+const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange }: IForm) => {
     const [formValues, setFormValues] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
 
-    const handleInputChange = (name: IFormField['name'], value: IFormField['value']) => {
-        if (!name) return;
-        setFormValues(prevState => ({
+
+    const handleInputChange = (e: any, constraints: IFormField['constraints']) => {
+        const isValid = handleConstraints(e, constraints);
+        if (!e || !isValid) return;
+        if (onChange) { onChange(e); return; }
+
+        setFormValues((prevState: any) => ({
             ...prevState,
-            [name]: value
+            [e.target.name]: e.target.value
         }));
     };
 
     const validateField = (field: IFormField) => {
         const name = field.name
         const value = (name !== undefined && formValues[name]) || "";
-        const min: any = field.validation ? field.validation.minLen : 1;
-        const max: any = field.validation ? field.validation.maxLen : 1;
+        const min: any = field.constraints ? field.constraints.min : 1;
+        const max: any = field.constraints ? field.constraints.max : 30;
         let error = "";
-        if (field.validation) {
-            if (field.validation.required && !value) {
+        if (field.constraints) {
+            if (field.constraints.required && !value) {
                 error = "This field is required";
             } else if (min && value.length < min.value) {
                 error = min.message;
-            } else if (field.validation.maxLen && value.length > max.value) {
+            } else if (field.constraints.max && value.length > max.value) {
                 error = max.message;
             }
         }
@@ -59,14 +45,13 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText }: IForm) => {
     };
 
     const handleSubmit = (e: any) => {
-        if (!fields || !onSubmit) return;
         e.preventDefault();
+        if (!fields || !onSubmit) return;
         const currentErrors: any = {};
-        fields.forEach(field => {
+        fields.forEach((field: IFormField) => {
             const error = validateField(field);
             if (error && field.name) currentErrors[field.name] = error;
         });
-
         if (Object.keys(currentErrors).length === 0) {
             onSubmit(formValues);
         } else {
@@ -74,35 +59,51 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText }: IForm) => {
             onError && onError(currentErrors);
         }
     };
-
+    const textTypes = ['', undefined, 'text', 'password', 'number', 'tel', null, false, 'expiry'];
+    const selectMaker = (field: any)=>{
+        if(field.name == 'country')return countryFormat(formValues[field.name] || field?.value);
+        if(field.name == 'state')return stateFormat(formValues[field.name] || field?.value);;
+    }
     return (<>
-
-    <style jsx>{styles}</style>
-        <form
-            onSubmit={handleSubmit}
-        >
-            {fields && fields.map((field: any) => (
-                <div className='form__field' key={field.name}>
-                    <UiInput 
-                        message='This is a test error message'
+        <style jsx>{styles}</style>
+        {title}
+        <div className='form' >
+            {fields ? fields.map((field: any) => (
+                <div
+                    key={field.name}
+                    className='form__field'
+                    style={
+                        typeof field?.width == 'string' ?
+                            { width: `calc(${field.width} - 10px)` } :
+                            {}}
+                >
+                    {textTypes.includes(field?.type) && <UiInput
+                        // message='This is a test error message'
                         label={field.label}
-                        variant='dark'
+                        max={field.max}
+                        variant={field?.variant ? field?.variant : 'dark'}
                         type={field.type}
+                        traits={field?.traits}
                         name={field.name}
                         placeholder={field.placeholder}
-                        value={formValues[field.name] || ''}
-                        onChange={e => handleInputChange(field.name, e.target.value)}
-                    />
+                        value={formValues[field.name] || field?.value  || ''}
+                        onChange={e => handleInputChange(e, field.constraints)}
+                    />}
+                    {field?.type == 'select' && <UiSelect
+                        variant='dark'
+                        options={field?.options}
+                        label={field.name}
+                        title={selectMaker(field)}
+                        onSelect={e => handleInputChange({ target: { name: field.name, value: e } }, field.constraints)}
+                    />}
                 </div>
-            ))}
-            <UiButton
-                variant='dark'
-                type='submit'
-            >
-                {btnText?btnText:'Submit'}
+            )):(<UiLoader position='relative'/>)}
+      
+            <UiButton variant='dark' type='submit' onClick={handleSubmit}>
+                {btnText ? btnText : 'Submit'}
             </UiButton>
-        </form>
-        </>
+        </div>
+    </>
     );
 }
 

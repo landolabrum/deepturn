@@ -22,7 +22,10 @@ export default function useRoute(handleSideNav?: () => void){
   const router = useRouter();
   const handleRoute = useCallback(
     (option: RouteOptionProps) => {
-      if (option.items || option.active === false) return;
+        if (
+          option.items ||
+        option.active === false
+        ) return;
       router.push(option.href, undefined, { shallow: false });
       handleSideNav && handleSideNav();
     },

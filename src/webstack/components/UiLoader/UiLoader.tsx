@@ -3,7 +3,7 @@ import type { NextComponentType, NextPageContext } from "next";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { useEffect, useRef, useState } from "react";
 interface Props {
-  text?: string;
+  text?: string | boolean;
   dots?: boolean;
   height?: number | string;
   position?: string;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) => {
-  const text = props?.text ? props.text : "Loading";
+  const text = !props?.text && typeof props.text != 'string' ? "Loading" : props.text;
   const [dots, setDots] = useState("");
     const ref = useRef<any>(null);
   useEffect(() => {
@@ -47,9 +47,12 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
             <UiIcon icon="deepturn-logo" />
           </div>
           </div>
-          <div className="ui-loader__loading-text-container">
-            <div className="ui-loader__loading-text">{text}</div>
-            <div className="ui-loader__loading-text-dots">{props.dots !== false?dots:""}</div>
+          <div 
+
+          className={`ui-loader__loading-text-container${props.dots == false? ' ui-loader__loading-text-container-no-dots':''}`}
+          >
+            <div className={`ui-loader__loading-text`}>{text}</div>
+            {props.dots !== false && <div className="ui-loader__loading-text-dots">{dots}</div>}
           </div>
         </div>
       </div>

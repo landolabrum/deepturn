@@ -20,7 +20,6 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
     if(props?.max && props.max < _e.target.value.length)return;
     let [newV, extra] = maskInput(e, type);
     if(extra !== undefined){
-      console.log('!extra: ',[newV, extra])
       setFormattedValue(value + newV)
       _e.target.value = [newV, extra];
     }else{

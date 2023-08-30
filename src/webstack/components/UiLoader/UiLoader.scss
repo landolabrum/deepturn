@@ -13,10 +13,11 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-
+    
     .ui-loader__loading-text-container {
+      justify-content: space-around;
       color: var(--color-gray-50);
-      font-size: 1.5em;
+      font-size: 1.5rem;
       line-height: 1;
       font-weight: 500;
       width: 100%;
@@ -25,14 +26,22 @@
       display: flex;
       align-items: center;
       gap: 6px;
-
       .ui-loader__loading-text {
         /* Equal width for the text and dots */
         display: flex;
         justify-content: flex-end;
-        width: 70%;
+        width: 80%;
       }
-
+      &.ui-loader__loading-text-container-no-dots{
+        width: 100%;
+        border: solid 1px;
+        justify-content: center;
+        .ui-loader__loading-text {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+        }
+      }
       .ui-loader__loading-text-dots {
         /* Equal width for the text and dots */
         display: flex;

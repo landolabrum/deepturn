@@ -12,13 +12,25 @@ $outlineColor: var(--color-gray-80);
 $borderColor: var(--color-gray-60);
 
 @keyframes show {
-    0% { width: $max; }
-    100% { width: $min; }
+    0% {
+        width: $max;
+    }
+
+    100% {
+        width: $min;
+    }
 }
+
 @keyframes hide {
-    0% { width: $min; }
-    100% { width: $max; }
+    0% {
+        width: $min;
+    }
+
+    100% {
+        width: $max;
+    }
 }
+
 .d-flex {
     display: flex;
     justify-content: center;
@@ -26,92 +38,121 @@ $borderColor: var(--color-gray-60);
     flex-direction: column;
     width: 100%;
 }
-
+.d-pad{
+    width: calc(calc(100% - var(--default-padding)) - 2px);
+    padding: calc(var(--default-padding) * .5);
+    border: solid 1px var(--color-gray-20-opaque);
+}
 .account-methods {
     @extend .d-flex;
     justify-content: flex-start;
-    min-height: 500px;
-    .account-methods__method {
-        cursor: pointer;
-        border-radius: var(--default-border-radius);
-        outline: solid 1px $outlineColor;
-        background-color: $background;
-        color: $color;
-        height: 45px;
-        position: relative;
-
-        @extend .d-flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        --ui-icon-color: $color;
-        width: calc(100% - 4px);
-        .account-methods__method-content{
-            line-height: 1;
-            font-size: var(--s-4);
-            // height: var(--default-element-height);
-            background-color: $contentBackground;
+    margin-bottom: var(--default-padding);
+    
+    
+    .account-methods__header {
+        @extend .d-flex, .d-pad;
+        border-bottom: unset;
+        align-items: flex-start;
+        font-size: var(--s-3);
+        border-radius: var(--default-border-radius) var(--default-border-radius) 0  0;
+        color: var(--color-gray-20);
+        text-transform: capitalize;
+    }
+    .account-methods__existing {
+        border-radius: 0  0 var(--default-border-radius) var(--default-border-radius);
+        @extend .d-flex, .d-pad;
+        gap: var(--default-padding);
+        .account-methods__method {
+            cursor: pointer;
+            border-radius: var(--default-border-radius);
+            outline: solid 1px $outlineColor;
+            background-color: $background;
+            color: $color;
+            height: var(--default-element-height);
+            position: relative;
             @extend .d-flex;
             flex-direction: row;
-            border-radius: var(--default-border-radius);
-            outline: solid 1px $borderColor;
-            z-index: 2;
-            justify-content: space-between;
-            padding: calc($pad * .66) $pad;
-            width: calc(100% - calc($pad * 2));
-            animation-play-state: paused;
-            &.account-methods__method-content-show{
-                animation: show 1s forwards;
-                animation-play-state: running;
-            }
-            &.account-methods__method-content-hide{
-                animation: hide 1s forwards;
-                animation-play-state: running;
-            }
-            &:hover{
-                color: $colorHover;
-                --ui-icon-color: $colorHover;
-            }
-            &:active{
-                background-color: #005eb8;
-            }
-            .account-methods__method-info {
+            justify-content: flex-start;
+            --ui-icon-color: $color;
+            width: calc(100% - 4px);
+
+            .account-methods__method-content {
+                line-height: 1;
+                font-size: var(--s-4);
+                // height: var(--default-element-height);
+                background-color: $contentBackground;
                 @extend .d-flex;
-                justify-content: flex-start;
                 flex-direction: row;
-                gap: $pad;
-                --ui-icon-width: max-content;
-                --ui-icon-height: 16px;
-            }
-            .account-methods__method-exp{
-                @extend .d-flex;
-                justify-content: flex-end;
-                flex-direction: row;
-            }
-            .account-methods__method-details {
-                @extend .d-flex;
-                flex-direction: column;
+                border-radius: var(--default-border-radius);
+                outline: solid 1px $borderColor;
+                z-index: 2;
                 justify-content: space-between;
+                padding: calc($pad * .66) $pad;
+                width: calc(100% - calc($pad * 2));
+                animation-play-state: paused;
+
+                &.account-methods__method-content-show {
+                    animation: show 1s forwards;
+                    animation-play-state: running;
+                }
+
+                &.account-methods__method-content-hide {
+                    animation: hide 1s forwards;
+                    animation-play-state: running;
+                }
+
+                &:hover {
+                    color: $colorHover;
+                    --ui-icon-color: $colorHover;
+                }
+
+                &:active {
+                    background-color: #005eb8;
+                }
+
+                .account-methods__method-info {
+                    @extend .d-flex;
+                    justify-content: flex-start;
+                    flex-direction: row;
+                    gap: $pad;
+                    --ui-icon-width: max-content;
+                    --ui-icon-height: 16px;
+                }
+
+                .account-methods__method-exp {
+                    @extend .d-flex;
+                    justify-content: flex-end;
+                    flex-direction: row;
+                }
+
+                .account-methods__method-details {
+                    @extend .d-flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+
             }
-            
-        }
-        .account-methods__delete{
-            position: absolute;
-            right: 2px;
-            z-index: 1;
-            width: calc($delW + 10px);
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            // height: calc(var(--default-element-height) + calc($pad * 2));
-            border-radius: 9px;
-            display: flex;
-                &:hover{
+
+            .account-methods__delete {
+                position: absolute;
+                right: 2px;
+                z-index: 1;
+                width: calc($delW + 10px);
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                // height: calc(var(--default-element-height) + calc($pad * 2));
+                border-radius: 9px;
+                display: flex;
+
+                &:hover {
                     --ui-icon-color: var(--color-red);
-                    
+
                     background-color: $contentBackgroundHover;
                 }
             }
         }
-        
+
+
     }
-    
+}

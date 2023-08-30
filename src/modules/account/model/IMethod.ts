@@ -1,6 +1,6 @@
 export interface OPaymentMethod{
     number: string;
-    ccv: string;
+    cvc: string;
     expiry: string;
 }
 export interface IPaymentMethod{

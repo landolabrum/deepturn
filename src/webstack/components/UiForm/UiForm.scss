@@ -1,21 +1,23 @@
-.d-flex{
- display: flex;
- justify-content: center;
- align-items: center;
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.d-flex-col{
-    @extend .d-flex;
-    flex-direction: column;
-    gap: var(--default-padding);
+
+.d-flex-col {
+  @extend .d-flex;
+  flex-direction: column;
+  gap: var(--default-padding);
 }
-form{
-    @extend .d-flex-col;
-    width: 100%;
-    .form__field{
-        height: calc(var(--default-element-height) * 3);
-        @extend .d-flex-col;
-        justify-content: space-between;
-        width: 100%;
-  
-    }
+
+.form {
+  @extend .d-flex;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: var(--default-padding);
+  .form__field {
+      width: 100%;
+      @extend .d-flex-col;
+  }
 }

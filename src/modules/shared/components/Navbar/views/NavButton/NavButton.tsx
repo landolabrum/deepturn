@@ -35,7 +35,7 @@ const NavButton = ({ item, handleRoute, setOpen, active }: NavButtonProps) => {
   };
 
   useEffect(() => {
-    if(totalQty && totalQty > 1 && isCartIcon){
+    if(totalQty && totalQty > 5 && isCartIcon){
       handleClick();
     };
   }, [totalQty, contentRef]);
@@ -50,7 +50,8 @@ const NavButton = ({ item, handleRoute, setOpen, active }: NavButtonProps) => {
       <span 
       className="nav-button"
       onClick={() => {
-        if (isCartIcon) item.href = `${item?.href}?ref=${router.pathname.slice(1)}`;
+        let pname = router.pathname.slice(1);
+        if (isCartIcon  ) item.href = `${item?.href}?ref=${pname}`;
         handleRoute(item);
       }}
       >

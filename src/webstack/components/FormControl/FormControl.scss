@@ -188,7 +188,7 @@ $elPad: 14px;
     &[class$="-icon"] {
       pointer-events: none;
       margin: 0 3px;
-      background-color: var(--color-gray-30-opaque);
+      // background-color: var(--color-gray-30-opaque);
       border-radius: var(--default-border-radius) !important;
       outline: solid 1px transparent;
     }

@@ -9,25 +9,28 @@ import AccountForm from "../views/AccountForm/AccountForm";
 import AccountMethods from "../views/AccountMethods/AccountMethods";
 import { capitalizeAll } from "@webstack/helpers/Capitalize";
 import {default as Div} from "@webstack/components/UiDiv/UiDiv";
+import UiForm from "@webstack/components/UiForm/UiForm";
 
 interface Props {}
 
 const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
   const [header, setHeader] = useHeader();
   const [loaded, setLoaded] = useState(false);
+  const [view, setView] = useState<string>('billing');
+
   const views:any = {
-    "edit profile":<AccountForm form={'profile'}/> ,
+    "edit profile":<AccountForm /> ,
     "email notification":"email notification",
     "privacy & security":"privacy & security",
     'billing':<AccountMethods/>
   };
-  const [view, setView] = useState<string>('billing');
+  
   // const [view, setView] = useState<string>('edit profile');
 
   useEffect(() => {
       setLoaded(true);
       setHeader({ title: 'account', breadcrumbs: [{ label: "account" }] });
-  }, []);
+  }, [setLoaded]);
 
   const userCountry = (country: string): string => {
     const contArr = Object.entries(countries).find(([iso, name]) => iso === country.toLowerCase());
@@ -44,16 +47,9 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
     return (
       <>
         <style jsx>{styles}</style>
-        <Div 
-          variant='dark card shadow'
-          // jsx='.ui-div{background-color:#f30 !important;}'
-        >
-          <div>a</div>
-          <div>b</div>
-        </Div>
         <div className="account">
           <div className="account__content">
-            <div className="account__menu-desktop">
+            <Div variant='dark card'>
               <UiMenu
                 label={'foop'}
                 traits={{backgroundColor:'transparent', border:'none', outline:'none', borderRadius:'unset'}}
@@ -64,7 +60,7 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
                   setView(e);
                 }}
               />
-            </div>
+            </Div>
             <div className="account__menu-mobile">
               <UiSelect
                 onSelect={(e) => {
@@ -77,9 +73,9 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
               />
             </div>
           </div>
-          <div className="account__view">
+          <Div variant="dark card">
             {views[view]}
-          </div>
+          </Div>
         </div>
       </>
     );

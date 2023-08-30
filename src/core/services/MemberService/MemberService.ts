@@ -66,16 +66,48 @@ export default class MemberService
   public async getCustomerMethods(
     request?: any
   ): Promise<any> {
-    let id:string = this._getCurrentUser(false)?.id;
-    if (id ) return await this.get<any>(
+    let id = this._getCurrentUser(false)?.id;
+    if (id) return await this.get<any>(
       `/api/method/customer/?id=${id}`,
     );
     if (!id) {
       throw new ApiError("Customer not logged in", 400, "MS.SI.02");
     }
-
   }
+    public async createCustomerMethod(id: string, method: any): Promise<any> {
+    if (id && method) {
 
+      const res = await this.post<any, any>(
+        `usage/customer/method?id=${id}`,
+        method);
+      return res;
+    }
+    if (!id) {
+      throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
+    }
+    if (!method) {
+      throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+    }
+  };
+  public async updateMember(id: string, memberData: any): Promise<any> {
+    if (id && memberData) {
+
+      const res = await this.put<GetRecruitesRequest, GetRecruitesResponse>(
+        `api/customer?id=${id}`,
+        memberData);
+      const memberJwt:any = res;
+      this.saveMemberToken(memberJwt);
+      this.saveLegacyCookie(memberJwt);
+      return this._getCurrentUser(true)!;
+
+    }
+    if (!id) {
+      throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
+    }
+    if (!memberData) {
+      throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+    }
+  };
   public async getProducts(
     request?: any
   ): Promise<any> {

@@ -8,7 +8,7 @@ import createTestId from "@webstack/helpers/createTestId";
 
 type FormIconProps = {
   icon: string;
-  onClick: (e: any) => void;
+  onClick?: (e: any) => void;
   color?: string;
 } | string;
 
@@ -52,8 +52,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
 
   useEffect(() => {
     if (!traits) return;
-    const elemenet_ref = ref.current.querySelector('.form-control__element');
-
+    let elemenet_ref = ref.current.querySelector('.form-control__element');
     // Set width if provided
     if (traits?.width) {
       if (typeof traits.width === "number") ref.current.style.width = `${traits.width}px`;

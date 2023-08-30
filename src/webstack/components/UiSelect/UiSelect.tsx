@@ -39,8 +39,9 @@ const UiSelect: React.FC<SelectProps> = ({
   const hasOptions = Boolean(typesBypass?.every((element: any) => element !== undefined));
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const bOpen = isOpen === 'open';
-  const handleSelect=(e:any)=>{
-    onSelect&&onSelect(e);
+  const handleSelect=(value:any)=>{
+    setSelectedOption(value);
+    onSelect&&onSelect(value);
     variant !== 'disabled' && setIsOpen("closed");
   }
   const handleOpen = (e:any) => {

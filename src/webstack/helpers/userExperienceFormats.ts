@@ -2,7 +2,7 @@ import { PhoneNumberUtil, PhoneNumberFormat } from "google-libphonenumber";
 import { InvalidCell, NaCell } from "@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell";
 type dateProps = string | number | Date;
 type returnType = "string" | "object";
-import { countries } from "@webstack/models/location";
+import { countries, states } from "@webstack/models/location";
 
 
 interface OptionsProps {
@@ -68,7 +68,7 @@ export default function formatCreditCard(cardNumber: string): FormattedCard {
   else if (/^(?:2131|1800|35\d{2})/.test(cleaned)) brand = 'jcb';
   else if (/^5[1-5]/.test(cleaned)) brand = 'mastercard';
   // Add other patterns for 'eftpos_au', 'unionpay' if you have them.
-  console.log("[ CARD-Brand ]:", brand)
+  // console.log("[ CARD-Brand ]:", brand)
   let formatted: string[] = [];
   switch (brand) {
     case 'visa':
@@ -90,64 +90,23 @@ export default function formatCreditCard(cardNumber: string): FormattedCard {
   return [ brand, formattedNumber ];
 }
 
-// type CardBrand =
-//   | 'amex'
-//   | 'diners'
-//   | 'discover'
-//   | 'eftpos_au'
-//   | 'jcb'
-//   | 'mastercard'
-//   | 'unionpay'
-//   | 'visa'
-//   | 'unknown';
-
-// interface FormattedCard {
-//   brand: CardBrand;
-//   formattedNumber: string;
-// }
-
-// export default function formatCreditCard(cardNumber: string): FormattedCard {
-//   const cleaned = ('' + cardNumber).replace(/\D/g, ''); // Remove any non-numeric characters
-
-//   let brand: CardBrand = 'unknown';
-//   if (/^3[47]/.test(cleaned)) brand = 'amex';
-//   else if (/^3(?:0[0-5]|[68])/.test(cleaned)) brand = 'diners';
-//   else if (/^6(?:011|5)/.test(cleaned)) brand = 'discover';
-//   else if (/^4/.test(cleaned)) brand = 'visa';
-//   else if (/^(?:2131|1800|35\d{3})/.test(cleaned)) brand = 'jcb';
-//   else if (/^5[1-5]/.test(cleaned)) brand = 'mastercard';
-//   // Add other patterns for 'eftpos_au', 'unionpay' if you have them.
-
-//   let formatted: any = '';
-//   switch (brand) {
-//     case 'visa':
-//     case 'mastercard':
-//       // Format: xxxx xxxx xxxx xxxx
-//       formatted = cleaned.match(/(\d{0,4})(\d{0,4})(\d{0,4})(\d{0,4})/)!.slice(1);
-//       break;
-
-//     case 'amex':
-//       // Format: 34xx xxxxxx xxxxx
-//       formatted = cleaned.match(/(\d{0,4})(\d{0,6})(\d{0,5})/)!.slice(1);
-//       break;
-
-//     default:
-//       return { brand, formattedNumber: cleaned }; // If an unknown brand, return the cleaned card number.
-//   }
-
-//   const formattedNumber = formatted.filter((n: string) => n).join(' '); // Filter and join
-//   return { brand, formattedNumber };
-// }
-
 // COUNTRY
 export function countryFormat(countryISO: string) {
- 
   const countryCodes: { [key: string]: string } = countries;
   if (countryISO?.toLowerCase() in countries) {
     countryISO = countryCodes[countryISO?.toLowerCase()];
     return countryISO;
   } else {
     return countryISO ? countryISO.toUpperCase() : NaCell();
+  }
+}
+export function stateFormat(stateISO: string) {
+  const stateCodes: { [key: string]: string } = states;
+  if (stateISO?.toLowerCase() in states) {
+    stateISO = stateCodes[stateISO?.toLowerCase()];
+    return stateISO;
+  } else {
+    return stateISO ? stateISO.toUpperCase() : NaCell();
   }
 }
 
@@ -212,13 +171,6 @@ export function dateFormat(
 
 export function numberToUsd(amount: number) {
   if(!amount)return "loading"
-  // let formatted = '0'
-  // if(amount)formatted = `${amount.toLocaleString("en-US", {
-  //   minimumFractionDigits: 2,
-  //   maximumFractionDigits: 2,
-  // })}`;
-  // formatted = `$${formatted}`;
-  // return formatted;
   const formattedAmount = (amount / 100).toFixed(2);
   return `$${formattedAmount}`;
 }

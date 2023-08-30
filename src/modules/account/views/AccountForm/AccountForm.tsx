@@ -1,96 +1,73 @@
-// Relative Path: ./AccountInfo.tsx
+// Relative Path: ./AccountForm.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './AccountForm.scss';
-import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
+import UiForm from '@webstack/components/UiForm/UiForm';
+import formatAccountFields  from './components/FormatAccountForm';
+import UiLoader from '@webstack/components/UiLoader/UiLoader';
+import { getService } from '@webstack/common';
+import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import UiInput from '@webstack/components/UiInput/UiInput';
-import UiButton from '@webstack/components/UiButton/UiButton';
-import methodReduce from '../../helpers/methodReduce';
 
 // Remember to create a sibling SCSS file with the same name as this component
-interface IAccountInfo {
-    collapse?: boolean;
-    form: string;
-    customer: any
-}
 
-const AccountForm: React.FC<any> = ({ collapse, form }: IAccountInfo) => {
-    const [loaded, setLoaded] = useState(false);
-    const [formData, setFormData] = useState<any>({});
-    const [visibleData, setVisible] = useState<any>({});
-    const user: any = useUser();
-    function handleCustomer() {
-        loaded && setLoaded(!loaded);
-        let manipulated = [];
-        if (form == 'method' && user?.methods?.data) {
-            const hidden = ['id', 'object', 'customer', 'three_d_secure_usage-supported', 'livemode', 'type', 'created', 'fingerprint', 'funding'];
-            const [full, visible]: any = methodReduce(user?.methods?.data, hidden);
-            if (full) manipulated = full[0];
-            if (visible) setVisible(visible);
-        }
-        if (user) {
-            const forms: { [key: string]: any } = {
-                profile: {
-                    first_name: user.name.split(" ")[0],
-                    last_name: user.name.split(" ")[1],
-                    email: user?.email,
-                    phone: user?.phone,
-                    line1: user?.address.line1,
-                    line2: user?.address.line2,
-                    city: user?.address.city,
-                    state: user?.address.state,
-                    postal_code: user?.address.postal_code,
-                },
-                method: manipulated
-            };
-            setFormData(
-                forms[form]
-            );
-            setLoaded(!loaded);
+const AccountForm: React.FC<any> = ({ }) => {
+    const user = useUser();
+    const [fields, setFields] = useState<any>(null);
+    const [loading, setloading] = useState<boolean | string>(true);
+    const memberService = getService<IMemberService>("IMemberService");
+
+    const handleAccount = async (formValues: any) =>{
+        if(!user)return;
+        setloading('updating account');
+        const memberResponse = await memberService.updateMember(user.id, formValues);
+        console.log(`[ FUNCTION ]: ${JSON.stringify(memberResponse)}`);
+        if(memberResponse?.id){
+            setloading('success');
+            setFields(formatAccountFields(memberResponse));
         }
     }
-    const [_form, setForm] = useState<any>({
-
-    })
+    
+    function getAccount(){
+        if (user){
+            const userData = formatAccountFields(user);
+            if(userData){
+                setFields(userData);
+                setloading(false);
+            }
+        }
+    }
     useEffect(() => {
-        if (Object.entries(formData).length && !Boolean(Object.entries(visibleData).length)) setVisible(formData);
-        if (!loaded) handleCustomer();
-    }, [loaded]);
-
-    if (!loaded) return <div >loading</div>
-    const FormFields = ({ data }: any) => {
-        if (!data) return;
-        return <>
+       getAccount();
+    }, [setFields]);
+    if(!loading || loading =='success' )return (
+        <>
             <style jsx>{styles}</style>
-            {Object.entries(data).map(([field, value]: any, key: number) => {
-                return <div key={field} className='form-fields' >
-                    {typeof value == 'object' ? (
-                        <FormFields data={value} />
-                    ) : (
-                        <UiInput name={field} label={field.replace("_", " ")} value={value ? String(value) : ''} variant='dark' />
-                    )}
-                </div>;
-            })}
+            {loading == 'success' && 
+                <UiInput 
+                    variant='link'
+                    disabled
+                    traits={{
+                        beforeIcon:{
+                            icon:'fa-check', color:'#4f96ff'
+                        },
+                        backgroundColor: 'transparent',
+                        width:"100%"
+                    }} 
+                    value="successfully modified your account"
+                />
+            }
+            <UiForm 
+                fields={fields}
+                onSubmit={handleAccount}
+            />
         </>
-    }
-    return <>
-        <style jsx>{styles}</style>
-        <div className='account-info'>
-            <form className="account-info__form">
-                {collapse ?
-                    (
-                        <UiCollapse label={`Account Info `}>
-                            <FormFields data={visibleData} />
-                        </UiCollapse>
-                    ) : (<FormFields data={visibleData} />)
-                }
-            </form>
-            <div className='account-info__action'>
-                <UiButton variant='dark'>update</UiButton>
-            </div>
-        </div>
-    </>;
+    );
+    if(loading || loading !='success' )return <UiLoader 
+                height="600px"
+                text={loading} 
+                position='relative'
+            />
 };
 
 export default AccountForm;
-

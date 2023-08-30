@@ -11,6 +11,7 @@ export default function DefaultLayout(props: IProps) {
   return <>
     <style jsx>{styles}</style>
     <main>
+       <span className='default-layout__bg'/>
         {props.children}
       </main>
   </>;

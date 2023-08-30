@@ -2,7 +2,6 @@
 $bG: var(--color-gray-80);
 $bGhover: var(--color-gray-70);
 
-$contTransformClose: translateY(calc(-100% - var(--default-element-height)));
 $actColorClose: var(--color-gray-50);
 $actBrdr: 0 0 var(--default-element-height) 50% var(--color-gray-80);
 $actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-100);
@@ -12,22 +11,30 @@ $actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-100);
         color: $actColorClose;
         --ui-icon-color: $actColorClose;
         box-shadow: $actBrdr;
+        background-color: var(--color-gray-80-opaque);
+        border-bottom: solid 1px var(--color-gray-80-opaque);
     }
-
+    
     50% {
         color: var(--color-gray-60);
         box-shadow: $actBrdr;
+        background-color: var(--color-gray-70-opaque);
+        border-bottom: solid 1px var(--color-gray-70-opaque);
     }
-
+    
     99% {
         color: var(--color-gray-60);
         box-shadow: $actBrdrT;
+        background-color: var(--color-gray-70-opaque);
+        border-bottom: solid 1px var(--color-gray-60-opaque);
     }
-
+    
     100% {
         color: $actColorClose;
         --ui-icon-color: $actColorClose;
         box-shadow: none;
+        background-color: var(--color-gray-70);
+        border-bottom: solid 1px var(--color-gray-60);
     }
 }
 
@@ -100,7 +107,6 @@ $actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-100);
         font-size: 18px;
         cursor: pointer;
         box-shadow: $actBrdr;
-
         &:hover {
             background-color: $bGhover;
         }
@@ -120,15 +126,44 @@ $actBrdrT: 0 0 var(--default-element-height) 5rem var(--color-gray-100);
         @extend .d-flex-col;
         width: calc(100% - 20px);
         padding: var(--default-padding) 0;
-        transform: $contTransformClose;
-        max-height: 0; // Start with 0 height
-        transition: transform, max-height 1s ease-out; // animate the max-height
+        animation: openBody 1s forwards;        
+        animation-play-state: paused;
         &.collapse__body-open {
-            margin-top: 50px;
-            transform: translateY(0);
-            max-height: 600px; // Assuming 500px as the expanded height. You can adjust.
-            transition: transform, max-height 2s ease-out; // animate the max-height
+            animation: openBody 1s forwards;
         }
-   
+        &.collapse__body-closed {
+            animation: closeBody 1s forwards;        
+        }
+        
+    }
+}
+$contTransformClose: translateY(calc(-100% - var(--default-element-height)));
+
+@keyframes closeBody {
+    0%{
+        max-height: unset;
+        transform: translateY(0);
+        margin-top: 50px;
+    }
+    70%{
+        translate: translateY(calc(-100%));
+    }
+    100%{
+        margin-top: 0;
+        max-height: 0;
+        transform: $contTransformClose;
+  
+    }
+}
+@keyframes openBody {
+    0%{
+        margin-top: 0;
+        max-height: 0;
+        transform: $contTransformClose;
+    }
+    100%{
+        max-height: unset;
+        transform: translateY(0);
+        margin-top: 50px;
     }
 }

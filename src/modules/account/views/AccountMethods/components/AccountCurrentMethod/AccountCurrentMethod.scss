@@ -1,0 +1,15 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.account-current-method{
+    @extend .d-flex;
+    width: 100%;
+    .account-current-method__content{
+        @extend .d-flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+}

@@ -1,0 +1,40 @@
+
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 100%;
+
+}
+.account-create-method {
+    width: 100%;
+    .account-create-method__method {
+        width: 100%;
+        .account-create-method__status{
+            @extend .d-flex;
+            height: max-content;
+            padding: var(--default-padding) calc(var(--default-padding) * .66);
+            width: calc(100% - calc(calc(var(--default-padding) * .66) * 2));
+            justify-content: flex-start;
+            height: var(--default-element-height);
+            color: var(--color-gray-40);
+            &.account-create-method__status-error{
+                color: var(--color-orange);
+            }
+            &.account-create-method__status-success{
+                color: var(--color-green-60);
+            }
+        }
+    }
+    .account-create-method__exp{
+        @extend .d-flex;
+        gap: 10px;
+    }
+    .account-create-method__action{
+        @extend .d-flex;
+        justify-content: flex-end;
+        margin-top: var(--default-element-height)
+        // visibility: hidden;
+    }
+
+}
