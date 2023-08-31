@@ -45,7 +45,7 @@ $elPad: 14px;
   flex-direction: column;
   text-transform: capitalize;
   height: max-content;
-  width: 100%;
+  width: calc(100% - 2px);
   justify-content: center;
 
   &.form-control-inherit {
@@ -120,7 +120,7 @@ $elPad: 14px;
  
 
     .form-control__icon-placeholder {
-      width: calc(var(--default-element-height) * .5)
+      width: var(--s-7);
     }
 
     &.form-control__element-center {
@@ -198,6 +198,7 @@ $elPad: 14px;
     }
 
     &[class$="-nav-item"] {
+      background-color: transparent;
       @media (max-width: 900px) {
         justify-content: flex-start;
       }
@@ -359,6 +360,9 @@ $elPad: 14px;
       position: absolute;
       top: 0;
       right: calc($badge * .7);
+      // @media(max-width: 900px){
+      //   right: calc($badge * .7);
+      // }
       height: $badge;
       width: $badge;
       min-width: $badge;

@@ -10,6 +10,7 @@ import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
 import useCart from '../hooks/useCart';
 import UiLoader from '@webstack/components/UiLoader/UiLoader';
 import UiForm from '@webstack/components/UiForm/UiForm';
+import Checkout from '../views/Checkout/Checkout';
 
 
 const Cart = ({ variant, traits }: any) => {
@@ -44,6 +45,7 @@ const Cart = ({ variant, traits }: any) => {
       <style jsx>{styles}</style>
   
       <div className='cart'>
+
         <div className='cart__header'>
           <UiButton variant="dark" href='/products'>Keep Shopping</UiButton>
           <div className='cart__header-title'></div>

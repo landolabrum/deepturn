@@ -1,5 +1,5 @@
 // Relative Path: ./AccountCurrentMethod.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './AccountCurrentMethod.scss';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { IMethod } from '~/src/modules/account/model/IMethod';
@@ -42,9 +42,11 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDelete, response }:IAcc
         'account-current-method__content-hide',
         'account-current-method__content-show'
     ]
+    
+    useEffect(() => {}, [response]);
     return (
         <>
-            <style jsx>{styles}</style>{clicked}
+            <style jsx>{styles}</style>
             <div className='account-current-method' >
                 <div 
                     className={`account-current-method__content ${states[clicked]}`}
@@ -64,7 +66,7 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDelete, response }:IAcc
             </div>
             {response && response != '' && 
                 <div className={`account-current-method__response${
-                        response.charAt(0) == '*'?'account-current-method__response-error':''
+                        response.charAt(0) == '*'?' account-current-method__response-error':''
                     }`}
                 >
                     {response}

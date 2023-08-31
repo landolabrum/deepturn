@@ -14,22 +14,21 @@ import AccountCurrentMethod from '../components/AccountCurrentMethod/AccountCurr
 const AccountMethods: React.FC = () => {
   const [loading, setLoading] = useState<boolean | string>(true);
   const [methods, setMethods] = useState<IMethod[]>([]);
-  const [deleteResponse, setDeleteResponse]=useState<any>('');
+  const [deleteResponse, setDeleteResponse] = useState<any>('');
 
   const memberService = getService<IMemberService>("IMemberService");
   const user = useUser();
 
-  const handleDelete = async (id: string)=>{
-    const runDelete = await memberService.deleteMethod('2')
-    console.log('[ runDelete ]', runDelete)
-    try{
-      setDeleteResponse(runDelete.message);
-    } catch (e){
-      console.log('[ ERROR ]', e)
-      setDeleteResponse(JSON.stringify(e));
-    }
+  const handleDelete = async (id: string) => {
+    setLoading('deleting payment method');
+    const runDelete = await memberService.deleteMethod(id)
+    setDeleteResponse(
+      runDelete.message ? runDelete.message : `*${runDelete.detail.split('on Stripe')[0]}`
+    );
+    getAccountMethods();
+    setLoading(false);
   }
-  
+
   const createMethod = async (method: any) => {
     if (user == undefined) return;
     setLoading('updating account');
@@ -50,35 +49,37 @@ const AccountMethods: React.FC = () => {
   }
   const getAccountMethods = async () => {
     const methodsResponse = await memberService.getMethods();
-    console.log('[ methodsResponse ]',methodsResponse)
+    console.log('[ methodsResponse ]', methodsResponse)
     if (methodsResponse) setMethods(methodsResponse?.data);
     setLoading(false);
   }
   useEffect(() => {
     getAccountMethods();
-  }, []);
+  }, [loading == false]);
   return (
     <>
-      <style jsx>{styles}</style>{JSON.stringify(methods)}
+      <style jsx>{styles}</style>
+      {JSON.stringify(methods.length)}
       <div className='account-methods'>
-        {/* <AccountCreateMethod
+        <AccountCreateMethod
+          open={methods.length == 0}
           loading={loading}
           onSubmit={createMethod}
-        /> */}
-        <div className='account-methods__header'>
-          <div className='account-methods__title'>
-            payment methods
-          </div>
-        </div>
-        <div className='account-methods__existing'>
-          {methods.length ? Object.entries(methods).map(([key, method]) => {
-            return <div className='account-methods__method-container' key={key} >
-              <AccountCurrentMethod method={method} onDelete={handleDelete} response={deleteResponse}/>
+        />
+        {methods.length > 0 && <>
+          <div className='account-methods__header'>
+            <div className='account-methods__title'>
+              payment methods
             </div>
-          }) :
-            (<UiLoader position='relative' height={500} />)
-          }
-        </div>
+          </div>
+          <div className='account-methods__existing'>
+            {Object.entries(methods).map(([key, method]) => {
+              return <div className='account-methods__method-container' key={key} >
+                <AccountCurrentMethod method={method} onDelete={handleDelete} response={deleteResponse} />
+              </div>
+            })}
+          </div></>}
+        {loading == true && <UiLoader position='relative' height={500} />}
       </div>
     </>
   );

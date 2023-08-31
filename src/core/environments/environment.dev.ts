@@ -11,7 +11,7 @@ const devEnvironment: IEnvironment = {
     // domain: "dev.connectunited.com",
   },
   serviceEndpoints: {
-    membership: "http://localhost:8000",
+    membership: "http://192.168.86.101:8000",
     distributor: "",
     shopping: "",
     licensing: "",

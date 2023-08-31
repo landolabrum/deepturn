@@ -52,7 +52,9 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
                       </div>
                     </div>
                     </span>
-                    <ProductBuyNow product={product} cart={cart} setCart={setCart}/> 
+                    <div>
+                      <ProductBuyNow product={product} cart={cart} setCart={setCart}/> 
+                    </div>
                   </div>
                 </div>
               </div>

@@ -10,3 +10,17 @@
         margin: var(--default-element-height) auto 20px;
     }
 }
+.account-form__collapes-label{
+    display: flex;
+    width: 100%;
+    gap: var(--s-8);
+    align-items: center;
+    --ui-icon-height: var(--s-3);
+    --ui-icon-width: var(--s-5);
+    .account-form__collapse-label-address{
+        flex-direction: column;
+        font-size: var(--s-6);
+        justify-content: space-around;
+        line-height: 1;
+    }
+}

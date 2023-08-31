@@ -66,11 +66,14 @@ button {
   &.icon, &.disabled-icon{
     padding: 0 7px;
   }
+  &.nav-item{
+    @media(max-width:900px){
+      justify-content: flex-start;
+    }
+  }
   &.nav-item__active{
     @media(max-width:900px){
       justify-content: flex-start;
-
-
     }
   }
   &:disabled{

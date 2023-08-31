@@ -7,10 +7,10 @@ import handleConstraints from './services/FormConstraints';
 import UiSelect from '../UiSelect/UiSelect';
 import { countryFormat, stateFormat } from '@webstack/helpers/userExperienceFormats';
 import UiLoader from '../UiLoader/UiLoader';
-import { context } from '@react-three/fiber';
+import keyStringConverter from '@webstack/helpers/keyStringConverter';
 
 
-const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange }: IForm) => {
+const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse }: IForm) => {
     const [formValues, setFormValues] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
 
@@ -74,12 +74,12 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange }: IForm) 
                     className='form__field'
                     style={
                         typeof field?.width == 'string' ?
-                            { width: `calc(${field.width} - 10px)` } :
+                            { width: `calc(${field.width} - 5px)` } :
                             {}}
                 >
                     {textTypes.includes(field?.type) && <UiInput
                         // message='This is a test error message'
-                        label={field.label}
+                        label={keyStringConverter(field.label)}
                         max={field.max}
                         variant={field?.variant ? field?.variant : 'dark'}
                         type={field.type}

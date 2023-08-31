@@ -85,7 +85,13 @@ const Navbar = () => {
                           />
                         </>
                       )}
-                      {!item.items && <NavButton
+                      {!item.items && item?.href != '/cart' && <NavButton
+                        active={open === item?.label || route.replaceAll("/", "") === item?.label}
+                        item={item}
+                        handleRoute={handleRoute}
+                        setOpen={setOpen}
+                      />}
+                      {!item.items && item?.href == '/cart' && width > 900 && <NavButton
                         active={open === item?.label || route.replaceAll("/", "") === item?.label}
                         item={item}
                         handleRoute={handleRoute}
@@ -112,6 +118,7 @@ const Navbar = () => {
             {environment?.brand?.name}
           </UiButton>
         </div>
+        fdsa
       </>
     );
   return <></>;

@@ -4,6 +4,7 @@ import { GetPersonalInformationResponse } from "~/src/models/membership/GetPerso
 import { GetMemberProfileInformationResponse } from "~/src/models/membership/GetMemberProfileInformationResponse";
 import { GetRecruitesRequest, GetRecruitesResponse } from "~/src/models/membership/Recruites";
 import { EnrollmentActivityResponse, RecentEnrollmentRequest, RecentEnrollmentResponse } from "~/src/models/membership/Enrollments";
+import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 
 export interface ProductRequestProps {
   id?: string
@@ -18,7 +19,7 @@ export default interface IMemberService {
   // METHODS
   getMethods(): Promise<any>;
   deleteMethod(id: string): Promise<any>;
-
+  confirmCheckout(cart:ICartItem[]): Promise<any>;
   createCustomerMethod(id: string, method: any): Promise<any>;
   getProducts(request?: any): Promise<any>;
   getProduct({ id, pri }: ProductRequestProps): Promise<any>;
@@ -59,3 +60,24 @@ export default interface IMemberService {
   startVehicle(request: any): Promise<any>;
 }
 
+// public async getMethods(): Promise<any> {
+//   let id = this._getCurrentUser(false)?.id;
+//   if (id) return await this.get<any>(
+//     `/api/method/customer/?id=${id}`,
+//   );
+//   if (!id) {
+//     throw new ApiError("Customer not logged in", 400, "MS.SI.02");
+//   }
+// }
+
+// public async deleteMethod(id: string): Promise<any> {
+//   if (id) {
+//     const deleted = await this.get<any>(`/api/method/delete?id=${id}`);
+//     console.log('[ DEL ]: ', deleted)
+//     return deleted
+//   }
+//   if (!id) {
+//     throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
+//   }
+
+// };

@@ -1,5 +1,5 @@
 $pad: 18px;
-$delW: 60px;
+$delW: 50px;
 $min: calc(100% - calc(calc($pad * 2) + $delW));
 $max: calc(100% - calc($pad * 2));
 
@@ -8,7 +8,7 @@ $colorHover: var(--color-primary);
 $contentBackground: var(--color-gray-80);
 $contentBackgroundHover: var(--color-gray-70-opaque);
 $background: var(--color-gray-90);
-$outlineColor: var(--color-gray-80);
+$outlineColor: var(--color-gray-70);
 $borderColor: var(--color-gray-60);
 @keyframes show {
     0% {
@@ -36,20 +36,12 @@ $borderColor: var(--color-gray-60);
  align-items: center;
 }
 
-// .account-current-method{
-//     @extend .d-flex;
-//     width: 100%;
-//     border: solid 1px;
-//     .account-current-method__content{
-//         @extend .d-flex;
-//         width: 100%;
-//         justify-content: space-between;
-//     }
-// }
+
 .account-current-method {
     cursor: pointer;
     border-radius: var(--default-border-radius);
-    outline: solid 1px $outlineColor;
+    outline: solid 1px var(--color-gray-60);
+    border: solid 1px var(--color-gray-70);
     background-color: $background;
     color: $color;
     height: var(--default-element-height);
@@ -59,9 +51,10 @@ $borderColor: var(--color-gray-60);
     justify-content: flex-start;
     --ui-icon-color: $color;
     width: calc(100% - 4px);
-
+    overflow: hidden;
     .account-current-method__content {
         line-height: 1;
+        height: 100%;
         font-size: var(--s-4);
         // height: var(--default-element-height);
         background-color: $contentBackground;
@@ -73,8 +66,6 @@ $borderColor: var(--color-gray-60);
         justify-content: space-between;
         padding: calc($pad * .66) $pad;
         width: calc(100% - calc($pad * 2));
-        // animation-play-state: paused;
-
         &.account-current-method__content-show {
             animation: show 1s forwards;
             animation-play-state: running;
@@ -119,17 +110,16 @@ $borderColor: var(--color-gray-60);
         z-index: 1;
         justify-content: center;
         align-items: center;
-        width: var(--default-element-height);
+        width: $delW;
         // --ui-icon-width: var(--default-element-height);
         height: var(--default-element-height);
         // --ui-icon-height: var(--default-element-height);
         // height: calc(var(--default-element-height) + calc($pad * 2));
-        border-radius: 9px;
         display: flex;
         
         &:hover {
             --ui-icon-color: var(--color-red);
-            background-color: $contentBackgroundHover;
+            background-color: var(--color-gray-50-opaque);
         }
     }
 }

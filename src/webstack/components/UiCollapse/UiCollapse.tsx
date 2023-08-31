@@ -9,11 +9,14 @@ import UiButton from '../UiButton/UiButton';
 interface ICollapse {
     open?: boolean;
     children: React.ReactElement | string | undefined;
-    label?: string;
+    label?: string | React.ReactElement;
     style?: { [key: string]: string };
     variant?: string,
 }
 const UiCollapse: React.FC<ICollapse> = ({ open, children, variant, label = "Collapse", style }) => {
+    let _style = {...style, height: undefined};
+    let elStyle = {}
+    if(style?.height)elStyle={height: style.height};
     const [oOpen, setOpen] = useState<number>(0);
     const handleOpen = () => {
         if ([0, 1].includes(oOpen)) setOpen(oOpen + 1);
@@ -38,11 +41,12 @@ const UiCollapse: React.FC<ICollapse> = ({ open, children, variant, label = "Col
     return (
         <>
             <style jsx>{styles}</style>
+            {/* open: {open?.toString()} */}
             <div
-                style={style}
+                style={_style}
                 className={`collapse${variant ? ` collapse-${variant}` : ''}`}
             >
-                <div onClick={handleOpen} className={oClzz('collapse__action')}>
+                <div onClick={handleOpen} className={oClzz('collapse__action')} style={elStyle}>
                     {label}
                     <UiIcon icon={`fa-chevron-${oOpen == 1 ? "down" : "right"}`}/>
                 </div>

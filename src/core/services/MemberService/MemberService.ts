@@ -22,6 +22,7 @@ import {
   RecentEnrollmentRequest,
   RecentEnrollmentResponse,
 } from "~/src/models/membership/Enrollments";
+import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 
 const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
 
@@ -36,7 +37,10 @@ export default class MemberService
   private _userToken: string | undefined;
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
-
+  public async confirmCheckout(cart:ICartItem[]){
+    console.log('[ CHECKOUT ]',cart)
+    return true
+  }
   public async signUp(
     {
       name,
@@ -64,14 +68,9 @@ export default class MemberService
   }
   public async getMethods(): Promise<any> {
     let id = this._getCurrentUser(false)?.id;
-    console.log('[ ID ]', id)
-    if (id){
-      const accountMethods = await this.get<any>(
-        `/api/method/customer/?id=${id}`,
-        );
-        console.log('[ IDa ]', accountMethods)
-       return accountMethods;
-      }
+    if (id) return await this.get<any>(
+      `/api/method/customer/?id=${id}`,
+    );
     if (!id) {
       throw new ApiError("Customer not logged in", 400, "MS.SI.02");
     }

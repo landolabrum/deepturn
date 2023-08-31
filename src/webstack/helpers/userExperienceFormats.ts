@@ -175,6 +175,7 @@ export function numberToUsd(amount: number) {
   return `$${formattedAmount}`;
 }
 export function calculateCartTotal(cart: any) {
+  if(!cart)return 0;
   let total = 0;
   for (let product of cart) {
       if (product.price_object && product.price_object.unit_amount && product.price_object.qty) {

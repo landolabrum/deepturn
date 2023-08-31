@@ -10,8 +10,9 @@ import { OPaymentMethod } from '~/src/modules/account/model/IMethod';
 interface IAccountCreateMethod {
     onSubmit: (e: any) => void;
     loading: string | boolean;
+    open: boolean;
 }
-const AccountCreateMethod = ({ onSubmit, loading }: IAccountCreateMethod) => {
+const AccountCreateMethod = ({ onSubmit, loading, open }: IAccountCreateMethod) => {
     const [brand, setBrand] = useState<string | null>(null);
     const errorIcon = "fa-exclamation-triangle";
     const [method, setMethod] = useState<OPaymentMethod>({
@@ -39,11 +40,12 @@ const AccountCreateMethod = ({ onSubmit, loading }: IAccountCreateMethod) => {
         if(typeof loading == 'string' && loading.charAt(0)=='*')return `${className} ${className}-error`;
         return className;
     }
+    
     return (
         <>
-            <style jsx>{styles}</style>
+            <style jsx>{styles}</style>{open.toString()}
             <div className='account-create-method'>
-                <UiCollapse variant='dark' open={true} label='add payment method'>
+                <UiCollapse variant='dark' open={open} label='add payment method'>
                     <div className='account-create-method__method'>
                         {loading != true && <UiForm
                             fields={[

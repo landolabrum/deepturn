@@ -30,4 +30,5 @@ export interface IForm {
     onChange?: (e: any) => void;
     onSubmit?: (e: any) => void;
     onError?: (e: any) => void;
+    collapse?: boolean;
 }

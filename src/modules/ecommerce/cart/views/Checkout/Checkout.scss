@@ -7,7 +7,9 @@
 
 .checkout {
     @extend .d-flex;
+    height: 100%;
     flex-direction: column;
+    height: 400px;
     .checkout__title{
         line-height: 3;
         gap:7px;
@@ -15,8 +17,21 @@
     }
 }
 
+.checkout__body {
+    @extend .d-flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
 .checkout-modal {
     @extend .d-flex;
     height: 100%;
     width: 100%;
 } 
+.checkout__button{
+    width: 100%;
+    margin: 10px 0 auto;
+    padding-bottom: var(--s-7);
+    border-bottom: solid 1px var(--color-gray-60);
+}

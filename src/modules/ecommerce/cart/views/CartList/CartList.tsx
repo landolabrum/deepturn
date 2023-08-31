@@ -5,11 +5,12 @@ import ProductImage from '~/src/modules/ecommerce/products/views/ProductImage/Pr
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import ProductBuyNow from '../../../products/views/ProductBuyNow/ProductBuyNow';
 import { ITraits } from '@webstack/components/FormControl/FormControl';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, traits }: { cart: ICartItem[], handleQty: (item: any) => void; collapse?: boolean, variant: string, traits: ITraits }) => {
-    if (!cart) return "error code: cl1";
+    if (!cart) return "error code: cl1 NO CART";
     const CartItems = ({ fullWidth }: { fullWidth?: boolean }) => {
         return <>
             <style jsx>{styles}</style>
@@ -49,9 +50,25 @@ const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, t
             </div>
         </>
     }
-    if (collapse) return <UiCollapse label={`Order Summary `}>
-        <CartItems fullWidth />
-    </UiCollapse>;
+
+
+    if (collapse) return (<>
+        <style jsx>{styles}</style>
+        <UiCollapse
+            label={
+                <div className='cart-list__collapse-label'>
+                    <UiIcon icon='fal-bags-shopping' />
+                <div className='cart-list__collapse-label-items'>
+                    {cart && cart.length <= 2 && cart.map((k, v) => 
+                        <div className='cart-list__collapse-label-item'>{k?.name}  ( ${k?.price_object?.qty}x )</div>
+                    )}
+                </div>
+                </div>
+            }>
+            <CartItems fullWidth />
+        </UiCollapse>
+                </>
+    );
     return <CartItems />
 };
 

@@ -73,10 +73,11 @@ $contTransformClose: translateY(calc(-100% - var(--default-element-height)));
 .collapse {
     @extend .d-flex-col;
     justify-content: flex-start;
-    margin: var(--default-padding) 0;
+    margin: 0 0 var(--s-7);
     width: calc(100% - 4px);
     border-radius: var(--default-border-radius);
     overflow: hidden; // Changed from clip
+    // overflow-y: scroll; // Changed from clip
     position: relative;
     z-index: 1;
     outline: solid 1px var(--color-gray-60);
@@ -85,7 +86,8 @@ $contTransformClose: translateY(calc(-100% - var(--default-element-height)));
     background-color: $bG;
 
     .collapse__action {
-        line-height: calc(var(--default-element-height) - 4px);
+        height: calc(var(--default-element-height) - 4px);
+        line-height: 1;
         position: absolute;
         @extend .d-flex;
         justify-content: space-between;
@@ -104,7 +106,9 @@ $contTransformClose: translateY(calc(-100% - var(--default-element-height)));
         animation: closeAction 1s forwards;
         animation-play-state: paused;
 
-        &:hover {background-color: var(--color-gray-70);}
+        &:hover {
+            background-color: var(--color-gray-70);
+        }
 
         &.collapse__action-open {
             box-shadow: $actBrdr;
@@ -120,18 +124,36 @@ $contTransformClose: translateY(calc(-100% - var(--default-element-height)));
 
     .collapse__body {
         @extend .d-flex-col;
-        width: calc(100% - 20px);
-        padding: var(--default-padding) 0;
+        width: calc(100% - var(--default-padding));
+        // width: 100%;
+        padding: var(--default-padding) 0  var(--default-padding) var(--default-padding);
         z-index: 1;
         transform: $contTransformClose;
+        max-height: 0;
+        animation: openBody 1s forwards ease-out;
         animation-play-state: paused;
-        animation: openBody 1s forwards;
+        overflow-y: scroll;
+        overflow-x: visible;
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--color-primary);
+            border-radius: 5px;
+            width: 11px;
+        }
+
+        &::-webkit-scrollbar {
+            border-radius: 0 7px 7px 0;
+            width: 10px;
+            background-color: #40404060;
+        }
+
         &.collapse__body-open {
-            animation: openBody 1s forwards ease-out;
+            animation: openBody 1s forwards;
+            animation-play-state: running;
         }
 
         &.collapse__body-closed {
-            animation: closeBody 1s forwards ease-in-out;
+            animation: closeBody 1s forwards;
+            animation-play-state: running;
         }
 
     }
@@ -141,31 +163,41 @@ $contTransformClose: translateY(calc(-100% - var(--default-element-height)));
 
 @keyframes closeBody {
     0% {
-        max-height: unset;
+        display: flex;
+        max-height: 0;
         transform: translateY(0);
         margin-top: 50px;
         opacity: 1;
     }
 
     10% {
-        max-height: unset;
+        max-height: 0;
         transform: translateY(20px);
         margin-top: 50px;
         opacity: 1;
     }
 
-    100% {
+    99% {
         margin-top: 0;
         max-height: 0;
         transform: $contTransformClose;
         opacity: 0;
     }
+
+    100% {
+        display: none;
+    }
 }
 
 @keyframes openBody {
     0% {
+        display: none;
+    }
+
+    1% {
+        display: flex;
         margin-top: 0;
-        max-height: 0;
+        max-height: 0px;
         transform: $contTransformClose;
         opacity: 0;
     }

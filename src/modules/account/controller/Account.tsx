@@ -6,9 +6,9 @@ import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import { useHeader } from "@webstack/components/Header/views/Header";
 import { countries, states } from "@webstack/models/location";
 import AccountForm from "../views/AccountForm/AccountForm";
-import AccountMethods from "../views/AccountMethods/controller/AccountMethods";
 import { capitalizeAll } from "@webstack/helpers/Capitalize";
 import {default as Div} from "@webstack/components/UiDiv/UiDiv";
+import AccountMethods from "../views/AccountMethods/controller/AccountMethods";
 
 interface Props {}
 
@@ -73,7 +73,7 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
             </div>
           </div>
           <Div variant="dark card">
-            {views[view]}
+            {view == 'billing' ? <AccountMethods/>:''}
           </Div>
         </div>
       </>
