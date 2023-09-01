@@ -124,38 +124,35 @@ $contTransformClose: translateY(calc(-100% - var(--default-element-height)));
 
     .collapse__body {
         @extend .d-flex-col;
-        width: calc(100% - var(--default-padding));
+        // width: calc(100% - calc(var(--default-padding) * .5));
+        // background-color: #f30;
         // width: 100%;
-        padding: var(--default-padding) 0  var(--default-padding) var(--default-padding);
+        padding: var(--default-padding) var(--default-padding);
         z-index: 1;
         transform: $contTransformClose;
         max-height: 0;
         animation: openBody 1s forwards ease-out;
         animation-play-state: paused;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: visible;
         &::-webkit-scrollbar-thumb {
             background-color: var(--color-primary);
             border-radius: 5px;
             width: 11px;
         }
-
         &::-webkit-scrollbar {
             border-radius: 0 7px 7px 0;
             width: 10px;
             background-color: #40404060;
         }
-
         &.collapse__body-open {
             animation: openBody 1s forwards;
             animation-play-state: running;
         }
-
         &.collapse__body-closed {
             animation: closeBody 1s forwards;
             animation-play-state: running;
         }
-
     }
 }
 

@@ -1,5 +1,5 @@
 // Relative Path: ./AccountCreateMethod.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './AccountCreateMethod.scss';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import UiForm from '@webstack/components/UiForm/UiForm';
@@ -43,7 +43,8 @@ const AccountCreateMethod = ({ onSubmit, loading, open }: IAccountCreateMethod) 
     
     return (
         <>
-            <style jsx>{styles}</style>{open.toString()}
+            <style jsx>{styles}</style>
+            {/* {open.toString()} */}
             <div className='account-create-method'>
                 <UiCollapse variant='dark' open={open} label='add payment method'>
                     <div className='account-create-method__method'>
@@ -73,14 +74,14 @@ const AccountCreateMethod = ({ onSubmit, loading, open }: IAccountCreateMethod) 
                                     placeholder: 'mm/yy',
                                     type: 'expiry',
                                     value: method?.expiry,
-                                    width: '50%'
+                                    width: 'calc(50% - 5px)'
                                 },
                                 {
                                     name: 'cvc',
                                     label: 'cvc',
                                     placeholder: '000',
                                     value: method?.cvc,
-                                    width: '50%',
+                                    width: 'calc(50% - 5px)',
                                     constraints: {
                                         max: 6
                                     },

@@ -41,7 +41,7 @@ const formatAccountForm = (data: any) => {
                 options: ['country', 'state'].includes(field) && field == 'country' ?
                     optionMaker(countries) : optionMaker(states)
             });
-            if (!useChild) iT(value, '50%');
+            if (!useChild) iT(value, 'calc(50% - 5px)');
         });
     }
     data && iT(data)

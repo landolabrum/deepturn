@@ -59,7 +59,7 @@ const AccountMethods: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      {JSON.stringify(methods.length)}
+      {/* {JSON.stringify(methods.length)} */}
       <div className='account-methods'>
         <AccountCreateMethod
           open={methods.length == 0}

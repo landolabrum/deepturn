@@ -73,7 +73,8 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
             </div>
           </div>
           <Div variant="dark card">
-            {view == 'billing' ? <AccountMethods/>:''}
+            {views[view]}
+            {/* {view == 'billing' ? <AccountMethods/>:''} */}
           </Div>
         </div>
       </>

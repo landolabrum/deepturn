@@ -2,20 +2,24 @@ $defSize: 10px;
 $el_spacing: 12px;
 $el_gap: 7px;
 .menu {
-  padding: $el_gap;
+  padding: 4px 5px 7px;
   color: var(--color-gray-70);
   --ui-icon-color: var(--color-gray-70);
-  background-color: var(--color-gray-30);
+  // background-color: var(--color-gray-30);
   outline: solid 1px var(--color-gray-80);
   border: solid 1px var(--color-gray-60);
   border-radius: var(--default-border-radius);
   height: max-content;
   min-width: calc(100% - calc($el_gap * 2));
-  font-weight: 400;
+  // font-weight: 400;
   display: flex;
+  gap:5px;
   white-space: nowrap;
   flex-direction: column;
-  width: inherit;
+  width: calc(100% - 12px);
+  &:hover{
+    background-color: var(--color-secondary-opaque);
+  }
   .menu__search{
     padding:12px;
   }
@@ -27,12 +31,12 @@ $el_gap: 7px;
   }
   &.menu__nav-item__active,  &.menu__nav-item {
     @media (max-width: 900px) {
-      padding: 0 $el_gap;
-      border: none;
-      outline: none;
-      background-color: var(--color-gray-90);
-      color: var(--color-gray-30);
-      --ui-icon-color: var(--color-gray-30);
+      // padding: 0 $el_gap;
+      // border: none;
+      // outline: none;
+      // background-color: var(--color-gray-90);
+      // color: var(--color-gray-30);
+      // --ui-icon-color: var(--color-gray-30);
       .menu__option {
         &:hover {
           color: var(--color-gray-20);
@@ -61,7 +65,7 @@ $el_gap: 7px;
     height: var(--default-element-height);
     --ui-icon-width: 16px;
     line-height: 1;
-    padding: 0 $el_spacing;
+    // padding: 0 $el_spacing;
     cursor: pointer;
     text-transform: capitalize;
     justify-content: space-between;

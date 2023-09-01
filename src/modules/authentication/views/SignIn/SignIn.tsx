@@ -81,10 +81,11 @@ const SignIn = ({email}:{email:string | undefined}) => {
 
   useEffect(() => {
     if(email)setCredentials({...credentials, email: email});
-    if (userResponse && userResponse.memberType !== "staff") {
-      setSignInResponse({ code: "non-staff", message: authResponse("non-staff") });
-      setIsSubmitting(false);
-    }
+    // if (userResponse && userResponse.memberType !== "staff") {
+    //   console.log('[ USER RESPO ]:', userResponse)
+    //   setSignInResponse({ code: "non-staff", message: authResponse("non-staff") });
+    // }
+    setIsSubmitting(false);
   }, [userResponse, setCredentials, email]);
 
   return (

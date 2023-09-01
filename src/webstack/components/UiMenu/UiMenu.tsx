@@ -3,6 +3,7 @@ import { UiIcon } from "../UiIcon/UiIcon";
 import { IFormControl } from "../FormControl/FormControl";
 import styles from "./UiMenu.scss";
 import Input from "../UiInput/UiInput";
+import UiButton from "../UiButton/UiButton";
 export interface UiMenuProps extends IFormControl {
   options?: any;
   onSelect?: (value: any) => void;
@@ -65,7 +66,14 @@ const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, se
                     className={`menu__option ${option?.active === false ? "disabled" : ""}`}
                     onClick={() => currentValue && option?.active !== false && handleSelect(currentValue)}
                   >
-                    <div className="menu__option-label">
+                    <UiButton variant='dark'  traits={{
+                      beforeIcon:option?.icon,
+                      width:'100%',
+                      afterIcon:value?.includes(currentValue)? 'fa-check':''
+                      }}>
+                    {label}
+                    </UiButton>
+                    {/* <div className="menu__option-label">
                       {option.icon && <UiIcon icon={option.icon} />} {label}{" "}
                     </div>
                     {value?.includes(currentValue) && (
@@ -77,7 +85,7 @@ const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, se
                       <div className="menu__option-selected">
                         <UiIcon icon="fa-check" />
                       </div>
-                    )}
+                    )} */}
                   </div>
                 );
             })}
