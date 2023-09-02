@@ -34,12 +34,14 @@ const formatAccountForm = (data: any) => {
             if (remove && useChild) newData.push({
                 name: field,
                 label: field,
-                value: field == 'phone' && typeof value == 'string' ? phoneFormat(value, 'US') : value,
+                value: field == 'phone' && typeof value == 'string' ? phoneFormat(value, 'US') : 
+                field == 'state'?'utah' :value,
                 width: width,
                 max: field == 'phone' ? 15 : null,
+                traits: ['state','country'].includes(field) ?{height: '500px'}:{},
                 type: ['country', 'state'].includes(field) ? 'select' : 'text',
                 options: ['country', 'state'].includes(field) && field == 'country' ?
-                    optionMaker(countries) : optionMaker(states)
+                    optionMaker(countries) : field == 'state' && optionMaker(states)
             });
             if (!useChild) iT(value, 'calc(50% - 5px)');
         });

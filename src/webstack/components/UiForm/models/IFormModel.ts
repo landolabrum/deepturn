@@ -24,6 +24,8 @@ export type IFormField = {
 }
 
 export interface IForm {
+    traits?: ITraits;
+    loading?: boolean;
     fields?: IFormField[];
     title?: string | React.ReactElement;
     btnText?: string | React.ReactElement;

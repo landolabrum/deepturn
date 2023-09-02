@@ -1,5 +1,5 @@
 // Relative Path: ./AccountCreateMethod.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './AccountCreateMethod.scss';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import UiForm from '@webstack/components/UiForm/UiForm';
@@ -40,7 +40,9 @@ const AccountCreateMethod = ({ onSubmit, loading, open }: IAccountCreateMethod) 
         if(typeof loading == 'string' && loading.charAt(0)=='*')return `${className} ${className}-error`;
         return className;
     }
+    // import React, { useEffect } from 'react';
     
+    useEffect(() => {}, [loading]);
     return (
         <>
             <style jsx>{styles}</style>
@@ -48,7 +50,9 @@ const AccountCreateMethod = ({ onSubmit, loading, open }: IAccountCreateMethod) 
             <div className='account-create-method'>
                 <UiCollapse variant='dark' open={open} label='add payment method'>
                     <div className='account-create-method__method'>
-                        {loading != true && <UiForm
+                         <UiForm
+                            loading={loading == true}
+                            // btnText={typeof loading == 'string'? String(loading):undefined }
                             fields={[
                                 {
                                     name: 'number',
@@ -72,6 +76,7 @@ const AccountCreateMethod = ({ onSubmit, loading, open }: IAccountCreateMethod) 
                                     name: 'expiry',
                                     label: 'expiration',
                                     placeholder: 'mm/yy',
+                                    variant: `${ method?.expiry.length != 0 && method?.expiry.length <= 4 ? 'invalid ' : ''}dark`,
                                     type: 'expiry',
                                     value: method?.expiry,
                                     width: 'calc(50% - 5px)'
@@ -82,6 +87,7 @@ const AccountCreateMethod = ({ onSubmit, loading, open }: IAccountCreateMethod) 
                                     placeholder: '000',
                                     value: method?.cvc,
                                     width: 'calc(50% - 5px)',
+                                    variant: `${ method?.cvc.length != 0 && method?.cvc.length <= 3 ? 'invalid ' : ''}dark`,
                                     constraints: {
                                         max: 6
                                     },
@@ -89,7 +95,7 @@ const AccountCreateMethod = ({ onSubmit, loading, open }: IAccountCreateMethod) 
                             ]}
                             onChange={handleMethod}
                             onSubmit={() => onSubmit(method)}
-                        />}
+                        />
                         {typeof loading == 'string' && <div className={clzz('account-create-method__status')}>{loading}</div>}
                         {loading == true && <UiLoader text={loading} dots={typeof loading != 'string'} width='100%' height="400px" position='relative' />}
                     </div>

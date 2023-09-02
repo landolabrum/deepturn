@@ -15,7 +15,7 @@ interface Props {}
 const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
   const [header, setHeader] = useHeader();
   const [loaded, setLoaded] = useState(false);
-  const [view, setView] = useState<string>('billing');
+  const [view, setView] = useState<string>('edit profile');
 
   const views:any = {
     "edit profile":<AccountForm /> ,

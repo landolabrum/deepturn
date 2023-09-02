@@ -36,29 +36,29 @@ const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, se
     setSelectedOption(option);
     onSelect && onSelect(option);
   };
+  const currValue = (option: any)=>{
+    return typeof option === "string" ? option : option?.href
+  }
 
   useEffect(() => {
     if (value) setSelectedOption(value);
-  }, []);
-
+  }, [value]);  
   return (
     <>
       <style jsx>{styles}</style>
-      <div className={`menu ${variant ? `menu__${variant}` : ""}`} style={traits && traits?.height?{...traits, overflowY:"auto"}:traits?traits:{}}>
-      {search && (
-        <div className="menu__search">
-          <Input type="text" variant={variant} value={searchValue} placeholder="Search" name="search" onChange={handleSearch}/>
-        </div>
-      )}
+      <div className={`menu ${variant ? `menu__${variant}` : ""}`} style={traits && traits?.height ? { ...traits, overflowY: "auto" } : traits ? traits : {}}>
+        {search && (
+          <div className="menu__search">
+            <Input type="text" variant={variant} value={searchValue} placeholder="Search" name="search" onChange={handleSearch} />
+          </div>
+        )}
         {searchValue && hasOptions && filteredOptions?.length === 0 ? (
           <div className="menu__no-results">No results found.</div>
         ) : (
           <>
-            {" "}
             {filteredOptions?.map((option: any, index: number) => {
               const label = typeof option === "string" ? option : option?.label;
-              const currentValue = typeof option === "string" ? option : option?.href;
-
+              const currentValue = currValue(option);
               if (currentValue)
                 return (
                   <div
@@ -66,26 +66,13 @@ const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, se
                     className={`menu__option ${option?.active === false ? "disabled" : ""}`}
                     onClick={() => currentValue && option?.active !== false && handleSelect(currentValue)}
                   >
-                    <UiButton variant='dark'  traits={{
-                      beforeIcon:option?.icon,
-                      width:'100%',
-                      afterIcon:value?.includes(currentValue)? 'fa-check':''
-                      }}>
-                    {label}
+                    <UiButton variant='dark' traits={{
+                      beforeIcon: option?.icon,
+                      width: '100%',
+                      afterIcon: value?.includes(currentValue) ? {icon:'fa-check',color: '#02f'} : ''
+                    }}>
+                      {label}
                     </UiButton>
-                    {/* <div className="menu__option-label">
-                      {option.icon && <UiIcon icon={option.icon} />} {label}{" "}
-                    </div>
-                    {value?.includes(currentValue) && (
-                      <div className="menu__option-selected">
-                        <UiIcon icon="fa-check" />
-                      </div>
-                    )}
-                    {value === "all"  && (
-                      <div className="menu__option-selected">
-                        <UiIcon icon="fa-check" />
-                      </div>
-                    )} */}
                   </div>
                 );
             })}

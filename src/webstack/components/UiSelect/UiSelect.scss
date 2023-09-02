@@ -66,7 +66,8 @@ $el_gap: 7px;
       left: auto;
       right: 0;
     }
-    // overflow: hidden;
+    // max-height: 500px !important;
+    // overflow: auto;
     min-width: 100%;
     width: max-content;
     &.nav-item__active {

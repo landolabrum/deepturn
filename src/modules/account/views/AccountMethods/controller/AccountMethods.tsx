@@ -41,6 +41,7 @@ const AccountMethods: React.FC = () => {
     const createdMethod = await memberService.createCustomerMethod(user.id, request);
     if (createdMethod.error) {
       setLoading(`*${createdMethod.error}`)
+      // setLoading(false);
     } else {
       setLoading('success');
       getAccountMethods();
@@ -55,11 +56,10 @@ const AccountMethods: React.FC = () => {
   }
   useEffect(() => {
     getAccountMethods();
-  }, [loading == false]);
+  }, []);
   return (
     <>
       <style jsx>{styles}</style>
-      {/* {JSON.stringify(methods.length)} */}
       <div className='account-methods'>
         <AccountCreateMethod
           open={methods.length == 0}

@@ -10,6 +10,18 @@
         margin: var(--default-element-height) auto 20px;
     }
 }
+.account-form__collapes-header{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: calc(var(--default-padding) * .5) calc(var(--default-padding) * .66);
+    border: solid 1px;
+    border-radius: var(--default-border-radius);
+    &::before{
+        content:'account info'
+    }
+}
 .account-form__collapes-label{
     display: flex;
     width: 100%;

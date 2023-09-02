@@ -113,6 +113,7 @@ $elPad: 14px;
       }
       &.form-control__icon-invalid {
         background-color: var(--color-invalid-bg);
+    
       }
     }
 
@@ -121,8 +122,13 @@ $elPad: 14px;
 
     .form-control__icon-placeholder {
       width: var(--s-7);
+      height: 100%;
     }
-
+    &.form-control__element-invalid {
+      .form-control__icon-placeholder{
+        background-color: var(--color-invalid-bg);
+      }
+    }
     &.form-control__element-center {
       gap: 0;
 
@@ -348,11 +354,12 @@ $elPad: 14px;
       &:active {
         color: var(--color-gray-20);
       }
-
+      
       &.form-control__element-disabled {
         color: var(--color-gray-60);
       }
     }
+ 
 
 
 

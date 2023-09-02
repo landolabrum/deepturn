@@ -10,7 +10,7 @@ import UiLoader from '../UiLoader/UiLoader';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 
 
-const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse }: IForm) => {
+const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse, loading }: IForm) => {
     const [formValues, setFormValues] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
 
@@ -60,13 +60,14 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse 
         }
     };
     const textTypes = ['', undefined, 'text', 'password', 'number', 'tel', null, false, 'expiry'];
-    const selectMaker = (field: any)=>{
-        if(field.name == 'country')return countryFormat(formValues[field.name] || field?.value);
-        if(field.name == 'state')return stateFormat(formValues[field.name] || field?.value);;
-    }
+    // const selectMaker = (field: any)=>{
+    //     if(field.name == 'country')return countryFormat(formValues[field.name] || field?.value);
+    //     if(field.name == 'state')return stateFormat(formValues[field.name] || field?.value);;
+    // }
     return (<>
         <style jsx>{styles}</style>
         {title}
+        {JSON.stringify(formValues)}
         <div className='form' >
             {fields ? fields.map((field: any) => (
                 <div
@@ -91,15 +92,15 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse 
                     />}
                     {field?.type == 'select' && <UiSelect
                         variant='dark'
+                        traits={field?.traits}
                         options={field?.options}
                         label={field.name}
-                        title={selectMaker(field)}
+                        value={field?.value || formValues[field.name] || ''}
                         onSelect={e => handleInputChange({ target: { name: field.name, value: e } }, field.constraints)}
                     />}
                 </div>
             )):(<UiLoader position='relative'/>)}
-      
-            <UiButton variant='dark' type='submit' onClick={handleSubmit}>
+            <UiButton variant='dark' type='submit' busy={ loading == true} onClick={handleSubmit}>
                 {btnText ? btnText : 'Submit'}
             </UiButton>
         </div>

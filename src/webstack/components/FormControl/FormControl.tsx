@@ -134,8 +134,8 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
           }
           <div id='after_icon' className={`${traits?.afterIcon ? `${varClasses('form-control__icon')}` : 'form-control__icon-placeholder'}`}>
             {traits?.afterIcon && (
-
               <UiIcon
+                color={typeof traits?.afterIcon !== "string" ? traits.afterIcon?.color : undefined}
                 onClick={(typeof traits?.afterIcon !== "string" && traits?.afterIcon?.onClick) || (() => null)}
                 icon={typeof traits?.afterIcon === "string" ? traits?.afterIcon : traits?.afterIcon?.icon}
               />

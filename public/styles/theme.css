@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+
 body {
   font-family: 'Play', sans-serif;
 }
@@ -14,7 +15,7 @@ body {
   --breakpoint-xl: 1600px;
   --default-border-radius: 6px;
   --default-element-height: 45px;
-  
+
   /* COLORS */
   --color-gray-20: #f5f5f5;
   --color-gray-20-opaque: #f5f5f550;
@@ -34,7 +35,7 @@ body {
   --color-gray-90-opaque: #26262650;
   --color-gray-100: #171717;
   --color-gray-100-opaque: #17171750;
-  
+
   --color-white: white;
   --color-yellow: #fbff00;
   --color-yellow-opaque: #fbff0070;
@@ -44,7 +45,7 @@ body {
   --color-red-60: #ef4444;
   --color-blue: #4f96ff;
   --color-blue-10: #54E3FF;
-  
+
   --color-primary: #1E88E5;
   --color-primary-opaque: rgba(30, 136, 229, 0.6);
   --color-primary-opaque-1: #1e88e530;
@@ -66,6 +67,7 @@ body {
   --s-7: 12px;
   --s-8: 10px;
 }
+
 body {
   font-size: 16px;
   margin: 0;
@@ -76,9 +78,10 @@ body {
 }
 
 @media screen and (min-height: 400px) {
-  body{
+  body {
     overflow-y: auto;
   }
+
   body::-webkit-scrollbar-thumb {
     background-color: var(--color-blue);
     border-radius: 5px;
@@ -90,9 +93,11 @@ body {
     background-color: #00000033;
   }
 }
+
 .no-scroll::-webkit-scrollbar {
   display: none;
 }
+
 h1,
 h2,
 h3,
@@ -152,10 +157,25 @@ h6 {
 .bodycopy p:last-child {
   margin-bottom: 0;
 }
+
 /* DIV */
-div{
+div {
   --default-padding: 20px;
-  @media(max-width: 900px){
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    width: 11px;
+    overflow: hidden;
+  }
+
+  &::-webkit-scrollbar {
+
+    overflow: hidden;
+    border-radius: 0 7px 7px 0;
+    width: 10px;
+    background-color: #40404060;
+  }
+
+  @media(max-width: 900px) {
     --default-padding: 10px;
   }
 }
@@ -264,41 +284,41 @@ nav {
   --nav-item-height: 45px;
   --nav-item-active: var(--color-gray-70);
   --nav-item-icon-color: var(--color-gray-40);
-  --nav-background-color:var(--color-gray-100);
-  --nav-hide-lg:none;
+  --nav-background-color: var(--color-gray-100);
+  --nav-hide-lg: none;
   --nav-items-position: unset;
   --nav-items-bg: unset;
   --nav-box-shadow-sm: unset;
   --nav-items-min-width: auto;
-  --nav-hide-sm:unset;
-  --nav-position:relative;
+  --nav-hide-sm: unset;
+  --nav-position: relative;
   --nav-trigger-display: none;
   --nav-backdrop-filter: blur(8);
-  --nav-item-justify-content:space-around;
+  --nav-item-justify-content: space-around;
   --nav-items-flex-direction: row;
-  --nav-border-radius:calc(var(--default-border-radius) * .66);
-  --nav-box-shadow-lg:1px 2px 10px #00000050;
+  --nav-border-radius: calc(var(--default-border-radius) * .66);
+  --nav-box-shadow-lg: 1px 2px 10px #00000050;
 }
 
 @media screen and (max-width: 900px) {
-  nav{
-    --nav-hide-lg:unset;
+  nav {
+    --nav-hide-lg: unset;
     --nav-hide-sm: none;
     --nav-height: auto;
     --nav-backdrop-filter: unset;
     --nav-trigger-display: flex;
-    --nav-position:absolute;
-    --nav-background-color:var(--color-gray-100);
+    --nav-position: absolute;
+    --nav-background-color: var(--color-gray-100);
     /* --nav-background-color:unset; */
     /* --nav-background-color: #00000050; */
     --nav-items-flex-direction: column;
     --nav-items-position: absolute;
     --nav-items-min-width: 270px;
-    --nav-items-bg:var(--color-gray-90);
-    --nav-box-shadow-sm:1px 2px 10px #00000050;
-    --nav-box-shadow-lg:unset;
+    --nav-items-bg: var(--color-gray-90);
+    --nav-box-shadow-sm: 1px 2px 10px #00000050;
+    --nav-box-shadow-lg: unset;
 
-    --nav-item-justify-content:flex-start;
+    --nav-item-justify-content: flex-start;
     --nav-item-height: var(--default-element-height);
 
   }
@@ -307,7 +327,7 @@ nav {
 .dashboard-item {
   --default-color: var(--color-gray-20);
   --default-bg: var(--color-gray-70);
-  
+
   --hover-color: white;
   --hover-bg: var(--color-gray-60);
 
@@ -315,11 +335,11 @@ nav {
   --unavailable-bg: var(--color-gray-80);
 }
 
-.header{
+.header {
   --header-primary-bg: var(--color-gray-100);
   --header-primary-border: solid 1px var(--color-gray-70);
   --header-primary: var(--color-gray-30);
-  --header-width:var(--full-width);
+  --header-width: var(--full-width);
 }
 
 .select,
@@ -330,17 +350,17 @@ button {
 
   --default-height: var(--default-element-height);
   --default-font-size: 16px;
-  
+
   --default-color: var(--color-gray-60);
   --default-background-color: var(--color-gray-70);
   --default-border-color: var(--color-gray-60);
 
-  --default-placeholder-color:var(--color-gray-50);
-  
-  --focus-color:var(--color-gray-40);
-  --focus-background-color:var(--color-gray-60);
+  --default-placeholder-color: var(--color-gray-50);
+
+  --focus-color: var(--color-gray-40);
+  --focus-background-color: var(--color-gray-60);
   --focus-border-color: var(--color-gray-40);
-  
+
   --invalid-background-color: var(--color-orange);
 
 
@@ -349,7 +369,7 @@ button {
 
   --input-secondary: var(--color-gray-50);
   --input-secondary-bg: var(--color-gray-80);
-  --input-focus-bg:var(--color-gray-60);
+  --input-focus-bg: var(--color-gray-60);
   --input-option-hover: var(--color-gray-40);
   --input-box-shadow: var(--default-box-shadow);
   --input-border-radius: calc(var(--default-border-radius) * .66);
@@ -363,11 +383,12 @@ button {
   --card-primary-bg: var(--color-gray-80);
 }
 
-.adaptable{
+.adaptable {
   --header-height: 80px;
-  --header-border-radius:var(--default-border-radius);
+  --header-border-radius: var(--default-border-radius);
 }
-.dev{
+
+.dev {
   position: absolute;
   display: flex;
   flex-direction: column;

@@ -13,7 +13,6 @@ export interface SelectProps extends UiMenuProps {
   openDirection?: "up" | "down" | "left" | "right";
   onToggle?: (isOpen: boolean) => void;
   title?: TitleProps;
-  // width?: number;
   openState?: boolean;
   search?: boolean;
   setSearch?: (value: string) => void;
@@ -58,13 +57,14 @@ const UiSelect: React.FC<SelectProps> = ({
     }
   }, [openState]);
 
+  useEffect(() => {},[value, selectedOption])
   useEffect(() => {
     if (title_ !== title) {
       // Set Title if Available
       if (typeof title === "string") setTitle(title);
       if (typeof title === "object" && "text" in title && title.text !== undefined) setTitle(title.text);
     }
-  }, [title]);
+  }, [ title, onSelect]);
   useEffect(() => {
     // Modify Toggle State
     if (bOpen && onToggle) onToggle(bOpen);
@@ -74,7 +74,6 @@ const UiSelect: React.FC<SelectProps> = ({
   return (
     <>
       <style jsx>{styles}</style>
-      {/* <FormControl label={label} variant={hasOptions && variant !== 'disabled'? variant:"select__disabled"} overlay={bOpen} setOverlay={handleOpen} traits={traits}> */}
         <div
           className={`select ${openDirection}`}
           style={traits?.width?{width:`${traits.width}px`}:{}}
@@ -92,6 +91,7 @@ const UiSelect: React.FC<SelectProps> = ({
             />
           {bOpen && variant !== 'disabled' && (
             <div className={`select__options ${variant ? " " + variant : ""}`}>
+              selV: {value}
               <UiMenu 
               traits={traits}
               search={search}
@@ -104,7 +104,6 @@ const UiSelect: React.FC<SelectProps> = ({
             </div>
           )}
         </div>
-      {/* </FormControl> */}
     </>
   );
 };

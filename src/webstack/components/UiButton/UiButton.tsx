@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./UiButton.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import type { NextComponentType, NextPageContext } from "next";
@@ -51,6 +51,7 @@ interface IButtonContext extends IButton {
 const ButtonContext = ({ context }: IButtonContext) => {
   let traits = context.traits ? context.traits : {};
   if (context.disabled) traits['disabled'] = true;
+
   return (
     <>
       <style jsx>{styles}</style>

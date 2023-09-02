@@ -135,16 +135,7 @@ $contTransformClose: translateY(calc(-100% - var(--default-element-height)));
         animation-play-state: paused;
         overflow-y: auto;
         overflow-x: visible;
-        &::-webkit-scrollbar-thumb {
-            background-color: var(--color-primary);
-            border-radius: 5px;
-            width: 11px;
-        }
-        &::-webkit-scrollbar {
-            border-radius: 0 7px 7px 0;
-            width: 10px;
-            background-color: #40404060;
-        }
+
         &.collapse__body-open {
             animation: openBody 1s forwards;
             animation-play-state: running;
