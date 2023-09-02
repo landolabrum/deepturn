@@ -337,7 +337,7 @@ nav {
 
 .header {
   --header-primary-bg: var(--color-gray-100);
-  --header-primary-border: solid 1px var(--color-gray-70);
+  --header-primary-border: solid 1px var(--color-gray-80);
   --header-primary: var(--color-gray-30);
   --header-width: var(--full-width);
 }
