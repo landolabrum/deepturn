@@ -1,18 +1,18 @@
 $hite: calc(100% - 20px);
 // $hite: 200px;
-@keyframes scale {
-    0% {
-        transform: scale(1);
-    }
+// @keyframes scale {
+//     0% {
+//         transform: scale(1);
+//     }
     
-    10% {
-        transform: scale(1.2);
-    }
+//     10% {
+//         transform: scale(1.05);
+//     }
     
-    100% {
-        transform: scale(1.1);
-    }
-}
+//     100% {
+//         transform: scale(1);
+//     }
+// }
 .d-flex {
     display: flex;
     justify-content: center;
@@ -34,8 +34,8 @@ $hite: calc(100% - 20px);
             width: 100%;
             height: auto;
         }
-        &:hover{
-            animation: scale 1s forwards;
-        }
+        // &:hover{
+        //     animation: scale 1s forwards;
+        // }
     }
 }

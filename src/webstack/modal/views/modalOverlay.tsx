@@ -7,6 +7,7 @@ import styles from "@webstack/modal/views/modalOverlay.scss"; // or use your pre
 const ModalOverlay: React.FC = () => {
   const { isModalOpen, closeModal, modalContent }: any = useContext(ModalContext);
   let variant;
+  let title = modalContent?.title;
   let children = modalContent;
   if(modalContent?.children)children = modalContent.children;
   if(modalContent?.variant)variant = modalContent?.variant;
@@ -21,7 +22,7 @@ const ModalOverlay: React.FC = () => {
         <div className='modal-overlay__content' >
           <div className='modal-overlay__header' >
             <div className='modal-overlay__title' >
-              Checkout
+              {title}
             </div>
             <div className='modal-overlay__icon' >
               <UiIcon icon='fa-xmark' onClick={closeModal} />

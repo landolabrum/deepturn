@@ -38,6 +38,7 @@
         gap: var(--default-padding);
         max-height: 100vh;
         overflow-y: auto;
+        box-shadow: var(--default-box-shadow-xl);
 
         &::-webkit-scrollbar-thumb {
             background-color: var(--color-blue);

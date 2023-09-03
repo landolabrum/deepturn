@@ -37,9 +37,21 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #e36ce3;
+      background-color: var(--color-gray-90);
       border-radius: var(--default-border-radius);
+      box-shadow: var(--default-box-shadow-xl);
+      transition: all 0.3s ease-out;
+
+      &:hover {
+        // Futuristic lift effect on hover
+        box-shadow: 
+          0 2px 3px var(--color-secondary),
+          0 .5px 1px var(--color-primary),
+          0 1px 3px var(--color-secondary);
+        transform: translateY(-1px);
+      }
     }
+
     &.adaptgrid_card-border {
       outline: solid 1px var(--color-gray-80);
       border: solid 1px var(--color-gray-60);
