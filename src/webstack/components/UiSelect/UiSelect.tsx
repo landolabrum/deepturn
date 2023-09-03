@@ -5,6 +5,7 @@ import { RouteProps } from "@shared/components/Navbar/data/routes";
 import FormControl from "../FormControl/FormControl";
 import UiMenu, { UiMenuProps } from "../UiMenu/UiMenu";
 import UiInput from "../UiInput/UiInput";
+import { capitalize } from "lodash";
 type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string } | string | React.ReactElement;
 
 export interface SelectProps extends UiMenuProps {
@@ -57,7 +58,6 @@ const UiSelect: React.FC<SelectProps> = ({
     }
   }, [openState]);
 
-  useEffect(() => {},[value, selectedOption])
   useEffect(() => {
     if (title_ !== title) {
       // Set Title if Available
@@ -79,11 +79,12 @@ const UiSelect: React.FC<SelectProps> = ({
           style={traits?.width?{width:`${traits.width}px`}:{}}
           onClick={handleOpen}
           >
+            {/* t: {title_} | s: {selectedOption} */}
           <UiInput 
             type="button"
             label={label}
             variant={hasOptions && variant !== 'disabled'? variant:"select__disabled"}
-            value={title_ || selectedOption || "Select"}
+            value={typeof value === 'string'? capitalize(value): title_ || selectedOption || "Select"}
             traits={{
               beforeIcon: isTitleObject(title) && title.preIcon ? title.preIcon: undefined,
               afterIcon: isTitleObject(title) && title.postIcon ? title.postIcon: variant !== 'disabled' && bOpen ? "fa-xmark" : `fa-chevron-${openDirection}`
@@ -91,7 +92,6 @@ const UiSelect: React.FC<SelectProps> = ({
             />
           {bOpen && variant !== 'disabled' && (
             <div className={`select__options ${variant ? " " + variant : ""}`}>
-              selV: {value}
               <UiMenu 
               traits={traits}
               search={search}

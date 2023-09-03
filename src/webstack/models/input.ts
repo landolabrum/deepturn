@@ -6,6 +6,7 @@ export type ValueType = string | number;
 export interface IInput extends IFormControl {
   name?: string;
   type?: string;
+  id?: string;
   disabled?: boolean;
   value?: ValueType;
   defaultValue?: string | number | readonly string[] | undefined;

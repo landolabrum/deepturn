@@ -26,32 +26,32 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse,
         }));
     };
 
-    const validateField = (field: IFormField) => {
-        const name = field.name
-        const value = (name !== undefined && formValues[name]) || "";
-        const min: any = field.constraints ? field.constraints.min : 1;
-        const max: any = field.constraints ? field.constraints.max : 30;
-        let error = "";
-        if (field.constraints) {
-            if (field.constraints.required && !value) {
-                error = "This field is required";
-            } else if (min && value.length < min.value) {
-                error = min.message;
-            } else if (field.constraints.max && value.length > max.value) {
-                error = max.message;
-            }
-        }
-        return error;
-    };
+    // const validateField = (field: IFormField) => {
+    //     const name = field.name
+    //     const value = (name !== undefined && formValues[name]) || "";
+    //     const min: any = field.constraints ? field.constraints.min : 1;
+    //     const max: any = field.constraints ? field.constraints.max : 30;
+    //     let error = "";
+    //     if (field.constraints) {
+    //         if (field.constraints.required && !value) {
+    //             error = "This field is required";
+    //         } else if (min && value.length < min.value) {
+    //             error = min.message;
+    //         } else if (field.constraints.max && value.length > max.value) {
+    //             error = max.message;
+    //         }
+    //     }
+    //     return error;
+    // };
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
         if (!fields || !onSubmit) return;
         const currentErrors: any = {};
-        fields.forEach((field: IFormField) => {
-            const error = validateField(field);
-            if (error && field.name) currentErrors[field.name] = error;
-        });
+        // fields.forEach((field: IFormField) => {
+        //     const error = validateField(field);
+        //     if (error && field.name) currentErrors[field.name] = error;
+        // });
         if (Object.keys(currentErrors).length === 0) {
             onSubmit(formValues);
         } else {
@@ -60,10 +60,6 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse,
         }
     };
     const textTypes = ['', undefined, 'text', 'password', 'number', 'tel', null, false, 'expiry'];
-    // const selectMaker = (field: any)=>{
-    //     if(field.name == 'country')return countryFormat(formValues[field.name] || field?.value);
-    //     if(field.name == 'state')return stateFormat(formValues[field.name] || field?.value);;
-    // }
     return (<>
         <style jsx>{styles}</style>
         {title}

@@ -1,0 +1,40 @@
+$line_height: calc(var(--default-element-height) * 2);
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+input{
+    width: 100%;
+    height: var(--default-element-height);
+    padding: 0;
+    background-color: transparent;
+    outline: unset;
+    border: unset;
+    box-shadow: unset;
+    color: var(--color-gray-50);
+    font-size: var(--s-5);
+    &:hover{
+        color: var(--color-gray-30);
+    }
+}
+.profile-form{
+    @extend .d-flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    margin: var(--default-element-height) 0;
+    height: 100%;
+    padding: 1px;
+    .profile-form__name, .profile-form__contact, .profile-form__address{
+        padding: var(--default-padding) 1px;
+        width: 100%;
+        gap: 10px;
+        @extend .d-flex;
+        @media(max-width: 900px){
+            flex-direction: column;
+        }
+        border-bottom: solid 1px var(--color-gray-70);
+    }
+    .profile-form__contact{}
+}

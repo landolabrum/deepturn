@@ -44,6 +44,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
           } : props.traits?.afterIcon,
         }}>
         <input
+          id={props?.id}
           className={inputClasses}
           name={props.name}
           type={show ? "text" : type}

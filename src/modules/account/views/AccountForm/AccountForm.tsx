@@ -85,11 +85,10 @@ const AccountForm: React.FC<any> = ({ collapse }: IAccountForm) => {
                     <div className='account-form__collapes-header'>
                         <div className='account-form__collapes-label'>
                             <UiIcon icon='fal-circle-user' />
-                    
                             {user?.name !== undefined && <div className='account-form__collapse-label-address'>
                                 <div>{user.name}</div>
                                 <div>{user.email}</div>
-                                <div>{phoneFormat(user.phone)}</div>
+                                <div>{user?.phone !== undefined && phoneFormat(user.phone, 'us')}</div>
                             </div>}
                         </div>
                         <div className='account-form__collapes-label'>

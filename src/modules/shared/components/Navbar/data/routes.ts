@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useUser, userAccessLevel } from "~/src/core/authentication/hooks/useUser";
+import { userAccessLevel } from "~/src/core/authentication/hooks/useUser";
 
 export type SelectableRoute = {
   href: string;
@@ -39,13 +39,13 @@ export const routes: RouteProps[] = [
       { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
     ],
   },
-  {
-    label: "auto",
-    icon: "fa-engine",
-    items: [
-      { label: "Raptor", href: "/auto/raptor", icon: "fmc-logo", active: true },
-    ],
-  },
+  // {
+  //   label: "auto",
+  //   icon: "fa-engine",
+  //   items: [
+  //     { label: "Raptor", href: "/auto/raptor", icon: "fmc-logo", active: true },
+  //   ],
+  // },
   {
     label: "account",
     icon: 'fal-circle-user',

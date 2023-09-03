@@ -1,8 +1,11 @@
 export default interface UserContext {
   memberId: string;
   id: string;
-  name: string;
-  email: string;
+  name?: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  phone?: string;
   // memberNumber: string;
   // isAffiliate: boolean;
   // sponsorId: string;

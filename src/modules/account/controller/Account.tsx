@@ -9,6 +9,8 @@ import AccountForm from "../views/AccountForm/AccountForm";
 import { capitalizeAll } from "@webstack/helpers/Capitalize";
 import {default as Div} from "@webstack/components/UiDiv/UiDiv";
 import AccountMethods from "../views/AccountMethods/controller/AccountMethods";
+import { useUser } from "~/src/core/authentication/hooks/useUser";
+import ProfileForm from "../views/ProfileForm/ProfileForm";
 
 interface Props {}
 
@@ -25,7 +27,7 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
   };
   
   // const [view, setView] = useState<string>('edit profile');
-
+  const user = useUser();
   useEffect(() => {
       setLoaded(true);
       setHeader({ title: 'account', breadcrumbs: [{ label: "account" }] });
@@ -73,7 +75,8 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
             </div>
           </div>
           <Div variant="dark card">
-            {views[view]}
+            <ProfileForm user={user}/>
+            {/* {views[view]} */}
             {/* {view == 'billing' ? <AccountMethods/>:''} */}
           </Div>
         </div>
