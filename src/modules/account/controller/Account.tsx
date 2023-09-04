@@ -77,9 +77,7 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
           </div>
           <Div variant="dark card">
             <h3>{capitalize(view)}</h3>
-            {/* <ProfileForm user={user}/> */}
             {views[view]}
-            {/* {view == 'billing' ? <AccountMethods/>:''} */}
           </Div>
         </div>
       </>
