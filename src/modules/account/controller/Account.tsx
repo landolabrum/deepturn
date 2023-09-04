@@ -11,6 +11,7 @@ import {default as Div} from "@webstack/components/UiDiv/UiDiv";
 import AccountMethods from "../views/AccountMethods/controller/AccountMethods";
 import { useUser } from "~/src/core/authentication/hooks/useUser";
 import ProfileForm from "../views/ProfileForm/ProfileForm";
+import { capitalize } from "lodash";
 
 interface Props {}
 
@@ -18,16 +19,16 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
   const [header, setHeader] = useHeader();
   const [loaded, setLoaded] = useState(false);
   const [view, setView] = useState<string>('edit profile');
+  const user = useUser();
 
   const views:any = {
-    "edit profile":<AccountForm /> ,
+    "edit profile":<ProfileForm user={user}/> ,
     "email notification":"email notification",
     "privacy & security":"privacy & security",
     'billing':<AccountMethods/>
   };
   
   // const [view, setView] = useState<string>('edit profile');
-  const user = useUser();
   useEffect(() => {
       setLoaded(true);
       setHeader({ title: 'account', breadcrumbs: [{ label: "account" }] });
@@ -75,8 +76,9 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
             </div>
           </div>
           <Div variant="dark card">
-            <ProfileForm user={user}/>
-            {/* {views[view]} */}
+            <h3>{capitalize(view)}</h3>
+            {/* <ProfileForm user={user}/> */}
+            {views[view]}
             {/* {view == 'billing' ? <AccountMethods/>:''} */}
           </Div>
         </div>

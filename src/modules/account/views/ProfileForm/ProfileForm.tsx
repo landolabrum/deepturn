@@ -1,141 +1,121 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import styles from './ProfileForm.scss';
 import FormControl from '@webstack/components/FormControl/FormControl';
 import UiInput from '@webstack/components/UiInput/UiInput';
+import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
-import UiLoader from '@webstack/components/UiLoader/UiLoader';
+import { getService } from '@webstack/common';
+import formatAccountFields from '../AccountForm/components/FormatAccountForm';
+import IMemberService from '~/src/core/services/MemberService/IMemberService';
+import UiButton from '@webstack/components/UiButton/UiButton';
+const GOOGLE_API_KEY = 'AIzaSyCthMX-HyRujKH9WgIwvVoi6Hhms247Ts4';
 
-const ProfileForm = ({ user }: any) => {
-
-    const [fields, setFields] = useState<any>({address: ''});
-    const onLoad = () => {
-        if (!user) return;
-        user.address && handleAddress(user.address);
-        Object.entries(user).forEach(([key, line]: any) => {
-            if (key == 'name') {
-                user.first_name = line.split(' ')[0];
-                user.last_name = line.split(' ')[1];
-            } 
-        });
-        setFields(user);
-    }
+const ProfileForm = ({ user }:any) => {
+    const [fields, setFields] = useState<any>({ 
+        first_name:'',
+        last_name:'',
+        phone:'',
+        address: '',
+        country: ''
+    });
+    const [loading, setLoading] = useState(false);
+    const memberService = getService<IMemberService>("IMemberService");
+  
+    const handleChange = (e) => {
+      setFields({ ...fields, [e.target.name]: e.target.value });
+    };
+  
     useEffect(() => {
-        onLoad();
-    }, [user]);
-    const handleChange = (e: any) => {
-        setFields({ ...fields, [e.target.name]: e.target.value });
-    }
-
-    const handleAddress = (inAddress: any) => {
-
+      // Initialize Google Places Autocomplete
+      const initAutocomplete = async () => {
         const loader = new Loader({
-            apiKey: 'AIzaSyCthMX-HyRujKH9WgIwvVoi6Hhms247Ts4',
-            libraries: ['places'],
+          apiKey: GOOGLE_API_KEY,
+          libraries: ['places'],
         });
-
-        loader.load().then((google) => {
-            const inputElement = document.getElementById("autocomplete-input");
-
-            const autocomplete = new google.maps.places.Autocomplete(inputElement);
-
-            autocomplete.addListener("place_changed", () => {
-                const place = autocomplete.getPlace();
-                const address = {
-                    line1: '',
-                    city: '',
-                    state: '',
-                    country: '',
-                    postal_code: '',
-                };
-
-                for (let i = 0; i < place.address_components.length; i++) {
-                    const component = place.address_components[i];
-                    switch (component.types[0]) {
-                        case 'street_number': {
-                            address.line1 = `${component.long_name} ${address.line1}`;
-                            break;
-                        }
-                        case 'route': {
-                            address.line1 += component.short_name;
-                            break;
-                        }
-                        case 'locality':
-                            address.city = component.long_name;
-                            break;
-                        case 'administrative_area_level_1':
-                            address.state = component.short_name;
-                            break;
-                        case 'country':
-                            address.country = component.long_name;
-                            break;
-                        case 'postal_code':
-                            address.postal_code = component.long_name;
-                            break;
-                    }
-                }
-
-                // Do something with the address
-                console.log(address);
-
-                setFields({...fields, 'address':`${address.line1}, ${address.city}, ${address.state}, ${address.postal_code}`});
-            });
-            
-            // Set initial value if available
-            if (inAddress) {
-                setFields({...fields, 'address':`${inAddress.line1}, ${inAddress.city}, ${inAddress.state}, ${inAddress.postal_code}`});
-            }
-
+        const google = await loader.load();
+        const inputElement = document.getElementById('autocomplete-input');
+        const autocomplete = new google.maps.places.Autocomplete(inputElement);
+  
+        // Listener to capture selected address
+        autocomplete.addListener('place_changed', () => {
+          const place = autocomplete.getPlace();
+          if (place && place.address_components) {
+            // Parsing the address components and updating the state
+            const addressComponents = place.address_components.reduce((acc, component) => {
+              const type = component.types[0];
+              acc[type] = component.long_name || component.short_name;
+              return acc;
+            }, {});
+            const formattedAddress = `${addressComponents.street_number || ''} ${addressComponents.route || ''}, ${addressComponents.locality || ''}, ${addressComponents.administrative_area_level_1 || ''}, ${addressComponents.postal_code || ''}, ${addressComponents.country || ''}`;
+            setFields((prevFields) => ({ ...prevFields, address: formattedAddress }));
+          }
         });
-    }
-    useEffect(() => {
-        onLoad();
-    }, [Object(fields).length == 0]);
+      };
+  
+      initAutocomplete();
+    }, [user]);
+  
+    const handleSubmit = async () => {
+      if (!user || !fields) return;
+      setLoading(true);
 
+      // Prepare the payload
+      const payload = {
+        name: `${fields.first_name} ${fields.last_name}`,
+        address:{
+            line1: fields.address.split(",")[0], // assuming the format remains consistent
+            line2: 'line 2', // assuming the format remains consistent
+            city: fields.address.split(",")[1].trim(),
+            state: fields.address.split(",")[2].trim(),
+            postal_code: fields.address.split(",")[3].trim(),
+            country: fields.address.split(",")[4].trim(),
+        },
+        email: fields.email,
+        phone: fields.phone,
+      };
+  
+      const memberResponse = await memberService.updateMember(user.id, payload);
+      if (memberResponse?.id) {
+        setLoading(false);
+        setFields(formatAccountFields(memberResponse));
+      } else {
+        setLoading(false);
+      }
+    };
+  
     return (
-        <>
-            <style jsx>{styles}</style>
-            <p style={{ maxWidth: '400px' }}>
-                {JSON.stringify(fields)}
-            </p>
+      <>
+        <style jsx>{styles}</style>
             <div className='profile-form'>
+                fo: {JSON.stringify(fields)}
                 <div className='profile-form__name'>
-                    <UiInput value={fields?.first_name} label='first name' variant={`dark`} name='first_name' onChange={handleChange} />
-                    <UiInput value={fields?.last_name} label='last name' variant={`dark`} name='first_name' onChange={handleChange} />
+                    <UiInput value={fields?.first_name} label='First Name' variant='dark' name='first_name' onChange={handleChange} />
+                    <UiInput value={fields?.last_name} label='Last Name' variant='dark' name='last_name' onChange={handleChange} />
                 </div>
                 <div className='profile-form__contact'>
-                    <UiInput
-                        value={fields?.email}
-                        type='email'
-                        label='email'
-                        variant={`dark`}
-                        name='email'
-                        onChange={handleChange}
-                    />
-                    <UiInput
-                        value={phoneFormat(fields?.phone, fields.country)}
-                        label='phone'
-                        type='tel'
-                        variant={`dark`}
-                        name='phone'
-                        onChange={handleChange}
-                    />
+                    <UiInput value={fields?.email} type='email' label='Email' variant='dark' name='email' onChange={handleChange} />
+                    <UiInput value={phoneFormat(fields?.phone, fields?.country)} label='Phone' type='tel' variant='dark' name='phone' onChange={handleChange} />
                 </div>
-                <div className='profile-form__address'>
-                    <FormControl variant='dark' label='address' traits={{height:'45px', width:"100%"}}>
-                    <input
-                        id="autocomplete-input"
-                        type="text"
-                        placeholder="Enter your address"
-                        value={typeof fields?.address == 'string'?fields.address:''}
-                        onChange={handleChange}
-                    />
+                <div className="profile-form__address">
+                    <FormControl variant="dark" label="Address" traits={{ height: '45px', width: '100%' }}>
+                        <input
+                            id="autocomplete-input"
+                            className="custom-autocomplete-input"
+                            type="text"
+                            placeholder="Enter your address"
+                            value={typeof fields?.address === 'string' ? fields.address : ''}
+                            name="address"
+                            onChange={handleChange}
+                        />
                     </FormControl>
                 </div>
-            </div>
-        </>
+          <div className='profile-form__action'>
+            <UiButton busy={loading} variant='dark' onClick={handleSubmit}>Update Account</UiButton>
+          </div>
+        </div>
+      </>
     );
-    // return <UiLoader position='relative'/>
-};
-
-export default ProfileForm;
+  };
+  
+  export default ProfileForm;

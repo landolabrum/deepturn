@@ -37,7 +37,7 @@ export const phoneFormat = (
       PhoneNumberFormat.NATIONAL
     );
   } catch (e) {
-    return "n/a";
+    return phoneNumber;
   }
   return formattedNumber;
 };

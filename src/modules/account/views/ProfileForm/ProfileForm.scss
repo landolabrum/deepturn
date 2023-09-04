@@ -20,6 +20,7 @@ input{
 }
 .profile-form{
     @extend .d-flex;
+    gap: var(--default-padding);
     flex-direction: column;
     width: 100%;
     overflow: hidden;
@@ -27,14 +28,20 @@ input{
     height: 100%;
     padding: 1px;
     .profile-form__name, .profile-form__contact, .profile-form__address{
-        padding: var(--default-padding) 1px;
+        padding: 1px;
         width: 100%;
         gap: 10px;
         @extend .d-flex;
         @media(max-width: 900px){
             flex-direction: column;
         }
-        border-bottom: solid 1px var(--color-gray-70);
     }
     .profile-form__contact{}
 }
+.custom-autocomplete-input {
+  }
+
+  .profile-form__action{
+    width: 100%;
+    margin-top: var(--default-padding);
+  }
