@@ -34,6 +34,7 @@ export default interface IMemberService {
   userChanged: EventEmitter<UserContext | undefined>;
   // authedResetPassword(newPassword: string): Promise<{}>;
   // signInWithLegacyToken(legacyCustomToken: string): Promise<UserContext | null>;
+  verifyEmail(token: string):Promise<any>;
   signIn({ email,
     password,
     code,

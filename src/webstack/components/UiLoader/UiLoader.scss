@@ -26,6 +26,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      text-transform: uppercase;
       .ui-loader__loading-text {
         /* Equal width for the text and dots */
         display: flex;
@@ -34,7 +35,6 @@
       }
       &.ui-loader__loading-text-container-no-dots{
         width: 100%;
-        border: solid 1px;
         justify-content: center;
         .ui-loader__loading-text {
           display: flex;

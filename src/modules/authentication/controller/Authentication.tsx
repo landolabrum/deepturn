@@ -5,6 +5,8 @@ import styles from "./Authentication.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import SignUp from "../views/SignUp/SignUp";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
+import { useRouter } from "next/router";
+import VerifyEmail from "../views/VerifyEmail/VerifyEmail";
 
 
 interface Props { }
@@ -12,7 +14,7 @@ interface Props { }
 const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Props) => {
   const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
   const [view, setView] = useState<string>("sign-in");
-
+  const router = useRouter();
   const handleView = () => {
     switch (view) {
       case "sign-in":
@@ -22,6 +24,9 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
       case "sign-up":
         setView("sign-in")
         break;
+      case "verify":
+        setView("verify")
+        break;
       case "customer-created":
         setView("sign-in")
         break;
@@ -30,6 +35,7 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
     }
   }
   useEffect(() => {
+    if(router.pathname.includes('verify'))setView('verify');
     if (view.includes("@")) {
       setNewCustomerEmail(view);
     }
@@ -62,9 +68,11 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
               </div>
               {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
               {view == 'sign-up' && <SignUp setView={setView} />}
+              {view == 'verify' && <VerifyEmail token={router.query.token} onSuccess={console.log}/>}
               <div className="authentication__view-action">
                 <label>{view == 'sign-in' ? "no account?" : "already have an account?"}</label>
                 <a onClick={handleView}>
+        console.log("[ isVerified ]",isVerified)
                   {view == 'sign-in' ? "create account" : "log in"}
                 </a>
               </div>

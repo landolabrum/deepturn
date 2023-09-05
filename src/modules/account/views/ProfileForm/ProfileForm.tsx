@@ -101,6 +101,7 @@ const ProfileForm = ({ user }: any) => {
     <>
       <style jsx>{styles}</style>
       <div className='profile-form'>
+        {loading.toString()}
         <div className='profile-form__name'>
           <UiInput value={fields?.first_name} label='First Name' variant='dark' name='first_name' onChange={handleChange} />
           <UiInput value={fields?.last_name} label='Last Name' variant='dark' name='last_name' onChange={handleChange} />
@@ -115,15 +116,14 @@ const ProfileForm = ({ user }: any) => {
             variant='dark'
             type="text"
             placeholder="Enter your address"
-            defaultValue={
-              `${fields.address?.line1?fields.address?.line1+', ':''
+            defaultValue={`${
+              fields.address?.line1?fields.address?.line1+', ':''
               }${fields.address?.line2 ? fields.address?.line2 + ', ' : ''
               }${fields.address?.city ? fields.address?.city + ', ' : ''
               }${fields.address?.state ? fields.address?.state + ', ' : ''
               }${fields.address?.postal_code ? fields.address?.postal_code + ', ' : ''
               }${fields.address?.country ? fields.address?.country : ''
-              }
-            `}
+              }`}
             name="address"
           />
         </div>

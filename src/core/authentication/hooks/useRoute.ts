@@ -8,6 +8,7 @@ import useUserAgent from "./useUserAgent";
 
 const AUTHED_LANDING = "/dashboard";
 const UNAUTHED_LANDING = "/authentication"
+const VERIFICATION_LANDING = '/verify'
 interface RouteOptionProps{
   items?: RouteProps[];
   active?:boolean;
@@ -34,10 +35,10 @@ export default function useRoute(handleSideNav?: () => void){
     
   useEffect(() => {
     // console.log("UA: ",userAgentData);
-    if ( !userResponse && router.pathname !== UNAUTHED_LANDING) {
+    if ( !userResponse && ![VERIFICATION_LANDING, UNAUTHED_LANDING].includes(router.pathname)) {
       setUser(null);
       setHeader(null);
-      handleRoute({href:UNAUTHED_LANDING});
+      !router.pathname.includes(VERIFICATION_LANDING) && handleRoute({href:UNAUTHED_LANDING});
     } else if ( userResponse) {
       userResponse&&setUser(userResponse);
       [UNAUTHED_LANDING,"/"].includes(router.pathname) && handleRoute({href:AUTHED_LANDING});

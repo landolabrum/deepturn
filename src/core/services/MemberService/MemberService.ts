@@ -41,6 +41,20 @@ export default class MemberService
     console.log('[ CHECKOUT ]',cart)
     return true
   }
+  public async verifyEmail(token: string):Promise<any>{
+    try{
+      if (token){
+        const encodedToken = encodeURIComponent(token);
+        return await this.get<any>(`/usage/auth/verify?token=${encodedToken}`);
+      }
+    }catch(error:any){
+      console.log('[error]',error)
+      return error
+    }
+    if (!token) {
+      throw new ApiError("No Token Provided", 400, "MS.SI.02");
+    }
+  };
   public async signUp(
     {
       name,

@@ -1,0 +1,10 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.verify-email{
+    @extend .d-flex;
+    height: 300px;
+    width: 100%;
+}

@@ -48,8 +48,7 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
           </div>
           </div>
           <div 
-
-          className={`ui-loader__loading-text-container${props.dots == false? ' ui-loader__loading-text-container-no-dots':''}`}
+            className={`ui-loader__loading-text-container${props.dots == false? ' ui-loader__loading-text-container-no-dots':''}`}
           >
             <div className={`ui-loader__loading-text`}>{text}</div>
             {props.dots !== false && <div className="ui-loader__loading-text-dots">{dots}</div>}
