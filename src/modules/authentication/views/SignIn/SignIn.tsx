@@ -99,7 +99,7 @@ const SignIn = ({email}:{email:string | undefined}) => {
             type={field}
             autoComplete={field === "email" ? "username" : "current-password"}
             name={field}
-            variant={["bad-email", "password required", "no credentials provided"].includes(signInResponse) ? "invalid dark" : "dark"}
+            variant={["bad-email", "password required", "no credentials provided"].includes(signInResponse) ? "invalid" : undefined}
             placeholder={field}
             label={field}
             value={credentials[field]}
@@ -118,7 +118,7 @@ const SignIn = ({email}:{email:string | undefined}) => {
         )}
       </div>
       <div className="sign-in__login">
-      <UiButton traits={{ width: "100%" }} variant="dark" onClick={handleSignIn} busy={isSubmitting}>
+      <UiButton traits={{ width: "100%" }} onClick={handleSignIn} busy={isSubmitting}>
         login
       </UiButton>
       </div>

@@ -1,5 +1,5 @@
 import type { NextComponentType, NextPageContext } from "next";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SignIn from "../views/SignIn/SignIn";
 import styles from "./Authentication.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
@@ -12,6 +12,7 @@ import VerifyEmail from "../views/VerifyEmail/VerifyEmail";
 interface Props { }
 
 const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Props) => {
+  const backgroundRef = useRef<null | any>(null);
   const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
   const [view, setView] = useState<string>("sign-in");
   const router = useRouter();
@@ -34,7 +35,40 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
         setView("sign-up")
     }
   }
+  
+  
   useEffect(() => {
+    const video = backgroundRef.current;
+    console.log(backgroundRef?.current.parentNode)
+    // console.log(backgroundRef?.current.nextSibling)
+    if (video) {
+      video.playbackRate = 0.1;
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      video.nextSibling.appendChild(canvas); // append canvas to body or a specific container
+      // document.body.appendChild(canvas); // append canvas to body or a specific container
+  
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+  
+      const drawFrame = () => {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height); // Draw at the same position
+          requestAnimationFrame(drawFrame);
+        ctx.globalAlpha = 0.5; // Adjust opacity to blend frames
+
+      };
+      
+      video.addEventListener('play', () => {
+    
+          drawFrame();
+      });
+    }
+  }, []);
+  
+  
+  useEffect(() => {
+    // if(backgroundRef.current)backgroundRef.current.playbackRate=".3"
     if(router.pathname.includes('verify'))setView('verify');
     if (view.includes("@")) {
       setNewCustomerEmail(view);
@@ -46,9 +80,10 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
     <>
       <style jsx>{styles}</style>
       <div className="authentication">
-        <video autoPlay loop muted playsInline className="authentication_video">
-          <source src="./assets/backgrounds/beeple.mp4" type="video/mp4" />
+        <video autoPlay loop muted playsInline className="authentication_video" ref={backgroundRef}>
+          <source src="./assets/backgrounds/nature-clean.mp4" type="video/mp4" />
         </video>
+        <div className='authentication__canvas'></div>
         <div className="authentication-body">
           <div className="authentication-header">
             <div className="authentication-logo">

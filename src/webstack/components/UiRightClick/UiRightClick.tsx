@@ -49,9 +49,9 @@ export default function UiRightClick(props: UiRightClickProps) {
 
   return (
     <div
-      onClick={handleClick}
-      onContextMenu={handleRightClick}
-      onTouchStart={handleTouchStart}
+      // onClick={handleClick}
+      // onContextMenu={handleRightClick}
+      // onTouchStart={handleTouchStart}
     >
       {props.children}
     </div>

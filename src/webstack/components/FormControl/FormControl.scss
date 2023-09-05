@@ -82,9 +82,9 @@ $elPad: 14px;
     line-height: 1;
     height: calc(var(--default-element-height) - 2px);
     white-space: nowrap;
-    color: var(--color-gray-60);
-    --ui-icon-color: var(--color-gray-40);
-    background-color: var(--color-gray-100);
+    color: var(--color-gray-90);
+    --ui-icon-color: var(--color-gray-90);
+    background-color: var(--color-gray-20);
     outline: solid 1px var(--color-gray-60);
     --ui-icon-height: 18px;
     --ui-icon-width: 18px;
@@ -107,7 +107,6 @@ $elPad: 14px;
       @extend .d-flex;
       height: 100%;
       width: var(--default-element-height);
-
       &.form-control__icon-dark {
         background-color: var(--color-gray-90);
       }
@@ -346,6 +345,8 @@ $elPad: 14px;
       --ui-icon-height: 12px;
       --ui-icon-width: 12px;
     }
+    
+
     &[class$="dark"] {
       color: var(--color-gray-50);
       background-color: var(--color-gray-80);

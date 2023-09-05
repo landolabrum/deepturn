@@ -95,6 +95,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
         accumulator + (` ${clzz}-${currentValue}`), initialValue
       );
     }
+    return clzz;
   }
   useEffect(() => {
     setTestId(createTestId(ref.current.parentNode, childRef.current));

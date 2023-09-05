@@ -1,3 +1,4 @@
+
 .d-flex {
   display: flex;
   justify-content: center;
@@ -27,16 +28,36 @@ $cPad: 15px;
   @media (max-width: 900px) {
     max-width: calc(100vw - 100px);
   }
+  .authentication__canvas{
+    opacity: .5;
+    min-width: 100%;
+    filter: blur(5px);
+    // display: flex;
+    // justify-content: center;
+    
+  }
+  .authentication_video, .authentication__canvas {
 
-  .authentication_video {
+    // z-index: 999;
     position: fixed;
+    // display: flex;
     top: 0;
-    filter: blur(4px);
-    height: 100vh;
+    left: 0;
+    min-width: 100%;
+    min-height: 100vh;
+    // filter: blur(4px);
     overflow: hidden;
-    mix-blend-mode: luminosity;
-    @media (max-width: 900px) {
-      transform: rotate(90deg);
+
+    background-position: center center;
+    // mix-blend-mode: luminosity;
+    // @media (max-width: 900px) {
+    //   transform: rotate(90deg);
+    // }
+    transition: opacity 1s ease-in-out;
+    // opacity: 0;
+  
+    &.visible {
+      opacity: 1;
     }
   }
 
@@ -50,9 +71,10 @@ $cPad: 15px;
     }
     .authentication-header {
       .authentication-logo {
-        --ui-icon-height: 120px;
-        --ui-icon-width: 70px;
-        --ui-icon-color: rgba(255, 255, 255, 0.6);
+        box-shadow: 0 0 10px 7px var(--color-primary-opaque-1);
+        --ui-icon-height: 140px;
+        --ui-icon-width: 110px;
+        --ui-icon-color: #2683BB;
         @media(max-width:900px){
           display: none;
         }
@@ -67,9 +89,9 @@ $cPad: 15px;
       padding: 0 $cPad;
       aspect-ratio: 7/8;
       width: calc(100% - calc($cPad * 2));
-      background-color: var(--color-gray-70);
+      background-color: var(--color-gray-40);
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 10px 7px var(--color-gray-90);
+      box-shadow: 0 0 10px 7px var(--color-primary-opaque-1);
       border-radius: var(--default-border-radius);
       .authentication__view {
         @extend .d-flex-col;
@@ -80,6 +102,7 @@ $cPad: 15px;
           width: 100%;
           justify-content: flex-start;
           gap: 9px;
+          color: var(--color-gray-50);
           .authentication__view-name{
             text-transform: capitalize;
             line-height: 1;
@@ -89,6 +112,7 @@ $cPad: 15px;
             width: max-content;
           }
           .authentication__logo-mobile {
+            // box-shadow: 0 0 10px 7px var(--color-primary-opaque-1);
             display: none;
             margin: 20px 0;
             --ui-icon-height: var(--default-element-height);
@@ -107,7 +131,7 @@ $cPad: 15px;
           justify-content: flex-start;
           width: 100%;
           text-transform: capitalize;
-          border-top: solid 1px var(--color-gray-60);
+          border-top: solid 1px var(--color-gray-50);
           label{
             font-size: 14px;
             color: var(--color-gray-50);

@@ -7,6 +7,7 @@ import styles from "./UiIcon.scss";
 
 interface Props {
   src?: string | undefined;
+  glow?: boolean | string;
   icon?: string | undefined;
   spin?: boolean | undefined;
   onClick?: MouseEventHandler<HTMLDivElement> | undefined;
@@ -297,9 +298,35 @@ export class UiIcon extends React.Component<Props, State> {
   }
 
   render() {
-    return <>
-      <style jsx>{styles}</style>
-      <div onClick={e => this.buttonClicked(e)} dangerouslySetInnerHTML={{ __html: this.state?.innerHtml }} style={this.state.iconStyles} data-testid={this.getDataTestId()} />
-    </>;
+    let glowClass = '';
+
+    // Check if the 'glow' property is set
+    if (this.props.glow === true) {
+      glowClass = 'iconGlow';  // this is the class name for the default glow effect
+    } else if (typeof this.props.glow === 'string') {
+      // Parse string for custom glow, this is just a placeholder.
+      // You would need to parse and set the glow as inline style.
+      const [offsetX, offsetY, blurRadius, color] = this.props.glow.split(' ');
+      //...
+    }
+
+    // Merge iconStyles with glow styles, if any
+    const combinedStyles = {
+      ...this.state.iconStyles,
+      ...(glowClass ? { textShadow: `0 0 5px ${this.state.iconStyles.color || 'currentColor'}` } : {})
+    };
+
+    return (
+      <>
+        <style jsx>{styles}</style>
+        <div 
+          className={glowClass} // Adding the glow class conditionally
+          onClick={e => this.buttonClicked(e)}
+          dangerouslySetInnerHTML={{ __html: this.state?.innerHtml }}
+          style={combinedStyles}
+          data-testid={this.getDataTestId()}
+        />
+      </>
+    );
   }
 }

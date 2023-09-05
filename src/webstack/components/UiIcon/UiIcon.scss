@@ -14,3 +14,14 @@ div {
     // }
   }
 }
+@keyframes shadowAnimation {
+  0% {filter: drop-shadow( 0 0 5px #fff);}
+  // 30% {filter: drop-shadow( 0 0 15px #fff);}
+  100% {filter: drop-shadow( 0 0 20px #fff);}
+}
+.iconGlow {
+  color: #e0e0e0;
+  mix-blend-mode: color-dodge;
+  animation: shadowAnimation 1.5s ease-in-out infinite alternate;
+  }
+  
