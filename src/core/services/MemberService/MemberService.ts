@@ -38,8 +38,19 @@ export default class MemberService
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
   public async confirmCheckout(cart:ICartItem[]){
-    console.log('[ CHECKOUT ]',cart)
-    return true
+    var context:any = {line_items:cart};
+    let id:string | undefined = this._getCurrentUser(false)?.id;
+    if(id){
+      context['customer']=id;
+      // console.log("[ CONTEXT ]", context)
+      const res = await this.post<{}, any>(
+        "usage/checkout/",
+        context
+      )
+      return res
+    }else{
+      throw new ApiError("No Customer ID Provided", 400, "MS.SI.02");
+    }
   }
   public async verifyEmail(token: string):Promise<any>{
     try{

@@ -33,7 +33,6 @@ const formatAccountForm = (data: any) => {
         if (usersState?.length) return usersState[1];
         return 'false'
     }
-    console.log(findState('ut'))
     function iT(data: any, width?: string) {
         Object.entries(data).forEach(([field, value]) => {
             const remove = !Boolean(AccountFormRemoveFields.includes(field));
@@ -42,7 +41,7 @@ const formatAccountForm = (data: any) => {
                 name: field,
                 label: field,
                 value: field == 'phone' && typeof value == 'string' ? phoneFormat(value, 'US') :
-                    field == 'state' ? findState(value) : value,
+                    field == 'state' ? findState(String(value)) : value,
                 width: width,
                 max: field == 'phone' ? 15 : null,
                 traits: ['state', 'country'].includes(field) ? { height: '500px' } : {},

@@ -59,8 +59,8 @@ const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, t
                 <div className='cart-list__collapse-label'>
                     <UiIcon icon='fal-bags-shopping' />
                 <div className='cart-list__collapse-label-items'>
-                    {cart && cart.length <= 2 && cart.map((k, v) => 
-                        <div className='cart-list__collapse-label-item'>{k?.name}  ( ${k?.price_object?.qty}x )</div>
+                    {cart && cart.length <= 2 && cart.map((value: any, index: any) => 
+                        {return <div key={index} className='cart-list__collapse-label-item'>{value?.name}  ( ${value?.price_object?.qty}x )</div>}
                     )}
                 </div>
                 </div>

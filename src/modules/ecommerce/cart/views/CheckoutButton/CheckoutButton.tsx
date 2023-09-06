@@ -17,15 +17,20 @@ interface ICheckoutButton {
     isModal?: boolean;
     traits?: ITraits;
     collect?: boolean;
+    setup?: boolean;
 }
-const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false, traits, collect }) => {
+const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false, traits, collect, setup }) => {
     const { openModal, closeModal } = useModal();
     const [response, setResponse ]=useState<any>('')
     const memberService = getService<IMemberService>('IMemberService');
     const router = useRouter();
-    const handleCheckout = () => {
+    const handleCheckout = async () => {
+        if(setup){
+            const checkoutResponse = await memberService.confirmCheckout(cart)
+            console.log('[ setup response ]', checkoutResponse)
+        }
         if(collect){
-            const checkoutResponse = memberService.confirmCheckout(cart)
+            const checkoutResponse = await memberService.confirmCheckout(cart)
             console.log('[ checkoutResponse ]', checkoutResponse)
         }
         if (isModal) openModal(<Checkout cart={cart} />);
@@ -34,8 +39,7 @@ const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", i
     
     return <>
         <style jsx>{styles}</style>
-        <div className='checkout'>
-
+        <div className='checkout-button'>
             <UiButton variant="primary" traits={traits} onClick={handleCheckout} >{`${label} ${calculateCartTotal(cart)}`}</UiButton>
         </div>
     </>

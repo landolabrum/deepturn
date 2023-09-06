@@ -108,6 +108,8 @@ $elPad: 14px;
       height: 100%;
       width: var(--default-element-height);
       &.form-control__icon-dark {
+        color: var(--color-gray-30);
+        --ui-icon-color: var(--color-gray-40);
         background-color: var(--color-gray-90);
       }
       &.form-control__icon-invalid {
@@ -193,6 +195,7 @@ $elPad: 14px;
     &[class$="-icon"] {
       pointer-events: none;
       margin: 0 3px;
+      background-color: transparent;
       // background-color: var(--color-gray-30-opaque);
       border-radius: var(--default-border-radius) !important;
       outline: solid 1px transparent;
@@ -203,7 +206,9 @@ $elPad: 14px;
     }
 
     &[class$="-nav-item"] {
+
       background-color: transparent;
+      --ui-icon-color: var(--color-gray-40);
       @media (max-width: 900px) {
         justify-content: flex-start;
       }
@@ -254,6 +259,7 @@ $elPad: 14px;
     &[class$="-flat"],
     &[class$="-nav-item"],
     &[class$="-nav-item__active"] {
+      color: var(--color-gray-40);
       border-radius: 0;
       --ui-icon-height: var(--s-6);
       --ui-icon-width: auto;
@@ -347,7 +353,7 @@ $elPad: 14px;
     }
     
 
-    &[class$="dark"] {
+    &.form-control__element-dark {
       color: var(--color-gray-50);
       background-color: var(--color-gray-80);
       &:hover,
