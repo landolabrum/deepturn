@@ -29,12 +29,13 @@ $cPad: 15px;
     max-width: calc(100vw - 100px);
   }
   .authentication__canvas{
-    opacity: .5;
-    min-width: 100%;
-    filter: blur(5px);
-    // display: flex;
-    // justify-content: center;
-    
+    // opacity: .5;
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
   }
   .authentication_video, .authentication__canvas {
 
@@ -71,10 +72,11 @@ $cPad: 15px;
     }
     .authentication-header {
       .authentication-logo {
-        box-shadow: 0 0 10px 7px var(--color-primary-opaque-1);
+        // box-shadow: 0 0 10px 7px var(--color-primary-opaque-1);
         --ui-icon-height: 140px;
         --ui-icon-width: 110px;
-        --ui-icon-color: #2683BB;
+        --ui-icon-color: var(--color-gray-30);
+        // --ui-icon-color: #2683BB;
         @media(max-width:900px){
           display: none;
         }
@@ -91,7 +93,7 @@ $cPad: 15px;
       width: calc(100% - calc($cPad * 2));
       background-color: var(--color-gray-40);
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 10px 7px var(--color-primary-opaque-1);
+      box-shadow: 0 0 10px 7px var(--color-gray-60);
       border-radius: var(--default-border-radius);
       .authentication__view {
         @extend .d-flex-col;

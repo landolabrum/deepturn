@@ -19,3 +19,19 @@ $brk: 25px;
   width: 100%;
 }
 
+.authentication__authentication-status{
+  width: calc(100% - 20px);
+  padding: 15px 10px;
+  color: var(--color-gray-70);
+  .authentication__signin-response{
+    display: flex;
+    flex-direction: column;
+    padding:0;
+    .sign-in__signin-response-details{
+      .sign-in__signin-response-detail{
+        text-indent: 0;
+        color: var(--color-orange);
+      }
+    }
+  }
+}

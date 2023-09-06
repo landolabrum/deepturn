@@ -31,7 +31,7 @@ export interface SignInProps {
   handleCredentials: (e: any) => void;
 }
 
-const SignIn = ({email}:{email:string | undefined}) => {
+const SignIn = ({ email }: { email: string | undefined }) => {
   const [signInResponse, setSignInResponse] = useState<any>(DEFAULT_RESPONSE);
   const userResponse = useUser();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -65,8 +65,8 @@ const SignIn = ({email}:{email:string | undefined}) => {
         if (error.name === "AuthenticationError") {
           setSignInResponse({ response: error.code, message: authResponse(error.code) });
         }
-        if (error.message) {
-          setSignInResponse(error.message);
+        if (error.detail) {
+          setSignInResponse(error);
         }
       }
     } else {
@@ -80,7 +80,7 @@ const SignIn = ({email}:{email:string | undefined}) => {
   }
 
   useEffect(() => {
-    if(email)setCredentials({...credentials, email: email});
+    if (email) setCredentials({ ...credentials, email: email });
     // if (userResponse && userResponse.memberType !== "staff") {
     //   console.log('[ USER RESPO ]:', userResponse)
     //   setSignInResponse({ code: "non-staff", message: authResponse("non-staff") });
@@ -90,9 +90,8 @@ const SignIn = ({email}:{email:string | undefined}) => {
 
   return (
     <>
-    <style jsx>{styles}</style>
-      <form className="sign-in">
-
+      <style jsx>{styles}</style>
+      <form className="sign-in" style={{ color: 'black' }}>
         {["email", "password"].map((field) => (
           <UiInput
             key={field}
@@ -114,13 +113,21 @@ const SignIn = ({email}:{email:string | undefined}) => {
         {signInResponse.message !== "" && (
           <div className="authentication__signin-response">
             {signInResponse.message}
+            {signInResponse?.detail &&
+              <ul className='sign-in__signin-response-details'>
+                {Object.values(signInResponse?.detail).map((d: any) => {
+                  return <li className='sign-in__signin-response-detail'>{d}</li>
+                })}
+              </ul>
+            }
           </div>
         )}
+
       </div>
       <div className="sign-in__login">
-      <UiButton traits={{ width: "100%" }} onClick={handleSignIn} busy={isSubmitting}>
-        login
-      </UiButton>
+        <UiButton traits={{ width: "100%" }} onClick={handleSignIn} busy={isSubmitting}>
+          login
+        </UiButton>
       </div>
     </>
   )

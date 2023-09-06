@@ -36,35 +36,38 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
     }
   }
   
+  // const playSpeed = 1;
+  // useEffect(() => {
+  //   const video = backgroundRef.current;
+  //   let forward = true; // Boolean variable to control playback direction
+  //   let lastTime = Date.now();
   
-  useEffect(() => {
-    const video = backgroundRef.current;
-    console.log(backgroundRef?.current.parentNode)
-    // console.log(backgroundRef?.current.nextSibling)
-    if (video) {
-      video.playbackRate = 0.1;
-      const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext('2d');
-      video.nextSibling.appendChild(canvas); // append canvas to body or a specific container
-      // document.body.appendChild(canvas); // append canvas to body or a specific container
+  //   if (video) {
+  //     const interval = setInterval(() => {
+  //       const currentTime = Date.now();
+  //       const deltaTime = (currentTime - lastTime) / 1000.0; // convert to seconds
+  //       lastTime = currentTime;
   
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+  //       if (forward) {
+  //         video.currentTime += deltaTime * playSpeed;
+  //         if (video.currentTime >= video.duration) {
+  //           forward = false;
+  //         }
+  //       } else {
+  //         video.currentTime -= deltaTime * playSpeed;
+  //         if (video.currentTime <= 0) {
+  //           forward = true;
+  //         }
+  //       }
+  //     }, 24); // Run about 30 times per second
   
-      const drawFrame = () => {
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height); // Draw at the same position
-          requestAnimationFrame(drawFrame);
-        ctx.globalAlpha = 0.5; // Adjust opacity to blend frames
-
-      };
-      
-      video.addEventListener('play', () => {
-    
-          drawFrame();
-      });
-    }
-  }, []);
+  //     return () => {
+  //       clearInterval(interval); // Clean up interval when the component unmounts
+  //     };
+  //   }
+  // }, []);
+  
+  
   
   
   useEffect(() => {
