@@ -7,6 +7,8 @@ import SignUp from "../views/SignUp/SignUp";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { useRouter } from "next/router";
 import VerifyEmail from "../views/VerifyEmail/VerifyEmail";
+import { useNotification } from "@webstack/components/Notification/Notification";
+import UiButton from "@webstack/components/UiButton/UiButton";
 
 
 interface Props { }
@@ -68,9 +70,20 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
   // }, []);
   
   
-  
-  
+  const [notification, setNotification]=useNotification();
+  console.log("nots",notification)
   useEffect(() => {
+    setNotification({
+      active:true,
+      dismissable: false,
+      children:<>
+      <p>We use cookies to give you the best experience and to ensure the safety of our users. The only non-essential cookies we use are for any personal referrals you make. We do not track you across other sites. You can see our Cookie Policy here, and our Privacy Notice here.</p>
+      <div style={{width: '100%', display: 'flex', justifyContent:'flex-end', gap:'5px'}}>
+        <UiButton traits={{width:"max-content"}}>Customize selection</UiButton>
+        <UiButton traits={{width:"max-content"}} variant="primary">accept all</UiButton>
+      </div>
+      </>
+    })
     // if(backgroundRef.current)backgroundRef.current.playbackRate=".3"
     if(router.pathname.includes('verify'))setView('verify');
     if (view.includes("@")) {
@@ -110,7 +123,6 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
               <div className="authentication__view-action">
                 <label>{view == 'sign-in' ? "no account?" : "already have an account?"}</label>
                 <a onClick={handleView}>
-        console.log("[ isVerified ]",isVerified)
                   {view == 'sign-in' ? "create account" : "log in"}
                 </a>
               </div>

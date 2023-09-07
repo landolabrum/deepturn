@@ -37,14 +37,15 @@ export default class MemberService
   private _userToken: string | undefined;
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
-  public async confirmCheckout(cart:ICartItem[]){
+
+  public async processTransaction(cart:ICartItem[]){
     var context:any = {line_items:cart};
     let id:string | undefined = this._getCurrentUser(false)?.id;
     if(id){
       context['customer']=id;
       // console.log("[ CONTEXT ]", context)
       const res = await this.post<{}, any>(
-        "usage/checkout/",
+        "usage/checkout/process",
         context
       )
       return res

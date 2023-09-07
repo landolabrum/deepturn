@@ -19,7 +19,7 @@ export default interface IMemberService {
   // METHODS
   getMethods(): Promise<any>;
   deleteMethod(id: string): Promise<any>;
-  confirmCheckout(cart:ICartItem[]): Promise<any>;
+  processTransaction(cart:ICartItem[]): Promise<any>;
   createCustomerMethod(id: string, method: any): Promise<any>;
   getProducts(request?: any): Promise<any>;
   getProduct({ id, pri }: ProductRequestProps): Promise<any>;

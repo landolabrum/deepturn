@@ -11,8 +11,9 @@ interface IAccountCreateMethod {
     onSubmit: (e: any) => void;
     loading: string | boolean;
     open: boolean;
+    collapse?: boolean;
 }
-const AccountCreateMethod = ({ onSubmit, loading, open }: IAccountCreateMethod) => {
+const AccountCreateMethod = ({ onSubmit, loading, open, collapse=true }: IAccountCreateMethod) => {
     const [brand, setBrand] = useState<string | null>(null);
     const errorIcon = "fa-exclamation-triangle";
     const [method, setMethod] = useState<OPaymentMethod>({
@@ -43,10 +44,9 @@ const AccountCreateMethod = ({ onSubmit, loading, open }: IAccountCreateMethod) 
     // import React, { useEffect } from 'react';
     
     useEffect(() => {}, [loading]);
-    return (
+    if(collapse)return (
         <>
             <style jsx>{styles}</style>
-            {/* {open.toString()} */}
             <div className='account-create-method'>
                 <UiCollapse variant='dark' open={open} label='add payment method'>
                     <div className='account-create-method__method'>
@@ -100,6 +100,62 @@ const AccountCreateMethod = ({ onSubmit, loading, open }: IAccountCreateMethod) 
                         {loading == true && <UiLoader text={loading} dots={typeof loading != 'string'} width='100%' height="400px" position='relative' />}
                     </div>
                 </UiCollapse>
+            </div>
+        </>
+    );
+    return (
+        <>
+            <style jsx>{styles}</style>
+            <div className='account-create-method'>
+                    <div className='account-create-method__method'>
+                         <UiForm
+                            loading={loading == true}
+                            fields={[
+                                {
+                                    name: 'number',
+                                    label: 'number',
+                                    placeholder: "**** **** **** ****",
+                                    constraints: {
+                                        min: 1,
+                                        max: 16
+                                    },
+                                    value: method?.number,
+                                    variant: `${brand == errorIcon && method?.number.length > 0 ? 'invalid ' : ''}dark`,
+                                    traits: {
+                                        beforeIcon: brand && method?.number.length > 0 ? `${brand}` : undefined,
+                                        afterIcon: method?.number?.length ?
+                                            { icon: 'fa-xmark', onClick: () => setMethod({ ...method, number: '' }) } :
+                                            undefined,
+                                        errorMessage: 'card number is invalid',
+                                    }
+                                },
+                                {
+                                    name: 'expiry',
+                                    label: 'expiration',
+                                    placeholder: 'mm/yy',
+                                    variant: `${ method?.expiry.length != 0 && method?.expiry.length <= 4 ? 'invalid ' : ''}dark`,
+                                    type: 'expiry',
+                                    value: method?.expiry,
+                                    width: 'calc(50% - 5px)'
+                                },
+                                {
+                                    name: 'cvc',
+                                    label: 'cvc',
+                                    placeholder: '000',
+                                    value: method?.cvc,
+                                    width: 'calc(50% - 5px)',
+                                    variant: `${ method?.cvc.length != 0 && method?.cvc.length <= 3 ? 'invalid ' : ''}dark`,
+                                    constraints: {
+                                        max: 6
+                                    },
+                                },
+                            ]}
+                            onChange={handleMethod}
+                            onSubmit={() => onSubmit(method)}
+                        />
+                        {typeof loading == 'string' && <div className={clzz('account-create-method__status')}>{loading}</div>}
+                        {loading == true && <UiLoader text={loading} dots={typeof loading != 'string'} width='100%' height="400px" position='relative' />}
+                    </div>
             </div>
         </>
     );

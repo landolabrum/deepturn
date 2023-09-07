@@ -91,7 +91,7 @@ useEffect(() => {
       </div>
       <ProductSlider products={products} /> 
       <div className="product-listing__footer">
-        <UiButton disabled={!hasMore} variant="dark" onClick={() => {/* Pagination code here */}}>Next</UiButton>
+        <UiButton disabled={!hasMore} variant="dark"  onClick={() => {/* Pagination code here */}}>Next</UiButton>
       </div>
     </div>
   );

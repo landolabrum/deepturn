@@ -8,6 +8,7 @@ import CheckoutButton from '../CheckoutButton/CheckoutButton';
 import AccountForm from '~/src/modules/account/views/AccountForm/AccountForm';
 import { ICartItem } from '../../model/ICartItem';
 import useCart from '../../hooks/useCart';
+import AccountCreateMethod from '~/src/modules/account/views/AccountMethods/components/AccountCreateMethod/AccountCreateMethod';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
     cart: any;
@@ -26,6 +27,7 @@ const Checkout: React.FC<ICheckout> = ({ cart }) => {
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" />
             </div>
+       
             <div className='checkout__button'>
                 <CheckoutButton cart={cart} collect />
             </div>

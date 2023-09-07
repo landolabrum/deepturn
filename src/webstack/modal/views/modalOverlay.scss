@@ -37,9 +37,9 @@
         justify-content: flex-start;
         gap: var(--default-padding);
         max-height: 100vh;
-        overflow-y: auto;
+        // overflow-y: auto;
         box-shadow: var(--default-box-shadow-xl);
-
+        min-height: max-content;
         &::-webkit-scrollbar-thumb {
             background-color: var(--color-blue);
             border-radius: 5px;

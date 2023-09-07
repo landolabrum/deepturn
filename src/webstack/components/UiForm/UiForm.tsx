@@ -5,7 +5,6 @@ import UiButton from '../UiButton/UiButton';
 import { IForm, IFormField } from './models/IFormModel';
 import handleConstraints from './services/FormConstraints';
 import UiSelect from '../UiSelect/UiSelect';
-import { countryFormat, stateFormat } from '@webstack/helpers/userExperienceFormats';
 import UiLoader from '../UiLoader/UiLoader';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 
@@ -63,7 +62,7 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse,
     return (<>
         <style jsx>{styles}</style>
         {title}
-        {JSON.stringify(formValues)}
+        {/* {JSON.stringify(formValues)} */}
         <div className='form' >
             {fields ? fields.map((field: any) => (
                 <div
