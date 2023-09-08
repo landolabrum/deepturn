@@ -29,15 +29,10 @@ const AccountMethods: React.FC = () => {
     setLoading(false);
   }
 
-  const createMethod = async (method: any) => {
+  const createMethod = async (request: any) => {
     if (user == undefined) return;
     setLoading('updating account');
-    const request = {
-      number: method.number.replaceAll(" ", ''),
-      exp_month: method.expiry.split('/')[0],
-      exp_year: method.expiry.split('/')[1],
-      cvc: method.cvc
-    }
+
     const createdMethod = await memberService.createCustomerMethod(user.id, request);
     if (createdMethod.error) {
       setLoading(`*${createdMethod.error}`)

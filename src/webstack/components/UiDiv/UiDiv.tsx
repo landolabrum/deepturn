@@ -1,16 +1,21 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import styles from "./UiDiv.scss";
+import useWindow from "@webstack/hooks/useWindow";
 
 // Define specific types for props
-interface UiDivProps {
+interface IDiv {
   children?: React.ReactElement | string | Iterable<React.ReactNode>;
   variant?: string;
   style?: React.CSSProperties;
   jsx?: string;
+  minWidth?: number;
+  maxWidth?: number;
 }
 
-const UiDiv: FC<UiDivProps> = ({ children, variant, style, jsx = `` }) => {
+const UiDiv: FC<IDiv> = ({ children, variant, style, jsx = ``, minWidth, maxWidth }) => {
   const jsxRef = useRef<any>(null);
+  const width = useWindow()?.width;
+  const [show, setShow]=useState<boolean>(true);
   // Function to generate class name from variant
   const variantToClass = (variant?: string): string => {
     const baseClass = 'div ui-div';
@@ -22,7 +27,17 @@ const UiDiv: FC<UiDivProps> = ({ children, variant, style, jsx = `` }) => {
   }
   const className = variantToClass(variant);
 
-  
+  const minMet = minWidth && minWidth < width;
+  const maxMet = maxWidth && maxWidth > width;
+  useEffect(() => {
+    if(show && minMet){
+      setShow(false);
+    }else if(show && maxMet){
+      setShow(false);
+    }else if(!show){
+      setShow(true);
+    }
+  },[minMet, maxMet]);
   useEffect(() => {
     if(jsxRef?.current) {
       const styleJsx = document.createElement('style');
@@ -32,7 +47,7 @@ const UiDiv: FC<UiDivProps> = ({ children, variant, style, jsx = `` }) => {
       jsxRef.current.parentNode.insertBefore(styleJsx, jsxRef.current);
     }
   }, [jsxRef.current]);
-  return (
+  if(show)return (
     <>
       <style jsx>{styles}</style>
         <div

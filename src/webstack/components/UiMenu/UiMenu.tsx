@@ -66,10 +66,10 @@ const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, se
                     className={`menu__option ${option?.active === false ? "disabled" : ""}`}
                     onClick={() => currentValue && option?.active !== false && handleSelect(currentValue)}
                   >
-                    <UiButton variant='dark' traits={{
+                    <UiButton variant={`${value?.includes(currentValue)?'primary':'dark'}`} traits={{
                       beforeIcon: option?.icon,
                       width: '100%',
-                      afterIcon: value?.includes(currentValue) ? {icon:'fa-check',color: '#02f'} : ''
+                      afterIcon: value?.includes(currentValue) ? {icon:'fa-check'} : ''
                     }}>
                       {label}
                     </UiButton>

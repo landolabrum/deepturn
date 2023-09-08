@@ -47,7 +47,7 @@ $elPad: 14px;
   height: max-content;
   width: calc(100% - 2px);
   justify-content: center;
-
+  padding: 10px 0;
   &.form-control-inherit {
     @extend .inherit;
   }
@@ -55,7 +55,9 @@ $elPad: 14px;
   @extend .d-flex;
   justify-content: space-between;
   label {
-    color: var(--color-gray-40);
+    text-indent: var(--default-padding);
+    text-transform: capitalize;
+    color: var(--color-gray-60);
     line-height: 3;
     font-size: 14px;
     font-weight: 300;
@@ -82,7 +84,7 @@ $elPad: 14px;
     line-height: 1;
     height: calc(var(--default-element-height) - 2px);
     white-space: nowrap;
-    color: var(--color-gray-90);
+    color: var(--color-gray-50);
     --ui-icon-color: var(--color-gray-90);
     background-color: var(--color-gray-20);
     outline: solid 1px var(--color-gray-60);
@@ -110,7 +112,7 @@ $elPad: 14px;
       &.form-control__icon-dark {
         color: var(--color-gray-30);
         --ui-icon-color: var(--color-gray-40);
-        background-color: var(--color-gray-90);
+        background-color: var(--color-gray-70-opaque);
       }
       &.form-control__icon-invalid {
         background-color: var(--color-invalid-bg);
@@ -186,19 +188,20 @@ $elPad: 14px;
       }
     }
 
-
     &[class$="-nav-item"],
     &[class$="-wordmark"],
     &[class$="-flat"],
     &[class$="-link"],
     &[class$="-disabled-icon"],
     &[class$="-icon"] {
-      pointer-events: none;
       margin: 0 3px;
       background-color: transparent;
       // background-color: var(--color-gray-30-opaque);
       border-radius: var(--default-border-radius) !important;
       outline: solid 1px transparent;
+    }
+    &[class$="-disabled-icon"]{
+      pointer-events: none;
     }
 
     &[class$="-inherit"] {
@@ -216,9 +219,9 @@ $elPad: 14px;
       outline: solid 1px transparent;
 
       &:hover {
+        border-radius: 0;
         --ui-icon-color: var(--color-blue-10);
         color: var(--color-blue-10);
-        border-bottom: solid 1px var(--color-blue-10);
       }
     }
 
@@ -259,11 +262,16 @@ $elPad: 14px;
     &[class$="-flat"],
     &[class$="-nav-item"],
     &[class$="-nav-item__active"] {
-      color: var(--color-gray-40);
+      display: flex;
+      align-items: center;
+      line-height: 1;
+      font-size: var(--s-5);
+      border-bottom: solid 1px transparent;
       border-radius: 0;
-      --ui-icon-height: var(--s-6);
+      --ui-icon-height: var(--s-5);
       --ui-icon-width: auto;
     }
+
 
     &[class$="-wordmark"] {
       justify-content: flex-start;
@@ -295,8 +303,11 @@ $elPad: 14px;
       padding: 0 3px;
       line-height: 1;
       outline: none;
-      color: var(--color-blue);
+      color: var(--color-primary-opaque);
       text-transform: none;
+      &:hover{
+        color: var(--color-blue);
+        text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;      }
     }
 
     &[class$="-primary"] {
@@ -354,8 +365,8 @@ $elPad: 14px;
     
 
     &.form-control__element-dark {
-      color: var(--color-gray-50);
-      background-color: var(--color-gray-80);
+      color: var(--color-gray-40);
+      background-color: var(--color-gray-70);
       &:hover,
       &:focus,
       &:active {

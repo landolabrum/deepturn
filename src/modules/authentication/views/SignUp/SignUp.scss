@@ -1,10 +1,8 @@
-$brk: 20px;
 .sign-up {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-content: center;
-  gap: $brk;
   width:100%;
     .sign-up__forgot-password-link{
       color: var(--color-blue);
@@ -15,12 +13,12 @@ $brk: 20px;
   }
 }
 .sign-up__login{
-  margin-top: calc($brk * 3);
+  margin-top: var(--default-padding);
   width: 100%;
 }
 .authentication__authentication-status{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  height: auto;
 }

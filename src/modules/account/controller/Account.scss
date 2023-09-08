@@ -24,20 +24,11 @@
     @media (max-width: 900px) {
       height: max-content;
     }
-
-    .account__menu-mobile {
-      @media (min-width: 900px) {
-        display: none;
-      }
-    }
-
-    .account__menu-desktop {
-      height: 100%;
-      @media (max-width: 900px) {
-        display: none;
-      }
-    }
-
+  }
+  .account__card{
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    height: auto;
   }
 
 }

@@ -17,6 +17,7 @@
     @extend .d-flex_j-fs_a-fs;
 }
 .ui-div, .div{
+    height: max-content;
     @extend .d-flex-col_j-fs_a-fs;
     gap: var(--default-padding);
     font-size: var(--s-5);
@@ -24,13 +25,11 @@
         color: var(--color-gray-50);
         outline: solid 1px var(--color-gray-80);
         border: solid 1px var(--color-gray-60);
-        padding: calc(var(--default-padding) * .66) var(--default-padding);
-        margin: var(--default-padding) 0;
         border-radius: var(--default-border-radius);
         min-height: var(--default-element-height);
     }
     &.ui-div-dark{
-        background-color: var(--color-gray-80);
+        background-color: var(--color-gray-90);
     }
     &.ui-div-shadow{
         box-shadow: var(--default-box-shadow);

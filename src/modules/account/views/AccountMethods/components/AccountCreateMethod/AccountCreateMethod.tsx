@@ -50,6 +50,7 @@ const AccountCreateMethod = ({ onSubmit, loading, open, collapse=true }: IAccoun
             <div className='account-create-method'>
                 <UiCollapse variant='dark' open={open} label='add payment method'>
                     <div className='account-create-method__method'>
+                        loading: {loading}<br/>
                          <UiForm
                             loading={loading == true}
                             // btnText={typeof loading == 'string'? String(loading):undefined }
@@ -94,7 +95,14 @@ const AccountCreateMethod = ({ onSubmit, loading, open, collapse=true }: IAccoun
                                 },
                             ]}
                             onChange={handleMethod}
-                            onSubmit={() => onSubmit(method)}
+                            onSubmit={() =>{
+                                onSubmit({
+                                    number: method.number.replaceAll(" ", ''),
+                                    exp_month: method.expiry.split('/')[0],
+                                    exp_year: method.expiry.split('/')[1],
+                                    cvc: method.cvc
+                                })
+                            }}
                         />
                         {typeof loading == 'string' && <div className={clzz('account-create-method__status')}>{loading}</div>}
                         {loading == true && <UiLoader text={loading} dots={typeof loading != 'string'} width='100%' height="400px" position='relative' />}

@@ -17,6 +17,8 @@ body {
   --default-element-height: 45px;
 
   /* COLORS */
+  --color-gray-10: #f8f8f8;
+  --color-gray-10-opaque: #f8f8f850;
   --color-gray-20: #f5f5f5;
   --color-gray-20-opaque: #f5f5f550;
   --color-gray-30: #e0e0e0;
@@ -37,6 +39,7 @@ body {
   --color-gray-100-opaque: #17171750;
 
   --color-white: white;
+  --color-white-opaque: #ffffff50;
   --color-yellow: #fbff00;
   --color-yellow-opaque: #fbff0070;
   --color-orange: #f90;

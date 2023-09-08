@@ -38,8 +38,7 @@ const Navbar = () => {
   useEffect(() => {
     sideNav && closeSideNavOnWidthChange();
   }, [width > 900]);
-
-  
+  const cart = routes.find((r:any)=>r.href == '/cart')
 
   if (user && !hide) {
     return (
@@ -85,13 +84,7 @@ const Navbar = () => {
                           />
                         </>
                       )}
-                      {!item.items && item?.href != '/cart' && <NavButton
-                        active={open === item?.label || route.replaceAll("/", "") === item?.label}
-                        item={item}
-                        handleRoute={handleRoute}
-                        setOpen={setOpen}
-                      />}
-                      {!item.items && item?.href == '/cart' && width > 900 && <NavButton
+                      {!item.items && item.href !== '/cart' && <NavButton
                         active={open === item?.label || route.replaceAll("/", "") === item?.label}
                         item={item}
                         handleRoute={handleRoute}
@@ -101,6 +94,12 @@ const Navbar = () => {
                   );
                 })}
             </div>
+            {cart && <NavButton
+              active={open === cart?.label || route.replaceAll("/", "") === cart?.label}
+              item={cart}
+              handleRoute={handleRoute}
+              setOpen={setOpen}
+            />}
           </div>
         </nav>
       </>
@@ -118,7 +117,6 @@ const Navbar = () => {
             {environment?.brand?.name}
           </UiButton>
         </div>
-        fdsa
       </>
     );
   return <></>;

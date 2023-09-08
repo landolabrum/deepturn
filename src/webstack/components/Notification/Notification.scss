@@ -21,6 +21,9 @@ $containerPad: 5px;
 
 
 .notification{
+  @media(max-width: 900px){
+    font-size: var(--s-8);
+  }
   position: fixed;
   top: calc($containerPad * -1);
   left:0;
@@ -38,6 +41,10 @@ $containerPad: 5px;
   background: var(--color-gray-40);
   color: var(--color-gray-60);
   animation: dropIn 1s forwards ease-out;
+  @media(max-width:900px){
+    width: calc(100% - calc($containerPad * 6));
+    margin: 0 calc($containerPad * 3);
+  }
   &.notification-hide{
     animation: dropOut 1s forwards ease-in;
   }

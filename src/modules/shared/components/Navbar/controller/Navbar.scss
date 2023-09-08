@@ -37,6 +37,7 @@ nav {
     max-width: calc(100% - 40px);
     width: calc(100% - 40px);
     height: var(--default-nav-height);
+    gap: var(--s-7);
     .navbar__nav-trigger {
       display: var(--nav-trigger-display);
       align-items: center;
@@ -62,7 +63,6 @@ nav {
       align-items: center;
       box-shadow: var(--nav-box-shadow-sm);
       flex-direction: var(--nav-items-flex-direction);
-      // gap: 10px;
       width: 100%;
       & > *:nth-last-child(2) {
         margin-left: auto;

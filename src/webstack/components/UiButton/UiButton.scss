@@ -43,7 +43,13 @@ button {
   border-radius: inherit;
   overflow: hidden;
   padding: 0;
-  &.link {
+
+  &.flat {
+    margin: 0;
+    width: max-content;
+  }
+  &.link,
+  &.flat {
     padding: 0;
   }
   &.miniactive, &.mini {

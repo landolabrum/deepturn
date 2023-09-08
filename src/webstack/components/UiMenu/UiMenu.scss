@@ -31,12 +31,7 @@ $el_gap: 7px;
   }
   &.menu__nav-item__active,  &.menu__nav-item {
     @media (max-width: 900px) {
-      // padding: 0 $el_gap;
-      // border: none;
-      // outline: none;
-      // background-color: var(--color-gray-90);
-      // color: var(--color-gray-30);
-      // --ui-icon-color: var(--color-gray-30);
+      background-color: var(--color-gray-90);
       .menu__option {
         &:hover {
           color: var(--color-gray-20);
@@ -65,11 +60,9 @@ $el_gap: 7px;
     height: var(--default-element-height);
     --ui-icon-width: 16px;
     line-height: 1;
-    // padding: 0 $el_spacing;
     cursor: pointer;
     text-transform: capitalize;
     justify-content: space-between;
-
     .menu__option-label {
       gap: $el_gap;
       display: flex;

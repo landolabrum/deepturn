@@ -1,5 +1,5 @@
 // Relative Path: ./Checkout.tsx
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './CheckoutButton.scss';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { calculateCartTotal } from '@webstack/helpers/userExperienceFormats';
@@ -23,23 +23,27 @@ interface ICheckoutButton {
 }
 const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false, traits, collect, setup }) => {
     const user = useUser();
-    const { isModalOpen, openModal, closeModal } = useModal();
-    const [response, setResponse ]=useState<any>('')
-    const memberService = getService<IMemberService>('IMemberService');
     const router = useRouter();
+    const { isModalOpen, openModal, closeModal } = useModal();
+    const [sourceId, setSourceId] = useState<string | null>(null);
+    const memberService = getService<IMemberService>('IMemberService');
     const handleCheckout = async () => {
         // if(setup){
         //     const checkoutResponse = await memberService.processTransaction(cart)
         //     console.log('[ setup response ]', checkoutResponse)
         // }
-        if(collect){
-            const checkoutResponse = await memberService.processTransaction(cart)
+        if (collect) {
+            const checkoutResponse = await memberService.processTransaction(cart);
             console.log('[ checkoutResponse ]', checkoutResponse)
         }
-        if (isModal) openModal(<Checkout cart={cart} />);
+        if (isModal) openModal(<Checkout cart={cart} user={user}/>);
+        // if (isModal && user?.default_source == null) openModal(<AccountCreateMethod loading={status} open onSubmit={handleCreateMethod} />);
         if (!isModal && !isModalOpen) router.push("/checkout");
     };
-    
+
+
+
+
     return <>
         <style jsx>{styles}</style>
         <div className='checkout-button'>

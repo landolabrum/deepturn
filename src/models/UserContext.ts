@@ -1,5 +1,6 @@
 export default interface UserContext {
   memberId: string;
+  default_source?: string;
   id: string;
   name?: string;
   first_name?: string;

@@ -9,8 +9,6 @@ import UiButton from '@webstack/components/UiButton/UiButton';
 import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
 import useCart from '../hooks/useCart';
 import UiLoader from '@webstack/components/UiLoader/UiLoader';
-import UiForm from '@webstack/components/UiForm/UiForm';
-import Checkout from '../views/Checkout/Checkout';
 
 
 const Cart = ({ variant, traits }: any) => {

@@ -4,7 +4,6 @@ $brk: 25px;
   flex-direction: column;
   justify-content: space-between;
   align-content: center;
-  gap: $brk;
   width:100%;
     .sign-in__forgot-password-link{
       color: var(--color-blue);
@@ -15,7 +14,7 @@ $brk: 25px;
   }
 }
 .sign-in__login{
-  margin-top: calc($brk * 3);
+  margin-top: var(--default-padding);
   width: 100%;
 }
 

@@ -42,14 +42,14 @@
       box-shadow: var(--default-box-shadow-xl);
       transition: all 0.3s ease-out;
 
-      &:hover {
-        // Futuristic lift effect on hover
-        box-shadow: 
-          0 2px 3px var(--color-secondary),
-          0 .5px 1px var(--color-primary),
-          0 1px 3px var(--color-secondary);
-        transform: translateY(-1px);
-      }
+      // &:hover {
+      //   // Futuristic lift effect on hover
+      //   box-shadow: 
+      //     0 2px 3px var(--color-secondary),
+      //     0 .5px 1px var(--color-primary),
+      //     0 1px 3px var(--color-secondary);
+      //   transform: translateY(-1px);
+      // }
     }
 
     &.adaptgrid_card-border {

@@ -28,7 +28,7 @@ const formatAccountForm = (data: any) => {
     let newData: any = [];
     const adaptToUiSelect = (data: any) => Object.entries(data).map(([k, v]) => { return { href: v, label: v } });
     const findState = (id: string) => {
-        alert(id.toString())
+        // alert(id.toString())
         id = String(id).toLowerCase()
         const usersState: any = Object.entries(states).find(([iso, val]: any) => iso == id);
         if (usersState?.length) return usersState[1];

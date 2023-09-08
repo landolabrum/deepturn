@@ -97,7 +97,7 @@ const SignUp = ({setView}:ISignUp) => {
             type={field.includes("password")?"password":"text"}
             autoComplete={field === "email" ? "username" : "current-password"}
             name={field}
-            variant={["bad-email", "password required", "no credentials provided"].includes(signInResponse) ? "invalid dark" : "dark"}
+            variant={["bad-email", "password required", "no credentials provided"].includes(signInResponse) ? "invalid": undefined}
             placeholder={keyStringConverter(field)}
             label={keyStringConverter(field)}
             value={formData[field]}
@@ -109,7 +109,7 @@ const SignUp = ({setView}:ISignUp) => {
         {signInResponse.message}
       </div>
       <div className="sign-up__login">
-      <UiButton traits={{ width: "100%" }} variant="dark" onClick={handleSignIn} busy={isSubmitting}>
+      <UiButton traits={{ width: "100%" }} onClick={handleSignIn} busy={isSubmitting}>
       {/* <UiButton traits={{ width: "100%" }} variant="dark" onClick={()=>setSignInResponse({message:"heleo"})} busy={isSubmitting}> */}
         login
       </UiButton>
