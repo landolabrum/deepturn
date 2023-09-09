@@ -53,38 +53,20 @@ const SignIn = ({ email }: { email: string | undefined }) => {
     setIsSubmitting(true);
     if (credentials.email && credentials.password) {
       const validTFA = /^\d{6}$/.test(credentials.code);
-      try {
-        await memberService.signIn({
-          email: credentials.email,
-          password: credentials.password,
-          ...(validTFA && { code: credentials.code }),
-          user_agent,
-        });
-      } catch (e: any) {
-        const error = JSON.parse(JSON.stringify(e));
-        if (error.name === "AuthenticationError") {
-          setSignInResponse({ response: error.code, message: authResponse(error.code) });
-        }
-        if (error.detail) {
-          setSignInResponse(error);
-        }
-      }
-    } else {
-      const responseCode =
-        credentials.email === "" && credentials.password !== "" ? "no-email" :
-          credentials.password === "" && credentials.email !== "" ? "no-password" :
-            "no-credentials";
-      setSignInResponse({ code: responseCode, message: authResponse(responseCode) });
+      const signInResponse = await memberService.signIn({
+        email: credentials.email,
+        password: credentials.password,
+        ...(validTFA && { code: credentials.code }),
+        user_agent,
+      });
+      console.log(`[       signInResponse      ]:`, signInResponse);
+      // setSignInResponse({ code: responseCode, message: authResponse(responseCode) });
     }
     setIsSubmitting(false);
   }
 
   useEffect(() => {
     if (email) setCredentials({ ...credentials, email: email });
-    // if (userResponse && userResponse.memberType !== "staff") {
-    //   console.log('[ USER RESPO ]:', userResponse)
-    //   setSignInResponse({ code: "non-staff", message: authResponse("non-staff") });
-    // }
     setIsSubmitting(false);
   }, [userResponse, setCredentials, email]);
 
@@ -112,7 +94,7 @@ const SignIn = ({ email }: { email: string | undefined }) => {
       <div className="authentication__authentication-status">
         {signInResponse.message !== "" && (
           <div className="authentication__signin-response">
-            {signInResponse.message}
+            {/* {signInResponse.message} */}
             {signInResponse?.detail &&
               <ul className='sign-in__signin-response-details'>
                 {Object.values(signInResponse?.detail).map((d: any) => {

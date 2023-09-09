@@ -14,7 +14,6 @@ $brk: 25px;
   }
 }
 .sign-in__login{
-  margin-top: var(--default-padding);
   width: 100%;
 }
 
@@ -27,6 +26,7 @@ $brk: 25px;
     flex-direction: column;
     padding:0;
     .sign-in__signin-response-details{
+      padding: 0 10px;
       .sign-in__signin-response-detail{
         text-indent: 0;
         color: var(--color-orange);
