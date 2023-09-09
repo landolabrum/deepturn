@@ -11,9 +11,9 @@ const handleConstraints = (e: any, constraints: IFormField['constraints']) => {
         if (!constraints?.max) return true;
         const max = typeof constraints?.max == 'number' ? constraints?.max : constraints?.max?.value;
         const notMax = max && max >= Number(value.length);
-        console.log(`[ ${name} ]:`, {
-            max: `${value.length}/${max}, isValid: ${notMax}`
-        });
+        // console.log(`[ ${name} ]:`, {
+        //     max: `${value.length}/${max}, isValid: ${notMax}`
+        // });
         return notMax;
     }
 

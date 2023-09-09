@@ -3,14 +3,13 @@ import React, { useEffect, useState } from 'react';
 import styles from './AccountCreateMethod.scss';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import UiForm from '@webstack/components/UiForm/UiForm';
-import UiLoader from '@webstack/components/UiLoader/UiLoader';
 import { OPaymentMethod } from '~/src/modules/account/model/IMethod';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IAccountCreateMethod {
     onSubmit: (e: any) => void;
     loading: string | boolean;
-    open: boolean;
+    open?: boolean;
     collapse?: boolean;
 }
 const AccountCreateMethod = ({ onSubmit, loading, open, collapse=true }: IAccountCreateMethod) => {
@@ -41,8 +40,6 @@ const AccountCreateMethod = ({ onSubmit, loading, open, collapse=true }: IAccoun
         if(typeof loading == 'string' && loading.charAt(0)=='*')return `${className} ${className}-error`;
         return className;
     }
-    // import React, { useEffect } from 'react';
-    
     useEffect(() => {}, [loading]);
     if(collapse)return (
         <>
@@ -50,7 +47,6 @@ const AccountCreateMethod = ({ onSubmit, loading, open, collapse=true }: IAccoun
             <div className='account-create-method'>
                 <UiCollapse variant='dark' open={open} label='add payment method'>
                     <div className='account-create-method__method'>
-                        loading: {loading}<br/>
                          <UiForm
                             loading={loading == true}
                             // btnText={typeof loading == 'string'? String(loading):undefined }
@@ -98,14 +94,14 @@ const AccountCreateMethod = ({ onSubmit, loading, open, collapse=true }: IAccoun
                             onSubmit={() =>{
                                 onSubmit({
                                     number: method.number.replaceAll(" ", ''),
-                                    exp_month: method.expiry.split('/')[0],
-                                    exp_year: method.expiry.split('/')[1],
+                                    exp_month: Number(method.expiry.split('/')[0]),
+                                    exp_year: Number(`20${method.expiry.split('/')[1]}`),
                                     cvc: method.cvc
                                 })
                             }}
                         />
-                        {typeof loading == 'string' && <div className={clzz('account-create-method__status')}>{loading}</div>}
-                        {loading == true && <UiLoader text={loading} dots={typeof loading != 'string'} width='100%' height="400px" position='relative' />}
+                        {/* {typeof loading == 'string' && <div className={clzz('account-create-method__status')}>{loading}</div>}
+                        {loading == true && <UiLoader text={loading} dots={typeof loading != 'string'} width='100%' height="400px" position='relative' />} */}
                     </div>
                 </UiCollapse>
             </div>
@@ -115,6 +111,7 @@ const AccountCreateMethod = ({ onSubmit, loading, open, collapse=true }: IAccoun
         <>
             <style jsx>{styles}</style>
             <div className='account-create-method'>
+                <div className='account-create-method__title'>add payment method</div>
                     <div className='account-create-method__method'>
                          <UiForm
                             loading={loading == true}
@@ -159,10 +156,15 @@ const AccountCreateMethod = ({ onSubmit, loading, open, collapse=true }: IAccoun
                                 },
                             ]}
                             onChange={handleMethod}
-                            onSubmit={() => onSubmit(method)}
+                            onSubmit={() =>  onSubmit({
+                                number: method.number.replaceAll(" ", ''),
+                                exp_month: Number(method.expiry.split('/')[0]),
+                                exp_year: Number(`20${method.expiry.split('/')[1]}`),
+                                cvc: method.cvc
+                            })}
                         />
-                        {typeof loading == 'string' && <div className={clzz('account-create-method__status')}>{loading}</div>}
-                        {loading == true && <UiLoader text={loading} dots={typeof loading != 'string'} width='100%' height="400px" position='relative' />}
+                        {/* {typeof loading == 'string' && <div className={clzz('account-create-method__status')}>{loading}</div>}
+                        {loading == true && <UiLoader text={loading} dots={typeof loading != 'string'} width='100%' height="400px" position='relative' />} */}
                     </div>
             </div>
         </>

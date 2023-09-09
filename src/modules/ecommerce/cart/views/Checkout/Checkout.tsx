@@ -40,16 +40,15 @@ const Checkout: React.FC<ICheckout> = ({ cart, user }) => {
         }
     }
     
-    useEffect(() => {
-            console.log(user)
-    }, [user]);
+    // useEffect(() => {
+    //         console.log(user)
+    // }, [user]);
     if(user.default_source || status == 'success')return <>
         <style jsx>{styles}</style>
         <div className='checkout' id="main-checkout">
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" />
             </div>
-       
             <div className='checkout__button'>
                 <CheckoutButton cart={cart} collect />
             </div>
@@ -58,8 +57,8 @@ const Checkout: React.FC<ICheckout> = ({ cart, user }) => {
                 <CartList cart={cart} collapse={true} handleQty={setCart} />
             </div>
         </div>
-    </>
-    if(user.default_source == null)return <AccountCreateMethod loading={status} open onSubmit={handleCreateMethod} />
+    </>;
+    if(user.default_source == null)return <AccountCreateMethod collapse={false} loading={status} onSubmit={handleCreateMethod} />;
 };
 
 export default Checkout;

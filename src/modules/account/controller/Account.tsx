@@ -50,12 +50,11 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
         <style jsx>{styles}</style>
         <div className="account">
           <div className="account__content">
-            <Div maxWidth={900} variant="dark card">
+            <Div maxWidth={900}>
               <UiMenu
                 label={'foop'}
-                traits={{ backgroundColor: 'transparent', border: 'none', outline: 'none', borderRadius: 'unset' }}
                 options={Object.keys(views)}
-                variant="dark"
+                // variant="dark"
                 value={view}
                 onSelect={(e) => {
                   setView(e);

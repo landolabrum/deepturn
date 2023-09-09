@@ -41,21 +41,21 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
 
   const [notification, setNotification] = useNotification();
   useEffect(() => {
-    if(router.pathname.includes('authentication')){setNotification({
-      active: true,
-      dismissable: false,
-      children: <>
-        <p>We use cookies to give you the best experience and to ensure the safety of our users. The only non-essential cookies we use are for any personal referrals you make. We do not track you across other sites. You can see our Cookie Policy here, and our Privacy Notice here.</p>
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', gap: '5px' }}>
-          <UiButton traits={{ width: "max-content" }}>Customize selection</UiButton>
-          <UiButton traits={{ width: "max-content" }} variant="primary">accept all</UiButton>
-        </div>
-      </>
-    })}else{setNotification({active: false})}
-    if (router.pathname.includes('verify')) setView('verify');
-    if (view.includes("@")) {
-      setNewCustomerEmail(view);
-    }
+    // if(router.pathname.includes('authentication')){setNotification({
+    //   active: true,
+    //   dismissable: false,
+    //   children: <>
+    //     <p>We use cookies to give you the best experience and to ensure the safety of our users. The only non-essential cookies we use are for any personal referrals you make. We do not track you across other sites. You can see our Cookie Policy here, and our Privacy Notice here.</p>
+    //     <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', gap: '5px' }}>
+    //       <UiButton traits={{ width: "max-content" }}>Customize selection</UiButton>
+    //       <UiButton traits={{ width: "max-content" }} variant="primary">accept all</UiButton>
+    //     </div>
+    //   </>
+    // })}else{setNotification({active: false})}
+    // if (router.pathname.includes('verify')) setView('verify');
+    // if (view.includes("@")) {
+    //   setNewCustomerEmail(view);
+    // }
     if (newCustomerEmail != undefined) setView("sign-in");
   }, [setView, newCustomerEmail])
 

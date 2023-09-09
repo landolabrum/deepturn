@@ -42,11 +42,9 @@ button {
   cursor: inherit;
   border-radius: inherit;
   overflow: hidden;
-  padding: 0;
-
   &.flat {
     margin: 0;
-    width: max-content;
+    
   }
   &.link,
   &.flat {

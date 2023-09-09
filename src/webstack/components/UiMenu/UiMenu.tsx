@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
-import { UiIcon } from "../UiIcon/UiIcon";
 import { IFormControl } from "../FormControl/FormControl";
 import styles from "./UiMenu.scss";
 import Input from "../UiInput/UiInput";
 import UiButton from "../UiButton/UiButton";
+
 export interface UiMenuProps extends IFormControl {
   options?: any;
   onSelect?: (value: any) => void;
@@ -63,10 +63,14 @@ const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, se
                 return (
                   <div
                     key={index}
-                    className={`menu__option ${option?.active === false ? "disabled" : ""}`}
+                    className={`menu__option ${
+                      option?.active === false ? "disabled" : ""
+                    }${
+                      value?.includes(currentValue)? ' active':''
+                    }`}
                     onClick={() => currentValue && option?.active !== false && handleSelect(currentValue)}
                   >
-                    <UiButton variant={`${value?.includes(currentValue)?'primary':'dark'}`} traits={{
+                    <UiButton variant='flat' traits={{
                       beforeIcon: option?.icon,
                       width: '100%',
                       afterIcon: value?.includes(currentValue) ? {icon:'fa-check'} : ''
