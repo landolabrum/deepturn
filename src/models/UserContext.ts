@@ -13,6 +13,7 @@ export default interface UserContext {
   memberStatus: string;
   memberType: string;
   metadata?: any;
+  methods?: any;
   address?: UserAddress;
 }
 export interface UserAddress{

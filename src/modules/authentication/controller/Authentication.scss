@@ -14,38 +14,14 @@ $cardWidth: 500px;
 
 
 .authentication {
-  @media (max-width: 900px) {
-    align-items: center;
+  width:300px;
+  @media(max-width:900px){
+    width: calc(100vw - 40px);
   }
+  // @media (max-width: 900px) {
+  //   align-items: center;
+  // }
   z-index: 1;
-  .authentication_video {
-    z-index: -1;
-    position: fixed;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-    
-    background-position: center center;
-    transition: opacity 1s ease-in-out;
-    
-    &.visible {
-      opacity: 1;
-    }
-  }
-  height: 100vh;
-  .authentication__content{
-    color: var(--color-gray-50);
-    --ui-icon-color: var(--color-gray-50);
-    z-index: 2;
-    margin-top: 10vh;
-    .authentication__form{
-      background-color: var(--color-gray-30);
-      border-radius: var(--default-border-radius);
-      padding: var(--default-padding);
-      width: calc(100% - var(--default-padding));
-      max-width: 500px;
       .authentication__view-header{
         width: 100%;
         height: var(--default-element-height);
@@ -59,12 +35,34 @@ $cardWidth: 500px;
         
 
       }
-      .authentication__view-action{
-        z-index: 999;
-        @extend .d-flex-col;
-        align-items: flex-start;
-        height: calc(var(--default-element-height) * 2.5);
-      }
-    }
-  }
+  //   --ui-icon-color: var(--color-gray-50);
+  //   z-index: 2;
+  //   margin-top: 10vh;
+  //   .authentication__form{
+  //     background-color: var(--color-gray-30);
+  //     border-radius: var(--default-border-radius);
+  //     padding: var(--default-padding);
+  //     width: calc(100% - var(--default-padding));
+  //     max-width: 500px;
+  //     .authentication__view-header{
+  //       width: 100%;
+  //       height: var(--default-element-height);
+  //       text-transform: capitalize;
+  //       @extend .d-flex;
+  //       justify-content: flex-start;
+  //       gap: var(--s-7);
+        
+  //       font-size: var(--s-2);
+  //       --ui-icon-size: var(--s-2);
+        
+
+  //     }
+  //     .authentication__view-action{
+  //       z-index: 999;
+  //       @extend .d-flex-col;
+  //       align-items: flex-start;
+  //       height: calc(var(--default-element-height) * 2.5);
+  //     }
+  //   }
+  // }
 }

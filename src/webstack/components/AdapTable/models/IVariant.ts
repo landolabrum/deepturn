@@ -2,6 +2,7 @@ export type IVariant =
   | ""
   | "inherit"
   | "left"
+  | "card"
   | "right"
   | "dark"
   | "center dark"
