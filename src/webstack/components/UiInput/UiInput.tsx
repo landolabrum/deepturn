@@ -1,7 +1,7 @@
 import styles from "./UiInput.scss";
 import type { NextComponentType, NextPageContext } from "next";
 import FormControl from "../FormControl/FormControl";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IInput } from "@webstack/models/input";
 import { validateInput } from "./helpers/validateInput";
 import maskInput from "./helpers/maskInput";
@@ -10,11 +10,10 @@ import maskInput from "./helpers/maskInput";
 
 
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
-  const { type, value, onChange, onKeyDown, onKeyUp, message } = props;
+  const { type, value, onChange, onKeyDown, onKeyUp, message, focus } = props;
 
   const [show, setShow] = useState<boolean>(false);
   const [formattedValue, setFormattedValue] = useState<string>(value?.toString() || "");
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let _e:any = e;
     if(props?.max && props.max < _e.target.value.length)return;
@@ -30,7 +29,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   };
   const inputClasses = `${typeof props.variant === 'string' ? props.variant : ""}${validateInput(value, type) ? "" : " invalid"}${props.disabled ? ' input-disabled' : ''}${props.traits?.beforeIcon ?' input__has-icons':''}`
   
-  useEffect(() => {}, [message]);
+
   return (
     <>
       <style jsx>{styles}</style>

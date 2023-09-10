@@ -5,6 +5,7 @@ export type ValueType = string | number;
 
 export interface IInput extends IFormControl {
   name?: string;
+  label?: string;
   type?: string;
   id?: string;
   disabled?: boolean;
@@ -20,4 +21,5 @@ export interface IInput extends IFormControl {
   max?: number;
   autoComplete?: string;
   message?: string;
+  focus?: boolean;
 }

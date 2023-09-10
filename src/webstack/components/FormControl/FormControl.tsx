@@ -29,6 +29,7 @@ export interface IFormControl {
   label?: string | React.ReactElement;
   variant?: IVariant;
   overlay?: boolean;
+  focus?: boolean;
   setOverlay?: (e: OverlayProps) => void;
   children?: string | React.ReactElement | React.ReactFragment | number;
   traits?: ITraits;
@@ -41,6 +42,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   variant,
   overlay,
   setOverlay,
+  focus,
   traits,
 }: IFormControl) => {
   const cyprus_test_key = "data-testid";
@@ -98,11 +100,16 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
     return clzz;
   }
   useEffect(() => {
+    if(focus && childRef?.current){
+      // childRef.current.hide()
+    }
+  }, []);
+  useEffect(() => {
     setTestId(createTestId(ref.current.parentNode, childRef.current));
   }, []);
   return (
     <>
-      <style jsx>{styles}</style>
+      <style jsx>{styles}</style>focus: {focus?.toString()}
       <div className={`form-control ${variant === "inherit" ? " form-control-inherit" : ""}`} ref={ref}>
         <div className='form-control__header'>
         {label && <label>{label}</label>}

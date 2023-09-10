@@ -27,7 +27,7 @@ input {
   //     caret-color: transparent;
   //   }
   // }
-  
+
 
   // Override the autofilled input styles
   &:-webkit-autofill,
@@ -69,6 +69,10 @@ input {
     background-color: var(--color-invalid-bg);
     border-width: 0px 0px 2px 0px;
     border-bottom-color: var(--color-invalid-border);
+  }
+  &:focus,
+  &:-webkit-autofill:focus{
+    background-color: #f30 !important;
   }
 }
 

@@ -40,7 +40,7 @@ const AccountCreateMethod = ({ onSubmit, loading, open, collapse=true }: IAccoun
         if(typeof loading == 'string' && loading.charAt(0)=='*')return `${className} ${className}-error`;
         return className;
     }
-    useEffect(() => {}, [loading]);
+    // useEffect(() => {}, [loading]);
     if(collapse)return (
         <>
             <style jsx>{styles}</style>
