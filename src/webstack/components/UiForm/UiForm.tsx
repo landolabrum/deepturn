@@ -40,10 +40,8 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse,
     return (<>
         <style jsx>{styles}</style>
         {title}
-        {/* {JSON.stringify(formValues)} */}
-        <div className='form' >
-            <UiInput name='test' label='test' variant='dark' focus={true}/>
-            {/* {fields ? fields.map((field: any) => (
+        <form className='form' >
+            {fields ? fields.map((field: any) => (
                 <div
                     key={field.name}
                     className='form__field'
@@ -76,8 +74,8 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse,
             )):(<UiLoader position='relative'/>)}
             <UiButton variant='dark' type='submit' busy={ loading == true} onClick={handleSubmit}>
                 {btnText ? btnText : 'Submit'}
-            </UiButton> */}
-        </div>
+            </UiButton>
+        </form>
     </>
     );
 }

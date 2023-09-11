@@ -11,7 +11,6 @@ import maskInput from "./helpers/maskInput";
 
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
   const { type, value, onChange, onKeyDown, onKeyUp, message, focus } = props;
-
   const [show, setShow] = useState<boolean>(false);
   const [formattedValue, setFormattedValue] = useState<string>(value?.toString() || "");
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +41,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             onClick: () => setShow(!show) 
           } : props.traits?.afterIcon,
         }}>
-        <input
+          <input
           id={props?.id}
           className={inputClasses}
           name={props.name}

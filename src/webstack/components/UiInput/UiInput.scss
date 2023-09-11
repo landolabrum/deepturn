@@ -70,10 +70,10 @@ input {
     border-width: 0px 0px 2px 0px;
     border-bottom-color: var(--color-invalid-border);
   }
-  &:focus,
-  &:-webkit-autofill:focus{
-    background-color: #f30 !important;
-  }
+  // &:focus,
+  // &:-webkit-autofill:focus{
+  //   background-color: #f30 !important;
+  // }
 }
 
 input::placeholder {

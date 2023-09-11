@@ -53,13 +53,18 @@ const SignIn = ({ email }: { email: string | undefined }) => {
     setIsSubmitting(true);
     if (credentials.email && credentials.password) {
       const validTFA = /^\d{6}$/.test(credentials.code);
-      const signInResponse = await memberService.signIn({
-        email: credentials.email,
-        password: credentials.password,
-        ...(validTFA && { code: credentials.code }),
-        user_agent,
-      });
-      console.log(`[       signInResponse      ]:`, signInResponse);
+      try{
+        const signInResponse = await memberService.signIn({
+          email: credentials.email,
+          password: credentials.password,
+          ...(validTFA && { code: credentials.code }),
+          user_agent,
+        });
+        console.log(`[       signInResponse      ]:`, signInResponse);
+      }catch(e:any){
+        setSignInResponse(e.detail)
+        // alert(JSON.stringify(e.detail))
+      }
       // setSignInResponse({ code: responseCode, message: authResponse(responseCode) });
     }
     setIsSubmitting(false);
@@ -80,8 +85,13 @@ const SignIn = ({ email }: { email: string | undefined }) => {
             type={field}
             autoComplete={field === "email" ? "username" : "current-password"}
             name={field}
-            variant={["bad-email", "password required", "no credentials provided"].includes(signInResponse) ? "invalid" : undefined}
+            variant={signInResponse.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)?'invalid':'dark'}
             placeholder={field}
+            traits={
+              signInResponse.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)&&{
+                errorMessage:`${signInResponse?.fields.find((f:any)=>f.name==field).message}`
+              }
+            }
             label={field}
             value={credentials[field]}
             onChange={handleCredentials}
