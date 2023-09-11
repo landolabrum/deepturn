@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import UiInput from '../UiInput/UiInput';
 import styles from './UiForm.scss';
 import UiButton from '../UiButton/UiButton';
@@ -10,6 +10,7 @@ import keyStringConverter from '@webstack/helpers/keyStringConverter';
 
 
 const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse, loading }: IForm) => {
+    if(!fields)return;
     const [formValues, setFormValues] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
 
@@ -41,18 +42,16 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse,
         <style jsx>{styles}</style>
         {title}
         <form className='form' >
-            {fields ? fields.map((field: any) => (
+            {fields ? Object.entries(fields).map(([index, field]:any) => (
                 <div
-                    key={field.name}
+                    key={index}
                     className='form__field'
-                    style={
-                        typeof field?.width == 'string' ?
-                            { width: `calc(${field.width} - 5px)` } :
-                            {}}
-                >
+                    style={typeof field?.width == 'string' ?
+                        { width: `calc(${field.width} - 5px)` }:{}}
+                > 
                     {textTypes.includes(field?.type) && <UiInput
                         // message='This is a test error message'
-                        label={keyStringConverter(field.label)}
+                        // label={keyStringConverter(field.label)}
                         max={field.max}
                         variant={field?.variant ? field?.variant : 'dark'}
                         type={field.type}

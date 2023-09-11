@@ -58,14 +58,12 @@ $elPad: 14px;
     justify-content: space-between;
 
     label {
-      text-indent: var(--default-padding);
       text-transform: capitalize;
       color: var(--color-gray-60);
-      line-height: 3;
+      line-height: 2;
       font-size: 14px;
-      font-weight: 300;
-      font-size: 11px;
-      font-style: italic;
+      font-weight: bold;
+      font-size: var(--s-7);
       letter-spacing: 3px;
     }
 
@@ -125,6 +123,7 @@ $elPad: 14px;
       }
       
       &.form-control__icon-invalid {
+        --ui-icon-color: var(--color-yellow-opaque);
         background-color: var(--color-invalid-bg);
         
       }

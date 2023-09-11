@@ -32,16 +32,22 @@ const AccountMethods: React.FC = () => {
   const createMethod = async (request: any) => {
     if (user == undefined) return;
     setLoading('updating account');
+    try{
+      const createdMethod = await memberService.createCustomerMethod(user.id, request);
+      setLoading('success')
+    }catch(e:any){
+      console.log('[ ER ]',e?.detail)
+      setLoading(e?.detail)
 
-    const createdMethod = await memberService.createCustomerMethod(user.id, request);
-    if (createdMethod.error) {
-      setLoading(`*${createdMethod.error}`)
-      // setLoading(false);
-    } else {
-      setLoading('success');
-      getAccountMethods();
     }
-    console.log(`[ FUNCTION ]: ${JSON.stringify(createdMethod)}`);
+    // if (createdMethod.error) {
+    //   setLoading(`*${createdMethod.error}`)
+    //   // setLoading(false);
+    // } else {
+    //   setLoading('success');
+    //   getAccountMethods();
+    // }
+    // console.log(`[ FUNCTION ]: ${JSON.stringify(createdMethod)}`);
   }
   const getAccountMethods = async () => {
     const methodsResponse = await memberService.getMethods();

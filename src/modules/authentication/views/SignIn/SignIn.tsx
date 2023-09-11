@@ -85,7 +85,7 @@ const SignIn = ({ email }: { email: string | undefined }) => {
             type={field}
             autoComplete={field === "email" ? "username" : "current-password"}
             name={field}
-            variant={signInResponse.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)?'invalid':'dark'}
+            variant={signInResponse.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)?'invalid':undefined}
             placeholder={field}
             traits={
               signInResponse.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)&&{

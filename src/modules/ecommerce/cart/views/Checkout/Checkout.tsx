@@ -34,12 +34,12 @@ const Checkout: React.FC<ICheckout> = ({ cart }) => {
     const handleCreateMethod = async (method: any) => {
         setStatus(true);
         if (user == undefined) return;
-        const methodResponse = await memberService.createCustomerMethod(user.id, method);
-        console.log('[methodResponse]: ', methodResponse)
-        if (methodResponse.status == 'failed') {
-            setStatus(`*${methodResponse.error}`)
-        } else {
+        try{
+            const methodResponse = await memberService.createCustomerMethod(user.id, method);
             setStatus('success')
+        }catch(e:any){
+            console.log(`[ ERROR ]: ${JSON.stringify(e)}`);
+            setStatus(e?.detail)
         }
     }
     
@@ -50,6 +50,7 @@ const Checkout: React.FC<ICheckout> = ({ cart }) => {
     if (show) return <>
         <style jsx>{styles}</style>
         <div className='checkout' id="main-checkout">
+            status: {JSON.stringify(status)}
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" />
             </div>

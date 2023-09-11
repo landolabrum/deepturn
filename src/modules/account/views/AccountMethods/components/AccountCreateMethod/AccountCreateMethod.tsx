@@ -86,7 +86,8 @@ const AccountCreateMethod = ({ onSubmit, loading, open, collapse=true }: IAccoun
                                     width: 'calc(50% - 5px)',
                                     variant: `${ method?.cvc.length != 0 && method?.cvc.length <= 3 ? 'invalid ' : ''}dark`,
                                     constraints: {
-                                        max: 6
+                                        min: 1,
+                                        max: 6,
                                     },
                                 },
                             ]}

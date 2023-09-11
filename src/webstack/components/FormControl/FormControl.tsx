@@ -98,7 +98,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
     return clzz;
   }
   useEffect(() => {
-    if(focus && childRef?.current){
+    if(focus != undefined && childRef?.current){
       // childRef.current.hide()
     }
   }, []);
