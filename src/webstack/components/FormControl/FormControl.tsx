@@ -101,14 +101,13 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
     if(focus != undefined && childRef?.current){
       // childRef.current.hide()
     }
-  }, []);
+  }, [traits]);
   useEffect(() => {
     setTestId(createTestId(ref.current.parentNode, childRef.current));
   }, []);
   return (
     <>
       <style jsx>{styles}</style>
-      {/* focus: {focus?.toString()} */}
       <div className={`form-control ${variant === "inherit" ? " form-control-inherit" : ""}`} ref={ref}>
         <div className='form-control__header'>
         {label && <label>{label}</label>}

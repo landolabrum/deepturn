@@ -9,9 +9,7 @@ import { useRouter } from "next/router";
 import VerifyEmail from "../views/VerifyEmail/VerifyEmail";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import UiButton from "@webstack/components/UiButton/UiButton";
-import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
 import AdaptToWindow from "@webstack/components/AdaptToWindow/AdaptToWindow";
-import UiForm from "@webstack/components/UiForm/UiForm";
 
 
 interface Props { }

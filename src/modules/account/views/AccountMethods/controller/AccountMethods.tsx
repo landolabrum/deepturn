@@ -29,43 +29,24 @@ const AccountMethods: React.FC = () => {
     setLoading(false);
   }
 
-  const createMethod = async (request: any) => {
-    if (user == undefined) return;
-    setLoading('updating account');
-    try{
-      const createdMethod = await memberService.createCustomerMethod(user.id, request);
-      setLoading('success')
-    }catch(e:any){
-      console.log('[ ER ]',e?.detail)
-      setLoading(e?.detail)
-
-    }
-    // if (createdMethod.error) {
-    //   setLoading(`*${createdMethod.error}`)
-    //   // setLoading(false);
-    // } else {
-    //   setLoading('success');
-    //   getAccountMethods();
-    // }
-    // console.log(`[ FUNCTION ]: ${JSON.stringify(createdMethod)}`);
-  }
   const getAccountMethods = async () => {
     const methodsResponse = await memberService.getMethods();
-    console.log('[ methodsResponse ]', methodsResponse)
     if (methodsResponse) setMethods(methodsResponse?.data);
     setLoading(false);
   }
   useEffect(() => {
     getAccountMethods();
   }, []);
+
+
   return (
     <>
       <style jsx>{styles}</style>
       <div className='account-methods'>
         <AccountCreateMethod
           open={methods.length == 0}
-          loading={loading}
-          onSubmit={createMethod}
+          loading={loading == true}
+          // onSubmit={createMethod}
         />
         {methods.length > 0 && <>
           <div className='account-methods__header'>

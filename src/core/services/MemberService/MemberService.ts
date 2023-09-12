@@ -1,12 +1,12 @@
 import CookieHelper from "@webstack/helpers/CookieHelper";
 import { EventEmitter } from "@webstack/helpers/EventEmitter";
-import {
-  FirebaseClient,
-  firebaseClient,
-} from "~/src/core/firebase/FirebaseClient";
+// import {
+//   FirebaseClient,
+//   firebaseClient,
+// } from "~/src/core/firebase/FirebaseClient";
 import environment from "~/src/environment";
 import CustomToken from "~/src/models/CustomToken";
-import { MemberSignInResponse } from "~/src/models/membership/MemberSignInResponse";
+// import { MemberSignInResponse } from "~/src/models/membership/MemberSignInResponse";
 import MemberToken from "~/src/models/MemberToken";
 import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
@@ -23,6 +23,8 @@ import {
   RecentEnrollmentResponse,
 } from "~/src/models/membership/Enrollments";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
+import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
+import { encryptRequest } from "@webstack/helpers/Encryption";
 
 const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
 
@@ -104,30 +106,41 @@ export default class MemberService
 
   public async deleteMethod(id: string): Promise<any> {
     if (id) {
-      const deleted = await this.get<any>(`/api/method/delete?id=${id}`);
-      console.log('[ DEL ]: ', deleted)
-      return deleted
+      return await this.get<any>(`/api/method/delete?id=${id}`);
     }
     if (!id) {
       throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
     }
 
   };
-  public async createCustomerMethod(id: string, method: any): Promise<any> {
+
+
+public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
+    let id = this._getCurrentUser(false)?.id;
     if (id && method) {
+        // Convert method object to string
+        const methodString = JSON.stringify(method);
+        const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
+        console.log('[ ENCRYPTION_KEY ]', ENCRYPTION_KEY)
+        // Encrypt the method string. Use an agreed-upon key.
 
-      const res = await this.post<any, any>(
-        `usage/customer/method?id=${id}`,
-        method);
-      return res;
+        const encryptedMethod = encryptRequest(methodString, ENCRYPTION_KEY); // Replace 'YOUR_SECRET_KEY' with your actual secret key
+        const res = await this.post<any, any>(
+            `usage/customer/method?id=${id}`,
+            { data: encryptedMethod } // send encrypted data as payload
+        );
+        return res;
     }
+
     if (!id) {
-      throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
+        throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
     }
+
     if (!method) {
-      throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+        throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
     }
-  };
+}
+
   public async updateMember(id: string, memberData: any): Promise<any> {
     if (id && memberData) {
 
@@ -150,7 +163,6 @@ export default class MemberService
   public async getProducts(
     request?: any
   ): Promise<any> {
-    // console.log("[ REQ ]:",request)
     if (request === undefined) return await this.get<any>(
       `/api/products`,
     );

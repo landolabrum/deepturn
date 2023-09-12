@@ -31,17 +31,7 @@ const Checkout: React.FC<ICheckout> = ({ cart }) => {
         handleQtyChange(item);
     };
 
-    const handleCreateMethod = async (method: any) => {
-        setStatus(true);
-        if (user == undefined) return;
-        try{
-            const methodResponse = await memberService.createCustomerMethod(user.id, method);
-            setStatus('success')
-        }catch(e:any){
-            console.log(`[ ERROR ]: ${JSON.stringify(e)}`);
-            setStatus(e?.detail)
-        }
-    }
+
     
     useEffect(() => {
         setShow(user?.methods);
@@ -64,7 +54,7 @@ const Checkout: React.FC<ICheckout> = ({ cart }) => {
             </div>
         </div>
     </>;
-    else return <AccountCreateMethod collapse={false} loading={status} onSubmit={handleCreateMethod} />;
+    else return <AccountCreateMethod collapse={false} loading={status} onSuccess={(e)=>{console.log('[ CHECKOUT ]', e)}} />;
 
 };
 

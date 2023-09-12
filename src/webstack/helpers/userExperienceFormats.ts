@@ -26,7 +26,7 @@ export const phoneFormat = (
   countryCode: string
 ): string => {
   const phoneUtil = PhoneNumberUtil.getInstance();
-  let formattedNumber:string = phoneNumber;
+  let formattedNumber: string = phoneNumber;
   try {
     const parsedNumber = phoneUtil.parseAndKeepRawInput(
       phoneNumber,
@@ -41,54 +41,49 @@ export const phoneFormat = (
   }
   return formattedNumber;
 };
-type CardBrand =
-  | 'amex'
-  | 'diners'
-  | 'discover'
-  | 'eftpos_au'
-  | 'jcb'
-  | 'mastercard'
-  | 'unionpay'
-  | 'visa'
-  | 'unknown';
-
-type FormattedCard = [
-  CardBrand,
-  string
-]
+export type IMethodBrand = 'unknown' | 'amex' | 'diners' | 'discover' | 'visa' | 'jcb' | 'mastercard' | 'eftpos_au' | 'unionpay';
+type FormattedCard = [IMethodBrand, string];
 
 export default function formatCreditCard(cardNumber: string): FormattedCard {
-  const cleaned = ('' + cardNumber).replace(/\D/g, ''); // Remove any non-numeric characters
+    const brands = [
+        {regex: /^3[47]/, name: 'amex', format: [4, 6, 5], maxLength: 15},
+        {regex: /^30[0-5]|3[68]/, name: 'diners', format: [4, 4, 4, 4], maxLength: 16},
+        {regex: /^6(?:011|5)/, name: 'discover', format: [4, 4, 4, 4], maxLength: 16},
+        {regex: /^4/, name: 'visa', format: [4, 4, 4, 4], maxLength: 16},
+        {regex: /^(?:2131|1800|35\d{2})/, name: 'jcb', format: [4, 4, 4, 4], maxLength: 16},
+        {regex: /^5[1-5]/, name: 'mastercard', format: [4, 4, 4, 4], maxLength: 16},
+        {regex: /^(?:502[0259]|508[59]|6[37])/, name: 'eftpos_au', format: [4, 4, 4, 4], maxLength: 16},
+        {regex: /^62[0-5]/, name: 'unionpay', format: [4, 4, 4, 4], maxLength: 16}
+    ];
+    
+    const cleaned = cardNumber.replace(/\D/g, ''); // Remove any non-numeric characters
 
-  let brand: CardBrand = 'unknown';
-  if (/^3[47]/.test(cleaned)) brand = 'amex';
-  else if (/^30[0-5]|3[68]/.test(cleaned)) brand = 'diners';
-  else if (/^6(?:011|5)/.test(cleaned)) brand = 'discover';
-  else if (/^4/.test(cleaned)) brand = 'visa';
-  else if (/^(?:2131|1800|35\d{2})/.test(cleaned)) brand = 'jcb';
-  else if (/^5[1-5]/.test(cleaned)) brand = 'mastercard';
-  // Add other patterns for 'eftpos_au', 'unionpay' if you have them.
-  // console.log("[ CARD-Brand ]:", brand)
-  let formatted: string[] = [];
-  switch (brand) {
-    case 'visa':
-    case 'mastercard':
-      // Format: xxxx xxxx xxxx xxxx
-      formatted = cleaned.match(/(\d{1,4})/g) || [];
-      break;
+    let brand: IMethodBrand = 'unknown';
+    let format: number[] = [16];
+    let maxLength = 16;
 
-    case 'amex':
-      // Format: 34xx xxxxxx xxxxx
-      formatted = cleaned.match(/(\d{1,4})(\d{1,6})(\d{1,5})/) || [];
-      break;
+    for (const b of brands) {
+        if (b.regex.test(cleaned)) {
+            brand = b.name as IMethodBrand;
+            format = b.format;
+            maxLength = b.maxLength;
+            break;
+        }
+    }
 
-    default:
-      return [ brand, cleaned ]; // If an unknown brand, return the cleaned card number.
-  }
+    let formattedNumber = cleaned.slice(0, maxLength);
+    let position = 0;
+    formattedNumber = format.map((length) => {
+        const part = cleaned.substr(position, length);
+        position += length;
+        return part;
+    }).filter(Boolean).join(' ');
 
-  const formattedNumber = formatted.filter((n: string) => n).join(' '); // Filter and join
-  return [ brand, formattedNumber ];
+    return [brand, formattedNumber];
 }
+
+
+
 
 // COUNTRY
 export function countryFormat(countryISO: string) {
@@ -111,9 +106,9 @@ export function stateFormat(stateISO: string) {
 }
 
 // DATES
-export function getYearsArray(length:number, asStrings=true):(string | number)[] {
+export function getYearsArray(length: number, asStrings = true): (string | number)[] {
   const currentYear = new Date().getFullYear();
-  return Array.from({ length: length }, (_, i) => asStrings?(currentYear + i).toString():currentYear + i);
+  return Array.from({ length: length }, (_, i) => asStrings ? (currentYear + i).toString() : currentYear + i);
 }
 export function dateFormat(
   suppliedDate: dateProps,
@@ -125,7 +120,7 @@ export function dateFormat(
     isTimestamp: false
   }
 ): string | string[] | React.ReactElement {
-  if(options.isTimestamp === true && typeof(suppliedDate)==='number'){
+  if (options.isTimestamp === true && typeof (suppliedDate) === 'number') {
     const dateObj = new Date(suppliedDate * 1000); // Convert seconds to milliseconds
     const date = dateObj.toLocaleDateString();
     const time = dateObj.toLocaleTimeString();
@@ -161,7 +156,7 @@ export function dateFormat(
         if (options.returnType === "object") return [dateString, timeString];
         return `${dateString} ${timeString}`;
       }
-      if(dateString.length < 8)return InvalidCell();
+      if (dateString.length < 8) return InvalidCell();
       return dateString;
     } catch (e) {
       return NaCell();
@@ -170,17 +165,17 @@ export function dateFormat(
 }
 
 export function numberToUsd(amount: number) {
-  if(!amount)return "loading"
+  if (!amount) return "loading"
   const formattedAmount = (amount / 100).toFixed(2);
   return `$${formattedAmount}`;
 }
 export function calculateCartTotal(cart: any) {
-  if(!cart)return 0;
+  if (!cart) return 0;
   let total = 0;
   for (let product of cart) {
-      if (product.price_object && product.price_object.unit_amount && product.price_object.qty) {
-          total += product.price_object.unit_amount * product.price_object.qty;
-      }
+    if (product.price_object && product.price_object.unit_amount && product.price_object.qty) {
+      total += product.price_object.unit_amount * product.price_object.qty;
+    }
   }
   return numberToUsd(total);
 }

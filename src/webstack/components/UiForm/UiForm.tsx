@@ -6,17 +6,28 @@ import { IForm, IFormField } from './models/IFormModel';
 import handleConstraints from './services/FormConstraints';
 import UiSelect from '../UiSelect/UiSelect';
 import UiLoader from '../UiLoader/UiLoader';
-import keyStringConverter from '@webstack/helpers/keyStringConverter';
 
 
-const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse, loading }: IForm) => {
+const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange,  loading }: IForm) => {
     if(!fields)return;
     const [formValues, setFormValues] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
+    const textTypes = ['', undefined, 'text', 'password', 'number', 'tel', null, false, 'expiry'];
 
+
+    const errorMsg = (name: string) => {
+        if(!name)return;
+        if (typeof loading === "object" && 'fields' in loading && Array.isArray(loading.fields)) {
+            const errorField = loading.fields.find(field => field.name === name);
+            if (errorField) return errorField.message;
+        }
+        return null;
+    }
+    
 
     const handleInputChange = (e: any, constraints: IFormField['constraints']) => {
         const isValid = handleConstraints(e, constraints);
+        console.log('[ isV ]', {e:e, isValid:isValid})
         if (!e || !isValid) return;
         if (onChange) { onChange(e); return; }
 
@@ -29,41 +40,74 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, collapse,
     const handleSubmit = (e: any) => {
         e.preventDefault();
         if (!fields || !onSubmit) return;
-        const currentErrors: any = {};
-        if (Object.keys(currentErrors).length === 0) {
-            onSubmit(formValues);
-        } else {
-            setErrors(currentErrors);
-            onError && onError(currentErrors);
+        
+        let newErrors = { ...errors };  // Create a copy of the existing errors
+        
+        fields.forEach((f: any) => {
+            if (f.constraints) {
+                const min = f.constraints?.min;
+                const max = f.constraints?.max;
+                const valueLen = String(f.value).replaceAll(' ', '').length;
+                if (min != undefined) {
+                    if(errors[f.name] !== undefined){delete newErrors[f.name];}
+                    else if(valueLen < min){newErrors[f.name] = `*${f.name} is not long enough`;}
+                } 
+                if (max != undefined) {
+                    if(errors[f.name] !== undefined){delete newErrors[f.name];}
+                    else if(valueLen > max){newErrors[f.name] = `*${f.name} is too long`;}
+                }
+            }
+        });
+        // console.log('[ NEW ERRORS ]', newErrors)
+        setErrors(newErrors);
+        
+        if (Object.keys(newErrors).length === 0) {
+            console.log('[ FORM SUBMIT ]', fields)
+            onSubmit(fields);
+        } else if (onError) {
+            onError(newErrors);
         }
     };
-    const textTypes = ['', undefined, 'text', 'password', 'number', 'tel', null, false, 'expiry'];
+    const fieldTraits = (field:IFormField)=>{
+        if(!field)return;
+        const fieldError = field.name?errorMsg(field.name): undefined;
+        if(!field.traits)field.traits={}
+        if(fieldError){
+            field.traits.errorMessage = fieldError;
+        }else{
+            field.traits.errorMessage = undefined;
+        }
+        return field?.traits
+    }
+    
+    useEffect(() => {}, [loading, fieldTraits]);
     return (<>
         <style jsx>{styles}</style>
         {title}
         <form className='form' >
-            {fields ? Object.entries(fields).map(([index, field]:any) => (
+            {fields ? fields.map((field, index) => field.name && (
                 <div
                     key={index}
                     className='form__field'
                     style={typeof field?.width == 'string' ?
                         { width: `calc(${field.width} - 5px)` }:{}}
                 > 
-                    {textTypes.includes(field?.type) && <UiInput
-                        // message='This is a test error message'
-                        // label={keyStringConverter(field.label)}
-                        max={field.max}
-                        variant={field?.variant ? field?.variant : 'dark'}
+                    {textTypes.includes(field?.type) && field.name && <>
+                    <UiInput
+                        label={field.label}
+                        // max={typeof field?.constraints?.max == 'number' ?field.constraints.max: undefined}
+                        variant={errors[field.name] || fieldTraits(field)?.errorMessage?'invalid':field?.variant ? field?.variant : 'dark'}
                         type={field.type}
-                        traits={field?.traits}
+                        traits={errors[field.name]?{errorMessage:errors[field.name]}:fieldTraits(field)}
                         name={field.name}
                         placeholder={field.placeholder}
-                        value={formValues[field.name] || field?.value  || ''}
+                        value={field?.value || formValues[field.name] || ''}
                         onChange={e => handleInputChange(e, field.constraints)}
-                    />}
-                    {field?.type == 'select' && <UiSelect
+                    />
+                    </>}
+                    {field?.type == 'select' && field?.options !== undefined && <UiSelect
                         variant='dark'
-                        traits={field?.traits}
+                        traits={fieldTraits(field)}
                         options={field?.options}
                         label={field.name}
                         value={field?.value || formValues[field.name] || ''}

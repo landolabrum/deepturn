@@ -9,6 +9,7 @@ import { capitalize } from "lodash";
 type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string } | string | React.ReactElement;
 
 export interface SelectProps extends UiMenuProps {
+  label?: string;
   options?: (string | RouteProps | number)[] | React.ReactElement[];
   onSelect?: (value: any) => void;
   openDirection?: "up" | "down" | "left" | "right";

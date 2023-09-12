@@ -5,6 +5,7 @@ import { GetMemberProfileInformationResponse } from "~/src/models/membership/Get
 import { GetRecruitesRequest, GetRecruitesResponse } from "~/src/models/membership/Recruites";
 import { EnrollmentActivityResponse, RecentEnrollmentRequest, RecentEnrollmentResponse } from "~/src/models/membership/Enrollments";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
+import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
 
 export interface ProductRequestProps {
   id?: string
@@ -20,7 +21,7 @@ export default interface IMemberService {
   getMethods(): Promise<any>;
   deleteMethod(id: string): Promise<any>;
   processTransaction(cart:ICartItem[]): Promise<any>;
-  createCustomerMethod(id: string, method: any): Promise<any>;
+  createCustomerMethod(method: IPaymentMethod): Promise<any>;
   getProducts(request?: any): Promise<any>;
   getProduct({ id, pri }: ProductRequestProps): Promise<any>;
   lights(): Promise<any>;

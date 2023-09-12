@@ -4,8 +4,58 @@ $bodyY: 275px;
 $actColorClose: var(--color-gray-30);
 $actBrdr: 0 0 calc($bodyY * .5) $bodyY var(--color-gray-90-opaque);
 $actBrdrT: 0 0 calc($bodyY * .5) calc($bodyY * .5) $bG;
-
 $contTransformClose: translateY(calc(-100% - var(--default-element-height)));
+
+@keyframes closeBody {
+    0% {
+        display: flex;
+        max-height: 0;
+        transform: translateY(0);
+        margin-top: 50px;
+        opacity: 1;
+    }
+
+    10% {
+        max-height: 0;
+        transform: translateY(20px);
+        margin-top: 50px;
+        opacity: 1;
+    }
+
+    99% {
+        margin-top: 0;
+        max-height: 0;
+        transform: $contTransformClose;
+        opacity: 0;
+    }
+
+    100% {
+        display: none;
+    }
+}
+
+@keyframes openBody {
+    0% {
+        margin-top: 0;
+        display: none;
+        transform: $contTransformClose;
+    }
+    
+    15% {
+        opacity: 0;
+        margin-top: 0;
+        display: flex;
+        max-height: 0px;
+        transform: $contTransformClose;
+    }
+
+    100% {
+        max-height: unset;
+        transform: translateY(0);
+        margin-top: 50px;
+        opacity: 1;
+    }
+}
 
 @keyframes openAction {
     0% {
@@ -149,51 +199,3 @@ $contTransformClose: translateY(calc(-100% - var(--default-element-height)));
 
 
 
-@keyframes closeBody {
-    0% {
-        display: flex;
-        max-height: 0;
-        transform: translateY(0);
-        margin-top: 50px;
-        opacity: 1;
-    }
-
-    10% {
-        max-height: 0;
-        transform: translateY(20px);
-        margin-top: 50px;
-        opacity: 1;
-    }
-
-    99% {
-        margin-top: 0;
-        max-height: 0;
-        transform: $contTransformClose;
-        opacity: 0;
-    }
-
-    100% {
-        display: none;
-    }
-}
-
-@keyframes openBody {
-    0% {
-        display: none;
-    }
-
-    1% {
-        display: flex;
-        margin-top: 0;
-        max-height: 0px;
-        transform: $contTransformClose;
-        opacity: 0;
-    }
-
-    100% {
-        max-height: unset;
-        transform: translateY(0);
-        margin-top: 50px;
-        opacity: 1;
-    }
-}
