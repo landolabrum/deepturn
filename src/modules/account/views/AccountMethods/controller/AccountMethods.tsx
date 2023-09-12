@@ -12,7 +12,7 @@ import AccountCurrentMethod from '../components/AccountCurrentMethod/AccountCurr
 // Remember to create a sibling SCSS file with the same name as this component
 
 const AccountMethods: React.FC = () => {
-  const [loading, setLoading] = useState<boolean | string>(true);
+  const [loading, setLoading] = useState<any>(true);
   const [methods, setMethods] = useState<IMethod[]>([]);
   const [deleteResponse, setDeleteResponse] = useState<any>('');
 
@@ -45,8 +45,6 @@ const AccountMethods: React.FC = () => {
       <div className='account-methods'>
         <AccountCreateMethod
           open={methods.length == 0}
-          loading={loading == true}
-          // onSubmit={createMethod}
         />
         {methods.length > 0 && <>
           <div className='account-methods__header'>

@@ -54,7 +54,7 @@ const Checkout: React.FC<ICheckout> = ({ cart }) => {
             </div>
         </div>
     </>;
-    else return <AccountCreateMethod collapse={false} loading={status} onSuccess={(e)=>{console.log('[ CHECKOUT ]', e)}} />;
+    else return <AccountCreateMethod collapse={false} onSuccess={(e)=>{console.log('[ CHECKOUT ]', e)}} />;
 
 };
 

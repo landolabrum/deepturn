@@ -27,7 +27,6 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange,  loading 
 
     const handleInputChange = (e: any, constraints: IFormField['constraints']) => {
         const isValid = handleConstraints(e, constraints);
-        console.log('[ isV ]', {e:e, isValid:isValid})
         if (!e || !isValid) return;
         if (onChange) { onChange(e); return; }
 
@@ -62,7 +61,6 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange,  loading 
         setErrors(newErrors);
         
         if (Object.keys(newErrors).length === 0) {
-            console.log('[ FORM SUBMIT ]', fields)
             onSubmit(fields);
         } else if (onError) {
             onError(newErrors);

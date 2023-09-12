@@ -174,15 +174,13 @@ $contTransformClose: translateY(calc(-100% - var(--default-element-height)));
 
     .collapse__body {
         @extend .d-flex-col;
-        // width: calc(100% - calc(var(--default-padding) * .5));
+        width: calc(100% - var(--default-padding));
         // background-color: #f30;
-        // width: 100%;
         padding: var(--default-padding) var(--default-padding);
         z-index: 1;
         transform: $contTransformClose;
         max-height: 0;
-        animation: openBody 1s forwards ease-out;
-        animation-play-state: paused;
+
         overflow-y: auto;
         overflow-x: visible;
 

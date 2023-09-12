@@ -14,9 +14,9 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
     if (props?.max && props.max < e.target.value.length) return;
     let _e:any = e;
     let [newV, extra] = maskInput(e, type);
-    console.log('MASK: ', [newV, extra])
+    // console.log('MASK: ', [newV, extra])
     _e.target.value = extra !== undefined ? [newV, extra] : newV;
-    console.log('value: ', _e.target.value)
+    // console.log('value: ', _e.target.value)
     if (onChange) onChange(_e);
   };
 

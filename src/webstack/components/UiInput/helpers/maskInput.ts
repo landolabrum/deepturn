@@ -27,7 +27,7 @@ const maskInput = (e: any, type?: string) => {
     // For Card Number Input
     if (e.target.name === 'number') {
         const [_brand, formattedNumber] = formatCreditCard(newValue);
-        console.log("[_brand, formattedNumber]",[_brand, formattedNumber])
+        // console.log("[_brand, formattedNumber]",[_brand, formattedNumber])
         if (_brand === 'unknown') {
             return [formattedNumber, "fa-exclamation-triangle"];
         }
