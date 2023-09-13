@@ -1,3 +1,2 @@
-import Checkout from "~/src/modules/ecommerce/cart/views/Checkout/Checkout";
-
+import Checkout from "~/src/modules/ecommerce/Checkout/controller/Checkout";
 export default Checkout;

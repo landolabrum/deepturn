@@ -1,11 +1,11 @@
 // Relative Path: ./Checkout.tsx
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import styles from './CheckoutButton.scss';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { calculateCartTotal } from '@webstack/helpers/userExperienceFormats';
 import { useModal } from '@webstack/modal/contexts/modalContext';
 import { useRouter } from 'next/router';
-import Checkout from '../Checkout/Checkout';
+import Checkout from '~/src/pages/checkout';
 import { ITraits } from '@webstack/components/FormControl/FormControl';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
@@ -36,7 +36,7 @@ const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", i
             const checkoutResponse = await memberService.processTransaction(cart);
             console.log('[ checkoutResponse ]', checkoutResponse)
         }
-        if (isModal) openModal(<Checkout cart={cart} user={user}/>);
+        if (isModal) openModal(<Checkout cart={cart}/>);
         // if (isModal && user?.default_source == null) openModal(<AccountCreateMethod loading={status} open onSubmit={handleCreateMethod} />);
         if (!isModal && !isModalOpen) router.push("/checkout");
     };

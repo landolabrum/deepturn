@@ -6,7 +6,7 @@ import EmptyCart from '../views/EmptyCart/EmptyCart';
 import { ICartItem } from '../model/ICartItem';
 import CartList from '../views/CartList/CartList';
 import UiButton from '@webstack/components/UiButton/UiButton';
-import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
+import CheckoutButton from '../../Checkout/views/CheckoutButton/CheckoutButton';
 import useCart from '../hooks/useCart';
 import UiLoader from '@webstack/components/UiLoader/UiLoader';
 

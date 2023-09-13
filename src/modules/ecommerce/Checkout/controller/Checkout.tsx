@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Checkout.scss';
 import { useRouter } from 'next/router';
-import CartList from '../CartList/CartList';
+import CartList from '../../cart/views/CartList/CartList';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import CheckoutButton from '../CheckoutButton/CheckoutButton';
+import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
 import AccountForm from '~/src/modules/account/views/AccountForm/AccountForm';
-import { ICartItem } from '../../model/ICartItem';
-import useCart from '../../hooks/useCart';
+import { ICartItem } from '../../cart/model/ICartItem';
+import useCart from '../../cart/hooks/useCart';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import AccountCreateMethod from '~/src/modules/account/views/AccountMethods/components/AccountCreateMethod/AccountCreateMethod';
