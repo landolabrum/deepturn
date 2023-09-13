@@ -414,3 +414,11 @@ button {
   left: 0;
   z-index: 999;
 }
+
+/* ELEMENTS */
+.embossed-theme{
+  width: calc(100% - 3px);
+  border-width: 3px;
+  border-style: outset;
+  border-color: var(--color-gray-50-opaque) var(--color-gray-100-opaque) var(--color-gray-90-opaque) var(--color-gray-20-opaque);
+}

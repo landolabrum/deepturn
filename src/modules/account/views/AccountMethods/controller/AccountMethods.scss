@@ -17,22 +17,26 @@
     justify-content: flex-start;
     margin-bottom:  calc(var(--default-padding) * 2);
     .account-methods__header {
-        @extend .d-flex, .d-pad;
+        @extend .d-flex;
         border-bottom: unset;
         align-items: flex-start;
         font-size: var(--s-4);
-        text-indent: 10px;
+        text-indent: var(--default-padding);
         border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
         color: var(--color-gray-30);
         text-transform: capitalize;
-        background-color: var(--color-gray-60);
+        background-color: var(--color-gray-70);
+        height: var(--default-element-height);
     }
-
+    
     .account-methods__existing {
+        background-color: var(--color-gray-80);
+
         border-radius: 0 0 var(--default-border-radius) var(--default-border-radius);
-        @extend .d-flex, .d-pad;
+        @extend .d-flex;
         gap: var(--default-padding);
-        padding: var(--default-padding) calc(var(--default-padding) * .5);
+        padding:  9px 7px;
+        width: calc(100% - 14px);
         .account-methods__method-container {
             width: 100%;
         }
