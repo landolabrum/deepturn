@@ -3,7 +3,7 @@ $delW: 50px;
 $min: calc(100% - calc(calc($pad * 2) + $delW));
 $max: calc(100% - calc($pad * 2));
 
-$color: var(--color-gray-20);
+$color: var(--color-gray-50);
 $colorHover: var(--color-gray-30);
 $colorActive: var(--color-primary);
 $contentBackground: var(--color-gray-60);
@@ -40,9 +40,6 @@ $borderColor: var(--color-gray-40);
 
 .account-current-method {
     cursor: pointer;
-    border-radius: var(--default-border-radius);
-    // outline: solid 1px var(--color-gray-60);
-    // border: solid 1px var(--color-gray-70);
     background-color: $background;
     color: $color;
     height: var(--default-element-height);
@@ -92,8 +89,8 @@ $borderColor: var(--color-gray-40);
             justify-content: flex-start;
             flex-direction: row;
             gap: $pad;
-            --ui-icon-width: max-content;
-            --ui-icon-height: 16px;
+            --ui-icon-size: var(--s-2);
+            letter-spacing: 2px;
         }
 
         .account-current-method__exp {
@@ -115,13 +112,10 @@ $borderColor: var(--color-gray-40);
         width: $delW;
         // --ui-icon-width: var(--default-element-height);
         height: var(--default-element-height);
-        // --ui-icon-height: var(--default-element-height);
-        // height: calc(var(--default-element-height) + calc($pad * 2));
         display: flex;
-        
+        --ui-icon-color: var(--color-white);
         &:hover {
-            --ui-icon-color: var(--color-red);
-            background-color: var(--color-gray-50-opaque);
+            background-color: var(--color-red);
         }
     }
 }
@@ -131,6 +125,7 @@ $borderColor: var(--color-gray-40);
     padding: 0 10px;
     height: var(--default-element-height);
     color: var(--color-primary);
+    background-color: var(--color-gray-60);
     &.account-current-method__response-error{
         color: var(--color-orange);
     }

@@ -38,6 +38,7 @@ export type IVariant =
   | "account dark"
   | "primary"
   | "secondary"
+  | false
   // Add other combinations as needed
   ;
 

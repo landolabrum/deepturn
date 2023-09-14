@@ -20,6 +20,7 @@
     @extend .d-flex;
     justify-content: center;
     flex-direction: column;
+    gap:var(--default-padding);
     height: 100%;
     width: 100%;
 }

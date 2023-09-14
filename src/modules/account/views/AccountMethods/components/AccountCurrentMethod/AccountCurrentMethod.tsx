@@ -5,6 +5,7 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { IMethod } from '~/src/modules/account/model/IMethod';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
+import { useNotification } from '@webstack/components/Notification/Notification';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IAccountCurrentMethod{
@@ -15,7 +16,7 @@ interface IAccountCurrentMethod{
 const AccountCurrentMethod: React.FC<any> = ({ method, onDelete, response }:IAccountCurrentMethod) => {
     const mm = String(method.card.exp_month).length == 1 ? `0${method.card.exp_month}` : method.card.exp_month;
     const [clicked, setClicked] = useState<number>(0);
-
+    const [notification, setNotification]=useNotification()
     const handleClick = (clickTarget?: number) => {
         let target = clickTarget;
         if(typeof target != 'number')target = clicked;
@@ -43,7 +44,16 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDelete, response }:IAcc
         'account-current-method__content-show'
     ]
     
-    useEffect(() => {}, [response]);
+    useEffect(() => {
+        if(response && response != ''){
+            setNotification({
+                active: true,
+                list:[
+                    {label: response}
+                ]
+            });
+        }
+    }, [response]);
     return (
         <>
             <style jsx>{styles}</style>
@@ -64,14 +74,14 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDelete, response }:IAcc
                     <UiIcon icon={clicked == 3?'spinner': 'fa-trash-can'} />
                 </div>
             </div>
-            {response && response != '' && 
+            {/* {response && response != '' && 
                 <div className={`account-current-method__response${
                         response.charAt(0) == '*'?' account-current-method__response-error':''
                     }`}
                 >
                     {response}
                 </div>
-            }
+            } */}
         </>
     );
 };

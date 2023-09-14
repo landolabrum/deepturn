@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     width: 100%;
 }
 
@@ -11,34 +10,43 @@
     padding: calc(var(--default-padding) * .5);
     border: solid 1px var(--color-gray-20-opaque);
 }
-
+.brdr{
+    border: solid 1px var(--color-gray-80);
+    outline: solid 1px var(--color-gray-60);
+}
 .account-methods {
     @extend .d-flex;
+    flex-direction: column;
     justify-content: flex-start;
-    margin-bottom:  calc(var(--default-padding) * 2);
-    .account-methods__header {
-        @extend .d-flex;
-        border-bottom: unset;
-        align-items: flex-start;
-        font-size: var(--s-4);
-        text-indent: var(--default-padding);
-        border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
-        color: var(--color-gray-30);
-        text-transform: capitalize;
-        background-color: var(--color-gray-70);
-        height: var(--default-element-height);
-    }
-    
     .account-methods__existing {
-        background-color: var(--color-gray-80);
-
-        border-radius: 0 0 var(--default-border-radius) var(--default-border-radius);
         @extend .d-flex;
-        gap: var(--default-padding);
-        padding:  9px 7px;
-        width: calc(100% - 14px);
+        .account-methods__header {
+            @extend .brdr;
+            width: calc(100% - 30px);
+            overflow: hidden;
+            padding: calc(var(--s-6) * .66) var(--s-6);
+            border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
+            background-color: var(--color-gray-60);
+            align-items: flex-start;
+            font-size: var(--s-6);
+            // text-indent: var(--default-padding);
+            color: var(--color-gray-30);
+            text-transform: capitalize;
+            // height: var(--default-element-height);
+        }
+        // background-color: var(--color-gray-60);
+        // border: solid 1px var(--color-gray-70);
+        // border-radius: 0 0 var(--default-border-radius) var(--default-border-radius);
+        // @extend .d-flex;
+        // gap: var(--default-padding);
+        // padding:  9px 7px;
+        // width: calc(100% - 16px);
         .account-methods__method-container {
-            width: 100%;
+            border-radius: 0 0 var(--default-border-radius) var(--default-border-radius);
+            @extend .brdr;
+            border-top: solid 1px var(--color-gray-70);
+            width: calc(100% - 2px);
+            overflow: hidden;
         }
     }
 }

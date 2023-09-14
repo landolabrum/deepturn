@@ -138,6 +138,7 @@ $elPad: 14px;
     }
 
     &.form-control__element-invalid {
+      overflow: hidden;
       .form-control__icon-placeholder {
         background-color: var(--color-invalid-bg);
       }

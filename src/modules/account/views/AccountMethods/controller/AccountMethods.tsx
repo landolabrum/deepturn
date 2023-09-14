@@ -44,15 +44,16 @@ const AccountMethods: React.FC = () => {
       <style jsx>{styles}</style>
       <div className='account-methods'>
         <AccountCreateMethod
-          open={methods.length == 0}
+          // open={methods.length == 0}
+          onSuccess={console.log}
         />
         {methods.length > 0 && <>
+          <div className='account-methods__existing'>
           <div className='account-methods__header'>
             <div className='account-methods__title'>
               payment methods
             </div>
           </div>
-          <div className='account-methods__existing'>
             {Object.entries(methods).map(([key, method]) => {
               return <div className='account-methods__method-container' key={key} >
                 <AccountCurrentMethod method={method} onDelete={handleDelete} response={deleteResponse} />

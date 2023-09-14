@@ -87,8 +87,8 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
     }
   }, [overlay, setOverlay_, traits]);
   const varClasses = (clzz: string) => {
-    const varArr: any = variant?.split(' ');
-    if (varArr && varArr.length) {
+    if (variant) {
+      const varArr: any = variant?.split(' ');
       let initialValue = clzz;
       return varArr.reduce(
         (accumulator: string, currentValue: string) => 
@@ -111,7 +111,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
       <div className={`form-control ${variant === "inherit" ? " form-control-inherit" : ""}`} ref={ref}>
         <div className='form-control__header'>
         {label && <label>{label}</label>}
-        {variant?.split(' ').includes('invalid') && <div className='form-control__header-invalid'>
+        {variant && variant?.split(' ').includes('invalid') && <div className='form-control__header-invalid'>
           {traits?.errorMessage}
         </div>}
         </div>

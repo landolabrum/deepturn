@@ -37,12 +37,8 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 name: 'number',
                 label: 'number',
                 placeholder: "**** **** **** ****",
-                // constraints: {
-                //     min: 4,
-                //     max: brand == 'amex'?15:16
-                // },
                 value: method?.number,
-                variant: `${brand == errorIcon && method?.number.length > 0 ? 'invalid ' : ''}dark`,
+                variant: brand == errorIcon && method?.number.length > 0 && 'invalid',
                 traits: {
                     beforeIcon: brand && method?.number.length > 0 ? `${brand}` : undefined,
                     afterIcon: method?.number?.length ?
@@ -54,7 +50,7 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 name: 'expiry',
                 label: 'expiration',
                 placeholder: 'mm/yy',
-                variant: `${method?.expiry.length != 0 && method?.expiry.length <= 4 ? 'invalid ' : ''}dark`,
+                variant: method?.expiry.length != 0 && method?.expiry.length <= 4 && 'invalid',
                 type: 'expiry',
                 value: method?.expiry,
                 width: 'calc(50% - 5px)'
@@ -65,7 +61,7 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 placeholder: '000',
                 value: method?.cvc,
                 width: 'calc(50% - 5px)',
-                variant: `${method?.cvc.length != 0 && method?.cvc.length <= 3 ? 'invalid ' : ''}dark`,
+                variant: method?.cvc.length != 0 && method?.cvc.length <= 2 && 'invalid',
                 constraints: {
                     min: 1,
                     max: 6,
@@ -100,6 +96,9 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
             const methodResponse = await memberService.createCustomerMethod(request);
             // console.log(`[ Success ]: ${JSON.stringify(methodResponse)}`);
             setStatus('success')
+            setTimeout(() => {
+                onSuccess && onSuccess(methodResponse)
+            }, 1000);
         } catch (e: any) {
             // console.log(`[ ERROR ]: ${JSON.stringify(e)}`);
             setStatus(e?.detail)
@@ -113,8 +112,9 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
             <div className='account-create-method'>
                 {collapse
                     ? (
-                        <UiCollapse variant='dark' open={open} label='add payment method'>
+                        <UiCollapse  open={open} label='add payment method'>
                             <UiForm
+
                                 loading={status}
                                 fields={getFieldsConfiguration()}
                                 onChange={handleMethodChange}

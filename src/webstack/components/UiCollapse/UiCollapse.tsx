@@ -27,9 +27,9 @@ const UiCollapse: React.FC<ICollapse> = ({ open, children, variant, label = "Col
             case 0:
                 return clzz;
             case 1:
-                return `${clzz} ${clzz}-open`;
+                return `${clzz} ${clzz}__open ${variant?` ${clzz}-${variant}`:''}`;
             case 2:
-                return `${clzz} ${clzz}-closed`;
+                return `${clzz} ${clzz}__close ${variant?` ${clzz}-${variant}`:''}`;
             default:
                 break;
         }
@@ -41,17 +41,16 @@ const UiCollapse: React.FC<ICollapse> = ({ open, children, variant, label = "Col
     return (
         <>
             <style jsx>{styles}</style>
-            {/* open: {open?.toString()} */}
             <div
                 style={_style}
-                className={`collapse${variant ? ` collapse-${variant}` : ''}`}
+                className={`collapse${variant ? ` collapse-${variant}` : ''} ${oClzz('collapse')}`}
             >
                 <div onClick={handleOpen} className={oClzz('collapse__action')} style={elStyle}>
-                    {label}
+                   {label}
                     <UiIcon icon={`fa-chevron-${oOpen == 1 ? "down" : "right"}`}/>
                 </div>
                 <div className={oClzz('collapse__body')}>
-                    {children}
+                    { children}
                 </div>
             </div>
         </>

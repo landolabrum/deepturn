@@ -48,7 +48,7 @@ export const NotificationProvider: React.FC<INotificationProvider> = ({
 
 const Notification: React.FC = () => {
   const [context, setContext] = useContext<[INotification, (Notification: INotification) => any]>(INotificationContext);
-  const [notificationState, setNotificationState] = useState<INotification | null>(null);
+  const [notification, setNotification] = useState<INotification | null>(null);
   const [show, setShow]=useState<boolean>(true);
   const handleClose = () =>{
     setShow(false);
@@ -68,30 +68,30 @@ const Notification: React.FC = () => {
   }, [context]);
   useEffect(() => {
     if(context?.dismissable == undefined)context.dismissable = true;
-    setNotificationState(context);
+    setNotification(context);
     handleBodyScroll();
   }, [context, handleBodyScroll]);
 
-  if (notificationState?.active) {
+  if (notification?.active) {
     return (
       <>
         <style jsx>{styles}</style>
         <div
           id="app-notification"
           style={
-            notificationState?.zIndex ? { zIndex: `${notificationState?.zIndex}` } : {}
+            notification?.zIndex ? { zIndex: `${notification?.zIndex}` } : {}
           }
           onClick={context?.onClick}
           className={`notification ${!show?' notification-hide':""}`}
         >
           <div className='notification__content'>
-            {notificationState.dismissable && 
+            {notification.dismissable && 
               <div className='notification__close'><UiIcon icon='fa-xmark' onClick={handleClose}/></div>
             }
-            {notificationState?.children}
+            {notification?.children}
           <div className='notification__list'>{
-          notificationState.list &&
-            Object.entries([{label:'label'}]).map(([field, value])=>{
+          notification.list &&
+            Object.entries(notification.list).map(([field, value])=>{
               return <div key={field} className={`notification__list-item`}>{value.label}</div>
             })
           }

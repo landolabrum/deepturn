@@ -1,5 +1,3 @@
-// deepturn/src/modules/home/stream/pages/StreamPage.tsx
-
 import { useEffect, useRef, useState } from "react";
 import environment from "~/src/environment";
 import styles from "./StreamPage.scss";
@@ -9,13 +7,15 @@ import RtspCam from "../views/RtspCam";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 
 const MAX_TIMEOUT = 35000;
-const CAMS = 5;
+const CAMS = 3;
 
 const Stream = () => {
   const myRef = useRef<any>([]);
   const mainRef = useRef<any>(null);
   const [loadedImages, setLoadedImages] = useState<string[]>([]);
+  const [isZoomed, setIsZoomed] = useState<boolean>(false);
   const [load, setLoad] = useState<boolean>(false);
+  const [scale, setScale] = useState(1); // State to track the current scale
 
   const [errorImages, setErrorImages] = useState<string[]>([]);
 
@@ -48,7 +48,6 @@ const Stream = () => {
       }
     }, 3000);
 
-    // Stop interval after 60 seconds
     const timeout = setTimeout(() => {
       clearInterval(interval);
       setLoad(true);
@@ -61,81 +60,64 @@ const Stream = () => {
   }, [setLoadedImages]);
 
   function handleMain(el: any) {
+    if (mainRef.current.contains(el.target)) return; // Check if the clicked element is already in mainRef
+
     const clickedImg = el.target;
     const clonedImg = clickedImg.cloneNode();
-    // clonedImg.classList.add("main");
     clonedImg.style.height = "100%";
     clonedImg.style.width = "auto";
-    clonedImg.onclick = function () {
-      this.remove();
-    };
     if (mainRef.current?.hasChildNodes()) {
       mainRef.current.replaceChild(clonedImg, mainRef.current.firstChild);
     } else {
       mainRef.current.appendChild(clonedImg);
     }
   }
-  const RtspProps = { handleMain, handleImageLoad, handleImageError, loadedImages, load };
+
+  function handleZoom(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    if (event.target !== mainRef.current) return;
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const xPercent = (x / rect.width) * 100;
+    const yPercent = (y / rect.height) * 100;
+
+    event.currentTarget.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+
+    if (scale < 2) {
+      setScale(prevScale => prevScale * 1.1);
+      event.currentTarget.style.transform = `scale(${scale * 1.1})`;
+    } else {
+      setScale(1);
+      event.currentTarget.style.transform = 'scale(1)';
+    }
+}
+
+
+  const StreamPage = { handleMain, handleImageLoad, handleImageError, loadedImages, load };
   return (
     <>
       <style jsx>{styles}</style>
       <div className="stream">
-        <AdaptContainer>
-          <div ref={mainRef} className="stream__main-container">
-            <div className="stream__main-logo">
-            <UiIcon icon="deepturn-logo"/>
+        <div
+          ref={mainRef}
+          className={`stream__main-container ${isZoomed ? 'zoomed' : ''}`}
+          onClick={handleZoom}
+        >
+          <div className="stream__main-logo">
+            <UiIcon icon="deepturn-logo" />
           </div>
-          </div>
-        </AdaptContainer>
+        </div>
         <div className="stream__tray">
           <AdaptGrid xs={2} sm={3}>
-            {Array.from(Array(5), (_, i) => i + 1).map((n) => {
+            {Array.from(Array(CAMS), (_, i) => i + 1).map((n) => {
               return (
                 <span key={n}>
-                  <RtspCam {...RtspProps} camera={n} />
+                  <RtspCam {...StreamPage} camera={n} />
                 </span>
               );
             })}
-            {/* <ImageLoader 
-              src={`${streamUrl}1`} 
-              alt={`cam-1`}
-              onClick={handleMain} 
-              handleImageLoad={handleImageLoad}
-              handleImageError={handleImageError}
-            />
-            {loadedImages.includes(`${streamUrl}1`) ? null : <Loading text={`cam ${1}`} />}
-          <ImageLoader 
-              src={`${streamUrl}2`} 
-              alt={`cam-2`}
-              onClick={handleMain} 
-              handleImageLoad={handleImageLoad}
-              handleImageError={handleImageError}
-            />
-            {loadedImages.includes(`${streamUrl}2`) ? null : <Loading text={`cam ${2}`} />}
-            <ImageLoader 
-              src={`${streamUrl}3`} 
-              alt={`cam-${3}`}
-              onClick={handleMain} 
-              handleImageLoad={handleImageLoad}
-              handleImageError={handleImageError}
-            />
-            {loadedImages.includes(`${streamUrl}3`) ? null : <Loading text={`cam ${3}`} />}
-            <ImageLoader 
-              src={`${streamUrl}4`} 
-              alt={`cam-${4}`}
-              onClick={handleMain} 
-              handleImageLoad={handleImageLoad}
-              handleImageError={handleImageError}
-            />
-            {loadedImages.includes(`${streamUrl}4`) ? null : <Loading text={`cam ${4}`} />} 
-            <ImageLoader 
-              src={`${streamUrl}5`} 
-              alt={`cam-5`}
-              onClick={handleMain} 
-              handleImageLoad={handleImageLoad}
-              handleImageError={handleImageError}
-            />
-            {loadedImages.includes(`${streamUrl}5`) ? null : <Loading text={`cam ${5}`} />} */}
           </AdaptGrid>
         </div>
       </div>
@@ -144,16 +126,3 @@ const Stream = () => {
 };
 
 export default Stream;
-
-//  {/* {Array.from([1,2,3,4]).map(n=>{
-//       return <>
-//                 <ImageLoader
-//       src={`${streamUrl}{n}`}
-//       alt={`cam-${n}`}
-//       onClick={handleMain}
-//       handleImageLoad={handleImageLoad}
-//       handleImageError={handleImageError}
-//     />
-//     {loadedImages.includes(`${streamUrl}${n}`) ? null : <Loading text={`cam ${n}`} />}
-//       </>
-//       })}

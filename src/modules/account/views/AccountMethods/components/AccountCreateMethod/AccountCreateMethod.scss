@@ -12,7 +12,7 @@
         @extend .d-flex;
         height: var(--default-element-height);
         justify-content: flex-start;
-        font-size: var(--s-2);
+        font-size: var(--s-5);
         text-transform: capitalize;
         color: var(--color-gray-40);
     }
@@ -44,5 +44,4 @@
         margin-top: var(--default-element-height)
         // visibility: hidden;
     }
-
 }

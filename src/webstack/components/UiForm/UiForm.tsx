@@ -8,7 +8,7 @@ import UiSelect from '../UiSelect/UiSelect';
 import UiLoader from '../UiLoader/UiLoader';
 
 
-const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange,  loading }: IForm) => {
+const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }: IForm) => {
     if(!fields)return;
     const [formValues, setFormValues] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
@@ -94,7 +94,10 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange,  loading 
                     <UiInput
                         label={field.label}
                         // max={typeof field?.constraints?.max == 'number' ?field.constraints.max: undefined}
-                        variant={errors[field.name] || fieldTraits(field)?.errorMessage?'invalid':field?.variant ? field?.variant : 'dark'}
+                        variant={
+                            errors[field.name] ||
+                            fieldTraits(field)?.errorMessage && 'invalid' || field?.variant
+                        }
                         type={field.type}
                         traits={errors[field.name]?{errorMessage:errors[field.name]}:fieldTraits(field)}
                         name={field.name}
@@ -104,7 +107,7 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange,  loading 
                     />
                     </>}
                     {field?.type == 'select' && field?.options !== undefined && <UiSelect
-                        variant='dark'
+                        variant={field?.variant}
                         traits={fieldTraits(field)}
                         options={field?.options}
                         label={field.name}
@@ -113,7 +116,7 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange,  loading 
                     />}
                 </div>
             )):(<UiLoader position='relative'/>)}
-            <UiButton variant='dark' type='submit' busy={ loading == true} onClick={handleSubmit}>
+            <UiButton  type='submit' busy={ loading == true} onClick={handleSubmit}>
                 {btnText ? btnText : 'Submit'}
             </UiButton>
         </form>
