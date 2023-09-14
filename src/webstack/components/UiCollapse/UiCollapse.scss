@@ -57,9 +57,10 @@ $actColorClose: var(--color-gray-30);
         padding: 0 var(--default-padding);
     }
     100%{
-        height: $button_height;
-        width: calc(100% - calc(var(--default-padding) * 2));
+        height: $button_height !important;
+        overflow: hidden;
         padding: 0 var(--default-padding);
+        background-color: #f30;
     }
 }
 @keyframes openAction {
@@ -71,24 +72,18 @@ $actColorClose: var(--color-gray-30);
 }
 @keyframes openBody {
     0%{
-        height: $button_height;
-    }
-    20%{
-        height: 50%;
+        transform: translateY(-100%);
     }
     100%{
-        height: max-content;
+        transform: translateY(0);
     }
 }
 @keyframes closeBody {
-    0%{
-        height: max-content;
+0%{
+        transform: translateY(0);
     }
-    20%{
-        height: 50%;
-    }
-    100%{
-        height: $button_height;
+   100%{
+        transform: translateY(-100%);
     }
 }
 // Styles
@@ -116,10 +111,12 @@ $actColorClose: var(--color-gray-30);
     width: calc(100% - calc(var(--default-padding) * 2));
     padding: 0 var(--default-padding);
     height: $button_height;
-    animation: openCollapse 1s forwards; 
-    /* &__open{ 
+    &__open{
+        animation: openCollapse 1s forwards; 
     }
-    &__close{ animation: closeCollapse 1s forwards; } */
+    &__close{
+        animation: closeCollapse 1s forwards; 
+    }
     &__action {
         background-color: var(--color-gray-60);
         position: absolute;
@@ -137,34 +134,26 @@ $actColorClose: var(--color-gray-30);
         cursor: pointer;
         justify-content: space-between;
         line-height: 1;
- 
-
-        animation: closeAction 1s forwards;
-        animation-play-state: paused;
-
         &:hover {
             background-color: var(--color-gray-70);
         }
-
-        &.collapse__action-open {
+        &__open {
             animation: openAction 1s forwards;
             animation-play-state: running;
         }
-
-        &.collapse__action-closed {
+        &__closed {
             animation: closeAction 1s forwards;
             animation-play-state: running;
         }
     }
+}
     .collapse__body{
-        overflow: hidden;
         width: 100%;
-        &.__open{ 
-            border: solid 1px #f30;
+        height: var(--default-element-height);
+        &__open{ 
             animation: openBody 1s forwards; 
         }
-        &.collapse__body__close{ 
+        &__close{ 
             animation: closeBody 1s forwards; 
         }
     }
-}
