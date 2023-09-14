@@ -22,7 +22,7 @@ const UiDiv: FC<IDiv> = ({ children, variant, style, jsx = ``, minWidth, maxWidt
     if (!variant) return baseClass;
 
     return `${baseClass} ${variant.split(' ')
-      .map(vari => `${baseClass}-${vari}`)
+      .map(vari => `${baseClass}__${vari}`)
       .join(' ')}`
   }
   const className = variantToClass(variant);

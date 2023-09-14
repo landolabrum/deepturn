@@ -9,8 +9,6 @@ import Checkout from '~/src/pages/checkout';
 import { ITraits } from '@webstack/components/FormControl/FormControl';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
-import { useUser } from '~/src/core/authentication/hooks/useUser';
-import AccountCreateMethod from '~/src/modules/account/views/AccountMethods/components/AccountCreateMethod/AccountCreateMethod';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckoutButton {
@@ -22,10 +20,8 @@ interface ICheckoutButton {
     setup?: boolean;
 }
 const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false, traits, collect, setup }) => {
-    const user = useUser();
     const router = useRouter();
     const { isModalOpen, openModal, closeModal } = useModal();
-    const [sourceId, setSourceId] = useState<string | null>(null);
     const memberService = getService<IMemberService>('IMemberService');
     const handleCheckout = async () => {
         // if(setup){

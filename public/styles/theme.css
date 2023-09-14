@@ -73,13 +73,14 @@ body {
 
   /* SIZES */
   --s-1: 33px;
-  --s-2: 26px;
-  --s-3: 23px;
-  --s-4: 19px;
-  --s-5: 16px;
-  --s-6: 14px;
-  --s-7: 12px;
-  --s-8: 10px;
+  --s-2: 31px;
+  --s-3: 26px;
+  --s-4: 23px;
+  --s-5: 19px;
+  --s-6: 16px;
+  --s-7: 14px;
+  --s-8: 12px;
+  --s-9: 10px;
 }
 
 body {
@@ -175,6 +176,7 @@ h6 {
 /* DIV */
 div {
   --default-padding: 20px;
+  --default-padding-sm: calc(--default-padding * 2);
   &::-webkit-scrollbar-thumb {
     background-color: var(--color-primary);
     width: 11px;

@@ -8,6 +8,7 @@
 }
 .account-create-method {
     width: 100%;
+    min-height: var(--default-element-height);
     .account-create-method__title{
         @extend .d-flex;
         height: var(--default-element-height);

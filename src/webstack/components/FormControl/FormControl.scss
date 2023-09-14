@@ -65,6 +65,9 @@ $elPad: 14px;
       font-weight: bold;
       font-size: var(--s-7);
       letter-spacing: 3px;
+      @media(max-width: 900px){
+        font-size: var(--s-9);
+      }
     }
 
     .form-control__header-invalid {
@@ -134,7 +137,7 @@ $elPad: 14px;
     
     .form-control__icon-placeholder {
       height: 100%;
-      width: var(--s-5);
+      width: var(--s-3);
     }
 
     &.form-control__element-invalid {
@@ -197,7 +200,6 @@ $elPad: 14px;
       }
     }
 
-    &[class$="-nav-item"],
     &[class$="-wordmark"],
     &[class$="-flat"],
     &[class$="-link"],
@@ -306,11 +308,13 @@ $elPad: 14px;
     }
 
     &[class$="-disabled"] {
-      cursor: default;
+      
       color: var(--color-gray-60);
       --ui-icon-color: var(--color-gray-60);
-
+      
       &:hover {
+        user-select: none;
+        cursor:not-allowed;
         color: var(--color-gray-60);
         --ui-icon-color: var(--color-gray-60);
         background-color: var(--color-gray-70);

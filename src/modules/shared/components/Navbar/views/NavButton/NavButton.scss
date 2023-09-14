@@ -1,10 +1,13 @@
 .nav-button{
     position: relative;
     cursor: pointer;
+    padding: 0 var(--default-padding-sm);
     &__cart{
         width: calc(var(--default-element-height) + var(--default-padding));
-        background-color: #f30;
     }
+    // &:hover{
+    //     background-color: var(--color-gray-60-opaque);
+    // }
     .nav-button__cart{
         display: none;
         position: absolute;
@@ -12,7 +15,7 @@
         right:0;
         background-color: var(--color-gray-80);
         border: solid 1px var(--color-gray-60);
-        padding: 10px 15px;
+        // padding: 10px 15px;
         box-shadow: var( --default-box-shadow);
         border-radius: 4px;
         min-width: 400px;

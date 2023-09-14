@@ -5,11 +5,7 @@
     width: 100%;
 }
 
-.d-pad {
-    width: calc(calc(100% - var(--default-padding)) - 2px);
-    padding: calc(var(--default-padding) * .5);
-    border: solid 1px var(--color-gray-20-opaque);
-}
+
 .brdr{
     border: solid 1px var(--color-gray-80);
     outline: solid 1px var(--color-gray-60);
@@ -17,36 +13,42 @@
 .account-methods {
     @extend .d-flex;
     flex-direction: column;
+    gap:var(--default-padding);
     justify-content: flex-start;
+    min-height: var(--default-element-height);
+    width: 100%;
     .account-methods__existing {
         @extend .d-flex;
+        flex-direction: column;
+        width: 100%;
         .account-methods__header {
             @extend .brdr;
-            width: calc(100% - 30px);
+            width: calc(100% - 32px);
             overflow: hidden;
             padding: calc(var(--s-6) * .66) var(--s-6);
             border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
             background-color: var(--color-gray-60);
             align-items: flex-start;
-            font-size: var(--s-6);
-            // text-indent: var(--default-padding);
             color: var(--color-gray-30);
             text-transform: capitalize;
-            // height: var(--default-element-height);
+            font-size: var(--s-6);
+            @media(max-width: 900px){
+                font-size: var(--s-8);
+            }
         }
-        // background-color: var(--color-gray-60);
-        // border: solid 1px var(--color-gray-70);
-        // border-radius: 0 0 var(--default-border-radius) var(--default-border-radius);
-        // @extend .d-flex;
-        // gap: var(--default-padding);
-        // padding:  9px 7px;
-        // width: calc(100% - 16px);
-        .account-methods__method-container {
-            border-radius: 0 0 var(--default-border-radius) var(--default-border-radius);
+        .account-methods__list {
+            width: 100%;
+            .account-methods__list-item {
+         
+            &:last-child{
+                border-radius: 0 0 var(--default-border-radius) var(--default-border-radius);
+            }
+            width: 100%;
+            min-height: var(--default-element-height);
             @extend .brdr;
             border-top: solid 1px var(--color-gray-70);
-            width: calc(100% - 2px);
             overflow: hidden;
+        }
         }
     }
 }

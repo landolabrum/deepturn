@@ -41,16 +41,13 @@ const Cart = ({ variant, traits }: any) => {
   return (
     <>
       <style jsx>{styles}</style>
-  
       <div className='cart'>
-
         <div className='cart__header'>
           <UiButton variant="dark" href='/products'>Keep Shopping</UiButton>
           <div className='cart__header-title'></div>
           {cart && cart.length != 0 && <CheckoutButton isModal cart={cart} />}
         </div>
         {cart && cart.length != 0 ? <CartList traits={traits} variant={variant} cart={cart} handleQty={setCart} 
-        // collapse
          /> : <EmptyCart />}
       </div>
     </>

@@ -17,6 +17,7 @@ interface INotificationListItem{
 export type INotification = {
   list?: INotificationListItem[];
   active: boolean;
+  persistance?: number;
   dismissable?: boolean;
   transparent?: boolean;
   onClick?: any;
@@ -67,7 +68,13 @@ const Notification: React.FC = () => {
     }
   }, [context]);
   useEffect(() => {
+    // handle Dismissable
     if(context?.dismissable == undefined)context.dismissable = true;
+    if(context?.persistance){
+      setTimeout(() => {
+        setShow(false);
+      }, context.persistance);
+    }
     setNotification(context);
     handleBodyScroll();
   }, [context, handleBodyScroll]);

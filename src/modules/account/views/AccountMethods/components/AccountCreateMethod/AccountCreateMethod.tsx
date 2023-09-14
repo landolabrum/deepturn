@@ -5,9 +5,9 @@ import UiForm from '@webstack/components/UiForm/UiForm';
 import { OPaymentMethod } from '~/src/modules/account/model/IMethod';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { IMethodBrand } from '@webstack/helpers/userExperienceFormats';
-import MemberService from '~/src/core/services/MemberService/MemberService';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
+import { useNotification } from '@webstack/components/Notification/Notification';
 
 
 interface IAccountCreateMethod {
@@ -22,6 +22,8 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
     collapse = true,
 }) => {
     const [status, setStatus] = useState<any>(false);
+    const [notification, setNotification]=useNotification();
+
     const [brand, setBrand] = useState<IMethodBrand | null | "fa-exclamation-triangle">(null);
     const errorIcon = "fa-exclamation-triangle";
     const memberService = getService<IMemberService>("IMemberService");
@@ -85,7 +87,15 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
     };
 
     const handleSubmit = async () => {
+        let context = 'adding payment method'
         setStatus(true);
+        setNotification({
+            active: true,
+            persistance: 1000,
+            list:[
+                {label: context},
+            ]
+          });
         try {
             const request: any = {
                 number: method.number.replaceAll(" ", ''),
@@ -94,15 +104,20 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 cvc: method.cvc
             }
             const methodResponse = await memberService.createCustomerMethod(request);
-            // console.log(`[ Success ]: ${JSON.stringify(methodResponse)}`);
+            context='successfully added card ending in: '+ method.number.slice(-4);
             setStatus('success')
-            setTimeout(() => {
-                onSuccess && onSuccess(methodResponse)
-            }, 1000);
+            onSuccess && onSuccess(methodResponse)
         } catch (e: any) {
-            // console.log(`[ ERROR ]: ${JSON.stringify(e)}`);
-            setStatus(e?.detail)
+            context=e.detail;
+            setStatus(e.detail)
         }
+        setNotification({
+            active: true,
+            persistance: 3000,
+            list:[
+                {label: context},
+            ]
+          });
     };
 
 

@@ -81,6 +81,8 @@ button {
     }
   }
   &:disabled{
+    user-select: none;
+    cursor:not-allowed !important;
     animation: disable 1s forwards;
     // animation-play-state: running;
   }

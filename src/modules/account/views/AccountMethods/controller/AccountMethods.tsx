@@ -20,16 +20,11 @@ const AccountMethods: React.FC = () => {
   const user = useUser();
 
   const handleDelete = async (id: string) => {
-    setLoading('deleting payment method');
-    const runDelete = await memberService.deleteMethod(id)
-    setDeleteResponse(
-      runDelete.message ? runDelete.message : `*${runDelete.detail.split('on Stripe')[0]}`
-    );
     getAccountMethods();
-    setLoading(false);
   }
 
   const getAccountMethods = async () => {
+    setLoading(true);
     const methodsResponse = await memberService.getMethods();
     if (methodsResponse) setMethods(methodsResponse?.data);
     setLoading(false);
@@ -39,26 +34,33 @@ const AccountMethods: React.FC = () => {
   }, []);
 
 
+
   return (
     <>
       <style jsx>{styles}</style>
       <div className='account-methods'>
-        <AccountCreateMethod
-          // open={methods.length == 0}
-          onSuccess={console.log}
-        />
+          <AccountCreateMethod
+            open={methods.length == 0}
+            onSuccess={() => getAccountMethods()}
+          />
         {methods.length > 0 && <>
           <div className='account-methods__existing'>
-          <div className='account-methods__header'>
-            <div className='account-methods__title'>
-              payment methods
-            </div>
-          </div>
-            {Object.entries(methods).map(([key, method]) => {
-              return <div className='account-methods__method-container' key={key} >
-                <AccountCurrentMethod method={method} onDelete={handleDelete} response={deleteResponse} />
+            <div className='account-methods__header'>
+              <div className='account-methods__title'>
+                payment methods
               </div>
-            })}
+            </div>
+            <div className='account-methods__list'>
+              {Object.entries(methods).map(([key, method]) => {
+                return <div className='account-methods__list-item' key={key} >
+                  <AccountCurrentMethod
+                    method={method}
+                    onDeleteSuccess={handleDelete}
+                    response={deleteResponse}
+                  />
+                </div>
+              })}
+            </div>
           </div></>}
         {loading == true && <UiLoader position='relative' height={500} />}
       </div>

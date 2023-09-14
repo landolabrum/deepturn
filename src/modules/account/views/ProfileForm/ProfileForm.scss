@@ -19,14 +19,18 @@ input{
     }
 }
 .profile-form{
+    $pad: 7px;
     @extend .d-flex;
     gap: var(--default-padding);
     flex-direction: column;
-    width: 100%;
+    width: calc(100% - $pad);
     overflow: hidden;
+    color: var(--color-gray-90);
     margin: var(--default-element-height) 0;
+    background-color: var(--color-gray-40);
+    border-radius: var(--default-border-radius);
     height: 100%;
-    padding: 1px;
+    padding: $pad;
     .profile-form__name, .profile-form__contact, .profile-form__address{
         padding: 1px;
         width: 100%;
@@ -36,10 +40,7 @@ input{
             flex-direction: column;
         }
     }
-    .profile-form__contact{}
 }
-.custom-autocomplete-input {
-  }
 
   .profile-form__action{
     width: 100%;

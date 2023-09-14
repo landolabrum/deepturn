@@ -14,7 +14,6 @@
   @media (max-width: 900px) {
     display: flex;
     flex-direction: column;
-    gap: var(--default-element-height);
     height: 100%;
     justify-content: center;
   }
@@ -28,8 +27,12 @@
   }
   .account__card{
     width: calc(100% - 20px);
-    padding: 0 10px;
+    padding: 0 10px var(--default-padding);
     height: auto;
+    background-color:var(--color-gray-70);
+    .account__card-content{
+      
+    }
   }
 
 }

@@ -23,7 +23,7 @@
 
     @media(max-width:900px) {
         overflow-y: visible;
-        height: 80vh;
+        height: 100vh;
     }
 
     .modal-overlay__content {
@@ -52,9 +52,8 @@
         }
 
         @media(max-width:900px) {
-            width: calc(100vw - 60px);
-            min-height: 100vw;
-            margin-top: 100px;
+            width: calc(100vw - 30px);
+            margin-top: 60px;
         }
 
         .modal-overlay__header {
@@ -64,7 +63,7 @@
             width: 100%;
 
             .modal-overlay__title {
-                font-size: 21px;
+                font-size: var(--s-6);
             }
 
             .modal-overlay__icon {

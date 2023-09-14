@@ -17,7 +17,8 @@ interface Props { }
 const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
   const [header, setHeader] = useHeader();
   const [loaded, setLoaded] = useState(false);
-  const [view, setView] = useState<string>('edit profile');
+  const [view, setView] = useState<string>('billing');
+  // const [view, setView] = useState<string>('edit profile');
   const user = useUser();
 
   const views: any = {
@@ -27,7 +28,6 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
     'billing': <AccountMethods />
   };
 
-  // const [view, setView] = useState<string>('edit profile');
   useEffect(() => {
     setLoaded(true);
     setHeader({ title: 'account', breadcrumbs: [{ label: "account" }] });
@@ -73,10 +73,12 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
               />
             </Div>
           </div>
-          <Div variant="dark card">
+          <Div variant="mc lite">
             <div className='account__card'>
             <h3>{capitalize(view)}</h3>
+            <div className='account__card-content'>
             {views[view]}
+            </div>
             </div>
           </Div>
         </div>

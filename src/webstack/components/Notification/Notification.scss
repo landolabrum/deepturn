@@ -16,7 +16,7 @@ $containerPad: 5px;
 @keyframes dropOut{
   0%{transform: translateY(0%);}
   10%{transform: translateY($containerPad);}
-  100%{transform: translateY(calc(20px - 100%));}
+  100%{transform: translateY(calc(20px - 100%)); display: none;}
 }
 
 

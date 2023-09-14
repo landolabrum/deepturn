@@ -8,8 +8,6 @@ import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
 import AccountForm from '~/src/modules/account/views/AccountForm/AccountForm';
 import { ICartItem } from '../../cart/model/ICartItem';
 import useCart from '../../cart/hooks/useCart';
-import { getService } from '@webstack/common';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import AccountCreateMethod from '~/src/modules/account/views/AccountMethods/components/AccountCreateMethod/AccountCreateMethod';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import AccountMethods from '~/src/modules/account/views/AccountMethods/controller/AccountMethods';
@@ -23,7 +21,6 @@ const Checkout: React.FC<ICheckout> = ({ cart }) => {
     const user = useUser();
     const [show, setShow] = useState<any>(false);
     const [status, setStatus] = useState<any>(false);
-    const memberService = getService<IMemberService>('IMemberService');
 
     const { getCartItems, handleQtyChange } = useCart();
     const router = useRouter();

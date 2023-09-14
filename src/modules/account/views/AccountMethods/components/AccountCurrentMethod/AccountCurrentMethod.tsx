@@ -10,13 +10,33 @@ import { useNotification } from '@webstack/components/Notification/Notification'
 // Remember to create a sibling SCSS file with the same name as this component
 interface IAccountCurrentMethod{
     method:IMethod;
-    onDelete: (e:any)=>void;
+    onDeleteSuccess: (e:any)=>void;
     response?: string;
 }
-const AccountCurrentMethod: React.FC<any> = ({ method, onDelete, response }:IAccountCurrentMethod) => {
+const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response }:IAccountCurrentMethod) => {
+    const memberService = getService<IMemberService>("IMemberService");
     const mm = String(method.card.exp_month).length == 1 ? `0${method.card.exp_month}` : method.card.exp_month;
     const [clicked, setClicked] = useState<number>(0);
-    const [notification, setNotification]=useNotification()
+    const [notification, setNotification]=useNotification();
+    const handleDelete = async (id: string) => {
+        setNotification({
+          active: true,
+          list:[
+              {label: 'deleting payment method'}
+          ]
+        });
+        const runDelete = await memberService.deleteMethod(id)
+        const label = runDelete.message ? runDelete.message : `*${runDelete.detail.split('on Stripe')[0]}`
+        setNotification({
+          active: true,
+          persistance: 3000,
+          list:[
+              {label: 'deleting payment method'},
+              {label:label}
+          ]
+        });
+        onDeleteSuccess(label)
+      }
     const handleClick = (clickTarget?: number) => {
         let target = clickTarget;
         if(typeof target != 'number')target = clicked;
@@ -31,7 +51,7 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDelete, response }:IAcc
                 setClicked(1);
                 break;
             case 3:
-                onDelete && onDelete(method.id)
+                handleDelete(method.id)
                 break;
             default:
                 break;
@@ -43,7 +63,7 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDelete, response }:IAcc
         'account-current-method__content-hide',
         'account-current-method__content-show'
     ]
-    
+           
     useEffect(() => {
         if(response && response != ''){
             setNotification({
@@ -59,7 +79,8 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDelete, response }:IAcc
             <style jsx>{styles}</style>
             <div className='account-current-method' >
                 <div 
-                    className={`account-current-method__content ${states[clicked]}`}
+                    className={`account-current-method__content${
+                        [0,2].includes(clicked) ?' account-current-method__content__hoverable ':' '}${states[clicked]}`}
                     onClick={()=>handleClick()}
                 >
                     <div className='account-current-method__info'>

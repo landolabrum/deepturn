@@ -50,8 +50,9 @@ interface IButtonContext extends IButton {
 
 const ButtonContext = ({ context }: IButtonContext) => {
   let traits = context.traits ? context.traits : {};
-  if (context.disabled) traits['disabled'] = true;
-
+  if (context.disabled == true) traits['disabled'] = true;
+  
+  useEffect(() => {}, []);
   return (
     <>
       <style jsx>{styles}</style>
