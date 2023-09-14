@@ -1,6 +1,10 @@
 .nav-button{
     position: relative;
     cursor: pointer;
+    &__cart{
+        width: calc(var(--default-element-height) + var(--default-padding));
+        background-color: #f30;
+    }
     .nav-button__cart{
         display: none;
         position: absolute;

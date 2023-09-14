@@ -21,7 +21,7 @@ const NavButton = ({ item, handleRoute, setOpen, active }: NavButtonProps) => {
   const contentRef = useRef<any>(null);
   let traits: any = { beforeIcon: item?.icon };
   if (isCartIcon) traits['badge'] = totalQty;
-  const handleClick = (del?: any) =>{
+  const handleClose = (del?: any) =>{
     if(!contentRef?.current)return;
     const showClass = 'nav-button__cart-show';
     const hideClass = 'nav-button__cart-hide';
@@ -36,7 +36,7 @@ const NavButton = ({ item, handleRoute, setOpen, active }: NavButtonProps) => {
 
   useEffect(() => {
     if(totalQty && totalQty > 5 && isCartIcon){
-      handleClick();
+      handleClose();
     };
   }, [totalQty, contentRef]);
 
@@ -47,17 +47,17 @@ const NavButton = ({ item, handleRoute, setOpen, active }: NavButtonProps) => {
   return (
     <>
       <style jsx>{styles}</style>
-      <span 
-      className="nav-button"
+      <div
+      className={`nav-button${isCartIcon?' nav-button__cart':''}`}
       onClick={() => {
         let pname = router.pathname.slice(1);
-        if (isCartIcon  ) item.href = `${item?.href}?ref=${pname}`;
+        if (isCartIcon && !Boolean(item?.href && item.href.includes("ref="))) item.href = `${item?.href}/?ref=${pname}`;
         handleRoute(item);
       }}
       >
           <div className="nav-button__cart" ref={contentRef}>
             <div className='nav-button__close'>
-            <UiIcon icon='fa-xmark' onClick={()=>handleClick(true)}/>
+            <UiIcon icon='fa-xmark' onClick={()=>handleClose(true)}/>
             </div>
             <Cart variant="mini" traits={{ responsive: true, width: "100%" }} />
           </div>
@@ -67,7 +67,7 @@ const NavButton = ({ item, handleRoute, setOpen, active }: NavButtonProps) => {
         >
           {item.label}
         </UiButton>
-      </span>
+      </div>
     </>
   );
 };
