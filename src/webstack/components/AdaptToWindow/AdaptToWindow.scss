@@ -46,6 +46,7 @@
     //     background-color: var(--color-primary-opaque);
     // }
     .adapt-to-window__element{
+        // display: none;
         @extend .d-flex-col;
         width: max-content;
         height: max-content;
@@ -53,6 +54,11 @@
         &.red{
             display: none;
         }
+        @media(max-width:900px){
+            position: fixed;
+            bottom: 10px;
+        }
+
         &.adapt-to-window__element-card{
             padding: var(--default-padding);
             background-color: var(--color-gray-40);

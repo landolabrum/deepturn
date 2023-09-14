@@ -60,10 +60,11 @@ const SignIn = ({ email }: { email: string | undefined }) => {
           ...(validTFA && { code: credentials.code }),
           user_agent,
         });
-        console.log(`[       signInResponse      ]:`, signInResponse);
+        // console.log(`[  signInResponse]:`, signInResponse);
       }catch(e:any){
-        setSignInResponse(e.detail)
-        // alert(JSON.stringify(e.detail))
+
+        setSignInResponse(e.detail!=undefined?e.detail:'*server down')
+        console.log(typeof e.detail)
       }
       // setSignInResponse({ code: responseCode, message: authResponse(responseCode) });
     }
@@ -85,10 +86,10 @@ const SignIn = ({ email }: { email: string | undefined }) => {
             type={field}
             autoComplete={field === "email" ? "username" : "current-password"}
             name={field}
-            variant={signInResponse.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)?'invalid':undefined}
+            variant={signInResponse?.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)?'invalid':undefined}
             placeholder={field}
             traits={
-              signInResponse.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)&&{
+              signInResponse?.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)&&{
                 errorMessage:`${signInResponse?.fields.find((f:any)=>f.name==field).message}`
               }
             }
@@ -102,7 +103,7 @@ const SignIn = ({ email }: { email: string | undefined }) => {
         }
       </form>
       <div className="authentication__authentication-status">
-        {signInResponse.message !== "" && (
+        {signInResponse?.message !== "" && (
           <div className="authentication__signin-response">
             {/* {signInResponse.message} */}
             {signInResponse?.detail &&

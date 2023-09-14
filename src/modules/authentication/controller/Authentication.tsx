@@ -65,6 +65,8 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
         sm='top'
         background={{
           type: 'video',
+          sm:'portrait',
+          lg:'landscapte',
           url:'./assets/backgrounds/nature-clean.mp4'
         }}
         >

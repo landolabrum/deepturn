@@ -14,25 +14,34 @@ const AdaptToWindow: React.FC<IAdaptToWindow> = (props) => {
     const {
         children,
         variant,
-        background
+        background,
+    
     }: IAdaptToWindow = props;
     const window = useWindow();
     const height = window.height;
     const width = window.width;
-    const [clzz, setClzz]=useState<string>('');
+    let sm = background?.sm;
+    const md = background?.md;
+    const lg = background?.lg;
+
+    const [clzz, setClzz] = useState<string>('');
     const Clzz = (cless: string) => {
-        if (variant) cless = cless + ` ${cless}-${variant}`
-        return cless
+        let newClz = cless;
+        // if (variant) cless = cless + ` ${cless}-${variant}`;
+        if (sm && width < 900) cless = ` ${cless}-${sm}`;
+        if (md && width < 1100) cless = ` ${cless}-${md}`;
+        if (lg && width < 1200) cless = ` ${cless}-${lg}`;
+        return newClz
     }
- 
+
     useEffect(() => {
         setClzz(Clzz("adapt-to-window__element"));
-    }, []);
+    }, [width]);
     return (
         <>
             <style jsx>{styles}</style>
             <div className='adapt-to-window'>
-                <AdaptWindowBackground background={background}/>
+                <AdaptWindowBackground background={background} />
                 <div className={clzz}>
                     {children}
                 </div>
