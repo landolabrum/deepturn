@@ -14,30 +14,23 @@ $cardWidth: 500px;
 
 
 .authentication {
-  width:300px;
-  @media(max-width:900px){
-    width: calc(100vw - 40px);
-  }
-  @media (max-width: 900px) {
-    align-items: center;
-  }
+ width: 100%;
+ min-width: 350px;
   z-index: 1;
-      .authentication__view-header{
-        width: 100%;
-        height: var(--default-element-height);
-        text-transform: capitalize;
-        @extend .d-flex;
-        justify-content: flex-start;
-        gap: var(--s-7);
-        
-        font-size: var(--s-2);
-        --ui-icon-size: var(--s-2);
-        
+  .authentication__view-header {
+    width: 100%;
+    height: var(--default-element-height);
+    text-transform: capitalize;
+    @extend .d-flex;
+    justify-content: flex-start;
+    gap: var(--s-7);
+    font-size: var(--s-2);
+    --ui-icon-size: var(--s-2);
+  }
 
-      }
-      .authentication__view-action{
-        width: max-content;
-        margin:0;
-      }
- 
+  .authentication__view-action {
+    width: max-content;
+    margin: 0;
+  }
+
 }

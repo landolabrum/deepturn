@@ -5,39 +5,37 @@ import { useRouter } from 'next/router';
 import CartList from '../../cart/views/CartList/CartList';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
-import AccountForm from '~/src/modules/account/views/AccountForm/AccountForm';
 import { ICartItem } from '../../cart/model/ICartItem';
 import useCart from '../../cart/hooks/useCart';
-import AccountCreateMethod from '~/src/modules/account/views/AccountMethods/components/AccountCreateMethod/AccountCreateMethod';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import AccountMethods from '~/src/modules/account/views/AccountMethods/controller/AccountMethods';
+import ProfileForm from '~/src/modules/account/views/ProfileForm/ProfileForm';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
     cart: any;
     label?: string;
     isModal?: boolean;
 }
-const Checkout: React.FC<ICheckout> = ({ cart }) => {
+const Checkout: React.FC<ICheckout> = () => {
     const user = useUser();
     const [show, setShow] = useState<any>(false);
-    const [status, setStatus] = useState<any>(false);
+    const [cart, _setCart] = useState<any>([]);
 
     const { getCartItems, handleQtyChange } = useCart();
     const router = useRouter();
     const setCart = (item: ICartItem) => {
         handleQtyChange(item);
     };
-
-
+    
     
     useEffect(() => {
+        _setCart(getCartItems());
         setShow(user?.methods);
     }, [user]);
   
-    if (show) return <>
+    return <>
         <style jsx>{styles}</style>
         <div className='checkout' id="main-checkout">
-            status: {JSON.stringify(status)}
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" />
             </div>
@@ -46,12 +44,12 @@ const Checkout: React.FC<ICheckout> = ({ cart }) => {
             </div>
             <div className='checkout__body'>
                 <AccountMethods />
-                <AccountForm form='profile' collapse={false} />
-                <CartList cart={cart} collapse={true} handleQty={setCart} />
+                <ProfileForm user={user} />
+                {/* <AccountForm form='profile' collapse={Boolean(user?.address)} /> */}
+                <CartList cart={cart} collapse={false} handleQty={setCart} />
             </div>
         </div>
     </>;
-    else return <AccountCreateMethod collapse={false} onSuccess={(e)=>{console.log('[ CHECKOUT ]', e)}} />;
 
 };
 

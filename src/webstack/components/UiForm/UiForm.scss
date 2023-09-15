@@ -15,9 +15,19 @@
   justify-content: flex-start;
   width: 100%;
   flex-wrap: wrap;
-  gap: var(--default-padding);
   .form__field {
       width: 100%;
       @extend .d-flex-col;
+      margin: auto;
+  }
+  &__submit{
+    // border-top: solid 1px var(--color-gray-60);
+    border-style: outset;
+    border-color: transparent;
+    border-top-color: var(--color-gray-60);
+    border-width: 2px;
+    width: calc(100%);
+    padding-top: 10px;
+    margin-top: 10px;
   }
 }

@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+export interface IWindow{
+  width:number
+  height:number
+}
 export default function useWindow(){
   const [windowSize, setWindowSize]=useState({width:0, height:0})
   useEffect(() => {

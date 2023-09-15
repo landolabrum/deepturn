@@ -73,10 +73,10 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
               />
             </Div>
           </div>
-          <Div variant="mc lite">
+          <Div variant="mc">
             <div className='account__card'>
             <h3>{capitalize(view)}</h3>
-            <div className='account__card-content'>
+            <div className='account__card__content'>
             {views[view]}
             </div>
             </div>

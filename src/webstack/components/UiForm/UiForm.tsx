@@ -9,21 +9,21 @@ import UiLoader from '../UiLoader/UiLoader';
 
 
 const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }: IForm) => {
-    if(!fields)return;
+    if (!fields) return;
     const [formValues, setFormValues] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const textTypes = ['', undefined, 'text', 'password', 'number', 'tel', null, false, 'expiry'];
 
 
     const errorMsg = (name: string) => {
-        if(!name)return;
+        if (!name) return;
         if (typeof loading === "object" && 'fields' in loading && Array.isArray(loading.fields)) {
             const errorField = loading.fields.find(field => field.name === name);
             if (errorField) return errorField.message;
         }
         return null;
     }
-    
+
 
     const handleInputChange = (e: any, constraints: IFormField['constraints']) => {
         const isValid = handleConstraints(e, constraints);
@@ -39,46 +39,46 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }
     const handleSubmit = (e: any) => {
         e.preventDefault();
         if (!fields || !onSubmit) return;
-        
+
         let newErrors = { ...errors };  // Create a copy of the existing errors
-        
+
         fields.forEach((f: any) => {
             if (f.constraints) {
                 const min = f.constraints?.min;
                 const max = f.constraints?.max;
                 const valueLen = String(f.value).replaceAll(' ', '').length;
                 if (min != undefined) {
-                    if(errors[f.name] !== undefined){delete newErrors[f.name];}
-                    else if(valueLen < min){newErrors[f.name] = `*${f.name} is not long enough`;}
-                } 
+                    if (errors[f.name] !== undefined) { delete newErrors[f.name]; }
+                    else if (valueLen < min) { newErrors[f.name] = `*${f.name} is not long enough`; }
+                }
                 if (max != undefined) {
-                    if(errors[f.name] !== undefined){delete newErrors[f.name];}
-                    else if(valueLen > max){newErrors[f.name] = `*${f.name} is too long`;}
+                    if (errors[f.name] !== undefined) { delete newErrors[f.name]; }
+                    else if (valueLen > max) { newErrors[f.name] = `*${f.name} is too long`; }
                 }
             }
         });
         // console.log('[ NEW ERRORS ]', newErrors)
         setErrors(newErrors);
-        
+
         if (Object.keys(newErrors).length === 0) {
             onSubmit(fields);
         } else if (onError) {
             onError(newErrors);
         }
     };
-    const fieldTraits = (field:IFormField)=>{
-        if(!field)return;
-        const fieldError = field.name?errorMsg(field.name): undefined;
-        if(!field.traits)field.traits={}
-        if(fieldError){
+    const fieldTraits = (field: IFormField) => {
+        if (!field) return;
+        const fieldError = field.name ? errorMsg(field.name) : undefined;
+        if (!field.traits) field.traits = {}
+        if (fieldError) {
             field.traits.errorMessage = fieldError;
-        }else{
+        } else {
             field.traits.errorMessage = undefined;
         }
         return field?.traits
     }
-    
-    useEffect(() => {}, [loading, fieldTraits]);
+
+    useEffect(() => { }, [loading, fieldTraits]);
     return (<>
         <style jsx>{styles}</style>
         {title}
@@ -88,23 +88,23 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }
                     key={index}
                     className='form__field'
                     style={typeof field?.width == 'string' ?
-                        { width: `calc(${field.width} - 5px)` }:{}}
-                > 
+                        { width: field.width } : {}}
+                >
                     {textTypes.includes(field?.type) && field.name && <>
-                    <UiInput
-                        label={field.label}
-                        // max={typeof field?.constraints?.max == 'number' ?field.constraints.max: undefined}
-                        variant={
-                            errors[field.name] ||
-                            fieldTraits(field)?.errorMessage && 'invalid' || field?.variant
-                        }
-                        type={field.type}
-                        traits={errors[field.name]?{errorMessage:errors[field.name]}:fieldTraits(field)}
-                        name={field.name}
-                        placeholder={field.placeholder}
-                        value={field?.value || formValues[field.name] || ''}
-                        onChange={e => handleInputChange(e, field.constraints)}
-                    />
+                        <UiInput
+                            label={field.label}
+                            // max={typeof field?.constraints?.max == 'number' ?field.constraints.max: undefined}
+                            variant={
+                                errors[field.name] ||
+                                fieldTraits(field)?.errorMessage && 'invalid' || field?.variant
+                            }
+                            type={field.type}
+                            traits={errors[field.name] ? { errorMessage: errors[field.name] } : fieldTraits(field)}
+                            name={field.name}
+                            placeholder={field.placeholder}
+                            value={field?.value || formValues[field.name] || ''}
+                            onChange={e => handleInputChange(e, field.constraints)}
+                        />
                     </>}
                     {field?.type == 'select' && field?.options !== undefined && <UiSelect
                         variant={field?.variant}
@@ -115,10 +115,12 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }
                         onSelect={e => handleInputChange({ target: { name: field.name, value: e } }, field.constraints)}
                     />}
                 </div>
-            )):(<UiLoader position='relative'/>)}
-            <UiButton  type='submit' busy={ loading == true} onClick={handleSubmit}>
-                {btnText ? btnText : 'Submit'}
-            </UiButton>
+            )) : (<UiLoader position='relative' />)}
+            <div className='form__submit'>
+                <UiButton type='submit' busy={loading == true} onClick={handleSubmit}>
+                    {btnText ? btnText : 'Submit'}
+                </UiButton>
+            </div>
         </form>
     </>
     );

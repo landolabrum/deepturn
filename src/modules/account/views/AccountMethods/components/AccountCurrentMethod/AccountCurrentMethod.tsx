@@ -12,20 +12,22 @@ interface IAccountCurrentMethod{
     method:IMethod;
     onDeleteSuccess: (e:any)=>void;
     response?: string;
+    default_source?: string | null;
 }
-const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response }:IAccountCurrentMethod) => {
+const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response, default_source }:IAccountCurrentMethod) => {
     const memberService = getService<IMemberService>("IMemberService");
     const mm = String(method.card.exp_month).length == 1 ? `0${method.card.exp_month}` : method.card.exp_month;
     const [clicked, setClicked] = useState<number>(0);
     const [notification, setNotification]=useNotification();
-    const handleDelete = async (id: string) => {
+    const handleDelete = async (mid: string) => {
+        setClicked(3);
         setNotification({
           active: true,
           list:[
               {label: 'deleting payment method'}
           ]
         });
-        const runDelete = await memberService.deleteMethod(id)
+        const runDelete = await memberService.deleteMethod(mid)
         const label = runDelete.message ? runDelete.message : `*${runDelete.detail.split('on Stripe')[0]}`
         setNotification({
           active: true,
@@ -36,6 +38,10 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
           ]
         });
         onDeleteSuccess(label)
+      }
+      const handleSetDefault = (mid: string)=>{
+        setClicked(4);
+        console.log('[ MID ]', mid)
       }
     const handleClick = (clickTarget?: number) => {
         let target = clickTarget;
@@ -50,8 +56,12 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
             case 2:
                 setClicked(1);
                 break;
-            case 3:
-                handleDelete(method.id)
+                case 3:
+                    
+                    handleDelete(method.id)
+                break;
+            case 4:
+                handleSetDefault(method.id)
                 break;
             default:
                 break;
@@ -61,6 +71,7 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
         '',
         'account-current-method__content-show',
         'account-current-method__content-hide',
+        'account-current-method__content-show',
         'account-current-method__content-show'
     ]
            
@@ -73,7 +84,7 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
                 ]
             });
         }
-    }, [response]);
+    }, []);
     return (
         <>
             <style jsx>{styles}</style>
@@ -91,8 +102,16 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
                         {mm} / {method.card.exp_year}
                     </div>
                 </div>
+                <div className='account-current-method__behind'>
+
+               {!default_source &&  <div className={`account-current-method__set-default`} onClick={()=>handleClick(4)}>
+                    <UiIcon icon={clicked == 4?'spinner': 'fa-check'} />
+                </div>
+
+               }
                 <div className={`account-current-method__delete`} onClick={()=>handleClick(3)}>
                     <UiIcon icon={clicked == 3?'spinner': 'fa-trash-can'} />
+                </div>
                 </div>
             </div>
             {/* {response && response != '' && 

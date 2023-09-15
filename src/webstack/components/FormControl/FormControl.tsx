@@ -23,6 +23,7 @@ export type ITraits = {
   outline?: string;
   disabled?: boolean;
   errorMessage?: string | React.ReactElement;
+  [key: string]: any;
 } | undefined;
 
 export interface IFormControl {
@@ -51,20 +52,17 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   const [testId, setTestId] = useState<string>("");
 
   useEffect(() => {
-    if (!traits) return;
+    if (!traits || traits == undefined) return;
     let elemenet_ref = ref.current.querySelector('.form-control__element');
     // Set width if provided
-    if (traits?.width) {
-      if (typeof traits.width === "number") ref.current.style.width = `${traits.width}px`;
-      if (typeof traits.width === "string") ref.current.style.width = traits.width;
+    if (elemenet_ref) {
+      for (let key in traits) {
+          if (key in elemenet_ref.style && traits[key]) {
+              elemenet_ref.style[key] = traits[key];
+          }
+      }
     }
-    if (traits?.height) {
-      if (typeof traits.height === "number") ref.current.style.height = `${traits.height}px`;
-      if (typeof traits.height === "string") ref.current.style.height = traits.height;
-    }
-    if (traits?.backgroundColor) {
-      if (typeof traits.backgroundColor === "string") elemenet_ref.style.backgroundColor = traits.backgroundColor;
-    }
+  
 
 
     if (elemenet_ref) {

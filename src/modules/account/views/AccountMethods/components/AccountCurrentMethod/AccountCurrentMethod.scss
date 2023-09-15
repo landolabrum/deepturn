@@ -1,6 +1,6 @@
 $pad: 18px;
 $delW: 50px;
-$min: calc(100% - calc(calc($pad * 2) + $delW));
+$min: calc(100% - calc(calc($pad * 5) + $delW));
 $max: calc(100% - calc($pad * 2));
 
 $color: var(--color-gray-60);
@@ -8,7 +8,7 @@ $colorHover: var(--color-gray-50);
 $colorActive: var(--color-primary);
 $contentBackground: var(--color-gray-60);
 $contentBackgroundHover: var(--color-gray-70-opaque);
-$background: var(--color-primary-opaque);
+$background: var(--color-gray-20-opaque);
 $outlineColor: var(--color-gray-70);
 $borderColor: var(--color-gray-40);
 
@@ -133,23 +133,34 @@ $borderColor: var(--color-gray-40);
             flex-direction: row;
         }
     }
-
-    .account-current-method__delete {
+    .account-current-method__behind{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: absolute;
+        height: var(--default-element-height);
         right: 0;
         top: 0;
         bottom: 0;
-        
         z-index: 1;
-        justify-content: center;
-        align-items: center;
-        width: $delW;
-        // --ui-icon-width: var(--default-element-height);
-        height: var(--default-element-height);
-        display: flex;
-        --ui-icon-color: var(--color-white);
-        &:hover {
-            background-color: var(--color-red);
+        & > div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: $delW;
+            aspect-ratio: 1/1;
+        }
+        .account-current-method__set-default {    
+            --ui-icon-color: var(--color-primary-opaque);
+            &:hover {
+                background-color: var(--color-white);
+            }
+        }
+        .account-current-method__delete {    
+            --ui-icon-color: var(--color-gray-50);
+            &:hover {
+                background-color: var(--color-red);
+            }
         }
     }
 }

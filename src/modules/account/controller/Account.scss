@@ -10,7 +10,6 @@
 .account {
   width: 100%;
   @extend .d-grid;
-
   @media (max-width: 900px) {
     display: flex;
     flex-direction: column;
@@ -26,69 +25,7 @@
     }
   }
   .account__card{
-    width: calc(100% - 20px);
-    padding: 0 10px var(--default-padding);
+    width: 100%;
     height: auto;
-    background-color:var(--color-gray-70);
-    .account__card-content{
-      
-    }
   }
-
 }
-
-  //   width: 33%;
-  //   height: inherit;
-  //   .account__views-mobile {
-  //     display: none;
-  //   }
-  //   .account__views-desktop { 
-  //     display: flex;
-  //     height: 100%;
-  //   }
-  // }
-  // @media (max-width: 900px) {
-  //   flex-direction: column;
-  //   gap: 15px;
-  //   .account__views {
-  //     z-index: 4;
-  //     .account__views-mobile {
-  //       display: unset;
-  //     }
-  //     .account__views-desktop {
-  //       display: none;
-  //       height: 100%;
-  //     }
-  //     width: 100%;
-  //   }
-  // }
-  // .account__content {
-  //   height: 100%;
-
-  //   font-family: "Atkinson Hyperlegible", sans-serif;
-  //   display: flex;
-  //   flex-direction: column;
-  //   gap: 10px;
-  //   border-radius: 5px;
-  //   padding: 15px;
-  //   background-color: var(--color-gray-80);
-  //   border: solid 1px var(--color-gray-60);
-  //   @media (min-width: 900px) {
-  //     width: 100%;
-  //   }
-  //     .account__line-item {
-  //       &.is-child {
-  //         padding-left: 15px;
-  //         color: #f30;
-  //       }
-  //       strong {
-  //         text-transform: capitalize;
-  //         font-style: italic;
-  //         color: #09f;
-  //         &::after {
-  //           content: ":";
-  //         }
-  //       }
-  //     }
-  //   }
-  //   }

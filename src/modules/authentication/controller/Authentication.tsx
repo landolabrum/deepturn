@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import VerifyEmail from "../views/VerifyEmail/VerifyEmail";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import UiButton from "@webstack/components/UiButton/UiButton";
-import AdaptToWindow from "@webstack/components/AdaptToWindow/AdaptToWindow";
+import AdaptToWindow from "@webstack/components/AdaptToWindow/controller/AdaptToWindow";
 
 
 interface Props { }
@@ -62,11 +62,13 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
       <style jsx>{styles}</style>
       <AdaptToWindow
         variant="card"
-        sm='top'
+        sm={{value:'bottom', style:{width: 'calc(100% - 40px'}}}
+        lg={{value: 'top right', style:{margin: '70px 50px 0 0', width:'500px'}}}
         background={{
           type: 'video',
           sm:'portrait',
-          lg:'landscapte',
+          md:'portrait',
+          lg:'landscape',
           url:'./assets/backgrounds/nature-clean.mp4'
         }}
         >
@@ -95,21 +97,3 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
 };
 
 export default Authentication;
-           {/* <div className="authentication__form">
-               <div className='authentication__view-header'>
-                 <div className="authentication__logo">
-                   <UiIcon icon="deepturn-logo" />
-                 </div>
-                 <div className='authentication__view-name'>
-                   {keyStringConverter(view)}
-                 </div>
-               </div>
-               {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
-               {view == 'sign-up' && <SignUp setView={setView} />}
-               {view == 'verify' && <VerifyEmail token={router.query.token} onSuccess={console.log} />}
-               <div className="authentication__view-action">
-                 <UiButton onClick={handleView} variant="link" label={view == 'sign-in' ? "no account?" : "already have an account?"}>
-                   {view == 'sign-in' ? "create account" : "log in"}
-                 </UiButton>
-               </div>
-           </div> */}

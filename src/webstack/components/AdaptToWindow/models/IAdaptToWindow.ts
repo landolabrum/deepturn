@@ -4,7 +4,21 @@ import React from "react";
 // Background Type for Adaptive Window
 
 // Orientation Types for Adaptive Window Sizes
-type AdaptOrient = 'portrait' | 'landscape';
+export type IAdaptElLocation = 
+    'top' | 
+    'right' | 
+    'bottom' | 
+    'left' | 
+    'top right' | 
+    'top left' | 
+    'bottom right' | 
+    'bottom left' |
+    'right top' |
+    'right bottom' |
+    'left top' |
+    'left bottom';
+
+export type AdaptOrient = 'portrait' | 'landscape' | undefined;
 
 // Sizes Interface for Adaptive Window
 
@@ -14,17 +28,21 @@ export type IAdaptWinBg = {
     sm?: AdaptOrient;
     md?: AdaptOrient;
     lg?: AdaptOrient;
-};
+}
 // | React.ReactElement | undefined
-interface IAdaptWinSizes{
+export interface IAdaptWinSizes{
     sm?: AdaptOrient;
     md?: AdaptOrient;
     lg?: AdaptOrient;
 }
 // Main Interface for Adaptive Window
+export type windowLoc = IAdaptElLocation | {value: IAdaptElLocation, style: React.CSSProperties };
 export interface IAdaptToWindow {
     children?: React.ReactElement | Iterable<React.ReactNode>;
     variant?: IVariant;
     background: IAdaptWinBg;
-    IAdaptWinSizes:[AdaptOrient]
+    sm?: windowLoc;
+    md?: windowLoc;
+    lg?: windowLoc;
 }
+

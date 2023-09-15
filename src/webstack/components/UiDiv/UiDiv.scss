@@ -21,27 +21,32 @@
     @extend .d-flex-col_j-fs_a-fs;
     gap: var(--default-padding);
     font-size: var(--s-5);
-    &__lite{
-        color:var(--color-gray-70);
-        background-color: var(--color-gray-50);
-    }
+    width: 100%;
     &__card{
         color: var(--color-gray-50);
         outline: solid 1px var(--color-gray-80);
         border: solid 1px var(--color-gray-60);
         border-radius: var(--default-border-radius);
         min-height: var(--default-element-height);
+        border-radius: var(--default-border-radius);
     }
     &__mc{
         color: var(--color-gray-40);
-        border-width: 4px;
+        background-color: var(--color-gray-80);
+        border-radius: var(--default-border-radius);
         border-style: outset;
-        background-color: var(--color-gray-70);
         border-color: 
         var(--color-gray-40-opaque)
         var(--color-gray-40-opaque)
         var(--color-gray-60-opaque)
         var(--color-gray-20-opaque);
+        border-width: 2px;
+        padding: var(--default-padding);
+        width: calc(calc(100% - 4px) -  calc(var(--default-padding) * 2));
+    }
+    &__lite{
+        color:var(--color-gray-70);
+        background-color: var(--color-gray-50);
     }
     &__dark{
         background-color: var(--color-gray-90);

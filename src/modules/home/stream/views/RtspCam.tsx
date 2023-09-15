@@ -15,7 +15,6 @@ const ImageLoader = ({ src, alt, onClick, handleImageLoad, handleImageError }: a
 const RtspCam: React.FC<any> = ({ camera, handleMain, handleImageLoad, handleImageError, loadedImages, load }: any) => {
   const [od, setOd]=useState<boolean>(false);
   const streamUrl = `${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=${camera}`;
-  alert(JSON.stringify(camera))
   const Loading = ({ text }: any) => (
     <>
       <style jsx>{styles}</style>

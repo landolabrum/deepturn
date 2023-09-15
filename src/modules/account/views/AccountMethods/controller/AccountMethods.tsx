@@ -54,6 +54,7 @@ const AccountMethods: React.FC = () => {
               {Object.entries(methods).map(([key, method]) => {
                 return <div className='account-methods__list-item' key={key} >
                   <AccountCurrentMethod
+                    default_source={user?.default_source}
                     method={method}
                     onDeleteSuccess={handleDelete}
                     response={deleteResponse}

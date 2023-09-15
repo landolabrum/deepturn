@@ -19,18 +19,16 @@ input{
     }
 }
 .profile-form{
-    $pad: 7px;
+    width: 100%;
+    // $pad: var(--default-padding);
+    // padding: $pad;
+    // width: calc(100% - calc($pad * 2));
     @extend .d-flex;
     gap: var(--default-padding);
     flex-direction: column;
-    width: calc(100% - $pad);
     overflow: hidden;
-    color: var(--color-gray-90);
-    margin: var(--default-element-height) 0;
-    background-color: var(--color-gray-40);
-    border-radius: var(--default-border-radius);
     height: 100%;
-    padding: $pad;
+    color: var(--color-gray-90);
     .profile-form__name, .profile-form__contact, .profile-form__address{
         padding: 1px;
         width: 100%;
