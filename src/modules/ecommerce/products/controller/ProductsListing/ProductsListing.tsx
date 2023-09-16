@@ -8,6 +8,7 @@ import ProductSlider from "../../views/ProductSlider/ProductSlider";
 import UiLoader from "@webstack/components/UiLoader/UiLoader";
 import { dateFormat, numberToUsd } from "@webstack/helpers/userExperienceFormats";
 import { useUser } from '~/src/core/authentication/hooks/useUser';
+import IShoppingService from "~/src/core/services/ShoppingService/IShoppingService";
 
 interface Filter {
   [key: string]: {
@@ -21,7 +22,7 @@ const ProductsListing: NextPage = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const memberService = getService<IMemberService>("IMemberService");
+  const shoppingService = getService<IShoppingService>("IShoppingService");
 
   const getSelectedCategories = (filter: any) => {
     const selectedEntries = Object.entries(filter).filter(([, value]:any) => value.selected);
@@ -42,7 +43,7 @@ useEffect(() => {
   setLoading(true);
   const fetchProducts = async () => {
     try {
-      const memberResponse = await memberService.getProducts();
+      const memberResponse = await shoppingService.getProducts();
       const fetchedProducts: any = memberResponse?.data;
       if (fetchedProducts) {
         const formatted = fetchedProducts.map((product: any) => ({

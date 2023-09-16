@@ -8,14 +8,14 @@ import { IMethod } from '../../../model/IMethod';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import AccountCreateMethod from '../components/AccountCreateMethod/AccountCreateMethod';
 import AccountCurrentMethod from '../components/AccountCurrentMethod/AccountCurrentMethod';
+import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const AccountMethods: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
+  const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
-  const [deleteResponse, setDeleteResponse] = useState<any>('');
-
   const memberService = getService<IMemberService>("IMemberService");
   const user = useUser();
 
@@ -29,15 +29,21 @@ const AccountMethods: React.FC = () => {
     if (methodsResponse) setMethods(methodsResponse?.data);
     setLoading(false);
   }
+  const handleLabel = () =>{
+    if(user ){
+      console.log('[ USER ]', user)
+      return user.default_source;
+    }
+  }
   useEffect(() => {
+    handleLabel();
     getAccountMethods();
   }, []);
-
-console.log("U:",user)
 
   return (
     <>
       <style jsx>{styles}</style>
+      <UiCollapse label={label} open>
       <div className='account-methods'>
           <AccountCreateMethod
             open={methods.length == 0}
@@ -45,11 +51,7 @@ console.log("U:",user)
           />
         {methods.length > 0 && <>
           <div className='account-methods__existing'>
-            <div className='account-methods__header'>
-              <div className='account-methods__title'>
-                payment methods
-              </div>
-            </div>
+ 
             <div className='account-methods__list'>
               {Object.entries(methods).map(([key, method]) => {
                 return <div className='account-methods__list-item' key={key} >
@@ -57,7 +59,7 @@ console.log("U:",user)
                     default_source={user?.default_source}
                     method={method}
                     onDeleteSuccess={handleDelete}
-                    response={deleteResponse}
+                    response={loading}
                   />
                 </div>
               })}
@@ -65,6 +67,7 @@ console.log("U:",user)
           </div></>}
         {loading == true && <UiLoader position='relative' height={500} />}
       </div>
+      </UiCollapse>
     </>
   );
 };

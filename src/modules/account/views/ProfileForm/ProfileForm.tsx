@@ -7,6 +7,7 @@ import { getService } from '@webstack/common';
 import formatAccountFields from '../AccountForm/components/FormatAccountForm';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import UiButton from '@webstack/components/UiButton/UiButton';
+import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 const GOOGLE_API_KEY = 'AIzaSyCthMX-HyRujKH9WgIwvVoi6Hhms247Ts4';
 
 const ProfileForm = ({ user }: any) => {
@@ -25,7 +26,7 @@ const ProfileForm = ({ user }: any) => {
   const memberService = getService<IMemberService>("IMemberService");
 
   const handleChange = (e: any) => {
-    if(disabled)setDisabled(false);
+    if (disabled) setDisabled(false);
     setFields({ ...fields, [e.target.name]: e.target.value });
   };
 
@@ -57,7 +58,7 @@ const ProfileForm = ({ user }: any) => {
             country: addressComponents.country || ''
           };
           setFields({ ...fields, address: formattedAddress });
-    
+
         }
       });
     };
@@ -93,45 +94,65 @@ const ProfileForm = ({ user }: any) => {
     setLoading(false);
   };
 
-  useEffect(() => {}, [handleChange]);
+  const label = () => {
+    const addr = fields?.address;
+
+    if (addr) return <>
+      <style jsx>{styles}</style>
+      <div className='profile-form__collapse-label'>
+        <div>
+        {fields.first_name} {fields.last_name}
+        </div>
+        <div>
+        {addr?.line1}, {addr?.city}, {addr?.state}
+        </div>
+      </div>
+    </>
+    return 'Profile Form'
+  }
+  useEffect(() => { }, [handleChange]);
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='profile-form'>
-        <div className='profile-form__name'>
-          <UiInput value={fields?.first_name} label='First Name' name='first_name' onChange={handleChange} />
-          <UiInput value={fields?.last_name} label='Last Name' name='last_name' onChange={handleChange} />
+      <UiCollapse label={label()} open>
+        <div className='profile-form'>
+          <div className='profile-form__body'>
+            <div className='profile-form__name'>
+              <UiInput value={fields?.first_name} label='First Name' name='first_name' onChange={handleChange} />
+              <UiInput value={fields?.last_name} label='Last Name' name='last_name' onChange={handleChange} />
+            </div>
+            <div className='profile-form__contact'>
+              <UiInput value={fields?.email} type='email' label='Email'
+                //  variant='dark'
+                name='email' onChange={handleChange} />
+              <UiInput value={phoneFormat(fields?.phone, fields?.country)} label='Phone' type='tel' name='phone' onChange={handleChange} />
+            </div>
+            <div className="profile-form__address">
+              {fields.address && <UiInput
+                id="autocomplete-address"
+                label='address'
+                type="text"
+                placeholder="Enter your address"
+                defaultValue={`${fields.address?.line1 ? fields.address?.line1 + ', ' : ''
+                  }${fields.address?.line2 ? fields.address?.line2 + ', ' : ''
+                  }${fields.address?.city ? fields.address?.city + ', ' : ''
+                  }${fields.address?.state ? fields.address?.state + ', ' : ''
+                  }${fields.address?.postal_code ? fields.address?.postal_code + ', ' : ''
+                  }${fields.address?.country ? fields.address?.country : ''
+                  }`}
+                name="address"
+              />}
+            </div>
+            <div className='profile-form__action'>
+              <UiButton
+                variant='primary'
+                disabled={disabled}
+                busy={loading}
+                onClick={handleSubmit}>Update Account</UiButton>
+            </div>
+          </div>
         </div>
-        <div className='profile-form__contact'>
-          <UiInput value={fields?.email} type='email' label='Email'
-            //  variant='dark'
-            name='email' onChange={handleChange} />
-          <UiInput value={phoneFormat(fields?.phone, fields?.country)} label='Phone' type='tel' name='phone' onChange={handleChange} />
-        </div>
-        <div className="profile-form__address">
-          {fields.address && <UiInput
-            id="autocomplete-address"
-            label='address'
-            type="text"
-            placeholder="Enter your address"
-            defaultValue={`${fields.address?.line1 ? fields.address?.line1 + ', ' : ''
-              }${fields.address?.line2 ? fields.address?.line2 + ', ' : ''
-              }${fields.address?.city ? fields.address?.city + ', ' : ''
-              }${fields.address?.state ? fields.address?.state + ', ' : ''
-              }${fields.address?.postal_code ? fields.address?.postal_code + ', ' : ''
-              }${fields.address?.country ? fields.address?.country : ''
-              }`}
-            name="address"
-          />}
-        </div>
-        <div className='profile-form__action'>
-          <UiButton 
-            variant='primary'
-            disabled={disabled}
-            busy={loading}
-            onClick={handleSubmit}>Update Account</UiButton>
-        </div>
-      </div>
+      </UiCollapse>
     </>
   );
 };

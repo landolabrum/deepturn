@@ -3,7 +3,7 @@ $delW: 50px;
 $min: calc(100% - calc(calc($pad * 5) + $delW));
 $max: calc(100% - calc($pad * 2));
 
-$color: var(--color-gray-60);
+
 $colorHover: var(--color-gray-50);
 $colorActive: var(--color-primary);
 $contentBackground: var(--color-gray-60);
@@ -61,36 +61,37 @@ $borderColor: var(--color-gray-40);
 
 .account-current-method {
     cursor: pointer;
-    background-color: $background;
-    color: $color;
-    height: var(--default-element-height);
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-90);
     position: relative;
     @extend .d-flex;
     flex-direction: row;
     justify-content: flex-start;
-    --ui-icon-color: $color;
+    --ui-icon-color: var(--color-gray-60);
     width: 100%;
-    // overflow: hidden;
-    // box-shadow: var(--default-box-shadow);
-    box-shadow: inset 0 0 5px 5px  var(--color-gray-80-opaque);
-    .account-current-method__content {
+    border-radius: var(--default-border-radius);
+    border: solid 1px var(--color--gray-70);
+    outline: solid 1px var(--color-gray-80);
+    height: var(--default-element-height);
+    overflow: hidden;
+    &__content {
+        --ui-icon-color: var(--color-gray-50);
+        color: var(--color-gray-50);
+        height: var(--default-element-height);
+        border-radius: var(--default-border-radius) 0 0 var(--default-border-radius);
+        border-right: solid 5px var(--color-gray-40);
+        @extend .d-flex;
+        width: calc( 100% - calc($pad * 2));
+        padding: 0 $pad;
         background-color: var(--color-gray-40);
         line-height: 1;
-        height: 100%;
         font-size: var(--s-5);
         @media(max-width: 900px){
             font-size: var(--s-6);
         }
-        // height: var(--default-element-height);
-        @extend .d-flex;
-        box-shadow: 5px 0 5px 0 var(--color-gray-80-opaque);
         flex-direction: row;
-        border-radius: var(--default-border-radius);
-        outline: solid 1px var(--color-gray-80);
         z-index: 2;
         justify-content: space-between;
-        padding: calc($pad * .66) $pad;
-        width: calc(100% - calc($pad * 2));
         animation-play-state: paused;
         &.account-current-method__content-show {
             animation: show 1s forwards;
@@ -105,8 +106,8 @@ $borderColor: var(--color-gray-40);
             &:hover {
                 animation: tease 1s forwards;
                 animation-play-state: running;
-                color: $colorHover;
-                --ui-icon-color: $colorHover;
+                color: var(--color-gray-90);
+                --ui-icon-color: var(--color-gray-90);
             }
         }
 
@@ -173,7 +174,6 @@ $borderColor: var(--color-gray-40);
             }
         }
         .account-current-method__delete {    
-            --ui-icon-color: var(--color-gray-50);
             &:hover {
                 background-color: var(--color-red);
             }

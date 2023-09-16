@@ -26,7 +26,7 @@ export interface IEnvironment {
     membership: string;
     shopping: string;
     distributor: string;
-    licensing: string;
+    home: string;
   };
 
   firebase: {

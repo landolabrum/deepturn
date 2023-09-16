@@ -14,7 +14,7 @@ const ImageLoader = ({ src, alt, onClick, handleImageLoad, handleImageError }: a
 };
 const RtspCam: React.FC<any> = ({ camera, handleMain, handleImageLoad, handleImageError, loadedImages, load }: any) => {
   const [od, setOd]=useState<boolean>(false);
-  const streamUrl = `${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=${camera}`;
+  const streamUrl = `${environment.serviceEndpoints.home}/api/stream/rtsp/?id=${camera}`;
   const Loading = ({ text }: any) => (
     <>
       <style jsx>{styles}</style>
@@ -29,7 +29,6 @@ const RtspCam: React.FC<any> = ({ camera, handleMain, handleImageLoad, handleIma
   return (
     <>
       <style jsx>{styles}</style>
-      {/* <span onClick={()=>setOd(!od)}>object detection</span> */}
       <ImageLoader
         src={`${streamUrl}`}
         alt={`rtsp-camera-feed-${camera}`}

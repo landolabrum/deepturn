@@ -111,7 +111,7 @@ $actColorClose: var(--color-gray-30);
     flex-direction: column;
     @include flexCenter;
     width: calc(100% - calc(var(--default-padding) * 2));
-    padding: 0 var(--default-padding);
+    padding:0 var(--default-padding);
     height: $button_height;
     min-height: $button_height;
     &__open{
@@ -156,7 +156,10 @@ $actColorClose: var(--color-gray-30);
     .collapse__body{
         width: 100%;
         height: var(--default-element-height);
+        padding-top: 0;
+
         &__open{ 
+            padding-top: var(--default-element-height);
             animation: openBody 1s forwards; 
         }
         &__close{ 

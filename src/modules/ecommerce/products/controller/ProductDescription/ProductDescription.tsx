@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './ProductDescription.scss';
-import { dateFormat, numberToUsd } from '@webstack/helpers/userExperienceFormats';
+import {  numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { useHeader } from '@webstack/components/Header/views/Header';
 import { useRouter } from 'next/router';
 import UiLoader from '@webstack/components/UiLoader/UiLoader';
 import { getService } from '@webstack/common';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import ProductImage from '../../views/ProductImage/ProductImage';
 import ProductBuyNow from '../../views/ProductBuyNow/ProductBuyNow';
 import { ICartItem } from '../../../cart/model/ICartItem';
 import useCart from '../../../cart/hooks/useCart';
+import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
 
 const ProductDescription = () => {
 
@@ -30,8 +30,8 @@ const ProductDescription = () => {
     async () => {
       if ([product_query_id, price_query_id].includes(undefined)) return;
       setIsLoading(true); // Start loading
-      const memberService = getService<IMemberService>("IMemberService");
-      const productResponse = await memberService.getProduct({ id: product_query_id, pri: price_query_id });
+      const shoppingService = getService<IShoppingService>("IShoppingService");
+      const productResponse = await shoppingService.getProduct({ id: product_query_id, pri: price_query_id });
       if (productResponse?.id) {
         productResponse.price_object.qty = 0;
         setProduct(productResponse);

@@ -13,8 +13,8 @@ const devEnvironment: IEnvironment = {
   serviceEndpoints: {
     membership: "http://192.168.86.101:8000",
     distributor: "",
-    shopping: "",
-    licensing: "",
+    shopping: "http://192.168.86.101:8000",
+    home: "http://192.168.86.101:8000",
   },
   firebase: {
     webApiKey: '',

@@ -4,8 +4,8 @@ import styles from './AccountCurrentMethod.scss';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { IMethod } from '~/src/modules/account/model/IMethod';
 import { getService } from '@webstack/common';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useNotification } from '@webstack/components/Notification/Notification';
+import IMemberService from '~/src/core/services/MemberService/IMemberService';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IAccountCurrentMethod {

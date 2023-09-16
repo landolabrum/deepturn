@@ -1,27 +1,12 @@
 import CookieHelper from "@webstack/helpers/CookieHelper";
 import { EventEmitter } from "@webstack/helpers/EventEmitter";
-// import {
-//   FirebaseClient,
-//   firebaseClient,
-// } from "~/src/core/firebase/FirebaseClient";
 import environment from "~/src/environment";
 import CustomToken from "~/src/models/CustomToken";
-// import { MemberSignInResponse } from "~/src/models/membership/MemberSignInResponse";
 import MemberToken from "~/src/models/MemberToken";
 import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
-import IMemberService, { ProductRequestProps, ProductsRequestProps } from "./IMemberService";
-import { GetPersonalInformationResponse } from "~/src/models/membership/GetPersonalInformationResponse";
-import { GetMemberProfileInformationResponse } from "~/src/models/membership/GetMemberProfileInformationResponse";
-import {
-  GetRecruitesRequest,
-  GetRecruitesResponse,
-} from "~/src/models/membership/Recruites";
-import {
-  EnrollmentActivityResponse,
-  RecentEnrollmentRequest,
-  RecentEnrollmentResponse,
-} from "~/src/models/membership/Enrollments";
+import IMemberService from "./IMemberService";
+
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
 import { encryptRequest } from "@webstack/helpers/Encryption";
@@ -144,7 +129,7 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
   public async updateMember(id: string, memberData: any): Promise<any> {
     if (id && memberData) {
 
-      const res = await this.put<GetRecruitesRequest, GetRecruitesResponse>(
+      const res = await this.put<any, any>(
         `api/customer?id=${id}`,
         memberData);
       const memberJwt: any = res;
@@ -160,138 +145,20 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
       throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
     }
   };
-  public async getProducts(
-    request?: any
-  ): Promise<any> {
-    if (request === undefined) return await this.get<any>(
-      `/api/products`,
-    );
-    return await this.get<any>(
-      `/api/products${request}`,
-    );
-  }
-  public async getProduct({ id, pri }: ProductRequestProps): Promise<any> {
-    if (pri) {
-      return this.get<any>(
-        `/api/product?id=${id}&pri=${pri}`,
-      );
-    }
-    return this.get<any>(
-      `/api/product?id=${id}`,
-    );
-  }
-  public async lights(
-  ): Promise<any> {
-    return await this.get<any>(
-      "/hue/lights",
-    );
-  }
-  public async lightsOn(
-  ): Promise<any> {
-    return await this.get<any>(
-      "/hue/all-on",
-    );
-  }
-  public async lightsOff(
-  ): Promise<any> {
-    return await this.get<any>(
-      "/hue/all-off",
-    );
-  }
-  public async stream(
-    cameraId: string
-  ): Promise<string> {
-    return this.get<string>(
-      `/cam-${cameraId}`,
-    );
-  }
-  public async light(
-    request: any
-  ): Promise<GetRecruitesResponse> {
-    return this.post<any, any>(
-      "/hue/light",
-      request
-    );
-  }
-  public async recentEnrollmentActivity(): Promise<any> {
-    return this.get<EnrollmentActivityResponse | null>(
-      "/reports/recent-enrollment-activity"
-    );
-  }
 
-  public async recruitesList(
-    request: GetRecruitesRequest
-  ): Promise<GetRecruitesResponse> {
-    return this.post<GetRecruitesRequest, GetRecruitesResponse>(
-      "/reports/new-recruits",
-      request
-    );
-  }
-  public async recentEnrollments(
-    request: RecentEnrollmentRequest
-  ): Promise<RecentEnrollmentResponse> {
-    return this.post<RecentEnrollmentRequest, RecentEnrollmentResponse>(
-      "/reports/recent-enrollments",
-      request
-    );
-  }
-
-  public async nodesPurchased(
-    request: GetRecruitesRequest
-  ): Promise<GetRecruitesResponse> {
-    return this.post<GetRecruitesRequest, GetRecruitesResponse>(
-      "/reports/new-recruits",
-      request
-    );
-  }
-
-  public async getPersonalInformation(): Promise<GetPersonalInformationResponse | null> {
-    return this.get<GetPersonalInformationResponse | null>(
+  public async getPersonalInformation(): Promise<any | null> {
+    return this.get<any | null>(
       "member/profile-info"
     );
   }
 
   public async getMemberProfileInformation(
     memberId: string
-  ): Promise<GetMemberProfileInformationResponse | null> {
+  ): Promise<any | null> {
     return this.post(`/reports/profile-info/${memberId}`);
   }
-  public async getVehicles(
-    access: any
-  ): Promise<GetRecruitesResponse> {
-    return this.post<any, any>(
-      "/auto/vehicles",
-      access
-    );
-  }
-  public async startVehicle(
-    request: any
-  ): Promise<GetRecruitesResponse> {
-    return this.post<any, any>(
-      "/auto/vehicle/start",
-      request
-    );
-  }
-  // async getSignInIdToken(
-  //   email: string,
-  //   password: string,
-  //   firebaseAPIKey: string
-  // ): Promise<any> {
-  //   const client = new FirebaseClient(
-  //     // {
-  //     //   apiKey: firebaseAPIKey,
-  //     //   authDomain: "",
-  //     //   projectId: "",
-  //     // },
-  //     // firebaseAPIKey
-  //   );
-  //   // try {
-  //   //   const tkn = await client.signUp(email, password);
-  //   //   return tkn;
-  //   // } catch (err) {
-  //   //   return "Email was in use or failed to sign up.";
-  //   // }
-  // }
+
+
 
   private saveLegacyCookie(customJwt: string) {
     if (environment.legacyJwtCookie?.name) {
@@ -319,7 +186,6 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
       user_agent: user_agent
     }: any
   ): Promise<UserContext> {
-    // console.log({email, password, user_agent})
     if (!email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
@@ -390,42 +256,7 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
 
     return this._userContext;
   }
-  // public async signInWithLegacyToken(
-  //   legacyCustomToken: string
-  // ): Promise<UserContext | null> {
-  //   try {
-  //     const customToken = this.parseCustomToken(legacyCustomToken);
-  //     if (customToken == null) {
-  //       return null;
-  //     }
-  //     if (customToken.claims.memberId) {
-  //       return null;
-  //     } // This is a new platform token (don't use for SSO)
-  //     // const idToken = await firebaseClient.signInWithToken(legacyCustomToken);
-  //     // if (!idToken) {
-  //     //   return null;
-  //     // }
-  //     const response = await this.post<{}, MemberSignInResponse>(
-  //       "/authentication/sign-in",
-  //       {},
-  //       { Authorization: "Bearer " + idToken }
-  //     );
-  //     if (!response) {
-  //       return null;
-  //     } // note: API should throw an error
-  //     const memberJwt = await firebaseClient.signInWithToken(
-  //       response.customToken
-  //     );
-  //     if (!memberJwt) {
-  //       return null;
-  //     }
-  //     this.saveMemberToken(memberJwt);
-  //     // this.saveLegacyCookie(response.customToken);
-  //     return this._getCurrentUser(true)!;
-  //   } catch (error) {
-  //     return null;
-  //   }
-  // }
+  
   private saveMemberToken(memberJwt: string) {
     if (this.isBrowser) {
       sessionStorage?.setItem(STORAGE_TOKEN_NAME, memberJwt);
@@ -448,26 +279,7 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
     if (jwtCookie.domain) props.domain = jwtCookie.domain;
     CookieHelper.setCookie(jwtCookie.name, "", props);
   }
-  private parseCustomToken(jwt: string): CustomToken | null {
-    const a = jwt.split(".");
-    if (a.length != 3) {
-      return null;
-    }
-    const encodedBody = a[1];
-    try {
-      const customToken = JSON.parse(window.atob(encodedBody)) as CustomToken;
-      if (customToken.exp == null || isNaN(customToken.exp)) {
-        return null;
-      }
-      const exp = parseInt(customToken.exp as any);
-      const now = Math.floor(new Date().getTime() / 1000);
-      if (exp <= now) {
-        return null;
-      }
-      return customToken;
-    } catch (error) { }
-    return null;
-  }
+
   private parseMemberToken(jwt: string): MemberToken | null {
     const a = jwt.split(".");
     if (a.length != 3) {
@@ -475,18 +287,12 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
     }
     const encodedBody = a[1];
     try {
-      const memberToken = JSON.parse(window.atob(encodedBody)) as MemberToken;
-      // console.log("PARDZ", memberToken)
-      // if (memberToken.exp == null || isNaN(memberToken.exp)) {
-      //   return null;
-      // }
-      // const exp = parseInt(memberToken.exp as any);
-      // const now = Math.floor(new Date().getTime() / 1000);
-      // if (exp <= now) {
-      //   return null;
-      // }
-      return memberToken;
-    } catch (error) { }
+      return JSON.parse(window.atob(encodedBody)) as MemberToken;;
+    } catch (error) { 
+      let e:any = error;
+      if(typeof error == 'object')e.loc = '[ MemberService.ts ]';
+      alert(JSON.stringify(error))
+    }
     return null;
   }
 

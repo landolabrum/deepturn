@@ -7,9 +7,6 @@ export default interface UserContext {
   last_name?: string;
   email?: string;
   phone?: string;
-  // memberNumber: string;
-  // isAffiliate: boolean;
-  // sponsorId: string;
   memberStatus: string;
   memberType: string;
   metadata?: any;

@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import environment from "~/src/environment";
 import styles from "./StreamPage.scss";
-import AdaptContainer from "@webstack/components/AdaptContainer/AdaptContainer";
 import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
 import RtspCam from "../views/RtspCam";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
