@@ -28,8 +28,8 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
                 { label: 'deleting payment method' }
             ]
         });
-        const runDelete = await memberService.deleteMethod(mid)
-        const label = runDelete.message ? runDelete.message : `*${runDelete.detail.split('on Stripe')[0]}`
+        const runDelete = await memberService.deleteMethod(mid);
+        const label = runDelete.message ? runDelete.message : `*${runDelete.message}`
         setNotification({
             active: true,
             persistance: 3000,
@@ -38,7 +38,8 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
                 { label: label }
             ]
         });
-        onDeleteSuccess(label)
+        setClicked(0);
+        onDeleteSuccess(label);
     }
     const handleSetDefault = (mid: string) => {
         setClicked(4);
@@ -65,6 +66,14 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
                 break;
             case 4:
                 handleSetDefault(method.id)
+                break;
+            case 5:
+                setNotification({
+                    active: true,
+                    list:[{label: 'Method is already default payment method, please select another.'}]
+                });
+                setContentClass('account-current-method__content-hide');
+                setClicked(0);
                 break;
             default:
                 break;
@@ -103,17 +112,16 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
                         <UiIcon icon={method.card.brand} />
                         {`**** **** **** ${method.card.last4}`}
                     </div>
-                    {clicked} {contentClass}
                     <div className='account-current-method__exp'>
                         {mm} / {method.card.exp_year}
                     </div>
                 </div>
                 <div className='account-current-method__behind'>
 
-                    {!default_source && <div className={`account-current-method__set-default`} onClick={() => handleClick(4)}>
-                        <UiIcon icon={clicked == 4 ? 'spinner' : 'fal-star'} />
+                   <div className={`account-current-method__set-default`}
+                   onClick={() => handleClick( method.id != default_source?4:5)}>
+                        <UiIcon icon={clicked == 4 ? 'spinner' : method.id == default_source?'fa-star':'fal-star'} />
                     </div>
-                    }
                     <div className={`account-current-method__delete`} onClick={() => handleClick(3)}>
                         <UiIcon icon={clicked == 3 ? 'spinner' : 'fa-trash-can'} />
                     </div>

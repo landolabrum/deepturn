@@ -33,7 +33,7 @@ const AccountMethods: React.FC = () => {
     getAccountMethods();
   }, []);
 
-
+console.log("U:",user)
 
   return (
     <>
