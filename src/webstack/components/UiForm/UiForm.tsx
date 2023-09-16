@@ -6,6 +6,7 @@ import { IForm, IFormField } from './models/IFormModel';
 import handleConstraints from './services/FormConstraints';
 import UiSelect from '../UiSelect/UiSelect';
 import UiLoader from '../UiLoader/UiLoader';
+import ToggleSwitch from '../UiToggle/UiToggle';
 
 
 const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }: IForm) => {
@@ -13,6 +14,7 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }
     const [formValues, setFormValues] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const textTypes = ['', undefined, 'text', 'password', 'number', 'tel', null, false, 'expiry'];
+    const boolTypes = ['checkbox'];
 
 
     const errorMsg = (name: string) => {
@@ -28,8 +30,8 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }
     const handleInputChange = (e: any, constraints: IFormField['constraints']) => {
         const isValid = handleConstraints(e, constraints);
         if (!e || !isValid) return;
+        console.log('[ UiForm ]', {n: e.target.name, v: e.target.value})
         if (onChange) { onChange(e); return; }
-
         setFormValues((prevState: any) => ({
             ...prevState,
             [e.target.name]: e.target.value
@@ -106,6 +108,12 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }
                             onChange={e => handleInputChange(e, field.constraints)}
                         />
                     </>}
+                    {boolTypes.includes(String(field.type)) && <ToggleSwitch
+                        label={field.label}
+                        name={field.name}
+                        onChange={e => handleInputChange(e, field?.constraints)}
+                        value={field?.value || formValues[field.name] || ''} />
+                    }
                     {field?.type == 'select' && field?.options !== undefined && <UiSelect
                         variant={field?.variant}
                         traits={fieldTraits(field)}

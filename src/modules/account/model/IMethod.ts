@@ -2,6 +2,7 @@ export interface OPaymentMethod{
     number: string;
     cvc: string;
     expiry: string;
+    default: boolean;
 }
 export interface IPaymentMethod{
     brand: string;

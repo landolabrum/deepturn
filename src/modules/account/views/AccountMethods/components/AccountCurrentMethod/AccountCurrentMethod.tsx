@@ -8,57 +8,60 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useNotification } from '@webstack/components/Notification/Notification';
 
 // Remember to create a sibling SCSS file with the same name as this component
-interface IAccountCurrentMethod{
-    method:IMethod;
-    onDeleteSuccess: (e:any)=>void;
+interface IAccountCurrentMethod {
+    method: IMethod;
+    onDeleteSuccess: (e: any) => void;
     response?: string;
     default_source?: string | null;
 }
-const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response, default_source }:IAccountCurrentMethod) => {
+const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response, default_source }: IAccountCurrentMethod) => {
     const memberService = getService<IMemberService>("IMemberService");
     const mm = String(method.card.exp_month).length == 1 ? `0${method.card.exp_month}` : method.card.exp_month;
     const [clicked, setClicked] = useState<number>(0);
-    const [notification, setNotification]=useNotification();
+    const [contentClass, setContentClass] = useState<string>('');
+    const [notification, setNotification] = useNotification();
     const handleDelete = async (mid: string) => {
         setClicked(3);
         setNotification({
-          active: true,
-          list:[
-              {label: 'deleting payment method'}
-          ]
+            active: true,
+            list: [
+                { label: 'deleting payment method' }
+            ]
         });
         const runDelete = await memberService.deleteMethod(mid)
         const label = runDelete.message ? runDelete.message : `*${runDelete.detail.split('on Stripe')[0]}`
         setNotification({
-          active: true,
-          persistance: 3000,
-          list:[
-              {label: 'deleting payment method'},
-              {label:label}
-          ]
+            active: true,
+            persistance: 3000,
+            list: [
+                { label: 'payment method' },
+                { label: label }
+            ]
         });
         onDeleteSuccess(label)
-      }
-      const handleSetDefault = (mid: string)=>{
+    }
+    const handleSetDefault = (mid: string) => {
         setClicked(4);
         console.log('[ MID ]', mid)
-      }
+    }
     const handleClick = (clickTarget?: number) => {
         let target = clickTarget;
-        if(typeof target != 'number')target = clicked;
+        if (typeof target != 'number') target = clicked;
         switch (target) {
             case 0:
                 setClicked(clicked + 1);
+                setContentClass('account-current-method__content-show');
                 break;
-            case 1:
-                setClicked(clicked + 1);
-                break;
-            case 2:
+                case 1:
+                    setClicked(clicked + 1);
+                    setContentClass('account-current-method__content-hide');
+                    break;
+                case 2:
+                setContentClass('account-current-method__content-show');
                 setClicked(1);
                 break;
-                case 3:
-                    
-                    handleDelete(method.id)
+            case 3:
+                handleDelete(method.id)
                 break;
             case 4:
                 handleSetDefault(method.id)
@@ -66,52 +69,54 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
             default:
                 break;
         }
+
     };
-    const states = [
-        '',
-        'account-current-method__content-show',
-        'account-current-method__content-hide',
-        'account-current-method__content-show',
-        'account-current-method__content-show'
-    ]
-           
+ 
+  
     useEffect(() => {
-        if(response && response != ''){
+ 
+    }, [handleClick]);
+    useEffect(() => {
+        if (response && response != '') {
             setNotification({
                 active: true,
-                list:[
-                    {label: response}
+                list: [
+                    { label: response }
                 ]
             });
         }
     }, []);
+
     return (
         <>
             <style jsx>{styles}</style>
+            {/* <ul>
+                <li>{clicked}</li>
+                <li>{contentClass}</li>
+            </ul> */}
             <div className='account-current-method' >
-                <div 
-                    className={`account-current-method__content${
-                        [0,2].includes(clicked) ?' account-current-method__content__hoverable ':' '}${states[clicked]}`}
-                    onClick={()=>handleClick()}
-                >
+                <div
+                    className={`account-current-method__content${[0].includes(clicked) ? ' account-current-method__content__hoverable ' : ' '} ${contentClass}`}
+                    onClick={() => handleClick()}
+                    >
                     <div className='account-current-method__info'>
                         <UiIcon icon={method.card.brand} />
                         {`**** **** **** ${method.card.last4}`}
                     </div>
+                    {clicked} {contentClass}
                     <div className='account-current-method__exp'>
                         {mm} / {method.card.exp_year}
                     </div>
                 </div>
                 <div className='account-current-method__behind'>
 
-               {!default_source &&  <div className={`account-current-method__set-default`} onClick={()=>handleClick(4)}>
-                    <UiIcon icon={clicked == 4?'spinner': 'fa-check'} />
-                </div>
-
-               }
-                <div className={`account-current-method__delete`} onClick={()=>handleClick(3)}>
-                    <UiIcon icon={clicked == 3?'spinner': 'fa-trash-can'} />
-                </div>
+                    {!default_source && <div className={`account-current-method__set-default`} onClick={() => handleClick(4)}>
+                        <UiIcon icon={clicked == 4 ? 'spinner' : 'fal-star'} />
+                    </div>
+                    }
+                    <div className={`account-current-method__delete`} onClick={() => handleClick(3)}>
+                        <UiIcon icon={clicked == 3 ? 'spinner' : 'fa-trash-can'} />
+                    </div>
                 </div>
             </div>
             {/* {response && response != '' && 

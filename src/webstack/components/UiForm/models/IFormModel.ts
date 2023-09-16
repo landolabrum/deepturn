@@ -14,7 +14,7 @@ export type IFormField = {
     name?: string;
     options?: (string | RouteProps | number)[] | React.ReactElement[];
     width?: string;
-    value?: string;
+    value?: string | boolean;
     label?: string;
     placeholder?: string;
     type?: string;

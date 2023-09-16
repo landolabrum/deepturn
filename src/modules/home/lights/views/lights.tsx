@@ -35,7 +35,7 @@ const Lights: NextComponentType<NextPageContext, {}, Props> = (props: Props) => 
   }
   function updateLight(r: any) {
     r.light = `${r.name} - ${r.id_}`
-    r.status = <UiToggle checked={r.is_on} onChange={() => toggleOne(r.id)} />;
+    r.status = <UiToggle value={r.is_on} onChange={() => toggleOne(r.id)} />;
     r.bri = Math.round((r.bri * 100) / 254);
     r.brightness = (
       <BrightnessSlider hex={r.hex} brite={r.bri} id={r.id_} onChange={handleLight} />

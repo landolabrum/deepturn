@@ -30,7 +30,8 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
     const [method, setMethod] = useState<OPaymentMethod>({
         number: '',
         expiry: '',
-        cvc: ''
+        cvc: '',
+        default: false
     });
 
     const getFieldsConfiguration = (): IFormField[] => {
@@ -69,11 +70,18 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                     max: 6,
                 },
             },
+            {
+                name: 'default',
+                label: 'set default',
+                value: method.default,
+                type: 'checkbox'
+            },
         ];
     };
     // HANDLERS
     const handleMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        console.log('[ METH ]', {n: name, v: value})
         if (name === 'number') {
             const values = value.split(',');
             const foundMethodBrand: any = values[1]
@@ -82,7 +90,7 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 setMethod(prevMethod => ({ ...prevMethod, [name]: values[0].trim() }));
             }
         } else {
-            setMethod(prevMethod => ({ ...prevMethod, [name]: value.trim() }));
+            setMethod(prevMethod => ({ ...prevMethod, [name]: (typeof value == 'string'?value.trim():value) }));
         }
     };
 
@@ -101,7 +109,8 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 number: method.number.replaceAll(" ", ''),
                 exp_month: Number(method.expiry.split('/')[0]),
                 exp_year: Number(`20${method.expiry.split('/')[1]}`),
-                cvc: method.cvc
+                cvc: method.cvc,
+                default: method.default
             }
             const methodResponse = await memberService.createCustomerMethod(request);
             context='successfully added card ending in: '+ method.number.slice(-4);
