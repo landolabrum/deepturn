@@ -28,7 +28,7 @@ button {
   align-items: inherit;
   justify-content: center;
   color: inherit;
-  background-color: transparent;
+  background-color: inherit;
   outline: none;
   border: none;
   height: inherit;
@@ -40,7 +40,7 @@ button {
   font-weight: inherit;
   font-family: inherit;
   cursor: inherit;
-  border-radius: inherit;
+  // border-radius: inherit;
   overflow: hidden;
   &.flat {
     margin: 0;

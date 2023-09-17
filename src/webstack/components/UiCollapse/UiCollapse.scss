@@ -41,7 +41,7 @@ $actColorClose: var(--color-gray-30);
     }
     100%{
         width: calc(100% - calc(var(--default-padding) * 2));
-        padding: var(--default-element-height) var(--default-padding) var(--default-padding);
+        padding: var(--default-padding) var(--default-padding) var(--default-padding);
         height: max-content;
     }
 }
@@ -110,7 +110,7 @@ $actColorClose: var(--color-gray-30);
     background-color: var(--color-gray-40);
     flex-direction: column;
     @include flexCenter;
-    width: calc(100% - calc(var(--default-padding) * 2));
+   width: calc(100% - calc(var(--default-padding) * 2));
     padding:0 var(--default-padding);
     height: $button_height;
     min-height: $button_height;
@@ -124,7 +124,8 @@ $actColorClose: var(--color-gray-30);
         background-color: var(--color-gray-60);
         position: absolute;
         top:0;
-        width: calc(100% - calc(var(--default-padding) * 2));
+        left: 0;
+        width: calc(100% - calc(var(--default-padding) * 1.5 ));
         padding: 0 var(--default-padding);
         height: $button_height;
         @include flexCenter;

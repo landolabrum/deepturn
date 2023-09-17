@@ -9,10 +9,10 @@ import UiLoader from '../UiLoader/UiLoader';
 import ToggleSwitch from '../UiToggle/UiToggle';
 
 
-const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }: IForm) => {
+const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading }: IForm) => {
     if (!fields) return;
     const [formValues, setFormValues] = useState<any>({});
-    const [errors, setErrors] = useState<any>({});
+    const [localErrors, setLocalErrors] = useState<any>({});
     const textTypes = ['', undefined, 'text', 'password', 'number', 'tel', null, false, 'expiry'];
     const boolTypes = ['checkbox'];
 
@@ -42,7 +42,7 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }
         e.preventDefault();
         if (!fields || !onSubmit) return;
 
-        let newErrors = { ...errors };  // Create a copy of the existing errors
+        let newErrors = { ...localErrors };  // Create a copy of the existing errors
 
         fields.forEach((f: any) => {
             if (f.constraints) {
@@ -50,22 +50,22 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }
                 const max = f.constraints?.max;
                 const valueLen = String(f.value).replaceAll(' ', '').length;
                 if (min != undefined) {
-                    if (errors[f.name] !== undefined) { delete newErrors[f.name]; }
+                    if (localErrors[f.name] !== undefined) { delete newErrors[f.name]; }
                     else if (valueLen < min) { newErrors[f.name] = `*${f.name} is not long enough`; }
                 }
                 if (max != undefined) {
-                    if (errors[f.name] !== undefined) { delete newErrors[f.name]; }
+                    if (localErrors[f.name] !== undefined) { delete newErrors[f.name]; }
                     else if (valueLen > max) { newErrors[f.name] = `*${f.name} is too long`; }
                 }
             }
         });
         // console.log('[ NEW ERRORS ]', newErrors)
-        setErrors(newErrors);
+        setLocalErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
             onSubmit(fields);
-        } else if (onError) {
-            onError(newErrors);
+        } else if (onLocalErrors) {
+            onLocalErrors(newErrors);
         }
     };
     const fieldTraits = (field: IFormField) => {
@@ -97,11 +97,11 @@ const UiForm = ({ fields, onSubmit, onError, title, btnText, onChange, loading }
                             label={field.label}
                             // max={typeof field?.constraints?.max == 'number' ?field.constraints.max: undefined}
                             variant={
-                                errors[field.name] ||
+                                localErrors[field.name] ||
                                 fieldTraits(field)?.errorMessage && 'invalid' || field?.variant
                             }
                             type={field.type}
-                            traits={errors[field.name] ? { errorMessage: errors[field.name] } : fieldTraits(field)}
+                            traits={localErrors[field.name] ? { errorMessage: localErrors[field.name] } : fieldTraits(field)}
                             name={field.name}
                             placeholder={field.placeholder}
                             value={field?.value || formValues[field.name] || ''}

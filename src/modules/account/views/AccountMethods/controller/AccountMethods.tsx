@@ -31,7 +31,6 @@ const AccountMethods: React.FC = () => {
   }
   const handleLabel = () =>{
     if(user ){
-      console.log('[ USER ]', user)
       return user.default_source;
     }
   }

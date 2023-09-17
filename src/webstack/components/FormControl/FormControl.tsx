@@ -69,7 +69,11 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
       if (typeof traits.outline === "string") elemenet_ref.style.outline = traits.outline;
       traits?.disabled && elemenet_ref.classList.add('form-control__element-disabled');
       traits?.responsive && elemenet_ref.classList.add('form-control__element-responsive');
-      // console.log(elemenet_ref.querySelector('input')?.tagName === 'INPUT')
+      
+      const isInput = elemenet_ref.querySelector('input:not([type="button"])');
+      if (isInput?.tagName === 'INPUT') {
+        elemenet_ref.classList += " form-control__element__lite" 
+      }
     }
     // Manage overlay
     if (overlay === true && !overlay_.active) {
@@ -106,10 +110,11 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   return (
     <>
       <style jsx>{styles}</style>
+      var:{variant}
       <div className={`form-control ${variant === "inherit" ? " form-control-inherit" : ""}`} ref={ref}>
         <div className='form-control__header'>
         {label && <label>{label}</label>}
-        {variant && variant?.split(' ').includes('invalid') && <div className='form-control__header-invalid'>
+        {variant && variant == 'invalid' || variant &&  variant?.split(' ').includes('invalid') && <div className='form-control__header-invalid'>
           {traits?.errorMessage}
         </div>}
         </div>

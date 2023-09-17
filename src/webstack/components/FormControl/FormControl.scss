@@ -79,6 +79,7 @@ $elPad: 14px;
 
   .form-control__element {
     // overflow: hidden;
+ 
     position: relative;
     cursor: pointer;
     font-size: 16px;
@@ -91,7 +92,6 @@ $elPad: 14px;
     white-space: nowrap;
     color: var(--color-gray-50);
     --ui-icon-color: var(--color-gray-90);
-    background-color: var(--color-gray-20);
     outline: solid 1px var(--color-gray-60);
     --ui-icon-height: 18px;
     --ui-icon-width: 18px;
@@ -132,7 +132,10 @@ $elPad: 14px;
       }
     }
     
-    
+    &__lite{
+      color: var(--color-gray-70);
+      background-color: var(--color-gray-20);
+    }
     
     
     .form-control__icon-placeholder {

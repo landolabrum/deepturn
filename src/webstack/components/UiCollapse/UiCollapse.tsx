@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './UiCollapse.scss';
 import { UiIcon } from '../UiIcon/UiIcon';
-import UiButton from '../UiButton/UiButton';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICollapse {

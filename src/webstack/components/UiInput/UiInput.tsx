@@ -27,7 +27,9 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
     props.traits?.beforeIcon ? "input__has-icons" : ""
   ].join(" ");
 
-useEffect(() => {}, [handleChange]);
+useEffect(() => {
+
+}, [handleChange]);
   return (
     <>
       <style jsx>{styles}</style>

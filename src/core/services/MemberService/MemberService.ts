@@ -106,15 +106,21 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
         // Convert method object to string
         const methodString = JSON.stringify(method);
         const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
-        console.log('[ ENCRYPTION_KEY ]', ENCRYPTION_KEY)
+        // console.log('[ ENCRYPTION_KEY ]', ENCRYPTION_KEY)
         // Encrypt the method string. Use an agreed-upon key.
 
         const encryptedMethod = encryptRequest(methodString, ENCRYPTION_KEY); // Replace 'YOUR_SECRET_KEY' with your actual secret key
-        const res = await this.post<any, any>(
+        try{
+
+          const res = await this.post<any, any>(
             `usage/customer/method?id=${id}`,
             { data: encryptedMethod } // send encrypted data as payload
-        );
-        return res;
+            );
+            return res;
+          }catch(e:any){
+            // console.log("[ MEMBER S]: ", e)
+            return e;
+          }
     }
 
     if (!id) {
