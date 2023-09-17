@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import UiInput from '../UiInput/UiInput';
 import styles from './UiForm.scss';
 import UiButton from '../UiButton/UiButton';
@@ -7,11 +7,10 @@ import handleConstraints from './services/FormConstraints';
 import UiSelect from '../UiSelect/UiSelect';
 import UiLoader from '../UiLoader/UiLoader';
 import ToggleSwitch from '../UiToggle/UiToggle';
-
+import { ITraits } from '../FormControl/FormControl';
 
 const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading }: IForm) => {
     if (!fields) return;
-    const [formValues, setFormValues] = useState<any>({});
     const [localErrors, setLocalErrors] = useState<any>({});
     const textTypes = ['', undefined, 'text', 'password', 'number', 'tel', null, false, 'expiry'];
     const boolTypes = ['checkbox'];
@@ -30,12 +29,8 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
     const handleInputChange = (e: any, constraints: IFormField['constraints']) => {
         const isValid = handleConstraints(e, constraints);
         if (!e || !isValid) return;
-        console.log('[ UiForm ]', {n: e.target.name, v: e.target.value})
+        // console.log('[ UiForm ]', {n: e.target.name, v: e.target.value})
         if (onChange) { onChange(e); return; }
-        setFormValues((prevState: any) => ({
-            ...prevState,
-            [e.target.name]: e.target.value
-        }));
     };
 
     const handleSubmit = (e: any) => {
@@ -46,6 +41,7 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
 
         fields.forEach((f: any) => {
             if (f.constraints) {
+                console.log('[ CONSTRAINTS ]', f)
                 const min = f.constraints?.min;
                 const max = f.constraints?.max;
                 const valueLen = String(f.value).replaceAll(' ', '').length;
@@ -59,7 +55,6 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                 }
             }
         });
-        // console.log('[ NEW ERRORS ]', newErrors)
         setLocalErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
@@ -68,19 +63,35 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
             onLocalErrors(newErrors);
         }
     };
-    const fieldTraits = (field: IFormField) => {
-        if (!field) return;
-        const fieldError = field.name ? errorMsg(field.name) : undefined;
-        if (!field.traits) field.traits = {}
-        if (fieldError) {
-            field.traits.errorMessage = fieldError;
-        } else {
-            field.traits.errorMessage = undefined;
-        }
-        return field?.traits
-    }
 
-    useEffect(() => { }, [loading, fieldTraits]);
+    const fieldTraits = 
+        (field: IFormField) => {
+            if (!field) return;
+            let traits: ITraits = field.traits;
+
+            if (field.required && traits) {
+                const value = field.value || '';
+                const valueLen = String(value).replaceAll(' ', '').length;
+                const min = field.constraints?.min;
+                const max = field.constraints?.max;
+    
+                if (field.traits === undefined) {
+                    field.traits = {};
+                }
+    
+                if (typeof min == 'number' && valueLen < min) {
+                    field.traits.errorMessage = `*${field.name} is not long enough`;
+                } else if (typeof max == 'number' && valueLen > max) {
+                    field.traits.errorMessage = `*${field.name} is too long`;
+                }else{
+                    field.traits.errorMessage = undefined
+                }
+            }
+            return traits;
+        }
+   
+   useEffect(() => {}, [fields]);
+
     return (<>
         <style jsx>{styles}</style>
         {title}
@@ -93,18 +104,20 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                         { width: field.width } : {}}
                 >
                     {textTypes.includes(field?.type) && field.name && <>
+                    ft: {JSON.stringify(field?.traits)}
                         <UiInput
                             label={field.label}
                             // max={typeof field?.constraints?.max == 'number' ?field.constraints.max: undefined}
                             variant={
                                 localErrors[field.name] ||
-                                fieldTraits(field)?.errorMessage && 'invalid' || field?.variant
+                                fieldTraits(field)?.errorMessage ? 'invalid': field?.variant
                             }
                             type={field.type}
-                            traits={localErrors[field.name] ? { errorMessage: localErrors[field.name] } : fieldTraits(field)}
+                            traits={field.traits}
+                            // traits={localErrors[field.name] ? { errorMessage: localErrors[field.name] } : fieldTraits(field)}
                             name={field.name}
                             placeholder={field.placeholder}
-                            value={field?.value || formValues[field.name] || ''}
+                            value={field?.value}
                             onChange={e => handleInputChange(e, field.constraints)}
                         />
                     </>}
@@ -112,20 +125,20 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                         label={field.label}
                         name={field.name}
                         onChange={e => handleInputChange(e, field?.constraints)}
-                        value={field?.value || formValues[field.name] || ''} />
+                        value={field?.value  || ''} />
                     }
                     {field?.type == 'select' && field?.options !== undefined && <UiSelect
                         variant={field?.variant}
                         traits={fieldTraits(field)}
                         options={field?.options}
                         label={field.name}
-                        value={field?.value || formValues[field.name] || ''}
+                        value={field?.value  || ''}
                         onSelect={e => handleInputChange({ target: { name: field.name, value: e } }, field.constraints)}
                     />}
                 </div>
             )) : (<UiLoader position='relative' />)}
             <div className='form__submit'>
-                <UiButton type='submit' busy={loading == true} onClick={handleSubmit}>
+                <UiButton variant='lite' type='submit'  busy={loading == true} onClick={handleSubmit}>
                     {btnText ? btnText : 'Submit'}
                 </UiButton>
             </div>

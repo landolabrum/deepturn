@@ -33,6 +33,7 @@ useEffect(() => {
   return (
     <>
       <style jsx>{styles}</style>
+      {JSON.stringify(props?.traits)}
       <FormControl 
         {...props}
         traits={{
@@ -50,6 +51,7 @@ useEffect(() => {
           value={value}
           placeholder={props.placeholder}
           min={props.min}
+          required={props.required}
           max={props.max}
           onChange={handleChange}
           autoComplete={props.autoComplete}

@@ -38,12 +38,13 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
         cvc: '',
         default: false
     });
-
+    const [fields, setFields ]=useState<IFormField[] | undefined>()
     const getFieldsConfiguration = (): IFormField[] => {
         return [
             {
                 name: 'number',
                 label: 'number',
+                required: true,
                 placeholder: "**** **** **** ****",
                 value: method?.number,
                 variant: brand == errorIcon && method?.number.length > 0 || errors.number != null ? 'invalid':undefined,
@@ -52,25 +53,29 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                     afterIcon: method?.number?.length ?
                         { icon: 'fa-xmark', onClick: () => setMethod({ ...method, number: '' }) } :
                         undefined,
-                    errorMessage: errors?.number != null? errors?.number: undefined
-                }
+                        errorMessage: errors?.number ? errors?.number : undefined
+
+                },
             },
             {
                 name: 'expiry',
                 label: 'expiration',
+                required: true,
                 placeholder: 'mm/yy',
                 variant: method?.expiry.length != 0 && method?.expiry.length <= 4 || errors.expiry != null ? 'invalid':undefined,
                 type: 'expiry',
                 value: method?.expiry,
                 width: 'calc(50% - 5px)',
                 traits:{
-                    errorMessage: errors?.expiry != null? errors?.expiry: undefined
+                    errorMessage: errors?.number ? errors?.number : undefined
+
                 }
             },
             {
                 name: 'cvc',
                 label: 'cvc',
                 placeholder: '000',
+                required: true,
                 value: method?.cvc,
                 width: 'calc(50% - 5px)',
                 variant: method?.cvc.length != 0 && method?.cvc.length <= 2 || errors.cvc != null? 'invalid':undefined,
@@ -93,7 +98,7 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
     // HANDLERS
     const handleMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        console.log('[ METH ]', {n: name, v: value})
+        // console.log('[ METH ]', {n: name, v: value})
         if (name === 'number') {
             const values = value.split(',');
             const foundMethodBrand: any = values[1]
@@ -105,9 +110,14 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
             setMethod(prevMethod => ({ ...prevMethod, [name]: (typeof value == 'string'?value.trim():value) }));
         }
     };
-
+    // const handleErrors = () =>{
+    //     console.log('[ HANDLE ERRS ]')
+    //     Object.entries(method).map((field:any) => {
+    //         console.log('[ errors ]',field)
+    //     });
+    // }
     const handleSubmit = async () => {
-        let context = 'adding payment method'
+        let context = 'adding payment method';
         setStatus(true);
         setNotification({
             active: true,
@@ -125,13 +135,15 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
             const methodResponse = await memberService.createCustomerMethod(request);
             if(methodResponse?.error && methodResponse?.error == false){
                 context='successfully added card ending in: '+ method.number.slice(-4);
-                setStatus('success')
-                onSuccess && onSuccess(methodResponse)
-            }else{
-                if(methodResponse?.detail?.fields != undefined){
-                    methodResponse?.detail.fields.forEach((field:any) => {
-                        setErrors({...errors, [field.name]:field.message});
+                setStatus('success');
+                onSuccess && onSuccess(methodResponse);
+             } else {
+                if (methodResponse?.detail?.fields != undefined) {
+                    const newErrors = {};
+                    methodResponse?.detail.fields.forEach((field: any) => {
+                        newErrors[field.name] = field.message;
                     });
+                    setErrors(newErrors);
                 }
             }
         setNotification({
@@ -142,7 +154,6 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
             ]
           });
     };
-
 
     return (
         <>

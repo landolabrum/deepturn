@@ -17,17 +17,19 @@ interface Props { }
 const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
   const [header, setHeader] = useHeader();
   const [loaded, setLoaded] = useState(false);
-  const [view, setView] = useState<string>('billing');
-  // const [view, setView] = useState<string>('edit profile');
   const user = useUser();
-
+  
   const views: any = {
     "edit profile": <ProfileForm user={user} />,
     "email notification": "email notification",
     "privacy & security": "privacy & security",
     'billing': <AccountMethods />
   };
-
+  const [view, setView] = useState<string>(Object.keys(views)[3]);
+  const handleView = (view: string) =>{
+    setView(view);
+    setHeader({ title: view, breadcrumbs: [{ label: "account" },{ label: view }] });
+  }
   useEffect(() => {
     setLoaded(true);
     setHeader({ title: 'account', breadcrumbs: [{ label: "account" }] });
@@ -49,38 +51,25 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
       <>
         <style jsx>{styles}</style>
         <div className="account">
-          <div className="account__content">
             <Div maxWidth={900}>
               <UiMenu
                 label={'foop'}
                 options={Object.keys(views)}
                 // variant="dark"
                 value={view}
-                onSelect={(e) => {
-                  setView(e);
-                }}
+                onSelect={handleView}
               />
             </Div>
             <Div minWidth={900} >
               <UiSelect
-                onSelect={(e) => {
-                  setView(e);
-                }}
+                onSelect={handleView}
                 variant="dark"
                 title={capitalizeAll(view)}
                 // openState
                 options={Object.keys(views)}
               />
             </Div>
-          </div>
-          <Div variant="mc">
-            <div className='account__card'>
-            <h3>{capitalize(view)}</h3>
-            <div className='account__card__content'>
             {views[view]}
-            </div>
-            </div>
-          </Div>
         </div>
       </>
     );

@@ -22,4 +22,5 @@ export interface IInput extends IFormControl {
   autoComplete?: string;
   message?: string;
   focus?: boolean;
+  required?: boolean;
 }

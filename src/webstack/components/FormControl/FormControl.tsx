@@ -57,22 +57,22 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
     // Set width if provided
     if (elemenet_ref) {
       for (let key in traits) {
-          if (key in elemenet_ref.style && traits[key]) {
-              elemenet_ref.style[key] = traits[key];
-          }
+        if (key in elemenet_ref.style && traits[key]) {
+          elemenet_ref.style[key] = traits[key];
+        }
       }
     }
-  
+
 
 
     if (elemenet_ref) {
       if (typeof traits.outline === "string") elemenet_ref.style.outline = traits.outline;
       traits?.disabled && elemenet_ref.classList.add('form-control__element-disabled');
       traits?.responsive && elemenet_ref.classList.add('form-control__element-responsive');
-      
+
       const isInput = elemenet_ref.querySelector('input:not([type="button"])');
       if (isInput?.tagName === 'INPUT') {
-        elemenet_ref.classList += " form-control__element__lite" 
+        elemenet_ref.classList += " form-control__element-lite"
       }
     }
     // Manage overlay
@@ -93,30 +93,27 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
       const varArr: any = variant?.split(' ');
       let initialValue = clzz;
       return varArr.reduce(
-        (accumulator: string, currentValue: string) => 
-        accumulator + (` ${clzz}-${currentValue}`), initialValue
+        (accumulator: string, currentValue: string) =>
+          accumulator + (` ${clzz}-${currentValue}`), initialValue
       );
     }
     return clzz;
   }
-  useEffect(() => {
-    if(focus != undefined && childRef?.current){
-      // childRef.current.hide()
-    }
-  }, [traits]);
+
   useEffect(() => {
     setTestId(createTestId(ref.current.parentNode, childRef.current));
   }, []);
   return (
     <>
       <style jsx>{styles}</style>
-      var:{variant}
       <div className={`form-control ${variant === "inherit" ? " form-control-inherit" : ""}`} ref={ref}>
         <div className='form-control__header'>
-        {label && <label>{label}</label>}
-        {variant && variant == 'invalid' || variant &&  variant?.split(' ').includes('invalid') && <div className='form-control__header-invalid'>
-          {traits?.errorMessage}
-        </div>}
+          formControl: {JSON.stringify(traits)}
+          {label && <label>{label}</label>}
+            {traits?.errorMessage}
+          {variant && variant == 'invalid' ||  String(variant)?.split(' ').includes('invalid') && <div className='form-control__header-invalid'>
+            {traits?.errorMessage}
+          </div>}
         </div>
         <div
           className={`${varClasses('form-control__element')}`}

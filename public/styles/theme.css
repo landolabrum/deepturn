@@ -175,6 +175,7 @@ h6 {
 
 /* DIV */
 div {
+
   --default-padding: 20px;
   --default-padding-sm: calc(--default-padding * 2);
   &::-webkit-scrollbar-thumb {

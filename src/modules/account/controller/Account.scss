@@ -10,22 +10,11 @@
 .account {
   width: 100%;
   @extend .d-grid;
+  position: relative;
   @media (max-width: 900px) {
     display: flex;
     flex-direction: column;
     height: 100%;
     justify-content: center;
-  }
-
-  .account__content {
-    width: 100%;
-    height: 100%;
-    @media (max-width: 900px) {
-      height: max-content;
-    }
-  }
-  .account__card{
-    width: 100%;
-    height: auto;
   }
 }

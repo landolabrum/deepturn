@@ -20,6 +20,7 @@ export type IFormField = {
     type?: string;
     traits?: ITraits;
     variant?: IVariant;
+    required?: boolean;
     constraints?: {
         min?: IFormMinMax | number;
         max?: IFormMinMax | number;

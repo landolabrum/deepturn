@@ -132,10 +132,11 @@ $elPad: 14px;
       }
     }
     
-    &__lite{
+    &.form-control__element-lite{
       color: var(--color-gray-70);
-      background-color: var(--color-gray-20);
+      background-color: var(--color-gray-10);
     }
+
     
     
     .form-control__icon-placeholder {
