@@ -38,7 +38,7 @@ const Navbar = () => {
   useEffect(() => {
     sideNav && closeSideNavOnWidthChange();
   }, [width > 900]);
-  const cart = routes.find((r:any)=>r.href == '/cart')
+  const cart = routes.find((r: any) => r.href == '/cart')
 
   if (user && !hide) {
     return (
@@ -64,7 +64,10 @@ const Navbar = () => {
                   return (
                     <span key={key} className="navbar__nav-item-container">
                       {item?.items && (
-                        <>
+                        <span 
+                          onDoubleClick={()=>
+                            item?.href&& handleRoute({href:item.href})}
+                        >
                           <UiSelect
                             variant={
                               open === item?.label
@@ -82,7 +85,7 @@ const Navbar = () => {
                             onToggle={(isOpen) => setOpen(isOpen ? item?.label : null)}
                             openState={open === item?.label}
                           />
-                        </>
+                        </span>
                       )}
                       {!item.items && item.href !== '/cart' && <NavButton
                         active={open === item?.label || route.replaceAll("/", "") === item?.label}

@@ -109,9 +109,9 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
     <>
       <style jsx>{styles}</style>
       <div className={`form-control ${variant === "inherit" ? " form-control-inherit" : ""}`} ref={ref}>
-        <div className='form-control__header'>
-          {label && <label>{label}</label>}
-        </div>
+        {label && <div className='form-control__header'>
+          <label>{label}</label>
+        </div>}
         <div
           className={`${varClasses('form-control__element')}`}
         >
@@ -145,11 +145,11 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
             )}
           </div>
         </div>
-        <div className='form-control__footer'>
-        {error && <div className='form-control__footer__invalid'>
-            <UiMarkdown markdownString={error}/>
-          </div>}
-        </div>
+        {error && <div className='form-control__footer'>
+          <div className='form-control__footer__invalid'>
+            <UiMarkdown markdownString={error} />
+          </div>
+        </div>}
       </div>
     </>
   );

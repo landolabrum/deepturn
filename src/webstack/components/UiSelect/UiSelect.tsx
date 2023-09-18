@@ -92,7 +92,8 @@ const UiSelect: React.FC<SelectProps> = ({
             }}
             />
           {bOpen && variant !== 'disabled' && (
-            <div className={`select__options ${variant ? " " + variant : ""}`}>
+            <div 
+              className={`select__options ${variant ? " " + variant : ""}`}>
               <UiMenu 
               traits={traits}
               search={search}

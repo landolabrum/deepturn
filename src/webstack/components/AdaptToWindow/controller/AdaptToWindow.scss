@@ -40,7 +40,16 @@
             width: max-content;
             height: max-content;
             overflow: hidden;
-
+            @media(max-width:1100px){
+                left: 10px;
+                width:calc(100vw - 60px);
+                max-width:calc(100vw - 60px);
+            }
+            @media(max-width:900px){
+                left: 10px;
+                width:calc(100vw - 40px);
+                max-width:calc(100vw - 40px);
+            }
             &__top {
                 top: var(--default-padding);
             }
