@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import type { NextPage } from "next";
 import styles from "./DashboardPage.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
@@ -8,32 +8,27 @@ import { RouteProps, pruneRoutes } from "@shared/components/Navbar/data/routes";
 import { useHeader } from "@webstack/components/Header/views/Header";
 import UiLoader from "@webstack/components/UiLoader/UiLoader";
 interface IDashboard {
-  links?: RouteProps[]
+  links?: RouteProps[];
 }
 export const DashboardPage: React.FC<IDashboard> = ({ links }: IDashboard) => {
   const router = useRouter();
-  const [_links, setLinks] = useState<RouteProps[] | undefined>(undefined);
-  const handleClick = (link: any) => {
-    if (!link.href) return;
-    router.push(link.href);
+  const dashboardLinks = pruneRoutes(["dashboard", "account"])
+  const [_header, _setHeader] = useHeader();
+  const handleHeader = () => {
+    if(!links)_setHeader({ title: "dashboard", breadcrumbs: [{ label: "dashboard" }] });
   };
-
-
-  // const [header, setHeader] = useHeader();
-  // useEffect(() => {
-  //   if (links == undefined){
-  //      setLinks(pruneRoutes(["dashboard", "account"]));
-  //      setHeader({ title: "dashboard", breadcrumbs: [{ label: "dashboard" }] });
-  //   }
-  //   else if (links) setLinks(links);
-  // }, [setHeader, setLinks]);
-  if (_links !== undefined) return (
+  const handleClick = (link: any) => {
+      if (!link.href) return;
+      router.push(link.href);
+  };
+  useEffect(() => handleHeader,[]);
+  if (Array(dashboardLinks) || Array(dashboardLinks)) return (
     <>
       <style jsx>{styles}</style>
       <div className="dashboard">
-        <AdaptGrid variant="card" xs={2} md={4} gap={10}>
-          {Array(_links).length && Object.entries(_links).map(([key, link]) => {
 
+        <AdaptGrid variant="card" xs={2} md={4} gap={10}>
+          {Object.entries(links || dashboardLinks).map(([key, link]) => {
             return (
               <div
                 key={key}

@@ -36,7 +36,7 @@ export const routes: RouteProps[] = [
     icon: "fa-biohazard",
     href: '/social',
     items: [
-      { label: "instagram", href: "/social?platform=instagrm", icon: "fa-instagram", active: true },
+      { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
     ],
   },
   {
