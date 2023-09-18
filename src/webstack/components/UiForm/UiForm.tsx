@@ -3,11 +3,9 @@ import UiInput from '../UiInput/UiInput';
 import styles from './UiForm.scss';
 import UiButton from '../UiButton/UiButton';
 import { IForm, IFormField } from './models/IFormModel';
-import handleConstraints from './services/FormConstraints';
 import UiSelect from '../UiSelect/UiSelect';
 import UiLoader from '../UiLoader/UiLoader';
 import ToggleSwitch from '../UiToggle/UiToggle';
-import { ITraits } from '../FormControl/FormControl';
 
 const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading }: IForm) => {
     if (!fields) return;
@@ -27,8 +25,8 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
 
 
     const handleInputChange = (e: any, constraints: IFormField['constraints']) => {
-        const isValid = handleConstraints(e, constraints);
-        if (!e || !isValid) return;
+        // const isValid = handleConstraints(e, constraints);
+        // if (!e || !isValid) return;
         // console.log('[ UiForm ]', {n: e.target.name, v: e.target.value})
         if (onChange) { onChange(e); return; }
     };
@@ -41,11 +39,10 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
 
         fields.forEach((f: any) => {
             if (f.constraints) {
-                console.log('[ CONSTRAINTS ]', f)
                 const min = f.constraints?.min;
                 const max = f.constraints?.max;
                 const valueLen = String(f.value).replaceAll(' ', '').length;
-                if (min != undefined) {
+                if (min != undefined && valueLen) {
                     if (localErrors[f.name] !== undefined) { delete newErrors[f.name]; }
                     else if (valueLen < min) { newErrors[f.name] = `*${f.name} is not long enough`; }
                 }
@@ -63,35 +60,6 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
             onLocalErrors(newErrors);
         }
     };
-
-    const fieldTraits = 
-        (field: IFormField) => {
-            if (!field) return;
-            let traits: ITraits = field.traits;
-
-            if (field.required && traits) {
-                const value = field.value || '';
-                const valueLen = String(value).replaceAll(' ', '').length;
-                const min = field.constraints?.min;
-                const max = field.constraints?.max;
-    
-                if (field.traits === undefined) {
-                    field.traits = {};
-                }
-    
-                if (typeof min == 'number' && valueLen < min) {
-                    field.traits.errorMessage = `*${field.name} is not long enough`;
-                } else if (typeof max == 'number' && valueLen > max) {
-                    field.traits.errorMessage = `*${field.name} is too long`;
-                }else{
-                    field.traits.errorMessage = undefined
-                }
-            }
-            return traits;
-        }
-   
-   useEffect(() => {}, [fields]);
-
     return (<>
         <style jsx>{styles}</style>
         {title}
@@ -104,20 +72,18 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                         { width: field.width } : {}}
                 >
                     {textTypes.includes(field?.type) && field.name && <>
-                    ft: {JSON.stringify(field?.traits)}
                         <UiInput
                             label={field.label}
-                            // max={typeof field?.constraints?.max == 'number' ?field.constraints.max: undefined}
                             variant={
                                 localErrors[field.name] ||
-                                fieldTraits(field)?.errorMessage ? 'invalid': field?.variant
+                                Boolean(field?.error) ? 'invalid': field?.variant
                             }
+                            error={field.error}
                             type={field.type}
                             traits={field.traits}
-                            // traits={localErrors[field.name] ? { errorMessage: localErrors[field.name] } : fieldTraits(field)}
                             name={field.name}
                             placeholder={field.placeholder}
-                            value={field?.value}
+                            value={String(field?.value)}
                             onChange={e => handleInputChange(e, field.constraints)}
                         />
                     </>}
@@ -125,14 +91,14 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                         label={field.label}
                         name={field.name}
                         onChange={e => handleInputChange(e, field?.constraints)}
-                        value={field?.value  || ''} />
+                        value={Boolean(field?.value)} />
                     }
                     {field?.type == 'select' && field?.options !== undefined && <UiSelect
                         variant={field?.variant}
-                        traits={fieldTraits(field)}
+                        traits={field.traits}
                         options={field?.options}
                         label={field.name}
-                        value={field?.value  || ''}
+                        value={String(field?.value)}
                         onSelect={e => handleInputChange({ target: { name: field.name, value: e } }, field.constraints)}
                     />}
                 </div>

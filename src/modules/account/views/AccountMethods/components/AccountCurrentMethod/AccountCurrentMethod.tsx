@@ -99,10 +99,6 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
     return (
         <>
             <style jsx>{styles}</style>
-            {/* <ul>
-                <li>{clicked}</li>
-                <li>{contentClass}</li>
-            </ul> */}
             <div className='account-current-method' >
                 <div
                     className={`account-current-method__content${[0].includes(clicked) ? ' account-current-method__content__hoverable ' : ' '} ${contentClass}`}
@@ -127,14 +123,6 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
                     </div>
                 </div>
             </div>
-            {/* {response && response != '' && 
-                <div className={`account-current-method__response${
-                        response.charAt(0) == '*'?' account-current-method__response-error':''
-                    }`}
-                >
-                    {response}
-                </div>
-            } */}
         </>
     );
 };

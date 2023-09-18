@@ -5,6 +5,7 @@ export type ValueType = string | number;
 
 export interface IInput extends IFormControl {
   name?: string;
+  error?: string | null;
   label?: string;
   type?: string;
   id?: string;
@@ -23,4 +24,4 @@ export interface IInput extends IFormControl {
   message?: string;
   focus?: boolean;
   required?: boolean;
-}
+} 

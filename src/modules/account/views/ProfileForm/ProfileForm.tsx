@@ -8,11 +8,19 @@ import formatAccountFields from '../AccountForm/components/FormatAccountForm';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
+import keyStringConverter from '@webstack/helpers/keyStringConverter';
 const GOOGLE_API_KEY = 'AIzaSyCthMX-HyRujKH9WgIwvVoi6Hhms247Ts4';
 
 const ProfileForm = ({ user }: any) => {
   // Initialize fields with empty strings or other defaults
-
+  const [errors, setErrors] = useState({
+    first_name: null,
+    last_name: null,
+    email: null,
+    phone: null,
+    address: null,
+    country: null
+  })
   const [fields, setFields] = useState<any>({
     first_name: '',
     last_name: '',
@@ -79,17 +87,25 @@ const ProfileForm = ({ user }: any) => {
   const handleSubmit = async () => {
     if (!user || !fields) return;
     setLoading(true);
-
+    let complete = true;
     const payload = {
       name: `${fields.first_name} ${fields.last_name}`,
       email: fields.email,
       phone: fields.phone,
       address: fields.address
     };
-
-    const memberResponse = await memberService.updateMember(user.id, payload);
-    if (memberResponse?.id) {
-      setFields(formatAccountFields(memberResponse));
+    Object.keys(fields).map((k) => {
+      if (fields[k] == '') {
+        setErrors({ ...errors, [k]: `${keyStringConverter(k)} cannot be blank` });
+        complete = false;
+      }
+    }
+    );
+    if (complete) {
+      const memberResponse = await memberService.updateMember(user.id, payload);
+      if (memberResponse?.id) {
+        setFields(formatAccountFields(memberResponse));
+      }
     }
     setLoading(false);
   };
@@ -101,16 +117,16 @@ const ProfileForm = ({ user }: any) => {
       <style jsx>{styles}</style>
       <div className='profile-form__collapse-label'>
         <div>
-        {fields.first_name} {fields.last_name}
+          {fields.first_name} {fields.last_name}
         </div>
         <div>
-        {addr?.line1}, {addr?.city}, {addr?.state}
+          {addr?.line1}, {addr?.city}, {addr?.state}
         </div>
       </div>
     </>
     return 'Profile Form'
   }
-  useEffect(() => { }, [handleChange]);
+  // useEffect(() => { }, [handleChange]);
   return (
     <>
       <style jsx>{styles}</style>
@@ -118,12 +134,12 @@ const ProfileForm = ({ user }: any) => {
         <div className='profile-form'>
           <div className='profile-form__body'>
             <div className='profile-form__name'>
-              <UiInput value={fields?.first_name} label='First Name' name='first_name' onChange={handleChange} />
-              <UiInput value={fields?.last_name} label='Last Name' name='last_name' onChange={handleChange} />
+              <UiInput required value={fields?.first_name} label='First Name' name='first_name' onChange={handleChange} error={errors.first_name} />
+              <UiInput required value={fields?.last_name} label='Last Name' name='last_name' onChange={handleChange} error={errors.last_name} />
             </div>
             <div className='profile-form__contact'>
               <UiInput value={fields?.email} type='email' label='Email'
-                //  variant='dark'
+                error={errors.email}
                 name='email' onChange={handleChange} />
               <UiInput value={phoneFormat(fields?.phone, fields?.country)} label='Phone' type='tel' name='phone' onChange={handleChange} />
             </div>
@@ -132,6 +148,7 @@ const ProfileForm = ({ user }: any) => {
                 id="autocomplete-address"
                 label='address'
                 type="text"
+                error={errors.address}
                 placeholder="Enter your address"
                 defaultValue={`${fields.address?.line1 ? fields.address?.line1 + ', ' : ''
                   }${fields.address?.line2 ? fields.address?.line2 + ', ' : ''
@@ -144,11 +161,10 @@ const ProfileForm = ({ user }: any) => {
               />}
             </div>
             <div className='profile-form__action'>
-              <UiButton
+                  {!disabled && <UiButton
                 variant='primary'
-                disabled={disabled}
                 busy={loading}
-                onClick={handleSubmit}>Update Account</UiButton>
+                onClick={handleSubmit}>Update Account</UiButton>}
             </div>
           </div>
         </div>

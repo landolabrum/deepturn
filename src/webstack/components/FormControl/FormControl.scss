@@ -46,7 +46,7 @@ $elPad: 14px;
   text-transform: capitalize;
   height: max-content;
   width: calc(100% - 2px);
-  justify-content: center;
+  justify-content: space-around;
   padding: 10px 0;
 
   &.form-control-inherit {
@@ -56,7 +56,7 @@ $elPad: 14px;
   .form-control__header {
     @extend .d-flex;
     justify-content: space-between;
-
+    min-height: var(--s-4);
     label {
       text-transform: capitalize;
       color: var(--color-gray-60);
@@ -70,11 +70,7 @@ $elPad: 14px;
       }
     }
 
-    .form-control__header-invalid {
-      color: var(--color-secondary);
-      font-style: italic;
-      font-size: var(--s-7);
-    }
+  
   }
 
   .form-control__element {
@@ -464,6 +460,22 @@ $elPad: 14px;
           height: var(--default-element-height);
         }
       }
+    }
+  }
+  .form-control__footer{
+    @extend .d-flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    min-height: var(--s-4); 
+    position: relative;
+    .form-control__footer__invalid {
+      position: absolute;
+      top:0;
+      text-indent: var(--s-6);
+      color: var(--color-secondary);
+      font-style: italic;
+      font-size: var(--s-7);
     }
   }
 }

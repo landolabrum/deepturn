@@ -56,7 +56,14 @@ $containerPad: 5px;
       @extend .d-flex-col;
       align-items: flex-start;
       .notification__list-item{
+        @extend .d-flex;
+        justify-content: flex-start;
+        width: 100%;
+        gap: 10px;
         text-transform: capitalize;
+        &__label{
+          font-weight: bold;
+        }
       }
     }
   }

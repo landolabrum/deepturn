@@ -5,6 +5,7 @@ import React, { Children, cloneElement, useEffect, useRef, useState } from "reac
 import { OverlayProps, useOverlay } from "@webstack/components/Overlay/Overlay";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import createTestId from "@webstack/helpers/createTestId";
+import UiMarkdown from "../UiMarkDown/UiMarkDown";
 
 type FormIconProps = {
   icon: string;
@@ -22,7 +23,6 @@ export type ITraits = {
   backgroundColor?: string;
   outline?: string;
   disabled?: boolean;
-  errorMessage?: string | React.ReactElement;
   [key: string]: any;
 } | undefined;
 
@@ -33,6 +33,7 @@ export interface IFormControl {
   setOverlay?: (e: OverlayProps) => void;
   children?: string | React.ReactElement | React.ReactFragment | number;
   traits?: ITraits;
+  error?: string | null;
 }
 
 // FormControl component for rendering form controls with label, icons, and overlay support
@@ -43,6 +44,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   overlay,
   setOverlay,
   traits,
+  error
 }: IFormControl) => {
   const cyprus_test_key = "data-testid";
 
@@ -108,12 +110,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
       <style jsx>{styles}</style>
       <div className={`form-control ${variant === "inherit" ? " form-control-inherit" : ""}`} ref={ref}>
         <div className='form-control__header'>
-          formControl: {JSON.stringify(traits)}
           {label && <label>{label}</label>}
-            {traits?.errorMessage}
-          {variant && variant == 'invalid' ||  String(variant)?.split(' ').includes('invalid') && <div className='form-control__header-invalid'>
-            {traits?.errorMessage}
-          </div>}
         </div>
         <div
           className={`${varClasses('form-control__element')}`}
@@ -147,6 +144,11 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
               />
             )}
           </div>
+        </div>
+        <div className='form-control__footer'>
+        {error && <div className='form-control__footer__invalid'>
+            <UiMarkdown markdownString={error}/>
+          </div>}
         </div>
       </div>
     </>

@@ -8,6 +8,7 @@ import { getService } from "@webstack/common";
 import IMemberService from "~/src/core/services/MemberService/IMemberService";
 import useUserAgent from "~/src/core/authentication/hooks/useUserAgent";
 import styles from "./SignIn.scss";
+import { useNotification } from "@webstack/components/Notification/Notification";
 
 const DEFAULT_RESPONSE = { response: "", message: "" };
 const defaultCodeValue = "------";
@@ -30,9 +31,10 @@ export interface SignInProps {
   response: any;
   handleCredentials: (e: any) => void;
 }
-
 const SignIn = ({ email }: { email: string | undefined }) => {
+  const [notif, setNotif]=useNotification();
   const [signInResponse, setSignInResponse] = useState<any>(DEFAULT_RESPONSE);
+
   const userResponse = useUser();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const memberService = getService<IMemberService>("IMemberService");
@@ -62,11 +64,17 @@ const SignIn = ({ email }: { email: string | undefined }) => {
         });
         // console.log(`[  signInResponse]:`, signInResponse);
       }catch(e:any){
-
-        setSignInResponse(e.detail!=undefined?e.detail:'*server down')
-        console.log(typeof e.detail)
+        if(e.detail!=undefined){
+          e.detail?.fields && setNotif({
+            active: true,
+            list: e.detail.fields,
+            persistance: 3000
+          })
+          setSignInResponse(e.detail)
+        }else{
+          setSignInResponse('*server down')
+        }
       }
-      // setSignInResponse({ code: responseCode, message: authResponse(responseCode) });
     }
     setIsSubmitting(false);
   }
@@ -80,24 +88,24 @@ const SignIn = ({ email }: { email: string | undefined }) => {
     <>
       <style jsx>{styles}</style>
       <form className="sign-in" style={{ color: 'black' }}>
-        {["email", "password"].map((field) => (
-          <UiInput
+        {["email", "password"].map((field) => {
+          const hasError = signInResponse?.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)
+          return(
+
+            <UiInput
             key={field}
             type={field}
             autoComplete={field === "email" ? "username" : "current-password"}
             name={field}
-            variant={signInResponse?.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)?'invalid':undefined}
+            variant={hasError && 'invalid'}
             placeholder={field}
-            traits={
-              signInResponse?.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)&&{
-                errorMessage:`${signInResponse?.fields.find((f:any)=>f.name==field).message}`
-              }
-            }
+            error={hasError && hasError.message}
             label={field}
             value={credentials[field]}
             onChange={handleCredentials}
-          />
-        ))}
+            />
+            )
+          })}
         {signInResponse === "Two Factor Authenication code required" &&
           <TwoFactorAuth code={credentials.code} setCode={(e) => { handleCredentials({ target: { value: e, name: "code" } }) }} />
         }

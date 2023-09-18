@@ -12,6 +12,7 @@ export type OForm = {
 
 export type IFormField = {
     name?: string;
+    error?: string;
     options?: (string | RouteProps | number)[] | React.ReactElement[];
     width?: string;
     value?: string | boolean;

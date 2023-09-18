@@ -8,7 +8,20 @@ import { IMethodBrand } from '@webstack/helpers/userExperienceFormats';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useNotification } from '@webstack/components/Notification/Notification';
+import environment from '~/src/environment';
 
+const mock = {
+    number: '4242 4242 4242 4242',
+    expiry: '12/24',
+    cvc: '232',
+    default: false
+};
+const _method = {
+    number: '',
+    expiry: '',
+    cvc: '',
+    default: false
+};
 
 interface IAccountCreateMethod {
     onSuccess?: (e: any) => void;
@@ -21,6 +34,7 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
     open = false,
     collapse = true,
 }) => {
+
     const [status, setStatus] = useState<any>(false);
     const [notification, setNotification]=useNotification();
     const [errors, setErrors]=useState({
@@ -29,15 +43,11 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
         cvc: null,
         default: null
     })
+    const default_method = environment.isProduction?_method:mock;
     const [brand, setBrand] = useState<IMethodBrand | null | "fa-exclamation-triangle">(null);
     const errorIcon = "fa-exclamation-triangle";
     const memberService = getService<IMemberService>("IMemberService");
-    const [method, setMethod] = useState<OPaymentMethod>({
-        number: '',
-        expiry: '',
-        cvc: '',
-        default: false
-    });
+    const [method, setMethod] = useState<OPaymentMethod>(default_method);
     const [fields, setFields ]=useState<IFormField[] | undefined>()
     const getFieldsConfiguration = (): IFormField[] => {
         return [
@@ -53,9 +63,8 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                     afterIcon: method?.number?.length ?
                         { icon: 'fa-xmark', onClick: () => setMethod({ ...method, number: '' }) } :
                         undefined,
-                        errorMessage: errors?.number ? errors?.number : undefined
-
                 },
+                error: errors?.number ? errors?.number : undefined
             },
             {
                 name: 'expiry',
@@ -66,10 +75,7 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 type: 'expiry',
                 value: method?.expiry,
                 width: 'calc(50% - 5px)',
-                traits:{
-                    errorMessage: errors?.number ? errors?.number : undefined
-
-                }
+                error: errors?.expiry ? errors?.expiry : undefined
             },
             {
                 name: 'cvc',
@@ -80,12 +86,9 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 width: 'calc(50% - 5px)',
                 variant: method?.cvc.length != 0 && method?.cvc.length <= 2 || errors.cvc != null? 'invalid':undefined,
                 constraints: {
-                    min: 1,
                     max: 6,
                 },
-                traits:{
-                    errorMessage: errors?.cvc != null? errors?.cvc: undefined
-                }
+                error: errors?.cvc != null? errors?.cvc: undefined
             },
             {
                 name: 'default',
@@ -110,20 +113,16 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
             setMethod(prevMethod => ({ ...prevMethod, [name]: (typeof value == 'string'?value.trim():value) }));
         }
     };
-    // const handleErrors = () =>{
-    //     console.log('[ HANDLE ERRS ]')
-    //     Object.entries(method).map((field:any) => {
-    //         console.log('[ errors ]',field)
-    //     });
-    // }
+  
     const handleSubmit = async () => {
-        let context = 'adding payment method';
+        let context:any = [
+            {label: 'adding payment method'},
+        ];
+        let newErrors:any = [];
         setStatus(true);
         setNotification({
             active: true,
-            list:[
-                {label: context},
-            ]
+            list:context
           });
             const request: any = {
                 number: method.number.replaceAll(" ", ''),
@@ -133,36 +132,37 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 default: method.default
             }
             const methodResponse = await memberService.createCustomerMethod(request);
-            if(methodResponse?.error && methodResponse?.error == false){
-                context='successfully added card ending in: '+ method.number.slice(-4);
+            console.log("[ METHOD RESP ]", methodResponse)
+            if(Boolean(methodResponse?.error && methodResponse?.error == false) || !methodResponse?.error){
+                context[0].label='successfully added card ending in: '+ method.number.slice(-4);
                 setStatus('success');
                 onSuccess && onSuccess(methodResponse);
              } else {
                 if (methodResponse?.detail?.fields != undefined) {
-                    const newErrors = {};
-                    methodResponse?.detail.fields.forEach((field: any) => {
+                    
+                    context = methodResponse?.detail.fields.map((field: any) => {
                         newErrors[field.name] = field.message;
-                    });
+                        return {name: String(field.name), message: field.message}
+                    }); 
                     setErrors(newErrors);
                 }
             }
+            const hasErrors = Array(newErrors).length;
         setNotification({
             active: true,
-            persistance: 3000,
-            list:[
-                {label: context},
-            ]
+            persistance: hasErrors?undefined:3000,
+            list:context
           });
+          setStatus(false);
     };
 
     return (
         <>
             <style jsx>{styles}</style>
-            {JSON.stringify(errors)}
             <div className='account-create-method'>
                 {collapse
                     ? (
-                        <UiCollapse  open={true} label='add payment method'>
+                        <UiCollapse  open={open} label='add payment method'>
                             <UiForm
                                 loading={status}
                                 fields={getFieldsConfiguration()}

@@ -11,6 +11,8 @@ const NO_SCROLL = "no-scroll";
 
 interface INotificationListItem{
   label?: string;
+  name?: string;
+  message?: string;
   onClick?: (e:any)=>void;
 }
 
@@ -99,7 +101,14 @@ const Notification: React.FC = () => {
           <div className='notification__list'>{
           notification.list &&
             Object.entries(notification.list).map(([field, value])=>{
-              return <div key={field} className={`notification__list-item`}>{value.label}</div>
+              return <div key={field} className={`notification__list-item`}>
+                <div className='notification__list-item__label'>
+                  {value.label || value?.name}
+                </div>
+                <div>
+                  {value.message}
+                </div>
+                </div>
             })
           }
           </div>

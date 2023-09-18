@@ -16,11 +16,16 @@ const AccountMethods: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
   const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
+  const [open, setOpen] = useState<any>(methods.length == 0);
   const memberService = getService<IMemberService>("IMemberService");
   const user = useUser();
 
   const handleDelete = async (id: string) => {
     getAccountMethods();
+  }
+  const handleCreated = () => {
+    getAccountMethods();
+    setOpen(false);
   }
 
   const getAccountMethods = async () => {
@@ -45,8 +50,8 @@ const AccountMethods: React.FC = () => {
       <UiCollapse label={label} open>
       <div className='account-methods'>
           <AccountCreateMethod
-            open={methods.length == 0}
-            onSuccess={() => getAccountMethods()}
+            open={open}
+            onSuccess={handleCreated}
           />
         {methods.length > 0 && <>
           <div className='account-methods__existing'>

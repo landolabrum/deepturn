@@ -7,7 +7,7 @@ import UiButton from "../UiButton/UiButton";
 export interface UiMenuProps extends IFormControl {
   options?: any;
   onSelect?: (value: any) => void;
-  value?: string | boolean;
+  value?: string;
   search?: boolean;
   setSearch?: (value: string) => void;
   traits?: any;
