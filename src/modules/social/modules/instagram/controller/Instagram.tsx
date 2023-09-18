@@ -8,6 +8,7 @@ const Instagram: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
+      <h1>Instagram</h1>
     </>
   );
 };

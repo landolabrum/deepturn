@@ -19,14 +19,14 @@ export const DashboardPage: React.FC<IDashboard> = ({ links }: IDashboard) => {
   };
 
 
-  const [header, setHeader] = useHeader();
-  useEffect(() => {
-    if (links == undefined){
-       setLinks(pruneRoutes(["dashboard", "account"]));
-       setHeader({ title: "dashboard", breadcrumbs: [{ label: "dashboard" }] });
-    }
-    else if (links) setLinks(links);
-  }, [setHeader, links]);
+  // const [header, setHeader] = useHeader();
+  // useEffect(() => {
+  //   if (links == undefined){
+  //      setLinks(pruneRoutes(["dashboard", "account"]));
+  //      setHeader({ title: "dashboard", breadcrumbs: [{ label: "dashboard" }] });
+  //   }
+  //   else if (links) setLinks(links);
+  // }, [setHeader, setLinks]);
   if (_links !== undefined) return (
     <>
       <style jsx>{styles}</style>

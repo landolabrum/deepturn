@@ -11,7 +11,7 @@ export default class ShoppingService extends ApiService implements IShoppingServ
   private memberService: IMemberService;
 
   constructor() {
-    super(environment.serviceEndpoints.shopping);
+    super(environment.serviceEndpoints.social);
     this.memberService = getService<IMemberService>('IMemberService');
   }
   public async getProducts(
