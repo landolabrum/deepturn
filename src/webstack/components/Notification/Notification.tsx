@@ -14,6 +14,7 @@ interface INotificationListItem{
   name?: string;
   message?: string;
   onClick?: (e:any)=>void;
+  href?: any;
 }
 
 export type INotification = {
@@ -59,6 +60,9 @@ const Notification: React.FC = () => {
       setContext({active: false})
     }, 2000);
   }
+  const handleHref = (href?: string)=>{
+    console.log("[ HERF ]", href)
+  }
   const handleBodyScroll = useCallback(() => {
     const body = document.getElementById("app-body");
     if (context?.noScroll) {
@@ -100,8 +104,8 @@ const Notification: React.FC = () => {
             {notification?.children}
           <div className='notification__list'>{
           notification.list &&
-            Object.entries(notification.list).map(([field, value])=>{
-              return <div key={field} className={`notification__list-item`}>
+            Object.entries(notification.list).map(([field, value]:any)=>{
+              return <div key={field} className={`notification__list-item`} onClick={(value)=>handleHref(value?.href)}>
                 <div className='notification__list-item__label'>
                   {value.label || value?.name}
                 </div>
