@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Social.scss';
 import { DashboardPage } from '../../dashboard/pages/DashboardPage/DashboardPage';
 import { RouteProps, routes } from '@shared/components/Navbar/data/routes';
-import UiLoader from '@webstack/components/UiLoader/UiLoader';
-import { HeaderProps, useHeader } from '@webstack/components/Header/views/Header';
+import { useHeader } from '@webstack/components/Header/views/Header';
 import { useRouter } from 'next/router';
 import Instagram from '../modules/instagram/controller/Instagram';
 
