@@ -8,7 +8,8 @@ $actColorClose: var(--color-gray-30);
     justify-content: center;
     align-items: center;
 }
-
+$pad: 0 var(--default-padding);
+$wid: calc(calc(100% - 4px) - calc(var(--default-padding) * 2));
 
 
 
@@ -31,34 +32,34 @@ $actColorClose: var(--color-gray-30);
 @keyframes openCollapse {
     0%{
         height: $button_height;
-        width: calc(100% - calc(var(--default-padding) * 2));
-        padding: 0 var(--default-padding);
+        width: $wid;
+        padding:$pad;
     }
     20%{
         height: 50%;
-        width: calc(100% - calc(var(--default-padding) * 2));
-        padding: 0 var(--default-padding);
+        width: $wid;
+        padding: $pad;
     }
     100%{
-        width: calc(100% - calc(var(--default-padding) * 2));
+        width: $wid;
         padding: var(--default-padding) var(--default-padding) var(--default-padding);
         height: max-content;
     }
 }
 @keyframes closeCollapse {
     0%{
-        width: calc(100% - calc(var(--default-padding) * 2));
+        width: $wid;
         padding: var(--default-element-height) var(--default-padding) var(--default-padding);
         height: max-content;
     }
     20%{
         height: 50%;
-        width: calc(100% - calc(var(--default-padding) * 2));
-        padding: 0 var(--default-padding);
+        width: $wid;
+        padding: $pad;
     }
     100%{
         height: $button_height;
-        padding: 0 var(--default-padding);
+        padding: $pad;
     }
 }
 @keyframes openAction {
@@ -97,7 +98,8 @@ $actColorClose: var(--color-gray-30);
 .brdr {
     outline: solid 1px var(--color-gray-60);
     border: solid 1px var(--color-gray-80);
-    width: calc(100% - 2px);
+    padding: $pad;
+    width: $wid;
 }
 
 .collapse {
@@ -110,8 +112,6 @@ $actColorClose: var(--color-gray-30);
     background-color: var(--color-gray-40);
     flex-direction: column;
     @include flexCenter;
-   width: calc(100% - calc(var(--default-padding) * 2));
-    padding:0 var(--default-padding);
     height: $button_height;
     min-height: $button_height;
     &__open{
@@ -125,8 +125,8 @@ $actColorClose: var(--color-gray-30);
         position: absolute;
         top:0;
         left: 0;
-        width: calc(100% - calc(var(--default-padding) * 1.5 ));
-        padding: 0 var(--default-padding);
+        width: calc(100% - calc(var(--default-padding) * 2));
+        padding: $pad;
         height: $button_height;
         @include flexCenter;
         /* background-color: var(--color-gray-50); */

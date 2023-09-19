@@ -16,7 +16,7 @@ const AccountMethods: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
   const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
-  const [open, setOpen] = useState<any>(methods.length == 0);
+  const [open, setOpen] = useState<any>(true);
   const memberService = getService<IMemberService>("IMemberService");
   const user = useUser();
 
@@ -31,7 +31,10 @@ const AccountMethods: React.FC = () => {
   const getAccountMethods = async () => {
     setLoading(true);
     const methodsResponse = await memberService.getMethods();
-    if (methodsResponse) setMethods(methodsResponse?.data);
+    if (methodsResponse) {
+      setMethods(methodsResponse?.data);
+      setOpen(methodsResponse?.data.length == 0)
+    }
     setLoading(false);
   }
   const handleLabel = () =>{
@@ -47,6 +50,10 @@ const AccountMethods: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
+      {/* {user && JSON.stringify({
+        'default_source':user?.default_source,
+        'default_payment_method':user?.invoice_settings?.default_payment_method
+        })}<br/> */}
       <UiCollapse label={label} open>
       <div className='account-methods'>
           <AccountCreateMethod
@@ -55,7 +62,7 @@ const AccountMethods: React.FC = () => {
           />
         {methods.length > 0 && <>
           <div className='account-methods__existing'>
- 
+
             <div className='account-methods__list'>
               {Object.entries(methods).map(([key, method]) => {
                 return <div className='account-methods__list-item' key={key} >

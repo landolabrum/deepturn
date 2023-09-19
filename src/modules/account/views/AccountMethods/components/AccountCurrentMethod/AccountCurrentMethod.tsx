@@ -16,6 +16,7 @@ interface IAccountCurrentMethod {
 }
 const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response, default_source }: IAccountCurrentMethod) => {
     const memberService = getService<IMemberService>("IMemberService");
+
     const mm = String(method.card.exp_month).length == 1 ? `0${method.card.exp_month}` : method.card.exp_month;
     const [clicked, setClicked] = useState<number>(0);
     const [contentClass, setContentClass] = useState<string>('');
@@ -107,6 +108,7 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
                     <div className='account-current-method__info'>
                         <UiIcon icon={method.card.brand} />
                         {`**** **** **** ${method.card.last4}`}
+                        { method.id == default_source && <span className='account-current-method__default'/>}
                     </div>
                     <div className='account-current-method__exp'>
                         {mm} / {method.card.exp_year}

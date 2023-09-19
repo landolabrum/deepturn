@@ -11,24 +11,15 @@ interface ToggleProps {
 
 const ToggleSwitch = ({ value, onChange, name, label }: ToggleProps) => {
   const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const newValue:boolean = String(e.target.checked ) == 'true'?true:false;
-    // let _e:any = {
-    //   name: name,
-    // };
-    // _e.target.value = _e.target.checked == 'true'?true:false;
     const newE = {
       target:{
         name: name,
         value: e.target.checked
       }
     }
-    console.log('[ HANDLETOG ]', newE)
     // // Call the provided onChange handler with the new checked state
     onChange(newE);
   };
-  
-  useEffect(() => {
-  }, []);
   return (
     <>
       <style jsx>{styles}</style>

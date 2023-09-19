@@ -1,6 +1,9 @@
 export default interface UserContext {
   memberId: string;
   default_source?: string;
+  invoice_settings?:{
+    default_payment_method: string | null;
+  }
   id: string;
   name?: string;
   first_name?: string;

@@ -6,25 +6,20 @@ import MemberToken from "~/src/models/MemberToken";
 import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
 import IMemberService from "./IMemberService";
-
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
 import { encryptRequest } from "@webstack/helpers/Encryption";
-
 const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
-
 export default class MemberService
   extends ApiService
   implements IMemberService {
   constructor() {
     super(environment.serviceEndpoints.membership);
   }
-
   private _userContext: UserContext | undefined;
   private _userToken: string | undefined;
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
-
   public async processTransaction(cart:ICartItem[]){
     var context:any = {line_items:cart};
     let id:string | undefined = this._getCurrentUser(false)?.id;
@@ -54,6 +49,26 @@ export default class MemberService
       throw new ApiError("No Token Provided", 400, "MS.SI.02");
     }
   };
+  public updateCurrentUser(user: any): void {
+    console.log("[ updateCurrentUser ]", user)
+    // Assume that the response object contains the new user data
+    const newUserData = user.newUserData;
+  
+    if (newUserData) {
+      // Update your _userContext and _userToken here
+      this._userContext = {
+        ...this._userContext,
+        ...newUserData,
+      };
+  
+      // Emit the updated user context so any listeners know about the change
+      this.userChanged.emit(this._userContext);
+  
+    } else {
+      console.warn("No new user data provided for update.");
+    }
+  }
+  
   public async signUp(
     {
       name,
@@ -88,7 +103,6 @@ export default class MemberService
       throw new ApiError("Customer not logged in", 400, "MS.SI.02");
     }
   }
-
   public async deleteMethod(id: string): Promise<any> {
     if (id) {
       return await this.get<any>(`/api/method/delete?id=${id}`);
@@ -98,8 +112,6 @@ export default class MemberService
     }
 
   };
-
-
 public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
     let id = this._getCurrentUser(false)?.id;
     if (id && method) {
@@ -131,7 +143,6 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
         throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
     }
 }
-
   public async updateMember(id: string, memberData: any): Promise<any> {
     if (id && memberData) {
 
@@ -151,21 +162,16 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
       throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
     }
   };
-
   public async getPersonalInformation(): Promise<any | null> {
     return this.get<any | null>(
       "member/profile-info"
     );
   }
-
   public async getMemberProfileInformation(
     memberId: string
   ): Promise<any | null> {
     return this.post(`/reports/profile-info/${memberId}`);
   }
-
-
-
   private saveLegacyCookie(customJwt: string) {
     if (environment.legacyJwtCookie?.name) {
       const jwtCookie = environment.legacyJwtCookie;

@@ -6,11 +6,12 @@ import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
 
 export default interface IMemberService {
   // METHODS
+  getCurrentUser(): UserContext | undefined;
+  updateCurrentUser(user: UserContext): void;
   getMethods(): Promise<any>;
   deleteMethod(id: string): Promise<any>;
   processTransaction(cart:ICartItem[]): Promise<any>;
   createCustomerMethod(method: IPaymentMethod): Promise<any>;
-  getCurrentUser(): UserContext | undefined;
   userChanged: EventEmitter<UserContext | undefined>;
   verifyEmail(token: string):Promise<any>;
   signIn({ email,

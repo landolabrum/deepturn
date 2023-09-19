@@ -125,7 +125,26 @@ $borderColor: var(--color-gray-40);
                 --ui-icon-size: var(--s-5);
             }
             letter-spacing: 2px;
-            
+            .account-current-method__default{
+                position: relative;
+                &::after{
+                    top: 0;
+                    transform: translateY(-50%);
+                    padding: 4px 7px;
+                    line-height: 1;
+                    font-weight: 900;
+                    color: var(--color-gray-20);
+
+                    background-color: var(--color-primary-opaque);
+                    font-style: italic;
+                    left: 0;
+                    position: absolute;
+                    font-size: var(--s-8);
+                    border-radius: var(--s-9);
+                    border: solid 2px var(--color-gray-20);
+                    content: 'DEFAULT';
+                }
+            }
         }
 
         .account-current-method__exp {

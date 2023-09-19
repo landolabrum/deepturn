@@ -101,7 +101,6 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
     // HANDLERS
     const handleMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        // console.log('[ METH ]', {n: name, v: value})
         if (name === 'number') {
             const values = value.split(',');
             const foundMethodBrand: any = values[1]
@@ -134,6 +133,11 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
             const methodResponse = await memberService.createCustomerMethod(request);
             console.log("[ METHOD RESP ]", methodResponse)
             if(Boolean(methodResponse?.error && methodResponse?.error == false) || !methodResponse?.error){
+                const customerResponse = methodResponse?.customer;
+                if(customerResponse){
+                    const updated_customer = memberService.updateCurrentUser(customerResponse);
+                    console.log('[ UPDATED CUSTOMER ]', updated_customer)
+                }
                 context[0].label='successfully added card ending in: '+ method.number.slice(-4);
                 setStatus('success');
                 onSuccess && onSuccess(methodResponse);
