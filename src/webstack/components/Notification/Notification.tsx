@@ -9,12 +9,12 @@ import styles from "./Notification.scss";
 import { UiIcon } from "../UiIcon/UiIcon";
 const NO_SCROLL = "no-scroll";
 
-interface INotificationListItem{
+interface INotificationListItem {
   label?: string;
   name?: string;
   message?: string;
-  onClick?: (e:any)=>void;
-  href?: any;
+  onClick?: (e: any) => void;
+  href?: string;
 }
 
 export type INotification = {
@@ -31,7 +31,7 @@ export type INotification = {
 
 const INotificationContext = createContext<
   [INotification, (Notification: INotification) => any]
->([{ active: false }, () => {}]);
+>([{ active: false }, () => { }]);
 
 export const useNotification = () => useContext(INotificationContext);
 type INotificationProvider = {
@@ -53,16 +53,14 @@ export const NotificationProvider: React.FC<INotificationProvider> = ({
 const Notification: React.FC = () => {
   const [context, setContext] = useContext<[INotification, (Notification: INotification) => any]>(INotificationContext);
   const [notification, setNotification] = useState<INotification | null>(null);
-  const [show, setShow]=useState<boolean>(true);
-  const handleClose = () =>{
+  const [show, setShow] = useState<boolean>(true);
+  const handleClose = () => {
     setShow(false);
     setTimeout(() => {
-      setContext({active: false})
+      setContext({ active: false })
     }, 2000);
   }
-  const handleHref = (href?: string)=>{
-    console.log("[ HERF ]", href)
-  }
+
   const handleBodyScroll = useCallback(() => {
     const body = document.getElementById("app-body");
     if (context?.noScroll) {
@@ -73,10 +71,11 @@ const Notification: React.FC = () => {
       }
     }
   }, [context]);
+  const list = notification?.list;
   useEffect(() => {
     // handle Dismissable
-    if(context?.dismissable == undefined)context.dismissable = true;
-    if(context?.persistance){
+    if (context?.dismissable == undefined) context.dismissable = true;
+    if (context?.persistance) {
       setTimeout(() => {
         setShow(false);
       }, context.persistance);
@@ -95,27 +94,30 @@ const Notification: React.FC = () => {
             notification?.zIndex ? { zIndex: `${notification?.zIndex}` } : {}
           }
           onClick={context?.onClick}
-          className={`notification ${!show?' notification-hide':""}`}
+          className={`notification ${!show ? ' notification-hide' : ""}`}
         >
           <div className='notification__content'>
-            {notification.dismissable && 
-              <div className='notification__close'><UiIcon icon='fa-xmark' onClick={handleClose}/></div>
+            {notification.dismissable &&
+              <div className='notification__close'><UiIcon icon='fa-xmark' onClick={handleClose} /></div>
             }
             {notification?.children}
-          <div className='notification__list'>{
-          notification.list &&
-            Object.entries(notification.list).map(([field, value]:any)=>{
-              return <div key={field} className={`notification__list-item`} onClick={(value)=>handleHref(value?.href)}>
-                <div className='notification__list-item__label'>
-                  {value.label || value?.name}
-                </div>
-                <div>
-                  {value.message}
-                </div>
-                </div>
-            })
-          }
-          </div>
+            <div className='notification__list'>{
+              list &&
+              Object.entries(list).map(([field, value]: any) => {
+                return <span key={field}>
+                  <a className={`notification__list-item`} href={value.href} onClick={value.onClick}>
+                  {value.href}
+                  <div className='notification__list-item__label' >
+                    {value.label || value?.name}
+                  </div>
+                  <div>
+                    {value.message}
+                  </div>
+                </a>
+                </span>
+              })
+            }
+            </div>
           </div>
         </div>
       </>
