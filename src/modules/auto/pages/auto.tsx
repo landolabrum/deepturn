@@ -36,8 +36,8 @@ export default function Auto() {
   const status = resp.vehicles && Object.entries(resp.vehicles)?.length && resp.vehicles[0]?.vehiclestatus;
 
   async function getVehicles() {
-    const respv = await memberService.getVehicles(body);
-    if (respv) setResp(respv);
+    // const respv = await memberService.getVehicles(body);
+    // if (respv) setResp(respv);
   }
   async function startVehicle() {
     body.vin = status?.vin
@@ -58,7 +58,7 @@ export default function Auto() {
       xl: 1260,
     },
   };
-  if (status)
+  if (!status)
     return (
       <>
         <style jsx>{styles}</style>
@@ -68,11 +68,11 @@ export default function Auto() {
             <div className="auto__status-vin">
               <strong>{query}:</strong> {status?.vin}
             </div>
-            <div><strong>Version:</strong> {resp.vehicles[0].version}</div>
+            {/* <div><strong>Version:</strong> {Array(resp?.vehicles).length >2 && resp?.vehicles[0].version}</div> */}
             <div className="auto__status-lock"><strong>Lock Status:</strong> {status?.lockStatus?.value} {status?.lockStatus?.value === "LOCKED"?<UiIcon icon="fa-lock"/>:<UiIcon color="#f90" icon="fa-unlock"/>}</div>
           </div>
           <div className="auto__gauges">
-            <div onClick={startVehicle} className="auto__remote-start">{status.ignitionStatus.value === "Off"?"start":"stop"}</div>
+            {/* <div onClick={startVehicle} className="auto__remote-start">{status.ignitionStatus.value === "Off"?"start":"stop"}</div> */}
 
             <UiBar
               barCount={4}
@@ -84,7 +84,7 @@ export default function Auto() {
             <UiBar
               barCount={4}
               header={`${status?.fuel?.distanceToEmpty} MTE`}
-              percentage={Number((status?.fuel?.fuelLevel).toFixed(2))}
+              percentage={99}
               timestamp={status?.fuel?.timestamp}
               icon="fa-gas-pump"
             />

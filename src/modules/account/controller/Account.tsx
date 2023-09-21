@@ -25,7 +25,7 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
     "privacy & security": "privacy & security",
     'billing': <AccountMethods />
   };
-  const [view, setView] = useState<string>(Object.keys(views)[3]);
+  const [view, setView] = useState<string>(Object.keys(views)[0]);
   const handleView = (view: string) =>{
     setView(view);
     setHeader({ title: view, breadcrumbs: [{ label: "account" },{ label: view }] });

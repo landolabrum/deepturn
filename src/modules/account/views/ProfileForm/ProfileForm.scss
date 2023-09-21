@@ -45,3 +45,25 @@ $line_height: calc(var(--default-element-height) * 2);
     align-items: flex-start;
 
 }
+.profile-form__display{
+    width: 100%;
+    @extend .d-flex;
+    flex-direction: column;
+    // justify-content: flex-start;
+    align-items: flex-start;
+    gap: var(--s-8);
+    .profile-form__display__item{
+        width: 100%;
+    }
+    .profile-form__display, .profile-form__footer{
+        @extend .d-flex;
+        width: 100%;
+    }
+    .profile-form__footer{
+        justify-content: flex-end;
+    .profile-form__action{
+        width: 200px;
+    }
+    }
+
+}
