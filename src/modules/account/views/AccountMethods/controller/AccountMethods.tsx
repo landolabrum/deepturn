@@ -9,6 +9,7 @@ import { useUser } from '~/src/core/authentication/hooks/useUser';
 import AccountCreateMethod from '../components/AccountCreateMethod/AccountCreateMethod';
 import AccountCurrentMethod from '../components/AccountCurrentMethod/AccountCurrentMethod';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
@@ -38,23 +39,26 @@ const AccountMethods: React.FC = () => {
     setLoading(false);
   }
   const handleLabel = () =>{
-    if(user ){
-      return user.default_source;
+    if(user && methods.length ){
+      let default_method:any = methods.find(m=> m.id == user?.default_source);
+      if(default_method?.card){
+        default_method = <div style={{display:'flex', alignItems:"center", gap: '16px'}}>
+        <UiIcon icon={default_method.card.brand} /> {`**** **** **** ${default_method.card.last4}`}
+        </div>
+        setLabel(default_method);
+      }
     }
   }
   useEffect(() => {
+
     handleLabel();
     getAccountMethods();
-  }, []);
+  }, [methods.length]);
 
   return (
     <>
       <style jsx>{styles}</style>
-      {/* {user && JSON.stringify({
-        'default_source':user?.default_source,
-        'default_payment_method':user?.invoice_settings?.default_payment_method
-        })}<br/> */}
-      <UiCollapse label={label} open>
+      <UiCollapse label={label} open={user?.default_source == undefined}>
       <div className='account-methods'>
           <AccountCreateMethod
             open={open}

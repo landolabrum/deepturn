@@ -1,3 +1,4 @@
+
 import CookieHelper from "@webstack/helpers/CookieHelper";
 import { EventEmitter } from "@webstack/helpers/EventEmitter";
 import environment from "~/src/environment";
@@ -50,7 +51,6 @@ export default class MemberService
     }
   };
   public updateCurrentUser(user: any): void {
-    console.log("[ updateCurrentUser ]", user)
     // Assume that the response object contains the new user data
     const newUserData = user.newUserData;
   
@@ -96,9 +96,17 @@ export default class MemberService
   }
   public async getMethods(): Promise<any> {
     let id = this._getCurrentUser(false)?.id;
-    if (id) return await this.get<any>(
-      `/api/method/customer/?id=${id}`,
-    );
+    if (id) {
+      const OGetMethods = await this.get<any>(
+        `/api/method/customer/?id=${id}`,
+      );
+      if(OGetMethods){
+        this.saveMemberToken(OGetMethods.customer);
+        this.saveLegacyCookie(OGetMethods.customer);
+        this._getCurrentUser(true)!;
+      }
+      return OGetMethods.methods
+    }
     if (!id) {
       throw new ApiError("Customer not logged in", 400, "MS.SI.02");
     }

@@ -30,7 +30,6 @@ const ProfileForm = ({ user }: any) => {
     country: ''
   });
   const [disabled, setDisabled] = useState(true);
-  const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const memberService = getService<IMemberService>("IMemberService");
 
@@ -127,33 +126,14 @@ const ProfileForm = ({ user }: any) => {
     </>
     return 'Profile Form'
   }
-  const DisplayFields = (fields: any) => {
-    return <>
-      <style jsx>{styles}</style>
-      <div className='profile-form__display'>
-        {Object.keys(fields?.fields).map((key, index) => {
-          return <div className='profile-form__display__item' key={key}>
-            {keyStringConverter(key)}
-          </div>
-        })}
-        <div className='profile-form__footer'>
 
-          <div className='profile-form__action'>
-            <UiButton onClick={()=>setShowForm(false)}>edit</UiButton>
-          </div>
-        </div>
-      </div>
-    </>
-  }
   
-  useEffect(() => {}, [setShowForm]);
-  if (!showForm) {
-    return <DisplayFields fields={fields} />
-  }
-  if (showForm) return (
+
+  return (
     <>
       <style jsx>{styles}</style>
-      <UiCollapse label={label()} open>
+
+      <UiCollapse label={label()} open={user?.address == undefined}>
         <div className='profile-form'>
           <div className='profile-form__body'>
             <div className='profile-form__name'>

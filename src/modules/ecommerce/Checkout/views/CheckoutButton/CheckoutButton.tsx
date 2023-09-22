@@ -24,10 +24,6 @@ const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", i
     const { isModalOpen, openModal, closeModal } = useModal();
     const memberService = getService<IMemberService>('IMemberService');
     const handleCheckout = async () => {
-        // if(setup){
-        //     const checkoutResponse = await memberService.processTransaction(cart)
-        //     console.log('[ setup response ]', checkoutResponse)
-        // }
         if (collect) {
             const checkoutResponse = await memberService.processTransaction(cart);
             console.log('[ checkoutResponse ]', checkoutResponse)
