@@ -8,8 +8,6 @@ input {
   border: none;
   background-color: transparent;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  padding: 0;
-  margin: 0;
   // ARROWS for TYPE='number'
   /* Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,
@@ -64,9 +62,8 @@ input {
 
   // VARIANTS
   &.invalid {
-    color: var(--color-yellow-opaque);
+    background-color: transparent;
     text-decoration: underline dashed;
-    background-color: var(--color-invalid-bg);
     border-width: 0px 0px 2px 0px;
     border-bottom-color: var(--color-invalid-border);
   }

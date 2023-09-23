@@ -10,7 +10,8 @@ if (typeof window == "object") {
     case "deepturn.com":
       environment = prodEnvironment;
       break;
-    case "192.168.86.101:3000":
+    case "localhost:3000":
+    // case "192.168.86.101:3000":
       environment = devEnvironment;
       break;
   }

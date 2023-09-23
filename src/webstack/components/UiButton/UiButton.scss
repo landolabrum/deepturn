@@ -54,6 +54,7 @@ button {
     padding: 0;
     aspect-ratio: 4/5;
   }
+
   .busy-spinner {
     position: absolute;
     top: 0;
@@ -80,16 +81,14 @@ button {
       justify-content: flex-start;
     }
   }
-  &:disabled{
-    user-select: none;
-    cursor:not-allowed !important;
-    animation: disable 1s forwards;
-    // animation-play-state: running;
-  }
-  &:not(disabled){
-    animation: abled 1s forwards;
-    // animation-play-state: paused;
-  }
+  // &:disabled{
+  //   user-select: none;
+  //   cursor:not-allowed !important;
+  //   animation: disable 1s forwards;
+  // }
+  // &:not(disabled){
+  //   animation: abled 1s forwards;
+  // }
 }
 .ui-button__link {
   color: inherit;

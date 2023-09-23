@@ -6,6 +6,7 @@ import React from "react";
 // Orientation Types for Adaptive Window Sizes
 export type IAdaptElLocation = 
     'top' | 
+    'center' | 
     'right' | 
     'bottom' | 
     'left' | 

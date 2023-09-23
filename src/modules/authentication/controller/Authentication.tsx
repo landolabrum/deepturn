@@ -38,31 +38,38 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
   }
 
   const [notification, setNotification] = useNotification();
-  // useEffect(() => {
-  //    if(router.pathname.includes('authentication')){setNotification({
-  //      active: true,
-  //      dismissable: false,
-  //      children: <>
-  //        <p>We use cookies to give you the best experience and to ensure the safety of our users. The only non-essential cookies we use are for any personal referrals you make. We do not track you across other sites. You can see our Cookie Policy here, and our Privacy Notice here.</p>
-  //        <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', gap: '5px' }}>
-  //          <UiButton traits={{ width: "max-content" }}>Customize selection</UiButton>
-  //          <UiButton traits={{ width: "max-content" }} variant="primary">accept all</UiButton>
-  //        </div>
-  //      </>
-  //    })}else{setNotification({active: false})}
-  //    if (router.pathname.includes('verify')) setView('verify');
-  //    if (view.includes("@")) {
-  //      setNewCustomerEmail(view);
-  //    }
-  //   if (newCustomerEmail != undefined) setView("sign-in");
-  // }, [setView, newCustomerEmail])
+  useEffect(() => {
+    //  if(router.pathname.includes('authentication')){setNotification({
+    //    active: true,
+    //    dismissable: false,
+    //    children: <>
+    //      <p>We use cookies to give you the best experience and to ensure the safety of our users. The only non-essential cookies we use are for any personal referrals you make. We do not track you across other sites. You can see our Cookie Policy here, and our Privacy Notice here.</p>
+    //      <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', gap: '5px' }}>
+    //        <UiButton traits={{ width: "max-content" }}>Customize selection</UiButton>
+    //        <UiButton traits={{ width: "max-content" }} variant="primary">accept all</UiButton>
+    //      </div>
+    //    </>
+    //  })}else{setNotification({active: false})}
+     if (router.pathname.includes('verify')) setView('verify');
+     if (view.includes("@")) {
+       setNewCustomerEmail(view);
+     }
+    if (newCustomerEmail != undefined) setView("sign-in");
+  }, [setView, newCustomerEmail])
 
   return (
     <>
       <style jsx>{styles}</style>
       <AdaptToWindow
         variant="card"
-        sm={{value:'bottom', style:{width: 'calc(100% - 40px'}}}
+        sm={{value:'bottom', style:{width: 'calc(100% - 40px)'}}}
+        md={{
+          value:'center',
+          style:{
+            width: '500px',
+            inlineSize:"calc(100% - 10vw)",
+          margin:"none"
+        }}}
         lg={{value: 'top right', style:{margin: '70px 50px 0 0', width:'500px'}}}
         background={{
           type: 'video',
@@ -81,6 +88,9 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
                    {keyStringConverter(view)}
                  </div>
                </div>
+               {view.includes("@") && <div className='-authentication__'>
+                An email has been sent to {view}, click the link in the email to continue.
+                </div>}
                {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
                {view == 'sign-up' && <SignUp setView={setView} />}
                {view == 'verify' && <VerifyEmail token={router.query.token} onSuccess={console.log} />}

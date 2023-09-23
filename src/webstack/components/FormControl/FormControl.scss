@@ -48,6 +48,7 @@ $elPad: 14px;
   width: calc(100% - 2px);
   justify-content: space-around;
   padding: 0;
+  margin-bottom: var(--s-7);
   &.form-control-inherit {
     @extend .inherit;
   }
@@ -73,8 +74,6 @@ $elPad: 14px;
   }
 
   .form-control__element {
-    // overflow: hidden;
- 
     position: relative;
     cursor: pointer;
     font-size: 16px;
@@ -92,9 +91,16 @@ $elPad: 14px;
     --ui-icon-width: 18px;
     border-radius: var(--default-border-radius);
     width: calc(100% - 2px);
+    background-color: var(--color-primary-lite);
+    color: var(--color-gray-20);
+  
     &:focus-within {
-      color: var(--color-gray-90);
-      background-color: var(--color-gray-20);
+      background-color: var(--color-white);
+      color: var(--color-primary);
+    }
+    &:hover {
+      color: var(--color-white);
+      background-color: var(--color-primary);
     }
 
     $pad: 5px;
@@ -121,7 +127,7 @@ $elPad: 14px;
       }
       
       &.form-control__icon-invalid {
-        --ui-icon-color: var(--color-yellow-opaque);
+        --ui-icon-color: var(--color-orange);
         background-color: var(--color-invalid-bg);
         
       }
@@ -137,10 +143,13 @@ $elPad: 14px;
     .form-control__icon-placeholder {
       height: 100%;
       width: var(--s-3);
+      background-color: inherit;
     }
 
     &.form-control__element-invalid {
       overflow: hidden;
+      color: var(--color-orange);
+      background-color: var(--color-invalid-bg);
       .form-control__icon-placeholder {
         background-color: var(--color-invalid-bg);
       }
@@ -308,9 +317,9 @@ $elPad: 14px;
 
     &[class$="-disabled"] {
       
-      color: var(--color-gray-60);
-      --ui-icon-color: var(--color-gray-60);
-      
+      color: var(--color-gray-30);
+      --ui-icon-color: var(--color-gray-30);
+      background-color: var(--color-gray-60-opaque);
       &:hover {
         user-select: none;
         cursor:not-allowed;
@@ -339,6 +348,15 @@ $elPad: 14px;
     &[class$="-primary"] {
       color: var(--color-white);
       background-color: var(--color-primary);
+      &:focus-within {
+        background-color: var(--color-white);
+        color: var(--color-primary-opaque);
+        font-weight: bold;
+      }
+      &:hover {
+        color: var(--color-white);
+        background-color: var(--color-primary);
+      }
     }
 
     &[class$="-disabled-icon"] {
@@ -463,11 +481,14 @@ $elPad: 14px;
   }
   .form-control__footer{
     @extend .d-flex;
+
     align-items: flex-start;
     flex-direction: column;
     width: 100%;
     min-height: var(--s-4); 
-    position: relative;
+    line-height: var(--s-4); 
+    position: absolute;
+    bottom: calc(var(--s-9) * -1);
     .form-control__footer__invalid {
       position: absolute;
       top:0;

@@ -26,6 +26,7 @@ const VerifyEmail: React.FC<any> = ({token, onSuccess}:IVerifyEmail) => {
     const handleVerify = async () =>{
         if(!token)return;
         const isVerified = await memberService.verifyEmail(String(token));
+        console.log("[ IS VER ]", isVerified)
         if(isVerified)setState(isVerified);
     }
 
@@ -47,6 +48,7 @@ const VerifyEmail: React.FC<any> = ({token, onSuccess}:IVerifyEmail) => {
     <>
       <style jsx>{styles}</style>
       <div className='verify-email'>
+        <h1>IS VERIFIED: {JSON.stringify(state)}</h1>
         <UiLoader text={loadingText()} dots={!Boolean(state.status == 'success')}/>
       </div>
     </>

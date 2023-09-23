@@ -23,11 +23,13 @@ const AdaptToWindow: React.FC<IAdaptToWindow> = (props) => {
     const width = window.width;
     const [elClass, setElClass] = useState<string | ''>('');
     const elRef = useRef<any | null>(null);
-    const elClassHandler = (cless: any) => {
+
+    const elClassStylesHandler = (cless: any) => {
    
         let variantClass; 
         if (variant)variantClass = `${cless}__${variant}`;
-        function classArrayDistributor(sZval: any){
+        function styleDistributor(sZval: any){
+            // alert(`${JSON.stringify(sZval)}`)
             if (sZval.style && elRef.current) {
                 for (let key in sZval.style) {
                     if (key in elRef.current.style) {
@@ -35,6 +37,9 @@ const AdaptToWindow: React.FC<IAdaptToWindow> = (props) => {
                     }
                 }
             }
+            
+        }
+        function classArrayDistributor(sZval: any){
             let positionClass:string = ` ${cless}__${sZval}`;
             const strArr = typeof sZval == 'string' ? sZval.split(' '):sZval;
             function iT(val:any){
@@ -53,12 +58,15 @@ const AdaptToWindow: React.FC<IAdaptToWindow> = (props) => {
         }
         switch (true) {
             case width < 900 && !!sm:
+                styleDistributor(sm);
                 cless += classArrayDistributor(sm);
                 break;
-            case width <= 1100 && !!md:
+                case width <= 1100 && !!md:
+                styleDistributor(md);
                 cless += classArrayDistributor(md);
                 break;
-            case width > 1100 && !!lg:
+                case width > 1260 && !!lg:
+                styleDistributor(lg);
                 cless += classArrayDistributor(lg);
                 break;
             default:
@@ -69,7 +77,7 @@ const AdaptToWindow: React.FC<IAdaptToWindow> = (props) => {
     
 
     useEffect(() => {
-       setElClass(elClassHandler("adapt-to-window__element"));
+       setElClass(elClassStylesHandler("adapt-to-window__element"));
     }, [width, elRef?.current]);
     return (
         <>

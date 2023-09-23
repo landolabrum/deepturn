@@ -60,9 +60,9 @@ useEffect(() => {
           defaultValue={props.defaultValue}
         />
       </FormControl>
-      <div className={`input__message ${message ? 'input__message-show' : ''}${props?.variant ? ' input__message-' + props.variant : ''}`}>
+      {/* <div className={`input__message ${message ? 'input__message-show' : ''}${props?.variant ? ' input__message-' + props.variant : ''}`}>
           {message && message}
-      </div>
+      </div> */}
     </>
   );
 };

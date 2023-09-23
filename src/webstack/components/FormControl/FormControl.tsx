@@ -73,6 +73,8 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
       traits?.responsive && elemenet_ref.classList.add('form-control__element-responsive');
 
       const isInput = elemenet_ref.querySelector('input:not([type="button"])');
+      // const isButton = elemenet_ref.getElementsByTagName('button')
+      // console.log("[isbtn]", isButton)
       if (isInput?.tagName === 'INPUT') {
         elemenet_ref.classList += " form-control__element-lite"
       }

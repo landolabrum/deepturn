@@ -9,7 +9,7 @@ $actColorClose: var(--color-gray-30);
     align-items: center;
 }
 $pad: 0 var(--default-padding);
-$wid: calc(calc(100% - 4px) - calc(var(--default-padding) * 2));
+$wid: calc(calc(100% - 2px) - calc(var(--default-padding) * 2));
 
 
 
@@ -142,7 +142,7 @@ $wid: calc(calc(100% - 4px) - calc(var(--default-padding) * 2));
         justify-content: space-between;
         line-height: 1;
         &:hover {
-            background-color: var(--color-gray-70);
+            background-color: var(--color-gray-50);
         }
         &__open {
             animation: openAction 1s forwards;

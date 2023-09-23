@@ -40,7 +40,14 @@ export default class MemberService
     try{
       if (token){
         const encodedToken = encodeURIComponent(token);
-        return await this.get<any>(`/usage/auth/verify?token=${encodedToken}`);
+        const newMemberResponse =  await this.get<any>(`/usage/auth/verify?token=${encodedToken}`);
+        const customer_token = newMemberResponse?.customer_token;
+        console.log("[ customer_token ]", customer_token)
+        if(customer_token){
+          this.saveMemberToken(customer_token);
+          this.saveLegacyCookie(customer_token);
+          this._getCurrentUser(true)!;
+        }
       }
     }catch(error:any){
       console.log('[error]',error)
