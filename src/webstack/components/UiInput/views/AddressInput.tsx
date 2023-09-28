@@ -1,12 +1,20 @@
 // Relative Path: ./AddressInput.tsx
 import React, { useEffect } from 'react';
-import styles from './AddressInput.scss';
+import styles from '../UiInput.scss';
 import { Loader } from '@googlemaps/js-api-loader';
-import UiInput from '@webstack/components/UiInput/UiInput';
+import FormControl, { ITraits } from '@webstack/components/FormControl/FormControl';
+import { IInput } from '@webstack/models/input';
 
-const GOOGLE_API_KEY = 'AIzaSyCthMX-HyRujKH9WgIwvVoi6Hhms247Ts4';
-
-const AutocompleteAddressInput = ({ address, setAddress }:any) => {
+interface IAddressInput{
+  address?: any;
+  setAddress:(e:any)=>void;
+  traits?: ITraits,
+  inputClasses?:string,
+  label?: string;
+}
+const AutocompleteAddressInput = ({ address, setAddress, traits, inputClasses, label }:IAddressInput) => {
+  const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GAPI_KEY?.trim() || "";
+  // console.log("[ PROPS ]", props)
   useEffect(() => {
     const initAutocomplete = async () => {
       const loader = new Loader({
@@ -39,9 +47,9 @@ const AutocompleteAddressInput = ({ address, setAddress }:any) => {
     };
 
     initAutocomplete();
-  }, [address]);
+  }, []);
 
-  const addressDisplay = address?.line1 ?
+  const addressDisplay = address != undefined ?
     `${address?.line1? address?.line1+', ' : ''
     }${address?.line2? address?.line2+' ' : ''
     }${address?.city? address?.city+' ' : ''
@@ -49,15 +57,19 @@ const AutocompleteAddressInput = ({ address, setAddress }:any) => {
     }${address?.postal_code? address?.postal_code+', ' : ''
     }${address?.country? address?.country : ''}`: undefined;
 
-  return (
-    <UiInput
+  return (<>
+    <style jsx>{styles}</style>
+    <FormControl traits={traits} label={label}>
+    <input
+    className={inputClasses}
       id="autocomplete-address"
-      label='Address'
       type="text"
       placeholder="Enter your address"
       defaultValue={addressDisplay}
       name="address"
     />
+    </FormControl> 
+    </>
   );
 };
 

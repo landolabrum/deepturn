@@ -12,10 +12,18 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   const [show, setShow] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // if(props?.name == 'address'){
+    //   if (onChange) onChange(e);
+    //   return;
+    // }
     if (props?.max && props.max < e.target.value.length) return;
-    let _e: any = e;
+    let _e: any = {
+      target:{
+        value: e?.target?.value || "",
+        name: e?.target?.name || ""
+      }
+    };
     let [newV, extra] = maskInput(e, type);
-    // console.log('MASK: ', [newV, extra])
     _e.target.value = extra !== undefined ? [newV, extra] : newV;
     // console.log('value: ', _e.target.value)
     if (onChange) onChange(_e);
@@ -31,11 +39,8 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   useEffect(() => {
 
   }, [handleChange]);
-  if (props.name == 'address') {
-    // if(value == undefined)return "loading"
-    return <AutocompleteAddressInput address={props.defaultValue} setAddress={handleChange} />
-  }
-  return (
+
+  if(props?.name != 'address')return (
     <>
       <style jsx>{styles}</style>
       <FormControl
@@ -70,6 +75,19 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
       </div> */}
     </>
   );
+  else if (props.name == 'address') {
+    return <>
+    <AutocompleteAddressInput label={props.label}
+    inputClasses={inputClasses} traits={{
+     ...props.traits,
+     afterIcon: type === "password" ? {
+       icon: show ? "fa-eye" : "fa-eye-slash",
+       onClick: () => setShow(!show)
+     } : props.traits?.afterIcon,
+   }} address={value} setAddress={handleChange} />
+   </>
+  }
+  return "UiInput Default"
 };
 
 export default UiInput;
