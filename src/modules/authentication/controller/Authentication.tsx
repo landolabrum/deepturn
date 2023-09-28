@@ -50,10 +50,10 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
     //      </div>
     //    </>
     //  })}else{setNotification({active: false})}
-     if (router.pathname.includes('verify')) setView('verify');
-     if (view.includes("@")) {
-       setNewCustomerEmail(view);
-     }
+    if (router.pathname.includes('verify')) setView('verify');
+    if (view.includes("@")) {
+      setNewCustomerEmail(view);
+    }
     if (newCustomerEmail != undefined) setView("sign-in");
   }, [setView, newCustomerEmail])
 
@@ -62,46 +62,59 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
       <style jsx>{styles}</style>
       <AdaptToWindow
         variant="card"
-        sm={{value:'bottom', style:{width: 'calc(100% - 40px)'}}}
+        sm={{ value: 'bottom', style: { width: 'calc(100% - 40px)' } }}
         md={{
-          value:'center',
-          style:{
+          value: 'center',
+          style: {
             width: '500px',
-            inlineSize:"calc(100% - 10vw)",
-          margin:"none"
-        }}}
-        lg={{value: 'top right', style:{margin: '70px 50px 0 0', width:'500px'}}}
+            inlineSize: "calc(100% - 10vw)",
+            margin: "none"
+          }
+        }}
+        lg={{ value: 'top right', style: { margin: '70px 50px 0 0', width: '500px' } }}
         background={{
           type: 'video',
-          sm:'portrait',
-          md:'portrait',
-          lg:'landscape',
-          url:'./assets/backgrounds/nature-clean.mp4'
+          sm: 'portrait',
+          md: 'portrait',
+          lg: 'landscape',
+          url: './assets/backgrounds/nature-clean.mp4'
         }}
-        >
-          <div className='authentication'>
-             <div className='authentication__view-header'>
-                 <div className="authentication__logo">
-                   <UiIcon icon="deepturn-logo" />
-                 </div>
-                 <div className='authentication__view-name'>
-                   {keyStringConverter(view)}
-                 </div>
-               </div>
-               {view.includes("@") && <div className='-authentication__'>
-                An email has been sent to {view}, click the link in the email to continue.
-                </div>}
-               {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
-               {view == 'sign-up' && <SignUp setView={setView} />}
-               {view == 'verify' && <VerifyEmail token={router.query.token} onSuccess={console.log} />}
-               <div className="authentication__view-action">
-                 <UiButton onClick={handleView} variant="link" label={view == 'sign-in' ? "no account?" : "already have an account?"}>
-                   {view == 'sign-in' ? "create account" : "log in"}
-                 </UiButton>
-               </div>
+      >
+        <div className='authentication'>
+          {/* {view} */}
+          <div className='authentication__view-header'>
+            <div className="authentication__logo">
+              <UiIcon icon="deepturn-logo" />
+            </div>
+            <div className='authentication__view-name'>
+              {keyStringConverter(view)}
+            </div>
+          </div>
+          {view.includes("@") && <div className='   authentication__'>
+            An email has been sent to {view}, click the link in the email to continue.
+          </div>}
+          {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
+          {view == 'sign-up' && <SignUp setView={setView} />}
+          {view == 'verify' && <VerifyEmail token={router.query.token} onSuccess={console.log} />}
+          <div className="authentication__view-action">
+            <div className="authentication__view-label">
+              {view == 'sign-in' && "no account?"}
+              {view == 'sign-up' && "already have an account?"}
+            </div>
+            <div>
+
+              <UiButton
+                onClick={handleView}
+                variant="link"
+              >
+                {view == 'sign-in' && "Sign Up"}
+                {view == 'sign-up' && "Login"}
+              </UiButton>
+            </div>
+          </div>
         </div>
       </AdaptToWindow>
-   
+
     </>
   );
 };

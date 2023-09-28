@@ -12,7 +12,9 @@ $el_gap: 7px;
   justify-content: center;
   width: 100%;
   height: max-content;
-  background-color: var(--color-gray-70);
+  // gap:var(--s-9);
+
+  // background-color: var(--color-gray-70);
   .menu__search {
     padding: 12px;
   }
@@ -46,13 +48,16 @@ $el_gap: 7px;
     cursor: pointer;
     justify-content: space-between;
     width: calc(100% - $brdr);
-    border-width: $brdr;
-    border-style: outset;
-    border-color: 
-    var(--color-gray-50-opaque)
-    var(--color-gray-100-opaque)
-    var(--color-gray-90-opaque)
-    var(--color-gray-20-opaque);
+    &:first-child{border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;}
+    &:last-child{border-radius:0 0 var(--default-border-radius) var(--default-border-radius);}
+    // border-width: $brdr;
+    // border-style: outset;
+    // border-color: 
+    // var(--color-gray-50-opaque)
+    // var(--color-gray-100-opaque)
+    // var(--color-gray-90-opaque)
+    // var(--color-gray-20-opaque);
+    background-color: var(--color-gray-60);
     &:hover{
       background-color: var(--color-gray-60-opaque);
       border-color: 

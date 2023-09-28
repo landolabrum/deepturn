@@ -18,7 +18,7 @@ const Navbar = () => {
   const [user, route, handleRoute]: any = useRoute(closeSideNavOnWidthChange);
 
   function closeSideNavOnWidthChange() {
-    if (width < 900) setSideNav(false);
+    if (width < 1100) setSideNav(false);
     setOpen(null);
   }
   function handleHide() {
@@ -37,7 +37,7 @@ const Navbar = () => {
   }, [open]);
   useEffect(() => {
     sideNav && closeSideNavOnWidthChange();
-  }, [width > 900]);
+  }, [width > 1100]);
   const cart = routes.find((r: any) => r.href == '/cart')
 
   if (user && !hide) {
@@ -81,7 +81,7 @@ const Navbar = () => {
                             options={item.items}
                             onSelect={(value) => handleRoute({ href: value })}
                             openDirection="down"
-                            // openDirection={item?.label === "account" && width < 900 ? "up" : "down"}
+                            // openDirection={item?.label === "account" && width < 1100 ? "up" : "down"}
                             onToggle={(isOpen) => setOpen(isOpen ? item?.label : null)}
                             openState={open === item?.label}
                           />

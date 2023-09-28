@@ -1,3 +1,4 @@
+$small: 1100px;
 .nav-button{
     position: relative;
     cursor: pointer;
@@ -19,7 +20,7 @@
         box-shadow: var( --default-box-shadow);
         border-radius: 4px;
         min-width: 400px;
-        @media(max-width: 900px){
+        @media(max-width: $small){
             width: calc(100% - 20px);
         }
         &.nav-button__cart-show{

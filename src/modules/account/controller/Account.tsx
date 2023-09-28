@@ -20,10 +20,10 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
   const user = useUser();
   
   const views: any = {
-    "edit profile": <ProfileForm user={user} />,
+    "edit profile": <ProfileForm user={user} open/>,
     "email notification": "email notification",
     "privacy & security": "privacy & security",
-    'billing': <AccountMethods />
+    'billing': <AccountMethods open />
   };
   const [view, setView] = useState<string>(Object.keys(views)[0]);
   const handleView = (view: string) =>{

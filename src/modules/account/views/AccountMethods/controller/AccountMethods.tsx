@@ -12,12 +12,13 @@ import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 // Remember to create a sibling SCSS file with the same name as this component
-
-const AccountMethods: React.FC = () => {
+interface IAccountMethods{
+  open?: boolean;
+}
+const AccountMethods: React.FC<any> = ({open}:IAccountMethods) => {
   const [loading, setLoading] = useState<any>(true);
   const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
-  const [open, setOpen] = useState<any>(true);
   const memberService = getService<IMemberService>("IMemberService");
   const user = useUser();
 
@@ -26,7 +27,6 @@ const AccountMethods: React.FC = () => {
   }
   const handleCreated = () => {
     getAccountMethods();
-    setOpen(false);
   }
 
   const getAccountMethods = async () => {
@@ -34,7 +34,6 @@ const AccountMethods: React.FC = () => {
     const methodsResponse = await memberService.getMethods();
     if (methodsResponse) {
       setMethods(methodsResponse?.data);
-      setOpen(methodsResponse?.data.length == 0)
     }
     setLoading(false);
   }
@@ -58,10 +57,10 @@ const AccountMethods: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      <UiCollapse label={label} open={user?.default_source == undefined}>
+      <UiCollapse label={label} open={!loading || open || user?.default_source == undefined}>
       <div className='account-methods'>
           <AccountCreateMethod
-            open={open}
+            open={!loading || open || user?.default_source == undefined}
             onSuccess={handleCreated}
           />
         {methods.length > 0 && <>

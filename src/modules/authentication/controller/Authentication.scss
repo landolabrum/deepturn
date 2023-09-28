@@ -29,8 +29,28 @@ $cardWidth: 500px;
   }
 
   .authentication__view-action {
-    width: max-content;
-    margin: 0;
+    @extend .d-flex-col;
+    white-space: nowrap;
+    text-align: center;
+    gap: var(--default-padding);
+    color:var(--color-gray-60);
+    position: relative;
+    z-index: 1;
+    &::after{
+      z-index: 1;
+      left: 0;
+      top: 40%;
+      content:'';
+      width: 100%;
+      position: absolute;
+      border-bottom: solid 1px;
+    }
+    .authentication__view-label{
+      padding: 0 var(--s-8);
+      z-index: 2;
+      margin: var(--default-padding) 0 0;
+      background-color: var(--color-gray-40);
+    }
   }
 
 }

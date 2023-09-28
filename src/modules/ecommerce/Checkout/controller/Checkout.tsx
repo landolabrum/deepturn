@@ -43,7 +43,7 @@ const Checkout: React.FC<ICheckout> = () => {
                 <CheckoutButton cart={cart} collect />
             </div>
             <div className='checkout__body'>
-                <ProfileForm user={user} />
+                <ProfileForm user={user} open={user?.address == undefined}/>
                 <AccountMethods />
                 <CartList cart={cart} collapse={false} handleQty={setCart} />
             </div>

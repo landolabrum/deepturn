@@ -69,12 +69,12 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
 
     if (elemenet_ref) {
       if (typeof traits.outline === "string") elemenet_ref.style.outline = traits.outline;
-      traits?.disabled && elemenet_ref.classList.add('form-control__element-disabled');
+      if(traits?.disabled && [null, true].includes(traits.disabled)){
+        elemenet_ref.classList.add('form-control__element-disabled');
+      }else if(traits?.disabled == false)elemenet_ref.classList.remove('form-control__element-disabled');
       traits?.responsive && elemenet_ref.classList.add('form-control__element-responsive');
 
       const isInput = elemenet_ref.querySelector('input:not([type="button"])');
-      // const isButton = elemenet_ref.getElementsByTagName('button')
-      // console.log("[isbtn]", isButton)
       if (isInput?.tagName === 'INPUT') {
         elemenet_ref.classList += " form-control__element-lite"
       }
@@ -91,18 +91,23 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
     if (overlay === false && overlay_.active) {
       setOverlay_({ active: false });
     }
-  }, [overlay, setOverlay_, traits]);
+  }, [overlay, setOverlay_]);
   const varClasses = (clzz: string) => {
     if (variant) {
       const varArr: any = variant?.split(' ');
       let initialValue = clzz;
-      return varArr.reduce(
-        (accumulator: string, currentValue: string) =>
-          accumulator + (` ${clzz}-${currentValue}`), initialValue
-      );
+      return varArr.reduce((accumulator: string, currentValue: string) => {
+        // Check if the class variant already exists
+        const newClass = `${clzz}-${currentValue}`;
+        if (!accumulator.split(' ').includes(newClass)) {
+          return accumulator + ` ${newClass}`;
+        }
+        return accumulator;
+      }, initialValue);
     }
     return clzz;
-  }
+  };
+  
 
   useEffect(() => {
     setTestId(createTestId(ref.current.parentNode, childRef.current));
@@ -146,12 +151,12 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
               />
             )}
           </div>
-        </div>
-        {error && <div className='form-control__footer'>
-          <div className='form-control__footer__invalid'>
+        {error && 
+          <div className='form-control__invalid'>
             <UiMarkdown markdownString={error} />
           </div>
-        </div>}
+        }
+        </div>
       </div>
     </>
   );

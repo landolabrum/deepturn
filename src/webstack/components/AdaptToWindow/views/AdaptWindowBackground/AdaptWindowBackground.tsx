@@ -45,9 +45,9 @@ export default function AdaptWindowBackground({ background, window }: IAdaptWind
     return (
       <>
         <style jsx>{styles}</style>
-        <div className='dev' style={{top: '60px'}}>
+        {/* <div className='dev' style={{top: '60px'}}>
           background: {JSON.stringify(sizeClass)}
-        </div>
+        </div> */}
         <video autoPlay loop muted playsInline 
           className={`adapt-to-window__video${visible ? ' adapt-to-window__video__visible' : ''}${sizeClass}`}
         ref={backgroundRef}>

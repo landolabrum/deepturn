@@ -5,14 +5,15 @@ import { useEffect, useRef, useState } from "react";
 import { IInput } from "@webstack/models/input";
 import { validateInput } from "./helpers/validateInput";
 import maskInput from "./helpers/maskInput";
+import AutocompleteAddressInput from "./views/AddressInput";
 
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
   const { type, value, onChange, onKeyDown, onKeyUp, message } = props;
   const [show, setShow] = useState<boolean>(false);
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (props?.max && props.max < e.target.value.length) return;
-    let _e:any = e;
+    let _e: any = e;
     let [newV, extra] = maskInput(e, type);
     // console.log('MASK: ', [newV, extra])
     _e.target.value = extra !== undefined ? [newV, extra] : newV;
@@ -27,22 +28,26 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
     props.traits?.beforeIcon ? "input__has-icons" : ""
   ].join(" ");
 
-useEffect(() => {
+  useEffect(() => {
 
-}, [handleChange]);
+  }, [handleChange]);
+  if (props.name == 'address') {
+    // if(value == undefined)return "loading"
+    return <AutocompleteAddressInput address={props.defaultValue} setAddress={handleChange} />
+  }
   return (
     <>
       <style jsx>{styles}</style>
-      <FormControl 
+      <FormControl
         {...props}
         traits={{
           ...props.traits,
           afterIcon: type === "password" ? {
             icon: show ? "fa-eye" : "fa-eye-slash",
-            onClick: () => setShow(!show) 
+            onClick: () => setShow(!show)
           } : props.traits?.afterIcon,
         }}>
-          <input
+        <input
           id={props?.id}
           className={inputClasses}
           name={props.name}

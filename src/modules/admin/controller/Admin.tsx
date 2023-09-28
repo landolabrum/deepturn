@@ -18,7 +18,7 @@ const Admin = () => {
       <style jsx>{styles}</style>
       {/* <h1>ADMIN</h1>  */}
       <UiElements/>
-      {/* <UiGlobe/> */}
+      <UiGlobe/>
 
     </>
   );

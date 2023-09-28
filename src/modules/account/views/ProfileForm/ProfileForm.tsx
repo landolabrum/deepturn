@@ -2,20 +2,18 @@ import { useEffect, useState } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import styles from './ProfileForm.scss';
 import UiInput from '@webstack/components/UiInput/UiInput';
-import { countryFormat, phoneFormat } from '@webstack/helpers/userExperienceFormats';
+import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import { getService } from '@webstack/common';
-import formatAccountFields from '../AccountForm/components/FormatAccountForm';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { useNotification } from '@webstack/components/Notification/Notification';
 import { countries, states } from '@webstack/models/location';
-import { capitalizeAll } from '@webstack/helpers/Capitalize';
 import { upperCase } from 'lodash';
 const GOOGLE_API_KEY = 'AIzaSyCthMX-HyRujKH9WgIwvVoi6Hhms247Ts4';
 
-const ProfileForm = ({ user }: any) => {
+const ProfileForm = ({ user, open=false }: any) => {
   // Initialize fields with empty strings or other defaults
   const [errors, setErrors] = useState({
     first_name: null,
@@ -55,14 +53,14 @@ const ProfileForm = ({ user }: any) => {
     </div>
   </div>
 </>:'Profile Form'
-
-  const addressDisplay = fields.address?.line1 ?
-    `${fields.address?.line1+', ' || ''
-    }${fields.address?.line2+' ' || ''
-    }${fields.address?.city+' ' || ''
-    }${fields.address?.state+', ' || ''
-    }${fields.address?.postal_code+', ' || ''
-    }${fields.address?.country || ''}`: undefined;
+  const address = fields.address;
+  const addressDisplay = address.line1 ?
+    `${address?.line1? address?.line1+', ' : ''
+    }${address?.line2? address?.line2+' ' : ''
+    }${address?.city? address?.city+' ' : ''
+    }${address?.state? address?.state+', ' : ''
+    }${address?.postal_code? address?.postal_code+', ' : ''
+    }${address?.country? address?.country : ''}`: undefined;
 
     
     const initAutocomplete = async () => {
@@ -125,17 +123,17 @@ const ProfileForm = ({ user }: any) => {
           line2: fields.address.line2 != ''?fields.address.line2: undefined,
           city: fields.address.city,
           postal_code: fields.address.postal_code,
-          state: upperCase(stateISO[0]),
-          country: upperCase(countryISO[0]),
+          state: stateISO?upperCase(stateISO[0]): fields.address.state,
+          country: countryISO?upperCase(countryISO[0]): fields.address.state,
         }
       };
-      // Object.keys(fields).map((k) => {
-      //   if (fields[k] == '') {
-      //     setErrors({ ...errors, [k]: `${keyStringConverter(k)} cannot be blank` });
-      //     complete = false;
-      //   }
-      // }
-      // );
+      Object.keys(payload).map((k) => {
+        if (fields[k] == '') {
+          setErrors({ ...errors, [k]: `${keyStringConverter(k)} cannot be blank` });
+          complete = false;
+        }
+      }
+      );
       if (true) {
         const memberResponse = await memberService.updateMember(user.id, payload);
         if (memberResponse?.id) {
@@ -159,8 +157,7 @@ const ProfileForm = ({ user }: any) => {
   return (
     <>
       <style jsx>{styles}</style>
-
-      <UiCollapse label={label} open={user?.address == undefined}>
+      <UiCollapse label={label} open={open}>
         <div className='profile-form'>
           <div className='profile-form__body'>
             <div className='profile-form__name'>
@@ -175,12 +172,11 @@ const ProfileForm = ({ user }: any) => {
             </div>
             <div className="profile-form__address">
               <UiInput
-                id="autocomplete-address"
                 label='address'
                 type="text"
                 error={errors.address}
                 placeholder="Enter your address"
-                value={addressDisplay}
+                defaultValue={addressDisplay}
                 name="address"
               />
             </div>

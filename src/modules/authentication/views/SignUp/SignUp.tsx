@@ -110,8 +110,7 @@ const SignUp = ({setView}:ISignUp) => {
       </div>
       <div className="sign-up__login">
       <UiButton traits={{ width: "100%" }} onClick={handleSignIn} busy={isSubmitting}>
-      {/* <UiButton traits={{ width: "100%" }} variant="dark" onClick={()=>setSignInResponse({message:"heleo"})} busy={isSubmitting}> */}
-        login
+        Create Account
       </UiButton>
       </div>
     </>

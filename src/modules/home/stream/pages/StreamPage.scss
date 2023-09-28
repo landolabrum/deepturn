@@ -25,7 +25,7 @@ $navHeaderHeight: 166px;
     // height: 550px;
     width: calc(100% - 2px);
     aspect-ratio: 8/6;
-    border: solid 1px #f30;
+    // border: solid 1px #f30;
     @extend .d-flex;
     justify-content: flex-start;
     &.zoomed {

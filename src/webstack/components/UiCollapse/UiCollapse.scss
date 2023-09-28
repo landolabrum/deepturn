@@ -8,8 +8,8 @@ $actColorClose: var(--color-gray-30);
     justify-content: center;
     align-items: center;
 }
-$pad: 0 var(--default-padding);
-$wid: calc(calc(100% - 2px) - calc(var(--default-padding) * 2));
+$pad: var(--s-9);
+$wid: calc(calc(100% - 2px) - calc($pad * 2));
 
 
 
@@ -33,33 +33,33 @@ $wid: calc(calc(100% - 2px) - calc(var(--default-padding) * 2));
     0%{
         height: $button_height;
         width: $wid;
-        padding:$pad;
+        padding: 0 $pad;
     }
     20%{
         height: 50%;
         width: $wid;
-        padding: $pad;
+        padding: 0 $pad;
     }
     100%{
         width: $wid;
-        padding: var(--default-padding) var(--default-padding) var(--default-padding);
+        padding: $pad $pad $pad;
         height: max-content;
     }
 }
 @keyframes closeCollapse {
     0%{
         width: $wid;
-        padding: var(--default-element-height) var(--default-padding) var(--default-padding);
+        padding: var(--default-element-height) $pad $pad;
         height: max-content;
     }
     20%{
         height: 50%;
         width: $wid;
-        padding: $pad;
+        padding: 0 $pad;
     }
     100%{
         height: $button_height;
-        padding: $pad;
+        padding: 0 $pad;
     }
 }
 @keyframes openAction {
@@ -98,7 +98,7 @@ $wid: calc(calc(100% - 2px) - calc(var(--default-padding) * 2));
 .brdr {
     outline: solid 1px var(--color-gray-60);
     border: solid 1px var(--color-gray-80);
-    padding: $pad;
+    padding:0 $pad;
     width: $wid;
 }
 
@@ -125,8 +125,8 @@ $wid: calc(calc(100% - 2px) - calc(var(--default-padding) * 2));
         position: absolute;
         top:0;
         left: 0;
-        width: calc(100% - calc(var(--default-padding) * 2));
-        padding: $pad;
+        width: calc(100% - calc($pad * 2));
+        padding:0 $pad;
         height: $button_height;
         @include flexCenter;
         /* background-color: var(--color-gray-50); */

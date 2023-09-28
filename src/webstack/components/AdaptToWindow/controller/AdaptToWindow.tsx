@@ -82,9 +82,9 @@ const AdaptToWindow: React.FC<IAdaptToWindow> = (props) => {
     return (
         <>
             <style jsx>{styles}</style>
-            <div className='dev' style={{padding: '1px'}}>
+            {/* <div className='dev' style={{padding: '1px'}}>
           ele: {elClass}
-        </div>
+        </div> */}
             <AdaptWindowBackground background={background} window={window} />
             <div className='adapt-to-window'>
             <div className='adapt-to-window-content'>

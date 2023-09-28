@@ -42,13 +42,12 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
     }
     const [status, setStatus] = useState<any>(false);
     const [notification, setNotification] = useNotification();
-    const [errors, setErrors] = useState(INITIAL_ERRORS)
+    const [errors, setErrors] = useState<any>(INITIAL_ERRORS)
     const default_method = environment.isProduction ? _method : mock;
     const [brand, setBrand] = useState<IMethodBrand | null | "fa-exclamation-triangle">(null);
     const errorIcon = "fa-exclamation-triangle";
     const memberService = getService<IMemberService>("IMemberService");
     const [method, setMethod] = useState<OPaymentMethod>(default_method);
-    const [fields, setFields] = useState<IFormField[] | undefined>()
     const getFieldsConfiguration = (): IFormField[] => {
         return [
             {
@@ -112,12 +111,35 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
             setMethod(prevMethod => ({ ...prevMethod, [name]: (typeof value == 'string' ? value.trim() : value) }));
         }
     };
-
+    const isComplete = (request: any) => {
+        let complete = true;
+        const check = (fieldName:any) => {
+            switch (fieldName) {
+                case 'number':
+                    const numberComplete = String(request.number).length > 18;
+                    if(!numberComplete){setErrors({...errors, number:'Credit Card Number is not long enough'}); complete = false}
+                    break;
+                case 'expiry':
+                    const expiryComplete = String(request.expiry).length == 5;
+                    if(!expiryComplete){setErrors({...errors, expiry:"Expiration is incomplete"}); complete = false}
+                    break;
+                case 'cvc':
+                    const cvcComplete = String(request.cvc).length >= 3;
+                    if(!cvcComplete){setErrors({...errors, cvc:"Security code is incomplete"}); complete = false}
+                    break;
+                default:
+                    break;
+            }
+        }
+        Object.keys(request).forEach((field:any) => {
+            check(field);
+        });
+        return complete;
+    }
     const handleSubmit = async () => {
         let context: any = [
             { label: 'adding payment method' },
         ];
-        let newErrors: any = [];
         setStatus(true);
         setNotification({
             active: true,
@@ -130,31 +152,40 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
             cvc: method.cvc,
             default: method.default
         }
-        const methodResponse = await memberService.createCustomerMethod(request);
-        if (Boolean(methodResponse?.error && methodResponse?.error == false) || !methodResponse?.error) {
-            const customerResponse = methodResponse?.customer;
-            if (customerResponse) {
-                const updated_customer = memberService.updateCurrentUser(customerResponse);
-                console.log('[ UPDATED CUSTOMER ]', updated_customer)
+        const complete = isComplete(method);
+
+        if(complete){
+            const methodResponse = await memberService.createCustomerMethod(request);
+            if (Boolean(methodResponse?.error && methodResponse?.error == false) || !methodResponse?.error) {
+                const customerResponse = methodResponse?.customer;
+                if (customerResponse) {
+                    const updated_customer = memberService.updateCurrentUser(customerResponse);
+                    console.log('[ UPDATED CUSTOMER ]', updated_customer)
+                }
+                context[0].label = 'successfully added card ending in: ' + method.number.slice(-4);
+                setStatus('success');
+                onSuccess && onSuccess(methodResponse);
+            } else {
+                if (methodResponse?.detail?.fields != undefined) {
+                    let red: any = INITIAL_ERRORS;
+                    Object.values(methodResponse?.detail?.fields).map((field: any, index: number) => {
+                        red[field.name] = field.message
+                    })
+                    setErrors(red);
+                }
             }
-            context[0].label = 'successfully added card ending in: ' + method.number.slice(-4);
-            setStatus('success');
-            onSuccess && onSuccess(methodResponse);
-        } else {
-            if (methodResponse?.detail?.fields != undefined) {
-                let red: any = INITIAL_ERRORS;
-                Object.values(methodResponse?.detail?.fields).map((field: any, index: number) => {
-                    red[field.name] = field.message
-                })
-                setErrors(red);
-            }
+            setNotification({
+                active: true,
+                persistance: 3000,
+                list: context
+            });
+        }else{
+            setNotification({
+                active: true,
+                persistance: 3000,
+                list: [{label:"Credit Card Info has errors, please correct and re-submit"}]
+            });
         }
-        const hasErrors = Boolean(Object.entries(errors).find(([name, value]: any) => value !== null));
-        setNotification({
-            active: true,
-            persistance: hasErrors ? undefined : 3000,
-            list: context
-        });
         setStatus(false);
     };
 
