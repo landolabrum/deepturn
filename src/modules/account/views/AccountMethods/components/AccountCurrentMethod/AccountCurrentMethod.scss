@@ -27,7 +27,7 @@ $borderColor: var(--color-gray-40);
         width: calc($max - var(--s-3));
     }
     100% {
-        width: $max;
+        width: calc($max - var(--s-3));
     }
 }
 
@@ -61,29 +61,28 @@ $borderColor: var(--color-gray-40);
 
 .account-current-method {
     cursor: pointer;
-    background-color: var(--color-gray-50);
+    background-color: var(--color-primary-opaque);
     color: var(--color-gray-90);
     position: relative;
     @extend .d-flex;
     flex-direction: row;
     justify-content: flex-start;
-    --ui-icon-color: var(--color-gray-60);
+    --ui-icon-color: var(--color-gray-20);
     width: 100%;
     border-radius: var(--default-border-radius);
-    border: solid 1px var(--color--gray-70);
-    outline: solid 1px var(--color-gray-80);
+    border: solid 1px var(--color--gray-50);
     height: var(--default-element-height);
     overflow: hidden;
     &__content {
-        --ui-icon-color: var(--color-gray-50);
-        color: var(--color-gray-50);
+        --ui-icon-color: var(--color-gray-40);
+        color: var(--color-gray-40);
+        background-color: var(--color-gray-50);
+        border-right: solid 5px var(--color-gray-50);
         height: var(--default-element-height);
         border-radius: var(--default-border-radius) 0 0 var(--default-border-radius);
-        border-right: solid 5px var(--color-gray-40);
         @extend .d-flex;
         width: calc( 100% - calc($pad * 2));
         padding: 0 $pad;
-        background-color: var(--color-gray-40);
         line-height: 1;
         font-size: var(--s-5);
         @media(max-width: 900px){
@@ -106,8 +105,8 @@ $borderColor: var(--color-gray-40);
             &:hover {
                 animation: tease 1s forwards;
                 animation-play-state: running;
-                color: var(--color-gray-90);
-                --ui-icon-color: var(--color-gray-90);
+                color: var(--color-gray-10);
+                --ui-icon-color: var(--color-gray-10);
             }
         }
 

@@ -74,6 +74,7 @@ $elPad: 14px;
 
   .form-control__element {
     position: relative;
+    overflow: hidden;
     cursor: pointer;
     font-size: 16px;
     font-weight: 300;
@@ -280,8 +281,8 @@ $elPad: 14px;
     }
     &[class$="-flat"]{
       width: inherit;
-      color: var(--color-gray-50);
-      --ui-icon-color: var(--color-gray-50);
+      color: unset;
+      --ui-icon-color: unset;
       &:hover{
         color: var(--color-white);
         --ui-icon-color: var(--color-white);

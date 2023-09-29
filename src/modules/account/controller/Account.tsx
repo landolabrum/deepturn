@@ -10,12 +10,11 @@ import { default as Div } from "@webstack/components/UiDiv/UiDiv";
 import AccountMethods from "../views/AccountMethods/controller/AccountMethods";
 import { useUser } from "~/src/core/authentication/hooks/useUser";
 import ProfileForm from "../views/ProfileForm/ProfileForm";
-import { capitalize } from "lodash";
 
 interface Props { }
 
 const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
-  const [header, setHeader] = useHeader();
+  const [_, setHeader] = useHeader();
   const [loaded, setLoaded] = useState(false);
   const user = useUser();
   
@@ -25,7 +24,7 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
     "privacy & security": "privacy & security",
     'billing': <AccountMethods open />
   };
-  const [view, setView] = useState<string>(Object.keys(views)[0]);
+  const [view, setView] = useState<string>(Object.keys(views)[3]);
   const handleView = (view: string) =>{
     setView(view);
     setHeader({ title: view, breadcrumbs: [{ label: "account" },{ label: view }] });

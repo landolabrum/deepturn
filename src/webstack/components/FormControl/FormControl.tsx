@@ -71,7 +71,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
       if (typeof traits.outline === "string") elemenet_ref.style.outline = traits.outline;
       if(traits?.disabled && [null, true].includes(traits.disabled)){
         elemenet_ref.classList.add('form-control__element-disabled');
-      }else if(traits?.disabled == false)elemenet_ref.classList.remove('form-control__element-disabled');
+      }else if(!Boolean(traits?.disabled))elemenet_ref.classList.remove('form-control__element-disabled');
       traits?.responsive && elemenet_ref.classList.add('form-control__element-responsive');
 
       const isInput = elemenet_ref.querySelector('input:not([type="button"])');
@@ -91,7 +91,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
     if (overlay === false && overlay_.active) {
       setOverlay_({ active: false });
     }
-  }, [overlay, setOverlay_]);
+  }, [overlay, setOverlay_, traits?.disabled]);
   const varClasses = (clzz: string) => {
     if (variant) {
       const varArr: any = variant?.split(' ');

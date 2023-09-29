@@ -12,13 +12,9 @@ $el_gap: 7px;
   justify-content: center;
   width: 100%;
   height: max-content;
-  // gap:var(--s-9);
-
-  // background-color: var(--color-gray-70);
   .menu__search {
     padding: 12px;
   }
-
   .menu__no-results {
     height: var(--default-element-height);
     line-height: 1;
@@ -57,9 +53,9 @@ $el_gap: 7px;
     // var(--color-gray-100-opaque)
     // var(--color-gray-90-opaque)
     // var(--color-gray-20-opaque);
-    background-color: var(--color-gray-60);
+    background-color: var(--color-gray-50);
     &:hover{
-      background-color: var(--color-gray-60-opaque);
+      background-color: var(--color-gray-30);
       border-color: 
       var(--color-gray-60-opaque)
       var(--color-gray-50-opaque)
@@ -67,7 +63,9 @@ $el_gap: 7px;
       var(--color-gray-40-opaque);
     }
     &.active{
-      background-color: var(--color-primary-opaque);
+      background-color: var(--color-primary);
+      color: var(--color-gray-30);
+      --ui-icon-color: var(--color-gray-30);
     }
     &.disabled {
       --ui-icon-color: var(--color-gray-50);

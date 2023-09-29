@@ -1,10 +1,15 @@
+import UserContext, { UserAddress } from "~/src/models/UserContext";
+
 export interface OPaymentMethod{
+    name?: string;
     number: string;
     cvc: string;
     expiry: string;
     default: boolean;
+    address?: UserAddress | undefined
 }
 export interface IPaymentMethod{
+    address?: UserAddress;
     brand: string;
     last4: string;
     exp_month: number;
@@ -21,17 +26,10 @@ export interface IPaymentMethod{
 export interface IMethod {
     id: string;
     object: string;
-    customer: string;
+    customer: UserContext;
     card: IPaymentMethod;
     billing_details: {
-        address: {
-            city: string | null;
-            country: string | null;
-            line1: string | null;
-            line2: string | null;
-            postal_code: string | null;
-            state: string | null;
-        };
+        address: UserAddress;
     };
     created: number;
     livemode: boolean;

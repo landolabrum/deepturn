@@ -13,7 +13,7 @@ import { countries, states } from '@webstack/models/location';
 import { upperCase } from 'lodash';
 const GOOGLE_API_KEY = 'AIzaSyCthMX-HyRujKH9WgIwvVoi6Hhms247Ts4';
 
-const ProfileForm = ({ user, open=false }: any) => {
+const ProfileForm = ({ user, open = false }: any) => {
   // Initialize fields with empty strings or other defaults
   const [errors, setErrors] = useState({
     first_name: null,
@@ -31,125 +31,78 @@ const ProfileForm = ({ user, open=false }: any) => {
     address: '',
     country: ''
   });
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState<boolean | undefined>(true);
   const [loading, setLoading] = useState(false);
   const memberService = getService<IMemberService>("IMemberService");
   const [notif, setNotif] = useNotification();
 
+
+
+
+
+  const userToFields = async () => {
+    setFields({
+      first_name: user.name.split(' ')[0] || '',
+      last_name: user.name.split(' ')[1] || '',
+      email: user.email,
+      phone: user.phone,
+      address: user.address
+    })
+  }
   const handleChange = (e: any) => {
-    if (disabled) setDisabled(false);
-    setFields({ ...fields, [e.target.name]: e.target.value });
+    if (disabled) setDisabled(undefined);
+    if (e.target.name != 'address') {
+      setFields({ ...fields, [e.target.name]: e.target.value });
+    } else {
+      let _fields = fields;
+      _fields.address = e.target.value;
+      setFields(_fields);
+    }
   };
 
-
-  const label = fields?.address?<>
-  <style jsx>{styles}</style>
-  <div className='profile-form__collapse-label'>
-    <div>
-      {fields.first_name} {fields.last_name}
-    </div>
-    <div>
-      {fields?.address?.line1}, {fields?.address?.city}, {fields?.address?.state}
-    </div>
-  </div>
-</>:'Profile Form'
-  // const address = fields.address;
-  // const addressDisplay = address.line1 ?
-  //   `${address?.line1? address?.line1+', ' : ''
-  //   }${address?.line2? address?.line2+' ' : ''
-  //   }${address?.city? address?.city+' ' : ''
-  //   }${address?.state? address?.state+', ' : ''
-  //   }${address?.postal_code? address?.postal_code+', ' : ''
-  //   }${address?.country? address?.country : ''}`: undefined;
-
-    
-  //   const initAutocomplete = async () => {
-  //     const loader = new Loader({
-  //       apiKey: GOOGLE_API_KEY,
-  //       libraries: ['places'],
-  //     });
-  //     const google = await loader.load();
-  //     const inputElement = document.getElementById('autocomplete-address');
-  //     const autocomplete = new google.maps.places.Autocomplete(inputElement);
-      
-  //     // Listener to capture selected address
-  //     autocomplete.addListener('place_changed', () => {
-  //       const place = autocomplete.getPlace();
-  //       if (place && place.address_components) {
-  //         const addressComponents = place.address_components.reduce((acc: any, component: any) => {
-  //           const type = component.types[0];
-  //           acc[type] = component.long_name || component.short_name;
-  //           return acc;
-  //         }, {});
-  //         const formattedAddress = {
-  //           line1: `${addressComponents.street_number || ''} ${addressComponents.route || ''}`,
-  //           line2: addressComponents.sublocality || '',
-  //           city: addressComponents.locality || '',
-  //           state: addressComponents.administrative_area_level_1 || '',
-  //           postal_code: addressComponents.postal_code || '',
-  //           country: addressComponents.country || ''
-  //         };
-  //         setDisabled(false);
-  //         // Only update the address field in the state
-  //         setFields((prevFields:any) => ({ ...prevFields, address: formattedAddress }));
-  //       }
-  //     });
-  //   };
-    
-    const userToFields = async () => {
-      setFields({
-        first_name: user.name.split(' ')[0] || '',
-        last_name: user.name.split(' ')[1] || '',
-        email: user.email,
-        phone: user.phone,
-        address: user.address
-      })
-    }
-
-    const handleSubmit = async () => {
-      if (!user || !fields) return;
-      setLoading(true);
-      let complete = true;
-      const stateISO:any = Object.entries(states).find(([iso,state])=>state == fields.address?.state)
-      const countryISO:any = Object.entries(countries).find(([iso,country])=>country == fields.address?.country)
-      console.log({state: stateISO, country: countryISO})
-      
-      const payload = {
-        name: `${fields.first_name} ${fields.last_name}`,
-        email: fields.email,
-        phone: fields.phone,
-        address: {
-          line1: fields.address.line1,
-          line2: fields.address.line2 != ''?fields.address.line2: undefined,
-          city: fields.address.city,
-          postal_code: fields.address.postal_code,
-          state: stateISO?upperCase(stateISO[0]): fields.address.state,
-          country: countryISO?upperCase(countryISO[0]): fields.address.state,
-        }
-      };
-      Object.keys(payload).map((k) => {
-        if (fields[k] == '') {
-          setErrors({ ...errors, [k]: `${keyStringConverter(k)} cannot be blank` });
-          complete = false;
-        }
+  const handleSubmit = async () => {
+    if (!user || !fields) return;
+    setLoading(true);
+    let complete = true;
+    const stateISO: any = Object.entries(states).find(([iso, state]) => state == fields.address?.state)
+    const countryISO: any = Object.entries(countries).find(([iso, country]) => country == fields.address?.country)
+    const payload = {
+      name: `${fields.first_name} ${fields.last_name}`,
+      email: fields.email,
+      phone: fields.phone,
+      address: {
+        line1: fields.address.line1,
+        line2: fields.address.line2 != '' ? fields.address.line2 : undefined,
+        city: fields.address.city,
+        postal_code: fields.address.postal_code,
+        state: stateISO ? upperCase(stateISO[0]) : fields.address.state,
+        country: countryISO ? upperCase(countryISO[0]) : fields.address.state,
       }
-      );
-      if (true) {
-        const memberResponse = await memberService.updateMember(user.id, payload);
-        if (memberResponse?.id) {
-          setNotif({
-            active: true,
-            persistance: 3000,
-            list: [
-              { label: `Successfully updated your account, ${fields.first_name}` }
-            ]
-          })
-        }
-      }
-      setLoading(false);
     };
+    Object.keys(payload).map((k) => {
+      if (fields[k] == '') {
+        setErrors({ ...errors, [k]: `${keyStringConverter(k)} cannot be blank` });
+        complete = false;
+      }
+    }
+    );
+    if (true) {
+      alert(JSON.stringify(payload))
+      const memberResponse = await memberService.updateMember(user.id, payload);
+      if (memberResponse?.id) {
+        setNotif({
+          active: true,
+          persistance: 3000,
+          list: [
+            { label: `Successfully updated your account, ${fields.first_name}` }
+          ]
+        })
+      }
+    }
+    setLoading(false);
+  };
   useEffect(() => {
-    if (user) userToFields()
+    if (fields?.first_name == '') userToFields()
   }, []);
 
 
@@ -157,7 +110,16 @@ const ProfileForm = ({ user, open=false }: any) => {
   return (
     <>
       <style jsx>{styles}</style>
-      <UiCollapse label={label} open={open}>
+      <UiCollapse label={fields?.address ? <>
+        <div className='profile-form__collapse-label'>
+          <div>
+            {fields.first_name} {fields.last_name}
+          </div>
+          <div>
+            {fields?.address?.line1}, {fields?.address?.city}, {fields?.address?.state}
+          </div>
+        </div>
+      </> : 'Profile Form'} open={open}>
         <div className='profile-form'>
           <div className='profile-form__body'>
             <div className='profile-form__name'>
@@ -177,6 +139,7 @@ const ProfileForm = ({ user, open=false }: any) => {
                 error={errors.address}
                 placeholder="Enter your address"
                 value={fields.address}
+                onChange={handleChange}
                 name="address"
               />
             </div>

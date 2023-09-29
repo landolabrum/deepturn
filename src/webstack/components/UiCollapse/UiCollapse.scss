@@ -42,7 +42,7 @@ $wid: calc(calc(100% - 2px) - calc($pad * 2));
     }
     100%{
         width: $wid;
-        padding: $pad $pad $pad;
+        padding: $pad $pad var(--s-2);
         height: max-content;
     }
 }
@@ -94,22 +94,16 @@ $wid: calc(calc(100% - 2px) - calc($pad * 2));
     @include flexCenter;
 }
 
-
-.brdr {
-    outline: solid 1px var(--color-gray-60);
-    border: solid 1px var(--color-gray-80);
+.collapse {
+    background-color: var(--color-gray-40);
+    border: solid 2px var(--color-gray-50);
     padding:0 $pad;
     width: $wid;
-}
-
-.collapse {
-    @extend .brdr;
     position: relative;
     z-index: 1;
     border-radius: var(--default-border-radius);
     overflow: hidden;
     color: var(--color-gray-60);
-    background-color: var(--color-gray-40);
     flex-direction: column;
     @include flexCenter;
     height: $button_height;
@@ -121,7 +115,7 @@ $wid: calc(calc(100% - 2px) - calc($pad * 2));
         animation: closeCollapse 1s forwards; 
     }
     &__action {
-        background-color: var(--color-gray-60);
+        background-color: var(--color-gray-50);
         position: absolute;
         top:0;
         left: 0;
@@ -129,7 +123,6 @@ $wid: calc(calc(100% - 2px) - calc($pad * 2));
         padding:0 $pad;
         height: $button_height;
         @include flexCenter;
-        /* background-color: var(--color-gray-50); */
         text-transform: capitalize;
         font-size: var(--s-6);
         @media(max-width:900px){

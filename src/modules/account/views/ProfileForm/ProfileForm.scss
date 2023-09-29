@@ -36,7 +36,7 @@ $line_height: calc(var(--default-element-height) * 2);
     }
     .profile-form__action {
         width: 100%;
-        margin-top: var(--default-padding);
+        margin-top:calc(var(--default-element-height) * 1.5);
     }
 }
 .profile-form__collapse-label{

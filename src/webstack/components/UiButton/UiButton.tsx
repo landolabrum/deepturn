@@ -52,7 +52,7 @@ const ButtonContext = ({ context }: IButtonContext) => {
   let traits = context.traits ? context.traits : {};
   traits['disabled'] = context.disabled;
   
-  useEffect(() => {}, [traits]);
+  useEffect(() => {}, [traits, context.disabled]);
   return (
     <>
       <style jsx>{styles}</style>
@@ -61,7 +61,7 @@ const ButtonContext = ({ context }: IButtonContext) => {
           type={context?.type && context?.type}
           className={context?.variant ? context?.variant : ""}
           onClick={context?.onClick}
-          disabled={context?.disabled || context?.variant === "disabled"}
+          disabled={context?.disabled || context?.variant == "disabled"}
         >
           {context?.busy && (
             <div className="busy-spinner">

@@ -1,7 +1,7 @@
 import styles from "./UiInput.scss";
 import type { NextComponentType, NextPageContext } from "next";
 import FormControl from "../FormControl/FormControl";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { IInput } from "@webstack/models/input";
 import { validateInput } from "./helpers/validateInput";
 import maskInput from "./helpers/maskInput";
@@ -12,10 +12,6 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   const [show, setShow] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // if(props?.name == 'address'){
-    //   if (onChange) onChange(e);
-    //   return;
-    // }
     if (props?.max && props.max < e.target.value.length) return;
     let _e: any = {
       target:{
@@ -36,9 +32,6 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
     props.traits?.beforeIcon ? "input__has-icons" : ""
   ].join(" ");
 
-  useEffect(() => {
-
-  }, [handleChange]);
 
   if(props?.name != 'address')return (
     <>
@@ -57,7 +50,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
           className={inputClasses}
           name={props.name}
           type={show && type === "password" ? "text" : type}
-          value={value}
+          value={String(value)}
           placeholder={props.placeholder}
           min={props.min}
           required={props.required !== undefined}

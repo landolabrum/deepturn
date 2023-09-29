@@ -9,7 +9,7 @@ import ApiService, { ApiError } from "../ApiService";
 import IMemberService from "./IMemberService";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
-import { encryptRequest } from "@webstack/helpers/Encryption";
+import { encryptString } from "@webstack/helpers/Encryption";
 const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
 export default class MemberService
   extends ApiService
@@ -42,7 +42,6 @@ export default class MemberService
         const encodedToken = encodeURIComponent(token);
         const newMemberResponse =  await this.get<any>(`/usage/auth/verify?token=${encodedToken}`);
         const customer_token = newMemberResponse?.customer_token;
-        console.log("[ customer_token ]", customer_token)
         if(customer_token){
           this.saveMemberToken(customer_token);
           this.saveLegacyCookie(customer_token);
@@ -50,8 +49,7 @@ export default class MemberService
         }
       }
     }catch(error:any){
-      console.log('[error]',error)
-      return error
+      return error;
     }
     if (!token) {
       throw new ApiError("No Token Provided", 400, "MS.SI.02");
@@ -136,7 +134,7 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
         // console.log('[ ENCRYPTION_KEY ]', ENCRYPTION_KEY)
         // Encrypt the method string. Use an agreed-upon key.
 
-        const encryptedMethod = encryptRequest(methodString, ENCRYPTION_KEY); // Replace 'YOUR_SECRET_KEY' with your actual secret key
+        const encryptedMethod = encryptString(methodString, ENCRYPTION_KEY); // Replace 'YOUR_SECRET_KEY' with your actual secret key
         try{
 
           const res = await this.post<any, any>(

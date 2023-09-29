@@ -9,23 +9,13 @@ import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useNotification } from '@webstack/components/Notification/Notification';
 import environment from '~/src/environment';
+import UserContext from '~/src/models/UserContext';
 
-const mock = {
-    number: '4242 4242 4242 4242',
-    expiry: '12/24',
-    cvc: '232',
-    default: false
-};
-const _method = {
-    number: '',
-    expiry: '',
-    cvc: '',
-    default: false
-};
 
 interface IAccountCreateMethod {
     onSuccess?: (e: any) => void;
     open?: boolean;
+    user?: UserContext | undefined;
     collapse?: boolean;
 }
 
@@ -33,12 +23,31 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
     onSuccess,
     open = false,
     collapse = true,
+    user = undefined
 }) => {
+    const mock = {
+        name: user?.name,
+        number: '4242 4242 4242 4242',
+        expiry: '12/24',
+        cvc: '232',
+        default: user?.default_source == undefined,
+        address: user?.address
+    };
+    const _method = {
+        name: user?.name,
+        number: '',
+        expiry: '',
+        cvc: '',
+        default: user?.default_source == undefined,
+        address: user?.address
+    };
     const INITIAL_ERRORS = {
+        name: null,
         number: null,
         expiry: null,
         cvc: null,
-        default: null
+        default: null,
+        address: null,
     }
     const [status, setStatus] = useState<any>(false);
     const [notification, setNotification] = useNotification();
@@ -50,6 +59,21 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
     const [method, setMethod] = useState<OPaymentMethod>(default_method);
     const getFieldsConfiguration = (): IFormField[] => {
         return [
+            {
+                name: 'name',
+                label: 'name',
+                required: true,
+                value: user?.name,
+                error: errors?.name ? errors?.name : undefined,
+            },
+            {
+                name: 'address',
+                label: 'address',
+                placeholder: 'enter your address',
+                required: true,
+                value: method.address,
+                error: errors?.cvc != null ? errors?.cvc : undefined
+            },
             {
                 name: 'number',
                 label: 'number',
@@ -73,7 +97,7 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 variant: method?.expiry.length != 0 && method?.expiry.length <= 4 || errors.expiry != null ? 'invalid' : undefined,
                 type: 'expiry',
                 value: method?.expiry,
-                width: 'calc(50% - 5px)',
+                width: '50%',
                 error: errors?.expiry ? errors?.expiry : undefined
             },
             {
@@ -82,13 +106,14 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 placeholder: '000',
                 required: true,
                 value: method?.cvc,
-                width: 'calc(50% - 5px)',
+                width: '50%',
                 variant: method?.cvc.length != 0 && method?.cvc.length <= 2 || errors.cvc != null ? 'invalid' : undefined,
                 constraints: {
                     max: 6,
                 },
                 error: errors?.cvc != null ? errors?.cvc : undefined
             },
+
             {
                 name: 'default',
                 label: 'set default',
@@ -146,14 +171,15 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
             list: context
         });
         const request: any = {
+            name: method.name,
             number: method.number.replaceAll(" ", ''),
             exp_month: Number(method.expiry.split('/')[0]),
             exp_year: Number(`20${method.expiry.split('/')[1]}`),
             cvc: method.cvc,
-            default: method.default
+            default: method.default,
+            address: method.address
         }
         const complete = isComplete(method);
-
         if(complete){
             const methodResponse = await memberService.createCustomerMethod(request);
             if (Boolean(methodResponse?.error && methodResponse?.error == false) || !methodResponse?.error) {
@@ -189,14 +215,15 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
         setStatus(false);
     };
 
-    useEffect(() => { }, [handleSubmit]);
     return (
         <>
             <style jsx>{styles}</style>
             <div className='account-create-method'>
                 {collapse
                     ? (
-                        <UiCollapse open={open} label='add payment method'>
+                        <UiCollapse 
+                            open={ user?.default_source == undefined}
+                            label='add payment method'>
                             <UiForm
                                 loading={status}
                                 fields={getFieldsConfiguration()}

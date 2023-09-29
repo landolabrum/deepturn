@@ -83,7 +83,7 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                             traits={field.traits}
                             name={field.name}
                             placeholder={field.placeholder}
-                            value={String(field?.value)}
+                            value={field?.value}
                             onChange={e => handleInputChange(e, field.constraints)}
                         />
                     </>}

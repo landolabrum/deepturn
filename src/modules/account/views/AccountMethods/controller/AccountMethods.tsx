@@ -60,7 +60,7 @@ const AccountMethods: React.FC<any> = ({open}:IAccountMethods) => {
       <UiCollapse label={label} open={!loading || open || user?.default_source == undefined}>
       <div className='account-methods'>
           <AccountCreateMethod
-            open={!loading || open || user?.default_source == undefined}
+            user={user}
             onSuccess={handleCreated}
           />
         {methods.length > 0 && <>

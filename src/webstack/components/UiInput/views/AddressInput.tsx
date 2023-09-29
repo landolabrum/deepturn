@@ -15,39 +15,39 @@ interface IAddressInput{
 const AutocompleteAddressInput = ({ address, setAddress, traits, inputClasses, label }:IAddressInput) => {
   const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GAPI_KEY?.trim() || "";
   // console.log("[ PROPS ]", props)
+  const initAutocomplete = async () => {
+    const loader = new Loader({
+      apiKey: GOOGLE_API_KEY,
+      libraries: ['places'],
+    });
+    const google = await loader.load();
+    const inputElement = document.getElementById('autocomplete-address');
+    const autocomplete = new google.maps.places.Autocomplete(inputElement);
+
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (place && place.address_components) {
+        const addressComponents = place.address_components.reduce((acc:any, component:any) => {
+          const type = component.types[0];
+          acc[type] = component.long_name || component.short_name;
+          return acc;
+        }, {});
+        const formattedAddress = {
+          line1: `${addressComponents.street_number || ''} ${addressComponents.route || ''}`,
+          line2: addressComponents.sublocality || '',
+          city: addressComponents.locality || '',
+          state: addressComponents.administrative_area_level_1 || '',
+          postal_code: addressComponents.postal_code || '',
+          country: addressComponents.country || ''
+        };
+        setAddress({target:{name:"address", value:formattedAddress}});
+      }
+    });
+  };
+  
   useEffect(() => {
-    const initAutocomplete = async () => {
-      const loader = new Loader({
-        apiKey: GOOGLE_API_KEY,
-        libraries: ['places'],
-      });
-      const google = await loader.load();
-      const inputElement = document.getElementById('autocomplete-address');
-      const autocomplete = new google.maps.places.Autocomplete(inputElement);
-
-      autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace();
-        if (place && place.address_components) {
-          const addressComponents = place.address_components.reduce((acc:any, component:any) => {
-            const type = component.types[0];
-            acc[type] = component.long_name || component.short_name;
-            return acc;
-          }, {});
-          const formattedAddress = {
-            line1: `${addressComponents.street_number || ''} ${addressComponents.route || ''}`,
-            line2: addressComponents.sublocality || '',
-            city: addressComponents.locality || '',
-            state: addressComponents.administrative_area_level_1 || '',
-            postal_code: addressComponents.postal_code || '',
-            country: addressComponents.country || ''
-          };
-          setAddress(formattedAddress);
-        }
-      });
-    };
-
     initAutocomplete();
-  }, []);
+  }, [address]);
 
   const addressDisplay = address != undefined ?
     `${address?.line1? address?.line1+', ' : ''

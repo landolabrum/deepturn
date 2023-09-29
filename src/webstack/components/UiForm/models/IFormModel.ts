@@ -1,6 +1,7 @@
 import { RouteProps } from "@shared/components/Navbar/data/routes";
 import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
 import { ITraits } from "@webstack/components/FormControl/FormControl";
+import { UserAddress } from "~/src/models/UserContext";
 
 export type IFormMinMax = {
     value?: number;
@@ -15,7 +16,7 @@ export type IFormField = {
     error?: string;
     options?: (string | RouteProps | number)[] | React.ReactElement[];
     width?: string;
-    value?: string | boolean;
+    value?: string | boolean | UserAddress;
     label?: string;
     placeholder?: string;
     type?: string;
