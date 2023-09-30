@@ -10,12 +10,11 @@
     .transaction__header{
         width: 100%;
         .transaction__title{
-
-        @extend .d-flex;
-        justify-content: flex-start;
-        font-size: 32px;
-        color: var(--color-primary);
-        padding: var(--default-padding) 0;
-    }
+            @extend .d-flex;
+            justify-content: flex-start;
+            font-size: 32px;
+            color: var(--color-primary);
+            padding: var(--default-padding) 0;
+        }
     }
 }

@@ -14,6 +14,7 @@ import { upperCase } from 'lodash';
 const GOOGLE_API_KEY = 'AIzaSyCthMX-HyRujKH9WgIwvVoi6Hhms247Ts4';
 
 const ProfileForm = ({ user, open = false }: any) => {
+  if(!user)return;
   // Initialize fields with empty strings or other defaults
   const [errors, setErrors] = useState({
     first_name: null,

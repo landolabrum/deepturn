@@ -35,6 +35,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
           {Array(products).length > 0 && products.map((product: any, key: number) => {
             return (
               <div key={key} className='product-slider__product' >
+                {/* {JSON.stringify(Object.keys(product.price_object))} */}
                 <div key={key} className='product-slider__product-content'>
                   <span onClick={()=>handleProduct(product)}>
                   <div className='product-slider__product-header' >
@@ -49,6 +50,9 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
                       <div>{product?.price_object?.nickname}</div>
                       <div className="product-slider__product-footer__price-info__price">
                         {product?.price}
+                        {/* {product.price_object.type} */}
+                        {product.price_object?.recurring?.interval &&
+                        ' / '+product.price_object.recurring.interval}
                       </div>
                     </div>
                     </span>
