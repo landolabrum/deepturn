@@ -42,7 +42,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
                     <div className='product-slider__product-notifications'></div>
                     <div className='product-slider__product-title'>{product?.name}</div>
                   </div>
-                  <ProductImage image={product?.images} options={{ animate: true }} />
+                  <ProductImage image={product?.images} options={{ animate: true, view:"slider" }} />
                   </span>
                   <div className='product-slider__product-footer'>
                   <span onClick={()=>handleProduct(product)}>

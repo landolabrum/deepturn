@@ -11,10 +11,20 @@
   width: 100%;
   @extend .d-grid;
   position: relative;
+
   @media (max-width: 900px) {
     display: flex;
     flex-direction: column;
     height: 100%;
     justify-content: center;
+  }
+
+  .account__view {
+    .account__view__title {
+      text-transform: capitalize;
+      font-size: var(--s-2);
+      line-height: 2;
+      padding: none;
+    }
   }
 }

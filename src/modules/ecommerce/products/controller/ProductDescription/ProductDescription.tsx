@@ -70,7 +70,7 @@ const ProductDescription = () => {
         variant='card'
       >
         <div className={`product__img-default `} >
-          <ProductImage image={product.images}/>
+          <ProductImage options={{view:'description'}} image={product.images}/>
         </div>
         <div className="product-description__info-panel">
           <div className="product-description__info-panel_header">

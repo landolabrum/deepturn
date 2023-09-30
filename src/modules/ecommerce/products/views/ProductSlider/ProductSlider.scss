@@ -79,7 +79,8 @@ $pad: 18px;
           .product-slider__product-title {
             font-size: 22px;
             @media(max-width:900px){
-              font-size: 16px;
+              font-size: var(--s-1);
+              line-height: calc(var(--s-1) * 2);
               // background-color: transparent;
             }
           }
@@ -93,6 +94,10 @@ $pad: 18px;
         justify-content: space-between;
         align-items: flex-end;
         z-index: 1;
+        @media(max-width: 900px){
+          height: 100%;
+          margin: var(--default-element-height) 0 var(--s-4);
+        }
         .product-slider__product-footer__price-info{
           @extend .d-flex;
           flex-direction: column;
