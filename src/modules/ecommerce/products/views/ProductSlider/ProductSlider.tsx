@@ -45,20 +45,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
                   <ProductImage image={product?.images} options={{ animate: true, view:"slider" }} />
                   </span>
                   <div className='product-slider__product-footer'>
-                  <span onClick={()=>handleProduct(product)}>
-                    <div className='product-slider__product-footer__price-info'>
-                      <div>{product?.price_object?.nickname}</div>
-                      <div className="product-slider__product-footer__price-info__price">
-                        {product?.price}
-                        {/* {product.price_object.type} */}
-                        {product.price_object?.recurring?.interval &&
-                        ' / '+product.price_object.recurring.interval}
-                      </div>
-                    </div>
-                    </span>
-                    <div>
                       <ProductBuyNow product={product} cart={cart} setCart={setCart}/> 
-                    </div>
                   </div>
                 </div>
               </div>

@@ -14,7 +14,7 @@ import { upperCase } from 'lodash';
 const GOOGLE_API_KEY = 'AIzaSyCthMX-HyRujKH9WgIwvVoi6Hhms247Ts4';
 
 const ProfileForm = ({ user, open = false }: any) => {
-  if(!user)return;
+  if (!user) return;
   // Initialize fields with empty strings or other defaults
   const [errors, setErrors] = useState({
     first_name: null,
@@ -36,10 +36,6 @@ const ProfileForm = ({ user, open = false }: any) => {
   const [loading, setLoading] = useState(false);
   const memberService = getService<IMemberService>("IMemberService");
   const [notif, setNotif] = useNotification();
-
-
-
-
 
   const userToFields = async () => {
     setFields({
@@ -88,7 +84,7 @@ const ProfileForm = ({ user, open = false }: any) => {
     }
     );
     if (true) {
-      alert(JSON.stringify(payload))
+      // alert(JSON.stringify(payload))
       const memberResponse = await memberService.updateMember(user.id, payload);
       if (memberResponse?.id) {
         setNotif({

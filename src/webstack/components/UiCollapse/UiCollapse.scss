@@ -9,7 +9,7 @@ $actColorClose: var(--color-gray-30);
     align-items: center;
 }
 $pad: var(--s-9);
-$wid: calc(calc(100% - 2px) - calc($pad * 2));
+$wid: calc(calc(100% - 4px) - calc($pad * 2));
 
 
 
@@ -96,7 +96,7 @@ $wid: calc(calc(100% - 2px) - calc($pad * 2));
 
 .collapse {
     background-color: var(--color-gray-40);
-    border: solid 2px var(--color-gray-50);
+    border: solid 2px var(--color-gray-30);
     padding:0 $pad;
     width: $wid;
     position: relative;

@@ -20,11 +20,18 @@
   }
 
   .account__view {
+    background-color: var(--color-gray-50);
+    border-radius: var(--default-border-radius);
+    width:calc(100% - var(--s-7));
+    padding:var(--s-7);
     .account__view__title {
-      text-transform: capitalize;
-      font-size: var(--s-2);
-      line-height: 2;
-      padding: none;
+      text-transform: uppercase;
+      letter-spacing: var(--s-9);
+      font-weight: 900;
+      font-size: var(--s-1);
+      line-height: 1.5;
+      margin-bottom: var(--s-9);
+      color: var(--color-gray-20);
     }
   }
 }
