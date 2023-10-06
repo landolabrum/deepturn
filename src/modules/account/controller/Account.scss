@@ -22,7 +22,7 @@
   .account__view {
     background-color: var(--color-gray-50);
     border-radius: var(--default-border-radius);
-    width:calc(100% - var(--s-7));
+    width:calc(100% - calc(var(--s-6) * 2));
     padding:var(--s-7);
     .account__view__title {
       text-transform: uppercase;

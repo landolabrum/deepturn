@@ -19,7 +19,7 @@ $pad: 18px;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
-  margin: 10px 0;
+  margin: var(--default-element-height) 0;
   height: calc($hite + 2px);
   @media(max-width:900px){
     height: 100%;

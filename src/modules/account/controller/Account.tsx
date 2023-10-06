@@ -50,24 +50,24 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
       <>
         <style jsx>{styles}</style>
         <div className="account">
-          <Div maxWidth={900}>
-            <UiMenu
-              options={Object.keys(views)}
-              // variant="dark"
-              value={view}
-              onSelect={handleView}
-            />
-          </Div>
+            <Div maxWidth={900}>
+              <UiMenu
+                options={Object.keys(views)}
+                // variant="dark"
+                value={view}
+                onSelect={handleView}
+              />
+            </Div>
 
-          <Div minWidth={900} >
-            <UiSelect
-              onSelect={handleView}
-              variant="dark"
-              title={capitalizeAll(view)}
-              // openState
-              options={Object.keys(views)}
-            />
-          </Div>
+            <Div minWidth={900} >
+              <UiSelect
+                onSelect={handleView}
+                variant="dark"
+                title={capitalizeAll(view)}
+                // openState
+                options={Object.keys(views)}
+              />
+            </Div>
           <div className='account__view'>
             <div className='account__view__title'>
               {view}

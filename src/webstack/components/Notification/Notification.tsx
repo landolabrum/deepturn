@@ -106,7 +106,6 @@ const Notification: React.FC = () => {
               Object.entries(list).map(([field, value]: any) => {
                 return <span key={field}>
                   <a className={`notification__list-item`} href={value.href} onClick={value.onClick}>
-                  {value.href}
                   <div className='notification__list-item__label' >
                     {value.label || value?.name}
                   </div>
