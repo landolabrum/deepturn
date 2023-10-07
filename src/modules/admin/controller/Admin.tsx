@@ -2,8 +2,7 @@
 import React from 'react';
 import styles from './Admin.scss';
 import dynamic from 'next/dynamic';
-import UiElements from '@webstack/views/UiElements/UiElements';
-import UiSettingsLayout from '@webstack/components/UiSettingsView/UiSettingsLayout';
+import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/UiSettingsLayout';
 import AdminCustomer from '../views/AdminCustomers/controller/AdminCustomer';
 import AdminProducts from '../views/AdminProducts/controller/AdminProducts';
 
@@ -27,7 +26,7 @@ const Admin = () => {
     <>
       <style jsx>{styles}</style>
       <UiSettingsLayout
-        defaultView='globe'
+        defaultView='customers'
         name='admin'
         variant="full-screen"
         views={views}

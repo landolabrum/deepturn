@@ -15,7 +15,7 @@
         position: fixed;
         left: 0;
         right: 0;
-        top: 190px;
+        top: 187px;
         @media(max-width:900px){
             top: 170px;
         }
@@ -36,7 +36,8 @@
     }
     .settings__actions {
         background-color: var(--color-dark);
-
+        // background-color: #f30;
+        border-right: inset 1px var(--color-primary);
         width: 400px;
         @media(max-width:900px){
             padding: var(--default-padding);
@@ -62,8 +63,9 @@
         }
         .settings__view__title {
             font-size: var(--s-1);
+            line-height: 2.5;
             text-transform: capitalize;
-            color: var(--color-primary);
+            color: var(--color-gray-70);
         }
     }
 }

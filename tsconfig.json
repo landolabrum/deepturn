@@ -31,6 +31,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "sass-plugin.ts", "src/pages/_error.js", "src/pages/_error.js", "public/assets/Zendesk/Zendesk.js", "next-i18next.config.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "sass-plugin.ts", "src/pages/_error.js", "src/pages/_error.js", "public/assets/Zendesk/Zendesk.js", "next-i18next.config.js", "src/webstack/layouts/UiTabsLayout"],
   "exclude": ["node_modules"]
 }

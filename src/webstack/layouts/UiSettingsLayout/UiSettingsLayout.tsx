@@ -1,13 +1,13 @@
 // Relative Path: ./SettingsView.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './UiSettingsLayout.scss';
-import { useHeader } from '../Header/views/Header';
+import { useHeader } from '../../components/Header/views/Header';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import { default as Div } from "@webstack/components/UiDiv/UiDiv";
-import UiMenu from '../UiMenu/UiMenu';
-import UiSelect from '../UiSelect/UiSelect';
+import UiMenu from '../../components/UiMenu/UiMenu';
+import UiSelect from '../../components/UiSelect/UiSelect';
 import { capitalizeAll } from '@webstack/helpers/Capitalize';
-import UiLoader from '../UiLoader/UiLoader';
+import UiLoader from '../../components/UiLoader/UiLoader';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ISettingsLayout {
