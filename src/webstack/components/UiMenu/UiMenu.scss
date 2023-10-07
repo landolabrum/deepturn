@@ -30,7 +30,25 @@ $el_gap: 7px;
   }
 
   &.menu__dark {
-    background-color: var(--color-primary);
+    // border: solid 1px;
+    // background-color: var(--color-primary);
+  }
+  &.menu__flat {
+    border-radius: unset;
+    .menu__option {
+      background-color: unset;
+      border-bottom: solid 1px var(--color-gray-70);
+      border-radius: 0;
+      &:first-child{border-radius: unset}
+      &:last-child{border-radius: unset}
+      &.active{
+        border-bottom: solid 1px;
+        color: var(--color-gray-30);
+        --ui-icon-color: var(--color-gray-30);
+      }
+    }
+    
+    // background-color: var(--color-primary);
   }
 
   .menu__option {
@@ -55,7 +73,7 @@ $el_gap: 7px;
     // var(--color-gray-20-opaque);
     background-color: var(--color-gray-50);
     &:hover{
-      background-color: var(--color-gray-30);
+      background-color: var(--color-gray-70);
       border-color: 
       var(--color-gray-60-opaque)
       var(--color-gray-50-opaque)

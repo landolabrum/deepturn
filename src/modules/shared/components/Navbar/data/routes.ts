@@ -31,22 +31,22 @@ export const routes: RouteProps[] = [
       { label: "customers", href: "/customers", icon: "fa-user-group", active: true },
     ],
   },
-  {
-    label: "social",
-    icon: "fa-biohazard",
-    href: '/social',
-    items: [
-      { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
-    ],
-  },
-  {
-    label: "home",
-    icon: "fa-home",
-    items: [
-      { label: "stream",  href: "/stream", icon: "fa-camera-security", active: true },
-      { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
-    ],
-  },
+  // {
+  //   label: "social",
+  //   icon: "fa-biohazard",
+  //   href: '/social',
+  //   items: [
+  //     { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
+  //   ],
+  // },
+  // {
+  //   label: "home",
+  //   icon: "fa-home",
+  //   items: [
+  //     { label: "stream",  href: "/stream", icon: "fa-camera-security", active: true },
+  //     { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
+  //   ],
+  // },
   // {
   //   label: "auto",
   //   icon: "fa-engine",

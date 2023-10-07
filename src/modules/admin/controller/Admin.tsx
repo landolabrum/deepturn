@@ -3,7 +3,9 @@ import React from 'react';
 import styles from './Admin.scss';
 import dynamic from 'next/dynamic';
 import UiElements from '@webstack/views/UiElements/UiElements';
-import UiSettingsView from '@webstack/components/UiSettingsView/UiSettingsView';
+import UiSettingsLayout from '@webstack/components/UiSettingsView/UiSettingsLayout';
+import AdminCustomer from '../views/AdminCustomers/controller/AdminCustomer';
+import AdminProducts from '../views/AdminProducts/controller/AdminProducts';
 
 
 const UiGlobe = dynamic(
@@ -14,20 +16,23 @@ const UiGlobe = dynamic(
 );
 
 const Admin = () => {
+
+  const views = {
+    // 'elements':<UiElements/>,
+    'globe':<UiGlobe/>,
+    customers: <AdminCustomer/>,
+    products: <AdminProducts/>
+  }
   return (
     <>
       <style jsx>{styles}</style>
-      <UiSettingsView
-        views={{
-          'elements':<UiElements/>,
-          'globe':<UiGlobe/>
-        }}
+      <UiSettingsLayout
+        defaultView='globe'
+        name='admin'
+        variant="full-screen"
+        views={views}
         setViewCallback={console.log}
       />
-      {/* <h1>ADMIN</h1>  */}
-      {/* <UiElements/> */}
-      {/* <UiGlobe/> */}
-
     </>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './ProductDescription.scss';
-import {  numberToUsd } from '@webstack/helpers/userExperienceFormats';
+import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { useHeader } from '@webstack/components/Header/views/Header';
 import { useRouter } from 'next/router';
@@ -54,37 +54,41 @@ const ProductDescription = () => {
       setHeader({ title: product.name, breadcrumbs: [{ label: "products" }, { label: product.name }] });
     }
   }, [product, setHeader]); // Dependencies updated
-  useEffect(() => {}, [handleQtyChange]);
+  useEffect(() => { }, [handleQtyChange]);
   if (isLoading) return <UiLoader />; // Return loader when loading
 
   return (
     <>
-    <style jsx>{styles}</style>
-    <div className="product-description">
-      <AdaptGrid
-        sm={1}
-        md={2}
-        gapX={10}
-        gapY={300}
-        margin='10px'
-        variant='card'
-      >
-        <div className={`product__img-default `} >
-          <ProductImage options={{view:'description'}} image={product.images}/>
-        </div>
-        <div className="product-description__info-panel">
-          <div className="product-description__info-panel_header">
-            <div className="product-description__info-panel_title">{product.name}</div>
-            <p>{product.description}</p>
+      <style jsx>{styles}</style>
+      <div className="product-description">
+        <AdaptGrid
+          sm={1}
+          md={2}
+          gapX={10}
+          gapY={300}
+          margin='10px'
+          variant='card'
+        >
+          <div className={`product__img-default `} >
+            <ProductImage options={{ view: 'description' }} image={product.images} />
           </div>
-          <div className="product-description__info-panel_body">
-          <p>{numberToUsd(product?.price_object?.unit_amount)} {product?.price_object?.recurring ? "/" + product.price.recurring.interval : ""}</p>
-          <ProductBuyNow product={product} cart={cart} setCart={setCart}/>
-        </div>
-        </div>
-      </AdaptGrid>
-    </div>
-  </>
+          <div className="product-description__info-panel">
+            <div className="product-description__info-panel_header">
+              <div className="product-description__info-panel_title">{product.name}</div>
+              <p>{product.description}</p>
+            </div>
+            <div className="product-description__info-panel_body">
+              <ProductBuyNow 
+                product={product} 
+                cart={cart} 
+                setCart={setCart} 
+                traits={{width:"100%"}}
+              />
+            </div>
+          </div>
+        </AdaptGrid>
+      </div>
+    </>
   );
 };
 

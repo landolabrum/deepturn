@@ -52,7 +52,7 @@
         }
         .product-description__info-panel_body{
             @extend .d-flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             width: 100%;
         }
     }

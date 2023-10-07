@@ -1,17 +1,16 @@
 .d-flex{
  display: flex;
- justify-content: center;
  align-items: center;
 }
 .globe{
-    width: 100%;
+    width: max-content;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
     height: 100%;
     flex-direction: column;
-    .globe__content{
+    @media(max-width:900px){
+        height: inherit;
+        margin-left: calc(var(--default-padding) * -1.5);
         width: 100%;
-        border-top: solid 1px;
     }
 }
