@@ -28,6 +28,7 @@ export interface IEnvironment {
     distributor: string;
     home: string;
     social: string;
+    admin: string;
   };
 
   firebase: {

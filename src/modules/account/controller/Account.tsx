@@ -10,6 +10,7 @@ import { default as Div } from "@webstack/components/UiDiv/UiDiv";
 import AccountMethods from "../views/AccountMethods/controller/AccountMethods";
 import { useUser } from "~/src/core/authentication/hooks/useUser";
 import ProfileForm from "../views/ProfileForm/ProfileForm";
+import UiSettingsLayout from "@webstack/layouts/UiSettingsLayout/UiSettingsLayout";
 
 interface Props { }
 
@@ -49,7 +50,15 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
     return (
       <>
         <style jsx>{styles}</style>
-        <div className="account">
+
+        <UiSettingsLayout
+          defaultView='billing'
+          name='account'
+          variant="full-screen"
+          views={views}
+          setViewCallback={console.log}
+        />
+        {/* <div className="account">
             <Div maxWidth={900}>
               <UiMenu
                 options={Object.keys(views)}
@@ -74,7 +83,7 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
             </div>
             {views[view]}
           </div>
-        </div>
+        </div> */}
       </>
     );
   return <>loading</>;

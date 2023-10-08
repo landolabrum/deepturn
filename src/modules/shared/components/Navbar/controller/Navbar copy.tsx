@@ -70,21 +70,15 @@ const Navbar = () => {
                           onDoubleClick={()=>
                             item?.href&& handleRoute({href:item.href})}
                         >
-                          {width < 900 && 
-                                <UiCollapse 
-                                label={item.label === "account" ? `${displayName}` : item.label?.toString()}
-                                variant="flat"
-                                open={open === item?.label}
-                                >
-                                <UiMenu
-                                  onSelect={(value) => handleRoute({ href: value })}
-                                  variant="flat"
-                                  options={item.items}
-                                  />
-                              </UiCollapse>
-                          }
-                          {width > 900 && 
-                          <UiSelect
+                          <UiCollapse 
+                            variant="flat"
+                            open={open === item?.label}
+                          >
+                            <UiMenu
+                              options={item.items}
+                              />
+                          </UiCollapse>
+                          {/* <UiSelect
                             variant={
                               open === item?.label
                                 ? "nav-item__active"
@@ -100,8 +94,7 @@ const Navbar = () => {
                             // openDirection={item?.label === "account" && width < 1100 ? "up" : "down"}
                             onToggle={(isOpen) => setOpen(isOpen ? item?.label : null)}
                             openState={open === item?.label}
-                            />
-                          }
+                          /> */}
                         </span>
                       )}
                       {!item.items && item.href !== '/cart' && <NavButton

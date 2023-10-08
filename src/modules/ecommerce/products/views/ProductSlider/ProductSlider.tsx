@@ -35,19 +35,18 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
           {Array(products).length > 0 && products.map((product: any, key: number) => {
             return (
               <div key={key} className='product-slider__product' >
-                {/* {JSON.stringify(Object.keys(product.price_object))} */}
-                <div key={key} className='product-slider__product-content'>
+                <div className='product-slider__product__image'>
                   <span onClick={()=>handleProduct(product)}>
-                  <div className='product-slider__product-header' >
+                  <ProductImage image={product?.images} options={{ animate: true, view:"slider" }} />
+                  </span>
+                <div className='product-slider__product__image__action'>
+                  <ProductBuyNow product={product} cart={cart} setCart={setCart}/> 
+                </div>
+                </div>
+                  <div className='product-slider__product__description' onClick={()=>handleProduct(product)}>
                     <div className='product-slider__product-notifications'></div>
                     <div className='product-slider__product-title'>{product?.name}</div>
                   </div>
-                  <ProductImage image={product?.images} options={{ animate: true, view:"slider" }} />
-                  </span>
-                  <div className='product-slider__product-footer'>
-                      <ProductBuyNow product={product} cart={cart} setCart={setCart}/> 
-                  </div>
-                </div>
               </div>
             );
           })}

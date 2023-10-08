@@ -6,7 +6,6 @@ import CustomToken from "~/src/models/CustomToken";
 import MemberToken from "~/src/models/MemberToken";
 import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
-import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 
 import IAdminService from "./IAdminService";
 const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
@@ -20,60 +19,19 @@ export default class AdminService
   private _userToken: string | undefined;
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
-  public async processTransaction(cart:ICartItem[]){
-    var context:any = {line_items:cart};
-    let id:string | undefined = this._getCurrentUser(false)?.id;
-    if(id){
-      context['customer']=id;
-      // console.log("[ CONTEXT ]", context)
-      const res = await this.post<{}, any>(
-        "usage/checkout/process",
-        context
-      )
-      return res
-    }else{
-      throw new ApiError("No Customer ID Provided", 400, "MS.SI.02");
-    }
-  }
-  public async verifyEmail(token: string):Promise<any>{
-    try{
-      if (token){
-        const encodedToken = encodeURIComponent(token);
-        const newMemberResponse =  await this.get<any>(`/usage/auth/verify?token=${encodedToken}`);
-        const customer_token = newMemberResponse?.customer_token;
-        if(customer_token){
-          this.saveMemberToken(customer_token);
-          this.saveLegacyCookie(customer_token);
-          this._getCurrentUser(true)!;
-        }
-      }
-    }catch(error:any){
+
+
+  public async listCustomers(): Promise<any> {
+    try {
+      const customersList = await this.get<any>(`/usage/admin/`);
+      return customersList;
+    } catch (error: any) {
       return error;
     }
-    if (!token) {
-      throw new ApiError("No Token Provided", 400, "MS.SI.02");
-    }
+    // if (!token) {
+    //   throw new ApiError("No Token Provided", 400, "MS.SI.02");
+    // }
   };
-  public updateCurrentUser(user: any): void {
-    // Assume that the response object contains the new user data
-    const newUserData = user.newUserData;
-  
-    if (newUserData) {
-      // Update your _userContext and _userToken here
-      this._userContext = {
-        ...this._userContext,
-        ...newUserData,
-      };
-  
-      // Emit the updated user context so any listeners know about the change
-      this.userChanged.emit(this._userContext);
-  
-    } else {
-      console.warn("No new user data provided for update.");
-    }
-  }
-  
-
 
   public async updateMember(id: string, memberData: any): Promise<any> {
     if (id && memberData) {
@@ -94,16 +52,7 @@ export default class AdminService
       throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
     }
   };
-  public async getPersonalInformation(): Promise<any | null> {
-    return this.get<any | null>(
-      "member/profile-info"
-    );
-  }
-  public async getMemberProfileInformation(
-    memberId: string
-  ): Promise<any | null> {
-    return this.post(`/reports/profile-info/${memberId}`);
-  }
+
   private saveLegacyCookie(customJwt: string) {
     if (environment.legacyJwtCookie?.name) {
       const jwtCookie = environment.legacyJwtCookie;
@@ -200,7 +149,7 @@ export default class AdminService
 
     return this._userContext;
   }
-  
+
   private saveMemberToken(memberJwt: string) {
     if (this.isBrowser) {
       sessionStorage?.setItem(STORAGE_TOKEN_NAME, memberJwt);
@@ -232,9 +181,9 @@ export default class AdminService
     const encodedBody = a[1];
     try {
       return JSON.parse(window.atob(encodedBody)) as MemberToken;;
-    } catch (error) { 
-      let e:any = error;
-      if(typeof error == 'object')e.loc = '[ MemberService.ts ]';
+    } catch (error) {
+      let e: any = error;
+      if (typeof error == 'object') e.loc = '[ MemberService.ts ]';
       alert(JSON.stringify(error))
     }
     return null;

@@ -17,6 +17,7 @@ const devEnvironment: IEnvironment = {
     distributor: "",
     shopping: `${serverUrl}:8000`,
     home: `${serverUrl}:8000`,
+    admin: `${serverUrl}:8000`,
   },
   firebase: {
     webApiKey: '',

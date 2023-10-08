@@ -29,18 +29,23 @@ $el_gap: 7px;
     }
   }
 
-  &.menu__dark {
-    // border: solid 1px;
-    // background-color: var(--color-primary);
-  }
+
   &.menu__flat {
     border-radius: unset;
+    width: 100%;
     .menu__option {
+      width: 100% !important;
       background-color: unset;
-      border-bottom: solid 1px var(--color-gray-70);
+      border-bottom: solid 1px var(--color-gray-60);
       border-radius: 0;
       &:first-child{border-radius: unset}
-      &:last-child{border-radius: unset}
+      &:last-child{
+        border-radius: unset;
+        border-bottom: unset;
+      }
+      &:hover{
+        background-color: var(--color-primary-opaque);
+      }
       &.active{
         border-bottom: solid 1px;
         color: var(--color-gray-30);

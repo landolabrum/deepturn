@@ -11,10 +11,12 @@ const prodEnvironment: IEnvironment = {
     // domain: "dev.connectunited.com",
   },
   serviceEndpoints: {
-    membership: "https://tiktok.soy",
-    distributor: "",
-    shopping: "",
-    licensing: "",
+    membership: '',
+    shopping: '',
+    distributor: '',
+    home: '',
+    social: '',
+    admin: ''
   },
   firebase: {
     webApiKey: '',

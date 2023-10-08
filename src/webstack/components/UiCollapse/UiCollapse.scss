@@ -1,5 +1,5 @@
 // Variables
-$button_height: calc(var(--default-element-height) - 4px);
+$button_height: calc(var(--default-element-height) - 2px);
 $actColorClose: var(--color-gray-30);
 
 // Mixins
@@ -8,60 +8,56 @@ $actColorClose: var(--color-gray-30);
     justify-content: center;
     align-items: center;
 }
-$pad: var(--s-9);
-$wid: calc(calc(100% - 4px) - calc($pad * 2));
 
-
+$pad: 4px;
+$wid: calc(100%);
 
 @mixin actionAnimation($startColor, $midColor, $endColor) {
-    0%, 100% {
+
+    0%,
+    100% {
         color: $startColor;
         --ui-icon-color: $startColor;
-        border-bottom: solid 1px var(--color-gray-80-opaque);
+        border-bottom: solid 1px var(--color-gray-70);
     }
+
     50% {
         color: $midColor;
-        border-bottom: solid 1px var(--color-gray-70-opaque);
     }
+
     99% {
         color: $midColor;
-        border-bottom: solid 1px var(--color-gray-60-opaque);
     }
 }
 
 @keyframes openCollapse {
-    0%{
+    0% {
         height: $button_height;
-        width: $wid;
-        padding: 0 $pad;
     }
-    20%{
+
+    20% {
         height: 50%;
-        width: $wid;
-        padding: 0 $pad;
     }
-    100%{
-        width: $wid;
-        padding: $pad $pad var(--s-2);
+
+    100% {
         height: max-content;
     }
 }
+
 @keyframes closeCollapse {
-    0%{
-        width: $wid;
-        padding: var(--default-element-height) $pad $pad;
+    0% {
         height: max-content;
     }
-    20%{
+
+    20% {
         height: 50%;
-        width: $wid;
-        padding: 0 $pad;
     }
-    100%{
+    
+    100% {
         height: $button_height;
-        padding: 0 $pad;
     }
 }
+
 @keyframes openAction {
     @include actionAnimation($actColorClose, var(--color-gray-40), $actColorClose);
 }
@@ -69,36 +65,41 @@ $wid: calc(calc(100% - 4px) - calc($pad * 2));
 @keyframes closeAction {
     @include actionAnimation($actColorClose, var(--color-gray-60), $actColorClose);
 }
+
 @keyframes openBody {
-    0%{
+    0% {
         transform: translateY(-100%);
         height: var(--default-element-height);
     }
-    100%{
+
+    100% {
         transform: translateY(0);
+        margin-top: calc(var(--default-element-height) - 2px);
         height: max-content;
     }
 }
+
 @keyframes closeBody {
-0%{
+    0% {
         transform: translateY(0);
         height: max-content;
     }
-   100%{
+
+    100% {
         transform: translateY(-100%);
         height: 0;
     }
 }
+
 // Styles
 .d-flex {
     @include flexCenter;
 }
 
 .collapse {
-    background-color: var(--color-gray-40);
-    border: solid 2px var(--color-gray-30);
-    padding:0 $pad;
-    width: $wid;
+    border: solid 1px var(--color-gray-70);
+    padding: 0 $pad;
+    // width: calc(100% - calc($pad * 2) - 2px);
     position: relative;
     z-index: 1;
     border-radius: var(--default-border-radius);
@@ -108,55 +109,97 @@ $wid: calc(calc(100% - 4px) - calc($pad * 2));
     @include flexCenter;
     height: $button_height;
     min-height: $button_height;
-    &__open{
-        animation: openCollapse 1s forwards; 
+    background-color: var(--color-gray-90);
+
+    @media(max-width:900px) {
+        padding: 0;
     }
-    &__close{
-        animation: closeCollapse 1s forwards; 
+
+    &__open {
+        animation: openCollapse 1s forwards;
     }
+
+    &__close {
+        animation: closeCollapse 1s forwards;
+    }
+
     &__action {
-        background-color: var(--color-gray-50);
+        background-color: var(--color-gray-90);
         position: absolute;
-        top:0;
+        top: 0;
         left: 0;
-        width: calc(100% - calc($pad * 2));
-        padding:0 $pad;
+        right: 0;
+        padding: 0 var(--s-7);
+
         height: $button_height;
         @include flexCenter;
         text-transform: capitalize;
         font-size: var(--s-6);
-        @media(max-width:900px){
-            font-size: var(--s-8);
+
+        @media(max-width:900px) {
+            font-size: var(--s-6);
         }
+
         color: $actColorClose;
         --ui-icon-color: $actColorClose;
         z-index: 2;
         cursor: pointer;
         justify-content: space-between;
         line-height: 1;
+
         &:hover {
-            background-color: var(--color-gray-50);
+            background-color: var(--color-gray-80);
         }
+
         &__open {
             animation: openAction 1s forwards;
             animation-play-state: running;
         }
+
         &__closed {
             animation: closeAction 1s forwards;
             animation-play-state: running;
         }
     }
-}
-    .collapse__body{
-        width: 100%;
-        height: var(--default-element-height);
-        padding-top: 0;
 
-        &__open{ 
-            padding-top: var(--default-element-height);
-            animation: openBody 1s forwards; 
+    &__flat {
+        padding: 0;
+        width: $wid;
+        border-style: solid;
+        border-width: 0 0 1px 0;
+        
+        margin: 0;
+        border-radius: 0;
+        .collapse__action {
+            border-radius: unset;
+            // background-color: var(--color-gray-100);
+            ---ui-icon-color: var(--color-gray-50);
+            &:hover{
+                background-color: var(--color-gray-80);
+            }
+            &__open {
+                background-color: var(--color-primary);
+            }
         }
-        &__close{ 
-            animation: closeBody 1s forwards; 
+        
+        .collapse__body {
+            padding: 0 !important;
+            background-color: var(--color-gray-80);
+            &__open {
+                padding-top: var(--default-element-height);
+            }
         }
     }
+}
+
+.collapse__body {
+    width: calc(100% - calc($pad * 4));
+    height: var(--default-element-height);
+    padding: var(--default-padding) 0;
+    &__open {
+        animation: openBody 1s forwards;
+    }
+    &__close {
+        animation: closeBody 1s forwards;
+    }
+}

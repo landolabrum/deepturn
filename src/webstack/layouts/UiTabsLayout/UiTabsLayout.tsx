@@ -12,7 +12,6 @@ interface iTabsLayout {
   setViewCallback?: (e: any) => void;
   variant?: string;
   name: string;
-  
   defaultView?: string
 }
 const UiTabsLayout: React.FC<iTabsLayout> = ({
@@ -44,7 +43,6 @@ const UiTabsLayout: React.FC<iTabsLayout> = ({
   return (
     <>
       <style jsx>{styles}</style>
-      v: {view}
       <div className={`tabs ${variant?` tabs__${variant}`:''}`}>
       <div className={`tabs__content ${variant?` tabs__content__${variant}`:''}`}>
         <div className="tabs__tabs" >

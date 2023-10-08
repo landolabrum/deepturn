@@ -87,13 +87,13 @@ $elPad: 14px;
     white-space: nowrap;
     color: var(--color-gray-50);
     --ui-icon-color: var(--color-gray-90);
-    // outline: solid 1px var(--color-gray-60);
+    outline: solid 1px var(--color-gray-60);
     --ui-icon-height: 18px;
     --ui-icon-width: 18px;
     border-radius: var(--default-border-radius);
-    // width: calc(100% - 2px);
     width: calc(100%);
     color: var(--color-gray-20);
+    background-color: var(--color-primary-lite);
   
     &:focus-within {
       background-color: var(--color-white);
@@ -286,11 +286,10 @@ $elPad: 14px;
       background-color: transparent;
       border-radius: unset;
       outline: none;
-      color: var(--color-gray-30);
+      color: var(--color-gray-40);
       font-size: var(--s-5);
       &:hover {
-        opacity: .7;
-        background-color: transparent;
+        color:var(--color-gray-20);
       }
     }
   

@@ -27,7 +27,6 @@
         .tabs__tabs{
             // height: 100px;
             @extend .d-flex;
-            width: 100%;
             justify-content: center;
             .tabs-layout__tab{
                 background-color: var(--color-gray-70);
@@ -36,20 +35,7 @@
                 text-transform: capitalize;
                 width: 100%;
                 height: var(--default-element-height);
-                &__active{
-                    background-color: var(--color-primary-opaque);
-                    &:before {
-                        content: '';
-                        position: absolute;
-                        bottom: 0;
-                        right: -10px;
-                        width: 10px;
-                        height: 10px;
-                        border-style: solid;
-                        border-width: 0 10px 5px 5px;
-                        border-color:  var(--color-gray-10)  var(--color-gray-10);
-                      }
-                }
+                box-shadow: 2px 2px 10px var(--color-gray-100);
                 &:after {
                     content: '';
                     position: absolute;
@@ -66,6 +52,26 @@
                     cursor: pointer;
                     background-color: var(--color-gray-50);
                 }
+                &__active{
+                    background-color: var(--color-primary);
+                    &:not(:last-child):before {
+                        content: '';
+                        position: absolute;
+                        bottom: 0;
+                        z-index: 1;
+                        right: -5px;
+                        width: 10px;
+                        height: 0;
+                        border-style: solid;
+                        border-width: 0 10px 10px 10px;
+                        border-color: transparent transparent var(--color-primary) var(--color-primary);
+                    }
+                    &:hover{
+                        &:not(:last-child):before {
+                            border-color: transparent transparent var(--color-gray-50) var(--color-gray-50);
+                        }
+                    }
+                }
             }
         }
     }
@@ -81,7 +87,6 @@
     }
 
     .tabs__view {
-        
         padding: var(--default-padding);
         @extend .d-flex;
         flex-direction: column;

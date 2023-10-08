@@ -17,6 +17,7 @@ const UiCollapse: React.FC<ICollapse> = ({ open, children, variant, label = "Col
     let elStyle = {}
     if(style?.height)elStyle={height: style.height};
     const [oOpen, setOpen] = useState<number>(0);
+    
     const handleOpen = () => {
         if ([0, 1].includes(oOpen)) setOpen(oOpen + 1);
         if (oOpen == 2) setOpen(1);
@@ -24,11 +25,11 @@ const UiCollapse: React.FC<ICollapse> = ({ open, children, variant, label = "Col
     const oClzz = (clzz: string) =>{
         switch (oOpen) {
             case 0:
-                return clzz;
+                return `${clzz} ${variant?` ${clzz}__${variant}`:''}`;
             case 1:
-                return `${clzz} ${clzz}__open ${variant?` ${clzz}-${variant}`:''}`;
+                return `${clzz} ${clzz}__open ${variant?` ${clzz}__${variant}`:''}`;
             case 2:
-                return `${clzz} ${clzz}__close ${variant?` ${clzz}-${variant}`:''}`;
+                return `${clzz} ${clzz}__close ${variant?` ${clzz}__${variant}`:''}`;
             default:
                 break;
         }
@@ -42,7 +43,7 @@ const UiCollapse: React.FC<ICollapse> = ({ open, children, variant, label = "Col
             <style jsx>{styles}</style>
             <div
                 style={_style}
-                className={`collapse${variant ? ` collapse-${variant}` : ''} ${oClzz('collapse')}`}
+                className={`${oClzz('collapse')}`}
             >
                 <div onClick={handleOpen} className={oClzz('collapse__action')} style={elStyle}>
                    {label}
@@ -55,4 +56,4 @@ const UiCollapse: React.FC<ICollapse> = ({ open, children, variant, label = "Col
         </>
     );
 };
-export default UiCollapse;
+export default UiCollapse; 

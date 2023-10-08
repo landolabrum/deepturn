@@ -69,17 +69,16 @@ nav {
         margin-left: auto;
       }
       @media (max-width: $small) {
-        border-radius: 0 5px 5px 0;
         position: absolute;
         top: var(--default-nav-height);
         bottom: 0;
-        height: calc(100vh - calc(var(--default-nav-height) + 21.5px));
+        height: calc(100vh - var(--default-nav-height));
         background-color: var(--color-gray-90);
         visibility: hidden;
         width: 66%;
         align-items: flex-start;
         left: -20px;
-        padding: 10px;
+        // padding: 10px 0;
         &.navbar__nav-items-show {
           visibility: visible;
         }

@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 
 body {
@@ -51,7 +52,7 @@ body {
   --color-blue-10: #54E3FF;
   --color-dark:#111f3d;
   --color-primary: #1E88E5;
-  --color-primary-lite: #3d96e4;
+  --color-primary-lite: #75a2ca;
   --color-primary-opaque: rgba(30, 136, 229, 0.6);
   --color-primary-opaque-1: #1e88e530;
   --color-secondary: #FF5722;
@@ -60,6 +61,7 @@ body {
   --color-invalid-border: #E34150;
 
   --default-box-shadow: 2px 2px 10px var(--color-gray-100);
+  --default-box-shadow-inset:inset 2px 2px 10px var(--color-gray-100);
   --default-box-shadow-sm: 2px 2px 5px var(--color-gray-100);
   --default-box-shadow-xl: 
     0px 4px 6px var(--color-gray-100-opaque),

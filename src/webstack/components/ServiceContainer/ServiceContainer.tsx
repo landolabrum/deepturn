@@ -4,6 +4,7 @@ import environment from "~/src/environment";
 import MemberService from "~/src/core/services/MemberService/MemberService";
 import ShoppingService from "~/src/core/services/ShoppingService/ShoppingService";
 import HomeService from "~/src/core/services/HomeService/HomeService";
+import AdminService from "~/src/core/services/AdminService/AdminService";
 // import LicensingService from "~/src/core/services/LicensingService/LicensingService";
 // import DistributorService from "~/src/core/services/DistributerService/DistributorService";
 
@@ -15,6 +16,7 @@ export default class ServiceContainer extends React.Component<IProps> {
     serviceProvider.registerService("IMemberService", MemberService);
     serviceProvider.registerService("IShoppingService", ShoppingService);
     serviceProvider.registerService("IHomeService", HomeService);
+    serviceProvider.registerService("IAdminService", AdminService);
   }
 
   render() {
