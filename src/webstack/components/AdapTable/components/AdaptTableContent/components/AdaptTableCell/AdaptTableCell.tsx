@@ -54,7 +54,7 @@ const AdaptTableCell: NextComponentType<NextPageContext, {}, Props> = ({ cell, d
       if (["wallet-address", "id", "copy-id", "currency-crypto", "icon-label"].includes(cell) && data) setValid(true);
       if (cell === "member" && data.email && data.name && data.id) setValid(true);
       if (cell === "date" && data) {
-        setMut(dateFormat(data, { time: true, returnType: "object" }));
+        setMut(dateFormat(data, { time: true, isTimestamp: true, returnType: "object" }));
         setValid(true);
       }
       if (cell === "product") {

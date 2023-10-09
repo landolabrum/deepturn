@@ -23,7 +23,7 @@ export function stringToKebab(str?: string) {
 // PHONE FORMAT
 export const phoneFormat = (
   phoneNumber: string,
-  countryCode: string
+  countryCode: string = 'US'
 ): string => {
   const phoneUtil = PhoneNumberUtil.getInstance();
   let formattedNumber: string = phoneNumber;

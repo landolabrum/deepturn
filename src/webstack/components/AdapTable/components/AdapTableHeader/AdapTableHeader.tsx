@@ -25,7 +25,7 @@ export default function AdapTableHeader({
 
   useEffect(() => {
 
-  }, [search, loading]);
+  }, [search, loading, traits]);
   if (!traits?.hide?.includes("header")) return <>
     <style jsx>{styles}</style>
     <div className='adaptable-header'>

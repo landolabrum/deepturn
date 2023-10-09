@@ -115,7 +115,7 @@ const AdapTable = ({
   return (
     <>
       <style jsx>{styles}</style>
-      <div className={`adaptable${variant?.includes("mini") ? " adaptable-mini" : ""}`}>
+      <div className={`adaptable${variant && variant?.includes("mini") ? " adaptable-mini" : ""}`}>
         {!hideHeader && (
           <AdapTableHeader
             data={visibleData}

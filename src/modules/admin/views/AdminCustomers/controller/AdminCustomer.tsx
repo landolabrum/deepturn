@@ -14,6 +14,7 @@ const AdminCustomer: React.FC = () => {
     'add':<AdminProductAdd/>,
     'modify':<AdminCustomerModify/>,
   }
+
   return (
     <>
       <style jsx>{styles}</style>
@@ -26,6 +27,7 @@ const AdminCustomer: React.FC = () => {
           views={
             views
           }
+          setViewCallback={(e)=>console.log('handleView',e)}
         />
       </div>
     </>

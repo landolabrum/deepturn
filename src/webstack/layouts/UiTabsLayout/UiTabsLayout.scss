@@ -87,6 +87,9 @@
     }
 
     .tabs__view {
+
+        
+        background-color: var(--color-gray-90);
         padding: var(--default-padding);
         @extend .d-flex;
         flex-direction: column;
@@ -95,12 +98,13 @@
         align-items: stretch;
         height: 100%;
         min-height: calc(100vh - 230px);
-        width: calc(100% - 400px);
+        // width: calc(100% - 400px);
         @media(max-width:900px){
             height: max-content;
             overflow: visible;
             width: inherit;
         }
+        border: solid 1px;
         .tabs__view__title {
             font-size: var(--s-1);
             line-height: 2.5;
