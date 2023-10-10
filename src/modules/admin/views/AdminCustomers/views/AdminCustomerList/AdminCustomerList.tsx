@@ -67,7 +67,7 @@ interface IShipping {
   tracking_number: string | null;
 }
 
-const AdminCustomerList: React.FC = () => {
+const AdminCustomerList: React.FC<any> = ({onRowClick}:any) => {
   const [customers, setCustomers]=useState<ICustomer | null>(null);
   const adminService = getService<IAdminService>('IAdminService');
 
@@ -75,7 +75,6 @@ const AdminCustomerList: React.FC = () => {
 
   const getCustomerList = async () => {
     let customerList = await adminService.listCustomers();
-    console.log("cust list: ", customerList);
     if (customerList?.object === 'list') {
       customerList = customerList.data;
   
@@ -130,11 +129,12 @@ const AdminCustomerList: React.FC = () => {
       <div className='admin-customer-list'>
       <div className='admin-customer-list__table'>
       <AdapTable 
-        variant='responsive'
         options={{
-          hideColumns:hideColumns
+          hideColumns:hideColumns,
+          tableTitle:'customer list'
         }}
         data={customers}
+        onRowClick={onRowClick}
         />
         </div>
       </div>

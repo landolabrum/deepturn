@@ -152,7 +152,29 @@ table {
         }
       }
       th {
-        cursor: default;
+        cursor: col-resize;
+        .resizeable {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .resizeable .th-content {
+          padding-right: 20px; /* Space for the resizing handle */
+        }
+        
+   
+        
+        .resizeable::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: 10px; /* Width of the resizing handle */
+          background-color: #f0f0f0; /* Color of the resizing handle */
+          cursor: col-resize;
+        }
+        
       }
       th,
       td {
