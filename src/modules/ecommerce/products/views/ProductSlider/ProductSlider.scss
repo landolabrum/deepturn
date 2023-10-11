@@ -30,14 +30,20 @@ $pad: 18px;
   
   .product-slider__carousel {
     position: absolute;
-    @media(max-width:900px){
-      position: unset;
-    }
     @extend .d-flex;
     gap: var(--s-9);
     @media(max-width:900px){
+      position: unset;
+      justify-content: flex-start;
+      gap:var(--s-2);
       flex-direction: column;
-      height: max-content;
+      
+      align-items: flex-start;
+    }
+    
+    @media(max-width:600px){
+      flex-direction: column;
+      width: 100%;
     }
   }
 }
@@ -49,6 +55,19 @@ $pad: 18px;
   display: flex;
   flex-direction: column;
   $dHite: 80px;
+  @media(max-width:900px){
+    flex-direction: row;
+    background-color: var(--color-gray-90);
+    
+    width: 100%;
+    padding:var(--s-7) var(--default-padding);
+  }
+  @media(max-width:600px){
+    background-color: var(--color-gray-50);
+    flex-direction: column-reverse;
+    padding: var(--s-8) 0;
+  }
+ 
   &__description{
     color:var(--color-gray-30);
     font-size: var(--s-5);
@@ -57,14 +76,44 @@ $pad: 18px;
     margin-bottom: var(--s-9);
     text-transform: capitalize;
     height: $dHite;
-    &__description{
+    @media(max-width:600px){
+      height: max-content;
+    }
   }
+  @media(max-width:900px){
+    &-title{
+      font-size: var(--s-2);
+      line-height: 1;
+    }
+  }
+  @media(max-width:600px){
+    
+    padding: 0;
+    &-title{
+      color: var(--color-gray-100);
+      font-weight: 900;
+      padding:var(--s-8) 0 0 var(--s-9);
+    }
   }
   &__image{
     height: calc($hite - $dHite);
     position: relative;
+    @media(max-width:900px){
+      height: 500px;
+      width: calc(50vw - var(--default-padding));
+    }
+    @media(max-width:600px){
+      width: 100%;
+      height: auto;
+    }
     &__action{
       position: absolute;
+      @media(max-width:900px){
+        right: 0;
+      }
+      @media(max-width:600px){
+        right: var(--s-4);
+      }
       bottom: var(--s-7);
       right: var(--s-9);
     }

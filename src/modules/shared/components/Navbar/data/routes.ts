@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { userAccessLevel } from "~/src/core/authentication/hooks/useUser";
+import { useUser, userAccessLevel } from "~/src/core/authentication/hooks/useUser";
 
 export type SelectableRoute = {
   href: string;
@@ -25,12 +25,11 @@ export interface HandleRouteProps {
 export const routes: IRoute[] = [
   { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true },
   {
-    label: "e-commerce",
-    clearance: 0,
+    label: "Store",
     icon: "fa-store",
     items: [
       { label: "products", href: "/products", icon: "fa-tags", active: true },
-      { label: "customers", href: "/customers", icon: "fa-user-group", active: true },
+      // { label: "customers", href: "/customers", icon: "fa-user-group", active: true },
     ],
   },
   // {
@@ -68,24 +67,31 @@ export const routes: IRoute[] = [
   },
   {
     label: "login",
-    href: "/login", 
+    href: "/authentication", 
     icon: 'fa-circle-user',
     clearance:0,
   },
-  { label: "", href: "/authenticate", icon: "fal-bag-shopping" },
+  { label: "", href: "/cart", icon: "fal-bag-shopping" },
 ];
 
 export const accessRoutes = () => {
-  const level = userAccessLevel();
+  const user = useUser();
+  const [level, setLevel]=useState(0);
+  // const level = userAccessLevel();
   const [access, setAccess] = useState<IRoute[]>([]);
   useEffect(() => {
+
+    user && user?.metadata?.clearance && setLevel(user?.metadata?.clearance);
     // Function to filter the routes based on clearance level
     const filterRoutes = (routeItems: IRoute[]) => {
+      // console.log('[ LEVEL ]', level)
       return routeItems
         .filter(route => {
           // If the route doesn't have clearance property or the user's clearance level is greater than or equal to the route's clearance level
-          // return !route.clearance || route.clearance <= level;
-          return level == 0 || route.clearance && route.clearance <= level;
+          console.log('[ clearance ]: ', route.clearance, level, user)
+          return route.clearance == undefined ||
+          Boolean(user && route?.clearance && route?.clearance <= level && route.clearance != 0);
+          // return level == 0 || route.clearance && route.clearance <= level;
         })
         .map(route => {
           // If the route has items, filter those items too

@@ -10,12 +10,12 @@ import NavButton from "../views/NavButton/NavButton";
 import NavSelect from "../views/NavSelect/NavSelect";
 
 const Navbar = () => {
-  const routes = accessRoutes()
   const width = useWindow().width;
   const [sideNav, setSideNav] = useState(true);
   const [open, setOpen] = useState<string | null | undefined | number>(null);
   const [hide, setHide] = useState<boolean>(false);
   const [user, route, handleRoute]: any = useRoute(closeSideNavOnWidthChange);
+  const routes = accessRoutes();
 
   function closeSideNavOnWidthChange() {
     if (width < 1100) setSideNav(false);
@@ -99,6 +99,9 @@ const Navbar = () => {
               handleRoute={handleRoute}
               setOpen={setOpen}
             />}
+          </div>
+          <div className='dev' style={{top:'unset', bottom:'0', position:'fixed'}}>
+            {JSON.stringify(routes)}
           </div>
         </nav>
       </>

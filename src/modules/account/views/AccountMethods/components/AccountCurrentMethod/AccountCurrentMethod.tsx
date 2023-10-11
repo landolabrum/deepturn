@@ -54,11 +54,11 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
                 setClicked(clicked + 1);
                 setContentClass('account-current-method__content-show');
                 break;
-                case 1:
+            case 1:
                     setClicked(clicked + 1);
                     setContentClass('account-current-method__content-hide');
                     break;
-                case 2:
+            case 2:
                 setContentClass('account-current-method__content-show');
                 setClicked(1);
                 break;

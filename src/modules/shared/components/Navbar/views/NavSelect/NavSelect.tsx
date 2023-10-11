@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import UiCollapse from "@webstack/components/UiCollapse/UiCollapse";
 import UiMenu from "@webstack/components/UiMenu/UiMenu";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
@@ -13,13 +13,10 @@ interface NavAccountProps {
     item: any;
     displayName: string;
     route: any;
-    user: UserContext;
     routes:IRoute[]
 }
 
-const NavSelect: React.FC<NavAccountProps> = ({ width, open, setOpen, handleRoute, item, displayName, route, user, routes }) => {
-    // const currentRoute = 
-    // routes.find((r)=>{console.log('currentRoute', r?.clearance)});
+const NavSelect: React.FC<NavAccountProps> = ({ width, open, setOpen, handleRoute, item, displayName, route, routes }) => {
     return (
         <>
             {width < 900 &&
@@ -35,7 +32,7 @@ const NavSelect: React.FC<NavAccountProps> = ({ width, open, setOpen, handleRout
                     />
                 </UiCollapse>
             }
-            {width > 900 && Boolean() &&
+            {width > 900  &&
                 <UiSelect
                     variant={
                         open === item?.label

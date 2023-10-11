@@ -41,7 +41,7 @@ export default function useRoute(handleSideNav?: () => void){
       // !router.pathname.includes(VERIFICATION_LANDING) && handleRoute({href:UNAUTHED_LANDING});
     } else if ( userResponse) {
       userResponse&&setUser(userResponse);
-      // [UNAUTHED_LANDING,"/"].includes(router.pathname) && handleRoute({href:AUTHED_LANDING});
+      [UNAUTHED_LANDING,"/"].includes(router.pathname) && handleRoute({href:AUTHED_LANDING});
     }
   }, [userResponse, userAgentData]);
   

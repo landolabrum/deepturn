@@ -31,18 +31,25 @@ $pb:15px;
     .header-left,
     .header-right { 
       display: flex;
+   
       @media(max-width:900px){
         padding-bottom:$pb;
       }
     }
     
     .header-left {
-      flex-direction: column;
-      justify-content: flex-end;
+      flex-direction: column-reverse;
+      // border: solid 1px;
+      // justify-content: flex-end;
+      @media(max-height: 500px){
+       flex-direction: row-reverse;
+       align-items: center;
+       gap:var(--s-4);
+      }
       .header-title {
-        font-size: 40px;
+        font-size:var(--s-1);
         @media(max-width:900px){
-          font-size: 30px;
+          font-size:var(--s-1);
         }
         font-weight: 600;
         line-height: 1;
