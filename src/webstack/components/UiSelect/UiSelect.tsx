@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./UiSelect.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
-import { RouteProps } from "@shared/components/Navbar/data/routes";
+import { IRoute } from "@shared/components/Navbar/data/routes";
 import FormControl from "../FormControl/FormControl";
 import UiMenu, { UiMenuProps } from "../UiMenu/UiMenu";
 import UiInput from "../UiInput/UiInput";
@@ -10,7 +10,7 @@ type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string 
 
 export interface SelectProps extends UiMenuProps {
   label?: string;
-  options?: (string | RouteProps | number)[] | React.ReactElement[];
+  options?: (string | IRoute | number)[] | React.ReactElement[];
   onSelect?: (value: any) => void;
   openDirection?: "up" | "down" | "left" | "right";
   onToggle?: (isOpen: boolean) => void;

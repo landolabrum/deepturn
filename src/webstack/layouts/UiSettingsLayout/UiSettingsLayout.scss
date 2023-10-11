@@ -54,17 +54,15 @@
     }
 
     .settings__view {
-
         padding: var(--default-padding);
         @extend .d-flex;
         flex-direction: column;
         justify-content: flex-start;
         border-left: solid 5px var(--color-gray-100);
         align-items: stretch;
-        height: 100%;
-        min-height: calc(100vh - 230px);
+        height: calc(100vh - 230px);
         width: calc(100% - 400px);
-
+        
         @media(max-width:900px) {
             margin: auto;
             height: max-content;
@@ -74,12 +72,17 @@
             padding: unset;
             width: calc(100% - 20px);
         }
-
+        
         .settings__view__title {
             font-size: var(--s-1);
             line-height: 2.5;
             text-transform: capitalize;
             color: var(--color-gray-70);
+        }
+        overflow-y: auto;
+        
+        &__content{
+            
         }
     }
 }

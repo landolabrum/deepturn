@@ -1,5 +1,5 @@
 import UiButton from "@webstack/components/UiButton/UiButton";
-import { RouteProps } from "../../data/routes";
+import { IRoute } from "../../data/routes";
 import { useRouter } from "next/router";
 import { useCartTotal } from "~/src/modules/ecommerce/cart/hooks/useCart";
 import Cart from "~/src/pages/cart";
@@ -8,7 +8,7 @@ import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { useEffect, useRef, useState } from "react";
 
 interface NavButtonProps {
-  item: RouteProps;
+  item: IRoute;
   handleRoute: (e: any) => void;
   setOpen: (e: string | null | undefined | number) => void;
   active?: boolean;

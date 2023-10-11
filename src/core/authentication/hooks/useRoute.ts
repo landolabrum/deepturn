@@ -3,14 +3,14 @@ import { useUser } from "./useUser";
 import UserContext from "~/src/models/UserContext";
 import { useRouter } from "next/router";
 import { useHeader } from "@webstack/components/Header/views/Header";
-import { RouteProps } from "@shared/components/Navbar/data/routes";
+import { IRoute } from "@shared/components/Navbar/data/routes";
 import useUserAgent from "./useUserAgent";
 
 const AUTHED_LANDING = "/dashboard";
 const UNAUTHED_LANDING = "/authentication"
 const VERIFICATION_LANDING = '/verify'
 interface RouteOptionProps{
-  items?: RouteProps[];
+  items?: IRoute[];
   active?:boolean;
   href: string;
 }
@@ -38,10 +38,10 @@ export default function useRoute(handleSideNav?: () => void){
     if ( !userResponse && ![VERIFICATION_LANDING, UNAUTHED_LANDING].includes(router.pathname)) {
       setUser(null);
       setHeader(null);
-      !router.pathname.includes(VERIFICATION_LANDING) && handleRoute({href:UNAUTHED_LANDING});
+      // !router.pathname.includes(VERIFICATION_LANDING) && handleRoute({href:UNAUTHED_LANDING});
     } else if ( userResponse) {
       userResponse&&setUser(userResponse);
-      [UNAUTHED_LANDING,"/"].includes(router.pathname) && handleRoute({href:AUTHED_LANDING});
+      // [UNAUTHED_LANDING,"/"].includes(router.pathname) && handleRoute({href:AUTHED_LANDING});
     }
   }, [userResponse, userAgentData]);
   

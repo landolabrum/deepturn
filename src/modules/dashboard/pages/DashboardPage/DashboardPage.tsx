@@ -4,11 +4,11 @@ import styles from "./DashboardPage.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { useRouter } from "next/router";
 import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
-import { RouteProps, pruneRoutes } from "@shared/components/Navbar/data/routes";
+import { IRoute, pruneRoutes } from "@shared/components/Navbar/data/routes";
 import { useHeader } from "@webstack/components/Header/views/Header";
 import UiLoader from "@webstack/components/UiLoader/UiLoader";
 interface IDashboard {
-  links?: RouteProps[];
+  links?: IRoute[];
 }
 export const DashboardPage: React.FC<IDashboard> = ({ links }: IDashboard) => {
   const router = useRouter();

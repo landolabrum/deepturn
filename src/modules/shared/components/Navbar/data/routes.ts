@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { userAccessLevel } from "~/src/core/authentication/hooks/useUser";
 
@@ -8,7 +9,7 @@ export type SelectableRoute = {
   active?: boolean;
   clearance?: number;
 };
-export interface RouteProps extends HandleRouteProps {
+export interface IRoute extends HandleRouteProps {
   icon?: string;
   clearance?: number;
   label?: string;
@@ -21,10 +22,11 @@ export interface HandleRouteProps {
   items?: SelectableRoute[] | undefined;
 }
 
-export const routes: RouteProps[] = [
+export const routes: IRoute[] = [
   { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true },
   {
     label: "e-commerce",
+    clearance: 0,
     icon: "fa-store",
     items: [
       { label: "products", href: "/products", icon: "fa-tags", active: true },
@@ -57,25 +59,33 @@ export const routes: RouteProps[] = [
   {
     label: "account",
     icon: 'fal-circle-user',
+    clearance: 1,
     items: [
       { href: "/account", label: "account" },
       { href: "/admin", label: "admin", clearance: 10 },
       { href: "/authentication/signout", label: "logout" },
     ],
   },
-  { label: "", href: "/cart", icon: "fal-bag-shopping" },
+  {
+    label: "login",
+    href: "/login", 
+    icon: 'fa-circle-user',
+    clearance:0,
+  },
+  { label: "", href: "/authenticate", icon: "fal-bag-shopping" },
 ];
 
 export const accessRoutes = () => {
   const level = userAccessLevel();
-  const [access, setAccess] = useState<RouteProps[]>([]);
+  const [access, setAccess] = useState<IRoute[]>([]);
   useEffect(() => {
     // Function to filter the routes based on clearance level
-    const filterRoutes = (routeItems: RouteProps[]) => {
+    const filterRoutes = (routeItems: IRoute[]) => {
       return routeItems
         .filter(route => {
           // If the route doesn't have clearance property or the user's clearance level is greater than or equal to the route's clearance level
-          return !route.clearance || route.clearance <= level;
+          // return !route.clearance || route.clearance <= level;
+          return level == 0 || route.clearance && route.clearance <= level;
         })
         .map(route => {
           // If the route has items, filter those items too
@@ -96,7 +106,7 @@ export const accessRoutes = () => {
 };
 
 export const pruneRoutes = ( pruneLabels : string[]) => {
-  const pruned: RouteProps[] = [];
+  const pruned: IRoute[] = [];
     routes.forEach((item) => {
       if (item?.label && item.items && !pruneLabels.includes(item?.label)) {
         pruned.push(...item.items);

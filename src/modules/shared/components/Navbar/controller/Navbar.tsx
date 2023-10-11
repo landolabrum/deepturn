@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useMemo } from "react";
 import styles from "./Navbar.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
-import { RouteProps, accessRoutes } from "../data/routes";
+import { IRoute, accessRoutes } from "../data/routes";
 import useWindow from "@webstack/hooks/useWindow";
 import useRoute from "~/src/core/authentication/hooks/useRoute";
-import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import environment from "~/src/environment";
 import NavButton from "../views/NavButton/NavButton";
-import UiCollapse from "@webstack/components/UiCollapse/UiCollapse";
-import UiMenu from "@webstack/components/UiMenu/UiMenu";
+import NavSelect from "../views/NavSelect/NavSelect";
 
 const Navbar = () => {
   const routes = accessRoutes()
@@ -41,12 +39,12 @@ const Navbar = () => {
     sideNav && closeSideNavOnWidthChange();
   }, [width > 1100]);
   const cart = routes.find((r: any) => r.href == '/cart')
-
-  if (user && !hide) {
+  // const clearanceHandler = () =>{}
+  if (!hide) {
     return (
       <>
         <style jsx>{styles}</style>
-        <nav id="nav-bar" style={sideNav ? { bottom: "0" } : {}}>
+        <nav id="nav-bar" style={sideNav ? { bottom: "0" }:undefined}>
           <div className="navbar__nav-content">
             <div className="navbar__nav-trigger" onClick={() => setOpen(open !== "sidenav" ? "sidenav" : "!sidenav")}>
               {sideNav ? <UiIcon icon="fa-xmark" /> : <UiIcon icon="fa-bars" />}
@@ -59,51 +57,32 @@ const Navbar = () => {
                 {environment?.brand?.name}
               </UiButton>
             </div>
+            {/* u:{JSON.stringify(user)} */}
             <div className={`navbar__nav-items ${sideNav ? "navbar__nav-items-show" : ""}`}>
               <div className="navbar__side-nav-overlay" onClick={() => setOpen("!sidenav")} />
               {routes &&
-                routes.map((item: RouteProps, key: number) => {
+                routes.map((item: IRoute, key: number) => {
                   return (
                     <span key={key} className="navbar__nav-item-container">
                       {item?.items && (
-                        <span 
-                          onDoubleClick={()=>
-                            item?.href&& handleRoute({href:item.href})}
+                        <span
+                          onDoubleClick={() =>
+                            item?.href && handleRoute({ href: item.href })}
                         >
-                          {width < 900 && 
-                                <UiCollapse 
-                                label={item.label === "account" ? `${displayName}` : item.label?.toString()}
-                                variant="flat"
-                                open={open === item?.label}
-                                >
-                                <UiMenu
-                                  onSelect={(value) => handleRoute({ href: value })}
-                                  variant="flat"
-                                  options={item.items}
-                                  />
-                              </UiCollapse>
-                          }
-                          {width > 900 && 
-                          <UiSelect
-                            variant={
-                              open === item?.label
-                                ? "nav-item__active"
-                                : route.replaceAll("/", "") === item?.label
-                                  ? "nav-item__active"
-                                  : "nav-item"
-                            }
-                            title={item.label === "account" ? `${displayName}` : item.label?.toString()}
-                            traits={{ beforeIcon: item?.icon }}
-                            options={item.items}
-                            onSelect={(value) => handleRoute({ href: value })}
-                            openDirection="down"
-                            // openDirection={item?.label === "account" && width < 1100 ? "up" : "down"}
-                            onToggle={(isOpen) => setOpen(isOpen ? item?.label : null)}
-                            openState={open === item?.label}
-                            />
-                          }
+                          <NavSelect
+                            routes={routes}
+                            user={user}
+                            width={width}
+                            open={open}
+                            setOpen={setOpen}
+                            handleRoute={handleRoute}
+                            item={item}
+                            displayName={displayName}
+                            route={route}
+                          />
                         </span>
                       )}
+
                       {!item.items && item.href !== '/cart' && <NavButton
                         active={open === item?.label || route.replaceAll("/", "") === item?.label}
                         item={item}

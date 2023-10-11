@@ -1,4 +1,4 @@
-import { RouteProps } from "@shared/components/Navbar/data/routes";
+import { IRoute } from "@shared/components/Navbar/data/routes";
 import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
 import { ITraits } from "@webstack/components/FormControl/FormControl";
 import { UserAddress } from "~/src/models/UserContext";
@@ -14,7 +14,7 @@ export type OForm = {
 export type IFormField = {
     name?: string;
     error?: string;
-    options?: (string | RouteProps | number)[] | React.ReactElement[];
+    options?: (string | IRoute | number)[] | React.ReactElement[];
     width?: string;
     value?: string | boolean | UserAddress;
     label?: string;

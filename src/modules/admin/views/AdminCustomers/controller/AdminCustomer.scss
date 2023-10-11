@@ -1,5 +1,18 @@
+.d-flex{
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
 .admin-customer{
-    width: 100%;
-    height: 1080px;
-    // background-color: var(--color-gray-50);
+    &__header{
+        width: 100%;
+        @extend .d-flex;
+        justify-content: flex-end;
+        gap: var(--s-9);
+        .admin-customer__actions{
+            gap: var(--s-9);
+            @extend .d-flex;
+            padding: var(--s-9) 0;
+        }
+    }
 }

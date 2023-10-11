@@ -74,7 +74,9 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
           <div className='settings__view__title'>
             {view}
           </div>
+          <div className='settings__view__content'>
           {views[view]}
+        </div>
         </div>
       </div>
       </div>
