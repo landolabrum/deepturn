@@ -67,7 +67,7 @@ export const routes: IRoute[] = [
   },
   {
     label: "login",
-    href: "/authentication", 
+    href: "/authentication",
     icon: 'fa-circle-user',
     clearance:0,
   },
@@ -90,8 +90,7 @@ export const accessRoutes = () => {
           // If the route doesn't have clearance property or the user's clearance level is greater than or equal to the route's clearance level
           console.log('[ clearance ]: ', route.clearance, level, user)
           return route.clearance == undefined ||
-          Boolean(user && route?.clearance && route?.clearance <= level && route.clearance != 0);
-          // return level == 0 || route.clearance && route.clearance <= level;
+          Boolean(user && route?.clearance && route?.clearance <= level && route.clearance != 0) || Boolean(!user && route?.clearance == 0)
         })
         .map(route => {
           // If the route has items, filter those items too

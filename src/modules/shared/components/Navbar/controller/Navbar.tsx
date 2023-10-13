@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useMemo } from "react";
 import styles from "./Navbar.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
@@ -8,6 +9,7 @@ import UiButton from "@webstack/components/UiButton/UiButton";
 import environment from "~/src/environment";
 import NavButton from "../views/NavButton/NavButton";
 import NavSelect from "../views/NavSelect/NavSelect";
+import Authentication from "~/src/pages/authentication";
 
 const Navbar = () => {
   const width = useWindow().width;
@@ -60,6 +62,7 @@ const Navbar = () => {
             {/* u:{JSON.stringify(user)} */}
             <div className={`navbar__nav-items ${sideNav ? "navbar__nav-items-show" : ""}`}>
               <div className="navbar__side-nav-overlay" onClick={() => setOpen("!sidenav")} />
+              {/* <Authentication/> */}
               {routes &&
                 routes.map((item: IRoute, key: number) => {
                   return (
@@ -71,7 +74,7 @@ const Navbar = () => {
                         >
                           <NavSelect
                             routes={routes}
-                            user={user}
+                            // user={user}
                             width={width}
                             open={open}
                             setOpen={setOpen}
