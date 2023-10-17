@@ -9,12 +9,10 @@ import { useRouter } from "next/router";
 import VerifyEmail from "../views/VerifyEmail/VerifyEmail";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import UiButton from "@webstack/components/UiButton/UiButton";
-import AdaptToWindow from "@webstack/components/AdaptToWindow/controller/AdaptToWindow";
 
 
-interface Props { }
 
-const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Props) => {
+const Authentication: React.FC<any> = (props: any) => {
   const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
   const [view, setView] = useState<string>("sign-in");
   const router = useRouter();
@@ -60,26 +58,6 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
   return (
     <>
       <style jsx>{styles}</style>
-      <AdaptToWindow
-        variant="card"
-        sm={{ value: 'bottom', style: { width: 'calc(100% - 40px)' } }}
-        md={{
-          value: 'center',
-          style: {
-            width: '500px',
-            inlineSize: "calc(100% - 10vw)",
-            margin: "none"
-          }
-        }}
-        lg={{ value: 'top right', style: { margin: '70px 50px 0 0', width: '500px' } }}
-        background={{
-          type: 'video',
-          sm: 'portrait',
-          md: 'portrait',
-          lg: 'landscape',
-          url: './assets/backgrounds/nature-clean.mp4'
-        }}
-      >
         <div className='authentication'>
           {/* {view} */}
           <div className='authentication__view-header'>
@@ -90,7 +68,7 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
               {keyStringConverter(view)}
             </div>
           </div>
-          {view.includes("@") && <div className='   authentication__'>
+          {view.includes("@") && <div className='authentication'>
             An email has been sent to {view}, click the link in the email to continue.
           </div>}
           {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
@@ -113,8 +91,6 @@ const Authentication: NextComponentType<NextPageContext, {}, Props> = (props: Pr
             </div>
           </div>
         </div>
-      </AdaptToWindow>
-
     </>
   );
 };

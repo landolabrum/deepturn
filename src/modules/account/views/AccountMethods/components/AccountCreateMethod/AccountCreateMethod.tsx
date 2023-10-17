@@ -64,11 +64,12 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 label: 'name',
                 required: true,
                 value: user?.name,
+                placeholder: 'full name',
                 error: errors?.name ? errors?.name : undefined,
             },
             {
                 name: 'address',
-                label: 'address',
+                label: 'billing address',
                 placeholder: 'enter your address',
                 required: true,
                 value: method.address,

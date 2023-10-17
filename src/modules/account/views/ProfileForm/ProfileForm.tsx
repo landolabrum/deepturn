@@ -106,7 +106,10 @@ const ProfileForm = ({ user, open = false }: any) => {
 
   return (
     <>
-      <style jsx>{styles}</style>
+      <style jsx>{styles}</style> 
+      {/* <h1>HELLO WORLD/</h1> */}
+      user: {JSON.stringify(user)}
+
       <UiCollapse label={fields?.address ? <>
         <div className='profile-form__collapse-label'>
           <div>

@@ -68,6 +68,12 @@ nav {
       & > *:nth-last-child(2) {
         margin:0 var(--default-padding) 0 auto;
       }
+      // &.navbar__nav-items__user:not(.navbar__nav-items__cart){
+      //   & > *:nth-last-child(2) {
+      //     margin:0 var(--default-padding) 0 auto;
+      //   }
+      // }
+    
       @media (max-width: $small) {
         position: absolute;
         top: var(--default-nav-height);

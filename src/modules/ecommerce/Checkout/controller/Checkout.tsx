@@ -10,6 +10,9 @@ import useCart from '../../cart/hooks/useCart';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import AccountMethods from '~/src/modules/account/views/AccountMethods/controller/AccountMethods';
 import ProfileForm from '~/src/modules/account/views/ProfileForm/ProfileForm';
+import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
+import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
+import keyStringConverter from '@webstack/helpers/keyStringConverter';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
     cart: any;
@@ -18,7 +21,7 @@ interface ICheckout {
 }
 const Checkout: React.FC<ICheckout> = () => {
     const user = useUser();
-    const [show, setShow] = useState<any>(false);
+    const [view, setView] = useState<any>('create-account');
     const [cart, _setCart] = useState<any>([]);
 
     const { getCartItems, handleQtyChange } = useCart();
@@ -26,13 +29,13 @@ const Checkout: React.FC<ICheckout> = () => {
     const setCart = (item: ICartItem) => {
         handleQtyChange(item);
     };
-    
-    
+
+
     useEffect(() => {
         _setCart(getCartItems());
-        setShow(user?.methods);
+        user && setView('create-method');
     }, [user]);
-  
+
     return <>
         <style jsx>{styles}</style>
         <div className='checkout' id="main-checkout">
@@ -43,9 +46,17 @@ const Checkout: React.FC<ICheckout> = () => {
                 <CheckoutButton cart={cart} collect />
             </div>
             <div className='checkout__body'>
-                <ProfileForm user={user} open={user?.address == undefined}/>
-                <AccountMethods />
-                <CartList cart={cart} collapse={false} handleQty={setCart} />
+                <UiCollapse label={keyStringConverter(view)} open={true}>
+                    <>
+                        {view == 'create-account' && <SignUp setView={console.log} />}
+                        {view == 'create-method' && <ProfileForm user={user} open={user?.address == undefined} />}
+                    </>
+                </UiCollapse>
+                {/* <div className='checkout__body'> */}
+                {/* user?.methods */}
+                {/* <ProfileForm user={user} open={user?.address == undefined}/> */}
+                {/* <AccountMethods /> */}
+                {/* <CartList cart={cart} collapse={false} handleQty={setCart} /> */}
             </div>
         </div>
     </>;

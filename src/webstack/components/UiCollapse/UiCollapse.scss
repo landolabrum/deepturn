@@ -97,8 +97,9 @@ $wid: calc(100%);
 }
 
 .collapse {
+    width: 100%;
     border: solid 1px var(--color-gray-70);
-    padding: 0 $pad;
+    // padding: 0 $pad;
     // width: calc(100% - calc($pad * 2) - 2px);
     position: relative;
     z-index: 1;

@@ -9,16 +9,27 @@ import UiButton from "@webstack/components/UiButton/UiButton";
 import environment from "~/src/environment";
 import NavButton from "../views/NavButton/NavButton";
 import NavSelect from "../views/NavSelect/NavSelect";
+import { useModal } from "@webstack/modal/contexts/modalContext";
 import Authentication from "~/src/pages/authentication";
+import useCart, { useCartTotal } from "~/src/modules/ecommerce/cart/hooks/useCart";
 
 const Navbar = () => {
   const width = useWindow().width;
   const [sideNav, setSideNav] = useState(true);
   const [open, setOpen] = useState<string | null | undefined | number>(null);
   const [hide, setHide] = useState<boolean>(false);
-  const [user, route, handleRoute]: any = useRoute(closeSideNavOnWidthChange);
-  const routes = accessRoutes();
+  const [user, route, setRoute]: any = useRoute(closeSideNavOnWidthChange);
 
+  const routes = accessRoutes();
+  const { openModal, closeModal } = useModal();
+  const handleRoute = (item: any)=>{
+    if(!item?.modal){
+     setRoute(item);
+    }else{
+      openModal(<Authentication/>);
+    }
+
+  }
   function closeSideNavOnWidthChange() {
     if (width < 1100) setSideNav(false);
     setOpen(null);
@@ -34,18 +45,22 @@ const Navbar = () => {
     return "";
   }, [user]);
   useEffect(() => {
+    if(user)closeModal();
+  },[user]);
+  useEffect(() => {
     if (open === "sidenav") setSideNav(true);
     if (open === "!sidenav") setSideNav(false);
   }, [open]);
   useEffect(() => {
     sideNav && closeSideNavOnWidthChange();
-  }, [width > 1100]);
-  const cart = routes.find((r: any) => r.href == '/cart')
-  // const clearanceHandler = () =>{}
+  }, [width > 1100, routes]);
+  const cartTotal = useCartTotal();
+  const cartRoute = routes.find((r: any) => r.href == '/cart')
   if (!hide) {
     return (
       <>
         <style jsx>{styles}</style>
+        <h1 color="#f30" className='dev'>c{JSON.stringify(cartTotal)}</h1>
         <nav id="nav-bar" style={sideNav ? { bottom: "0" }:undefined}>
           <div className="navbar__nav-content">
             <div className="navbar__nav-trigger" onClick={() => setOpen(open !== "sidenav" ? "sidenav" : "!sidenav")}>
@@ -59,8 +74,15 @@ const Navbar = () => {
                 {environment?.brand?.name}
               </UiButton>
             </div>
-            {/* u:{JSON.stringify(user)} */}
-            <div className={`navbar__nav-items ${sideNav ? "navbar__nav-items-show" : ""}`}>
+            {/* u:{JSON.stringify(cart)} */}
+            <div className={
+              `navbar__nav-items ${
+                user ?'navbar__nav-items__user':''
+              } ${
+                cartTotal ?'navbar__nav-items__cart':''
+              } ${
+                sideNav ? "navbar__nav-items-show" : ""}`
+              }>
               <div className="navbar__side-nav-overlay" onClick={() => setOpen("!sidenav")} />
               {/* <Authentication/> */}
               {routes &&
@@ -96,9 +118,9 @@ const Navbar = () => {
                   );
                 })}
             </div>
-            {cart && <NavButton
-              active={open === cart?.label || route.replaceAll("/", "") === cart?.label}
-              item={cart}
+            {cartRoute && <NavButton
+              active={open === cartRoute?.label || route.replaceAll("/", "") === cartRoute?.label}
+              item={cartRoute}
               handleRoute={handleRoute}
               setOpen={setOpen}
             />}

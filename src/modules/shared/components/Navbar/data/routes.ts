@@ -19,11 +19,13 @@ export interface IRoute extends HandleRouteProps {
 }
 export interface HandleRouteProps {
   href?: string;
+  modal?: string;
   items?: SelectableRoute[] | undefined;
+  active?: boolean;
 }
 
 export const routes: IRoute[] = [
-  { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true },
+  { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
   {
     label: "Store",
     icon: "fa-store",
@@ -60,40 +62,37 @@ export const routes: IRoute[] = [
     icon: 'fal-circle-user',
     clearance: 1,
     items: [
-      { href: "/account", label: "account" },
+      { href: "/account", label: "account" , clearance: 1},
       { href: "/admin", label: "admin", clearance: 10 },
-      { href: "/authentication/signout", label: "logout" },
+      { href: "/authentication/signout", label: "logout", clearance: 1 },
     ],
   },
   {
     label: "login",
-    href: "/authentication",
+    modal: "login",
     icon: 'fa-circle-user',
-    clearance:0,
+    clearance: 0,
   },
   { label: "", href: "/cart", icon: "fal-bag-shopping" },
 ];
 
 export const accessRoutes = () => {
   const user = useUser();
-  const [level, setLevel]=useState(0);
-  // const level = userAccessLevel();
+  // const [level, setLevel] = useState(0);
+  const level = userAccessLevel();
   const [access, setAccess] = useState<IRoute[]>([]);
   useEffect(() => {
-
-    user && user?.metadata?.clearance && setLevel(user?.metadata?.clearance);
-    // Function to filter the routes based on clearance level
+    // user && user?.metadata?.clearance && setLevel(user?.metadata?.clearance);
     const filterRoutes = (routeItems: IRoute[]) => {
       // console.log('[ LEVEL ]', level)
       return routeItems
         .filter(route => {
           // If the route doesn't have clearance property or the user's clearance level is greater than or equal to the route's clearance level
-          console.log('[ clearance ]: ', route.clearance, level, user)
+          // console.log('[ clearance ]: ', route.clearance, level, user)
           return route.clearance == undefined ||
-          Boolean(user && route?.clearance && route?.clearance <= level && route.clearance != 0) || Boolean(!user && route?.clearance == 0)
+            Boolean(user && route?.clearance && route?.clearance <= level && route.clearance != 0) || Boolean(!user && route?.clearance == 0)
         })
         .map(route => {
-          // If the route has items, filter those items too
           if (route.items) {
             return {
               ...route,
@@ -105,20 +104,20 @@ export const accessRoutes = () => {
     };
 
     setAccess(filterRoutes(routes));
-  }, [level]);
+  }, [user]);
 
   return access;
 };
 
-export const pruneRoutes = ( pruneLabels : string[]) => {
+export const pruneRoutes = (pruneLabels: string[]) => {
   const pruned: IRoute[] = [];
-    routes.forEach((item) => {
-      if (item?.label && item.items && !pruneLabels.includes(item?.label)) {
-        pruned.push(...item.items);
-      } else {
-        if (item.label === undefined ) pruned.push(item);
-        if (item.label && !pruneLabels.includes(item.label)) pruned.push(item);
-      }
-    });
+  routes.forEach((item) => {
+    if (item?.label && item.items && !pruneLabels.includes(item?.label)) {
+      pruned.push(...item.items);
+    } else {
+      if (item.label === undefined) pruned.push(item);
+      if (item.label && !pruneLabels.includes(item.label)) pruned.push(item);
+    }
+  });
   return pruned;
 };

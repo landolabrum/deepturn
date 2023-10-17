@@ -21,59 +21,63 @@ export default class MemberService
   private _userToken: string | undefined;
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
-  public async processTransaction(cart:ICartItem[]){
-    var context:any = {line_items:cart};
-    let id:string | undefined = this._getCurrentUser(false)?.id;
-    if(id){
-      context['customer']=id;
+
+
+  public async processTransaction(cart: ICartItem[]) {
+    var context: any = { line_items: cart };
+    let id: string | undefined = this._getCurrentUser(false)?.id;
+    if (id) {
+      context['customer'] = id;
       // console.log("[ CONTEXT ]", context)
       const res = await this.post<{}, any>(
         "usage/checkout/process",
         context
       )
       return res
-    }else{
+    } else {
       throw new ApiError("No Customer ID Provided", 400, "MS.SI.02");
     }
   }
-  public async verifyEmail(token: string):Promise<any>{
-    try{
-      if (token){
+
+
+  public async verifyEmail(token: string): Promise<any> {
+    try {
+      if (token) {
         const encodedToken = encodeURIComponent(token);
-        const newMemberResponse =  await this.get<any>(`/usage/auth/verify?token=${encodedToken}`);
+        const newMemberResponse = await this.get<any>(`/usage/auth/verify?token=${encodedToken}`);
         const customer_token = newMemberResponse?.customer_token;
-        if(customer_token){
+        if (customer_token) {
           this.saveMemberToken(customer_token);
           this.saveLegacyCookie(customer_token);
           this._getCurrentUser(true)!;
         }
       }
-    }catch(error:any){
+    } catch (error: any) {
       return error;
     }
     if (!token) {
       throw new ApiError("No Token Provided", 400, "MS.SI.02");
     }
   };
+
+
   public updateCurrentUser(user: any): void {
-    // Assume that the response object contains the new user data
     const newUserData = user.newUserData;
-  
     if (newUserData) {
       // Update your _userContext and _userToken here
       this._userContext = {
         ...this._userContext,
         ...newUserData,
       };
-  
+
       // Emit the updated user context so any listeners know about the change
       this.userChanged.emit(this._userContext);
-  
+
     } else {
       console.warn("No new user data provided for update.");
     }
   }
-  
+
   public async signUp(
     {
       name,
@@ -105,7 +109,7 @@ export default class MemberService
       const OGetMethods = await this.get<any>(
         `/api/method/customer/?id=${id}`,
       );
-      if(OGetMethods){
+      if (OGetMethods) {
         this.saveMemberToken(OGetMethods.customer);
         this.saveLegacyCookie(OGetMethods.customer);
         this._getCurrentUser(true)!;
@@ -125,37 +129,41 @@ export default class MemberService
     }
 
   };
-public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
+  public async createCustomerMethod(method: IPaymentMethod): Promise<any> {
     let id = this._getCurrentUser(false)?.id;
-    if (id && method) {
-        // Convert method object to string
-        const methodString = JSON.stringify(method);
-        const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
-        // console.log('[ ENCRYPTION_KEY ]', ENCRYPTION_KEY)
-        // Encrypt the method string. Use an agreed-upon key.
+    const memberMethod = async () => {
+      // Convert method object to string
+      const methodString = JSON.stringify(method);
+      const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
+      // console.log('[ ENCRYPTION_KEY ]', ENCRYPTION_KEY)
+      // Encrypt the method string. Use an agreed-upon key.
 
-        const encryptedMethod = encryptString(methodString, ENCRYPTION_KEY); // Replace 'YOUR_SECRET_KEY' with your actual secret key
-        try{
+      const encryptedMethod = encryptString(methodString, ENCRYPTION_KEY); // Replace 'YOUR_SECRET_KEY' with your actual secret key
+      try {
 
-          const res = await this.post<any, any>(
-            `usage/customer/method?id=${id}`,
-            { data: encryptedMethod } // send encrypted data as payload
-            );
-            return res;
-          }catch(e:any){
-            // console.log("[ MEMBER S]: ", e)
-            return e;
-          }
+        const res = await this.post<any, any>(
+          `usage/customer/method?id=${id}`,
+          { data: encryptedMethod } // send encrypted data as payload
+        );
+        return res;
+      } catch (e: any) {
+        // console.log("[ MEMBER S]: ", e)
+        return e;
+      }
     }
 
+    if (id && method)memberMethod();
+    if (!id && method){
+
+    }
     if (!id) {
-        throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
+      throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
     }
 
     if (!method) {
-        throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+      throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
     }
-}
+  }
   public async updateMember(id: string, memberData: any): Promise<any> {
     if (id && memberData) {
 
@@ -281,7 +289,7 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
 
     return this._userContext;
   }
-  
+
   private saveMemberToken(memberJwt: string) {
     if (this.isBrowser) {
       sessionStorage?.setItem(STORAGE_TOKEN_NAME, memberJwt);
@@ -313,9 +321,9 @@ public async createCustomerMethod( method: IPaymentMethod): Promise<any> {
     const encodedBody = a[1];
     try {
       return JSON.parse(window.atob(encodedBody)) as MemberToken;;
-    } catch (error) { 
-      let e:any = error;
-      if(typeof error == 'object')e.loc = '[ MemberService.ts ]';
+    } catch (error) {
+      let e: any = error;
+      if (typeof error == 'object') e.loc = '[ MemberService.ts ]';
       alert(JSON.stringify(error))
     }
     return null;

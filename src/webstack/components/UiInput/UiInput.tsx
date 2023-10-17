@@ -50,7 +50,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
           className={inputClasses}
           name={props.name}
           type={show && type === "password" ? "text" : type}
-          value={String(value)}
+          value={value ? String(value):undefined}
           placeholder={props.placeholder}
           min={props.min}
           required={props.required !== undefined}

@@ -10,7 +10,7 @@ import ToggleSwitch from '../UiToggle/UiToggle';
 const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading }: IForm) => {
     if (!fields) return;
     const [localErrors, setLocalErrors] = useState<any>({});
-    const textTypes = ['', undefined, 'text', 'password', 'number', 'tel', null, false, 'expiry'];
+    const textTypes = ['', undefined, 'text', 'password', 'email', 'number', 'tel', null, false, 'expiry'];
     const boolTypes = ['checkbox'];
 
 
@@ -64,7 +64,7 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
         <style jsx>{styles}</style>
         {title}
         <form className='form' >
-            {fields ? fields.map((field, index) => field.name && (
+            {Array(fields)?.length  ? fields.map((field, index) => field.name && (
                 <div
                     key={index}
                     className='form__field'
@@ -83,7 +83,7 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                             traits={field.traits}
                             name={field.name}
                             placeholder={field.placeholder}
-                            value={field?.value}
+                            value={field?.value }
                             onChange={e => handleInputChange(e, field.constraints)}
                         />
                     </>}

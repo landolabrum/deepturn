@@ -50,8 +50,6 @@ const NavSelect: React.FC<NavAccountProps> = ({ width, open, setOpen, handleRout
                     openState={open === item?.label}
                 />
             }
-            {/* {JSON.stringify(routes)} */}
-
         </>
     );
 }

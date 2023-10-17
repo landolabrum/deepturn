@@ -6,8 +6,8 @@ import UiLoader from "@webstack/components/UiLoader/UiLoader";
 export default function AuthQuery(){
   const router = useRouter();
   const memberService = getService<IMemberService>("IMemberService");
-  const logoutUser = async () => {
-    await memberService.signOut();
+  const logoutUser =  () => {
+    memberService.signOut();
   };
   if(router.query.function==='signout')logoutUser();
   return <><UiLoader/></>;
