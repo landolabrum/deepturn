@@ -6,6 +6,21 @@ import { IInput } from "@webstack/models/input";
 import { validateInput } from "./helpers/validateInput";
 import maskInput from "./helpers/maskInput";
 import AutocompleteAddressInput from "./views/AddressInput";
+// Create a function to format the phone number dynamically
+function phoneMask(phone: string): string {
+  const cleanPhone = phone.replace(/\D+/g, '');
+  let formattedPhone = '';
+
+  if (cleanPhone.length <= 3) {
+    formattedPhone = `1 (${cleanPhone}`;
+  } else if (cleanPhone.length <= 6) {
+    formattedPhone = `1 (${cleanPhone.substring(0, 3)}) ${cleanPhone.substring(3)}`;
+  } else {
+    formattedPhone = `1 (${cleanPhone.substring(0, 3)}) ${cleanPhone.substring(3, 6)} - ${cleanPhone.substring(6, 10)}`;
+  }
+
+  return formattedPhone;
+}
 
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
   let { type, value, onChange, onKeyDown, onKeyUp, message, variant } = props;
@@ -20,10 +35,17 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
       }
     };
     let [newV, extra] = maskInput(e, type);
+  
+    // Apply phone mask if the input type is 'tel'
+    if (type === 'tel') {
+      newV = phoneMask(newV);
+    }
+  
     _e.target.value = extra !== undefined ? [newV, extra] : newV;
-    // console.log('value: ', _e.target.value)
+  
     if (onChange) onChange(_e);
   };
+  
 
   const inputClasses = [
     props.variant || "",
@@ -35,8 +57,8 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   if(variant){
     variant = value && String(value)?.length == 0 ?'lite': variant
   }
-  
-  useEffect(() => {}, [handleChange]);
+ 
+  useEffect(() => {}, [onChange]);
   if(!Boolean(props.name && ['address'].includes(props.name)) )return (
     <>
       <style jsx>{styles}</style>
