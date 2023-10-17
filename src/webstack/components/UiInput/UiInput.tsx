@@ -1,14 +1,14 @@
 import styles from "./UiInput.scss";
 import type { NextComponentType, NextPageContext } from "next";
 import FormControl from "../FormControl/FormControl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IInput } from "@webstack/models/input";
 import { validateInput } from "./helpers/validateInput";
 import maskInput from "./helpers/maskInput";
 import AutocompleteAddressInput from "./views/AddressInput";
 
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
-  const { type, value, onChange, onKeyDown, onKeyUp, message } = props;
+  let { type, value, onChange, onKeyDown, onKeyUp, message, variant } = props;
   const [show, setShow] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,12 +32,17 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
     props.traits?.beforeIcon ? "input__has-icons" : ""
   ].join(" ");
 
-
-  if(props?.name != 'address')return (
+  if(variant){
+    variant = value && String(value)?.length == 0 ?'lite': variant
+  }
+  
+  useEffect(() => {}, [handleChange]);
+  if(!Boolean(props.name && ['address'].includes(props.name)) )return (
     <>
       <style jsx>{styles}</style>
       <FormControl
         {...props}
+        variant={variant}
         traits={{
           ...props.traits,
           afterIcon: type === "password" ? {

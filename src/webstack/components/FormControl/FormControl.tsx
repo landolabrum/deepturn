@@ -91,7 +91,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
     if (overlay === false && overlay_.active) {
       setOverlay_({ active: false });
     }
-  }, [overlay, setOverlay_, traits?.disabled]);
+  }, [overlay, setOverlay_, traits?.disabled, error]);
   const varClasses = (clzz: string) => {
     if (variant) {
       const varArr: any = variant?.split(' ');
@@ -110,8 +110,8 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   
 
   useEffect(() => {
-    setTestId(createTestId(ref.current.parentNode, childRef.current));
-  }, []);
+    // setTestId(createTestId(ref.current.parentNode, childRef.current));
+  }, [variant]);
   return (
     <>
       <style jsx>{styles}</style>
