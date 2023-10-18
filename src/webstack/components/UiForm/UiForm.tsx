@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import UiInput from '../UiInput/UiInput';
 import styles from './UiForm.scss';
 import UiButton from '../UiButton/UiButton';
@@ -60,8 +60,6 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
             onLocalErrors(newErrors);
         }
     };
-    
-    // useEffect(() => {}, [fields]);
     return (<>
         <style jsx>{styles}</style>
         {title}

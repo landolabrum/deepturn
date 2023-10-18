@@ -25,7 +25,12 @@ const AdminCustomerAdd: React.FC = () => {
       name: 'phone',
       label: 'phone',
       placeholder: '4356719245',
-      type: 'tel'
+      type: 'tel',
+      constraints:{
+        min: 11,
+        max: 11
+      }
+
     },
     {
       name: 'email',
@@ -41,10 +46,11 @@ const AdminCustomerAdd: React.FC = () => {
   ]
 
   const lenTest = (value: string, { max, min}:any)=>{
-    if(max && !min)return value?.length > max;
-    if(min && !max)return value?.length < min;
-    if(min && max){
-      if(max <= min)return 'error, invalid constraints!'
+    const valueLen = value?.length;
+    if(valueLen && max && !min)return value?.length > max;
+    if(valueLen && min && !max)return value?.length < min;
+    if(valueLen && min && max){
+      if(max < min)return 'error, invalid constraints!'
       if(value?.length < min)return 'too short'
       if(value?.length > max)return 'too long'
     }
@@ -57,11 +63,9 @@ const AdminCustomerAdd: React.FC = () => {
     const value = e.value;
     switch (name) {
       case 'first_name':
-          return lenTest(value, {min: 5, max: 7});
+          return lenTest(value, {min: 2, max: 20});
       case 'last_name':
-          return lenTest(value, {min: 5, max: 7});
-        case 'phone':
-        return lenTest(value, {min: 10, max: 10});
+          return lenTest(value, {min: 2, max: 20});
       default:
         return false;
     }
@@ -69,7 +73,6 @@ const AdminCustomerAdd: React.FC = () => {
   const updateField = (e: any) => {
     const tName = e?.target?.name;
     let tValue = e?.target?.value;
-    if(tName == 'phone')tValue = phoneFormat(tValue, "US");
     const newCustomer = customer.map((field: any) => {
       if (field.name === tName) {
         field.error = hasError(e.target);
