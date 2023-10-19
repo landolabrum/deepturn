@@ -19,6 +19,8 @@
     @extend .p-fix;
 
     background-color: var(--color-gray-90-opaque);
+    cursor: not-allowed;
+    user-select: none;
     z-index: 999;
 
     @media(max-width:900px) {
@@ -27,6 +29,8 @@
     }
 
     .modal-overlay__content {
+        cursor: auto;
+        user-select: auto;
         @extend .d-flex;
         margin: 10% auto 150px;
         flex-direction: column;
@@ -78,6 +82,7 @@
         }
 
         .modal-overlay__body {
+            background-color: inherit;
             word-wrap: break-word;
             width: 100%;
         }

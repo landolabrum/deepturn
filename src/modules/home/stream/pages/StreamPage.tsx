@@ -64,6 +64,7 @@ const Stream = () => {
     const clonedImg = clickedImg.cloneNode();
     clonedImg.style.height = "100%";
     clonedImg.style.width = "auto";
+    clonedImg.style.zIndex = "1";
     if (mainRef.current?.hasChildNodes()) {
       mainRef.current.replaceChild(clonedImg, mainRef.current.firstChild);
     } else {

@@ -16,6 +16,7 @@ $cardWidth: 500px;
 .authentication {
  width: 100%;
  min-width: 350px;
+ background-color: inherit;
   z-index: 1;
   .authentication__view-header {
     width: 100%;
@@ -29,6 +30,7 @@ $cardWidth: 500px;
   }
 
   .authentication__view-action {
+    background-color: inherit;
     @extend .d-flex-col;
     white-space: nowrap;
     text-align: center;
@@ -49,7 +51,7 @@ $cardWidth: 500px;
       padding: 0 var(--s-8);
       z-index: 2;
       margin: var(--default-padding) 0 0;
-      background-color: var(--color-gray-40);
+      background-color: inherit;
     }
   }
 

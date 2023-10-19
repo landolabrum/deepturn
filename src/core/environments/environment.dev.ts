@@ -1,5 +1,5 @@
 import { IEnvironment } from "./environment.interface";
-const serverUrl ="http://localhost"
+const serverUrl ="http://0.0.0.0"
 // const serverUrl ="http://192.168.86.101"
 const devEnvironment: IEnvironment = {
   useMockApi: false,

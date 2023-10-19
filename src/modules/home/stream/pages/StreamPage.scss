@@ -22,12 +22,13 @@ $navHeaderHeight: 166px;
   overflow-y: scroll;
   width: 100vw;
   .stream__main-container {
-    // height: 550px;
     width: calc(100% - 2px);
-    aspect-ratio: 8/6;
-    // border: solid 1px #f30;
+    // aspect-ratio: 8/6;
+    min-height: 40vh;
+    height: max-content;
+    border: solid 11px var(--color-primary-opaque);
     @extend .d-flex;
-    justify-content: flex-start;
+    // justify-content: flex-start;
     &.zoomed {
       transform: scale(1.1); /* Adjust the scale value as needed */
     }
