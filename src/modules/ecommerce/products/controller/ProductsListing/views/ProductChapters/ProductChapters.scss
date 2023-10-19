@@ -1,0 +1,41 @@
+.d-flex{
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+.product-chapters{
+    @extend .d-flex;
+    width: 100%;
+    list-style: none;
+    margin: var(--default-padding) 0;
+    padding: 0;
+    &__chapter{
+        width: 100%;
+        height: calc(var(--default-element-height) * 3);
+        .chapter__content{
+            @extend .d-flex;
+            flex-direction: column;
+            height: 100%;
+            .chapter__icon{
+                width: 100%;
+                @extend .d-flex;
+                justify-content: center;
+                // border: solid 1px;
+                height: 60%;
+            }
+            .chapter__body{
+                height: 40%;
+                @extend .d-flex;
+                flex-direction: column;
+                justify-content: space-around;
+                .chapter__title{
+                    font-size: var(--s-6);
+                }
+                .chapter__extras{
+                    font-size: var(--s-8);
+                    color: var(--color-orange);
+                }
+            }
+        }
+    }
+}

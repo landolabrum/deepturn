@@ -1,0 +1,29 @@
+$space: var(--s-7);
+
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.products-listing__banner {
+    @extend .d-flex;
+    align-items: flex-start;
+    width: calc(100% - calc($space * 2));
+    padding: $space $space calc($space * 1);
+    background-color: var(--color-primary);
+    gap: var(--s-7);
+
+    &--title {
+        font-size: var(--s-3);
+        color: var(--color-gray-20);
+        line-height: calc(var(--s-3) * 1.5);
+    }
+
+    &--body {
+        margin-bottom: var(--s-7);
+        color: var(--color-gray-30);
+    }
+}
+

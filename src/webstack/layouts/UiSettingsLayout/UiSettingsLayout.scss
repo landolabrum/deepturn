@@ -1,12 +1,18 @@
-.d-flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+
+.d-flex{
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
 }
-
-
-
 .settings {
+
+    width: 100%;
+    background-color: var(--color-dark-opaque) ;
+    @media(max-width:1100px) {
+        width: 100vw;
+        height: 100vh;
+    }
     @media(max-width:900px) {
         width: 100vw;
         height: 100vh;
@@ -33,7 +39,9 @@
         /* Updated to stretch */
         border-radius: var(--default-border-radius);
         width: 100%;
-
+        @media(max-width:1100px) {
+            width: 100vw;
+        }
         @media(max-width:900px) {
             flex-direction: column;
             min-height: unset;
@@ -43,8 +51,22 @@
 
     .settings__actions {
         background-color: var(--color-dark);
-        border-right: inset 1px var(--color-primary);
+        border-right: solid 1px var(--color-primary);
+        position: relative;
+        &::after{
+            position: absolute;
+            content: '';
+            top: 0;
+            width: 1px;
+            right: -2px;
+            height: 100%;
+            background-color: var(--color-primary-opaque);
+        }
+        // outline: solid 2px 
         width: 400px;
+        @media(max-width:1100px) {
+        width: 300px;
+        }
         @media(max-width:900px) {
             padding: var(--default-padding);
             width: calc(100% - calc(var(--default-padding) * 2));
@@ -59,8 +81,6 @@
         border-left: solid 5px var(--color-gray-100);
         align-items: stretch;
         height: calc(100vh - 230px);
-        width: calc(100% - 400px);
-        
         @media(max-width:900px) {
             margin: auto;
             height: max-content;
@@ -80,7 +100,12 @@
         overflow-y: auto;
         
         &__content{
-            
+        // background-color: #f30;
+            background-color: var(--color-dark);
+            border-radius: var(--default-border-radius);
+            padding: 10px;
+            outline: solid 1px var(--color-primary);
+            border: solid 1px var(--color-primary-opaque);
         }
     }
 }

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import styles from "./ProductSlider.scss";
-import ProductBuyNow from '../ProductBuyNow/ProductBuyNow';
-import ProductImage from '../ProductImage/ProductImage';
-import useCart from '../../../cart/hooks/useCart';
-import { ICartItem } from '../../../cart/model/ICartItem';
+import ProductBuyNow from '../../../../views/ProductBuyNow/ProductBuyNow';
+import ProductImage from '../../../../views/ProductImage/ProductImage';
+import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
+import { ICartItem } from '~/src/modules/ecommerce/cart/model/ICartItem';
 import { useRouter } from 'next/router';
 
 interface Product {

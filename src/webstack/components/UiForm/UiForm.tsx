@@ -6,6 +6,7 @@ import { IForm, IFormField } from './models/IFormModel';
 import UiSelect from '../UiSelect/UiSelect';
 import UiLoader from '../UiLoader/UiLoader';
 import ToggleSwitch from '../UiToggle/UiToggle';
+import UiCheckBox from '../UiCheckbox/UiCheckBox';
 
 const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading }: IForm) => {
     if (!fields) return;
@@ -87,6 +88,8 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                             onChange={e => handleInputChange(e, field.constraints)}
                         />
                     </>}
+                    {field.type == 'radio' && <UiCheckBox options={fields}/>}
+
                     {boolTypes.includes(String(field.type)) && <ToggleSwitch
                         label={field.label}
                         name={field.name}
