@@ -60,7 +60,7 @@ const Navbar = () => {
     return (
       <>
         <style jsx>{styles}</style>
-        <h1 color="#f30" className='dev'>c{JSON.stringify(cartTotal)}</h1>
+        {/* <h1 color="#f30" className='dev'>c{JSON.stringify(cartTotal)}</h1> */}
         <nav id="nav-bar" style={sideNav ? { bottom: "0" }:undefined}>
           <div className="navbar__nav-content">
             <div className="navbar__nav-trigger" onClick={() => setOpen(open !== "sidenav" ? "sidenav" : "!sidenav")}>

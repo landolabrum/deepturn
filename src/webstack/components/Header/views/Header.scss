@@ -3,18 +3,18 @@ $pb:15px;
   height: 60px;
 }
 .header {
-  width: 100%;
+  width: 100vw;
+  position: absolute;
+  left: 0;
   color: var(--header-primary);
   background-color: var(--header-primary-bg);
-  position: relative;
   z-index: 1;
   border-bottom: var(--header-primary-border);
   height: max-content;
-  margin-top: 60px;
+  top: 60px;
   
   @media(max-width:900px){
-    min-width: 100vw;
-  //   padding-top:80px;
+    top: 70px;
   }
   .header-content {
     min-height: 105px;

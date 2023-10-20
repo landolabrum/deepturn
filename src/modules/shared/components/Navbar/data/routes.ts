@@ -29,6 +29,7 @@ export const routes: IRoute[] = [
   {
     label: "Store",
     icon: "fa-store",
+    altLabel: 'store',
     items: [
       { label: "products", href: "/products", icon: "fa-tags", active: true },
       // { label: "customers", href: "/customers", icon: "fa-user-group", active: true },

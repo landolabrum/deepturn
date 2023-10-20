@@ -70,7 +70,7 @@ $el_gap: 7px;
     min-width: 100%;
     width: max-content;
     &.nav-item__active {
-      left: auto;
+      // left: auto;
       right: 0;
       @media (max-width: 900px) {
         z-index: 3;

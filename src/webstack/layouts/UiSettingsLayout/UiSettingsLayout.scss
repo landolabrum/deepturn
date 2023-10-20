@@ -81,6 +81,8 @@
         border-left: solid 5px var(--color-gray-100);
         align-items: stretch;
         height: calc(100vh - 230px);
+        width: 100%;
+        color: var(--color-gray-40);
         @media(max-width:900px) {
             margin: auto;
             height: max-content;

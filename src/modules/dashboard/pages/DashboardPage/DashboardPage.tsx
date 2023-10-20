@@ -4,7 +4,7 @@ import styles from "./DashboardPage.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { useRouter } from "next/router";
 import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
-import { IRoute, pruneRoutes } from "@shared/components/Navbar/data/routes";
+import { IRoute, accessRoutes, pruneRoutes } from "@shared/components/Navbar/data/routes";
 import { useHeader } from "@webstack/components/Header/views/Header";
 import UiLoader from "@webstack/components/UiLoader/UiLoader";
 interface IDashboard {
@@ -12,7 +12,8 @@ interface IDashboard {
 }
 export const DashboardPage: React.FC<IDashboard> = ({ links }: IDashboard) => {
   const router = useRouter();
-  const dashboardLinks = pruneRoutes(["dashboard", "account"])
+  const dashboardLinks = pruneRoutes(["dashboard", "account"]);
+  const access = accessRoutes();
   const [_header, _setHeader] = useHeader();
   const handleHeader = () => {
     if(!links)_setHeader({ title: "dashboard", breadcrumbs: [{ label: "dashboard" }] });
@@ -26,16 +27,16 @@ export const DashboardPage: React.FC<IDashboard> = ({ links }: IDashboard) => {
     <>
       <style jsx>{styles}</style>
       <div className="dashboard">
-
+{JSON.stringify(access)}
         <AdaptGrid variant="card" xs={2} md={4} gap={10}>
-          {Object.entries(links || dashboardLinks).map(([key, link]) => {
+          {Object.entries(links || access).map(([key, link]) => {
             return (
               <div
                 key={key}
                 data-testid={`dashboard-page-internal-link-${link.label} `}
                 onClick={() => link?.active && handleClick(link)}
-                className={`dashboard__dashboard-item ${link.active ? " dashboard__active" : " dashboard__unavailable"
-                  }`}
+                // className={`dashboard__dashboard-item ${link.active ? " dashboard__active" : " dashboard__unavailable"
+                className='dashboard__dashboard-item'
               >
                 <UiIcon icon={link.altIcon ? link.altIcon : link.icon} /> {link?.altLabel ? link.altLabel : link.label}
               </div>

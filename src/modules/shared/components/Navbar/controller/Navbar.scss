@@ -28,6 +28,7 @@ nav {
   height: 70px;
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 998;
   background-color: var(--nav-background-color);
   .navbar__nav-content {
@@ -62,7 +63,7 @@ nav {
     .navbar__nav-items {
       display: flex;
       align-items: center;
-      box-shadow: var(--nav-box-shadow-sm);
+      // box-shadow: var(--nav-box-shadow-sm);
       flex-direction: var(--nav-items-flex-direction);
       width: 100%;
       & > *:nth-last-child(2) {

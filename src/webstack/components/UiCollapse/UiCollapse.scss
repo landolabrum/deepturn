@@ -184,6 +184,7 @@ $wid: calc(100%);
         }
         
         .collapse__body {
+            width: 100%;
             padding: 0 !important;
             background-color: var(--color-gray-80);
             &__open {
@@ -194,7 +195,7 @@ $wid: calc(100%);
 }
 
 .collapse__body {
-    width: calc(100% - calc($pad * 4));
+    width: calc(100% - var(--default-padding));
     height: var(--default-element-height);
     padding: var(--default-padding) 0;
     &__open {

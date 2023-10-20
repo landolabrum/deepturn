@@ -50,8 +50,11 @@ body {
   --color-red-60: #ef4444;
   --color-blue: #4f96ff;
   --color-blue-10: #54E3FF;
+
+  --color-body:#282828;
   --color-dark:#111f3d;
   --color-dark-opaque:#111f3d50;
+  
   --color-primary: #1E88E5;
   --color-primary-lite: #75a2ca;
   --color-primary-opaque: rgba(30, 136, 229, 0.6);
@@ -89,12 +92,12 @@ body {
 }
 
 body {
-  font-size: 16px;
+  /* font-size: 16px;
   margin: 0;
-  background: #171717;
   color: #ccc;
   max-width: 100%;
-  overflow: hidden;
+  overflow: hidden; */
+  background-color: var(--color-body);
 }
 
 @media screen and (min-height: 400px) {

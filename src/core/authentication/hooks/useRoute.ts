@@ -9,7 +9,7 @@ import useUserAgent from "./useUserAgent";
 const AUTHED_LANDING = "/account";
 const UNAUTHED_LANDING = "/"
 const VERIFICATION_LANDING = '/verify'
-const LOGOUT_LANDING = '/authentication/signout'
+const LOGOUT_LANDING = '/authentication/[function]';
 // useRoute component handles the paths users are allowed and not allowed to navigate
 
 export default function useRoute(handleSideNav?: () => void) {
@@ -19,7 +19,7 @@ export default function useRoute(handleSideNav?: () => void) {
   const userAgentData = useUserAgent();
   const router = useRouter();
 
-  const handleRoute = useCallback(
+  const handleRoute = 
     (option: IRoute) => {
       if (
         option.items ||
@@ -27,25 +27,29 @@ export default function useRoute(handleSideNav?: () => void) {
       ) return;
       option.href && router.push(option.href, undefined, { shallow: false });
       handleSideNav && handleSideNav();
-    },
-    [handleSideNav, router.pathname]
-  );
+    }
 
   useEffect(() => {
     // console.log("UA: ",userAgentData);
-    if (!userResponse && ![VERIFICATION_LANDING, UNAUTHED_LANDING].includes(router.pathname)) {
-      setUser(null);
-      setHeader(null);
-      if(router.pathname.includes(LOGOUT_LANDING)){
-        handleRoute({href:UNAUTHED_LANDING});
-      }else if(!router.pathname.includes(VERIFICATION_LANDING)){
-        handleRoute({href:UNAUTHED_LANDING});
-      }
-    } else if (userResponse) {
+    if(userResponse){
+      console.log("[ RT2 ]", )
       userResponse && setUser(userResponse);
       [UNAUTHED_LANDING, "/"].includes(router.pathname) && handleRoute({ href: AUTHED_LANDING });
     }
-  }, [userResponse, userAgentData]);
+    else if (!userResponse && ![VERIFICATION_LANDING, UNAUTHED_LANDING].includes(router.pathname)) {
+      setUser(null);
+      setHeader(null);
+      if(router.pathname.includes(LOGOUT_LANDING)){
+        // SIGN OUT
+        router.push('/');
+      }else if(!router.pathname.includes(VERIFICATION_LANDING)){
+        // handleRoute({href:UNAUTHED_LANDING});
+        console.log("[ RT ]", )
+      }
+    } else {
+      console.log('[ FAIl ]')
+    }
+  }, [ userResponse, router.pathname]);
 
   if (typeof user !== "string" && handleSideNav)
     return [user, router.pathname, handleRoute];
