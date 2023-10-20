@@ -3,6 +3,7 @@ import styles from "./Header.scss";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { capitalize } from "lodash";
+import Navbar from "@shared/components/Navbar/controller/Navbar";
 
 
 export type HeaderDispatch = React.Dispatch<React.SetStateAction<HeaderProps | null>>;
@@ -28,11 +29,17 @@ type HeaderProviderProps = {
 
 export const HeaderProvider: React.FC<HeaderProviderProps> = ({ children }) => {
   const headerState = useState<HeaderProps | null>(null);
-  return (
+  return (<>
+        <style jsx>{styles}</style>
     <HeaderContext.Provider value={headerState}>
-      <Header />
+      <div className='header__container'>
+        <Navbar />
+        <span className='header__container--divider'/>
+        <Header />
+      </div>
       {children}
     </HeaderContext.Provider>
+  </>
   );
 };
 

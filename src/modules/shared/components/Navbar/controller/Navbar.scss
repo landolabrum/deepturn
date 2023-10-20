@@ -12,7 +12,7 @@ $small: 1100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70px;
+  height: 100%;
   @media (max-width: $small) {
     width: max-content;
     justify-content: center;
@@ -20,25 +20,21 @@ $small: 1100px;
   }
 }
 nav {
-  
+  padding: var(--s-8) 0;
   display: flex;
   justify-content: center;
+  height: var(--default-element-height);
   width: 100%;
-  backdrop-filter: var(--nav-backdrop-filter);
-  height: 70px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 998;
-  background-color: var(--nav-background-color);
+  @media(min-width:900px) {
+    inline-size: 1260px;
+    margin: auto;
+  }
   .navbar__nav-content {
     z-index: 2;
-    position: absolute;
     display: flex;
     align-items: center;
     max-width: calc(100% - 40px);
     width: calc(100% - 40px);
-    height: var(--default-nav-height);
     gap: var(--s-7);
     .navbar__nav-trigger {
       display: var(--nav-trigger-display);
@@ -84,7 +80,7 @@ nav {
         visibility: hidden;
         width: 66%;
         align-items: flex-start;
-        left: -20px;
+        left: 0px;
         // padding: 10px 0;
         &.navbar__nav-items-show {
           visibility: visible;

@@ -9,6 +9,7 @@
     list-style: none;
     margin: var(--default-padding) 0;
     padding: 0;
+    color:var(--color-primary);
     &__chapter{
         width: 100%;
         height: calc(var(--default-element-height) * 3);

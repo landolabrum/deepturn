@@ -1,58 +1,61 @@
 $pb:15px;
+$div:calc(var(--default-padding) * -1);
+
+.header__container{
+  z-index: 998;
+  background-color: var(--color-gray-100);
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: max-content;
+  // padding: var(--default-padding) 0 0;
+  margin:0;
+  border-bottom: solid 1px var(--color-gray-40);
+  box-shadow: 0 5px 5px var(--color-gray-70-opaque);
+  width: 100%;
+}
+
 .no-header{
   height: 60px;
 }
 .header {
   width: 100vw;
-  position: absolute;
+  background-color: var(--color-dark);
   left: 0;
   color: var(--header-primary);
-  background-color: var(--header-primary-bg);
   z-index: 1;
-  border-bottom: var(--header-primary-border);
-  height: max-content;
-  top: 60px;
-  
   @media(max-width:900px){
     top: 70px;
   }
   .header-content {
-    min-height: 105px;
-    padding: 0 20px 20px;
-    max-width: 1260px;
     margin: auto;
-    box-sizing: content-box;
-    display: flex;
-    justify-content: space-between;
+    max-width: 1260px;
     @media(max-width:900px){
       flex-direction: column;
-      padding: 0 20px 0;
+      padding: 0;
+      width: 100%;
     }
     .header-left,
     .header-right { 
       display: flex;
-   
-      @media(max-width:900px){
-        padding-bottom:$pb;
-      }
-    }
-    
+    }    
     .header-left {
       flex-direction: column-reverse;
-      // border: solid 1px;
-      // justify-content: flex-end;
       @media(max-height: 500px){
-       flex-direction: row-reverse;
-       align-items: center;
-       gap:var(--s-4);
+        flex-direction: row-reverse;
+        align-items: center;
+        gap:var(--s-4);
       }
       .header-title {
+        line-height: 1.5;
         font-size:var(--s-1);
         @media(max-width:900px){
           font-size:var(--s-1);
         }
         font-weight: 600;
-        line-height: 1;
         text-transform: capitalize;
       }
     }
@@ -71,7 +74,6 @@ $pb:15px;
     align-items: center;
     justify-content: center;
     border-top: var(--header-primary-border);
-    height: 80px;
     width: 100%;
     @media(max-width:900px){
       flex-direction: column;

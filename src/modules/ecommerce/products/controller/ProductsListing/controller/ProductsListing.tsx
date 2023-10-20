@@ -10,6 +10,7 @@ import { useUser } from '~/src/core/authentication/hooks/useUser';
 import IShoppingService from "~/src/core/services/ShoppingService/IShoppingService";
 import BannerProduct from "../views/BannerProduct/BannerProduct";
 import ProductChapters from "../views/ProductChapters/ProductChapters";
+import { useHeader } from "@webstack/components/Header/views/Header";
 
 interface Filter {
   [key: string]: {
@@ -24,7 +25,7 @@ const ProductsListing: NextPage = () => {
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const shoppingService = getService<IShoppingService>("IShoppingService");
-
+const [header, setHeader ] = useHeader();
   const getSelectedCategories = (filter: any) => {
     const selectedEntries = Object.entries(filter).filter(([, value]: any) => value.selected);
     if (selectedEntries.length === 0) return "all";
@@ -41,6 +42,7 @@ const ProductsListing: NextPage = () => {
     }));
   };
   useEffect(() => {
+    setHeader({title:'products', breadcrumbs:[{label: 'products'}]})
     setLoading(true);
     const fetchProducts = async () => {
       try {
