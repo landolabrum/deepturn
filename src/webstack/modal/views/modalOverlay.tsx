@@ -9,8 +9,8 @@ const ModalOverlay: React.FC = () => {
   let variant;
   let title = modalContent?.title;
   let children = modalContent;
-  if(modalContent?.children)children = modalContent.children;
-  if(modalContent?.variant)variant = modalContent?.variant;
+  if (modalContent?.children) children = modalContent.children;
+  if (modalContent?.variant) variant = modalContent?.variant;
   if (!isModalOpen) {
     return null;
   }
@@ -18,8 +18,9 @@ const ModalOverlay: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      <div className={`modal-overlay ${variant}`} >
-        <div className='modal-overlay__content' >
+      <div onClick={closeModal} className={`modal-overlay ${variant}`} >z</div>
+      <div className='modal' >
+        <div className='modal__content' >
           <div className='modal-overlay__header' >
             <div className='modal-overlay__title' >
               {title}
@@ -34,7 +35,6 @@ const ModalOverlay: React.FC = () => {
           </div>
           <div className='modal-overlay__footer' >
           </div>
-
         </div>
       </div>
     </>

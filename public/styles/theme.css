@@ -1,9 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 
-body {
-  font-family: 'Play', sans-serif;
-}
+
 
 
 :root {
@@ -97,6 +95,8 @@ body {
   color: #ccc;
   max-width: 100%;
   overflow: hidden; */
+  padding-top: 200px;
+  font-family: 'Play', sans-serif;
   background-color: var(--color-body);
 }
 

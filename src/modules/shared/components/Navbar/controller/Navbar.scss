@@ -36,6 +36,10 @@ nav {
     max-width: calc(100% - 40px);
     width: calc(100% - 40px);
     gap: var(--s-7);
+    @media (min-width: 900px) {
+      width: 100%;
+      max-width: 100%;
+    }
     .navbar__nav-trigger {
       display: var(--nav-trigger-display);
       align-items: center;

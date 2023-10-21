@@ -50,17 +50,17 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
           className={inputClasses}
           name={props.name}
           type={show && type === "password" ? "text" : type}
-          value={value ? String(value):undefined}
           placeholder={props.placeholder}
           min={props.min}
           required={props.required !== undefined}
           max={props.max}
+          value={value}
           onChange={handleChange}
           autoComplete={props.autoComplete}
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}
           onPaste={props.onPaste}
-          defaultValue={props.defaultValue}
+          // defaultValue={ props.defaultValue ? props.defaultValue :  value}
         />
       </FormControl>
       <div className={`input__message ${message ? 'input__message-show' : ''}${props?.variant ? ' input__message-' + props.variant : ''}`}>

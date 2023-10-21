@@ -22,12 +22,13 @@ $div:calc(var(--default-padding) * -1);
   height: 60px;
 }
 .header {
-  width: 100vw;
   background-color: var(--color-dark);
   left: 0;
   color: var(--header-primary);
   z-index: 1;
+  padding: var(--s-8) 0;
   @media(max-width:900px){
+    padding: var(--s-8);
     top: 70px;
   }
   .header-content {

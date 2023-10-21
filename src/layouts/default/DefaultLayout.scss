@@ -1,14 +1,14 @@
 main {
-  min-width: inherit;
   display: flex;
   position: relative;
-  width: 100%;
+  // width: 100vw;
   height: auto;
-  top: 160px;
   overflow-y: visible;
 
   @media(min-width:900px) {
     inline-size: 1260px;
+    max-width: 1260px;
+    width: 100%;
     margin: auto;
   }
 

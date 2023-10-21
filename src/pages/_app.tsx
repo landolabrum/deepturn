@@ -57,17 +57,17 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <style jsx>{styles}</style>
       <ServiceContainer />
       <OverlayProvider>
-      <NotificationProvider>
-        <HeaderProvider>
-            <ModalProvider>
+        <NotificationProvider>
+          <ModalProvider>
+            <HeaderProvider>
               <ModalOverlay />
-          <DefaultLayout>
-              <Component {...pageProps} />
-          </DefaultLayout>
-            </ModalProvider>
+              <DefaultLayout>
+                <Component {...pageProps} />
+              </DefaultLayout>
 
-        </HeaderProvider>
-      </NotificationProvider>
+            </HeaderProvider>
+          </ModalProvider>
+        </NotificationProvider>
       </OverlayProvider>
     </>
   );

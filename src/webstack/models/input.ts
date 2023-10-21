@@ -2,7 +2,8 @@ import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
 import { IFormControl } from "@webstack/components/FormControl/FormControl";
 import { UserAddress } from "~/src/models/UserContext";
 
-export type ValueType = string | number | UserAddress | boolean;
+export type ValueType = any;
+// export type ValueType = string | number | UserAddress | boolean;
 
 export interface IInput extends IFormControl {
   name?: string;

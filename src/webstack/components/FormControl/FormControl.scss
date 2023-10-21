@@ -82,6 +82,7 @@ $elPad: 14px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    border: solid 1px transparent;
     line-height: 1;
     height: calc(var(--default-element-height) - 2px);
     white-space: nowrap;
@@ -134,6 +135,21 @@ $elPad: 14px;
       }
     }
     
+    &.form-control__element-input{
+      color: var(--color-gray-50);
+      background-color: var(--color-gray-80);
+      border: solid 1px transparent;
+      &:hover{
+        border: solid 1px var(--color-gray-50);
+        background-color: var(--color-gray-70);
+        --ui-icon-color: var(--color-gray-50);
+      }
+      &:focus-within:not(.form-control__element-invalid){
+        background-color: var(--color-gray-60);
+        color: var(--color-white);
+      }
+
+    }
     &.form-control__element-lite{
       color: var(--color-gray-70);
       background-color: var(--color-gray-10);
@@ -153,6 +169,9 @@ $elPad: 14px;
       color: var(--color-orange);
       background-color: var(--color-invalid-bg);
       .form-control__icon-placeholder {
+        background-color: var(--color-invalid-bg);
+      }
+      &:hover{
         background-color: var(--color-invalid-bg);
       }
     }
@@ -320,10 +339,9 @@ $elPad: 14px;
     }
 
     &[class$="-disabled"] {
-      
-      color: var(--color-gray-30);
+      color: var(--color-gray-60);
       --ui-icon-color: var(--color-gray-30);
-      background-color: var(--color-gray-60-opaque);
+      background-color: var(--color-gray-70-opaque);
       &:hover {
         user-select: none;
         cursor:not-allowed;

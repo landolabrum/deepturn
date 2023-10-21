@@ -14,7 +14,7 @@ import UiButton from "@webstack/components/UiButton/UiButton";
 
 const Authentication: React.FC<any> = (props: any) => {
   const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
-  const [view, setView] = useState<string>("sign-in");
+  const [view, setView] = useState<string>(props?.view || "sign-in");
   const router = useRouter();
   const handleView = () => {
     switch (view) {

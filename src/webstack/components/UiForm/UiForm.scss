@@ -15,7 +15,7 @@
   justify-content: flex-start;
   width: 100%;
   flex-wrap: wrap;
-
+  gap: var(--s-8);
   .form__field {
       width: 100%;
       @extend .d-flex-col;
@@ -28,9 +28,9 @@
     border-top-color: var(--color-gray-60);
     border-width: 2px;
     width: calc(100%);
-    padding-top: 10px;
-    margin-top: 10px;
-  
+    margin-top: var(--default-padding);
+    padding-top: var(--default-element-height);
+    
     // // new gradient background
     // background-image: linear-gradient(to bottom, var(--color-gray-60), transparent);
   }

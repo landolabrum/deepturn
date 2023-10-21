@@ -13,6 +13,7 @@ import ProfileForm from '~/src/modules/account/views/ProfileForm/ProfileForm';
 import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
+import Authentication from '~/src/pages/authentication';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
     cart: any;
@@ -29,7 +30,9 @@ const Checkout: React.FC<ICheckout> = () => {
     const setCart = (item: ICartItem) => {
         handleQtyChange(item);
     };
-
+    const handleView = (view: string)=>{
+        if(view.includes('@'))alert('')
+    }
 
     useEffect(() => {
         _setCart(getCartItems());
@@ -43,12 +46,13 @@ const Checkout: React.FC<ICheckout> = () => {
                 Secure Checkout <UiIcon icon="fa-lock" />
             </div>
             <div className='checkout__button'>
-                <CheckoutButton cart={cart} collect />
+                {user && <CheckoutButton cart={cart} collect />}
             </div>
             <div className='checkout__body'>
+                {view == 'create-account' && !user && <i>* Create an account to proceed to checkout</i>}
                 <UiCollapse label={keyStringConverter(view)} open={true}>
                     <>
-                        {view == 'create-account' && <SignUp setView={console.log} />}
+                        {view == 'create-account' && <Authentication view={'sign-up'}/>}
                         {view == 'create-method' && <ProfileForm user={user} open={user?.address == undefined} />}
                     </>
                 </UiCollapse>

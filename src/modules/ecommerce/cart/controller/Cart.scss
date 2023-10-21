@@ -26,7 +26,7 @@
 
 .cart {
     @extend .d-flex-col;
-
+    width: 100%;
     .cart__header {
         @extend .d-flex;
         gap: 7px;

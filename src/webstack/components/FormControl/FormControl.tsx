@@ -76,7 +76,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
 
       const isInput = elemenet_ref.querySelector('input:not([type="button"])');
       if (isInput?.tagName === 'INPUT') {
-        elemenet_ref.classList += " form-control__element-lite"
+        elemenet_ref.classList += " form-control__element-input"
       }
     }
     // Manage overlay

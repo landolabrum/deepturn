@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import UiInput from '../UiInput/UiInput';
 import styles from './UiForm.scss';
 import UiButton from '../UiButton/UiButton';
@@ -61,6 +61,7 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
             onLocalErrors(newErrors);
         }
     };
+    useEffect(()=>{},[fields])
     return (<>
         <style jsx>{styles}</style>
         {title}
@@ -106,8 +107,9 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                     />}
                 </div>
             )) : (<UiLoader position='relative' />)}
+
             <div className='form__submit'>
-                <UiButton variant='lite' type='submit'  busy={loading == true} onClick={handleSubmit}>
+                <UiButton  type='submit' busy={loading == true} onClick={handleSubmit}>
                     {btnText ? btnText : 'Submit'}
                 </UiButton>
             </div>
