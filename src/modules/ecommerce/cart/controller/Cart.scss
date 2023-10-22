@@ -22,6 +22,7 @@
 .d-flex-col {
     @extend .d-flex;
     flex-direction: column;
+    justify-content: flex-start;
 }
 
 .cart {

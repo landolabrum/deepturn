@@ -1,11 +1,9 @@
 main {
   display: flex;
   position: relative;
-  // width: 100vw;
-  height: auto;
+  min-height: 100vh;
   overflow-y: visible;
-
-  @media(min-width:900px) {
+  @media(min-width:1260px) {
     inline-size: 1260px;
     max-width: 1260px;
     width: 100%;

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import styles from './Social.scss';
 import { DashboardPage } from '../../dashboard/pages/DashboardPage/DashboardPage';
 import { IRoute, routes } from '@shared/components/Navbar/data/routes';
-import { useHeader } from '@webstack/components/Header/views/Header';
 import { useRouter } from 'next/router';
 import Instagram from '../modules/instagram/controller/Instagram';
 
@@ -13,7 +12,6 @@ interface ISocialViews {
 // Remember to create a sibling SCSS file with the same name as this component
 const Social: React.FC<any> = () => {
   const [links, setLinks] = useState<IRoute[] | undefined>(undefined);
-  const [header, setHeader] = useHeader();
   const router = useRouter();
   let platform = router?.query?.platform;
   const views: any = {
@@ -23,23 +21,9 @@ const Social: React.FC<any> = () => {
     'instagram': <Instagram />
   }
   const [view, setView] = useState('social')
-  function handleHeader(){
-    if (platform == undefined) {
-      setHeader({
-        title: "social",
-        breadcrumbs: [{ label: "social" }]
-      }
-      )
-    } else if(typeof platform == 'string'){
-      setHeader({
-        title: platform,
-        breadcrumbs: [{ label: "social" }, { 'label': platform }]
-      });
-    }
-  }
+
   useEffect(() => {
     console.log('[ PLATFORM ]', platform)
-    handleHeader();
   }, [platform]);
   useEffect(() => {
     if(platform != undefined){

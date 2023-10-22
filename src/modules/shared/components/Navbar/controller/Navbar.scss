@@ -4,6 +4,9 @@ $small: 1100px;
   align-items: center;
   justify-content: center;
   --ui-icon-color: var(--color-gray-40);
+  @media(min-width: 900px){
+    padding-left: var(--default-padding);
+  }
   &:hover{
     --ui-icon-color: var(--color-secondary);
   }
@@ -13,6 +16,7 @@ $small: 1100px;
   align-items: center;
   justify-content: center;
   height: 100%;
+
   @media (max-width: $small) {
     width: max-content;
     justify-content: center;
@@ -24,8 +28,7 @@ nav {
   display: flex;
   justify-content: center;
   height: var(--default-element-height);
-  width: 100%;
-  @media(min-width:900px) {
+  @media(min-width:1260px) {
     inline-size: 1260px;
     margin: auto;
   }
@@ -33,19 +36,16 @@ nav {
     z-index: 2;
     display: flex;
     align-items: center;
-    max-width: calc(100% - 40px);
-    width: calc(100% - 40px);
     gap: var(--s-7);
-    @media (min-width: 900px) {
-      width: 100%;
-      max-width: 100%;
-    }
+    width: 100%;
     .navbar__nav-trigger {
       display: var(--nav-trigger-display);
       align-items: center;
       height: 100%;
       cursor: pointer;
       --ui-icon-color: var(--color-gray-60);
+      --ui-icon-width: calc(var(--default-element-height) + var(--default-padding));
+
     }
 
     .navbar__side-nav-overlay {

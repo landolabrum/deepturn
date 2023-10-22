@@ -1,7 +1,6 @@
 // Relative Path: ./SettingsView.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './UiSettingsLayout.scss';
-import { useHeader } from '../../components/Header/views/Header';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import { default as Div } from "@webstack/components/UiDiv/UiDiv";
 import UiMenu from '../../components/UiMenu/UiMenu';
@@ -24,12 +23,10 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     name,
     defaultView
   }: ISettingsLayout) => {
-  const [_, setHeader] = useHeader();
   const [loaded, setLoaded] = useState(false);
   const [view, setView] = useState<string>();
   const handleView = (view: string) => {
     setView(view);
-    setHeader({ title: view, breadcrumbs: [{ label: name }, { label: view }] });
     setViewCallback && setViewCallback(view);
   }
   const user = useUser();
@@ -38,10 +35,6 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     if (views){
       const firstView = defaultView || Object.keys(views)[0];
        setView(firstView);
-       setHeader({
-        title:name,
-        breadcrumbs:[{label:firstView}]
-      })
       }
   }, []);
   if (!view) return <UiLoader />;

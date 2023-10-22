@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './ProductDescription.scss';
-import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
-import { useHeader } from '@webstack/components/Header/views/Header';
 import { useRouter } from 'next/router';
 import UiLoader from '@webstack/components/UiLoader/UiLoader';
 import { getService } from '@webstack/common';
@@ -13,9 +11,6 @@ import useCart from '../../../cart/hooks/useCart';
 import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
 
 const ProductDescription = () => {
-
-
-  const [header, setHeader] = useHeader();
   const router = useRouter();
   const product_query_id: string | undefined = router?.query?.id != undefined ? router?.query?.id.toString() : undefined
   const price_query_id: string | undefined = router?.query?.pri != undefined ? router?.query?.pri.toString() : undefined
@@ -49,11 +44,7 @@ const ProductDescription = () => {
   }, [product_query_id, price_query_id, fetchProduct]); // Dependencies updated
 
   useEffect(() => {
-    // This effect only runs when product changes, and updates the header
-    if (product?.name) {
-      setHeader({ title: product.name, breadcrumbs: [{ label: "products" }, { label: product.name }] });
-    }
-  }, [product, setHeader]); // Dependencies updated
+  }, [product]); // Dependencies updated
   useEffect(() => { }, [handleQtyChange]);
   if (isLoading) return <UiLoader />; // Return loader when loading
 

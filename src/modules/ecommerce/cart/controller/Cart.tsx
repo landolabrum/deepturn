@@ -1,6 +1,5 @@
 import styles from './Cart.scss';
 import React, { useEffect, useState } from 'react';
-import { useHeader } from '@webstack/components/Header/views/Header';
 import { useRouter } from 'next/router';
 import EmptyCart from '../views/EmptyCart/EmptyCart';
 import { ICartItem } from '../model/ICartItem';
@@ -15,7 +14,6 @@ const Cart = ({ variant, traits }: any) => {
   const { getCartItems, handleQtyChange } = useCart();
   const cart = getCartItems();
   const router = useRouter();
-  const [header, setHeader] = useHeader();
   const [loaded, setLoaded] = useState(false);
   let query = String(router.query.ref);
 
@@ -23,16 +21,7 @@ const Cart = ({ variant, traits }: any) => {
     handleQtyChange(item);
   };
 
-  // const handleProduct = (product: any) => {
-  //   router.push({ pathname: "/product", query: { id: product.id, pri: product.price_object.id } })
-  // }
-
-  function handleHeader() {
-    const crumbs: any = query ? [{ label: typeof query == 'undefined' ? query : "products" }, { label: "cart" }] : [{ label: "cart" }];
-    if (query) setHeader({ title: "cart", breadcrumbs: crumbs });
-  }
   useEffect(() => {
-    if (cart.length > 0) handleHeader();
     setLoaded(true);
   }, [query]);
   if (!loaded) {

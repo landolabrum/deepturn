@@ -1,9 +1,7 @@
 // Relative Path: ./SettingsView.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './UiTabsLayout.scss';
-import { useHeader } from '../../components/Header/views/Header';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
-import { default as Div } from "@webstack/components/UiDiv/UiDiv";
 import UiLoader from '../../components/UiLoader/UiLoader';
 
 // Remember to create a sibling SCSS file with the same name as this component
@@ -33,10 +31,6 @@ const UiTabsLayout: React.FC<iTabsLayout> = ({
     if (views){
       const firstView = defaultView || Object.keys(views)[0];
        setView(firstView);
-      //  setHeader({
-      //   title:name,
-      //   breadcrumbs:[{label:firstView}]
-      // })
       }
   }, []);
   if (!view) return <UiLoader />;

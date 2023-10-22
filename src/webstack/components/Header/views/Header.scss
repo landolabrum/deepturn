@@ -7,20 +7,18 @@ $div:calc(var(--default-padding) * -1);
   position: fixed;
   left: 0;
   top: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: max-content;
   // padding: var(--default-padding) 0 0;
   margin:0;
-  border-bottom: solid 1px var(--color-gray-40);
-  box-shadow: 0 5px 5px var(--color-gray-70-opaque);
-  width: 100%;
+  border-bottom: solid 1px var(--color-dark);
+  box-shadow: 0 5px 5px var(--color-gray-90);
 }
 
-.no-header{
-  height: 60px;
-}
+
 .header {
   background-color: var(--color-dark);
   left: 0;

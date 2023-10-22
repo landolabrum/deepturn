@@ -62,17 +62,17 @@ const Header: React.FC = () => {
 
   // Reset context when router.asPath changes
   useEffect(() => {
+    console.log(headerState)
     if (router.asPath !== route) {
       setContext(null);
       setRoute(router.asPath);
     }
-  }, [router.asPath, route, setContext]);
+  }, [router.asPath, route, setContext, headerState]);
   // }, [router.asPath, route, setContext]);
 
   return (
     <>
       <style jsx>{styles}</style>
-        {headerState === null && <div className="no-header"/>}
         {headerState && <>
       <title>{`Deepturn ${headerState.title ? "| " + h(headerState.title) : ""}`}</title>
       <div className="header" id="header">

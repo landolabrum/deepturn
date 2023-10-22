@@ -30,9 +30,19 @@ export default function useRoute(handleSideNav?: () => void) {
     }
 
   useEffect(() => {
-    // console.log("UA: ",userAgentData);
+    const noSlash = () =>{
+      console.log('[ NOSHAL ]', router.pathname.substring(1) == header?.title);
+      return router?.pathname.substring(1);
+    }
+    const headerContent = {
+      title: router.pathname.substring(1) == header?.title?'y':'n'
+    }
+    console.log("UA: ",headerContent);
+    setHeader(headerContent);
+  },[router.pathname]);
+  useEffect(() => {
     if(userResponse){
-      console.log("[ RT2 ]", )
+      console.log("[ RT2 ]", );
       userResponse && setUser(userResponse);
       [UNAUTHED_LANDING, "/"].includes(router.pathname) && handleRoute({ href: AUTHED_LANDING });
     }
@@ -44,10 +54,10 @@ export default function useRoute(handleSideNav?: () => void) {
         router.push('/');
       }else if(!router.pathname.includes(VERIFICATION_LANDING)){
         // handleRoute({href:UNAUTHED_LANDING});
-        console.log("[ RT ]", )
+        console.log("[ RT ]", );
       }
     } else {
-      console.log('[ FAIl ]')
+      console.log('[ FAIl ]');
     }
   }, [ userResponse, router.pathname]);
 
