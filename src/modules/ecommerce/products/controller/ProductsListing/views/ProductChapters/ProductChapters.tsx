@@ -7,6 +7,7 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 // Remember to create a sibling SCSS file with the same name as this component
 
 const ProductChapters: React.FC = () => {
+    
     return (
         <>
             <style jsx>{styles}</style>
@@ -16,7 +17,7 @@ const ProductChapters: React.FC = () => {
                         key={index} className='product-chapters__chapter'>
                             <div className='chapter__content'>
                             <div className='chapter__icon'>
-                                <UiIcon icon='fa-xmark' />
+                                <UiIcon icon='offgrid-box' />
                             </div>
                             <div className='chapter__body'>
                             <div className='chapter__title'>

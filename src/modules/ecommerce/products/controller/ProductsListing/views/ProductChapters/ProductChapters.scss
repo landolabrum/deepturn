@@ -12,7 +12,9 @@
     color:var(--color-primary);
     &__chapter{
         width: 100%;
-        height: calc(var(--default-element-height) * 3);
+        height: calc(var(--default-element-height) * 4);
+        color: var(--color-gray-30);
+        --ui-icon-color: var(--color-gray-30);
         .chapter__content{
             @extend .d-flex;
             flex-direction: column;
@@ -22,19 +24,21 @@
                 @extend .d-flex;
                 justify-content: center;
                 // border: solid 1px;
-                height: 60%;
+                height: 65%;
+                --ui-icon-size: 60px;
             }
             .chapter__body{
-                height: 40%;
+                height: 35%;
                 @extend .d-flex;
                 flex-direction: column;
                 justify-content: space-around;
                 .chapter__title{
                     font-size: var(--s-6);
+                    color: var(--color-primary);
                 }
                 .chapter__extras{
                     font-size: var(--s-8);
-                    color: var(--color-orange);
+
                 }
             }
         }
