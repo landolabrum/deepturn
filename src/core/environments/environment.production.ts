@@ -4,8 +4,8 @@ const prodEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: false,
   merchant:{
-    name:"nirvana energy",
-    mid: "us",
+    name:"deepturn",
+    mid: "mb1",
   },
   legacyJwtCookie: {
     name: "auth-token",
