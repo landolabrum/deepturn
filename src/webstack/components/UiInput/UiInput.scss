@@ -1,0 +1,98 @@
+input {
+  // Define your custom styles for the input elements/
+  width: 100%;
+  height: inherit;
+  font-size: inherit;
+  outline: none;
+  color: inherit;
+  border: none;
+  background-color: transparent;
+  &:not(.nav-item, .nav-item__active){
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  // ARROWS for TYPE='number'
+  /* Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  &[type=button]{
+    display: flex;
+    justify-content: flex-start;
+  }
+  // &.input-disabled {
+  //   user-select: none;
+  //   cursor: pointer;
+  //   &:focus {
+  //     caret-color: transparent;
+  //   }
+  // }
+
+
+  // Override the autofilled input styles
+  &:-webkit-autofill,
+  // &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active,
+  &:-internal-autofill-selected
+  {
+    background-color: transparent !important;
+    -webkit-text-fill-color: var(--color-primary) !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+  }
+  &.input__has-icons{
+    text-indent: 8px;
+  }
+  &.center {
+    text-align: center;
+    text-indent: 0;
+    min-height: var(--default-element-height);
+    height: 100%;
+    width: var(--default-element-height);
+
+    @media(max-width: 900px) {}
+
+    &:focus {
+      background-color: var(--color-gray-70);
+    }
+
+    &:hover {
+      background-color: var(--color-gray-70-opaque);
+    }
+  }
+
+  // VARIANTS
+  &.invalid {
+    background-color: transparent;
+    z-index: 2;
+    text-decoration: underline dashed;
+    border-width: 0px 0px 2px 0px;
+    border-bottom-color: var(--color-invalid-border);
+  }
+  // &:focus,
+  // &:-webkit-autofill:focus{
+  //   background-color: #f30 !important;
+  // }
+}
+
+input::placeholder {
+  font-style: italic;
+  color: var(--default-placeholder-color);
+  padding: 0;
+  font-size: 16px;
+}
+
+.input__message{
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  color: var(--color-orange);
+  height: var(--default-element-height);
+  line-height: 1;
+  display: none;
+  text-indent: var(--default-padding);
+  &.input__message-show{
+    display: flex;
+  }
+}

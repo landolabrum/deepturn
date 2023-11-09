@@ -1,0 +1,83 @@
+$containerPad: 5px;
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.d-flex-col{
+  @extend .d-flex;
+   flex-direction: column;
+}
+@keyframes dropIn{
+  0%{transform: translateY(calc(20px - 100%));}
+  90%{transform: translateY($containerPad);}
+  100%{transform: translateY(0%);}
+}
+@keyframes dropOut{
+  0%{transform: translateY(0%);}
+  10%{transform: translateY($containerPad);}
+  100%{transform: translateY(calc(20px - 100%)); display: none;}
+}
+
+
+.notification{
+  @media(max-width: 900px){
+    font-size: var(--s-8);
+  }
+  position: fixed;
+  top: calc($containerPad * -1);
+  left:0;
+  right:0;
+  width: calc(100% - calc($containerPad * 2));
+  margin: 0 $containerPad;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // height: 200px;
+  max-height: 400px;
+  border-radius: 0 0 var(--default-border-radius) var(--default-border-radius);
+  z-index: 999;
+  cursor: pointer;
+  background: var(--color-gray-40);
+  color: var(--color-gray-60);
+  animation: dropIn 1s forwards ease-out;
+  @media(max-width:900px){
+    width: calc(100% - calc($containerPad * 6));
+    margin: 0 calc($containerPad * 3);
+  }
+  &.notification-hide{
+    animation: dropOut 1s forwards ease-in;
+  }
+  .notification__content{
+    padding: $containerPad var(--default-padding) var(--default-padding);
+    width: 100%;
+    position: relative;
+    .notification__list{
+      @extend .d-flex-col;
+      align-items: flex-start;
+      .notification__list-item{
+        text-decoration: none;
+        color: var(--color-primary);
+        @extend .d-flex;
+        justify-content: flex-start;
+        width: 100%;
+        gap: 10px;
+        text-transform: capitalize;
+        &__label{
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .notification__close{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    justify-content: flex-end;
+    // position: absolute;
+    // top: calc($containerPad * 2.5);
+    // right: calc($containerPad * 2);
+    --ui-icon-color: var(--color-gray-60);
+  }
+}

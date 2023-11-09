@@ -1,0 +1,19 @@
+.overlay{
+  position: fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  width: 100vw;
+  height: 100%;
+  border-radius: 16px;
+  z-index: 2;
+  cursor: pointer;
+  background-color: transparent;
+  &:not(.overlay-transparent){
+    background: #00000033;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    box-shadow: 0 4px 30px #00000010;
+  }
+}

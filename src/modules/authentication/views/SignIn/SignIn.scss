@@ -1,0 +1,36 @@
+$brk: 25px;
+.sign-in {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+  width:100%;
+    .sign-in__forgot-password-link{
+      color: var(--color-blue);
+      cursor: pointer;
+      &:hover{
+        filter:brightness(1.3)
+      }
+  }
+}
+.sign-in__login{
+  width: 100%;
+}
+
+.authentication__authentication-status{
+  width: calc(100% - 20px);
+  padding: 15px 10px;
+  color: var(--color-gray-70);
+  .authentication__signin-response{
+    display: flex;
+    flex-direction: column;
+    padding:0;
+    .sign-in__signin-response-details{
+      padding: 0 10px;
+      .sign-in__signin-response-detail{
+        text-indent: 0;
+        color: var(--color-orange);
+      }
+    }
+  }
+}

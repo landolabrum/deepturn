@@ -1,0 +1,18 @@
+.d-flex{
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+.admin-customer{
+    &__header{
+        width: 100%;
+        @extend .d-flex;
+        justify-content: flex-end;
+        gap: var(--s-9);
+        .admin-customer__actions{
+            gap: var(--s-9);
+            @extend .d-flex;
+            padding: var(--s-9) 0;
+        }
+    }
+}

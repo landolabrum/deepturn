@@ -1,0 +1,17 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.checkout-button {
+    @extend .d-flex;
+    justify-content: flex-end;
+}
+
+.checkout-modal {
+    @extend .d-flex;
+    height: 100%;
+    width: 100%;
+}

@@ -1,0 +1,27 @@
+div {
+  width: var(--ui-icon-width, var(--ui-icon-size, 20px));
+  height: var(--ui-icon-height, var(--ui-icon-size, 20px));
+  color: var(--ui-icon-color, #666);
+}
+
+div {
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    // path {
+    //     stroke-width: var(--icon-stroke-width, auto);
+    // }
+  }
+}
+@keyframes shadowAnimation {
+  0% {filter: drop-shadow( 0 0 5px #fff);}
+  // 30% {filter: drop-shadow( 0 0 15px #fff);}
+  100% {filter: drop-shadow( 0 0 20px #fff);}
+}
+.iconGlow {
+  color: #e0e0e0;
+  mix-blend-mode: color-dodge;
+  animation: shadowAnimation 1.5s ease-in-out infinite alternate;
+  }
+  

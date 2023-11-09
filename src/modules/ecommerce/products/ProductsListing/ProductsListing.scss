@@ -1,0 +1,15 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
+}
+$space: var(--s-7);
+.product-listing{
+    @extend .d-flex;
+    justify-content: flex-start;
+    width: 100%;
+    .product-listing__header {
+        width: 100%;
+    }
+}

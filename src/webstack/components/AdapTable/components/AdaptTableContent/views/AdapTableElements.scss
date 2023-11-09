@@ -1,0 +1,232 @@
+// Define variables for repeated values
+$xs: 450px;
+$sm: 900px;
+$defaultPadding: 5px 10px;
+$bRad: 5px;
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 0;
+  }
+  85% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@mixin mobileTr($bRad: 5px) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: max-content;
+  border-radius: $bRad;
+  background-color: var(--color-gray-70);
+  padding: 10px;
+  width: inherit;
+  gap: 5px;
+  margin: 10px;
+  min-height: max-content;
+  height: max-content;
+  &.mini {
+    margin: 0;
+    padding: 0 8px;
+  }
+  &:hover {
+    background-color: var(--color-gray-60);
+  }
+  @media (max-width: $xs) {
+    max-width: calc(100% - 8px);
+    margin: 5px 10px;
+  }
+}
+
+@mixin mobileTd($defaultPadding: 10px) {
+  width: 100%;
+  max-width: 100%;
+  padding: $defaultPadding;
+  border-bottom: none;
+  &:not(:last-child) {
+    border-right: none;
+  }
+  justify-content: space-between;
+  display: flex;
+  @media (max-width: $xs) {
+    flex-direction: column;
+    gap: 10px;
+  }
+  &::before {
+    display: flex;
+    text-transform: capitalize;
+    content: attr(data-key);
+    align-items: center;
+    color: var(--color-gray-50);
+  }
+
+}
+table {
+  margin-bottom: auto;
+  width: 100%;
+  border-spacing: unset;
+  display: none;
+  &.table-show{
+    display: table;
+  }
+  &.hide-header{
+    border-radius: var(--default-border-radius);
+    border: solid 1px transparent;
+    overflow: hidden;
+  }
+  &.table-mini {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: solid 1px var(--color-gray-60);;
+
+    tr {
+      td,
+      th {
+        border: none !important;
+        &:last-child {
+          .th-content.mini,
+          .td-content {
+            display: flex;
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+  thead {
+  
+    @media (max-width: 900px) {
+      display: none;
+    }
+    tr {
+      background-color: var(--color-gray-80);
+      th {
+        text-transform: capitalize;
+      }
+    }
+  }
+  thead,
+  tbody {
+    tr {
+      height: 50px;
+      width: 100%;
+      &:hover {
+        background-color: var(--color-gray-80);
+      }
+
+      &.mobile-tr {
+        @include mobileTr();
+      }
+
+      @media (max-width: $sm) {
+        @include mobileTr();
+      }
+
+      &.mini {
+        max-width: inherit;
+        cursor: default;
+
+        td:last-child {
+          text-align: right;
+        }
+      }
+
+      :last-child {
+        td {
+          border-bottom-color: transparent;
+
+          :first-child {
+            border-radius: 0 0 0 $bRad;
+          }
+
+          :last-child {
+            border-radius: 0 0 $bRad 0;
+          }
+        }
+      }
+      th {
+        cursor: col-resize;
+        .resizeable {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .resizeable .th-content {
+          padding-right: 20px; /* Space for the resizing handle */
+        }
+        
+   
+        
+        .resizeable::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: 10px; /* Width of the resizing handle */
+          background-color: #f0f0f0; /* Color of the resizing handle */
+          cursor: col-resize;
+        }
+        
+      }
+      th,
+      td {
+        padding: $defaultPadding;
+        position: relative;
+        max-width: max-content;
+        @media (min-width: 900px) {
+          .td-content {
+            overflow-x: hidden;
+            overflow-y: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+
+        &:not(:last-child) {
+          border-right: solid 1px var(--color-gray-60);;
+        }
+
+        border-bottom: solid 1px var(--color-gray-60);;
+
+        &.mobile-td {
+          @include mobileTd();
+        }
+
+        @media (max-width: $sm) {
+          @include mobileTd();
+        }
+
+        &.index {
+          min-width: 20px;
+          text-align: center;
+          width: 25px;
+        }
+
+        
+        .td-hover {
+          display: none;
+        }
+        .td-content {
+          position: relative;
+        }
+        &.hoverable {
+          // pointer-events: none;
+            &:hover {
+              .td-hover {
+                display: flex;
+            }
+          }
+        }
+
+        
+      }
+    }
+  }
+}

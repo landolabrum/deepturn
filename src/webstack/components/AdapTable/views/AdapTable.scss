@@ -1,0 +1,26 @@
+// Variables
+$defaultPadding: 10px;
+$defaultHeight: 80px;
+$cellHite: 50px;
+$bRad: 5px;
+$gap: 15px;
+$selectHite: 35px;
+$magnifySize: 15px;
+$overBreakPoint: 1350px;
+
+
+.adaptable {
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: $bRad;
+  font-weight: 300;
+  background-color: var(--color-gray-90);
+  font-size: 14px;
+  &.adaptable-mini{
+    font-size: 16px;
+    background-color: transparent;
+    color: var(--color-gray-30);
+  }
+}

@@ -1,0 +1,50 @@
+
+@keyframes fade_in {
+    0% {opacity: 0;z-index: 2;};
+    90% {opacity: .5;};
+    100% {opacity: 1;z-index: -1;};
+};
+
+.adapt-to-window__video {
+    left: 0;
+    top: 0;
+    position: fixed;
+    z-index: -1;
+    background-position: center center;
+    // opacity: 0;
+    // min-width: 100%;
+    // min-height: 100%;
+
+    &__visible {
+        animation: fade_in 1s forwards;
+    }
+
+    // @media (orientation: portrait) {
+    //     @media (max-width: 900px) {
+    //         bottom: auto;
+    //         height: 100vh;
+    //     }
+    // }
+    &__portrait{
+        // @media (max-width: 900px) {
+            bottom: auto;
+            min-width: 100%;
+            min-height: 100vh;
+        // }
+    }
+    // @media (orientation: landscape) {
+    //     min-width: 100%;
+    //     top:auto;
+    //     bottom:auto;
+    //     @media (max-width: 900px) {
+    //         top:auto;
+    //         bottom:0;
+    //     }
+    // }
+    &__landscape{
+        min-width: 100vw;
+        // min-height: 100vh;
+        background-position: top left;
+    
+    }
+}
