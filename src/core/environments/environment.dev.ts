@@ -4,7 +4,7 @@ const devEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: false,
   merchant:{
-    name:"nirvana energy",
+    name:"deepturn",
     mid: "us",
   },
   legacyJwtCookie: {

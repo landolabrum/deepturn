@@ -5,39 +5,11 @@ main {
   overflow-y: visible;
   padding-bottom: 200px;
   margin: auto;
-  padding-top: calc(var(--header-height) + var(--default-element-height));
+  // padding-top: var(--header-height);
   @media(min-width:1260px) {
     inline-size: 1260px;
     max-width: 1260px;
     width: 100%;
 
   }
-.inspect-only{
-  display: none;
-}
-  // .default-layout__bg {
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   right: 0;
-  //   width: calc(100vw);
-  //   /* Adjust the image path as needed */
-  //   background-image: url('assets/backgrounds/lava1.jpeg');
-  //   /* Set the size of the image */
-  //   /* Set the position of the image */
-  //   background-repeat: no-repeat;
-  //   background-size: calc(100% + 20px);
-  //   filter: blur(2px);
-  //   background-position: center center;
-  //   /* This creates the parallax effect */
-  //   // background-attachment: fixed;
-  //   /* Set the height for the section with the background */
-  //   height: calc(100vh);
-  //   overflow: hidden;
-  //   mix-blend-mode: difference;
-  //   /* Optional: other styles to adjust the appearance and positioning */
-  //   margin: 0;
-  //   padding: 0;
-
-  // }
 }

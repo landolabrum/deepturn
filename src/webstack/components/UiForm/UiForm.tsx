@@ -36,8 +36,9 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
 
     const handleInputChange = (e: any, constraints?: IFormField['constraints']) => {
         handleComplete();
-        const isValid = handleConstraints(e, constraints);
-        if (!e || !isValid) return;
+        // const isValid = handleConstraints(e, constraints);
+        // console.log('[ handeInputChange f dsa ]',e)
+        // if (!e || !isValid) return;
         if (onChange) { onChange(e); return; }
     };
 

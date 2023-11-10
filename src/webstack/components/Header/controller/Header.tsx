@@ -32,7 +32,7 @@ export const HeaderProvider: React.FC<HeaderProviderProps> = ({ children }) => {
   return (<>
         <style jsx>{styles}</style>
     <HeaderContext.Provider value={headerState}>
-      <div className='header__container'>
+      <div className='header__container' id="header-container">
         <Navbar />
         <span className='header__container--divider'/>
         <Header />
@@ -48,12 +48,12 @@ const Header: React.FC = () => {
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
   const [route, setRoute] = useState<string | null>(null);
   const router = useRouter();
-  const h = (t: string): any => {
-    return t
-      .split(" ")
-      .map((str: string) => capitalize(str))
-      .join(" ");
-  };
+  // const h = (t: string): any => {
+  //   return t
+  //     .split(" ")
+  //     .map((str: string) => capitalize(str))
+  //     .join(" ");
+  // };
   // Update headerState when context changes
   useEffect(() => {
     setHeaderState(context);
@@ -74,7 +74,7 @@ const Header: React.FC = () => {
     <>
       <style jsx>{styles}</style>
         {headerState && <>
-      <div className="header" id="header">
+      <div className="header">
           <div className="header-content">
             <div className="header-left">
               <BreadCrumbs links={headerState.breadcrumbs} />

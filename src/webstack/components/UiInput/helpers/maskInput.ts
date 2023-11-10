@@ -38,6 +38,7 @@ const maskInput = (e: any, type?: string) => {
     
     else if (name === 'phone') {
         const cleanPhone = value?.replace(/\D+/g, '');
+     
         const inputType = e.nativeEvent?.inputType;
         let formattedPhone = '';
         const lastChar = value.substring(value.length -1, value.length);
@@ -63,6 +64,10 @@ const maskInput = (e: any, type?: string) => {
         }
         // HANDLE DELETE Non NUMBER CHARS
         else if(inputType == 'deleteContentBackward')formattedPhone = value.replace(/[^0-9]*$/, '');
+        console.log('[ PHONE ]',{
+            cl: cleanPhone,
+            fp: formattedPhone
+        })
         return [formattedPhone, undefined];
     }
     // else if (e.target.type === 'text') return [value.replace(/[^a-zA-Z\s]+/g, '') , undefined];

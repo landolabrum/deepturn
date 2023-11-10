@@ -21,6 +21,7 @@ $pad: 18px;
   overscroll-behavior-x: contain;
   margin: var(--s-7) 0;
   height: 100%;
+  min-height: 500px;
   @media(max-width:900px){
     height: 100%;
   }

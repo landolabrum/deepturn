@@ -1,5 +1,5 @@
-import Home from "~/src/modules/home/controller/Home";
-export default Home;
+import Index from 'src/modules/index/controller/Index'
+export default Index;
 // // Relative Path: ./Index.tsx
 
 // import React from 'react';

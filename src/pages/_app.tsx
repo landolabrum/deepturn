@@ -5,7 +5,7 @@ import ServiceContainer from "@webstack/components/ServiceContainer/ServiceConta
 import { appWithTranslation } from 'next-i18next';
 import styles from "~/src/layouts/default/DefaultLayout.scss"
 import { OverlayProvider } from "@webstack/components/Overlay/Overlay";
-import { HeaderProvider, useHeader } from "@webstack/components/Header/controller/Header";
+import { HeaderProvider } from "@webstack/components/Header/controller/Header";
 import useDarkMode from "@webstack/hooks/useDarkMode";
 import { NotificationProvider } from "@webstack/components/Notification/Notification";
 import { ModalProvider } from "@webstack/components/modal/contexts/modalContext";

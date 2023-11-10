@@ -26,8 +26,8 @@ export interface HandleRouteProps {
 
 export const routes: IRoute[] = [
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
-  { label: "configure", href: "/configure", icon: "fa-tags", active: true },
-  { label: "products", href: "/products", icon: "fa-tags", active: true },
+  // { label: "configure", href: "/configure", icon: "fa-tags", active: true },
+  // { label: "products", href: "/products", icon: "fa-tags", active: true },
   // {
   //   label: "Store",
   //   icon: "fa-store",
@@ -36,22 +36,23 @@ export const routes: IRoute[] = [
   //     // { label: "customers", href: "/customers", icon: "fa-user-group", active: true },
   //   ],
   // },
-  // {
-  //   label: "social",
-  //   icon: "fa-biohazard",
-  //   href: '/social',
-  //   items: [
-  //     { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
-  //   ],
-  // },
-  // {
-  //   label: "home",
-  //   icon: "fa-home",
-  //   items: [
-  //     { label: "stream",  href: "/stream", icon: "fa-camera-security", active: true },
-  //     { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
-  //   ],
-  // },
+  {
+    label: "Social",
+    icon: "fa-biohazard",
+    href: '/social',
+    items: [
+      { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
+    ],
+  },
+  {
+    label: "Home",
+    icon: "fa-home",
+    href:"/home",
+    items: [
+      { label: "stream",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
+      { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
+    ],
+  },
   // {
   //   label: "auto",
   //   icon: "fa-engine",

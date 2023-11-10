@@ -1,6 +1,4 @@
-// DefaultLayout.tsx
-
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import styles from './DefaultLayout.scss';
 import Title from "@webstack/components/Title/Title";
 
@@ -9,6 +7,8 @@ interface IProps {
 }
 
 export default function DefaultLayout(props: IProps) {
+// Empty dependency array means this effect will only run once after the initial render
+  
   return (
     <>
       <style jsx>{styles}</style>
@@ -16,7 +16,6 @@ export default function DefaultLayout(props: IProps) {
         <main>
           {props.children}
         </main>
-   
     </>
   );
 }

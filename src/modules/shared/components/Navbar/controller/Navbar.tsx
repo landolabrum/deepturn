@@ -71,7 +71,7 @@ const Navbar = () => {
               <div className="navbar__hide_show">
                 <UiIcon 
                 // onClick={handleHide}
-                icon="nirvana-logo" />
+                icon="deepturn-logo" />
               </div>
               <UiButton variant="flat" onClick={() => handleRoute({ href: "/" })}>
                 {environment?.merchant?.name}
@@ -93,7 +93,8 @@ const Navbar = () => {
                   return (
                     <div key={key} className={`navbar__nav-item-container ${item?.label && `navbar__nav-item-container__${String(item.label).toLowerCase()}`}`}>
                       {item?.items && (
-                        <div
+                        <span
+                        className={item?.label=='account'?'navbar__nav-item-container__account-bump':''}
                           onDoubleClick={() =>
                             item?.href && handleRoute({ href: item.href })}
                         >
@@ -108,7 +109,7 @@ const Navbar = () => {
                             displayName={displayName}
                             route={route}
                           />
-                        </div>
+                        </span>
                       )}
 
                       {!item.items && item.href !== '/cart' && <NavButton
@@ -141,7 +142,7 @@ const Navbar = () => {
         <style jsx>{styles}</style>
         <div className="navbar__brand-logo">
           <div className="navbar__hide_show">
-            <UiIcon onClick={handleHide} icon="nirvana-logo" />
+            <UiIcon onClick={handleHide} icon="deepturn-logo" />
           </div>
           <UiButton variant="flat" onClick={() => handleRoute({ href: "/" })}>
             {environment?.merchant?.name}

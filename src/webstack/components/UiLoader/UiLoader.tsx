@@ -44,7 +44,7 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
         <div className="ui-loader__loading">
           <div className="ui-loader__icon-container">
             <div className="ui-loader__icon">
-              <UiIcon icon="nirvana-logo" />
+              <UiIcon icon="deepturn-logo" />
             </div>
           </div>
           <div

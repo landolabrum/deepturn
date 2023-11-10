@@ -18,30 +18,41 @@ export default function useRoute(handleSideNav?: () => void) {
   const [header, setHeader] = useHeader();
   // const userAgentData = useUserAgent();
   const router = useRouter();
-
+  const query: { [key: string]: string } | {} = router?.query;
   const handleRoute =
     (option: IRoute) => {
       if (
         option.items ||
         option.active === false
       ) return;
-      else if(option.href )router.push(option.href, undefined, { shallow: false });
+      else if (option.href) router.push(option.href, undefined, { shallow: false });
       handleSideNav && handleSideNav();
     }
 
   const current = router.pathname.substring(1);
   const isCurrent = current == header?.title;
-  const handleHeader: any = () => {
+
+  const handleHeader: any = async () => {
+    let crumbs = [{ label: (isCurrent ? environment.merchant.name : current) }];
+    if (
+      (Object.values(query).length > 0) && router.isReady) {
+      const queryCrumbs = Object.values(query).map(
+        (query: any) => {
+          return { label: query }
+        }
+      )
+      crumbs = [...crumbs, ...queryCrumbs];
+    }
     let context: any = {
       title: isCurrent ? environment.merchant.name : current == '' ? environment.merchant.name : current,
-      breadcrumbs: [{ label: isCurrent ? environment.merchant.name : current }]
+      breadcrumbs: crumbs
     }
-    setHeader(context);
+    await setHeader(context);
+    return;
   }
 
   const handleUser = async () => {
     if (userResponse) {
-      // console.log("[ RT2 ]", user);
       userResponse && setUser(userResponse);
       [UNAUTHED_LANDING, "/", VERIFICATION_LANDING].includes(router.pathname) && handleRoute({ href: AUTHED_LANDING });
     }
@@ -60,9 +71,33 @@ export default function useRoute(handleSideNav?: () => void) {
       return;
     }
   }
+  const handleLayout = () => {
+    setTimeout(() => {
 
+      // Find the header container element
+      const headerContainer = document.getElementById('header-container');
+      const settingsContainer = document.getElementById('settings-container');
+
+      // Find the main element
+      const mainElement = document.getElementsByTagName('main')[0];
+
+      if (headerContainer && mainElement) {
+        // Get the height of the header container
+        const headerHeight = headerContainer.offsetHeight;
+        
+        const mainMt:any = mainElement.style.marginTop;
+        if(settingsContainer){
+          const settingsTop:any = settingsContainer.style.top;
+          console.log('[ settingsTop ]: ', settingsTop)
+          if(settingsTop=='')settingsContainer.style.top = `${headerHeight}px`;
+        }
+        // Set the top margin of the main element to the header height
+        if(mainMt=='')mainElement.style.marginTop = `${headerHeight}px`;
+      }
+    }, 100);
+  }
   useEffect(() => {
-    handleUser().then(handleHeader);
+    handleUser().then(handleHeader).then(handleLayout);
   }, [userResponse, router.pathname]);
 
   if (typeof user !== "string" && handleSideNav)
