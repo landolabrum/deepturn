@@ -1,3 +1,4 @@
+
 .d-flex {
     display: flex;
     justify-content: space-between;
@@ -85,6 +86,24 @@
         }
     }
 
+    @keyframes borderAnimation {
+        0% {
+            border-color: #ff303040;
+        }
+        25% {
+            border-color: #ff990050;
+        }
+        50% {
+            border-color: #0099ff90;
+        }
+        75% {
+            border-color: #0f00ff;
+        }
+        100% {
+            border-color: #ff303040;
+        }
+    }
+    
     .settings__view {
         border-style: solid;
         border-color: #ff303040 #ff990050 #0099ff50 #0f00ff;
@@ -93,34 +112,34 @@
         box-shadow: 10px 10px 30px var(--color-gray-100);
         background-color: var(--color-gray-90);
         padding: var(--default-padding);
-        // width: calc(100% - calc(var(--default-padding) * 2));
         margin: var(--default-padding);
-        // margin-right: var(--default-padding);
         @extend .d-flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: stretch;
         height: max-content;
         color: var(--color-gray-40);
-
-        @media(max-width:1100px) {
+        animation: borderAnimation 5s infinite alternate;
+        // Other styles...
+    }
+    
+    @media(max-width:1100px) {
+        .settings__view {
             border-left: unset;
             background-color: #f30;
             max-width: calc(100vw - calc(400px));
         }
-        // @media(min-width:1260px) {
-        //     max-width: 1260px;
-        //     margin: var(--default-padding) auto;
-        // }
-
-        @media(max-width:900px) {
+    }
+    
+    @media(max-width:900px) {
+        .settings__view {
             margin: var(--s-7) auto;
             height: max-content;
             overflow: visible;
             padding: var(--s-9);
-            
         }
-
+    }
+    
         .settings__view__title {
             font-size: var(--s-1);
             line-height: 2.5;
@@ -132,5 +151,4 @@
 
         width: 100%;
         // &__content {}
-    }
 }

@@ -10,7 +10,9 @@ const Surveillance: React.FC = () => {
     <>
       <style jsx>{styles}</style>
       <div className='surveillance'>
+        <UiVideo src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=1`}/>
         <UiVideo src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=2`}/>
+        <UiVideo src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=3`}/>
       </div>
     </>
   );

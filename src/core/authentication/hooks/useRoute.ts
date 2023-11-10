@@ -63,7 +63,7 @@ export default function useRoute(handleSideNav?: () => void) {
         // SIGN OUT
         router.push('/');
       } else if (!router.pathname.includes(VERIFICATION_LANDING)) {
-        // handleRoute({href:UNAUTHED_LANDING});
+        handleRoute({href:UNAUTHED_LANDING});
         // console.log("[ RT ]",);
       }
     } else {
