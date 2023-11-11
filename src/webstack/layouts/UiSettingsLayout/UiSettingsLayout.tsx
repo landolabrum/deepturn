@@ -40,33 +40,6 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     )
     setViewCallback && setViewCallback(view);
   }
-  // const handleTop = () => {
-  //   const headerContainer = document.getElementById('header-container');
-  //   if (headerContainer && settingsRef.current) {
-
-  //     const headerHeight = headerContainer.offsetHeight;
-  //     if (settingsRef.current.style.top === '') settingsRef.current.style.top = `${headerHeight}px`;
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   const handleLoad = () => {
-  //     console.log('Page fully loaded');
-  //     handleTop();
-  //   };
-
-  //   // Check if the load event has already fired
-  //   if (document.readyState === 'complete' && router.isReady) {
-  //     handleLoad();
-  //   } else {
-  //     // Add event listener for the load event
-  //     window.addEventListener('load', handleLoad);
-  //   }
-
-  //   // Remove event listener when the component unmounts
-  //   return () => window.removeEventListener('load', handleLoad);
-  // }, [window]); // Empty dependency array ensures this effect only runs once
-
   useEffect(() => {
     if (views) {
       const firstView = queryViewId || Object.keys(views)[0];

@@ -7,7 +7,6 @@ import UiSelect from '../UiSelect/UiSelect';
 import UiLoader from '../UiLoader/UiLoader';
 import ToggleSwitch from '../UiToggle/UiToggle';
 import UiCheckBox from '../UiCheckbox/UiCheckBox';
-import handleConstraints from './services/FormConstraints';
 import FormControl from '../FormControl/FormControl';
 
 const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading, disabled }: IForm) => {
@@ -16,14 +15,14 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
     const [complete, setComplete] = useState<boolean>(false);
     const [localErrors, setLocalErrors] = useState<any>({});
     
-    const errorMsg = (name: string) => {
-        if (!name) return;
-        if (typeof loading === "object" && 'fields' in loading && Array.isArray(loading.fields)) {
-            const errorField = loading.fields.find(field => field.name === name);
-            if (errorField) return errorField.message;
-        }
-        return null;
-    }
+    // const errorMsg = (name: string) => {
+    //     if (!name) return;
+    //     if (typeof loading === "object" && 'fields' in loading && Array.isArray(loading.fields)) {
+    //         const errorField = loading.fields.find(field => field.name === name);
+    //         if (errorField) return errorField.message;
+    //     }
+    //     return null;
+    // }
     const handleComplete = () => {
         // COMPLETE
         if(!fields)return;
@@ -72,7 +71,7 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
             onLocalErrors(newErrors);
         }
     };
-    useEffect(() => { }, [fields, disabled]);
+    useEffect(() => { }, [fields, disabled, loading]);
     if (!fields) return<></>;
     return (<>
         <style jsx>{styles}</style>
@@ -119,9 +118,7 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                     />}
                     {field.type == 'pill' &&
                         <FormControl
-                            label={
-                                field?.error? `${field.label} *${field.error}*`: field.label
-                            }
+                            label={field?.error? `${field.label} *${field.error}*`: field.label}
                             variant={field.error && 'invalid'}
                             traits={{
                                 beforeIcon: { icon: 'fas-minus', onClick: () => onChange && onChange({ target: { name: field.name, value: Number(field.value) - 1 } }) },
@@ -138,26 +135,8 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                                     if (value && String(value).charAt(0) == '0') value = value.slice(1, value.length)
                                     handleInputChange({ target: { name: name, value: value } })
                                 }}
-                            // type='number'
                             />
                         </FormControl>
-                        // && <UiInput
-                        //     type='number'
-                        //     traits={{
-                        //         beforeIcon:{icon:'fas-minus', onClick:()=>onChange && onChange({target:{name: field.name, value: Number(field.value) - 1}})},
-                        //         afterIcon:{icon:'fas-plus', onClick:()=>onChange && onChange({target:{name: field.name, value: Number(field.value) + 1}})},
-                        //         width: '120px'
-                        //     }}
-                        //     name={field.name}
-                        //     variant='center'
-                        //     label={field?.label}
-                        //     value={field.value}
-                        //     onChange={(e)=>{
-                        //         let {name, value}=e.target;
-                        //         if(value.charAt(0) == 0)value = value.slice(1, value.length)
-                        //         handleInputChange({target:{name: name, value: value}})
-                        //     }}
-                        //     />
                     }
                 </div>
             )) : (<UiLoader position='relative' />)}

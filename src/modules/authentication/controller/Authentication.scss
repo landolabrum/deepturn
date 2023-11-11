@@ -18,15 +18,25 @@ $cardWidth: 500px;
   min-width: 350px;
   z-index: 1;
   height: max-content;
-  &:not(.authentication__sign-in){
+
+  &:not(.authentication__sign-in) {
+
     // background-color: var(--color-gray-90);
     // border-radius: var(--default-border-radius);
     @media(max-width: 1100px) {
-        max-width: 500px;
+      max-width: 500px;
     }
   }
 
-    .authentication__view-header {
+  &__email-verify {
+    @extend .d-flex;
+    font-size: var(--s-5);
+    min-height: 500px;
+    flex-wrap: wrap;
+    white-space: nowrap;
+  }
+
+  .authentication__view-header {
     height: var(--default-element-height);
     text-transform: capitalize;
     @extend .d-flex;
@@ -45,8 +55,7 @@ $cardWidth: 500px;
     .authentication__view-name {
       color: var(--color-gray-10);
 
-      @media(max-width: 1100px) {
-      }
+      @media(max-width: 1100px) {}
     }
   }
 

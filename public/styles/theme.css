@@ -375,7 +375,7 @@ nav {
 button {
 
   --default-height: var(--default-element-height);
-  --default-font-size: 16px;
+  --default-font-size: 18px;
 
   --default-color: var(--color-gray-20);
   --default-background-color: var(--color-gray-70);

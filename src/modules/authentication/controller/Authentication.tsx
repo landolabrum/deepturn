@@ -64,14 +64,15 @@ const Authentication: React.FC<any> = (props: any) => {
           
           <div className='authentication__view-header'>
             <div className="authentication__logo">
-              <UiIcon icon="nirvana-logo" />
+              <UiIcon icon="deepturn-logo" />
             </div>
             <div className='authentication__view-name'>
               {keyStringConverter(view)}
             </div>
           </div>
-          {view.includes("@") && <div className='authentication'>
-            An email has been sent to {view}, click the link in the email to continue.
+          {view.includes("@") && <div className='authentication__email-verify'>
+            <div>An email has been sent to</div>
+            <UiButton  variant='link'>{view}</UiButton>, <div>click the link in the email to continue.</div>
           </div>}
           {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
           {view == 'sign-up' && <SignUp setView={setView} />}

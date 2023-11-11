@@ -47,7 +47,6 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   error
 }: IFormControl) => {
   const cyprus_test_key = "data-testid";
-
   const [overlay_, setOverlay_] = useOverlay();
   const ref = useRef<any>(null);
   const childRef = useRef<any>(null);
@@ -56,6 +55,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   useEffect(() => {
     if (!traits || traits == undefined) return;
     let elemenet_ref = ref.current.querySelector('.form-control__element');
+    if(variant == 'link')ref.current.style.width='max-content';
     // Set width if provided
     if (elemenet_ref) {
       for (let key in traits) {

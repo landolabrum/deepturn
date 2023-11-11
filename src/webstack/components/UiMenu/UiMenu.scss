@@ -57,7 +57,7 @@ $el_gap: 7px;
   }
 
   .menu__option {
-    $brdr: 3px;
+    $brdr: 1px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,24 +66,17 @@ $el_gap: 7px;
     line-height: 1;
     cursor: pointer;
     justify-content: space-between;
-    width: calc(100% - $brdr);
+    width: calc(100% - calc($brdr * 2));
     &:first-child{border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;}
     &:last-child{border-radius:0 0 var(--default-border-radius) var(--default-border-radius);}
-    // border-width: $brdr;
-    // border-style: outset;
-    // border-color: 
-    // var(--color-gray-50-opaque)
-    // var(--color-gray-100-opaque)
-    // var(--color-gray-90-opaque)
-    // var(--color-gray-20-opaque);
-    background-color: var(--color-gray-50);
+    border-width: $brdr;
+    border-style: solid;
+    border-color: var(--color-gray-70);
+    background-color: var(--color-gray-90);
+
     &:hover{
-      background-color: var(--color-gray-70);
-      border-color: 
-      var(--color-gray-60-opaque)
-      var(--color-gray-50-opaque)
-      var(--color-gray-90-opaque)
-      var(--color-gray-40-opaque);
+      background-color: var(--color-gray-80);
+      border-color: var(--color-gray-10);
     }
     &.active{
       background-color: var(--color-primary);

@@ -40,6 +40,7 @@ export const routes: IRoute[] = [
     label: "Social",
     icon: "fa-biohazard",
     href: '/social',
+    clearance: 10,
     items: [
       { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
     ],

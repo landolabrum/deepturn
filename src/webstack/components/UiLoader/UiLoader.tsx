@@ -20,8 +20,11 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
     if (props?.width && ref?.current) ref.current.style.width = `${typeof props.width === "number" ? props.width + "px" : props.width}`;
     if (props?.height && ref?.current) ref.current.style.height = `${typeof props.height === "number" ? props.height + "px" : props.height}`;
     if (props?.fontSize && ref?.current) ref.current.style.fontSize = `${typeof props.fontSize === "number" ? props.fontSize + "px" : props.fontSize}`;
-  }, []);
+  }, [props]);
   useEffect(() => {
+    if(props.dots == false){
+      return;
+    };
     const intervalId = setInterval(() => {
       setDots((prevText) => {
         const dotCount = (prevText.match(/\./g) || []).length;
@@ -36,7 +39,7 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
     return () => {
       clearInterval(intervalId);
     };
-  }, [text]);
+  }, [text, props.dots]);
   return (
     <>
       <style jsx>{styles}</style>
