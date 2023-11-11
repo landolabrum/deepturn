@@ -135,8 +135,7 @@ nav {
             }
             &__account-bump{
               display: inline-block;
-              padding: 0 var(--s-6);
-              width: calc(100% - calc(var(--s-6) * 2));
+              width: 100%;
             }
             &:hover{
               cursor: pointer;

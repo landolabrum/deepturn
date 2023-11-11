@@ -87,12 +87,14 @@ export default function useRoute(handleSideNav?: () => void) {
         
         const mainMt:any = mainElement.style.marginTop;
         if(settingsContainer){
-          const settingsTop:any = settingsContainer.style.top;
-          // console.log('[ settingsTop ]: ', settingsTop)
-          if(settingsTop==''){
+          if(headerHeight + settingsContainer.offsetHeight >  window.innerHeight){
+            var settingsContent:any = settingsContainer.firstChild;
+            const contentWidth = settingsContent?.offsetWidth;
+            settingsContent.style.width =`calc(${contentWidth}px - 10px)`
+          }
+          if(settingsContainer.style.top==''){
             settingsContainer.style.top = `${headerHeight}px`;
             settingsContainer.style.height = `calc(100vh - ${headerHeight}px)`;
-
           }
         }
         // Set the top margin of the main element to the header height

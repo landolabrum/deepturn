@@ -25,7 +25,6 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
     const interval = setInterval(() => {
       const mediaHeight = childRef?.current?.offsetHeight;
       const hasSrc = Boolean(mediaHeight && mediaHeight > 30);
-      console.log('[ IMAGE CTRL ]', mediaHeight, hasSrc, error)
       if (childRef.current && hasSrc) {
         setLoading(false);
       } else {
