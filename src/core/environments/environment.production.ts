@@ -2,7 +2,7 @@ import { IEnvironment } from "./environment.interface";
 const serverUrl ="https://tiktok.soy"
 const prodEnvironment: IEnvironment = {
   useMockApi: false,
-  isProduction: false,
+  isProduction: true,
   merchant:{
     name:"deepturn",
     mid: "mb1",
