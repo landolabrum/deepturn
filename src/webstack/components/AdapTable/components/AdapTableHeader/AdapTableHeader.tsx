@@ -31,7 +31,7 @@ export default function AdapTableHeader({
     <div className='adaptable-header'>
       <div className='adaptable-header__table-title'>
         <div className='adaptable-header__logo'>
-          <UiIcon icon="nirvana-logo" />
+          <UiIcon icon="deepturn-logo" />
         </div>
         <div className='adaptable-header__title'>{traits?.tableTitle}</div>
       </div>

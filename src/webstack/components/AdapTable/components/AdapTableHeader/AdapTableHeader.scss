@@ -28,29 +28,27 @@ $defaultPadding: 15px;
   .adaptable-header__table-title { 
     display: flex;
     align-items: center;
+    height: var(--default-element-height);
     gap: calc($defaultPadding / 2);
     text-transform: capitalize;
 
     .adaptable-header__logo {
-      margin-top: 4px;
-      margin-left: 5px;
-      --ui-icon-width: 40px;
-      --ui-icon-height: 34px;
+      --ui-icon-width: var(--s-2); 
+      --ui-icon-height: var(--s-2);
       --ui-icon-color: var(--color-gray-40);
       @media(max-width:900px){
         --ui-icon-color: var(--color-gray-40);
-        --ui-icon-width: 2rem; 
-        --ui-icon-height: 2rem;
+        --ui-icon-width: var(--s-2); 
+        --ui-icon-height: var(--s-2);
       }
     }
 
     .adaptable-header__title {
       display: flex;
       align-items: center;
-      height: 100%;
       padding: 0;
-      line-height: 1;
-      font-size: var(--s-2);
+      height: inherit;
+      font-size: var(--s-3);
       font-weight: 500;
     }
   }

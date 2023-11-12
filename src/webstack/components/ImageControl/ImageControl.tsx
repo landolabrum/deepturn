@@ -2,6 +2,9 @@ import React, { Children, cloneElement, useEffect, useRef, useState, isValidElem
 import styles from './ImageControl.scss';
 import UiLoader from '../UiLoader/UiLoader';
 import useClass from '@webstack/hooks/useClass';
+import UiButton from '../UiButton/UiButton';
+import { UiIcon } from '../UiIcon/UiIcon';
+import { useModal } from '../modal/contexts/modalContext';
 
 export type IImageVariant = 'center' | string;
 export type IImageMediaType = 'image' | 'video';
@@ -19,7 +22,24 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
   const childRef = useRef<HTMLDivElement | null>(null); // Change to HTMLDivElement
   const [loading, setLoading] = useState<boolean>(true);
   const clzz: string = useClass('image-control__element', mediaType, variant);
-  
+  const { openModal, closeModal, isModalOpen } = useModal();
+
+  const handleExpand = () => {
+    console.log('[ EXPAND ]')
+    !isModalOpen ? openModal(
+      {
+        children: <ImageControl
+          variant={variant}
+          mediaType={mediaType}
+          refreshInterval={refreshInterval}
+          error={error}>
+          {children}
+        </ImageControl>,
+        variant: 'fullscreen'
+      }
+    ): closeModal();
+  };
+
   useEffect(() => {
     // if (!loading || error) return;
     const interval = setInterval(() => {
@@ -43,12 +63,20 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
           height={400}
           position='relative'
           text={error || undefined}
-          dots={typeof error == 'string' ? false: undefined}
+          dots={typeof error == 'string' ? false : undefined}
         />}
         <div id='image-control__element' className={`${clzz}`} ref={childRef}>
           {Children.map(children, child =>
             isValidElement(child) ? cloneElement(child) : child // Removed the ref here
           )}
+        </div>
+        <div className='image-control__controls'>
+          <div className='image-control__controls__control'>
+            <UiIcon icon='fa-play-pause' />
+          </div>
+          <div className='image-control__controls__control'>
+            <UiIcon icon='fa-expand' onClick={handleExpand} />
+          </div>
         </div>
       </div>
     </>

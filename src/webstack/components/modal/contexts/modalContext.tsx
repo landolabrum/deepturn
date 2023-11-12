@@ -2,7 +2,7 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 
 export type IModalContent = {
   children?: ReactNode | null | string;
-  variant?: "popup";
+  variant?: "popup" | 'fullscreen';
 } | ReactNode | null;
 
 interface ModalContextType {

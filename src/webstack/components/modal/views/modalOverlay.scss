@@ -13,7 +13,7 @@
     left: 0;
 }
 
-.modal-overlay {
+.modal__overlay {
     @extend .d-flex;
     @extend .p-fix;
     width: 100%;
@@ -27,7 +27,6 @@
     background: var(--color-gray-90-opaque);
     backdrop-filter: blur(6.6px);
     -webkit-backdrop-filter: blur(6.6px);
-    min-height: 100vh;
 }
 
 .modal {
@@ -43,21 +42,29 @@
     width: $width;
     margin: 0 20px 0;
     height: max-content;
+    overflow-y: auto;
+    @media (orientation: portrait) {
+        height: 100vh; /* Limit the modal height to 80% of the viewport height */
+    }
     @media(min-width: 1100px){
         width: 800px; // Set a fixed width for larger screens
         // max-width: 90%; // Add a max-width to ensure it doesn't get too wide on very large screens
         height: auto; // Height can be auto for scrollable content
         transform: translate(calc(50vw - 400px), 200px); // Center the modal
+        &__fullscreen{
+            transform: unset;
+        }
     }
-
+    &__fullscreen{
+        width: 100vw;
+        height: auto;
+        margin: 0;
+    }
     &__content {
-
         @extend .d-flex;
         flex-direction: column;
         width: 800px;
-        /* Set width */
         height: auto;
-        /* Set height */
         color: var(--color-gray-30);
         border: solid 1px var(--color-gray-70);
         background-color: var(--color-gray-100);
@@ -66,7 +73,6 @@
         box-shadow: var(--default-box-shadow-xl);
         min-height: max-content;
         transition: all 1s;
-
         &::-webkit-scrollbar-thumb {
             background-color: var(--color-blue);
             border-radius: 5px;
@@ -80,11 +86,12 @@
             aspect-ratio: 1/1;
             background-color: #00000033;
         }
-
+        
         @media(max-width:1260px) {
-            margin-top: 100px;
-
-            max-width: calc(100vw - 60px);
+            @media (orientation: portrait) {
+                margin-top: 100px;
+                max-width: calc(100vw - 60px);
+            }
         }
         @media(max-width:900px) {
             min-width: 100%;
@@ -93,27 +100,53 @@
             background-color: var(--color-gray-100-opaque);
             justify-content: flex-start;
         }
+        &__fullscreen{
+            width: 100vw;
+            padding: 0;
+            &:hover{
+                background-color: #ffffff00;
+            }
+        }
 
-        .modal-overlay__header {
-            @extend .d-flex;
-            align-self: flex-start;
-            justify-content: space-between;
-            width: 100%;
-            font-size: var(--s-4);
-            .modal-overlay__icon {
-                --ui-icon-color: var(--color-gray-60);
-                &:hover {
-                    cursor: pointer;
-                    --ui-icon-color: var(--color-gray-30);
-                }
+    }
+    &__header {
+        @extend .d-flex;
+        align-self: flex-start;
+        justify-content: space-between;
+        width: 100%;
+        font-size: var(--s-4);
+        .modal-overlay__icon {
+            --ui-icon-color: var(--color-gray-40);
+            &:hover {
+                cursor: pointer;
+                --ui-icon-color: var(--color-primary);
+            }
+        }
+        &__fullscreen{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            padding: 0 var(--default-padding);
+            width: calc(100% - calc(var(--default-padding) * 2));
+            min-height: var(--default-element-height);
+            &:hover{
+                background-color: var(--color-gray-100);
             }
         }
     }
-    .modal-overlay__body {
+    &__body {
         word-wrap: break-word;
         width: 100%;
+        max-height: calc(100vh - var(--default-element-height)); /* Limit the modal body height to 75% of the viewport height */
+        overflow-y: auto; 
         @media(max-width: 900px){
             padding-top: var(--default-element-height);
+            max-height: calc(100vh - 60px); /* Adjust the height to account for other modal elements */
+        }
+        &__fullscreen{
+            z-index: 1;
         }
     }
 }

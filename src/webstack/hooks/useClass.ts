@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useClass = (cls: string, type: string, variant?: string) => {
+const useClass = (cls: string, type?: string, variant?: string) => {
     const [classState, setClassState] = useState<string>(cls);
     useEffect(() => {
         let newClass = cls;

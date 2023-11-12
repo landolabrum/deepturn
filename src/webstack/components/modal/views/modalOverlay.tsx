@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import styles from "@webstack/components/modal/views/modalOverlay.scss"; // or use your preferred way of styling
 import { ModalContext } from '../contexts/modalContext';
+import useClass from '@webstack/hooks/useClass';
 
 
 const ModalOverlay: React.FC = () => {
@@ -18,10 +19,10 @@ const ModalOverlay: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      <div onClick={closeModal} className={`modal-overlay${variant&&' '+variant || ''}`} />
-      <div className='modal' >
-        <div className='modal__content' >
-          <div className='modal-overlay__header' >
+      <div onClick={closeModal} className={useClass('modal__overlay', undefined, variant)} />
+      <div className={useClass('modal', undefined, variant)}  >
+        <div className={useClass('modal__content', undefined, variant)}  >
+          <div className={useClass('modal__header', undefined, variant)} >
             <div className='modal-overlay__title' >
               {title}
             </div>
@@ -30,10 +31,10 @@ const ModalOverlay: React.FC = () => {
             </div>
           </div>
 
-          <div className='modal-overlay__body' >
+          <div className={useClass('modal__body', undefined, variant)}>
             {children}
           </div>
-          <div className='modal-overlay__footer' >
+          <div className='modal__footer' >
           </div>
         </div>
       </div>

@@ -17,6 +17,7 @@ interface GridProps {
   gapX?: number;
   gapY?: number;
   margin?: string;
+  padding?: string;
   children?: any;
   variant?: string;
   scroll?: string;
@@ -40,6 +41,7 @@ export default function AdaptGrid({
   gapX,
   gapY,
   margin,
+  padding,
   responsive: dynamic,
   scroll,
   reverse,
@@ -81,6 +83,7 @@ export default function AdaptGrid({
       paddingTop: `${gap ? gap / 2 : 0}px`,
       paddingBottom: `${gap ? gap / 2 : 0}px`,
       margin: `${margin ? margin : "0px"}`,
+      padding: `${padding ? padding : "0px"}`,
       direction: `${reverse ? "rtl" : "ltr"}`,
     };
 
@@ -91,6 +94,7 @@ export default function AdaptGrid({
     gapX,
     gapY,
     margin,
+    padding,
     xs,
     sm,
     md,

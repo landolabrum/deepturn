@@ -24,7 +24,7 @@ $small: 1100px;
   height: 100%;
   --ui-icon-height: var(--s-1);
   --ui-icon-width: var(--s-1);
-
+  padding-right: var(--default-element-height);
   @media (min-width: 900px) {
     padding-left: var(--default-padding);
   }

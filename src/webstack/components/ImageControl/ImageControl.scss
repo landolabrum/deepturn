@@ -1,4 +1,50 @@
-
-.image-control{
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.image-control {
     width: 100%;
+    position: relative;
+    height: max-content;
+    overflow: hidden;
+    @media(max-width: 900px){
+        max-width: calc(100vw - calc(var(--default-padding) * 2));
+    }
+    &:hover .image-control__controls {
+        bottom: 0;
+        /* Position to show on hover */
+        opacity: 1;
+
+        /* Fully visible on hover */
+    }
+
+    .image-control__element {
+        display: flex;
+        width: 100%;
+        height: auto;
+        z-index: -1;
+    }
+
+    .image-control__controls {
+        background-color: var(--color-gray-100);
+        z-index: 2;
+        @extend .d-flex;
+        justify-content: space-between;
+        position: absolute;
+        bottom: -100%;
+        padding: 0 var(--s-9);
+        /* Start hidden below the container */
+        width: calc(100% - calc(var(--s-9) * 2));
+        left: 0;
+        height: var(--default-element-height);
+        opacity: 0;
+        transition: bottom .5s ease, opacity .5s ease;
+        &__control{
+            cursor: pointer;
+            &:hover{
+                --ui-icon-color: var(--color-primary);
+            }
+        }
+    }
 }

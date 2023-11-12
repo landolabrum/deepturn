@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useHeader } from "@webstack/components/Header/controller/Header";
 import { IRoute } from "@shared/components/Navbar/data/routes";
 import environment from "~/src/environment";
+import useWindow from "@webstack/hooks/useWindow";
 
 const AUTHED_LANDING = "/account";
 const UNAUTHED_LANDING = "/"
@@ -71,39 +72,9 @@ export default function useRoute(handleSideNav?: () => void) {
       return;
     }
   }
-  const handleLayout = () => {
-    setTimeout(() => {
 
-      // Find the header container element
-      const headerContainer = document.getElementById('header-container');
-      const settingsContainer = document.getElementById('settings-container');
-
-      // Find the main element
-      const mainElement = document.getElementsByTagName('main')[0];
-
-      if (headerContainer && mainElement) {
-        // Get the height of the header container
-        const headerHeight = headerContainer.offsetHeight;
-        
-        const mainMt:any = mainElement.style.marginTop;
-        if(settingsContainer){
-          if(headerHeight + settingsContainer.offsetHeight >  window.innerHeight){
-            var settingsContent:any = settingsContainer.firstChild;
-            const contentWidth = settingsContent?.offsetWidth;
-            settingsContent.style.width =`calc(${contentWidth}px - 10px)`
-          }
-          if(settingsContainer.style.top==''){
-            settingsContainer.style.top = `${headerHeight}px`;
-            settingsContainer.style.height = `calc(100vh - ${headerHeight}px)`;
-          }
-        }
-        // Set the top margin of the main element to the header height
-        if(mainMt=='')mainElement.style.marginTop = `${headerHeight}px`;
-      }
-    }, 100);
-  }
   useEffect(() => {
-    handleUser().then(handleHeader).then(handleLayout);
+    handleUser().then(handleHeader);
   }, [userResponse, router.pathname]);
 
   if (typeof user !== "string" && handleSideNav)
