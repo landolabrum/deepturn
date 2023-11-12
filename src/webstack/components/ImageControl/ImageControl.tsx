@@ -16,9 +16,10 @@ interface IImageControl {
   children?: React.ReactNode;
   refreshInterval?: number; // Interval in milliseconds to refresh the image
   error?: string;
+  fixedLoad?: boolean;
 }
 
-const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 'image', refreshInterval = 1000, error }) => {
+const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 'image', refreshInterval = 1000, error,  fixedLoad=false }) => {
   const childRef = useRef<HTMLDivElement | null>(null); // Change to HTMLDivElement
   const [loading, setLoading] = useState<boolean>(true);
   const clzz: string = useClass('image-control__element', mediaType, variant);
@@ -29,6 +30,7 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
     !isModalOpen ? openModal(
       {
         children: <ImageControl
+          fixedLoad
           variant={variant}
           mediaType={mediaType}
           refreshInterval={refreshInterval}
@@ -58,10 +60,10 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='image-control' > {/* Attach the ref here */}
+      <div className={`image-control${loading?' image-control__loading':""}`} > {/* Attach the ref here */}
         {loading == true && <UiLoader
           height={400}
-          position='relative'
+          position={!fixedLoad?'relative':undefined}
           text={error || undefined}
           dots={typeof error == 'string' ? false : undefined}
         />}

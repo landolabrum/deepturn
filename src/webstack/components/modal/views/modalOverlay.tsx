@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import styles from "@webstack/components/modal/views/modalOverlay.scss"; // or use your preferred way of styling
 import { ModalContext } from '../contexts/modalContext';
@@ -15,14 +15,22 @@ const ModalOverlay: React.FC = () => {
   if (!isModalOpen) {
     return null;
   }
+ const classes:any = {
+  modal__overlay: useClass('modal__overlay', undefined, modalContent?.variant || undefined),
+  modal: useClass('modal', undefined, modalContent?.variant || undefined),
+  modal__content: useClass('modal__content', undefined, modalContent?.variant || undefined),
+  modal__header: useClass('modal__header', undefined, modalContent?.variant || undefined),
+  modal__body: useClass('modal__body', undefined, modalContent?.variant || undefined),
+
+ }
 
   return (
     <>
       <style jsx>{styles}</style>
-      <div onClick={closeModal} className={useClass('modal__overlay', undefined, variant)} />
-      <div className={useClass('modal', undefined, variant)}  >
-        <div className={useClass('modal__content', undefined, variant)}  >
-          <div className={useClass('modal__header', undefined, variant)} >
+      <div onClick={closeModal} className={"modal__overlay"} />
+      <div className={classes.modal}  >
+        <div className={classes.modal__content}  >
+          <div className={classes.modal__header} >
             <div className='modal-overlay__title' >
               {title}
             </div>
@@ -31,7 +39,7 @@ const ModalOverlay: React.FC = () => {
             </div>
           </div>
 
-          <div className={useClass('modal__body', undefined, variant)}>
+          <div className={classes.modal__body}>
             {children}
           </div>
           <div className='modal__footer' >
@@ -40,6 +48,7 @@ const ModalOverlay: React.FC = () => {
       </div>
     </>
   );
+  return <>loading</>
 };
 
 export { ModalOverlay };
