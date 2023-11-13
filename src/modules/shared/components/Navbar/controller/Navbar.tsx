@@ -7,36 +7,75 @@ import useWindow from "@webstack/hooks/useWindow";
 import useRoute from "~/src/core/authentication/hooks/useRoute";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import environment from "~/src/environment";
-import NavButton from "../views/NavButton/NavButton";
-import NavSelect from "../views/NavSelect/NavSelect";
 import Authentication from "~/src/pages/authentication";
-import  { useCartTotal } from "~/src/modules/ecommerce/cart/hooks/useCart";
+import { useCartTotal } from "~/src/modules/ecommerce/cart/hooks/useCart";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import UiSelect from "@webstack/components/UiSelect/UiSelect";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
+  const MobileNav = () => {
+    return <>
+      <style jsx>{styles}</style>
+      <div className='navbar__mobile'>
+        {routes &&
+          Object.entries(routes).map(([key, route]) => {
+            return <div
+              key={key}
+              className={`nav__nav-item nav__nav-item--${route?.label}`}
+              onDoubleClick={() =>
+                route?.href && handleClick({ href: route.href })}
+            >
+              {!route?.items && <UiButton
+                variant='flat'
+                onClick={() => handleClick(route)}>
+                {route.label}
+              </UiButton>}
+              {route?.items && <UiSelect
+                variant='nav-item'
+                value={
+                  route.label == 'account' ? displayName : route.label
+                }
+                options={route?.items}
+                onSelect={handleClick}
+              >
+              </UiSelect>}
+            </div>
+          }
+          )
+        }
+      </div>
+    </>
+  }
   const width = useWindow().width;
-  const [sideNav, setSideNav] = useState(true);
-  const [open, setOpen] = useState<string | null | undefined | number>(null);
-  const [hide, setHide] = useState<boolean>(false);
-  const [user, route, setRoute]: any = useRoute(closeSideNavOnWidthChange);
-
+  const [user, route, setRoute]: any = useRoute();
   const routes = useClearanceRoutes();
-  const { openModal, closeModal } = useModal();
-  const handleRoute = (item: any)=>{
-    if(!item?.modal){
-     setRoute(item);
-    }else{
-      openModal(<Authentication/>);
-    }
+  const { openModal, closeModal, isModalOpen } = useModal();
+  const modals: any = {
+    login: <Authentication />
+  }
+  const handleClick = (route: any) => {
+    console.log('[ HANDLE CLICK ]', Boolean(route?.modal), isModalOpen);
 
-  }
-  function closeSideNavOnWidthChange() {
-    if (width < 1100) setSideNav(false);
-    setOpen(null);
-  }
-  function handleHide() {
-    setHide(!hide);
-  }
+    // If it's a string route, just set the route
+    if (typeof route === 'string') {
+      setRoute(route);
+    } else if (route?.modal) {
+        return openModal(modals[route.modal]);
+    }
+    if (isModalOpen) {
+      openModal(modals[route.modal]);
+    }
+  };
+
+  const handleTrigger = () => {
+    if (!isModalOpen) {
+      openModal(<MobileNav />);
+    } else {
+      closeModal();
+    }
+  };
+
   const displayName = useMemo(() => {
     if (user) {
       const [firstName, lastName] = user.name.split(" ");
@@ -44,112 +83,48 @@ const Navbar = () => {
     }
     return "";
   }, [user]);
-  useEffect(() => {
-    if(user)closeModal();
-  },[user]);
-  useEffect(() => {
-    if (open === "sidenav") setSideNav(true);
-    if (open === "!sidenav") setSideNav(false);
-  }, [open]);
-  useEffect(() => {
-    sideNav && closeSideNavOnWidthChange();
-  }, [width > 1100, routes]);
-  const isOpenEqualSideNav = open == 'sidenav';
-  const cartTotal = useCartTotal();
-  const cartRoute = routes.find((r: any) => r.href == '/cart')
-  if (!hide) {
-    return (
-      <>
-        <style jsx>{styles}</style>
-        {/* <h1 color="#f30" className='dev'>c{JSON.stringify(cartTotal)}</h1> */}
-        <nav id="nav-bar" style={sideNav ? { bottom: "0" }:undefined}>
-          <div className="navbar__nav-content">
-            <div className="navbar__nav-trigger" onClick={() => setOpen(!isOpenEqualSideNav ? "sidenav" : "!sidenav")}>
-              {sideNav ? <UiIcon icon="fa-xmark" /> : <UiIcon icon="fa-bars" />}
-            </div>
-            <div className="navbar__brand-logo">
-              <div className="navbar__hide_show">
-                <UiIcon 
-                // onClick={handleHide}
-                icon="deepturn-logo" />
-              </div>
-              <UiButton variant="flat" onClick={() => handleRoute({ href: "/" })}>
-                {environment?.merchant?.name}
-              </UiButton>
-            </div>
-            {/* u:{JSON.stringify(cart)} */}
-            <div className={
-              `navbar__nav-items ${
-                user ?'navbar__nav-items__user':''
-              } ${
-                cartTotal ?'navbar__nav-items__cart':''
-              } ${
-                sideNav ? "navbar__nav-items-show" : ""}`
-              }>
-              <div className="navbar__side-nav-overlay" onClick={() => setOpen("!sidenav")} />
-              {/* <Authentication/> */}
-              {routes &&
-                routes.map((item: IRoute, key: number) => {
-                  return (
-                    <div key={key} className={`navbar__nav-item-container ${item?.label && `navbar__nav-item-container__${String(item.label).toLowerCase()}`}`}>
-                      {item?.items && (
-                        <span
-                        className={item?.label=='account'?'navbar__nav-item-container__account-bump':''}
-                          onDoubleClick={() =>
-                            item?.href && handleRoute({ href: item.href })}
-                        >
-                          <NavSelect
-                            routes={routes}
-                            // user={user}
-                            width={width}
-                            open={open}
-                            setOpen={setOpen}
-                            handleRoute={handleRoute}
-                            item={item}
-                            displayName={displayName}
-                            route={route}
-                          />
-                        </span>
-                      )}
 
-                      {!item.items && item.href !== '/cart' && <NavButton
-                        active={open === item?.label || route.replaceAll("/", "") === item?.label}
-                        item={item}
-                        handleRoute={handleRoute}
-                        setOpen={setOpen}
-                      />}
-                    </div>
-                  );
-                })}
-            </div>
-            {cartRoute && <NavButton
-              active={open === cartRoute?.label || route.replaceAll("/", "") === cartRoute?.label}
-              item={cartRoute}
-              handleRoute={handleRoute}
-              setOpen={setOpen}
-            />}
-          </div>
-          {/* <div className='dev' style={{top:'unset', bottom:'0', position:'fixed'}}>
-            {JSON.stringify(routes)}
-          </div> */}
-        </nav>
-      </>
-    );
-  }
-  if (hide)
-    return (
-      <>
-        <style jsx>{styles}</style>
-        <div className="navbar__brand-logo">
-          <div className="navbar__hide_show">
-            <UiIcon onClick={handleHide} icon="deepturn-logo" />
-          </div>
-          <UiButton variant="flat" onClick={() => handleRoute({ href: "/" })}>
-            {environment?.merchant?.name}
-          </UiButton>
+  // useEffect(() => {}, [isModalOpen]);
+  const cartTotal = useCartTotal();
+  const cartRoute = routes.find((r: any) => r.href == '/cart');
+  return (
+    <>
+      <style jsx>{styles}</style>
+      <nav id="nav-bar">
+        <div className='navbar__trigger'>
+          <UiIcon
+            icon={isModalOpen ? 'fa-xmark' : 'fa-bars'}
+            onClick={handleTrigger}
+          />
         </div>
-      </>
-    );
-  return <></>;
+        {routes &&
+          Object.entries(routes).map(([key, route]) => {
+            return <div
+              key={key}
+              className={`nav__nav-item nav__nav-item--${route?.label}`}
+              onDoubleClick={() =>
+                route?.href && handleClick({ href: route.href })}
+            >
+              {!route?.items && <UiButton
+                variant='flat'
+                onClick={() => handleClick(route)}>
+                {route.label}
+              </UiButton>}
+              {route?.items && <UiSelect
+                variant='nav-item'
+                value={
+                  route.label == 'account' ? displayName : route.label
+                }
+                options={route?.items}
+                onSelect={handleClick}
+              >
+              </UiSelect>}
+            </div>
+          }
+          )
+        }
+      </nav>
+    </>
+  );
 };
 export default Navbar;

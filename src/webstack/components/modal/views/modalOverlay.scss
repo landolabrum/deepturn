@@ -30,7 +30,7 @@
 }
 
 .modal {
-    $width: calc(100% - 40px);
+    $width: calc(100% - 10px);
     position: fixed;
     top: 0;
     left: 0;
@@ -40,9 +40,11 @@
     @extend .d-flex;
     align-items: flex-start;
     width: $width;
-    margin: 0 20px 0;
+    margin: 0 5px 0;
     height: max-content;
     overflow-y: auto;
+    overflow-x: hidden;
+
     @media (orientation: portrait) {
         height: 100vh; /* Limit the modal height to 80% of the viewport height */
     }
@@ -90,13 +92,11 @@
         @media(max-width:1260px) {
             @media (orientation: portrait) {
                 margin-top: 100px;
-                max-width: calc(100vw - 60px);
+                max-width: $width;
             }
         }
         @media(max-width:900px) {
-            min-width: 100%;
-            min-height: calc(100vh - 55px);
-            margin:var(--default-padding);
+            margin:var(--s-9);
             background-color: var(--color-gray-100-opaque);
             justify-content: flex-start;
         }
@@ -142,7 +142,6 @@
         max-height: calc(100vh - var(--default-element-height)); /* Limit the modal body height to 75% of the viewport height */
         overflow-y: auto; 
         @media(max-width: 900px){
-            padding-top: var(--default-element-height);
             max-height: calc(100vh - 60px); /* Adjust the height to account for other modal elements */
         }
         &__fullscreen{

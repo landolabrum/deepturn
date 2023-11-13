@@ -7,7 +7,7 @@ export type IModalContent = {
 
 interface ModalContextType {
   isModalOpen: boolean;
-  openModal: (content: any) => ModalContextType;
+  openModal: (content: IModalContent) => void;
   closeModal: () => void;
   modalContent: IModalContent;
 }
@@ -20,12 +20,11 @@ interface Props {
 
 export const ModalProvider: React.FC<Props> = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [modalContent, setModalContent] = useState<ReactNode | null>(null);
+  const [modalContent, setModalContent] = useState<IModalContent>(null); // Updated type here
 
-  const openModal = (content: ReactNode): ModalContextType => {
+  const openModal = (content: IModalContent) => {
     setIsModalOpen(true);
     setModalContent(content);
-    return { isModalOpen: true, openModal, closeModal, modalContent: content };
   };
 
   const closeModal = () => {
@@ -40,7 +39,6 @@ export const ModalProvider: React.FC<Props> = ({ children }) => {
   );
 };
 
-// Custom hook for the modal context
 export const useModal = () => {
   const context = useContext(ModalContext);
 
@@ -48,7 +46,6 @@ export const useModal = () => {
     isModalOpen: false,
     openModal: (content: IModalContent) => {
       console.warn('openModal called before ModalProvider is ready.');
-      return defaultContext;
     },
     closeModal: () => {
       console.warn('closeModal called before ModalProvider is ready.');

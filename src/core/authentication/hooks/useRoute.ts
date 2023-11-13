@@ -21,13 +21,14 @@ export default function useRoute(handleSideNav?: () => void) {
   const router = useRouter();
   const query: { [key: string]: string } | {} = router?.query;
   const handleRoute =
-    (option: IRoute) => {
-      if (
-        option.items ||
-        option.active === false
-      ) return;
-      else if (option.href) router.push(option.href, undefined, { shallow: false });
-      handleSideNav && handleSideNav();
+    (route: IRoute) => {
+      router.push(route);
+      // if (
+      //   option.items ||
+      //   option.active === false
+      // ) return;
+      // else if (option.href) router.push(option.href, undefined, { shallow: false });
+      // handleSideNav && handleSideNav();
     }
 
   const current = router.pathname.substring(1);
@@ -77,7 +78,7 @@ export default function useRoute(handleSideNav?: () => void) {
     handleUser().then(handleHeader);
   }, [userResponse, router.pathname]);
 
-  if (typeof user !== "string" && handleSideNav)
+  // if (typeof user !== "string")
     return [user, router.pathname, handleRoute];
-  return [];
+  // return [];
 }

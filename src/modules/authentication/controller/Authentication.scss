@@ -18,7 +18,7 @@ $cardWidth: 500px;
   min-width: 350px;
   z-index: 1;
   height: max-content;
-
+overflow: hidden;
   &:not(.authentication__sign-in) {
 
     // background-color: var(--color-gray-90);
@@ -55,7 +55,8 @@ $cardWidth: 500px;
     .authentication__view-name {
       color: var(--color-gray-10);
 
-      @media(max-width: 1100px) {}
+      @media(max-width: 1100px) {
+      }
     }
   }
 
@@ -69,15 +70,15 @@ $cardWidth: 500px;
     position: relative;
     z-index: 1;
 
-    &::after {
-      z-index: 1;
-      left: 0;
-      top: 40%;
-      content: '';
-      width: 100%;
-      position: absolute;
-      // border-bottom: solid 1px;
-    }
+    // &::after {
+    //   z-index: 1;
+    //   left: 0;
+    //   top: 40%;
+    //   content: '';
+    //   width: 100%;
+    //   position: absolute;
+    //   // border-bottom: solid 1px;
+    // }
 
     .authentication__view-label {
       padding: 0 var(--s-8);

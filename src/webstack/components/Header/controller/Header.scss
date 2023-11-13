@@ -10,8 +10,6 @@ $div:calc(var(--default-padding) * -1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: var(--header-height);
-  // padding: var(--default-padding) 0 0;
   margin: 0;
   border-bottom: solid 1.5px var(--color-primary);
   background-color: var(--color-gray-100);
@@ -44,7 +42,6 @@ $div:calc(var(--default-padding) * -1);
     .header-right { 
       display: flex;
       width: 100%;
-      margin: var(--s-9) 0;
       justify-content: space-between;
       height: calc(var(--header-height) - calc(var(--default-element-height) * 2));
     }    

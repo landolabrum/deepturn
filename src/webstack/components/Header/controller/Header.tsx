@@ -34,7 +34,6 @@ export const HeaderProvider: React.FC<HeaderProviderProps> = ({ children }) => {
     <HeaderContext.Provider value={headerState}>
       <div className='header__container' id="header-container">
         <Navbar />
-        <span className='header__container--divider'/>
         <Header />
       </div>
       {children}
