@@ -12,40 +12,42 @@ import { useCartTotal } from "~/src/modules/ecommerce/cart/hooks/useCart";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import { useRouter } from "next/router";
-
 const Navbar = () => {
-  const MobileNav = () => {
-    return <>
-      <style jsx>{styles}</style>
-      <div className='navbar__mobile'>
-        {routes &&
-          Object.entries(routes).map(([key, route]) => {
-            return <div
+  const MobileNav = ({routes}:{routes:IRoute[]}) => {
+    const handleMobileClick = (selectedRoute: IRoute) => {
+      console.log('[ HANDLE Mobile CLICK ]', selectedRoute);
+      if(selectedRoute.items){
+        return <MobileNav routes={selectedRoute.items}/>;
+      }
+      // Implement your logic here
+      // Example: if it's a string route, navigate to it
+      if (typeof selectedRoute.href === 'string') {
+        // Navigate to the route
+        // Example: router.push(selectedRoute.href);
+      }
+      // Add any additional logic you need for modal or other route types
+    };
+
+    return (
+      <>
+        <style jsx>{styles}</style>
+        <div className='navbar__mobile'>
+          {routes && routes.map((route,key) => (
+            <div
               key={key}
               className={`nav__nav-item nav__nav-item--${route?.label}`}
-              onDoubleClick={() =>
-                route?.href && handleClick({ href: route.href })}
+              onClick={() => handleMobileClick(route)}
             >
-              {!route?.items && <UiButton
-                variant='flat'
-                onClick={() => handleClick(route)}>
-                {route.label}
-              </UiButton>}
-              {route?.items && <UiSelect
-                variant='nav-item'
-                value={
-                  route.label == 'account' ? displayName : route.label
-                }
-                options={route?.items}
-                onSelect={handleClick}
-              >
-              </UiSelect>}
+              <div>
+                <div className='nav__nav-item__label'>
+                  {route.label}
+                </div>
+              </div>
             </div>
-          }
-          )
-        }
-      </div>
-    </>
+          ))}
+        </div>
+      </>
+    )
   }
   const width = useWindow().width;
   const [user, route, setRoute]: any = useRoute();
@@ -54,6 +56,7 @@ const Navbar = () => {
   const modals: any = {
     login: <Authentication />
   }
+
   const handleClick = (route: any) => {
     console.log('[ HANDLE CLICK ]', Boolean(route?.modal), isModalOpen);
 
@@ -70,7 +73,7 @@ const Navbar = () => {
 
   const handleTrigger = () => {
     if (!isModalOpen) {
-      openModal(<MobileNav />);
+      openModal(<MobileNav routes={routes}/>);
     } else {
       closeModal();
     }
@@ -124,6 +127,7 @@ const Navbar = () => {
           )
         }
       </nav>
+      <MobileNav routes={routes}/>
     </>
   );
 };
