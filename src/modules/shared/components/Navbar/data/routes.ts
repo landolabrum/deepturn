@@ -37,6 +37,11 @@ export const routes: IRoute[] = [
   //   ],
   // },
   {
+    label: "Deepturn",
+    icon: "deepturn-logo",
+    href:"/",
+  },
+  {
     label: "Social",
     icon: "fa-biohazard",
     href: '/social',

@@ -135,7 +135,9 @@ $elPad: 14px;
       @extend .d-flex;
       height: var(--default-element-height);
       width: var(--default-element-height);
-      --ui-icon-width: 100%;
+      --ui-icon-width: var(--s-5);
+      --ui-icon-height: var(--s-5);
+
       &.form-control__icon-dark {
         color: var(--color-gray-30);
         background-color: var(--color-gray-70-opaque);

@@ -14,17 +14,24 @@
     overflow-y: auto;
     width: 100%;
 
+
     @media(max-width:900px) {
         width: 100vw;
         height: 100vh;
     }
 
     &__content {
+        @media(min-width:1260px) {
+            inline-size: 1260px;
+            margin: 0 auto;
+        }
+
         @extend .d-flex;
         justify-content: flex-start;
         min-height: max-content;
         height: 100%;
         align-items: stretch;
+
         @media(max-width:900px) {
             flex-direction: column;
             min-height: unset;
@@ -38,12 +45,17 @@
         position: relative;
         width: calc(35vw - calc(var(--default-padding) * 2));
 
+        @media(min-width:1260px) {
+            border-left: solid 1px var(--color-gray-70);
+
+        }
+
         @media(max-width:900px) {
             border-right: unset;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: var(--default-padding) var(--default-padding) var(--s-5);
+            padding: var(--default-padding) var(--default-padding) 0;
             width: calc(100% - calc(var(--default-padding) * 2));
             // background-color: var(--color-gray-90);
             // border-bottom: solid 1px var(--color-gray-70);
@@ -96,29 +108,31 @@
             border: none;
             box-shadow: unset;
         }
-    }
 
-    @media(max-width:1100px) {
-        .settings__view {
+        @media(max-width:900px) {
+            margin: 0;
+            padding: var(--s-9) var(--s-9) var(--s-1);
+            width: calc(100% - calc(var(--s-9) * 2));
+        }
+
+        .settings__view__title {
+            font-size: var(--s-1);
+            line-height: 1.5;
+            text-transform: capitalize;
+            color: var(--color-gray-40);
+        }
+
+        @media(max-width:1100px) {
             border-left: unset;
         }
     }
 
-    @media(max-width:900px) {
-        .settings__view {
-            margin: var(--s-9);
-            padding: var(--s-9) var(--s-9) var(--s-1);
-            width: calc(100% - calc(var(--s-9) * 4));
-        }
-    }
 
-    .settings__view__title {
-        font-size: var(--s-1);
-        line-height: 2.5;
-        text-transform: capitalize;
-        color: var(--color-gray-40);
-    }
 
-  
+
+
+
+
+
     // &__content {}
 }

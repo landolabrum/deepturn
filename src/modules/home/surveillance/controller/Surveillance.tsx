@@ -11,7 +11,7 @@ const Surveillance: React.FC = () => {
     <>
       <style jsx>{styles}</style>
       <div className='surveillance'>
-        <AdaptGrid xs={1} md={2} lg={3} padding="0 0 200px">
+        <AdaptGrid xs={1} md={2} padding="0 0 200px">
         {/* <UiMedia  type='image' variant='dark' src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=1`} /> */}
         <UiMedia src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=2`}/>
         <UiMedia src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=3`}/>

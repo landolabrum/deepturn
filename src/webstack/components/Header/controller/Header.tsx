@@ -2,7 +2,6 @@ import BreadCrumbs, {BreadCrumbLinkProps} from "../components/BreadCrumbs/BreadC
 import styles from "./Header.scss";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { capitalize } from "lodash";
 import Navbar from "@shared/components/Navbar/controller/Navbar";
 
 
@@ -47,13 +46,6 @@ const Header: React.FC = () => {
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
   const [route, setRoute] = useState<string | null>(null);
   const router = useRouter();
-  // const h = (t: string): any => {
-  //   return t
-  //     .split(" ")
-  //     .map((str: string) => capitalize(str))
-  //     .join(" ");
-  // };
-  // Update headerState when context changes
   useEffect(() => {
     setHeaderState(context);
     setRoute(router.asPath);
@@ -67,7 +59,6 @@ const Header: React.FC = () => {
       setRoute(router.asPath);
     }
   }, [  setContext, headerState]);
-  // }, [router.asPath, route, setContext]);
 
   return (
     <>

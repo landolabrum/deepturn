@@ -15,7 +15,7 @@ export interface SelectProps extends UiMenuProps {
   openDirection?: "up" | "down" | "left" | "right";
   onToggle?: (isOpen: boolean) => void;
   title?: TitleProps;
-  openState?: boolean;
+  openState?: string;
   search?: boolean;
   setSearch?: (value: string) => void;
 }
@@ -55,7 +55,8 @@ const UiSelect: React.FC<SelectProps> = ({
   };
   useEffect(() => {
     if (openState !== undefined) {
-      setIsOpen(openState?"open":"closed");
+      setIsOpen(openState);
+      // setIsOpen(openState?"open":"closed");
     }
   }, [openState]);
 

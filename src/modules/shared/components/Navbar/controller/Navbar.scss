@@ -7,21 +7,24 @@ nav {
   @extend .d-flex;
   height: var(--default-element-height);
   width: 100vw;
-
+  margin: 0 auto;
+  gap: var(--default-padding);
+  @media(min-width: 1260px) {
+    inline-size: calc(1260px - calc(var(--default-padding) * 2));
+  }
   @media(max-width: 1100px) {
     padding: 0 var(--s-9);
   }
 
   .navbar__trigger {
+    margin-left: var(--default-padding);
     @media(min-width: 1100px) {
       display: none;
     }
   }
 
   .nav__nav-item {
-    width: 100%;
     height: var(--default-element-height);
-    border: solid 1px;
     font-size: var(--s-4);
     @media(max-width: 1100px) {
       display: none;
@@ -34,8 +37,11 @@ nav {
 }
 
 .navbar__mobile {
+  @media(min-width: 1260px){
+    display: none;
+  }
   margin: var(--default-element-height) 0;
-  border: solid 1px var(--color-gray-70);
+  // border: solid 1px var(--color-gray-70);
   border-radius: var(--default-border-radius);
   display: flex;
   justify-content: space-around;
@@ -46,7 +52,6 @@ nav {
   .nav__nav-item {
     background-color: var(--color-gray-90);
     color: var(--color-gray-10);
-
     border-radius: var(--default-border-radius);
     width: calc(100% - calc(var(--default-padding) * 2));
     height: var(--default-element-height);
