@@ -9,15 +9,20 @@ nav {
   width: 100vw;
   margin: 0 auto;
   gap: var(--default-padding);
+  inline-size: calc(100vw - calc(var(--s-9) * 2));
   @media(min-width: 1260px) {
     inline-size: calc(1260px - calc(var(--default-padding) * 2));
   }
+  
   @media(max-width: 1100px) {
     padding: 0 var(--s-9);
   }
 
   .navbar__trigger {
-    margin-left: var(--default-padding);
+    cursor: pointer;
+    &:hover{
+      --ui-icon-color: var(--color-primary);
+    }
     @media(min-width: 1100px) {
       display: none;
     }
@@ -25,53 +30,13 @@ nav {
 
   .nav__nav-item {
     height: var(--default-element-height);
-    font-size: var(--s-4);
     @media(max-width: 1100px) {
       display: none;
     }
 
-    &--account {
+    &--account, &--login  {
       margin-left: auto;
     }
   }
 }
 
-.navbar__mobile {
-  @media(min-width: 1260px){
-    display: none;
-  }
-  margin: var(--default-element-height) 0;
-  // border: solid 1px var(--color-gray-70);
-  border-radius: var(--default-border-radius);
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  gap: var(--s-9);
-  padding: var(--default-element-height) var(--default-padding);
-  @extend .d-flex;
-  .nav__nav-item {
-    background-color: var(--color-gray-90);
-    color: var(--color-gray-10);
-    border-radius: var(--default-border-radius);
-    width: calc(100% - calc(var(--default-padding) * 2));
-    height: var(--default-element-height);
-    border: solid 1px var(--color-gray-80);
-    font-size: var(--s-7);
-    @extend .d-flex;
-    text-align: center;
-    justify-content: center;
-    padding: var(--default-padding);
-    &--account {
-      margin-left: auto;
-    }
-    &__label{
-      font-size: var(--s-3);
-      text-transform: capitalize;
-    }
-    &:hover, :focus{
-      cursor: pointer;
-      background-color: var(--color-gray-100);
-      color: var(--color-primary);
-    }
-  }
-}

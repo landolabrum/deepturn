@@ -22,6 +22,7 @@ export default function useRoute(handleSideNav?: () => void) {
   const query: { [key: string]: string } | {} = router?.query;
   const handleRoute =
     (route: IRoute) => {
+      if(route?.href)return router.push(route?.href, undefined, { shallow: false });
       router.push(route);
       // if (
       //   option.items ||
@@ -54,16 +55,17 @@ export default function useRoute(handleSideNav?: () => void) {
   }
 
   const handleUser = async () => {
+    console.log('[ HANDLE USER ]', userResponse)
     if (userResponse) {
-      userResponse && setUser(userResponse);
-      [UNAUTHED_LANDING, "/", VERIFICATION_LANDING].includes(router.pathname) && handleRoute({ href: AUTHED_LANDING });
+      setUser(userResponse);
+      [UNAUTHED_LANDING,  '/', VERIFICATION_LANDING].includes(router.pathname) && handleRoute({ href: AUTHED_LANDING });
     }
     else if (!userResponse && ![VERIFICATION_LANDING, UNAUTHED_LANDING].includes(router.pathname)) {
       setUser(null);
       setHeader(null);
       if (router.pathname.includes(LOGOUT_LANDING)) {
         // SIGN OUT
-        router.push('/');
+          router.push('/');
       } else if (!router.pathname.includes(VERIFICATION_LANDING)) {
         handleRoute({href:UNAUTHED_LANDING});
         // console.log("[ RT ]",);
@@ -76,7 +78,7 @@ export default function useRoute(handleSideNav?: () => void) {
 
   useEffect(() => {
     handleUser().then(handleHeader);
-  }, [userResponse, router.pathname]);
+  }, [userResponse, router.pathname, setUser]);
 
   // if (typeof user !== "string")
     return [user, router.pathname, handleRoute];

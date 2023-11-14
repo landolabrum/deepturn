@@ -9,25 +9,30 @@ import Authentication from "~/src/pages/authentication";
 import { useCartTotal } from "~/src/modules/ecommerce/cart/hooks/useCart";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
+import MobileNav from "../views/MobileNav/MobileNav";
 
 const Navbar = () => {
   const [user, current, setRoute]: any = useRoute();
   const routes = useClearanceRoutes();
   const { openModal, closeModal, isModalOpen } = useModal();
-  const [currentRoutes, setCurrentRoutes] = useState(routes);
+  const [currentRoutes, setCurrentRoutes] = useState<IRoute[] | undefined>(undefined);
   const [toggled, setToggled] = useState<string | null>(null);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const modals: any = {
-    login: <Authentication />
-  };
+  const [modalOpen, setModalOpen] = useState<string | undefined>();
+
 
 
   // Handle mobile navigation click
   const handleMobileClick = (selectedRoute: IRoute) => {
-    if (selectedRoute.items) {
-      setCurrentRoutes(selectedRoute.items);
-    } else {
-      // Handle other click scenarios
+    console.log('[ isModalOpen ]', isModalOpen);
+    closeModal();
+    console.log(selectedRoute);
+    if (selectedRoute?.href && !selectedRoute.items) {
+      setRoute(selectedRoute.href);
+    }
+    else if (selectedRoute?.modal) {
+      openModal(modals[selectedRoute?.modal]);
+    } else if (selectedRoute.items) {
+      openModal(<MobileNav routes={selectedRoute.items} handleClick={handleMobileClick} />);
     }
   };
 
@@ -35,7 +40,7 @@ const Navbar = () => {
   const handleBackButtonClick = () => {
     setCurrentRoutes(routes);
   };
-  const handleToggle = (label: string)=>{
+  const handleToggle = (label: string) => {
     setToggled(label);
   }
   // Handle click events for routes and modals
@@ -52,8 +57,7 @@ const Navbar = () => {
 
   // Toggle mobile navigation or modal
   const handleTrigger = () => {
-    if (modalOpen)closeModal();
-    openModal(<MobileNav routes={routes}/>);
+    currentRoutes !== undefined && openModal(<MobileNav routes={currentRoutes} handleClick={handleMobileClick} />);
   };
 
   // Compute user display name
@@ -65,28 +69,21 @@ const Navbar = () => {
   const cartRoute = routes.find((r: any) => r.href === '/cart');
 
   // Mobile navigation component
-  const MobileNav = ({ routes }:{routes: IRoute[]}) => (
-    <>
-      <style jsx>{styles}</style>
-      <div className='dev'>
-        {isModalOpen.toString()}
-      </div>
-      <div className='navbar__mobile'>
-        {routes.map((route: IRoute, key: number) => (
-          <div
-            key={key}
-            className={`nav__nav-item nav__nav-item--${route?.label}`}
-            onClick={() => handleMobileClick(route)}
-          >
-            <div className='nav__nav-item__label'>
-              {route.label}
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
-  );
 
+  const modals: any = {
+    login: <Authentication />,
+  };
+  useEffect(() => {
+    if (routes) {
+      const newRoutes = routes
+        .filter(r => !(r.href === '/cart' && cartTotal === 0))
+        .map(r => r);
+  
+      console.log('newRoutes ]', newRoutes);
+      setCurrentRoutes(newRoutes);
+    }
+  }, [routes]);
+  
   return (
     <>
       <style jsx>{styles}</style>
@@ -95,19 +92,19 @@ const Navbar = () => {
           <UiIcon
             icon={isModalOpen ? 'fa-xmark' : 'fa-bars'}
             onClick={handleTrigger}
-            />
+          />
         </div>
 
-        {routes.map((route, key) => (
+        {currentRoutes && currentRoutes.map((route, key) => (
           <div
-          key={key}
-          className={`nav__nav-item nav__nav-item--${route?.label}`}
+            key={key}
+            className={`nav__nav-item nav__nav-item--${route?.label}`}
             onDoubleClick={() => route?.href && handleClick({ href: route.href })}
           >
             {!route?.items ? (
               <UiButton
                 traits={
-                  route?.icon && {beforeIcon:{icon: route.icon }} || undefined
+                  route?.icon && { beforeIcon: { icon: route.icon } } || undefined
                 }
                 variant='flat'
                 onClick={() => handleClick(route)}
@@ -121,12 +118,12 @@ const Navbar = () => {
                 value={route.label === 'account' ? displayName : route.label}
                 options={route?.items}
                 onSelect={handleClick}
-                onToggle={()=>route.label&&handleToggle(route.label)}
+                onToggle={() => route.label && handleToggle(route.label)}
               />
             )}
           </div>
         ))}
-        <MobileNav routes={currentRoutes} />
+        {/* <MobileNav routes={currentRoutes} handleClick={handleMobileClick}/> */}
       </nav>
     </>
   );

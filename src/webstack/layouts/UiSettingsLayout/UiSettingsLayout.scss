@@ -14,7 +14,9 @@
     overflow-y: auto;
     width: 100%;
 
-
+    @media(min-width:1260px) {
+        background-color: var(--color-gray-100);
+    }
     @media(max-width:900px) {
         width: 100vw;
         height: 100vh;
@@ -24,6 +26,8 @@
         @media(min-width:1260px) {
             inline-size: 1260px;
             margin: 0 auto;
+            background-color: var(--color-gray-90);
+            border: solid 1px var(--color-gray-70); 
         }
 
         @extend .d-flex;
@@ -44,12 +48,6 @@
         border-right: solid 1px var(--color-gray-70);
         position: relative;
         width: calc(35vw - calc(var(--default-padding) * 2));
-
-        @media(min-width:1260px) {
-            border-left: solid 1px var(--color-gray-70);
-
-        }
-
         @media(max-width:900px) {
             border-right: unset;
             display: flex;
@@ -89,30 +87,30 @@
         display: flex;
         border-style: solid;
         border-color: #ff303040 #ff990050 #0099ff50 #0f00ff;
-        border-radius: var(--s-5);
+        border-radius: var(--default-border-radius);
         border-width: 1px;
         box-shadow: 10px 10px 30px var(--color-gray-100);
         background-color: var(--color-gray-90);
-        padding: var(--default-padding);
-        margin: var(--default-padding);
+        margin: var(--s-9);
         flex-direction: column;
         justify-content: flex-start;
         align-items: stretch;
         height: max-content;
         color: var(--color-gray-40);
         animation: borderAnimation 5s infinite alternate;
-        width: calc(65vw - calc(var(--default-padding) * 2));
-
+        width: calc(65vw - calc(var(--s-9) * 2) - calc(var(--default-padding) * 2));
+        padding: var(--default-padding);
         &__flat {
+            width: calc(65vw - calc(var(--s-9) * 2));
+            padding: 0;
             background-color: transparent;
             border: none;
             box-shadow: unset;
         }
 
-        @media(max-width:900px) {
-            margin: 0;
+        @media(max-width:1100px) {
             padding: var(--s-9) var(--s-9) var(--s-1);
-            width: calc(100% - calc(var(--s-9) * 2));
+            width: calc(100% - calc(var(--s-9) * 4));
         }
 
         .settings__view__title {

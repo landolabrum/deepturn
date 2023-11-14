@@ -1,4 +1,4 @@
-$shadow-size: 10px;
+$shadow-size: 8px;
 $badge: 19px;
 $elPad: 14px;
 
@@ -105,7 +105,8 @@ $elPad: 14px;
     &:hover {
       --ui-icon-color: var(--color-gray-50);
       color: var(--color-gray-50);
-      background-color: var(--color-dark);
+      background-color: var(--color-gray-80);
+      border: solid 1px var(--color-gray-60);
     }
 
     $pad: 5px;
@@ -225,11 +226,15 @@ $elPad: 14px;
 
     &[class$="-glow"] {
       background-color: var(--color-gray-90);
+      width: calc(100% - 4px);
+      margin: auto;
       color: white;
       animation: none; // Stop the animation on hover.
-
+      .form-control__icon-placeholder{
+        display: none;
+      }
       &:hover {
-        animation: glow 2s ease-in; // Use the glow animation, duration is 2 seconds.
+        animation: glow 2s infinite; // Use the glow animation, duration is 2 seconds.
         background: var(--color-primary-opaque-1);
         box-shadow: 0 0 calc($shadow-size / 2) var(--color-primary) 0 0 $shadow-size var(--color-primary);
       }
