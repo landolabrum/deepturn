@@ -53,20 +53,12 @@ const ProfileForm = ({ user, open = false }: any) => {
     }));
   };
   const onSubmit = async (form:any)=>{
-    const findField:any= (name:string)=>fields.find(f=>f.name == name);
-    let request:any = {}
-    form.forEach((field: IFormField) => {
-      if(field.value == undefined)return;
-      if(field.name == 'first_name'){
-        field.name = 'name';
-        const lN = findField('last_name')?.value;
-        if(lN != undefined)field.value = `${field.value} ${lN}`;
-      }
-      else if(field.name=='phone'){
-        field.value = phoneFormat(String(field.value), 'US', true);
-      }
-      request[field.name]=field.value;
-    });
+    const findField:any= (name:string)=>fields.find(f=>f.name == name)?.value;
+    let request:any = {
+      name: `${findField('first_name')} ${findField('last_name')}`,
+      email: findField('email'),
+      phone: phoneFormat(String(findField('phone')), 'US', true)
+    }
     try{
       const response = await memberService.updateMember(user.id, request);
 
@@ -75,7 +67,6 @@ const ProfileForm = ({ user, open = false }: any) => {
       console.log('[ EROR ]', e);
     }
 
-   console.log('[ request ]', request);
   }
   useEffect(() => {
     // Check if the user object is present and if the fields have not been updated yet

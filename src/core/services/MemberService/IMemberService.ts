@@ -9,7 +9,7 @@ export default interface IMemberService {
   getCurrentUser(): UserContext | undefined;
   prospectRequest(quote: any, test?:boolean): any | undefined;
   updateCurrentUser(user: UserContext): void;
-  getMethods(): Promise<any>;
+  getMethods(customerId?: string): Promise<any>;
   deleteMethod(id: string): Promise<any>;
   processTransaction(cart:ICartItem[]): Promise<any>;
   createCustomerMethod(method: IPaymentMethod): Promise<any>;

@@ -21,6 +21,8 @@ export function stringToKebab(str?: string) {
 }
 
 // PHONE FORMAT
+
+
 export const phoneFormat = (
   phoneNumber: string,
   countryCode: string = 'US',
@@ -30,8 +32,12 @@ export const phoneFormat = (
   let formattedNumber: string = phoneNumber;
 
   if (reverse) {
-    // Remove anything that's not a number
-    return `+${phoneNumber.replace(/\D/g, '')}`;
+    const cleanedNumber = phoneNumber.replace(/\D/g, '');
+    if (cleanedNumber.startsWith('1')) {
+      return `+${cleanedNumber}`;
+    } else {
+      return `+1${cleanedNumber}`;
+    }
   }
 
   try {

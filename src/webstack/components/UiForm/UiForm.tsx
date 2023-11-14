@@ -90,6 +90,7 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                             variant={
                                 Boolean(field?.error) ? 'invalid' : field?.variant
                             }
+                            disabled={field?.disabled}
                             error={field.error}
                             type={field.type}
                             required={field.required}

@@ -110,7 +110,20 @@ $elPad: 14px;
     }
 
     $pad: 5px;
-
+    &-disabled {
+      filter: brightness(.7);
+      // color: var(--color-gray-60);
+      // --ui-icon-color: var(--color-gray-30);
+      // background-color: var(--color-gray-70-opaque);
+      &:hover {
+        user-select: none;
+        cursor:not-allowed;
+        color: var(--color-gray-60);
+        --ui-icon-color: var(--color-gray-60);
+        background-color: var(--color-gray-70);
+        outline: solid 1px var(--color-gray-60);
+      }
+    }
 
 
     .form-control__icon {

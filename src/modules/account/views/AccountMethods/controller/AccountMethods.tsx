@@ -14,8 +14,9 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 // Remember to create a sibling SCSS file with the same name as this component
 interface IAccountMethods{
   open?: boolean;
+  customerMethods?: any;
 }
-const AccountMethods: React.FC<any> = ({open}:IAccountMethods) => {
+const AccountMethods: React.FC<any> = ({open, customerMethods}:IAccountMethods) => {
   const [loading, setLoading] = useState<any>(true);
   const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
@@ -51,7 +52,8 @@ const AccountMethods: React.FC<any> = ({open}:IAccountMethods) => {
   useEffect(() => {
 
     handleLabel();
-    getAccountMethods();
+    !customerMethods && getAccountMethods();
+    customerMethods && setMethods(customerMethods);
   }, [methods.length]);
 
   return (

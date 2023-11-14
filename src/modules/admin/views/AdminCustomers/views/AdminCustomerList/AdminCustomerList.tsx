@@ -105,10 +105,10 @@ const AdminCustomerList: React.FC<any> = ({onRowClick}:any) => {
           address: address ? address.trim() : '',
           phone: customer.phone && phoneFormat(customer.phone),
           balance: customer.balance,
-          created: customer.created,
+          created: <AdaptTableCell cell='date' data={customer.created}/>,
           default_source: customer.default_source && <UiIcon icon='fas-circle-check'/>,
           delinquent: customer.delinquent,
-          tax_exempt: customer.tax_exempt,
+          tax_exempt: <AdaptTableCell cell='check' data={Boolean(customer.tax_exempt == 'exempt')}/>,
           extras:extras
         };
       });

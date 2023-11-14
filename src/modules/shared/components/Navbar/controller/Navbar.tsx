@@ -79,9 +79,9 @@ const Navbar = () => {
         .filter(r => !(r.href === '/cart' && cartTotal === 0))
         .map(r => r);
   
-      console.log('newRoutes ]', newRoutes);
       setCurrentRoutes(newRoutes);
     }
+    toggled != null && setToggled(null);
   }, [routes]);
   
   return (

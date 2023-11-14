@@ -22,6 +22,12 @@ $cell-height: 100%;
     width: 100%;
   }
 }
+.adapt-table-cell__center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 .adapt-table-cell__member-initials {
   background-color: var(--color-gray-60);
   display: flex;

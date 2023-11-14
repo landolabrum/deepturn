@@ -45,12 +45,14 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
           {...props}
           traits={{
             ...props.traits,
+            disabled: props.disabled,
             afterIcon: type === "password" ? {
               icon: show ? "fa-eye" : "fa-eye-slash",
               onClick: () => setShow(!show)
             } : props.traits?.afterIcon,
           }}>
           <input
+            disabled={props?.disabled || undefined}
             id={props?.id}
             className={inputClasses}
             name={props.name}

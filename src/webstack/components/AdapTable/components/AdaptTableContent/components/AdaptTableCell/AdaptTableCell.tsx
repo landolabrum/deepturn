@@ -15,7 +15,8 @@ interface Props {
     | "currency-crypto"
     | "date"
     | "licenses-date"
-    | "copy-id";
+    | "copy-id"
+    | "check";
   data?: any;
 }
 export const NaCell = () => {
@@ -50,14 +51,15 @@ const AdaptTableCell: NextComponentType<NextPageContext, {}, Props> = ({ cell, d
 
   useEffect(() => {
     function validator() {
-      if (!cell || !data) return;
+      if (cell == undefined || data == undefined) return;
       if (["wallet-address", "id", "copy-id", "currency-crypto", "icon-label"].includes(cell) && data) setValid(true);
-      if (cell === "member" && data.email && data.name && data.id) setValid(true);
-      if (cell === "date" && data) {
+      else if(cell == 'check' && data != undefined)setValid(true);
+      else if (cell === "member" && data.email && data.name && data.id) setValid(true);
+      else if (cell === "date" && data) {
         setMut(dateFormat(data, { time: true, isTimestamp: true, returnType: "object" }));
         setValid(true);
       }
-      if (cell === "product") {
+      else if (cell === "product") {
         setMut({
           description: data?.description,
           icon: data?.description,
@@ -94,6 +96,8 @@ const AdaptTableCell: NextComponentType<NextPageContext, {}, Props> = ({ cell, d
             </div>
           </div>
         )}
+        {cell == 'date' && mut}
+        {cell == 'check' && <div className='adapt-table-cell__center'><UiIcon color={data?'#090':'#ff990050'} icon={data?'fas-circle-check':'fa-xmark'}/></div>}
       </>
     );
   return <NaCell />;

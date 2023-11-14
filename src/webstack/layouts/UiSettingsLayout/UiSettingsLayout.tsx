@@ -63,12 +63,12 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
         const mainMt: any = mainElement.style.marginTop;
         if (settingsContainer) {
           if (settingsContainer.style.top == '') {
-            settingsContainer.style.top = `${headerHeight}px`;
-            settingsContainer.style.height = `calc(100vh - ${headerHeight}px)`;
+            // settingsContainer.style.top = `${headerHeight}px`;
+            settingsContainer.style.minHeight = `calc(100vh - calc(${headerHeight}px + 20px))`;
           }
         }
         // Set the top margin of the main element to the header height
-        if (mainMt == '') mainElement.style.marginTop = `${headerHeight}px`;
+        // if (mainMt == '') mainElement.style.marginTop = `${headerHeight}px`;
       }
     }, 100);
   }

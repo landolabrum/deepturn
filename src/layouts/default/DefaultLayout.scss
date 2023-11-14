@@ -2,13 +2,11 @@ main {
   display: flex;
   // position: relative;
   overflow-y: visible;
-  padding-bottom: 200px;
   margin: auto;
   // padding-top: var(--header-height);
   @media(min-width:1260px) {
     inline-size: 1260px;
     max-width: 1260px;
     width: 100%;
-
   }
 }

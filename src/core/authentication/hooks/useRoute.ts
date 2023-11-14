@@ -55,7 +55,7 @@ export default function useRoute(handleSideNav?: () => void) {
   }
 
   const handleUser = async () => {
-    console.log('[ HANDLE USER ]', userResponse)
+    // console.log('[ HANDLE USER ]', userResponse)
     if (userResponse) {
       setUser(userResponse);
       [UNAUTHED_LANDING,  '/', VERIFICATION_LANDING].includes(router.pathname) && handleRoute({ href: AUTHED_LANDING });

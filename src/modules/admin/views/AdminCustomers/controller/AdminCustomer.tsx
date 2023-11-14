@@ -17,7 +17,6 @@ const AdminCustomer: React.FC = () => {
       setView(e);
     }
     else if (e?.id) {
-      // console.log(e)
       setData(e.id);
       setView('modify');
     };

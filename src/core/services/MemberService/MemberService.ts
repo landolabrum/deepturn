@@ -117,8 +117,8 @@ export default class MemberService
     );
     return res;
   }
-  public async getMethods(): Promise<any> {
-    let id = this._getCurrentUser(false)?.id;
+  public async getMethods(customerId?: string): Promise<any> {
+    let id = customerId || this._getCurrentUser(false)?.id;
     if (id) {
       const OGetMethods = await this.get<any>(
         `/api/method/customer/?id=${id}`,

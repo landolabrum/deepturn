@@ -10,6 +10,9 @@ input {
   &:not(.nav-item, .nav-item__active){
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
+  // &:disabled{
+  //   cursor: not-allowed;
+  // }
   // ARROWS for TYPE='number'
   /* Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,
