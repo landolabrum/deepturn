@@ -96,6 +96,7 @@
 }
 
 body {
+  margin: 0;
   font-family: 'Play', sans-serif;
   background: var(--color-body);
 }
