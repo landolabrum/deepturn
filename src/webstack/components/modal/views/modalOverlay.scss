@@ -30,7 +30,8 @@
 }
 
 .modal {
-    $width: calc(100% - 10px);
+    $hundredWidth: calc(100% - 10px);
+    $maxWidth: 900px;
     position: fixed;
     top: 0;
     left: 0;
@@ -39,8 +40,8 @@
     z-index: 999;
     @extend .d-flex;
     align-items: flex-start;
-    width: $width;
-    margin: 0 5px 0;
+    width: $hundredWidth;
+    margin: var(--default-element-height) 5px 0;
     height: max-content;
     overflow-y: auto;
     overflow-x: hidden;
@@ -52,7 +53,16 @@
         width: 800px; // Set a fixed width for larger screens
         // max-width: 90%; // Add a max-width to ensure it doesn't get too wide on very large screens
         height: auto; // Height can be auto for scrollable content
-        transform: translate(calc(50vw - 400px), 200px); // Center the modal
+        margin: var(--default-element-height) auto;
+        @media (orientation: landscape) {
+            height: calc(100vh - 90px);
+        }
+        @media (orientation: portrait) {
+            // margin-top: 100px;
+            margin:0;
+            // max-width: $hundredWidth;
+            transform: translate(calc(50vw - 400px), 200px); // Center the modal
+        }
         &__fullscreen{
             transform: unset;
         }
@@ -92,7 +102,7 @@
         @media(max-width:1260px) {
             @media (orientation: portrait) {
                 margin-top: 100px;
-                max-width: $width;
+                max-width: $hundredWidth;
             }
         }
         @media(max-width:900px) {
