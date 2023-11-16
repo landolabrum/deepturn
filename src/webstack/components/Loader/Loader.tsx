@@ -47,7 +47,7 @@ const Loader: React.FC = () => {
 
   useEffect(() => {
     setLoaderState(context);
-  }, [context]);
+  }, []);
 
   if (LoaderState?.isLoading) {
     return (

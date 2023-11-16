@@ -13,8 +13,11 @@ const AdminCustomer: React.FC = () => {
   const [data, setData] = useState<any | null>(null);
   const [view, setView] = useState<string>('list');
   const handleView = (e: any) => {
-    alert()
-    if(typeof e == 'string'){
+    if(e.customer){
+
+      console.log(e)
+    }
+    else if(typeof e == 'string'){
       setView(e);
     }
     else if (e?.id) {
