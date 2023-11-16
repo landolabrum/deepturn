@@ -4,7 +4,7 @@ import styles from './UiForm.scss';
 import UiButton from '../UiButton/UiButton';
 import { IForm, IFormField } from './models/IFormModel';
 import UiSelect from '../UiSelect/UiSelect';
-import UiLoader from '../UiLoader/UiLoader';
+import UiLoader from '../UiLoader/view/UiLoader';
 import ToggleSwitch from '../UiToggle/UiToggle';
 import UiCheckBox from '../UiCheckbox/UiCheckBox';
 import FormControl from '../FormControl/FormControl';

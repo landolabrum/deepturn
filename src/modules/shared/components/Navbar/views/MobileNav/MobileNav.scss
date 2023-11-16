@@ -6,14 +6,21 @@
 
 .navbar__mobile {
     display: none;
-    width: 100%;
-
+    width: auto;
+    background-color: var(--color-gray-100);
+    border-radius: var(--default-border-radius);
+    margin: var(--default-element-height) 0;
+    border: solid 1px var(--color-gray-70);
     @media(max-width: 1260px) {
+        flex-direction: column;
         display: flex;
     }
-
-    &--content {
+    &--actions{
+        @extend .d-flex;
+        justify-content: flex-start;
         width: 100%;
+    }
+    &--content {
         // margin: var(--default-element-height) 0;
         // border: solid 1px var(--color-gray-70);
         border-radius: var(--default-border-radius);
@@ -21,7 +28,7 @@
         justify-content: space-around;
         flex-direction: column;
         gap: var(--s-9);
-        padding: var(--default-element-height) var(--default-padding);
+        padding: var(--s-5) var(--default-padding);
 
         // @extend .d-flex;
         .nav__nav-item {

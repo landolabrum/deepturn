@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { useHeader } from "@webstack/components/Header/controller/Header";
 import { IRoute } from "@shared/components/Navbar/data/routes";
 import environment from "~/src/environment";
-import useWindow from "@webstack/hooks/useWindow";
 
 const AUTHED_LANDING = "/account";
 const UNAUTHED_LANDING = "/"
@@ -20,17 +19,10 @@ export default function useRoute(handleSideNav?: () => void) {
   // const userAgentData = useUserAgent();
   const router = useRouter();
   const query: { [key: string]: string } | {} = router?.query;
-  const handleRoute =
-    (route: IRoute) => {
+  const handleRoute = (route: IRoute) => {
       if(route?.href)return router.push(route?.href, undefined, { shallow: false });
-      router.push(route);
-      // if (
-      //   option.items ||
-      //   option.active === false
-      // ) return;
-      // else if (option.href) router.push(option.href, undefined, { shallow: false });
-      // handleSideNav && handleSideNav();
-    }
+      else router.push(route);
+  }
 
   const current = router.pathname.substring(1);
   const isCurrent = current == header?.title;
@@ -55,22 +47,27 @@ export default function useRoute(handleSideNav?: () => void) {
   }
 
   const handleUser = async () => {
-    // console.log('[ HANDLE USER ]', userResponse)
+    const conlog = {userResp: userResponse, path: router.pathname};
     if (userResponse) {
+      console.log('[ HANDLE USER ]( 1 )', conlog, user)
       setUser(userResponse);
       [UNAUTHED_LANDING,  '/', VERIFICATION_LANDING].includes(router.pathname) && handleRoute({ href: AUTHED_LANDING });
     }
     else if (!userResponse && ![VERIFICATION_LANDING, UNAUTHED_LANDING].includes(router.pathname)) {
+      console.log('[ HANDLE USER ]( 2 )', conlog)
       setUser(null);
       setHeader(null);
       if (router.pathname.includes(LOGOUT_LANDING)) {
+        console.log('[ HANDLE USER ]( 3 )', conlog)
         // SIGN OUT
-          router.push('/');
+        router.push('/');
       } else if (!router.pathname.includes(VERIFICATION_LANDING)) {
+        console.log('[ HANDLE USER ]( 4 )', conlog)
         handleRoute({href:UNAUTHED_LANDING});
         // console.log("[ RT ]",);
       }
     } else {
+      console.log('[ HANDLE USER ]( 5 )', conlog)
       // console.log('[ FAIl ]');
       return;
     }

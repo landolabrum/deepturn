@@ -10,5 +10,5 @@ export default function AuthQuery(){
     await memberService.signOut();
   };
   if(router.query.function==='signout')logoutUser().then(()=>router.push('/'));
-  return <><UiLoader/></>;
+  return <><h1>LOADIN'</h1></>;
 }

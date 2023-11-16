@@ -21,7 +21,6 @@ interface Props {
 export const ModalProvider: React.FC<Props> = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<IModalContent>(null); // Updated type here
-
   const openModal = (content: IModalContent) => {
     setIsModalOpen(true);
     setModalContent(content);

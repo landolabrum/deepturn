@@ -293,13 +293,17 @@ $elPad: 14px;
       @media (max-width: 900px) {
         justify-content: flex-start;
       }
-
+      
       outline: solid 1px transparent;
-
+      
       &:hover {
+        border: none;
         border-radius: 0;
         --ui-icon-color: var(--color-blue-10);
         color: var(--color-blue-10);
+      }
+      &:focus-within{
+        border-bottom: solid 1px var(--color-primary);
       }
     }
 
@@ -344,6 +348,7 @@ $elPad: 14px;
       color: var(--color-gray-40);
       font-size: var(--s-5);
       &:hover {
+        border: solid 1px transparent;
         color:var(--color-gray-20);
       }
     }
@@ -360,7 +365,7 @@ $elPad: 14px;
       border-radius: 0;
       --ui-icon-height: var(--s-5);
       --ui-icon-width: auto;
-
+      &:hover{}
     }
 
 

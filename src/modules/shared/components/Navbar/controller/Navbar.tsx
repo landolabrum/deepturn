@@ -17,35 +17,33 @@ const Navbar = () => {
   const { openModal, closeModal, isModalOpen } = useModal();
   const [currentRoutes, setCurrentRoutes] = useState<IRoute[] | undefined>(undefined);
   const [toggled, setToggled] = useState<string | null>(null);
-  const [modalOpen, setModalOpen] = useState<string | undefined>();
+  const width = useWindow()?.width;
 
 
 
   // Handle mobile navigation click
   const handleMobileClick = (selectedRoute: IRoute) => {
-    console.log('[ isModalOpen ]', isModalOpen);
     closeModal();
-    console.log(selectedRoute);
     if (selectedRoute?.href && !selectedRoute.items) {
       setRoute(selectedRoute.href);
     }
     else if (selectedRoute?.modal) {
       openModal(modals[selectedRoute?.modal]);
     } else if (selectedRoute.items) {
-      openModal(<MobileNav routes={selectedRoute.items} handleClick={handleMobileClick} />);
+      openModal(<MobileNav routes={selectedRoute.items} handleClick={handleMobileClick} onBack={handleBackButtonClick} />);
     }
   };
 
   // Function to go back to the original routes in mobile view
   const handleBackButtonClick = () => {
     setCurrentRoutes(routes);
+    handleTrigger();
   };
   const handleToggle = (label: string) => {
     setToggled(label);
   }
   // Handle click events for routes and modals
   const handleClick = (route: any) => {
-    console.log('[ handleClick ]', route)
     if (typeof route === 'string') {
       setRoute(route);
     } else if (route?.href) {
@@ -78,12 +76,15 @@ const Navbar = () => {
       const newRoutes = routes
         .filter(r => !(r.href === '/cart' && cartTotal === 0))
         .map(r => r);
-  
+
       setCurrentRoutes(newRoutes);
     }
     toggled != null && setToggled(null);
-  }, [routes]);
-  
+  }, [routes, setCurrentRoutes, ]);
+  useEffect(() => {
+    width > 1100 && closeModal();
+  }, [width]);
+
   return (
     <>
       <style jsx>{styles}</style>

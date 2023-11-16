@@ -3,9 +3,8 @@ import styles from './AdminCustomerModify.scss';
 import UiForm from '@webstack/components/UiForm/UiForm';
 import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
-import UiLoader from '@webstack/components/UiLoader/UiLoader';
 import { dateFormat } from '@webstack/helpers/userExperienceFormats';
-import AccountMethods from '~/src/modules/account/views/AccountMethods/controller/AccountMethods';
+import { useLoader } from '@webstack/components/Loader/Loader';
 
 const hideKeys = ['id', 'object', 'currency', 'invoice_settings','next_invoice_sequence','preferred_locales', 'test_clock','invoice_prefix'];
 const modKeys = ['metadata'];
@@ -55,12 +54,14 @@ const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
       alert("Couldn't get customer");
     }
   }
-
+const [loader, setLoader]=useLoader();
   useEffect(() => {
     if (customerId) getCustomer();
   }, [customerId, setMethods]);
 
-  if (!customerId || !customer) return <UiLoader position='relative'/>;
+  if (!customerId || !customer) {
+    setLoader({isLoading:true})
+  };
 
   return (
     <>

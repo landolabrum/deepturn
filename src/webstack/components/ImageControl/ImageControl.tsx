@@ -1,6 +1,6 @@
 import React, { Children, cloneElement, useEffect, useRef, useState, isValidElement } from 'react';
 import styles from './ImageControl.scss';
-import UiLoader from '../UiLoader/UiLoader';
+import UiLoader from '../UiLoader/view/UiLoader';
 import useClass from '@webstack/hooks/useClass';
 import UiButton from '../UiButton/UiButton';
 import { UiIcon } from '../UiIcon/UiIcon';

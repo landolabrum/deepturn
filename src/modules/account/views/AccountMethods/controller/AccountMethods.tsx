@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styles from './AccountMethods.scss';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { getService } from '@webstack/common';
-import UiLoader from '@webstack/components/UiLoader/UiLoader';
 import { IMethod } from '../../../model/IMethod';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import AccountCreateMethod from '../components/AccountCreateMethod/AccountCreateMethod';
@@ -81,7 +80,7 @@ const AccountMethods: React.FC<any> = ({open, customerMethods}:IAccountMethods) 
               })}
             </div>
           </div></>}
-        {loading == true && <UiLoader position='relative' height={500} />}
+        {loading == true && <h1>LOADIN'</h1>}
       </div>
       </UiCollapse>
     </>

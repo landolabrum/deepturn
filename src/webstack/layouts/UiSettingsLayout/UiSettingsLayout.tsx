@@ -6,7 +6,7 @@ import { default as Div } from "@webstack/components/UiDiv/UiDiv";
 import UiMenu from '../../components/UiMenu/UiMenu';
 import UiSelect from '../../components/UiSelect/UiSelect';
 import { capitalizeAll } from '@webstack/helpers/Capitalize';
-import UiLoader from '../../components/UiLoader/UiLoader';
+import UiLoader from '../../components/UiLoader/view/UiLoader';
 import { useRouter } from 'next/router';
 import useClass from '@webstack/hooks/useClass';
 import useWindow from '@webstack/hooks/useWindow';
@@ -88,7 +88,8 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       <div id="settings-container" className={containerClass}>
         <div className={contentClass}>
           <div className="settings__actions">
-            <Div maxWidth={900}>
+          <div className="settings__actions--content">
+            <Div maxWidth={900} >
               <UiMenu
                 options={Object.keys(views)}
                 variant="flat"
@@ -106,6 +107,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
                 options={Object.keys(views)}
               />
             </Div>
+          </div>
           </div>
           <div className={viewClass}>
             <div className='settings__view__title'>

@@ -9,6 +9,8 @@ import IMemberService from "~/src/core/services/MemberService/IMemberService";
 import useUserAgent from "~/src/core/authentication/hooks/useUserAgent";
 import styles from "./SignIn.scss";
 import { useNotification } from "@webstack/components/Notification/Notification";
+import { useLoader } from "@webstack/components/Loader/Loader";
+import { useModal } from "@webstack/components/modal/contexts/modalContext";
 
 const DEFAULT_RESPONSE = { response: "", message: "" };
 const defaultCodeValue = "------";
@@ -32,6 +34,7 @@ export interface SignInProps {
   handleCredentials: (e: any) => void;
 }
 const SignIn = ({ email }: { email: string | undefined }) => {
+  const [loader, setLoader]=useLoader();
   const defaultCredentials = {
     email: "",
     password: "",
@@ -39,7 +42,7 @@ const SignIn = ({ email }: { email: string | undefined }) => {
   }
   const [notif, setNotif]=useNotification();
   const [signInResponse, setSignInResponse] = useState<any>(DEFAULT_RESPONSE);
-
+  const { closeModal } = useModal();
   const userResponse = useUser();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const memberService = getService<IMemberService>("IMemberService");
@@ -63,6 +66,7 @@ const SignIn = ({ email }: { email: string | undefined }) => {
           ...(validTFA && { code: credentials.code }),
           user_agent,
         });
+        if(signInResponse)closeModal();
         // console.log(`[  signInResponse]:`, signInResponse);
       }catch(e:any){
         if(e.detail!=undefined){

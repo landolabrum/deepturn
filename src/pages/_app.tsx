@@ -10,6 +10,7 @@ import useDarkMode from "@webstack/hooks/useDarkMode";
 import { NotificationProvider } from "@webstack/components/Notification/Notification";
 import { ModalProvider } from "@webstack/components/modal/contexts/modalContext";
 import { ModalOverlay } from "@webstack/components/modal/views/modalOverlay";
+import { LoaderProvider } from "@webstack/components/Loader/Loader";
 
 
 const ZENDESK_KEY = "73bedd9b-0cdd-46a4-ad2e-b2ea5b72699d"
@@ -58,6 +59,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <style jsx>{styles}</style>
       <ServiceContainer />
       <OverlayProvider>
+      <LoaderProvider>
         <NotificationProvider>
           <ModalProvider>
             <HeaderProvider>
@@ -68,6 +70,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             </HeaderProvider>
           </ModalProvider>
         </NotificationProvider>
+        </LoaderProvider>
       </OverlayProvider>
     </>
   );

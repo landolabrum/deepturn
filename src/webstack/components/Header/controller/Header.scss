@@ -25,6 +25,7 @@ $div:calc(var(--default-padding) * -1);
   color: var(--header-primary);
   z-index: 1;
   height: max-content;
+  padding: var(--s-8) var(--s-8) 0;
   @media(max-width:900px){
     padding: 0 var(--s-8);
   }
@@ -44,7 +45,6 @@ $div:calc(var(--default-padding) * -1);
       display: flex;
       width: 100%;
       justify-content: space-between;
-      height: calc(var(--header-height) - calc(var(--default-element-height) * 2));
     }    
     .header-left {
       flex-direction: column-reverse;
@@ -54,11 +54,11 @@ $div:calc(var(--default-padding) * -1);
         gap:var(--s-4);
       }
       .header-title {
-        line-height: 1.5;
         font-size:var(--s-1);
-        @media(max-width:900px){
-          font-size:var(--s-1);
-        }
+        height: var(--default-element-height);
+        // @media(max-width:900px){
+        //   font-size:var(--s-1);
+        // }
         font-weight: 600;
         text-transform: capitalize;
       }

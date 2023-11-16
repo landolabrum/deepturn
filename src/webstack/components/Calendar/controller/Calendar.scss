@@ -1,0 +1,27 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar {
+
+    width: 100%;
+    background-color: var(--color-gray-90);
+
+    &__dow {
+        width: 100%;
+        text-transform: capitalize;
+        color: var(--color-gray-50);
+        line-height: 2;
+        text-align: right;
+    }
+
+    &__date-container {
+        width: 100%;
+        overflow: hidden;
+        border: solid 1px var(--color-gray-80);
+        outline: solid 1px var(--color-gray-70);
+
+    }
+}

@@ -4,16 +4,18 @@ import AccountMethods from "../views/AccountMethods/controller/AccountMethods";
 import { useUser } from "~/src/core/authentication/hooks/useUser";
 import ProfileForm from "../views/ProfileForm/ProfileForm";
 import UiSettingsLayout from "@webstack/layouts/UiSettingsLayout/UiSettingsLayout";
+import Subscriptions from "../views/Subscriptions/controller/Subscriptions";
 
 interface Props { }
 
 const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
   const user = useUser();
   const views: any = {
+    'subscriptions': <Subscriptions />,
     "edit profile": <ProfileForm user={user} open />,
     "email notification": "email notification",
     "privacy & security": "privacy & security",
-    'billing': <AccountMethods open />
+    'billing': <AccountMethods open />,
   };
     return (
       <>

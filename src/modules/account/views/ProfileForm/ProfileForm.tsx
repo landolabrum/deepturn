@@ -6,6 +6,7 @@ import { useNotification } from '@webstack/components/Notification/Notification'
 import UiForm from '@webstack/components/UiForm/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
+import UiMarkdown from '@webstack/components/UiMarkDown/UiMarkDown';
 
 const ProfileForm = ({ user, open = false }: any) => {
   const memberService = getService<IMemberService>('IMemberService');
@@ -61,8 +62,13 @@ const ProfileForm = ({ user, open = false }: any) => {
     }
     try{
       const response = await memberService.updateMember(user.id, request);
-
-      console.log('[ SUCCESS ]', response);
+      if(response.object == 'customer')setNotification({
+        active: true,
+        list:[
+          {label: 'success', message:<UiMarkdown text={`Updated Member: *${response?.name}*`}/>}
+        ]
+      })
+      // console.log('[ SUCCESS ]', response);
     }catch(e){
       console.log('[ EROR ]', e);
     }

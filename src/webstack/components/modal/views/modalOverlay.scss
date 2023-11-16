@@ -25,7 +25,6 @@
     cursor: pointer;
     z-index: 998;
     background: var(--color-gray-90-opaque);
-    backdrop-filter: blur(6.6px);
     -webkit-backdrop-filter: blur(6.6px);
 }
 
@@ -77,9 +76,10 @@
         flex-direction: column;
         width: 800px;
         height: auto;
+        backdrop-filter: blur(5px);
         color: var(--color-gray-30);
         border: solid 1px var(--color-gray-70);
-        background-color: var(--color-gray-100);
+        background: var(--color-gray-100-opaque);
         border-radius: var(--default-border-radius);
         padding: calc(var(--default-padding) * 1.5) var(--default-padding);
         box-shadow: var(--default-box-shadow-xl);
@@ -107,7 +107,7 @@
         }
         @media(max-width:900px) {
             margin:var(--s-9);
-            background-color: var(--color-gray-100-opaque);
+            // background-color: var(--color-gray-100-opaque);
             justify-content: flex-start;
         }
         &__fullscreen{

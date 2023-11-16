@@ -7,9 +7,8 @@
 .settings {
     justify-content: flex-start;
     width: 100%;
-    height: auto;
     @media(min-width:1260px) {
-        background-color: var(--color-gray-100);
+        // background-color: var(--color-gray-100);
     }
     @media(max-width:900px) {
         width: 100vw;
@@ -20,13 +19,13 @@
         @media(min-width:1262px) {
             inline-size: calc(1260px);
             margin: 0 auto;
-            background-color: var(--color-gray-90);
+            // background-color: var(--color-gray-90);
             border: solid 1px var(--color-gray-70); 
         }
 
         @extend .d-flex;
         justify-content: flex-start;
-        height: 100vh;
+        height: 100%;
         align-items: stretch;
 
         @media(max-width:900px) {
@@ -37,20 +36,33 @@
     }
 
     .settings__actions {
-        background-color: var(--color-dark);
-        border-right: solid 1px var(--color-gray-70);
+        height: auto;
+        border-right: solid 1px var(--color-gray-90);
         position: relative;
-        width: calc(35vw - calc(var(--default-padding) * 2));
         min-width: 300px;
+        background-color: var(--color-gray-80);
+        padding: var(--s-9);
+        &--content{
+            border-bottom: solid 1px var(--color-gray-70);
+            border-radius: var(--default-border-radius);
+            overflow: hidden;
+            border: solid 1px var(--color-gray-60);
+            background-color: var(--color-gray-90);
+        }
         @media(max-width:900px) {
             border-right: unset;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: var(--default-padding) var(--default-padding) 0;
-            width: calc(100% - calc(var(--default-padding) * 2));
-            // background-color: var(--color-gray-90);
-            // border-bottom: solid 1px var(--color-gray-70);
+            padding: var(--default-padding);
+            width: auto;
+            background-color: transparent;
+            overflow: visible;
+            &--content{
+                overflow: visible;
+                width: 100%;
+            }
+            border-bottom: solid 1px var(--color-gray-70);
         }
     }
 
@@ -79,22 +91,27 @@
     .settings__view {
         @extend .d-flex;
         display: flex;
-        border-style: solid;
-        border-color: #ff303040 #ff990050 #0099ff50 #0f00ff;
-        border-radius: var(--default-border-radius);
-        border-width: 1px;
-        box-shadow: 10px 10px 30px var(--color-gray-100);
-        background-color: var(--color-gray-90);
-        margin: var(--s-9);
+        &__full-screen{
+            // border-style: solid;
+            // border-color: #ff303040 #ff990050 #0099ff50 #0f00ff;
+            // border-radius: var(--default-border-radius);
+            // border-width: 1px;
+            // box-shadow: 10px 10px 30px var(--color-gray-100);
+            background-color: var(--color-gray-100);
+            // padding: var(--default-padding);
+        }
+        // margin: var(--s-9);
 
         flex-direction: column;
         justify-content: flex-start;
-        align-items: stretch;
-        height: max-content;
+  
         color: var(--color-gray-40);
-        animation: borderAnimation 5s infinite alternate;
-        width: calc(65vw - calc(var(--s-9) * 2) - calc(var(--default-padding) * 2));
-        padding: var(--default-padding);
+        padding: var(--default-padding) var(--s-9) 0;
+        // animation: borderAnimation 5s infinite alternate;
+        width: calc(100% - calc(var(--default-padding) * 2));
+        margin:0;
+        
+        // padding: var(--default-padding);
         &__flat {
             width: calc(65vw - calc(var(--s-9) * 2));
             padding: 0;
@@ -106,8 +123,10 @@
         @media(max-width:1100px) {
             min-height: 100%;
             border-left: unset;
+            margin: 0;
             overflow: hidden;
-            padding: var(--s-9) var(--s-9) var(--s-1);
+            padding: var(--s-9) var(--s-9) 0;
+            width: calc(100% - calc(var(--s-9) * 2));
         }
 
         .settings__view__title {

@@ -1,7 +1,7 @@
 .breadcrumbs {
   display: flex;
   align-items: center;
-  height: 45px;
+  height: var(--default-element-height);
   
   .crumb {
     display: flex;

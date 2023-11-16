@@ -12,7 +12,7 @@ const NO_SCROLL = "no-scroll";
 interface INotificationListItem {
   label?: string;
   name?: string;
-  message?: string;
+  message?: any;
   onClick?: (e: any) => void;
   href?: string;
 }

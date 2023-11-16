@@ -14,11 +14,17 @@ type OverlayItem = {
   onClick?: any;
   zIndex?: number | string;
   noScroll?: boolean;
+  children?: any
 };
 
-const OverlayContext = createContext<
-  [OverlayProps, (overlay: OverlayProps) => any]
->([{ active: false }, () => {}]);
+const OverlayContext = 
+createContext<[OverlayProps, (overlay: OverlayProps) => any]>
+(
+  [
+    { active: false },
+    () => {}
+  ]
+);
 
 export const useOverlay = () => useContext(OverlayContext);
 type OverlayProviderProps = {
@@ -69,6 +75,7 @@ const Overlay: React.FC = () => {
             context?.transparent ? " overlay-transparent" : ""
           }`}
         />
+        {context?.children}
       </>
     );
   }
