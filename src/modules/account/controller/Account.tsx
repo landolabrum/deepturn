@@ -11,7 +11,7 @@ interface Props { }
 const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
   const user = useUser();
   const views: any = {
-    'subscriptions': <Subscriptions />,
+    'subscriptions': <Subscriptions user={user} />,
     "edit profile": <ProfileForm user={user} open />,
     "email notification": "email notification",
     "privacy & security": "privacy & security",

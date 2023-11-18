@@ -24,11 +24,14 @@ const Admin = () => {
     products: <AdminProducts/>
   }
   useEffect(() => {
-    if(router?.query?.view)setCurrentView(String(router.query.view))
+    // if(router?.query?.view)setCurrentView(String(router.query.view))
   }, [setCurrentView]);
   return (
     <>
       <style jsx>{styles}</style>
+      <div className='dev'>
+      c: {currentView}
+      </div>
       <UiSettingsLayout
         defaultView={currentView}
         name='admin'

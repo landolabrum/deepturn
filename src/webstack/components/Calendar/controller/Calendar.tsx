@@ -41,7 +41,7 @@ const Calendar: React.FC<ICalendar> = ({
             return { ...day, events: dayEvents };
         });
         setDays(updatedDays);
-    }, [events, calendar]);
+    }, []);
 
 
     return (
@@ -54,10 +54,10 @@ const Calendar: React.FC<ICalendar> = ({
                     ))}
                 </AdaptGrid>
                 <AdaptGrid xs={7}>
-                    {days && days.map((date:IDate, key:number) => (
-                       <div key={key} className='calendar__date-container'>
-                        <CalendarDate date={date}/>
-                       </div>
+                    {days && days.map((date: IDate, key: number) => (
+                        <div key={key} className='calendar__date-container'>
+                            <CalendarDate date={date} />
+                        </div>
                     ))}
                 </AdaptGrid>
             </div>

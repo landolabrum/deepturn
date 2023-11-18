@@ -57,7 +57,7 @@
 
     min-height: 90px;
     padding: var(--s-5) 0;
-    width: calc(100% - 2px);
+    width: auto;
     z-index: 1;
 
     &::before {
@@ -76,9 +76,7 @@
     &__modal {
         gap: var(--s-4);
     }
-
-    outline: solid 1px var(--color-gray-70-opaque);
-
+    border: solid 1px transparent;
     &:hover {
         border: solid 1px var(--color-gray-60);
         background-color: var(--color-gray-60-opaque);

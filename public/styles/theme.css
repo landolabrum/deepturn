@@ -49,7 +49,7 @@
   --color-blue: #4f96ff;
   --color-blue-10: #54E3FF;
 
-  --color-body:var(--color-dark);
+  --color-body:var(--color-gray-90);
 
   --color-lite: #e0e0e0;
 

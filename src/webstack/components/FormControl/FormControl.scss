@@ -297,8 +297,8 @@ $elPad: 14px;
       outline: solid 1px transparent;
       
       &:hover {
-        border: none;
-        border-radius: 0;
+        border: solid 1px transparent;
+        background-color: var(--color-gray-70-opaque);
         --ui-icon-color: var(--color-blue-10);
         color: var(--color-blue-10);
       }

@@ -11,7 +11,7 @@ const UNAUTHED_LANDING = "/"
 const VERIFICATION_LANDING = '/verify'
 const LOGOUT_LANDING = '/authentication/[function]';
 // useRoute component handles the paths users are allowed and not allowed to navigate
-
+const DEV = false;
 export default function useRoute(handleSideNav?: () => void) {
   const userResponse = useUser();
   const [user, setUser] = useState<UserContext | null>(null);
@@ -49,26 +49,24 @@ export default function useRoute(handleSideNav?: () => void) {
   const handleUser = async () => {
     const conlog = {userResp: userResponse, path: router.pathname};
     if (userResponse) {
-      console.log('[ HANDLE USER ]( 1 )', conlog, user)
+      DEV && console.log('[ HANDLE USER ]( 1 )', conlog, user)
       setUser(userResponse);
       [UNAUTHED_LANDING,  '/', VERIFICATION_LANDING].includes(router.pathname) && handleRoute({ href: AUTHED_LANDING });
     }
     else if (!userResponse && ![VERIFICATION_LANDING, UNAUTHED_LANDING].includes(router.pathname)) {
-      console.log('[ HANDLE USER ]( 2 )', conlog)
+      DEV && console.log('[ HANDLE USER ]( 2 )', conlog)
       setUser(null);
       setHeader(null);
       if (router.pathname.includes(LOGOUT_LANDING)) {
-        console.log('[ HANDLE USER ]( 3 )', conlog)
+        DEV && console.log('[ HANDLE USER ]( 3 )', conlog)
         // SIGN OUT
         router.push('/');
       } else if (!router.pathname.includes(VERIFICATION_LANDING)) {
-        console.log('[ HANDLE USER ]( 4 )', conlog)
+        DEV && console.log('[ HANDLE USER ]( 4 )', conlog)
         handleRoute({href:UNAUTHED_LANDING});
-        // console.log("[ RT ]",);
       }
     } else {
-      console.log('[ HANDLE USER ]( 5 )', conlog)
-      // console.log('[ FAIl ]');
+      DEV && console.log('[ HANDLE USER ]( 5 )', conlog)
       return;
     }
   }
