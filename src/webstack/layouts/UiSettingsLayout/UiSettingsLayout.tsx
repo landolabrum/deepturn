@@ -58,7 +58,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
         const style = headerElem && window.getComputedStyle(headerElem);
         const mL = Number(style.marginLeft.replace('px',''));
         const act = `calc(${headerElem.offsetWidth} + ${mL})}`
-        setActionWidth(mL)
+        setActionWidth(width > 1660 ?mL:300)
         // console.log('[ headerContainer Margin Left ]', style.marginLeft);
         // console.log('[ headerContainer Margin Left ]', act);
       } else {

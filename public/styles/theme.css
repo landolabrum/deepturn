@@ -99,12 +99,16 @@ body {
   margin: 0;
   font-family: 'Play', sans-serif;
   background: var(--color-body);
+  #__next{
+    min-height: 100vh;
+  }
 }
 
 @media screen and (min-height: 400px) {
   body {
     overflow-x: hidden;
     overflow-y: auto;
+    min-height: 100vh;
   }
 
   body::-webkit-scrollbar-thumb {
