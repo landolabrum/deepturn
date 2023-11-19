@@ -1,0 +1,41 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.form-control-icon{
+    @extend .d-flex;
+    position: absolute;
+    width: var(--s-1);
+    &:hover{
+        filter: brightness(1.5);
+    }
+    &__before{left: 0;}
+    &__after{right: 0;}
+}
+
+
+.form-control__icon {
+    --ui-icon-color: inherit;
+    &:first-child {
+      border-radius: var(--default-border-radius) 0 0 var(--default-border-radius);
+    }
+    &:focus { --ui-icon-color: inherit; }
+    &:hover { --ui-icon-color: var(--color-primary); }
+    &:last-child {
+      border-radius: 0 var(--default-border-radius) var(--default-border-radius) 0;
+    }
+    &.form-control__icon-round {
+      &:last-child { padding-right: 5px; }
+    }
+    @extend .d-flex;
+    height: var(--default-element-height);
+    width: var(--default-element-height);
+    --ui-icon-width: var(--s-5);
+    --ui-icon-height: var(--s-5);
+
+    &.form-control__icon-dark {
+      color: var(--color-gray-30);
+      background-color: var(--color-gray-70-opaque);
+    }
+  }

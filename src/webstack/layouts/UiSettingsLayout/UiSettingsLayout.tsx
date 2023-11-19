@@ -31,7 +31,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   const queryViewId = router?.query?.vid && router.query.vid;
   const [view, setView] = useState<string | undefined>(defaultView);
   const { width, height } = useWindow();
-  const [actionWidth, setActionWidth]=useState(200);
+  const [actionStyles, setActionStyles]=useState({width: 350});
 
   const handleView = (view: string) => {
     console.log('[ handleView ]', view)
@@ -46,7 +46,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     setViewCallback && setViewCallback(view);
   }
   const containerClass = useClass('settings', undefined, variant);
-  const contentClass = useClass('settings__content', undefined, variant) + `${actionWidth < 150 ?' settings__col':''}`;
+  const contentClass = useClass('settings__content', undefined, variant) + `${actionStyles.width < 150 ?' settings__col':''}`;
   const viewClass = useClass('settings__view', undefined, variant);
   const handleLayout = () => {
     setTimeout(() => {
@@ -57,8 +57,9 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
         // console.log('[ headerContainer Width ]', headerElem.offsetWidth);
         const style = headerElem && window.getComputedStyle(headerElem);
         const mL = Number(style.marginLeft.replace('px',''));
-        const act = `calc(${headerElem.offsetWidth} + ${mL})}`
-        setActionWidth(width > 1660 ?mL:300)
+        let newActionStyles:any = {width:width > 1700 ?mL:300};
+      
+        setActionStyles(newActionStyles);
         // console.log('[ headerContainer Margin Left ]', style.marginLeft);
         // console.log('[ headerContainer Margin Left ]', act);
       } else {
@@ -88,26 +89,28 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
         <div className={contentClass}>
 
           <div className="settings__actions">
+              <Div maxWidth={1100} style={actionStyles}>
             <div className="settings__actions--content">
-              <Div maxWidth={900} style={{width: `${actionWidth}px`}}>
                 <UiMenu
                   options={optionViews()}
                   variant="flat"
                   value={view}
                   onSelect={handleView}
                 />
+                </div>
               </Div>
 
-              <Div minWidth={900} >
+              <Div minWidth={1100} >
+                <div className="settings__actions--content">
                 <UiSelect
                   onSelect={handleView}
-                  variant="dark"
                   title={capitalizeAll(view || '')}
                   // openState
                   options={optionViews()}
-                />
+                  />
+                  </div>
               </Div>
-            </div>
+            
           </div>
           <div className={viewClass}>
 

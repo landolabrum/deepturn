@@ -38,6 +38,7 @@ $div:calc(var(--default-padding) * -1);
       width: calc(100% - 40px);
     }
     @media(max-width:900px){
+      padding: var(--s-9) 0;
       width: 100%;
     }
     .header-left,
@@ -55,6 +56,7 @@ $div:calc(var(--default-padding) * -1);
       }
       .header-title {
         font-size:var(--s-1);
+        line-height: 1;
         height: var(--default-element-height);
         // @media(max-width:900px){
         //   font-size:var(--s-1);

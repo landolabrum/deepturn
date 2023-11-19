@@ -1,0 +1,85 @@
+$shadow-size: 8px;
+$badge: 19px;
+$elPad: 14px;
+
+.inherit {
+  // Inherits properties from the parent
+  --ui-icon-color: inherit;
+  --ui-icon-width: inherit;
+  --ui-icon-height: inherit;
+  text-decoration: inherit;
+  color: inherit;
+  background-color: inherit;
+  height: inherit;
+  min-height: inherit;
+  max-height: inherit;
+  width: inherit;
+  min-width: inherit;
+  max-width: inherit;
+  padding: inherit;
+  margin: inherit;
+  display: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+  flex-direction: inherit;
+  gap: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  border: inherit;
+  outline: inherit;
+  border-radius: inherit;
+  box-shadow: inherit;
+  aspect-ratio: inherit;
+  position: inherit;
+}
+
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.b-rad{
+  width: calc(100% - 2px);
+  outline: solid 1px transparent;
+  border: solid 1px transparent;
+  border-radius: var(--default-border-radius);
+  background-color: #f30;
+}
+.form-control {
+  // @extend  .b-rad;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-transform: capitalize;
+  height: max-content;
+  justify-content: space-around;
+  &.form-control--inherit { @extend .inherit; }
+  &.form-control--invalid {
+    label { color: var(--color-orange); }
+  }
+
+  .form-control__header {
+    @extend .d-flex;
+    justify-content: space-between;
+    min-height: var(--s-4);
+    label {
+      text-transform: capitalize;
+      color: var(--color-gray-60);
+      line-height: 2;
+      font-size: 14px;
+      font-weight: bold;
+      font-size: var(--s-7);
+      letter-spacing: 3px;
+      @media(max-width: 900px) { font-size: var(--s-9); }
+    }
+  }
+
+
+}
+
+@keyframes glow {
+   0% { box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.5); }
+  100% { box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0); }
+}

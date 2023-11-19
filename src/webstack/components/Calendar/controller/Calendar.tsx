@@ -6,7 +6,7 @@ import useCalendar from '../hooks/useCalendar';
 import CalendarDate from '../views/CalendarDate/CalendarDate';
 import { ICalendar } from '../models/ICalendar';
 import { IDate } from '../models/IDate';
-
+import { daysOfWeek } from '@webstack/helpers/userExperienceFormats';
 
 
 
@@ -20,7 +20,6 @@ const Calendar: React.FC<ICalendar> = ({
 }: ICalendar) => {
     const calendar = useCalendar(month, year); // November 2023
     const [days, setDays] = useState(calendar);
-    const dowNameArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     useEffect(() => {
         // Append events to days
@@ -48,12 +47,15 @@ const Calendar: React.FC<ICalendar> = ({
         <>
             <style jsx>{styles}</style>
             <div className='calendar'>
-                <AdaptGrid xs={7}>
-                    {dowNameArray.map((d, index) => (
-                        <div key={index} className='calendar__dow'>{d}</div>
-                    ))}
-                </AdaptGrid>
-                <AdaptGrid xs={7}>
+                <div className='calendar__dows'>
+                    <AdaptGrid xs={7}>
+                        {daysOfWeek.map((d, index) => (
+                            <div key={index} className='calendar__dow'>{d}</div>
+                        ))}
+                    </AdaptGrid>
+
+                </div>
+                <AdaptGrid xs={7} responsive>
                     {days && days.map((date: IDate, key: number) => (
                         <div key={key} className='calendar__date-container'>
                             <CalendarDate date={date} />

@@ -15,7 +15,9 @@ const Subscriptions: React.FC<any> = ({user}:{user: UserContext}) => {
     return (
         <>
             <style jsx>{styles}</style>
-            {today}<br />
+            <div className='subscriptions__'>
+
+            </div>
             <Calendar />
         </>
     );

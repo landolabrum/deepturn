@@ -72,7 +72,6 @@ const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, se
                   >
                     <UiButton variant='flat' traits={{
                       beforeIcon: option?.icon,
-                      width: '100%',
                       afterIcon: value?.includes(currentValue) ? {icon:'fa-check'} : ''
                     }}>
                       {label}

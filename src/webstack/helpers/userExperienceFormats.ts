@@ -121,6 +121,7 @@ export function stateFormat(stateISO: string) {
 }
 
 // DATES
+export const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export function getYearsArray(length: number, asStrings = true): (string | number)[] {
   const currentYear = new Date().getFullYear();
   return Array.from({ length: length }, (_, i) => asStrings ? (currentYear + i).toString() : currentYear + i);
