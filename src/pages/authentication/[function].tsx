@@ -1,8 +1,7 @@
 import { getService } from "@webstack/common";
 import { useRouter } from "next/router";
 import IMemberService from "~/src/core/services/MemberService/IMemberService";
-import UiLoader from "@webstack/components/UiLoader/UiLoader";
-
+import UiLoader from "@webstack/components/UiLoader/view/UiLoader";
 export default function AuthQuery(){
   const router = useRouter();
   const memberService = getService<IMemberService>("IMemberService");
@@ -10,5 +9,5 @@ export default function AuthQuery(){
     await memberService.signOut();
   };
   if(router.query.function==='signout')logoutUser().then(()=>router.push('/'));
-  return <><h1>LOADIN'</h1></>;
+  return <><h1>LOADIN</h1></>;
 }

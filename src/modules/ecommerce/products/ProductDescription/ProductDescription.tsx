@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styles from './ProductDescription.scss';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { useRouter } from 'next/router';
-import UiLoader from '@webstack/components/UiLoader/UiLoader';
+import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
 import ProductImage from '../views/ProductImage/ProductImage';
 import ProductBuyNow from '../views/ProductBuyNow/ProductBuyNow';

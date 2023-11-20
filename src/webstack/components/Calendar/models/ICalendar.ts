@@ -1,3 +1,4 @@
+import { IEvent } from "./IEvent";
 
 export interface ICalendar {
     events?: IEvent[];

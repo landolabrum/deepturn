@@ -9,6 +9,7 @@
     }
 
     &:hover {
+        transition: all 300ms;
         --ui-icon-color: var(--color-gray-50);
         color: var(--color-gray-50);
         background-color: var(--color-gray-80);
@@ -29,6 +30,8 @@
 
 .form-control__element {
     color: var(--color-gray-50);
+    border: solid 1px transparent;
+    border-radius: var(--default-border-radius);
     &:not(&--flat){
         @extend .element-color;
     }

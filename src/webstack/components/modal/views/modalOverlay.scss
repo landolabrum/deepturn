@@ -29,6 +29,7 @@
 }
 
 .modal {
+    min-height: 500px;
     $hundredWidth: calc(100% - 10px);
     $maxWidth: 900px;
     position: fixed;
@@ -72,6 +73,7 @@
         margin: 0;
     }
     &__content {
+        position: relative;
         @extend .d-flex;
         flex-direction: column;
         width: 800px;

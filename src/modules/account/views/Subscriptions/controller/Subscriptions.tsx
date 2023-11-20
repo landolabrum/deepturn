@@ -4,6 +4,7 @@ import styles from './Subscriptions.scss';
 import { dateFormat } from '@webstack/helpers/userExperienceFormats';
 import Calendar from '@webstack/components/Calendar/controller/Calendar';
 import UserContext from '~/src/models/UserContext';
+import { IEvent } from '@webstack/components/Calendar/models/IEvent';
 
 // Remember to create a sibling SCSS file with the same name as this component
 

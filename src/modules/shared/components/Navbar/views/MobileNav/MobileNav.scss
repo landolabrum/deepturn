@@ -6,11 +6,15 @@
 
 .navbar__mobile {
     display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: auto;
+    min-width: 100%;
     background-color: var(--color-gray-100);
-    border-radius: var(--default-border-radius);
+   border: solid 1px;
+    border-radius: 0 0 var(--default-border-radius) var(--default-border-radius);
     margin: var(--default-element-height) 0;
-    border: solid 1px var(--color-gray-70);
     @media(max-width: 1260px) {
         flex-direction: column;
         display: flex;
@@ -21,16 +25,12 @@
         width: 100%;
     }
     &--content {
-        // margin: var(--default-element-height) 0;
-        // border: solid 1px var(--color-gray-70);
         border-radius: var(--default-border-radius);
         display: flex;
         justify-content: space-around;
         flex-direction: column;
         gap: var(--s-9);
         padding: var(--s-5) var(--default-padding);
-
-        // @extend .d-flex;
         .nav__nav-item {
             @extend .d-flex;
             background-color: var(--color-gray-90);
@@ -41,9 +41,7 @@
             border: solid 1px var(--color-gray-80);
             font-size: var(--s-7);
             text-align: center;
-            justify-content: center;
             padding: var(--default-padding);
-
             &--account {
                 margin-left: auto;
             }
@@ -52,7 +50,6 @@
                 font-size: var(--s-3);
                 text-transform: capitalize;
             }
-
             &:hover,
             :focus {
                 cursor: pointer;
@@ -62,5 +59,3 @@
         }
     }
 }
-
-// }

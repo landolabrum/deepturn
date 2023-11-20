@@ -7,7 +7,7 @@ import CartList from '../views/CartList/CartList';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import CheckoutButton from '../../Checkout/views/CheckoutButton/CheckoutButton';
 import useCart from '../hooks/useCart';
-import UiLoader from '@webstack/components/UiLoader/UiLoader';
+import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 
 
 const Cart = ({ variant, traits }: any) => {

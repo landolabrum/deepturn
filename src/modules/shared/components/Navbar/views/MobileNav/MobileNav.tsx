@@ -14,8 +14,6 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }) => {
     return (
         <>
             <style jsx>{styles}</style>
-            <div className='dev'>
-            </div>
             <div className='navbar__mobile'>
                 {onBack && <div className='navbar__mobile--actions'>
                     <div>

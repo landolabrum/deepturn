@@ -1,4 +1,4 @@
-type IEvent = {
+export type IEvent = {
     title: string;
     description: string;
     iso: string;

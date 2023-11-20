@@ -80,7 +80,7 @@ const AccountMethods: React.FC<any> = ({open, customerMethods}:IAccountMethods) 
               })}
             </div>
           </div></>}
-        {loading == true && <h1>LOADIN'</h1>}
+        {loading == true && <h1>LOADIN</h1>}
       </div>
       </UiCollapse>
     </>

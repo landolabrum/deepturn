@@ -7,6 +7,7 @@ import { dateFormat } from '@webstack/helpers/userExperienceFormats';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { daysOfWeek } from '@webstack/helpers/userExperienceFormats';
+import { IEvent } from '../../models/IEvent';
 // Remember to create a sibling SCSS file with the same name as this component
 
 const CalendarDate: React.FC<any> = ({ date }: { date: IDate }) => {

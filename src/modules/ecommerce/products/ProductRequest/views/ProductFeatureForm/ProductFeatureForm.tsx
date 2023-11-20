@@ -7,7 +7,7 @@ import UiForm from '@webstack/components/UiForm/UiForm';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import useUserAgent from '@webstack/hooks/getUserAgentInfo';
-import UiLoader from '@webstack/components/UiLoader/UiLoader';
+import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import ProductFeatureOther from './views/ProductFeatureOther';
