@@ -34,14 +34,14 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   const [actionStyles, setActionStyles]=useState({width: 350});
 
   const handleView = (view: string) => {
-    console.log('[ handleView ]', view)
+    // console.log('[ handleView ]', view)
     router.push({
       pathname: router?.pathname,
       query: {
         vid:  keyStringConverter(view, true) || queryViewId
       }
     },
-      // undefined, { shallow: true }
+      undefined, { shallow: false }
     )
     setViewCallback && setViewCallback(view);
   }
