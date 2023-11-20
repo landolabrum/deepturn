@@ -53,7 +53,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   useEffect(() => {
     if (!traits) return;
     let formElement = ref.current.querySelector('.form-control__element');
-    if (variant === 'link') ref.current.style.width = 'max-content';
+    // if (variant === 'link') ref.current.style.width = 'max-content';
 
     // Apply styles from traits
     if (formElement) {
@@ -89,8 +89,10 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
 
   const varClasses = (className: string) => {
     const createElemIconClass = () =>{
-      if(traits?.beforeIcon || traits?.afterIcon)return ` ${className}--has-icon`;
-      return '';
+      if(traits?.beforeIcon && traits?.afterIcon )return ` ${className}--has-icon`;
+      else if(traits?.beforeIcon ) return ` ${className}--before-icon`;
+      else if(traits?.afterIcon )return ` ${className}--after-icon`;
+      return ''
     }
     const createVariantClass = () =>{
       return variant && variant.split(' ').reduce((acc, val) => {

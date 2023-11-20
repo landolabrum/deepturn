@@ -53,47 +53,45 @@ const Authentication: React.FC<any> = (props: any) => {
       setNewCustomerEmail(view);
     }
     if (newCustomerEmail != undefined) setView("sign-in");
-  }, [ newCustomerEmail])
+  }, [newCustomerEmail])
 
   return (
     <>
       <style jsx>{styles}</style>
-        <div className={`authentication ${view == 'sign-in'?' authentication__sign-in':''}`}>
+      <div className={`authentication ${view == 'sign-in' ? ' authentication__sign-in' : ''}`}>
 
-          {/* <span style={{color: "#fff" }} >{view}</span> */}
-          
-          <div className='authentication__view-header'>
-            <div className="authentication__logo">
-              <UiIcon icon="deepturn-logo" />
-            </div>
-            <div className='authentication__view-name'>
-              {keyStringConverter(view)}
-            </div>
+        {/* <span style={{color: "#fff" }} >{view}</span> */}
+
+        <div className='authentication__view-header'>
+          <div className="authentication__logo">
+            <UiIcon icon="deepturn-logo" />
           </div>
-          {view.includes("@") && <div className='authentication__email-verify'>
-            <div>An email has been sent to</div>
-            <UiButton  variant='link'>{view}</UiButton>, <div>click the link in the email to continue.</div>
-          </div>}
-          {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
-          {view == 'sign-up' && <SignUp setView={setView} />}
-          {view == 'verify' && router.query.token && <VerifyEmail token={router.query.token} onSuccess={setNewCustomerEmail} />}
-          <div className="authentication__view-action">
-            <div className="authentication__view-label">
-              {view == 'sign-in' && "no account?"}
-              {view == 'sign-up' && "already have an account?"}
-            </div>
-            <div>
-
-              <UiButton
-                onClick={handleView}
-                variant="link"
-              >
-                {view == 'sign-in' && "Sign Up"}
-                {view == 'sign-up' && "Login"}
-              </UiButton>
-            </div>
+          <div className='authentication__view-name'>
+            {keyStringConverter(view)}
           </div>
         </div>
+        {view.includes("@") && <div className='authentication__email-verify'>
+          <div>An email has been sent to</div>
+          <UiButton variant='link'>{view}</UiButton>, <div>click the link in the email to continue.</div>
+        </div>}
+        {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
+        {view == 'sign-up' && <SignUp setView={setView} />}
+        {view == 'verify' && router.query.token && <VerifyEmail token={router.query.token} onSuccess={setNewCustomerEmail} />}
+        <div className="authentication__view-action">
+          <div className="authentication__view-label">
+            {view == 'sign-in' && "no account?"}
+            {view == 'sign-up' && "already have an account?"}
+          </div>
+
+          <UiButton
+            onClick={handleView}
+            variant="link"
+          >
+            {view == 'sign-in' && "Sign Up"}
+            {view == 'sign-up' && "Login"}
+          </UiButton>
+        </div>
+      </div>
     </>
   );
 };

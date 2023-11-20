@@ -1,3 +1,24 @@
+@keyframes glow {
+    0% { box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.5); }
+   100% { box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0); }
+ }
+ @keyframes glowTxt {
+    0% {
+        text-shadow: 0 0 var(--s-9) var(--color-primary);
+    }
+    100% {
+        text-shadow: 0 0 var(--s-8) var(--color-secondary);
+    }
+  }
+  
+//  HELPERS
+.b-rad{
+    outline: solid 1px transparent;
+    border: solid 1px transparent;
+    border-radius: var(--default-border-radius);
+}
+
+
 .element-color{
     --ui-icon-color: var(--color-gray-50);
     background-color: var(--color-gray-90);
@@ -29,12 +50,30 @@
 }
 
 .form-control__element {
+    padding: 0 var(--default-padding);
     color: var(--color-gray-50);
-    border: solid 1px transparent;
-    border-radius: var(--default-border-radius);
-    &:not(&--flat){
+    // FORM CONTROL ELEMENTS - APPLY HELPERS
+    &:not(&--flat, &--link, &--nav-item, &--nav-item__active){
         @extend .element-color;
     }
+    &:not(&--nav-item,&--nav-item__active){
+        @extend .b-rad;
+    }
+    // FORM CONTROL ELEMENTS - VARIANT DEFINITIONS
+    &--link{
+        &:hover{animation: glowTxt 1s infinite;}
+    }
+    &--nav-item{
+        border-bottom: solid 1px var(--color-primary-opaque);
+        &:hover{
+            border-bottom: solid 1px var(--color-blue);
+        }
+    }
+    &--nav-item__active{
+        background-color: transparent;
+        border-bottom: solid 1px var(--color-secondary) !important;
+    }
+
     font-size: var(--default-font-size);
     --ui-icon-width: var(--default-font-size);
     --ui-icon-height: var(--default-font-size);
@@ -49,9 +88,17 @@
     height: calc(var(--default-element-height) - 2px);
     white-space: nowrap;
     width: auto;
+    // HANDLE ICONS
+    &--before-icon {
+        padding-left: var(--s-1);
+    }
+    &--after-icon {
+        padding-right: var(--s-1);
+    }
     &--has-icon {
         padding: 0 var(--s-1);
     }
+
     &--input {
         &:nth-child(2) {
             padding-left: var(--s-9);

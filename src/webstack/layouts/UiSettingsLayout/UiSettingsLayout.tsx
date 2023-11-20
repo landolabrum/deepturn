@@ -38,7 +38,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     router.push({
       pathname: router?.pathname,
       query: {
-        vid:  keyStringConverter(view, false) || queryViewId
+        vid:  keyStringConverter(view, true) || queryViewId
       }
     },
       // undefined, { shallow: true }
@@ -69,7 +69,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   }
   
   const optionViews = () =>  Object.keys(views).map(v => {
-    return keyStringConverter(v, true)
+    return keyStringConverter(v, false)
   });
   useEffect(() => {
     handleLayout();

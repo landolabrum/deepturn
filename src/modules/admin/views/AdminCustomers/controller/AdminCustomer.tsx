@@ -41,7 +41,7 @@ const AdminCustomer: React.FC = () => {
           <div className='admin-customer__actions'>
             <div className='admin-customer__actions'>
             </div>
-            <UiButton onClick={()=>handleView('list')}>customers</UiButton>
+            <UiButton traits={{afterIcon:'fa-circle-user'}} onClick={()=>handleView('list')}>customers</UiButton>
             <UiButton onClick={()=>handleView('add')}>add</UiButton>
           </div>
         </div>

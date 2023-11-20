@@ -35,14 +35,15 @@ button {
   height: inherit;
   line-height: inherit;
   width: 100%;
+  overflow: inherit;
   gap: inherit;
   text-transform: inherit;
   font-size: inherit;
+  animation: inherit;
   font-weight: inherit;
   font-family: inherit;
   cursor: inherit;
   // border-radius: inherit;
-  overflow: hidden;
   padding: 0;
   &.flat {
     margin: 0;

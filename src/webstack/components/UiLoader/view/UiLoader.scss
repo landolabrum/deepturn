@@ -57,15 +57,17 @@ min-height: 100px;
     }
 
     .ui-loader__icon-container {
-      height: 200px;
+      min-height: 150px;
       display: flex;
       justify-content: center;
       align-items: center;
       aspect-ratio: 1/1;
       .ui-loader__icon {
         --ui-icon-color: var(--color-gray-60);
-        --ui-icon-height: 150px;
-        --ui-icon-width: 150px;
+        --ui-icon-height: auto;
+        --ui-icon-width: 100%;
+        min-width: 70px;
+        width: inheriit;
       }
     }
   }

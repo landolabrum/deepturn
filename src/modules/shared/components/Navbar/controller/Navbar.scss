@@ -5,7 +5,7 @@
 
 nav {
   @extend .d-flex;
-  height: var(--default-element-height);
+  min-height: var(--default-element-height);
   width: 100vw;
   margin: 0 auto;
   gap: var(--default-padding);

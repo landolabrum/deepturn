@@ -88,6 +88,7 @@ const Navbar = () => {
   return (
     <>
       <style jsx>{styles}</style>
+      
       <nav id="nav-bar">
         <div className='navbar__trigger'>
           <UiIcon
@@ -99,7 +100,15 @@ const Navbar = () => {
         {currentRoutes && currentRoutes.map((route, key) => (
           <div
             key={key}
-            className={`nav__nav-item nav__nav-item--${route?.label}`}
+            className={
+              `nav__nav-item nav__nav-item--${
+                // ROUTE CLASS DEFINITIONS
+                String(route?.label).toLowerCase()
+              }${
+                // IS THE ROUTE CURRENT VIEW
+                toggled == route.label ?' nav__nav-item__active':''
+              }`
+            }
             onDoubleClick={() => route?.href && handleClick({ href: route.href })}
           >
             {!route?.items ? (
@@ -115,7 +124,7 @@ const Navbar = () => {
             ) : (
               <UiSelect
                 openState={Boolean(toggled && toggled == route.label) && 'open' || 'closed'}
-                variant='nav-item'
+                variant={toggled == route.label? 'nav-item__active':'nav-item'}
                 value={route.label === 'account' ? displayName : route.label}
                 options={route?.items}
                 onSelect={handleClick}

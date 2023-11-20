@@ -55,9 +55,42 @@ const AccountMethods: React.FC<any> = ({open, customerMethods}:IAccountMethods) 
     customerMethods && setMethods(customerMethods);
   }, [methods.length]);
 
+  if(open)return (
+    <>
+      <style jsx>{styles}</style>
+
+      {/* <UiCollapse label={label} open={!loading || open || user?.default_source == undefined}> */}
+      <div className='account-methods'>
+          <AccountCreateMethod
+            user={user}
+            onSuccess={handleCreated}
+          />
+        {methods.length > 0 && <>
+          <div className='account-methods__existing'>
+
+            <div className='account-methods__list'>
+              {Object.entries(methods).map(([key, method]) => {
+                return <div className='account-methods__list-item' key={key} >
+                  <AccountCurrentMethod
+                    default_source={user?.default_source}
+                    method={method}
+                    onDeleteSuccess={handleDelete}
+                    response={loading}
+                  />
+                </div>
+              })}
+            </div>
+          </div></>}
+        {loading == true && <h1>LOADIN</h1>}
+      </div>
+
+      {/* </UiCollapse> */}
+    </>
+  );
   return (
     <>
       <style jsx>{styles}</style>
+
       <UiCollapse label={label} open={!loading || open || user?.default_source == undefined}>
       <div className='account-methods'>
           <AccountCreateMethod
@@ -82,6 +115,7 @@ const AccountMethods: React.FC<any> = ({open, customerMethods}:IAccountMethods) 
           </div></>}
         {loading == true && <h1>LOADIN</h1>}
       </div>
+
       </UiCollapse>
     </>
   );

@@ -17,9 +17,9 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript />
           <span style={{ visibility: 'hidden' }}>
-          {`☠ Property of MindBurner Corporation ☠\nUnauthorized use is prohibited ☠☠☠☠☠☠☠☠☠☠
-          ☠☠☠ ${JSON.stringify({"buildDate": "buildTimestamp()"})} ☠☠☠
-          `}
+          {`☠☠☠☠☠☠☠☠☠☠☠☠☠ Property of MindBurner Corporation © ☠☠☠☠☠☠☠☠☠☠☠☠☠`}
+          {` ☠☠☠☠☠☠☠☠☠☠☠☠☠ Unauthorized use is prohibited ☠☠☠☠☠☠☠☠☠☠☠☠☠`}  
+          {`BUILD DATE: ( ${buildDate} )`}
           </span>
         </body>
       </Html>
