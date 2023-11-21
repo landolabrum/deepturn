@@ -2,14 +2,15 @@ import React, { useEffect, useRef } from "react";
 import styles from "./UiToggle.scss";
 import FormControl from "../FormControl/FormControl";
 
-interface ToggleProps {
+interface IToggle {
   name: string;
+  disabled?: boolean;
   label?: string;
   value?: boolean | 'true' | 'false';
   onChange: (checked: any) => void;
 }
 
-const ToggleSwitch = ({ value, onChange, name, label }: ToggleProps) => {
+const ToggleSwitch = ({ value, onChange, name, label, disabled }: IToggle) => {
   const togRef = useRef<any>(null)
   const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newE = {
@@ -19,7 +20,7 @@ const ToggleSwitch = ({ value, onChange, name, label }: ToggleProps) => {
       }
     }
     // // Call the provided onChange handler with the new checked state
-    onChange(newE);
+    !disabled && onChange(newE);
   };
   
   useEffect(() => {
@@ -35,13 +36,14 @@ const ToggleSwitch = ({ value, onChange, name, label }: ToggleProps) => {
       <FormControl variant='link' label={label}>
         <label className="toggle-switch">
           <input 
+            disabled={disabled}
             ref={togRef}
             name={name} 
             type="checkbox" 
             // {value == 'true' && 'checked': undefined}
             onChange={handleToggle} 
           />
-          <span className="slider" />
+          <span className={`slider ${disabled && ' slider--disabled' || ''}`} />
         </label>
       </FormControl>
     </>

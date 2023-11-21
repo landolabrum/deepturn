@@ -1,21 +1,20 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const useUserAgent = () => {
-    const[userAgentData, setNavigatorAvailable]=useState<any>(null);
-    useEffect(() => {
-        const checkNavigator = () => {
-          if (typeof window !== 'undefined' && window.navigator?.userAgent) {
-            const navigator:any = window.navigator;
-            setNavigatorAvailable(navigator?.userAgentData);
-          }
-        };
-        checkNavigator();
-      }, []);
-  return userAgentData;
+  const [userAgentInfo, setUserAgentInfo] = useState({});
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const navigator: any = window.navigator;
+      const userAgent = navigator.userAgent;
+      const userAgentData = navigator.userAgentData;
+
+      // Combine userAgent and userAgentData into one object
+      setUserAgentInfo({ userAgent, userAgentData });
+    }
+  }, []);
+
+  return userAgentInfo;
 };
 
 export default useUserAgent;
-
-const postUserAgent = () => {
-    
-}

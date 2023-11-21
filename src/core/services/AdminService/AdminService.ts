@@ -34,6 +34,18 @@ export default class AdminService
       throw new ApiError("No Token Provided", 400, "MS.SI.02");
     }
   };
+  public async deleteCustomer(customerId: string): Promise<any> {
+    if (customerId) {
+      try {
+        const customer = await this.get<any>(`/usage/admin/customer/delete?id=${customerId}`);
+        return customer;
+      } catch (error: any) {
+        return error;
+      }
+    }else{
+      throw new ApiError("No Token Provided", 400, "MS.SI.02");
+    }
+  };
   public async listCustomers(): Promise<any> {
     try {
       const customersList = await this.get<any>(`/usage/admin/customer/list`);

@@ -223,7 +223,7 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                 {collapse
                     ? (
                         <UiCollapse 
-                            open={ user?.default_source == undefined}
+                            open={ user?.default_source == undefined && 'opened'}
                             label='add payment method'>
                             <UiForm
                                 loading={status}

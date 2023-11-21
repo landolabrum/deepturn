@@ -42,6 +42,7 @@ nav {
 
     &--account, &--login  {
       margin-left: auto;
+      padding-right: var(--default-padding);
     }
   }
 }

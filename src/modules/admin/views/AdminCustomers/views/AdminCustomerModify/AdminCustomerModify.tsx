@@ -6,17 +6,23 @@ import IAdminService from '~/src/core/services/AdminService/IAdminService';
 import { dateFormat, phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { useNotification } from '@webstack/components/Notification/Notification';
-
+import keyStringConverter from '@webstack/helpers/keyStringConverter';
+import UiButton from '@webstack/components/UiButton/UiButton';
+import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { useRouter } from 'next/router';
 
 
 const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
+  const router = useRouter();
   const [methods, setMethods] = useState([]);
   const [customer, setCustomer] = useState<any>(null);
-const [notification, setNotification]=useNotification();
+  const findField:any= (name:string)=>customer && customer.find((f:IFormField)=>f.name == name)?.value;
+  const customerName = findField('name');
+  const [notification, setNotification]=useNotification();
   function modifyCustomerData(data: any): any {
     const hideKeys = ['id', 'methods', 'default_source', 'shipping', 'object', 'currency', 'invoice_settings', 'next_invoice_sequence', 'preferred_locales', 'test_clock', 'invoice_prefix'];
     const modKeys = ['metadata'];
-    const disabledKeys = ['created'];
+    const disabledKeys = ['created', 'server_url', 'referrer_url', 'email_verified','delinquent','livemode','balance'];
     const handleFormatValue = (key: string, value: any) => {
       let val = value;
       if (key == 'methods') {
@@ -28,21 +34,42 @@ const [notification, setNotification]=useNotification();
       else if (value == null) val = '';
       return val;
     }
-    const formatted = Object.entries(data)
+    const handleFormatType = (key: string,  value: any) =>{
+      let t =typeof value == 'boolean'?'checkbox' : 'text';
+      if(key=='password') t= 'password';
+      if(key == 'email_verified')t='checkbox';
+      return t;
+    }
+    const formatted = (dta?: any) => {
+     return Object.entries(dta || data)
       .filter(([key]) => !modKeys.includes(key) && !hideKeys.includes(key))
       .map(([key, value]) => (
         {
           name: key,
-          label: key,
+          label: keyStringConverter(key),
           value: handleFormatValue(key, value),
-          type: typeof value == 'boolean' ? 'checkbox' : 'text',
+          type: handleFormatType(key, handleFormatValue(key, value)),
           variant: 'default',
           disabled: disabledKeys.includes(key) || undefined,
           placeholder: '',
         }
       )
       )
-    return formatted;
+    }
+    return [...formatted(), ...formatted(data.metadata)];
+  }
+  const {openModal, closeModal} = useModal();
+  const confirmDelete = () =>{
+    try{
+      adminService.deleteCustomer(customerId);
+      router.reload();
+    }catch(e){
+      alert(JSON.stringify(e))
+    }
+
+  }
+  const handleDelete = () =>{
+    openModal({confirm:{title:'Ya Shure?', statements:[{text:'yes', onClick: confirmDelete}, {text:'no',onClick:closeModal}]}})
   }
   const adminService = getService<IAdminService>('IAdminService');
   const onChange = (e:{target:{name: string, value: any}}) => {
@@ -53,7 +80,6 @@ const [notification, setNotification]=useNotification();
     }));
   }
   const onSubmit = async () => {
-    const findField:any= (name:string)=>customer.find((f:IFormField)=>f.name == name)?.value;
     let request:any = {
       name: findField('name'),
       email: findField('email'),
@@ -108,7 +134,11 @@ const [notification, setNotification]=useNotification();
         <div className='admin-customer-modify__title'>
           Admin Customer Modify
         </div>
-        <UiForm  fields={customer} onChange={onChange} onSubmit={onSubmit} />
+        <UiForm btnText='Modify'  fields={customer} onChange={onChange} onSubmit={onSubmit} />
+        <hr style={{width:'100%'}}/>
+        <div className='admin-customer-modify__delete'>
+        <UiButton onClick={handleDelete} variant='secondary'>delete {customer?.length && customerName}</UiButton>
+        </div>
       </div>
     </>
   );

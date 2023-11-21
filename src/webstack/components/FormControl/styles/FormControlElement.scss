@@ -53,18 +53,80 @@
 .form-control__element {
     padding: 0 var(--default-padding);
     color: var(--color-gray-50);
-
-    
+    font-size: var(--default-font-size);
+    --ui-icon-width: var(--default-font-size);
+    --ui-icon-height: var(--default-font-size);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    line-height: 1;
+    height: calc(var(--default-element-height) - 2px);
+    white-space: nowrap;
+    width: auto;
+    // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
-    &:not(&--flat, &--link, &--nav-item, &--nav-item__active, &--select, &--invalid){
+    &:not(&--flat, &--secondary, &--link,  &--nav-item, &--nav-item__active, &--select, &--invalid){
         @extend .element-color;
     }
     &:not(&--nav-item,&--nav-item__active){
         @extend .b-rad;
     }
+    // HANDLE ICONS
+    &--before-icon {
+        padding-left: var(--s-1);
+    }
+    &--after-icon {
+        padding-right: var(--s-1);
+    }
+    &--has-icon {
+        padding: 0 var(--s-1);
+    }
+
+    &--input, &--textarea {
+        &:focus-within{
+            border: solid 1px var(--color-gray-80);
+            color: var(--color-gray-100) !important;
+            background-color: var(--color-gray-40) !important;
+        }
+        &:hover{
+            font-weight: 900;
+            color: var(--color-gray-100) !important;
+            background-color: var(--color-gray-20) !important;
+        }
+        &:nth-child(2) {
+            padding-left: var(--s-9);
+        }
+    }
+    &--textarea{
+        height: max-content;
+        min-height: var(--default-element-height);
+    }
+    &-disabled {
+        &:hover {
+            user-select: none;
+            cursor: not-allowed;
+        }
+    }
+    
+   
 
 
     // FORM CONTROL ELEMENTS - VARIANT DEFINITIONS
+    &--secondary {
+        background-color: var(--color-secondary-opaque);
+        color: var(--color-gray-20);
+        &:hover{
+            background-color: var(--color-secondary);
+            color: var(--color-white);
+        }
+    }
+    &--dark {
+        background-color: var(--color-dark);
+    }
     &--link{
         &:hover{animation: glowTxt 1s infinite;}
     }
@@ -118,40 +180,5 @@
     }
   
 
-    font-size: var(--default-font-size);
-    --ui-icon-width: var(--default-font-size);
-    --ui-icon-height: var(--default-font-size);
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    font-weight: 300;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    line-height: 1;
-    height: calc(var(--default-element-height) - 2px);
-    white-space: nowrap;
-    width: auto;
-    // HANDLE ICONS
-    &--before-icon {
-        padding-left: var(--s-1);
-    }
-    &--after-icon {
-        padding-right: var(--s-1);
-    }
-    &--has-icon {
-        padding: 0 var(--s-1);
-    }
 
-    &--input {
-        &:nth-child(2) {
-            padding-left: var(--s-9);
-        }
-    }
-    &-disabled {
-        &:hover {
-            user-select: none;
-            cursor: not-allowed;
-        }
-    }
 }

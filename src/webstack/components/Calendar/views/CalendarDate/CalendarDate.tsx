@@ -10,7 +10,7 @@ import { daysOfWeek } from '@webstack/helpers/userExperienceFormats';
 import { IEvent } from '../../models/IEvent';
 // Remember to create a sibling SCSS file with the same name as this component
 
-const CalendarDate: React.FC<any> = ({ date }: { date: IDate }) => {
+const CalendarDate: React.FC<any> = ({ date, btnText = 'rsvp' }: { date: IDate, btnText: string }) => {
     const { openModal, closeModal } = useModal();
     const Events = ({ events }: { events: IEvent[] }) => {
         const day = dateFormat(`${date.year}-${date.month}-${date.day}`);
@@ -28,29 +28,30 @@ const CalendarDate: React.FC<any> = ({ date }: { date: IDate }) => {
                         </div>
                         <div className='calendar-date-modal__event--description'>{event.description}</div>
                         <div className='calendar-date-modal__event--action'>
-                            <UiButton>rsvp</UiButton>
+                            <UiButton>{btnText}</UiButton>
                         </div>
                     </div>
                 ))}
             </div>
         </>
     }
-    const handleClick = () => {
-
+    const handleClick = (eventIndex?: any) => {
+        eventIndex.preventDefault;
         const events = date?.events;
-        events?.length && openModal(<Events events={events} />)
+        if(!events?.length)return;
+        if(typeof eventIndex == 'number')openModal(<Events events={[events[eventIndex]]} />);
+        // else if(typeof eventIndex == 'object'){openModal(<Events events={events} />)}
     }
     return (
         <>
             <style jsx>{styles}</style>
             <div
-                className='calendar-date'
+                className={`calendar-date${date?.events?.length && ' calendar-date__has-event' || ''}`}
                 data-day={String(date.day)}
                 data-mobile-day={`${daysOfWeek[date.dow]} ${dateFormat(`${date.month}-${date.day}-${date.year}`)}`}
-                onClick={handleClick}
             >
                 {date?.events && date.events.map((event, eventKey) => (
-                    <div key={eventKey} className='calendar-date__event'>
+                    <div onClick={()=>handleClick(eventKey)} key={eventKey} className='calendar-date__event'>
                         <div className='calendar-date__event--title'>{event.title}</div>
                         {event.time && <div className='calendar-date__event--time'>
                             <UiIcon icon='fa-clock' />

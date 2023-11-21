@@ -7,7 +7,7 @@ import {
 } from "react";
 import styles from "./Overlay.scss";
 const NO_SCROLL = "no-scroll";
-export type OverlayProps = OverlayItem;
+export type IOverlay = OverlayItem;
 type OverlayItem = {
   active: boolean;
   transparent?: boolean;
@@ -18,7 +18,7 @@ type OverlayItem = {
 };
 
 const OverlayContext = 
-createContext<[OverlayProps, (overlay: OverlayProps) => any]>
+createContext<[IOverlay, (overlay: IOverlay) => any]>
 (
   [
     { active: false },
@@ -33,7 +33,7 @@ type OverlayProviderProps = {
 export const OverlayProvider: React.FC<OverlayProviderProps> = ({
   children,
 }) => {
-  const overlayState = useState<OverlayProps>({ active: false });
+  const overlayState = useState<IOverlay>({ active: false });
 
   return (
     <OverlayContext.Provider value={overlayState}>
@@ -45,7 +45,7 @@ export const OverlayProvider: React.FC<OverlayProviderProps> = ({
 
 const Overlay: React.FC = () => {
   const [context, setContext] = useContext(OverlayContext);
-  const [overlayState, setOverlayState] = useState<OverlayProps | null>(null);
+  const [overlayState, setOverlayState] = useState<IOverlay | null>(null);
   const handleBodyScroll = useCallback(() => {
     const body = document.getElementById("app-body");
     if (context?.noScroll) {

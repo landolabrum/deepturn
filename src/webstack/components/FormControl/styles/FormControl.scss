@@ -48,19 +48,11 @@ $elPad: 14px;
   text-transform: capitalize;
   height: max-content;
   justify-content: space-around;
-  &.form-control--inherit { @extend .inherit; }
-  &.form-control--invalid {
-    label { color: var(--color-orange); }
-  }
-  // VARIANT DEFINITIONS
-
-  &--link {
-    width: 100%;
-  }
   .form-control__header {
     @extend .d-flex;
     justify-content: space-between;
     min-height: var(--s-4);
+
     label {
       text-transform: capitalize;
       color: var(--color-gray-60);
@@ -69,10 +61,37 @@ $elPad: 14px;
       font-weight: bold;
       font-size: var(--s-7);
       letter-spacing: 3px;
-      @media(max-width: 900px) { font-size: var(--s-9); }
+
+      @media(max-width: 900px) {
+        font-size: var(--s-9);
+      }
+    }
+  }
+
+  &.form-control--inherit {
+    @extend .inherit;
+  }
+
+  &.form-control--invalid {
+    label {
+      color: var(--color-orange);
+    }
+  }
+
+  // VARIANT DEFINITIONS
+
+  &--link {
+    width: 100%;
+  }
+
+  &--dark {
+    .form-control__header {
+      label {
+        color: var(--color-gray-100);
+      }
     }
   }
 
 
-}
 
+}

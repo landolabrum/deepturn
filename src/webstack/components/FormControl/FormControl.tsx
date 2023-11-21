@@ -4,7 +4,7 @@ import elStyles from "./styles/FormControlElement.scss";
 import iStyles from "./styles/FormControlIcon.scss";
 import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
 import React, { Children, cloneElement, useEffect, useRef } from "react";
-import { OverlayProps, useOverlay } from "@webstack/components/Overlay/Overlay";
+import { IOverlay, useOverlay } from "@webstack/components/Overlay/Overlay";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import UiMarkdown from "../UiMarkDown/UiMarkDown";
 
@@ -31,7 +31,7 @@ export interface IFormControl {
   label?: string | React.ReactElement;
   variant?: IVariant;
   overlay?: boolean;
-  setOverlay?: (e: OverlayProps) => void;
+  setOverlay?: (e: IOverlay) => void;
   children?: string | React.ReactElement | React.ReactFragment | number;
   traits?: ITraits;
   error?: string | null;
@@ -70,7 +70,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
 
       // Special handling for USABLE elements
       const hasDataElem:any = Object.values(formElement.children)
-      .find((e:any) => e.getAttribute('data-element') && ['button', 'input', 'select'].includes(e.getAttribute('data-element')));
+      .find((e:any) => e.getAttribute('data-element') && ['button', 'input', 'select', 'textarea'].includes(e.getAttribute('data-element')));
       if(hasDataElem)formElement.classList.add(`form-control__element--${hasDataElem.getAttribute('data-element')}`);
     }
 

@@ -64,8 +64,8 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     }, 100);
   }
 
-  const optionViews = () => Object.keys(views).map(v => {
-    return keyStringConverter(v, true)
+  const optionViews = (dashed:boolean = true) => Object.keys(views).map(v => {
+    return keyStringConverter(v, dashed)
   });
   useEffect(() => {
     handleLayout();
@@ -75,7 +75,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       const firstView = queryViewId || defaultView || Object.keys(views)[0];
       firstView && setView(String(firstView));
     }
-  }, [setViewCallback]);
+  }, [queryViewId]);
   if (!Boolean(view)) return <UiLoader />;
   return (
     <>
@@ -88,7 +88,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
             <Div maxWidth={1100} style={actionStyles}>
               <div className="settings__actions--content">
                 <UiMenu
-                  options={optionViews()}
+                  options={optionViews(false)}
                   variant="flat"
                   value={view}
                   onSelect={handleView}
@@ -102,7 +102,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
                   onSelect={handleView}
                   title={capitalizeAll(view || '')}
                   // openState
-                  options={optionViews()}
+                  options={optionViews(false)}
                 />
               </div>
             </Div>

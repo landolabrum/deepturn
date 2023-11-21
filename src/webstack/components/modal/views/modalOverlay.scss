@@ -47,31 +47,38 @@
     overflow-x: hidden;
 
     @media (orientation: portrait) {
-        height: 100vh; /* Limit the modal height to 80% of the viewport height */
+        height: 100vh;
+        /* Limit the modal height to 80% of the viewport height */
     }
-    @media(min-width: 1100px){
+
+    @media(min-width: 1100px) {
         width: 800px; // Set a fixed width for larger screens
         // max-width: 90%; // Add a max-width to ensure it doesn't get too wide on very large screens
         height: auto; // Height can be auto for scrollable content
         margin: var(--default-element-height) auto;
+
         @media (orientation: landscape) {
             height: calc(100vh - 90px);
         }
+
         @media (orientation: portrait) {
             // margin-top: 100px;
-            margin:0;
+            margin: 0;
             // max-width: $hundredWidth;
             transform: translate(calc(50vw - 400px), 200px); // Center the modal
         }
-        &__fullscreen{
+
+        &__fullscreen {
             transform: unset;
         }
     }
-    &__fullscreen{
+
+    &__fullscreen {
         width: 100vw;
         height: auto;
         margin: 0;
     }
+
     &__content {
         position: relative;
         @extend .d-flex;
@@ -87,54 +94,64 @@
         box-shadow: var(--default-box-shadow-xl);
         min-height: max-content;
         transition: all 1s;
+
         &::-webkit-scrollbar-thumb {
             background-color: var(--color-blue);
             border-radius: 5px;
         }
-        &:hover{
+
+        &:hover {
             transition: all 1s;
             background-color: var(--color-gray-100);
         }
+
         &::-webkit-scrollbar {
             width: 10px;
             aspect-ratio: 1/1;
             background-color: #00000033;
         }
-        
+
         @media(max-width:1260px) {
             @media (orientation: portrait) {
                 margin-top: 100px;
                 max-width: $hundredWidth;
             }
         }
+
         @media(max-width:900px) {
-            margin:var(--s-9);
+            margin: var(--s-9);
             // background-color: var(--color-gray-100-opaque);
             justify-content: flex-start;
         }
-        &__fullscreen{
+
+        &__fullscreen {
             width: 100vw;
             padding: 0;
-            &:hover{
+
+            &:hover {
                 background-color: #ffffff00;
             }
         }
 
     }
+
     &__header {
         @extend .d-flex;
         align-self: flex-start;
         justify-content: space-between;
         width: 100%;
         font-size: var(--s-4);
+
         .modal-overlay__icon {
             --ui-icon-color: var(--color-gray-40);
+
             &:hover {
                 cursor: pointer;
                 --ui-icon-color: var(--color-primary);
             }
         }
-        &__fullscreen{
+
+        &__fullscreen {
             position: absolute;
             top: 0;
             left: 0;
@@ -143,21 +160,38 @@
             padding: 0 var(--default-padding);
             width: calc(100% - calc(var(--default-padding) * 2));
             min-height: var(--default-element-height);
-            &:hover{
+
+            &:hover {
                 background-color: var(--color-gray-100);
             }
         }
     }
+
     &__body {
         word-wrap: break-word;
         width: 100%;
-        max-height: calc(100vh - var(--default-element-height)); /* Limit the modal body height to 75% of the viewport height */
-        overflow-y: auto; 
-        @media(max-width: 900px){
-            max-height: calc(100vh - 60px); /* Adjust the height to account for other modal elements */
+        max-height: calc(100vh - var(--default-element-height));
+        /* Limit the modal body height to 75% of the viewport height */
+        overflow-y: auto;
+
+        @media(max-width: 900px) {
+            max-height: calc(100vh - 60px);
+            /* Adjust the height to account for other modal elements */
         }
-        &__fullscreen{
+
+        &__fullscreen {
             z-index: 1;
+        }
+
+        .modal-overlay__confirm {
+            width: 100%;
+            margin: var(--default-element-height) 0 var(--default-padding);
+            @extend .d-flex;
+            flex-direction: column;
+            gap: var(--default-padding);
+            &-btn{
+                width: 100%;
+            }
         }
     }
 }

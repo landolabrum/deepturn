@@ -133,6 +133,7 @@ const AdminCustomerList: React.FC<any> = ({onRowClick}:any) => {
           hideColumns:hideColumns,
           tableTitle:'customer list'
         }}
+        loading={!Object(customers)?.length}
         data={customers}
         onRowClick={onRowClick}
         />

@@ -9,7 +9,7 @@ import ToggleSwitch from '../UiToggle/UiToggle';
 import UiCheckBox from '../UiCheckbox/UiCheckBox';
 import FormControl from '../FormControl/FormControl';
 
-const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading, disabled }: IForm) => {
+const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading, disabled }: IForm) => {
     const textTypes = ['', undefined, 'text', 'password', 'email', 'number', 'tel', null, false, 'expiry'];
     const boolTypes = ['checkbox'];
     const [complete, setComplete] = useState<boolean>(false);
@@ -88,7 +88,7 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                         <UiInput
                             label={field.label}
                             variant={
-                                Boolean(field?.error) ? 'invalid' : field?.variant
+                                Boolean(field?.error) ? 'invalid' : variant || field?.variant 
                             }
                             disabled={field?.disabled}
                             error={field.error}
@@ -106,6 +106,7 @@ const UiForm = ({ fields, onSubmit, onError: onLocalErrors, title, btnText, onCh
                     {boolTypes.includes(String(field.type)) && <ToggleSwitch
                         label={field.label}
                         name={field.name}
+                        disabled={field?.disabled}
                         onChange={e => handleInputChange(e, field?.constraints)}
                         value={Boolean(field?.value)} />
                     }

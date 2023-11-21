@@ -36,7 +36,7 @@ export const LinkProvider: FC<ILinkProvider> = ({ href, target, children, rel, f
     </>
   );
 };
-interface IButton extends IFormControl {
+export interface IButton extends IFormControl {
   onClick?: (e: any) => void;
   disabled?: boolean;
   busy?: boolean;

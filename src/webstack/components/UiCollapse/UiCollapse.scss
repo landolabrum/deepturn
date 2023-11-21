@@ -110,12 +110,15 @@ $wid: calc(100%);
     @include flexCenter;
     height: $button_height;
     min-height: $button_height;
-    background-color: var(--color-gray-90);
+    background-color: var(--color-gray-80);
 
     @media(max-width:900px) {
         padding: 0;
     }
 
+    &__opened {
+        height: max-content;
+    }
     &__open {
         animation: openCollapse 1s forwards;
     }
@@ -125,7 +128,7 @@ $wid: calc(100%);
     }
 
     &__action {
-        background-color: var(--color-gray-90);
+        background-color: var(--color-gray-70);
         position: absolute;
         top: 0;
         left: 0;
@@ -135,8 +138,8 @@ $wid: calc(100%);
         height: $button_height;
         @include flexCenter;
         text-transform: capitalize;
-        font-size: var(--s-6);
-
+        font-size: var(--s-5);
+        font-weight: 700;
         @media(max-width:1100px) {
             font-size: var(--s-5);
         }
@@ -151,15 +154,15 @@ $wid: calc(100%);
         &:hover {
             background-color: var(--color-gray-80);
         }
-
+        &__opened {
+            color: var(--color-gray-40);
+        }
         &__open {
             animation: openAction 1s forwards;
-            animation-play-state: running;
         }
 
         &__closed {
             animation: closeAction 1s forwards;
-            animation-play-state: running;
         }
     }
 
@@ -178,7 +181,7 @@ $wid: calc(100%);
             &:hover{
                 background-color: var(--color-gray-80);
             }
-            &__open {
+            &__open, &__opened {
                 background-color: var(--color-primary);
             }
         }
@@ -187,7 +190,7 @@ $wid: calc(100%);
             width: 100%;
             padding: 0 !important;
             background-color: var(--color-gray-80);
-            &__open {
+            &__open, &__opened {
                 padding-top: var(--default-element-height);
             }
         }
@@ -199,7 +202,13 @@ $wid: calc(100%);
     height: var(--default-element-height);
     padding: var(--default-padding) 0;
     &__open {
+
         animation: openBody 1s forwards;
+    }
+    &__opened {
+        transform: translateY(0);
+        margin-top: calc(var(--default-element-height) - 2px);
+        height: max-content;
     }
     &__close {
         animation: closeBody 1s forwards;

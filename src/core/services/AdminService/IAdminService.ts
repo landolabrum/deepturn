@@ -3,5 +3,6 @@ export default interface IAdminService {
   getCurrentUserToken(): string | undefined;
   listCustomers(): Promise<any>;
   getCustomer(customerId: string): Promise<any>;
+  deleteCustomer(customerId: string): Promise<any>;
   updateMember(id: string, memberData: any): Promise<any>;
 }

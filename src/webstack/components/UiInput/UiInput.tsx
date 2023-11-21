@@ -11,8 +11,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   const { type, value, onChange, onKeyDown, onKeyUp, message, required } = props;
   const [show, setShow] = useState<boolean>(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    
+  const handleChange = (e: any) => {
     if (props?.max && props.max < e.target.value.length) return;
     let _e: any = {
       target: {
@@ -36,6 +35,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   if (props.variant == 'invalid' && value?.length == 0) props.variant == undefined;
   const elType = show && type === "password" ? "text" : type;
   useEffect(() => { }, [props?.variant, value]);
+  const isTextArea = String(value).length > 100;
 
   return (
     <>
@@ -51,7 +51,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
               onClick: () => setShow(!show)
             } : props.traits?.afterIcon,
           }}>
-          <input
+          {!isTextArea ? <input
             data-element={props['data-element'] || 'input'}
             disabled={props?.disabled || undefined}
             id={props?.id}
@@ -69,7 +69,24 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             onPaste={props.onPaste}
             required={Boolean(required)}
           // defaultValue={ props.defaultValue ? props.defaultValue :  value}
-          />
+          /> : <textarea
+            data-element={props['data-element'] || 'textarea'}
+            disabled={props?.disabled || undefined}
+            id={props?.id}
+            className={inputClasses}
+            name={props.name}
+            placeholder={props.placeholder}
+            value={value}
+            onChange={handleChange}
+            autoComplete={props.autoComplete}
+            onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
+            onPaste={props.onPaste}
+            required={Boolean(required)}
+          // defaultValue={ props.defaultValue ? props.defaultValue :  value}
+          />}
+
+
         </FormControl>
       }
       {props.name == 'address' && <AutocompleteAddressInput

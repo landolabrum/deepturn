@@ -11,6 +11,7 @@
     height: 0;
   }
   
+  
   .slider {
     position: absolute;
     cursor: pointer;
@@ -34,9 +35,15 @@
     transition: 0.4s;
     border-radius: 50%;
   }
-  
-  input:checked + .slider {
+  input:checked + .slider:not(.slider--disabled) {
     background-color: #2196f3;
+  }
+  input:checked + .slider.slider--disabled {
+    cursor: not-allowed;
+    background-color: var(--color-primary-opaque);
+    &:before {
+      background-color: var(--color-gray-50);
+    }
   }
   
   input:checked + .slider:before {

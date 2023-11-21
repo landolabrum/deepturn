@@ -3,6 +3,7 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import styles from "@webstack/components/modal/views/modalOverlay.scss"; // or use your preferred way of styling
 import { ModalContext } from '../contexts/modalContext';
 import useClass from '@webstack/hooks/useClass';
+import UiButton, { IButton } from '@webstack/components/UiButton/UiButton';
 
 const ModalOverlay: React.FC = () => {
   const { isModalOpen, closeModal, modalContent }: any = useContext(ModalContext);
@@ -19,7 +20,8 @@ const ModalOverlay: React.FC = () => {
   }
 
   let title = modalContent?.title;
-  let children = modalContent?.children || modalContent;
+  let confirm = modalContent?.confirm;
+  let children = confirm && ' ' || modalContent?.children || modalContent;
 
   return (
     <>
@@ -29,7 +31,7 @@ const ModalOverlay: React.FC = () => {
         <div className={modalContentClass}>
           <div className={modalHeaderClass}>
             <div className='modal-overlay__title'>
-              {title}
+              {title || confirm?.title}
             </div>
             <div className='modal-overlay__icon'>
               <UiIcon icon='fa-xmark' onClick={closeModal} />
@@ -38,6 +40,16 @@ const ModalOverlay: React.FC = () => {
 
           <div className={modalBodyClass}>
             {children}
+            {Object(confirm?.statements)?.length && 
+            <div className='modal-overlay__confirm'>
+
+            {Object.values(confirm?.statements).map((btn:any, key: number)=>{
+              return <div key={key} className='modal-overlay__confirm-btn'>
+              <UiButton onClick={btn.onClick} variant={btn?.variant}>{btn.text}</UiButton>
+            </div>
+            })}
+            </div>
+            }
           </div>
           <div className='modal__footer'>
           </div>

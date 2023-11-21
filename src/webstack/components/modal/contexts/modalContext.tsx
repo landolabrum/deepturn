@@ -1,8 +1,14 @@
+import { IVariant } from '@webstack/components/AdapTable/models/IVariant';
+import { IButton } from '@webstack/components/UiButton/UiButton';
 import { createContext, ReactNode, useContext, useState } from 'react';
-
+type IConfirm ={
+  title?: string;
+  statements?: {text?: string, onClick?:(e:any)=>void, variant?: IVariant}[];
+} | undefined;
 export type IModalContent = {
   children?: ReactNode | null | string;
   variant?: "popup" | 'fullscreen';
+  confirm?: IConfirm;
 } | ReactNode | null;
 
 interface ModalContextType {

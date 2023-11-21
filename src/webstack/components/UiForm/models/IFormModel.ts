@@ -35,6 +35,7 @@ export type IFormField = {
 
 export interface IForm {
     traits?: ITraits;
+    variant?: IVariant;
     disabled?: boolean;
     loading?: OForm;
     fields?: IFormField[];

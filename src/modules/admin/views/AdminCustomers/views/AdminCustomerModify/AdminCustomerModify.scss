@@ -5,16 +5,25 @@
 }
 
 .admin-customer-modify {
+    border-radius: var(--default-border-radius);
+    background-color: var(--color-gray-80);
+    padding: var(--default-padding);
     @extend .d-flex;
     flex-direction: column;
     overflow: hidden;
-    width: 100%;
+    width: auto;
     align-items: stretch;
     gap: var(--default-padding);
 
     &__title {
         font-size: var(--s-1);
         color: var(--color-gray-40);
+    }
+    &__delete {
+    
+        margin-left: auto;
+        padding: var(--default-padding);
+        width: max-content;
     }
 
     &__info {

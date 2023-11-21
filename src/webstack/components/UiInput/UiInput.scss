@@ -1,8 +1,9 @@
-input {
+input, textarea {
   // Define your custom styles for the input elements/
   width: 100%;
   height: inherit;
   font-size: inherit;
+  font-weight: inherit;
   outline: none;
   color: inherit;
   border: none;
@@ -34,7 +35,7 @@ input {
 
   // Override the autofilled input styles
   &:-webkit-autofill,
-  // &:-webkit-autofill:hover,
+  &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
   &:-webkit-autofill:active,
   &:-internal-autofill-selected

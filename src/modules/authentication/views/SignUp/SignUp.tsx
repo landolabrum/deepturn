@@ -28,7 +28,9 @@ export interface ISignUp {
 const form = [
   { name: "first_name", label: "first name", placeholder: 'first name', required: true },
   { name: "last_name", label: "last name", placeholder: 'last name', required: true },
-  { name: "email", type: 'email', label: "email", placeholder: 'your@email.com', required: true, error: 'email exists' },
+  { name: "email", type: 'email', label: "email", placeholder: 'your@email.com', required: true, 
+  // error: 'email exists' 
+},
   { name: "password", label: "password", type: 'password', placeholder: 'password', required: true },
   { name: "confirm_password", label: "confirm password", type: 'password', placeholder: 'confirm password', required: true }
 ];
@@ -37,7 +39,6 @@ const SignUp = ({ setView }: ISignUp) => {
   const user = useUser();
   const memberService = getService<IMemberService>("IMemberService");
   const user_agent = useUserAgent();
-
   const [fields, setFields] = useState<any>(form);
 
   const changeField = (fieldName: string, key: string, value: string) => {
@@ -111,7 +112,7 @@ const SignUp = ({ setView }: ISignUp) => {
       }, {});
       request.name = `${request.first_name} ${request.last_name}`
       request.user_agent = user_agent;
-      request.referrer_url = URL
+      request.referrer_url = URL;
       // console.log('[ REQ ]', request)
       try {
         const resp = await memberService.signUp(request);

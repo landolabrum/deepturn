@@ -12,7 +12,7 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IAccountMethods{
-  open?: boolean;
+  open?: boolean | 'opened';
   customerMethods?: any;
 }
 const AccountMethods: React.FC<any> = ({open, customerMethods}:IAccountMethods) => {
@@ -91,7 +91,7 @@ const AccountMethods: React.FC<any> = ({open, customerMethods}:IAccountMethods) 
     <>
       <style jsx>{styles}</style>
 
-      <UiCollapse label={label} open={!loading || open || user?.default_source == undefined}>
+      <UiCollapse label={label} open={open || !loading || user?.default_source == undefined}>
       <div className='account-methods'>
           <AccountCreateMethod
             user={user}
