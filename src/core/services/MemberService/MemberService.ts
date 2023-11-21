@@ -92,12 +92,13 @@ export default class MemberService
     }
   }
 
-  public async signUp(
+  public async signUp( 
     {
       name,
       email,
       password,
-      user_agent
+      user_agent,
+      referrer_url
     }: any
   ): Promise<UserContext> {
     if (!email) {
@@ -112,6 +113,7 @@ export default class MemberService
         name: name,
         email: email,
         password: password,
+        referrer_url: referrer_url,
         user_agent: user_agent
       },
     );
@@ -182,7 +184,7 @@ export default class MemberService
     if (id && memberData) {
       try {
         const res = await this.put<any, any>(
-          `api/customer?id=${id}`,
+          `api/customer/?id=${id}`,
           memberData
         );
         let memberJwt: any = null;

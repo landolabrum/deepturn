@@ -10,7 +10,7 @@ $el_gap: 7px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: auto;
   height: max-content;
   overflow: hidden;
   .menu__search {
@@ -35,20 +35,11 @@ $el_gap: 7px;
     border-radius: unset;
     width: 100%;
     .menu__option {
-      width: 100% !important;
-      background-color: unset;
-      border-bottom: solid 1px var(--color-gray-60);
-      border-radius: 0;
-      &:first-child{border-radius: unset}
-      &:last-child{
-        border-radius: unset;
-        border-bottom: unset;
-      }
+      overflow: hidden;
       &:hover{
         background-color: var(--color-primary-opaque);
       }
       &.active{
-        border-bottom: solid 1px;
         color: var(--color-gray-30);
         --ui-icon-color: var(--color-gray-30);
       }
@@ -73,10 +64,10 @@ $el_gap: 7px;
     border-width: $brdr;
     border-style: solid;
     border-color: var(--color-gray-80);
-    background-color: var(--color-gray-90);
+    background-color: var(--color-gray-80);
 
     &:hover{
-      background-color: var(--color-gray-80);
+      background-color: var(--color-gray-70);
     }
     &.active{
       background-color: var(--color-primary);

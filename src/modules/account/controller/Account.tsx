@@ -15,7 +15,7 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
     "edit profile": <ProfileForm user={user} open />,
     "email notification": "email notification",
     "privacy & security": "privacy & security",
-    'billing': <AccountMethods open />,
+    'billing info': <AccountMethods open />,
   };
     return (
       <>

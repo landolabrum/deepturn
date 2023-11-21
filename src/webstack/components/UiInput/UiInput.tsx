@@ -52,6 +52,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             } : props.traits?.afterIcon,
           }}>
           <input
+            data-element={props['data-element'] || 'input'}
             disabled={props?.disabled || undefined}
             id={props?.id}
             className={inputClasses}

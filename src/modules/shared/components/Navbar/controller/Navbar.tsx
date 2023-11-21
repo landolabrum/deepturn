@@ -10,6 +10,7 @@ import { useCartTotal } from "~/src/modules/ecommerce/cart/hooks/useCart";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import MobileNav from "../views/MobileNav/MobileNav";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const [user, current, setRoute]: any = useRoute();
@@ -84,11 +85,12 @@ const Navbar = () => {
   useEffect(() => {
     width > 1100 && closeModal();
   }, [width]);
-
   return (
     <>
       <style jsx>{styles}</style>
-      
+<div className='dev'>
+
+  </div>      
       <nav id="nav-bar">
         <div className='navbar__trigger'>
           <UiIcon
@@ -96,20 +98,19 @@ const Navbar = () => {
             onClick={handleTrigger}
           />
         </div>
-
         {currentRoutes && currentRoutes.map((route, key) => (
           <div
-            key={key}
-            className={
-              `nav__nav-item nav__nav-item--${
-                // ROUTE CLASS DEFINITIONS
-                String(route?.label).toLowerCase()
-              }${
-                // IS THE ROUTE CURRENT VIEW
-                toggled == route.label ?' nav__nav-item__active':''
-              }`
-            }
-            onDoubleClick={() => route?.href && handleClick({ href: route.href })}
+          key={key}
+          className={
+            `nav__nav-item nav__nav-item--${
+              // ROUTE CLASS DEFINITIONS
+              String(route?.label).toLowerCase()
+            }${
+              // IS THE ROUTE CURRENT VIEW
+              toggled == route.label ?' nav__nav-item__active':''
+            }`
+          }
+          onDoubleClick={() => route?.href && handleClick({ href: route.href })}
           >
             {!route?.items ? (
               <UiButton

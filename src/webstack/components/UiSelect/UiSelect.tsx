@@ -83,6 +83,7 @@ const UiSelect: React.FC<SelectProps> = ({
           >
             {/* t: {title_} | s: {selectedOption} */}
           <UiInput 
+            data-element='select'
             type="button"
             label={label}
             variant={hasOptions && variant !== 'disabled'? variant:"select__disabled"}

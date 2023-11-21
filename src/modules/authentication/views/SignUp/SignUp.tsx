@@ -7,6 +7,8 @@ import useUserAgent from "~/src/core/authentication/hooks/useUserAgent";
 import UiForm from "@webstack/components/UiForm/UiForm";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { IFormField } from "@webstack/components/UiForm/models/IFormModel";
+import environment from "~/src/environment";
+import { useRouter } from "next/router";
 
 const DEFAULT_RESPONSE = { response: "", message: "" };
 const authResponseMessages: any = {
@@ -26,7 +28,7 @@ export interface ISignUp {
 const form = [
   { name: "first_name", label: "first name", placeholder: 'first name', required: true },
   { name: "last_name", label: "last name", placeholder: 'last name', required: true },
-  { name: "email", type: 'email', label: "email", placeholder: 'your@email.com', required: true },
+  { name: "email", type: 'email', label: "email", placeholder: 'your@email.com', required: true, error: 'email exists' },
   { name: "password", label: "password", type: 'password', placeholder: 'password', required: true },
   { name: "confirm_password", label: "confirm password", type: 'password', placeholder: 'confirm password', required: true }
 ];
@@ -88,7 +90,13 @@ const SignUp = ({ setView }: ISignUp) => {
     });
     return hasError;
   }
+  const { asPath } = useRouter();
+  const origin =
+      typeof window !== 'undefined' && window.location.origin
+          ? window.location.origin
+          : '';
 
+  const URL = `${origin}${asPath}`;
   const handleChange = (e: any) => {
     const {name, value}=e.target;
     changeField(name, 'value', value);
@@ -103,6 +111,8 @@ const SignUp = ({ setView }: ISignUp) => {
       }, {});
       request.name = `${request.first_name} ${request.last_name}`
       request.user_agent = user_agent;
+      request.referrer_url = URL
+      // console.log('[ REQ ]', request)
       try {
         const resp = await memberService.signUp(request);
         if (resp.status == 'created' && resp.email != undefined && setView) setView(resp.email);setLoading(false);

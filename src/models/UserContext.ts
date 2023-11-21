@@ -15,6 +15,7 @@ export default interface UserContext {
   metadata?: any;
   methods?: any;
   address?: UserAddress;
+  referrer_url?: string;
 }
 export interface UserAddress{
   line1?: string;

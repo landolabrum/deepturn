@@ -46,19 +46,24 @@
             background-color: var(--color-gray-70);
             outline: solid 1px var(--color-gray-60);
         }
+
     }
 }
 
 .form-control__element {
     padding: 0 var(--default-padding);
     color: var(--color-gray-50);
+
+    
     // FORM CONTROL ELEMENTS - APPLY HELPERS
-    &:not(&--flat, &--link, &--nav-item, &--nav-item__active){
+    &:not(&--flat, &--link, &--nav-item, &--nav-item__active, &--select, &--invalid){
         @extend .element-color;
     }
     &:not(&--nav-item,&--nav-item__active){
         @extend .b-rad;
     }
+
+
     // FORM CONTROL ELEMENTS - VARIANT DEFINITIONS
     &--link{
         &:hover{animation: glowTxt 1s infinite;}
@@ -73,6 +78,45 @@
         background-color: transparent;
         border-bottom: solid 1px var(--color-secondary) !important;
     }
+
+    // FORM CONTROL ELEMENTS - INVALID DEFINITIONS
+    &--invalid{
+        position: relative;
+        border: solid 1px var(--color-invalid-border) !important;
+        color: var(--color-invalid-border) !important;
+        --ui-icon-color: var(--color-invalid-border) !important;
+
+        .form-control__invalid{
+            position: absolute;
+            font-style: italic;
+            right: var(--s-2);
+            font-size: var(--s-3);
+            font-weight: bold;
+            user-select: none;
+            color: var(--color-secondary-opaque);
+            opacity: .5;
+        }
+    }
+    &-disabled{
+        filter: brightness(.7) blur(1px);
+        // filter: blur(3px)
+    }
+    // FORM CONTROL ELEMENTS - ELEM TYPES
+    &--select:not(&--nav-item, &--nav-item__active){
+        color: var(--color-gray-60);
+        --ui-icon-color: var(--color-gray-60);
+        background-color: var(--color-gray-70);
+        &:hover{
+            color: var(--color-gray-40);
+            --ui-icon-color: var(--color-gray-40);
+        }
+        &:focus-within{
+            color: var(--color-white);
+            --ui-icon-color: var(--color-white);
+            background-color: var(--color-primary-opaque);
+        }
+    }
+  
 
     font-size: var(--default-font-size);
     --ui-icon-width: var(--default-font-size);

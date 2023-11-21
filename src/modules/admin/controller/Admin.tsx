@@ -29,9 +29,6 @@ const Admin = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='dev'>
-      c: {currentView}
-      </div>
       <UiSettingsLayout
         defaultView={currentView}
         name='admin'

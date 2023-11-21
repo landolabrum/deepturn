@@ -1,1 +1,37 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.admin-customer-modify {
+    @extend .d-flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+    align-items: stretch;
+    gap: var(--default-padding);
+
+    &__title {
+        font-size: var(--s-1);
+        color: var(--color-gray-40);
+    }
+
+    &__info {
+        @extend .d-flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: var(--s-9);
+        width: auto;
+        border-radius: var(--default-border-radius);
+        padding: var(--default-padding);
+        background-color: var(--color-gray-70);
+
+        &--field {
+            &--key {
+                font-weight: 900;
+                text-transform: capitalize;
+            }
+        }
+    }
+}

@@ -68,11 +68,10 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
       formElement.classList.toggle('form-control__element-disabled', traits?.disabled != undefined);
       if (traits?.responsive) formElement.classList.add('form-control__element-responsive');
 
-      // Special handling for input elements
-      const isInput = formElement.querySelector('input:not([type="button"])');
-      if (isInput) {
-        formElement.classList.add("form-control__element--input");
-      }
+      // Special handling for USABLE elements
+      const hasDataElem:any = Object.values(formElement.children)
+      .find((e:any) => e.getAttribute('data-element') && ['button', 'input', 'select'].includes(e.getAttribute('data-element')));
+      if(hasDataElem)formElement.classList.add(`form-control__element--${hasDataElem.getAttribute('data-element')}`);
     }
 
     // Overlay management
@@ -88,13 +87,13 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   }, [overlay, traits, variant, setOverlay, setOverlayState]);
 
   const varClasses = (className: string) => {
-    const createElemIconClass = () =>{
-      if(traits?.beforeIcon && traits?.afterIcon )return ` ${className}--has-icon`;
-      else if(traits?.beforeIcon ) return ` ${className}--before-icon`;
-      else if(traits?.afterIcon )return ` ${className}--after-icon`;
+    const createElemIconClass = () => {
+      if (traits?.beforeIcon && traits?.afterIcon) return ` ${className}--has-icon`;
+      else if (traits?.beforeIcon) return ` ${className}--before-icon`;
+      else if (traits?.afterIcon) return ` ${className}--after-icon`;
       return ''
     }
-    const createVariantClass = () =>{
+    const createVariantClass = () => {
       return variant && variant.split(' ').reduce((acc, val) => {
         const variantClass = `${className}--${val}`;
         return acc.includes(variantClass) ? acc : `${acc} ${variantClass}`.trim();

@@ -23,6 +23,10 @@ export interface HandleRouteProps {
   items?: SelectableRoute[] | undefined;
   active?: boolean;
 }
+// CLEARANCES
+// 1 - 5 Customer
+// 6 Tennant
+// 7 + Admin
 
 export const routes: IRoute[] = [
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
@@ -54,7 +58,7 @@ export const routes: IRoute[] = [
     label: "Home",
     icon: "fa-home",
     href:"/home",
-    clearance: 10,
+    clearance: 6,
     items: [
       { label: "stream",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
       { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },

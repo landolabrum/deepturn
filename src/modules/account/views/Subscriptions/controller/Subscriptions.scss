@@ -1,1 +1,13 @@
-    
+
+
+
+
+.subscriptions {
+    width: 100%;
+    &__calendar {
+        &--title{
+            font-size: var(--s-1);
+            color:var(--color-gray-50);
+        }
+    }
+}

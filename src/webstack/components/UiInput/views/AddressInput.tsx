@@ -64,7 +64,7 @@ const AutocompleteAddressInput = ({ address, setAddress, traits, inputClasses, l
         className={inputClasses}
         id="autocomplete-address"
         type="text"
-        placeholder="Enter your address"
+        placeholder="Enter address"
         defaultValue={addressDisplay}
         name="address"
       />

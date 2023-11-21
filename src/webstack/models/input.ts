@@ -26,4 +26,5 @@ export interface IInput extends IFormControl {
   message?: string;
   focus?: boolean;
   required?: boolean;
+  'data-element'?: string;
 } 

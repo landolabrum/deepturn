@@ -81,7 +81,7 @@ const ProfileForm = ({ user, open = false }: any) => {
     }
   }, [user, fields]);
   
-  if (!user) return <></>;
+  if (!user) return <>no user</>;
   return (
     <>
       <style jsx>{styles}</style>

@@ -60,6 +60,7 @@ const ButtonContext = ({ context }: IButtonContext) => {
       <style jsx>{styles}</style>
       <FormControl label={context.label} variant={context.variant} traits={traits}>
         <button
+          data-element='button'
           type={context?.type && context?.type}
           className={context?.variant ? context?.variant : ""}
           onClick={context?.onClick}

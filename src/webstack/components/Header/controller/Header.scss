@@ -26,6 +26,7 @@ $div:calc(var(--default-padding) * -1);
   z-index: 1;
   height: max-content;
   padding: var(--s-8) var(--s-8) 0;
+
   @media(max-width:900px){
     padding: 0 var(--s-8);
   }
@@ -33,6 +34,9 @@ $div:calc(var(--default-padding) * -1);
     height: max-content;
     margin: auto;
     width: auto;
+    @media(min-width:1260px){
+      max-width: 1240px;
+    }
     @media(max-width:1260px){
       flex-direction: column;
     }
