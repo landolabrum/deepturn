@@ -10,7 +10,8 @@ import { useCartTotal } from "~/src/modules/ecommerce/cart/hooks/useCart";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import MobileNav from "../views/MobileNav/MobileNav";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
+import environment from "~/src/environment";
 
 const Navbar = () => {
   const [user, current, setRoute]: any = useRoute();
@@ -88,9 +89,6 @@ const Navbar = () => {
   return (
     <>
       <style jsx>{styles}</style>
-<div className='dev'>
-
-  </div>      
       <nav id="nav-bar">
         <div className='navbar__trigger'>
           <UiIcon
@@ -117,7 +115,7 @@ const Navbar = () => {
                 traits={
                   route?.icon && { beforeIcon: { icon: route.icon } } || undefined
                 }
-                variant='flat'
+                variant={toggled == route.label || current == '/' && route.label?.toLowerCase() == environment.merchant.name ? 'nav-item__active':'nav-item'}
                 onClick={() => handleClick(route)}
               >
                 {route.label}

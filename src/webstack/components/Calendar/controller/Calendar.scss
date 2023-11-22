@@ -9,7 +9,25 @@
     border-radius: var(--default-border-radius);
     overflow: hidden;
     width: 100%;
+    &__header{
+        @extend .d-flex;
+        justify-content: space-between;
+        width: auto;
+        padding: var(--s-9) var(--s-5);
+        &--title{
+            text-transform: capitalize;
+            font-size: var(--s-3);
+            color: var(--color-gray-50);
+            font-family: Game;
+            font-style: normal;
 
+        }
+        &--filters{
+            @extend .d-flex;
+            justify-content: flex-end;
+
+        }
+    }
     &__dows {
         @media(max-width: 900px) {
             display: none;

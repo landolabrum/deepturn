@@ -126,13 +126,18 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
     // HANDLERS
     const handleMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        if (name === 'number') {
+        console.log('[ handleMethodChange ]', typeof value, value)
+        if (name === 'number' && typeof value != 'object') {
             const values = value.split(',');
             const foundMethodBrand: any = values[1]
             if (values?.length) {
                 setBrand(foundMethodBrand);
                 setMethod(prevMethod => ({ ...prevMethod, [name]: values[0].trim() }));
             }
+        }
+        else if (name === 'number' && typeof value == 'object') {
+                setMethod(prevMethod => ({ ...prevMethod, [name]: value[0] }));
+                setBrand(value[1])
         } else {
             setMethod(prevMethod => ({ ...prevMethod, [name]: (typeof value == 'string' ? value.trim() : value) }));
         }
@@ -224,7 +229,9 @@ const AccountCreateMethod: React.FC<IAccountCreateMethod> = ({
                     ? (
                         <UiCollapse 
                             open={ user?.default_source == undefined && 'opened'}
-                            label='add payment method'>
+                            label='add payment method'
+                            variant='dark'
+                            >
                             <UiForm
                                 loading={status}
                                 fields={getFieldsConfiguration()}

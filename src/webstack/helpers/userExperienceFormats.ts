@@ -121,7 +121,12 @@ export function stateFormat(stateISO: string) {
 }
 
 // DATES
-export const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+// let monthFull = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+// let dayFull = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
+
+export const dowArray = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ];
+export const monthArray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 export function getYearsArray(length: number, asStrings = true): (string | number)[] {
   const currentYear = new Date().getFullYear();
   return Array.from({ length: length }, (_, i) => asStrings ? (currentYear + i).toString() : currentYear + i);

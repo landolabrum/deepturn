@@ -144,7 +144,7 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
             )) : (<UiLoader position='relative' />)}
 
             <div className='form__submit'>
-                <UiButton disabled={!complete || disabled} variant={complete && !disabled && 'primary'} type='submit' busy={loading == true} >
+                <UiButton  disabled={!complete || disabled} variant={complete && !disabled && 'primary'} type='submit' busy={loading == true} >
                     {btnText ? btnText : 'Submit'}
                 </UiButton>
             </div>

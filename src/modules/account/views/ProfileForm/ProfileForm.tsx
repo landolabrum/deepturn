@@ -11,6 +11,7 @@ import UiMarkdown from '@webstack/components/UiMarkDown/UiMarkDown';
 const ProfileForm = ({ user, open = false }: any) => {
   const memberService = getService<IMemberService>('IMemberService');
   const [notifiication, setNotification]=useNotification();
+  const [busy, setBusy]=useState(false);
   const initialFields: IFormField[] = [
     { name: 'first_name', label: 'first name', required: true },
     { name: 'last_name', label: 'last name', required: true },
@@ -54,6 +55,7 @@ const ProfileForm = ({ user, open = false }: any) => {
     }));
   };
   const onSubmit = async (form:any)=>{
+    setBusy(true);
     const findField:any= (name:string)=>fields.find(f=>f.name == name)?.value;
     let request:any = {
       name: `${findField('first_name')} ${findField('last_name')}`,
@@ -72,7 +74,7 @@ const ProfileForm = ({ user, open = false }: any) => {
     }catch(e){
       console.log('[ EROR ]', e);
     }
-
+    setBusy(false);
   }
   useEffect(() => {
     // Check if the user object is present and if the fields have not been updated yet
@@ -85,12 +87,14 @@ const ProfileForm = ({ user, open = false }: any) => {
   return (
     <>
       <style jsx>{styles}</style>
+      <div className='profile-form'>
       <UiForm
         fields={fields}
         onChange={onChange}
         onSubmit={onSubmit}
+        loading={busy}
       />
-
+      </div>
     </>
   );
 };

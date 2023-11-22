@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 import { ITraits } from '../FormControl/FormControl';
 
 interface IPill {
-  amount: number,
+  amount: number | string,
   setAmount: (qty: number) => void,
   variant?: IVariant,
   traits?: ITraits
@@ -14,7 +14,8 @@ interface IPill {
 
 const UiPill = ({ amount, setAmount, variant, traits }: IPill) => {
   const [value,setValue]=useState<string>("0");
-  let _traits:any = {
+  let _traits:any = traits;
+  if(!_traits && typeof amount == 'number')_traits = {
     beforeIcon:{
       icon:amount > 1 ?"fas-minus": "fa-trash-can",
       onClick:()=>handleAmount('minus'),
@@ -41,7 +42,7 @@ const UiPill = ({ amount, setAmount, variant, traits }: IPill) => {
   }, [debouncedHandleInput]);
 
   const handleAmount = useCallback((method: "plus" | "minus") => {
-    setAmount(amount + (method === "plus" ? 1 : -1));
+    typeof amount == 'number' && setAmount(amount + (method === "plus" ? 1 : -1));
   }, [amount, setAmount]);
 
 useEffect(() => {

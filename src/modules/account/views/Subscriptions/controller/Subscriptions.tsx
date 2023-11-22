@@ -18,10 +18,7 @@ const Subscriptions: React.FC<any> = ({ user }: { user: UserContext }) => {
             <style jsx>{styles}</style>
             <div className='subscriptions'>
                 <div className='subscriptions__calendar'>
-                    <div className='subscriptions__calendar--title'>
-                        Calendar
-                    </div>
-                    <Calendar />
+                    <Calendar title='subscriptions'/>
                 </div>
             </div>
         </>

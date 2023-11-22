@@ -13,14 +13,16 @@
   
 //  HELPERS
 .b-rad{
-    outline: solid 1px transparent;
-    border: solid 1px transparent;
+    &:not(.form-control__element--input){
+        outline: solid 1px transparent;
+        border: solid 1px transparent;
+    }
     border-radius: var(--default-border-radius);
 }
 
-
+// COLORS
 .element-color{
-    --ui-icon-color: var(--color-gray-50);
+    --ui-icon-color: var(--color-gray-40);
     background-color: var(--color-gray-90);
     &:focus-within {
         color: var(--color-gray-40);
@@ -69,7 +71,8 @@
     width: auto;
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
-    &:not(&--flat, &--secondary, &--link,  &--nav-item, &--nav-item__active, &--select, &--invalid){
+ 
+    &:not(&--primary, &--flat, &--secondary, &--link,  &--nav-item, &--nav-item__active, &--select, &--invalid, &--input, &--textarea){
         @extend .element-color;
     }
     &:not(&--nav-item,&--nav-item__active){
@@ -85,20 +88,29 @@
     &--has-icon {
         padding: 0 var(--s-1);
     }
-
     &--input, &--textarea {
+        --ui-icon-color: var(--color-gray-50);
+        &:not(&--nav-item, &--nav-item__active){
+            font-family: 'Game', sans-serif;
+            font-style: italic;
+        }
+        background-color: var(--color-gray-70);
+        border: solid 1px var(--color-gray-60);
         &:focus-within{
-            border: solid 1px var(--color-gray-80);
-            color: var(--color-gray-100) !important;
-            background-color: var(--color-gray-40) !important;
+            border: solid 1px var(--color-secondary);
+            --ui-icon-color: var(--color-gray-100);
+            color: var(--color-gray-100);
+            background-color: var(--color-gray-20);
         }
         &:hover{
-            font-weight: 900;
-            color: var(--color-gray-100) !important;
-            background-color: var(--color-gray-20) !important;
+            font-weight: 500;
+            border-color:var(--color-gray-70);
+            color: var(--color-gray-100);
+            --ui-icon-color: var(--color-gray-100);
+            background-color: var(--color-gray-40);
         }
         &:nth-child(2) {
-            padding-left: var(--s-9);
+            padding-left: var(--default-padding);
         }
     }
     &--textarea{
@@ -116,6 +128,22 @@
 
 
     // FORM CONTROL ELEMENTS - VARIANT DEFINITIONS
+    // &--flat{
+
+    // }
+
+    &--primary{
+        background-color: var(--color-dark);
+        color: var(--color-gray-40);
+        --ui-icon-color: var(--color-gray-40);
+        &:hover{
+            background-color: var(--color-primary);
+        }
+        &:focus-within{
+            background-color: var(--color-primary);
+            filter: brightness(.8);
+        }
+    }
     &--secondary {
         background-color: var(--color-secondary-opaque);
         color: var(--color-gray-20);
@@ -131,12 +159,15 @@
         &:hover{animation: glowTxt 1s infinite;}
     }
     &--nav-item{
+        --ui-icon-color: var(--color-gray-50) !important;
+        
         border-bottom: solid 1px var(--color-primary-opaque);
         &:hover{
             border-bottom: solid 1px var(--color-blue);
         }
     }
     &--nav-item__active{
+        --ui-icon-color: var(--color-gray-50);
         background-color: transparent;
         border-bottom: solid 1px var(--color-secondary) !important;
     }

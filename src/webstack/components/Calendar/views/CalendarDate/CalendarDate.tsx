@@ -6,7 +6,7 @@ import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import { dateFormat } from '@webstack/helpers/userExperienceFormats';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import { daysOfWeek } from '@webstack/helpers/userExperienceFormats';
+import { dowArray } from '@webstack/helpers/userExperienceFormats';
 import { IEvent } from '../../models/IEvent';
 // Remember to create a sibling SCSS file with the same name as this component
 
@@ -48,7 +48,7 @@ const CalendarDate: React.FC<any> = ({ date, btnText = 'rsvp' }: { date: IDate, 
             <div
                 className={`calendar-date${date?.events?.length && ' calendar-date__has-event' || ''}`}
                 data-day={String(date.day)}
-                data-mobile-day={`${daysOfWeek[date.dow]} ${dateFormat(`${date.month}-${date.day}-${date.year}`)}`}
+                data-mobile-day={`${dowArray[date.dow]} ${dateFormat(`${date.month}-${date.day}-${date.year}`)}`}
             >
                 {date?.events && date.events.map((event, eventKey) => (
                     <div onClick={()=>handleClick(eventKey)} key={eventKey} className='calendar-date__event'>
