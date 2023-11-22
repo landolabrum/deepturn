@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[893],{8859:function(n,u,t){"use strict";t.r(u);var _=t(3041);u.default=_.default},3248:function(n,u,t){(window.__NEXT_P=window.__NEXT_P||[]).push(["/verify/[token]",function(){return t(8859)}])}},function(n){n.O(0,[774,888,179],function(){return n(n.s=3248)}),_N_E=n.O()}]);
