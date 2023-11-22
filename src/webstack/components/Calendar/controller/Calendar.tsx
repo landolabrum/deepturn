@@ -27,9 +27,6 @@ const Calendar: React.FC<ICalendar> = ({
     const [amount, setAmount] = useState<any>();
     const firstDay = () => dayISO(days[0]);
     const lastDay = () => dayISO(days[days.length - 1]);
-    const calendar = (mm:any, yy:any)=>{
-        return useCalendar(mm,yy)
-    }
     const handleAmount = (direction: string) => {
         const dir = direction == 'plus' ? 1 : -1;
         const refDay: IDate = days[15];
@@ -37,7 +34,7 @@ const Calendar: React.FC<ICalendar> = ({
         const newMonth = refDay.month + dir;
         const newYear = refMonth == 1 ? refDay.year - 1 : refMonth == 12 ? refDay.year + 1 : refDay.year;
         console.log({ m: newMonth, y: newYear });
-        setDays(updatedDays(useCalendar(newMonth, newYear)));
+        // setDays(updatedDays(useCalendar(newMonth, newYear)));
         // monthArray.map((mm, i)=>{
         //     console.log(i, mm)
         // })
@@ -45,7 +42,7 @@ const Calendar: React.FC<ICalendar> = ({
         // if(direction == 'minus')setAmount(amount > 0 ? amount - 1:0);
         // else{setAmount( amount + 1);}
     }
-
+    const initialCalendar = useCalendar();
     const updatedDays = (calendar:any)=>{
         return calendar.map((day:IDate) => {
             const iso:any = dayISO(day);
@@ -68,7 +65,7 @@ const Calendar: React.FC<ICalendar> = ({
     useEffect(() => {
         // Append events to days
         // setDays(calendar)
-        setDays(updatedDays(calendar));
+        setDays(updatedDays(initialCalendar));
     }, []);
 
 
