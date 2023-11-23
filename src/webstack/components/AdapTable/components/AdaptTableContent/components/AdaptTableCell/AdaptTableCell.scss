@@ -54,10 +54,10 @@ $cell-height: 100%;
 }
 
 // SHARED
-.adaptable-cell__id {
-  height: $cell-height;
-  display: flex;
-  align-items: center;
+.adapt-table-cell__id {
+  overflow: hidden;
+  width: inherit;
+  text-overflow: ellipsis;
 }
 
 .cell-flex {

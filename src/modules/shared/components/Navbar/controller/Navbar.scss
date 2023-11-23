@@ -6,10 +6,9 @@
 nav {
   @extend .d-flex;
   min-height: var(--default-element-height);
-  width: 100vw;
+  width: 100%;
   margin: 0 auto;
-  gap: var(--default-padding);
-  inline-size: calc(100vw - calc(var(--s-9) * 2));
+  // gap: var(--default-padding);
   @media(min-width: 1262px) {
     inline-size: 1260px;
     padding: 0;
@@ -33,16 +32,14 @@ nav {
   }
 
   .nav__nav-item {
-    width: 100%;
-    max-width: max-content;
     height: var(--default-element-height);
     @media(max-width: 1100px) {
       display: none;
     }
 
     &--account, &--login  {
+      margin-right: var(--s-9);
       margin-left: auto;
-      padding-right: var(--default-padding);
     }
   }
 }

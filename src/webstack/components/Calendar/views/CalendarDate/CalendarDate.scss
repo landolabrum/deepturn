@@ -41,7 +41,8 @@
                 font-style: italic;
                 --ui-icon-size: var(--s-8);
                 --ui-icon-color: var(--color-gray-40);
-                color: var(--color-gray-40);
+                color: #f30;
+                // color: var(--color-gray-40);
                 font-size: var(--s-8);
                 line-height: 1;
                 @extend .d-flex;
@@ -62,13 +63,13 @@
     justify-content: stretch;
     flex-direction: column;
     position: relative;
-    gap: var(--s-9);
+    gap: 2px;
     min-height: 90px;
-    padding: 0 5px;
+    padding: var(--s-2) 5px 0;
     width: auto;
     z-index: 1;
-    height: 100%;
-
+    border: solid 1px transparent;
+    height: calc(calc(100% - 2px) - var(--s-2));
     &::before {
         z-index: 0;
         @extend .d-flex;
@@ -80,10 +81,12 @@
 
         width: auto;
         line-height: 1;
+        position: absolute;
         top: 0;
+        left: 0 !important;
 
         @media(min-width: 900px) {
-            right: 0;
+            // right: 0;
         }
 
         color: var(--color-gray-80);
@@ -93,6 +96,7 @@
         gap: var(--s-4);
         padding: 5px 5px var(--default-padding);
         &__has-event{
+            z-index: 1;
             &::before {
                 color: var(--color-primary);
             }
@@ -102,7 +106,6 @@
         gap: var(--s-4);
     }
 
-    border: solid 1px transparent;
 
     &:hover {
         border: solid 1px var(--color-gray-60);

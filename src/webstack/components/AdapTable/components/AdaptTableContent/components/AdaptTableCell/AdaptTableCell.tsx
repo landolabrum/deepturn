@@ -97,6 +97,7 @@ const AdaptTableCell: NextComponentType<NextPageContext, {}, Props> = ({ cell, d
           </div>
         )}
         {cell == 'date' && mut}
+        {cell == 'id' && <div className='adapt-table-cell__id'>{data}</div>}
         {cell == 'check' && <div className='adapt-table-cell__center'><UiIcon color={data?'#090':'#ff990050'} icon={data?'fas-circle-check':'fa-xmark'}/></div>}
       </>
     );

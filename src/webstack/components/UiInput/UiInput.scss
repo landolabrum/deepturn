@@ -53,8 +53,7 @@ input, textarea {
     text-indent: 0;
     min-height: var(--default-element-height);
     height: 100%;
-    width: var(--default-element-height);
-
+    width: max-content;
     @media(max-width: 900px) {}
 
     &:focus {

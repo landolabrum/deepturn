@@ -10,7 +10,7 @@ import UiCheckBox from '../UiCheckbox/UiCheckBox';
 import FormControl from '../FormControl/FormControl';
 
 const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading, disabled }: IForm) => {
-    const textTypes = ['', undefined, 'text', 'password', 'email', 'number', 'tel', null, false, 'expiry'];
+    const textTypes = ['', undefined, 'text', 'password', 'email', 'number', 'tel', null, false, 'expiry', 'textarea'];
     const boolTypes = ['checkbox'];
     const [complete, setComplete] = useState<boolean>(false);
     const [localErrors, setLocalErrors] = useState<any>({});

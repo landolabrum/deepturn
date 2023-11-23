@@ -1,1 +1,10 @@
-
+.add-product{
+    width: 100%;
+    &--title{
+        font-size: var(--s-3);
+        text-transform: capitalize;
+        line-height: 1;
+        margin-bottom: var(--default-padding);
+        color: var(--color-gray-40);
+    }
+}

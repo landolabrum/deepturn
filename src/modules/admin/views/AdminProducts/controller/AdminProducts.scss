@@ -1,0 +1,21 @@
+.d-flex{
+ display: flex;
+ justify-content: stretch;
+ align-items: stretch;
+}
+.admin-products{
+    @extend .d-flex;
+    flex-direction: column;
+    gap: var(--s-9);
+    width: 100%;
+    &__header{
+        @extend .d-flex;
+        justify-content: space-between;
+        width: auto;
+        &--actions{
+            @extend .d-flex;
+            justify-content: flex-end;
+            width: auto;
+        }
+    }
+}

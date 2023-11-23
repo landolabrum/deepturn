@@ -8,12 +8,13 @@
     background-color: var(--color-gray-90);
     border-radius: var(--default-border-radius);
     overflow: hidden;
-    width: 100%;
+    border: solid 1px var(--color-gray-70);
+    width: auto;
     &__header{
         @extend .d-flex;
         justify-content: space-between;
         width: auto;
-        padding: var(--s-9) var(--s-5);
+        padding: var(--s-9) var(--s-9);
         &--title{
             text-transform: capitalize;
             font-size: var(--s-3);
@@ -25,7 +26,7 @@
         &--filters{
             @extend .d-flex;
             justify-content: flex-end;
-
+            gap: var(--s-9);
         }
     }
     &__dows {
@@ -48,6 +49,10 @@
     }
 
     &__date-container {
+        width: auto;
+        overflow: hidden;
+        border-right: solid 1px var(--color-gray-80);
+        border-bottom: solid 1px var(--color-gray-80);
         @media(min-width: 1260px) {
             aspect-ratio: 1/1;
         }
@@ -75,8 +80,6 @@
             }
         }
 
-        width: auto;
-        overflow: hidden;
-        border: solid 1px var(--color-gray-80);
+
     }
 }

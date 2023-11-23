@@ -2,93 +2,100 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Calendar.scss';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
-import useCalendar from '../hooks/useCalendar';
 import CalendarDate from '../views/CalendarDate/CalendarDate';
 import { ICalendar } from '../models/ICalendar';
 import { IDate } from '../models/IDate';
 import { dowArray, monthArray } from '@webstack/helpers/userExperienceFormats';
-import UiSelect from '@webstack/components/UiSelect/UiSelect';
 import UiPill from '@webstack/components/UiPill/UiPill';
-
-
+import UiButton from '@webstack/components/UiButton/UiButton';
 
 const Calendar: React.FC<ICalendar> = ({
     events = [
         { title: 'event test 1', description: 'desc 1', iso: '2023-11-01' },
         { title: 'event test 2', description: 'desc 2', iso: '2023-11-01T12:00:00Z' }
     ],
-    year,
-    month,
+    year = new Date().getFullYear(),
+    month = new Date().getMonth() + 1,
     title
 }: ICalendar) => {
-    const dayISO = (day: IDate) => day?.year && `${day.year}-${String(day.month).padStart(2, '0')}-${String(day.day).padStart(2, '0')}`;
     const [mmYY, setMmYy] = useState({ mm: month, yy: year });
-    const [days, setDays] = useState([]);
-    const [amount, setAmount] = useState<any>();
-    const firstDay = () => dayISO(days[0]);
-    const lastDay = () => dayISO(days[days.length - 1]);
-    const handleAmount = (direction: string) => {
-        const dir = direction == 'plus' ? 1 : -1;
-        const refDay: IDate = days[15];
-        const refMonth = refDay.month;
-        const newMonth = refDay.month + dir;
-        const newYear = refMonth == 1 ? refDay.year - 1 : refMonth == 12 ? refDay.year + 1 : refDay.year;
-        console.log({ m: newMonth, y: newYear });
-        // setDays(updatedDays(useCalendar(newMonth, newYear)));
-        // monthArray.map((mm, i)=>{
-        //     console.log(i, mm)
-        // })
-        // setAmount(direction)
-        // if(direction == 'minus')setAmount(amount > 0 ? amount - 1:0);
-        // else{setAmount( amount + 1);}
-    }
-    const initialCalendar = useCalendar();
-    const updatedDays = (calendar:any)=>{
-        return calendar.map((day:IDate) => {
-            const iso:any = dayISO(day);
+    const [days, setDays] = useState<IDate[]>([]);
 
-            const dayEvents = events
-                .filter(event => event.iso.startsWith(iso))
-                .map(event => {
-                    const timeMatch = event.iso.match(/T(\d{2}:\d{2})/);
-                    return {
-                        ...event,
-                        time: timeMatch ? timeMatch[1] : 'all day',
-                        sortKey: timeMatch ? timeMatch[1] : '00:00'
-                    };
-                })
-                .sort((a, b) => a.sortKey.localeCompare(b.sortKey));
+    const generateCalendarDays = (month: number, year: number): IDate[] => {
+        let days: IDate[] = [];
+        let currentDate = new Date(year, month - 1, 1);
     
-            return { ...day, events: dayEvents };
-        });
+        // Move back to the first day of the week
+        while (currentDate.getDay() !== 0) {
+            currentDate.setDate(currentDate.getDate() - 1);
+        }
+    
+        // Track the first iteration to allow entry into the loop
+        let isFirstIteration = true;
+    
+        do {
+            if (currentDate.getMonth() + 1 !== month) {
+                if (!isFirstIteration) {
+                    break; // Exit the loop when it's no longer the target month
+                }
+            } else {
+                isFirstIteration = false; // Clear the first iteration flag
+            }
+    
+            const isoDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+            const dayEvents = events.filter(event => event.iso.startsWith(isoDate));
+    
+            days.push({
+                month: currentDate.getMonth() + 1,
+                year: currentDate.getFullYear(),
+                day: currentDate.getDate(),
+                dow: currentDate.getDay(),
+                events: dayEvents
+            });
+    
+            currentDate.setDate(currentDate.getDate() + 1);
+        } while (true); // Use break statements to exit the loop
+    
+        return days;
+    };
+    const handleToday = () =>{
+        const currMonth =new Date().getMonth() + 1
+        const currYear = new Date().getFullYear()
+        setDays(generateCalendarDays(currMonth , currYear));
+        setMmYy({ mm: currMonth, yy: currYear });
     }
+
+    
+    const handleAmount = (direction: string) => {
+        const dir = direction === 'plus' ? 1 : -1;
+        const newMonth = ((mmYY.mm - 1 + dir + 12) % 12) + 1;
+        const newYear = mmYY.mm === 1 && dir === -1 ? mmYY.yy - 1 : mmYY.mm === 12 && dir === 1 ? mmYY.yy + 1 : mmYY.yy;
+        setMmYy({ mm: newMonth, yy: newYear });
+    };
     useEffect(() => {
-        // Append events to days
-        // setDays(calendar)
-        setDays(updatedDays(initialCalendar));
-    }, []);
-
-
+        setDays(generateCalendarDays(mmYY.mm, mmYY.yy));
+    }, [mmYY]);
     return (
         <>
             <style jsx>{styles}</style>
-
+                        {JSON.stringify({
+                            mmyy: mmYY
+                        })}
             <div className='calendar'>
-                <div className='calendar__header'>
+            <div className='calendar__header'>
                     <div className='calendar__header--title'>
                         {title}
                     </div>
                     <div className='calendar__header--filters'>
-                        {JSON.stringify(firstDay())}
-                        {JSON.stringify(lastDay())}
+                        <UiButton variant='dark' onClick={handleToday}>Today</UiButton>
                         <UiPill
-                            amount={amount}
-                            setAmount={setAmount}
+                            variant='center dark'
+                            amount={`${monthArray[mmYY.mm - 1]}, ${mmYY.yy}`}
+                            setAmount={console.log}
                             traits={{
                                 beforeIcon: {
-                                    icon: amount > 1 ? "fas-minus" : "fa-trash-can",
-                                    onClick: () => handleAmount('minus'),
-                                    color: amount == 1 ? "red" : ""
+                                    icon: "fas-minus",
+                                    onClick: () => handleAmount('minus')
                                 },
                                 afterIcon: {
                                     icon: "fas-plus",

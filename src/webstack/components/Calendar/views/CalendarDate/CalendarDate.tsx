@@ -1,5 +1,5 @@
 // Relative Path: ./CalendarDate.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './CalendarDate.scss';
 import { IDate } from '../../models/IDate';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
@@ -20,6 +20,7 @@ const CalendarDate: React.FC<any> = ({ date, btnText = 'rsvp' }: { date: IDate, 
                 <div className='calendar-date-modal__title'>{day}</div>
                 {events.map((event, eventKey) => (
                     <div key={eventKey} className='calendar-date-modal__event'>
+                        {JSON.stringify(event)}
                         <div className='calendar-date-modal__event--header'>
                             <div className='calendar-date-modal__event--header--title'>{event.title}</div>
                             <div className='calendar-date-modal__event--header--time'>
@@ -35,23 +36,34 @@ const CalendarDate: React.FC<any> = ({ date, btnText = 'rsvp' }: { date: IDate, 
             </div>
         </>
     }
-    const handleClick = (eventIndex?: any) => {
-        eventIndex.preventDefault;
-        const events = date?.events;
-        if(!events?.length)return;
-        if(typeof eventIndex == 'number')openModal(<Events events={[events[eventIndex]]} />);
-        // else if(typeof eventIndex == 'object'){openModal(<Events events={events} />)}
+    const handleEventClick = (eventIndex: number, e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent event from bubbling up to the parent
+
+        let events = date?.events;
+        if(!events?.length) return;
+
+        openModal(<Events events={[events[eventIndex]]} />);
     }
+
+    const handleClick = () => {
+        let events = date?.events;
+        if(!events?.length) return;
+
+        openModal(<Events events={events} />);
+    }
+    
+    useEffect(() => {}, [date]);
     return (
         <>
             <style jsx>{styles}</style>
             <div
                 className={`calendar-date${date?.events?.length && ' calendar-date__has-event' || ''}`}
                 data-day={String(date.day)}
+                onClick={handleClick}
                 data-mobile-day={`${dowArray[date.dow]} ${dateFormat(`${date.month}-${date.day}-${date.year}`)}`}
             >
                 {date?.events && date.events.map((event, eventKey) => (
-                    <div onClick={()=>handleClick(eventKey)} key={eventKey} className='calendar-date__event'>
+                    <div onClick={(e) => handleEventClick(eventKey, e)} key={eventKey} className='calendar-date__event'>
                         <div className='calendar-date__event--title'>{event.title}</div>
                         {event.time && <div className='calendar-date__event--time'>
                             <UiIcon icon='fa-clock' />

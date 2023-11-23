@@ -35,7 +35,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   if (props.variant == 'invalid' && value?.length == 0) props.variant == undefined;
   const elType = show && type === "password" ? "text" : type;
   useEffect(() => { }, [props?.variant, value]);
-  const isTextArea = String(value).length > 100;
+  const isTextArea = String(value).length > 100 || type == 'textarea';
 
   return (
     <>

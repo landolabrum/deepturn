@@ -14,8 +14,8 @@
 //  HELPERS
 .b-rad{
     &:not(.form-control__element--input){
-        outline: solid 1px transparent;
-        border: solid 1px transparent;
+        outline: solid 1px unset;
+        border: solid 1px unset;
     }
     border-radius: var(--default-border-radius);
 }
@@ -52,6 +52,11 @@
     }
 }
 
+  
+// FORM CONTROL ELEMENT
+// FORM CONTROL ELEMENT
+// FORM CONTROL ELEMENT
+
 .form-control__element {
     padding: 0 var(--default-padding);
     color: var(--color-gray-50);
@@ -72,7 +77,7 @@
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
  
-    &:not(&--primary, &--flat, &--secondary, &--link,  &--nav-item, &--nav-item__active, &--select, &--invalid, &--input, &--textarea){
+    &:not(&--primary, &--dark, &--flat, &--secondary, &--link,  &--nav-item, &--nav-item__active, &--select, &--invalid, &--input, &--textarea){
         @extend .element-color;
     }
     &:not(&--nav-item,&--nav-item__active){
@@ -110,11 +115,13 @@
             background-color: var(--color-gray-40);
         }
         &:nth-child(2) {
-            padding-left: var(--default-padding);
+            padding-left: var(--s-8);
         }
     }
     &--textarea{
         height: max-content;
+        max-width: inherit;
+        padding-top: 4px;
         min-height: var(--default-element-height);
     }
     &-disabled {
@@ -144,7 +151,33 @@
             filter: brightness(.8);
         }
     }
-    &--secondary {
+ 
+    @mixin variant(
+        $name,
+        $bg, $c, $bc, 
+        $hBg, $hC, $hBc,  
+        $fBg, $fC, $fBc,
+    ) {
+        &--#{$name} {
+          background-color: $bg;
+          border: solid 1px $bc;
+          color: $c;
+          --ui-icon-color: $c;
+          &:hover {
+            background-color: $hBg;
+            border: solid 1px $hBc;
+            color: $hC;
+            --ui-icon-color: $hC;
+          }
+          &:focus-within {
+            background-color: $fBg;
+            border: solid 1px $fBc;
+            color: $fC;
+            --ui-icon-color: $fC;
+          }
+        }
+      }
+      &--secondary {
         background-color: var(--color-secondary-opaque);
         color: var(--color-gray-20);
         &:hover{
@@ -152,16 +185,22 @@
             color: var(--color-white);
         }
     }
-    &--dark {
-        background-color: var(--color-dark);
-    }
+    @include variant('dark',
+        var(--color-gray-100), var(--color-gray-50), var(--color-gray-80),
+        var(--color-dark), var(--color-gray-50), var(--color-gray-50),
+        var(--color-dark), var(--color-gray-50), var(--color-gray-50)
+    );
+    @include variant('secondary',
+        var(--color-secondary-opaque), var(--color-gray-20), var(--color-gray-20),
+        var(--color-secondary-opaque), var(--color-gray-20), var(--color-gray-20),
+        var(--color-secondary-opaque), var(--color-gray-20), var(--color-gray-20)
+    );
     &--link{
         &:hover{animation: glowTxt 1s infinite;}
     }
     &--nav-item{
         --ui-icon-color: var(--color-gray-50) !important;
         
-        border-bottom: solid 1px var(--color-primary-opaque);
         &:hover{
             border-bottom: solid 1px var(--color-blue);
         }
@@ -192,7 +231,6 @@
     }
     &-disabled{
         filter: brightness(.7) blur(1px);
-        // filter: blur(3px)
     }
     // FORM CONTROL ELEMENTS - ELEM TYPES
     &--select:not(&--nav-item, &--nav-item__active){
