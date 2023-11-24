@@ -13,16 +13,14 @@ nav {
     inline-size: 1260px;
     padding: 0;
   }
-  
-  @media(max-width: 1100px) {
-    padding: 0 var(--s-4);
-  }
   @media(max-width: 900px) {
       padding: 0;
   }
 
   .navbar__trigger {
     cursor: pointer;
+    width: var(--default-padding);
+    padding: var(--default-padding);
     &:hover{
       --ui-icon-color: var(--color-primary);
     }

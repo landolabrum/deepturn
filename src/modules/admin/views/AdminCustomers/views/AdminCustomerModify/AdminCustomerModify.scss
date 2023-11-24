@@ -6,8 +6,9 @@
 
 .admin-customer-modify {
     border-radius: var(--default-border-radius);
-    background-color: var(--color-gray-80);
-    padding: var(--default-padding);
+    background-color: var(--color-gray-90);
+    border: solid 1px var(--color-gray-70);
+    padding: var(--s-3) var(--default-padding);
     @extend .d-flex;
     flex-direction: column;
     overflow: hidden;
@@ -17,6 +18,7 @@
 
     &__title {
         font-size: var(--s-1);
+        height: var(--default-element-height);
         color: var(--color-gray-40);
     }
     &__delete {

@@ -33,7 +33,7 @@ const AdminCustomer: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      {JSON.stringify(data)}
+      {/* {JSON.stringify(data)} */}
       <div className='admin-customer'>
         <div className='admin-customer__header'>
           <div className='admin-customer__actions'>
