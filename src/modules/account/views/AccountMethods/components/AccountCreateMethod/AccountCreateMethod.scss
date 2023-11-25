@@ -47,7 +47,9 @@
 // }
 form {
     width: 100%;
-
+    .StripeElement{
+        background-color: #f30 !important;
+    }
     .account-create-method__card-element {
         min-height: var(--default-element-height);
         

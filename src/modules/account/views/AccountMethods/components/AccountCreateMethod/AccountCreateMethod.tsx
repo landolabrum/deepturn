@@ -6,12 +6,41 @@ import styles from "./AccountCreateMethod.scss";
 import { stripePromise } from '~/src/pages/_app';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import {  StripeCardElement, StripeElement } from '@stripe/stripe-js';
+import UserContext from '~/src/models/UserContext';
 interface IAccountCreateMethod {
     onSuccess?: (e: any) => void;
     open?: boolean;
     user?: UserContext | undefined;
     collapse?: boolean;
+    className?: string; // Add this line
 }
+const CARD_ELEMENT_OPTIONS = {
+    // style: {
+    //   base: {
+    //     color: "#32325d",
+    //     fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    //     fontSmoothing: "antialiased",
+    //     fontSize: "16px",
+    //     "::placeholder": {
+    //       color: "#0f0"
+    //     },
+    //     // Note: backgroundColor might not work as expected
+    //   },
+    //   invalid: {
+    //     color: "#fa755a",
+    //     iconColor: "#fa755a"
+    //   },
+    //   complete: {
+    //     // Add styles for complete state
+    //   },
+    //   empty: {
+    //     // Add styles for empty state
+    //   },
+    //   focus: {
+    //     // Add styles for focus state
+    //   }
+    // }
+  };
 const AccountCreateMethod = ({ onSuccess, open, collapse, user }: IAccountCreateMethod) => {
     const stripe = useStripe();
     const elements = useElements();
@@ -57,10 +86,14 @@ const AccountCreateMethod = ({ onSuccess, open, collapse, user }: IAccountCreate
     return (
         <>
             <style jsx>{styles}</style>
+            <h1 
+                
+            >hi mason</h1>
             {clientSecret && (
                 <Elements stripe={stripePromise} options={{ clientSecret }}>
                     <form onSubmit={onSubmit}>
-                        <PaymentElement />
+                        <PaymentElement 
+                        options={CARD_ELEMENT_OPTIONS}/>
                         <UiButton type="submit">
                             Add Payment Method
                         </UiButton>
