@@ -57,6 +57,8 @@ export default function useRoute(handleSideNav?: () => void) {
       DEV && console.log('[ HANDLE USER ]( 2 )', conlog)
       setUser(null);
       setHeader(null);
+      if(router.pathname == '/.well-known/apple-developer-merchantid-domain-association'){
+      }
       if (router.pathname.includes(LOGOUT_LANDING)) {
         DEV && console.log('[ HANDLE USER ]( 3 )', conlog)
         // SIGN OUT

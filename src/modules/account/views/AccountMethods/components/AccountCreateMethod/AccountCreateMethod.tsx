@@ -5,59 +5,52 @@ import IMemberService from "~/src/core/services/MemberService/IMemberService";
 import styles from "./AccountCreateMethod.scss";
 import { stripePromise } from '~/src/pages/_app';
 import UiButton from '@webstack/components/UiButton/UiButton';
-import {  StripeCardElement, StripeElement } from '@stripe/stripe-js';
 import UserContext from '~/src/models/UserContext';
+
 interface IAccountCreateMethod {
     onSuccess?: (e: any) => void;
     open?: boolean;
     user?: UserContext | undefined;
     collapse?: boolean;
-    className?: string; // Add this line
+    className?: string;
 }
-const CARD_ELEMENT_OPTIONS = {
-    // style: {
-    //   base: {
-    //     color: "#32325d",
-    //     fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-    //     fontSmoothing: "antialiased",
-    //     fontSize: "16px",
-    //     "::placeholder": {
-    //       color: "#0f0"
+
+const appearance = {
+    theme: 'night' as 'stripe', // Explicitly type as 'stripe'
+    // variables: {
+    //     colorPrimary: '#0570de',
+    //     colorBackground: '#f6f9fc',
+    //     colorText: '#303238',
+    //     colorDanger: '#df1b41',
+    //     fontFamily: 'Ideal Sans, system-ui, sans-serif',
+    //     spacingUnit: '2px',
+    //     borderRadius: '4px',
+    // },
+    // rules: {
+    //     '.Input': {
+    //         backgroundColor: 'colorBackground',
+    //         boxShadow: '0 1px 3px 0 rgba(50,50,93,.1), 0 1px 0 0 rgba(0,0,0,.07)',
+    //         border: 'none',
     //     },
-    //     // Note: backgroundColor might not work as expected
-    //   },
-    //   invalid: {
-    //     color: "#fa755a",
-    //     iconColor: "#fa755a"
-    //   },
-    //   complete: {
-    //     // Add styles for complete state
-    //   },
-    //   empty: {
-    //     // Add styles for empty state
-    //   },
-    //   focus: {
-    //     // Add styles for focus state
-    //   }
-    // }
-  };
+    //     '.Input--invalid': {
+    //         boxShadow: '0 1px 3px 0 rgba(220,53,69,.25), 0 1px 0 0 rgba(220,53,69,.25)',
+    //     },
+    // },
+};
+
+
+
 const AccountCreateMethod = ({ onSuccess, open, collapse, user }: IAccountCreateMethod) => {
     const stripe = useStripe();
     const elements = useElements();
     const memberService = getService<IMemberService>('IMemberService');
     const [clientSecret, setClientSecret] = useState("");
 
-    
     const onSubmit = useCallback(async (event: any) => {
         event.preventDefault();
         if (!stripe || !elements || !clientSecret) return;
-        const card: StripeCardElement | null = elements.getElement(PaymentElement);
-        if(card == null )return;
-        const result = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: card,
-            },
-        });
+
+        const result = await stripe.confirmCardPayment(clientSecret);
         
         if (result.error) {
             console.log(result.error.message);
@@ -67,39 +60,33 @@ const AccountCreateMethod = ({ onSuccess, open, collapse, user }: IAccountCreate
             }
         }
     }, [stripe, elements, clientSecret]);
+
     useEffect(() => {
         const fetchClientSecret = async () => {
-            // try {
-                const response = await memberService.createPaymentIntent();
-                if (response?.client_secret) {
-                    setClientSecret(response?.client_secret);
-                } else {
-                    console.error("Client secret not found in the response");
-                }
-            // } catch (error) {
-            //     console.error("Error fetching client secret:", error);
-            // }
+            const response = await memberService.createPaymentIntent();
+            if (response?.client_secret) {
+                setClientSecret(response.client_secret);
+            } else {
+                console.error("Client secret not found in the response");
+            }
         };
 
         fetchClientSecret();
-    }, [ ]);
+    }, []);
+
     return (
         <>
             <style jsx>{styles}</style>
-            <h1 
-                
-            >hi mason</h1>
             {clientSecret && (
-                <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <Elements
+                    stripe={stripePromise}
+                    options={{ clientSecret, appearance }}
+                >
                     <form onSubmit={onSubmit}>
-                        <PaymentElement 
-                        options={CARD_ELEMENT_OPTIONS}/>
+                        <PaymentElement />
                         <UiButton type="submit">
                             Add Payment Method
                         </UiButton>
-                        {/* <button type="submit" disabled={!stripe}>
-                            Submit Payment
-                        </button> */}
                     </form>
                 </Elements>
             )}

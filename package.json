@@ -1,5 +1,5 @@
 {
-  "name": "deept",
+  "name": "deepturn",
   "private": true,
   "scripts": {
     "dev": "next dev",

@@ -1,10 +1,10 @@
-// .d-flex{
-//  display: flex;
-//  justify-content: center;
-//  align-items: center;
-//  width: 100%;
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 100%;
 
-// }
+}
 // .account-create-method {
 //     width: 100%;
 //     min-height: var(--default-element-height);
@@ -46,34 +46,7 @@
 //     }
 // }
 form {
-    width: 100%;
-    .StripeElement{
-        background-color: #f30 !important;
-    }
-    .account-create-method__card-element {
-        min-height: var(--default-element-height);
-        
-    }
-
-    // .myCardElement {
-    //     // Example styles
-    //     background: white;
-    //     padding: 10px;
-    //     border-radius: 4px;
-    //     border: 1px solid #ccc;
-    //     box-shadow: 0 1px 3px 0 #e6ebf1;
-    //     transition: box-shadow 150ms ease;
-
-    //     &:focus {
-    //       box-shadow: 0 1px 3px 0 #cfd7df;
-    //     }
-
-    //     .StripeElement--invalid {
-    //       border-color: #fa755a;
-    //     }
-
-    //     .StripeElement--webkit-autofill {
-    //       background-color: #fefde5 !important;
-    //     }
-    //   }
+    @extend .d-flex;
+    flex-direction: column;
+    gap: var(--default-padding);
 }
