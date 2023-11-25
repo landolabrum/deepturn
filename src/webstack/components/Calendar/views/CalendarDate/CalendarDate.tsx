@@ -20,11 +20,10 @@ const CalendarDate: React.FC<any> = ({ date, btnText = 'rsvp' }: { date: IDate, 
                 <div className='calendar-date-modal__title'>{day}</div>
                 {events.map((event, eventKey) => (
                     <div key={eventKey} className='calendar-date-modal__event'>
-                        {JSON.stringify(event)}
                         <div className='calendar-date-modal__event--header'>
                             <div className='calendar-date-modal__event--header--title'>{event.title}</div>
                             <div className='calendar-date-modal__event--header--time'>
-                                <UiIcon icon='fa-clock' />{event.time}
+                                <UiIcon icon='fa-clock' />{dateFormat(event.iso)}
                             </div>
                         </div>
                         <div className='calendar-date-modal__event--description'>{event.description}</div>

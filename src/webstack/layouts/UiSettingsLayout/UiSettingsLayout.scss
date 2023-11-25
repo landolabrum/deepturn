@@ -39,9 +39,6 @@ $actionsBg: var(--color-gray-90);
         background-color: $actionsBg;
     }
 
-    &__col {
-    }
-
     &__content {
         @extend .d-flex;
         justify-content: flex-start;
@@ -129,7 +126,7 @@ $actionsBg: var(--color-gray-90);
             }
 
             @media(max-width: 900px) {
-                padding: var(--s-5) var(--s-6);
+                padding: var(--s-7) var(--s-9);
             }
         }
     }

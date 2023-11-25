@@ -12,38 +12,10 @@ import { ModalProvider } from "@webstack/components/modal/contexts/modalContext"
 import { ModalOverlay } from "@webstack/components/modal/views/modalOverlay";
 import { LoaderProvider } from "@webstack/components/Loader/Loader";
 
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
-const ZENDESK_KEY = "73bedd9b-0cdd-46a4-ad2e-b2ea5b72699d"
-const setting = {
-  color: {
-    theme: "#000"
-  },
-  offset: {
-    horizontal: "0px",
-    vertical: "0px",
-    mobile: {
-      horizontal: "-20px",
-      vertical: "36px",
-    }
-  },
-  launcher: {
-    chatLabel: {
-      "en-US": "Need Help"
-    }
-  },
-  contactForm: {
-    fields: [
-      { id: "description", prefill: { "*": "My pre-filled description" } }
-    ]
-  }
-};
-
-declare global {
-  interface Window {
-    zEmbed: any;
-    zE: any;
-  }
-}
+export const stripePromise = loadStripe('pk_live_qBiVh0MkAYVU7o3oVmP1Tzg900DLvxesSw');
 
 
 
@@ -59,21 +31,26 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <style jsx>{styles}</style>
       <ServiceContainer />
       <OverlayProvider>
-      <LoaderProvider>
-        <NotificationProvider>
-          <ModalProvider>
-            <HeaderProvider>
-              <ModalOverlay />
-              <DefaultLayout>
-                <Component {...pageProps} />
-              </DefaultLayout>
-            </HeaderProvider>
-          </ModalProvider>
-        </NotificationProvider>
+        <LoaderProvider>
+          <NotificationProvider>
+            <ModalProvider>
+              <HeaderProvider>
+                <ModalOverlay />
+
+                <DefaultLayout>
+                  <Elements stripe={stripePromise}>
+
+                    <Component {...pageProps} />
+                  </Elements>
+                </DefaultLayout>
+              </HeaderProvider>
+            </ModalProvider>
+          </NotificationProvider>
         </LoaderProvider>
       </OverlayProvider>
     </>
   );
 }
 
-export default appWithTranslation(MyApp);
+export default MyApp;
+//export default  appWithTranslation(MyApp)

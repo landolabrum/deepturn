@@ -78,9 +78,9 @@ const Calendar: React.FC<ICalendar> = ({
     return (
         <>
             <style jsx>{styles}</style>
-                        {JSON.stringify({
+                        {/* {JSON.stringify({
                             mmyy: mmYY
-                        })}
+                        })} */}
             <div className='calendar'>
             <div className='calendar__header'>
                     <div className='calendar__header--title'>

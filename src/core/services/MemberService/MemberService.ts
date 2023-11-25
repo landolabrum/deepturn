@@ -22,6 +22,60 @@ export default class MemberService
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
 
+  public async createPaymentIntent(method?: IPaymentMethod): Promise<any> {
+    let id = this._getCurrentUser(false)?.id;
+    const memberMethod = async () => {
+      // Convert method object to string
+      // const methodString = JSON.stringify(method);
+      // const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
+      // const encryptedMethod = encryptString(methodString, ENCRYPTION_KEY); // Replace 'YOUR_SECRET_KEY' with your actual secret key
+      try {
+        return await this.get<any>(
+          `usage/customer/method/create?id=${id}`// send encrypted data as payload
+        );
+      } catch (e: any) {
+        console.log("[ MEMBER S]: ", e)
+        return e;
+      }
+    }
+    if (id) {
+        return await memberMethod();
+    }
+    if (!id) {
+        throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
+    }
+    if (!method) {
+        throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+    }
+}
+//   public async createCustomerMethod(method: IPaymentMethod): Promise<any> {
+//     let id = this._getCurrentUser(false)?.id;
+//     const memberMethod = async () => {
+//       // Convert method object to string
+//       const methodString = JSON.stringify(method);
+//       const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
+//       const encryptedMethod = encryptString(methodString, ENCRYPTION_KEY); // Replace 'YOUR_SECRET_KEY' with your actual secret key
+//       try {
+//         return await this.post<any, any>(
+//           `usage/customer/method?id=${id}`,
+//           { data: encryptedMethod } // send encrypted data as payload
+//         );
+//       } catch (e: any) {
+//         console.log("[ MEMBER S]: ", e)
+//         return e;
+//       }
+//     }
+//     if (id && method) {
+//         return await memberMethod();
+//     }
+//     if (!id) {
+//         throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
+//     }
+//     if (!method) {
+//         throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+//     }
+// }
+
 
   public async prospectRequest(quote: any, test: boolean = false) {
     if (quote) {
@@ -145,41 +199,7 @@ export default class MemberService
     }
 
   };
-  public async createCustomerMethod(method: IPaymentMethod): Promise<any> {
-    let id = this._getCurrentUser(false)?.id;
-    const memberMethod = async () => {
-      // Convert method object to string
-      const methodString = JSON.stringify(method);
-      const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
-      // console.log('[ ENCRYPTION_KEY ]', ENCRYPTION_KEY)
-      // Encrypt the method string. Use an agreed-upon key.
 
-      const encryptedMethod = encryptString(methodString, ENCRYPTION_KEY); // Replace 'YOUR_SECRET_KEY' with your actual secret key
-      try {
-
-        const res = await this.post<any, any>(
-          `usage/customer/method?id=${id}`,
-          { data: encryptedMethod } // send encrypted data as payload
-        );
-        return res;
-      } catch (e: any) {
-        // console.log("[ MEMBER S]: ", e)
-        return e;
-      }
-    }
-
-    if (id && method)memberMethod();
-    if (!id && method){
-
-    }
-    if (!id) {
-      throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
-    }
-
-    if (!method) {
-      throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
-    }
-  }
   public async updateMember(id: string, memberData: any): Promise<any> {
     if (id && memberData) {
       try {

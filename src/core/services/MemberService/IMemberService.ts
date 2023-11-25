@@ -12,7 +12,7 @@ export default interface IMemberService {
   getMethods(customerId?: string): Promise<any>;
   deleteMethod(id: string): Promise<any>;
   processTransaction(cart:ICartItem[]): Promise<any>;
-  createCustomerMethod(method: IPaymentMethod): Promise<any>;
+  createPaymentIntent(method?: IPaymentMethod): Promise<any>;
   userChanged: EventEmitter<UserContext | undefined>;
   verifyEmail(token: string):Promise<any>;
   signIn({ email,

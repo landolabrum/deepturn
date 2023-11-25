@@ -2,20 +2,23 @@ import React, { ReactElement, useEffect } from "react";
 import styles from './DefaultLayout.scss';
 import Title from "@webstack/components/Title/Title";
 
+
+
 interface IProps {
   children: ReactElement;
 }
 
-export default function DefaultLayout(props: IProps) {
-// Empty dependency array means this effect will only run once after the initial render
-  
+const DefaultLayout = (props: IProps) => {
+  // Empty dependency array means this effect will only run once after the initial render
+
   return (
     <>
       <style jsx>{styles}</style>
-        <Title/>
-        <main>
+      <Title />
+      <main>
           {props.children}
-        </main>
+      </main>
     </>
   );
 }
+export default DefaultLayout;
