@@ -1,4 +1,4 @@
-$actionsBg: var(--color-gray-90);
+$actionsBg: var(--gray-90);
 
 .d-flex {
     display: flex;
@@ -35,7 +35,7 @@ $actionsBg: var(--color-gray-90);
     min-height: inherit;
 
     @media(min-width:1100px) {
-        padding-top: var(--default-padding);
+        padding-top: var(--padding);
         background-color: $actionsBg;
     }
 
@@ -64,9 +64,9 @@ $actionsBg: var(--color-gray-90);
 
 
         &--content {
-            border-bottom: solid 1px var(--color-gray-70);
-            border-radius: var(--default-border-radius);
-            border: solid 1px var(--color-gray-60);
+            border-bottom: solid 1px var(--gray-70);
+            border-radius: var(--border-radius);
+            border: solid 1px var(--gray-60);
             @extend .d-flex;
             width: 100%;
 
@@ -84,10 +84,10 @@ $actionsBg: var(--color-gray-90);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1px var(--default-padding) var(--default-padding);
+            padding: 1px var(--padding) var(--padding);
             width: auto;
             height: max-content;
-            border-bottom: solid 1px var(--color-gray-70);
+            border-bottom: solid 1px var(--gray-70);
             overflow: visible;
         }
     }
@@ -95,8 +95,8 @@ $actionsBg: var(--color-gray-90);
     // VIEW
     .settings__view {
         width: 100%;
-        color: var(--color-gray-40);
-        background-color: var(--color-gray-100);
+        color: var(--gray-40);
+        background-color: var(--gray-100);
         @media(min-width: 1100px) {
             width: calc(100% - 300px);
             min-height: 100%;
@@ -105,7 +105,7 @@ $actionsBg: var(--color-gray-90);
             position: unset;
             border-top: solid 1px;
             border-left: solid 1px;
-            border-radius: var(--default-border-radius) 0 0 0;
+            border-radius: var(--border-radius) 0 0 0;
             animation: borderAnimation 5s infinite alternate;
         }
 

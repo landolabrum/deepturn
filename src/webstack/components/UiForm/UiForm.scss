@@ -7,7 +7,7 @@
 .d-flex-col {
   @extend .d-flex;
   flex-direction: column;
-  gap: var(--default-padding);
+  gap: var(--padding);
 }
 
 .form {
@@ -19,10 +19,10 @@
   &__title{
     text-transform: capitalize;
     font-size: var(--s-2);
-    height: var(--default-element-height);
+    height: var(--element-height);
     @extend .d-flex;
     justify-content: flex-start;
-    padding: var(--default-padding) 0;
+    padding: var(--padding) 0;
   }
   .form__field {
       width: 100%;
@@ -33,19 +33,19 @@
     // existing styles
     border-style: outset;
     border-color: transparent;
-    border-top-color: var(--color-gray-60);
+    border-top-color: var(--gray-60);
     border-width: 2px;
     width: calc(100%);
-    margin-top: var(--default-padding);
-    padding-top: var(--default-element-height);
+    margin-top: var(--padding);
+    padding-top: var(--element-height);
     
     // // new gradient background
-    // background-image: linear-gradient(to bottom, var(--color-gray-60), transparent);
+    // background-image: linear-gradient(to bottom, var(--gray-60), transparent);
   }
 }
 input{
   @extend .d-flex;
-  width: var(--default-element-height);
+  width: var(--element-height);
   height: 100%;
   text-align: center;
   border: none;

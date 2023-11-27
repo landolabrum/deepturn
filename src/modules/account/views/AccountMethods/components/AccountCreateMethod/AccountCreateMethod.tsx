@@ -6,6 +6,7 @@ import styles from "./AccountCreateMethod.scss";
 import { stripePromise } from '~/src/pages/_app';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UserContext from '~/src/models/UserContext';
+import { loadStripe } from '@stripe/stripe-js';
 
 interface IAccountCreateMethod {
     onSuccess?: (e: any) => void;
@@ -13,6 +14,7 @@ interface IAccountCreateMethod {
     user?: UserContext | undefined;
     collapse?: boolean;
     className?: string;
+    shippable?: boolean;
 }
 
 const appearance = {
@@ -37,29 +39,56 @@ const appearance = {
     //     },
     // },
 };
-
-
-
-const AccountCreateMethod = ({ onSuccess, open, collapse, user }: IAccountCreateMethod) => {
-    const stripe = useStripe();
-    const elements = useElements();
+const AccountCreateMethod = ({ onSuccess, open, collapse, user, shippable }: IAccountCreateMethod) => {
+    // const stripe = useStripe();
+    // const elements = useElements();
     const memberService = getService<IMemberService>('IMemberService');
     const [clientSecret, setClientSecret] = useState("");
 
     const onSubmit = useCallback(async (event: any) => {
         event.preventDefault();
-        if (!stripe || !elements || !clientSecret) return;
+        // if (!stripe || !elements || !clientSecret || !user) return;
+        // let confirmParams: any = {
+        //     // Replace the following example parameters with the ones you need for your specific implementation.
 
-        const result = await stripe.confirmCardPayment(clientSecret);
-        
-        if (result.error) {
-            console.log(result.error.message);
-        } else {
-            if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
-                onSuccess && onSuccess(result.paymentIntent);
-            }
-        }
-    }, [stripe, elements, clientSecret]);
+        //     // The 'return_url' is used for redirecting the customer back to your site after completing the payment on the hosted payment page.
+        //     return_url: 'https://deepturn.com/transaction',
+
+        //     // 'receipt_email' is where Stripe will send a receipt upon successful payment, if email receipts are enabled in your Stripe dashboard.
+        //     receipt_email: user.email, // Assuming 'user.email' contains the customer's email address.
+
+        //     // 'payment_method' is used to specify a particular payment method if needed.
+        //     payment_method: 'pm_card_visa', // Example for specifying a Visa card payment method.
+
+        //     // 'setup_future_usage' indicates how the payment method will be used in the future, useful for saving card details.
+        //     setup_future_usage: 'off_session', // Options are 'off_session' or 'on_session'.
+
+        //     // 'shipping' details if the payment involves physical goods.
+         
+
+        //     // Add any other parameters required for your specific use case.
+        // };
+        // if(shippable && user.address != undefined){
+        //     confirmParams.shipping =   {
+        //         name: user?.name || 'no-name',
+        //         address: user.address,
+        //     };
+        // };
+        // const result = await stripe.confirmPayment({
+        //     elements,
+        //     ...confirmParams
+        // });
+
+        // if (result.error) {
+        //     console.log(result.error.message);
+        // } else {
+        //     const paymentIntent: any = result.paymentIntent;
+        //     if (paymentIntent && paymentIntent.status === 'succeeded') {
+        //         onSuccess && onSuccess(paymentIntent);
+        //     }
+        // }
+    }, [ clientSecret]);
+    // }, [stripe, elements, clientSecret]);
 
     useEffect(() => {
         const fetchClientSecret = async () => {
@@ -67,12 +96,13 @@ const AccountCreateMethod = ({ onSuccess, open, collapse, user }: IAccountCreate
             if (response?.client_secret) {
                 setClientSecret(response.client_secret);
             } else {
-                console.error("Client secret not found in the response");
+                console.error("Client secret not found in the response", response);
             }
         };
 
         fetchClientSecret();
     }, []);
+     const stripePromise = loadStripe('pk_live_qBiVh0MkAYVU7o3oVmP1Tzg900DLvxesSw');
 
     return (
         <>

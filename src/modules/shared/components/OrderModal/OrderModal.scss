@@ -13,8 +13,8 @@ $headerHeight: 100px;
   margin: 45px auto auto;
   cursor: default;
   z-index: 4;
-  background-color: var(--color-gray-80);
-  border-radius: var(--default-border-radius);
+  background-color: var(--gray-80);
+  border-radius: var(--border-radius);
   padding: $padding;
   color: white;
   font-family: "Atkinson Hyperlegible", sans-serif;
@@ -33,7 +33,7 @@ $headerHeight: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--color-gray-70);
+    background-color: var(--gray-70);
     top: $padding;
     right: $padding;
     width: calc($padding * 2.25);
@@ -41,7 +41,7 @@ $headerHeight: 100px;
     aspect-ratio: 1/1.2;
     --ui-icon-width: 16px;
     --ui-icon-height: 16px;
-    --ui-icon-color: var(--color-gray-30);
+    --ui-icon-color: var(--gray-30);
   }
   .order-modal__header {
     display: flex;
@@ -57,8 +57,8 @@ $headerHeight: 100px;
   .order-modal__content {
     word-wrap: break-word;
     white-space: break-spaces;
-    background-color: var(--color-gray-70);
-    border-radius: var(--default-border-radius);
+    background-color: var(--gray-70);
+    border-radius: var(--border-radius);
     padding: $padding;
     max-width: 500px;
     @media (max-width: 900px) {
@@ -67,7 +67,7 @@ $headerHeight: 100px;
       height: 500px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: var(--color-blue);
+      background-color: var(--blue);
       border-radius: 5px;
       width: 15px;
     }
@@ -89,11 +89,11 @@ $headerHeight: 100px;
       font-weight: 300;
       width: calc(100% - 20px);
       .order-key {
-        color: var(--color-gray-50);
+        color: var(--gray-50);
         text-transform: capitalize;
       }
       .order-value {
-        color: var(--color-gray-40);
+        color: var(--gray-40);
       }
     }
 

@@ -21,8 +21,8 @@ $cardWidth: 500px;
 overflow: hidden;
   &:not(.authentication__sign-in) {
 
-    // background-color: var(--color-gray-90);
-    // border-radius: var(--default-border-radius);
+    // background-color: var(--gray-90);
+    // border-radius: var(--border-radius);
     @media(max-width: 1100px) {
       max-width: 500px;
     }
@@ -37,7 +37,7 @@ overflow: hidden;
   }
 
   .authentication__view-header {
-    height: var(--default-element-height);
+    height: var(--element-height);
     text-transform: capitalize;
     @extend .d-flex;
     justify-content: flex-start;
@@ -50,10 +50,10 @@ overflow: hidden;
       justify-content: center;
     }
 
-    --ui-icon-color: var(--color-primary-lite);
+    --ui-icon-color: var(--primary-lite);
 
     .authentication__view-name {
-      color: var(--color-gray-10);
+      color: var(--gray-10);
 
       @media(max-width: 1100px) {
       }
@@ -65,8 +65,8 @@ overflow: hidden;
     @extend .d-flex-col;
     white-space: nowrap;
     text-align: center;
-    gap: var(--default-padding);
-    color: var(--color-gray-60);
+    gap: var(--padding);
+    color: var(--gray-60);
     position: relative;
     z-index: 1;
 
@@ -83,7 +83,7 @@ overflow: hidden;
     .authentication__view-label {
       padding: 0 var(--s-8);
       z-index: 2;
-      margin: var(--default-padding) 0 0;
+      margin: var(--padding) 0 0;
       background-color: inherit;
     }
   }

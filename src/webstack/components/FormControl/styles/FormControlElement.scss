@@ -4,10 +4,10 @@
  }
  @keyframes glowTxt {
     0% {
-        text-shadow: 0 0 var(--s-9) var(--color-primary);
+        text-shadow: 0 0 var(--s-9) var(--primary);
     }
     100% {
-        text-shadow: 0 0 var(--s-8) var(--color-secondary);
+        text-shadow: 0 0 var(--s-8) var(--secondary);
     }
   }
   
@@ -17,36 +17,36 @@
         outline: solid 1px unset;
         border: solid 1px unset;
     }
-    border-radius: var(--default-border-radius);
+    border-radius: var(--border-radius);
 }
 
 // COLORS
 .element-color{
-    --ui-icon-color: var(--color-gray-40);
-    background-color: var(--color-gray-90);
+    --ui-icon-color: var(--gray-40);
+    background-color: var(--gray-90);
     &:focus-within {
-        color: var(--color-gray-40);
+        color: var(--gray-40);
         .form-control__icon {
-            --ui-icon-color: var(--color-gray-40);
+            --ui-icon-color: var(--gray-40);
         }
     }
 
     &:hover {
         transition: all 300ms;
-        --ui-icon-color: var(--color-gray-50);
-        color: var(--color-gray-50);
-        background-color: var(--color-gray-80);
-        border: solid 1px var(--color-gray-60);
+        --ui-icon-color: var(--gray-50);
+        color: var(--gray-50);
+        background-color: var(--gray-80);
+        border: solid 1px var(--gray-60);
     }
 
 
     &-disabled {
         filter: brightness(.7);
         &:hover {
-            color: var(--color-gray-60);
-            --ui-icon-color: var(--color-gray-60);
-            background-color: var(--color-gray-70);
-            outline: solid 1px var(--color-gray-60);
+            color: var(--gray-60);
+            --ui-icon-color: var(--gray-60);
+            background-color: var(--gray-70);
+            outline: solid 1px var(--gray-60);
         }
 
     }
@@ -58,11 +58,11 @@
 // FORM CONTROL ELEMENT
 
 .form-control__element {
-    padding: 0 var(--default-padding);
-    color: var(--color-gray-50);
-    font-size: var(--default-font-size);
-    --ui-icon-width: var(--default-font-size);
-    --ui-icon-height: var(--default-font-size);
+    padding: 0 var(--padding);
+    color: var(--gray-50);
+    font-size: var(--font-size);
+    --ui-icon-width: var(--font-size);
+    --ui-icon-height: var(--font-size);
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -71,7 +71,7 @@
     align-items: center;
     justify-content: flex-start;
     line-height: 1;
-    height: calc(var(--default-element-height) - 2px);
+    height: calc(var(--element-height) - 2px);
     white-space: nowrap;
     width: auto;
     // PSUEDO's
@@ -93,26 +93,30 @@
     &--has-icon {
         padding: 0 var(--s-1);
     }
+    // ELEMENTS
+    &--button{
+        border: solid 1px transparent;
+    }
     &--input, &--textarea {
-        --ui-icon-color: var(--color-gray-50);
+        --ui-icon-color: var(--gray-50);
         &:not(&--nav-item, &--nav-item__active){
             font-family: 'Game', sans-serif;
             font-style: italic;
         }
-        background-color: var(--color-gray-70);
-        border: solid 1px var(--color-gray-60);
+        background-color: var(--gray-70);
+        border: solid 1px var(--gray-60);
         &:focus-within{
-            border: solid 1px var(--color-secondary);
-            --ui-icon-color: var(--color-gray-100);
-            color: var(--color-gray-100);
-            background-color: var(--color-gray-20);
+            border: solid 1px var(--secondary);
+            --ui-icon-color: var(--gray-100);
+            color: var(--gray-100);
+            background-color: var(--gray-20);
         }
         &:hover{
             font-weight: 500;
-            border-color:var(--color-gray-70);
-            color: var(--color-gray-100);
-            --ui-icon-color: var(--color-gray-100);
-            background-color: var(--color-gray-40);
+            border-color:var(--gray-70);
+            color: var(--gray-100);
+            --ui-icon-color: var(--gray-100);
+            background-color: var(--gray-40);
         }
         &:nth-child(2) {
             padding-left: var(--s-8);
@@ -122,7 +126,7 @@
         height: max-content;
         max-width: inherit;
         padding-top: 4px;
-        min-height: var(--default-element-height);
+        min-height: var(--element-height);
     }
     &-disabled {
         &:hover {
@@ -140,14 +144,14 @@
     // }
 
     &--primary{
-        background-color: var(--color-dark);
-        color: var(--color-gray-40);
-        --ui-icon-color: var(--color-gray-40);
+        background-color: var(--dark);
+        color: var(--gray-40);
+        --ui-icon-color: var(--gray-40);
         &:hover{
-            background-color: var(--color-primary);
+            background-color: var(--primary);
         }
         &:focus-within{
-            background-color: var(--color-primary);
+            background-color: var(--primary);
             filter: brightness(.8);
         }
     }
@@ -178,45 +182,45 @@
         }
       }
       &--secondary {
-        background-color: var(--color-secondary-opaque);
-        color: var(--color-gray-20);
+        background-color: var(--secondary-opaque);
+        color: var(--gray-20);
         &:hover{
-            background-color: var(--color-secondary);
-            color: var(--color-white);
+            background-color: var(--secondary);
+            color: var(--white);
         }
     }
     @include variant('dark',
-        var(--color-gray-100), var(--color-gray-50), var(--color-gray-80),
-        var(--color-dark), var(--color-gray-50), var(--color-gray-50),
-        var(--color-dark), var(--color-gray-50), var(--color-gray-50)
+        var(--gray-100), var(--gray-50), var(--gray-80),
+        var(--dark), var(--gray-50), var(--gray-50),
+        var(--dark), var(--gray-50), var(--gray-50)
     );
     @include variant('secondary',
-        var(--color-secondary-opaque), var(--color-gray-20), var(--color-gray-20),
-        var(--color-secondary-opaque), var(--color-gray-20), var(--color-gray-20),
-        var(--color-secondary-opaque), var(--color-gray-20), var(--color-gray-20)
+        var(--secondary-opaque), var(--gray-20), var(--gray-20),
+        var(--secondary-opaque), var(--gray-20), var(--gray-20),
+        var(--secondary-opaque), var(--gray-20), var(--gray-20)
     );
     &--link{
         &:hover{animation: glowTxt 1s infinite;}
     }
     &--nav-item{
-        --ui-icon-color: var(--color-gray-50) !important;
+        --ui-icon-color: var(--gray-50) !important;
         
         &:hover{
-            border-bottom: solid 1px var(--color-blue);
+            border-bottom: solid 1px var(--blue);
         }
     }
     &--nav-item__active{
-        --ui-icon-color: var(--color-gray-50);
+        --ui-icon-color: var(--gray-50);
         background-color: transparent;
-        border-bottom: solid 1px var(--color-secondary) !important;
+        border-bottom: solid 1px var(--secondary) !important;
     }
 
     // FORM CONTROL ELEMENTS - INVALID DEFINITIONS
     &--invalid{
         position: relative;
-        border: solid 1px var(--color-invalid-border) !important;
-        color: var(--color-invalid-border) !important;
-        --ui-icon-color: var(--color-invalid-border) !important;
+        border: solid 1px var(--invalid-border) !important;
+        color: var(--invalid-border) !important;
+        --ui-icon-color: var(--invalid-border) !important;
 
         .form-control__invalid{
             position: absolute;
@@ -225,7 +229,7 @@
             font-size: var(--s-3);
             font-weight: bold;
             user-select: none;
-            color: var(--color-secondary-opaque);
+            color: var(--secondary-opaque);
             opacity: .5;
         }
     }
@@ -234,17 +238,17 @@
     }
     // FORM CONTROL ELEMENTS - ELEM TYPES
     &--select:not(&--nav-item, &--nav-item__active){
-        color: var(--color-gray-60);
-        --ui-icon-color: var(--color-gray-60);
-        background-color: var(--color-gray-70);
+        color: var(--gray-60);
+        --ui-icon-color: var(--gray-60);
+        background-color: var(--gray-70);
         &:hover{
-            color: var(--color-gray-40);
-            --ui-icon-color: var(--color-gray-40);
+            color: var(--gray-40);
+            --ui-icon-color: var(--gray-40);
         }
         &:focus-within{
-            color: var(--color-white);
-            --ui-icon-color: var(--color-white);
-            background-color: var(--color-primary-opaque);
+            color: var(--white);
+            --ui-icon-color: var(--white);
+            background-color: var(--primary-opaque);
         }
     }
   

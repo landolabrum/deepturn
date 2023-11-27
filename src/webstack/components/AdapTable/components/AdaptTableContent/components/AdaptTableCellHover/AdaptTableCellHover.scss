@@ -1,7 +1,7 @@
-$gray90: var(--color-gray-90);
-$gray40: var(--color-gray-40);
-$gray50: var(--color-gray-50);
-$gray50: var(--color-gray-50);
+$gray90: var(--gray-90);
+$gray40: var(--gray-40);
+$gray50: var(--gray-50);
+$gray50: var(--gray-50);
 @keyframes fadeIn {
     0% {
       opacity: 0;
@@ -52,7 +52,7 @@ $gray50: var(--color-gray-50);
       .td-hover-key-value {
         background-color: $gray40;
         line-height: 1;
-        color: var(--color-blue);
+        color: var(--blue);
         padding: 8px;
         border-radius: 4px;
         white-space: wrap;

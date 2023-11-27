@@ -29,7 +29,7 @@ $cell-height: 100%;
   width: 100%;
 }
 .adapt-table-cell__member-initials {
-  background-color: var(--color-gray-60);
+  background-color: var(--gray-60);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,7 +47,7 @@ $cell-height: 100%;
   align-items: center;
   font-size: 12px;
   font-weight: 200;
-  color: var(--color-gray-50);
+  color: var(--gray-50);
   padding: 4px 6px;
   border-radius: 4px;
   font-style: italic;
@@ -128,7 +128,7 @@ $cell-height: 100%;
       gap: $gap-small;
       line-height: 1;
       .adaptable-cell__member-id {
-        color: var(--color-gray-50);
+        color: var(--gray-50);
       }
     }
   }
@@ -165,7 +165,7 @@ $cell-height: 100%;
   height: 100%;
   display: flex;
   align-items: center;
-  --ui-icon-color: var(--color-gray-40);
+  --ui-icon-color: var(--gray-40);
   --ui-icon-width: 16px;
   --ui-icon-height: 16px;
   overflow: visible;
@@ -195,7 +195,7 @@ $cell-height: 100%;
   z-index: 1;
   &:not(.adaptable-cell__copied):hover {
     --ui-icon-color: white;
-    background-color: var(--color-gray-50);
+    background-color: var(--gray-50);
     &::before {
       animation: fade-out 3s forwards;
       font-size: 12px;
@@ -206,8 +206,8 @@ $cell-height: 100%;
       top: auto;
       padding: $gap-small $gap-medium;
       content: "copy";
-      background-color: var(--color-gray-30);
-      color: var(--color-gray-70);
+      background-color: var(--gray-30);
+      color: var(--gray-70);
       border-radius: 4px;
       width: max-content;
       // @media (max-width: 900px) {
@@ -233,8 +233,8 @@ $cell-height: 100%;
       bottom: auto;
       padding: $gap-small $gap-medium;
       content: "copied!";
-      background-color: var(--color-gray-30);
-      color: var(--color-gray-70);
+      background-color: var(--gray-30);
+      color: var(--gray-70);
       border-radius: 4px;
       width: max-content;
       @media (max-width: 900px) {
@@ -258,8 +258,8 @@ $cell-height: 100%;
       top: 0;
       padding: $gap-small $gap-medium;
       content: "view transaction details";
-      background-color: var(--color-gray-30);
-      color: var(--color-gray-70);
+      background-color: var(--gray-30);
+      color: var(--gray-70);
       border-radius: 4px;
       width: max-content;
       @media (max-width: 900px) {

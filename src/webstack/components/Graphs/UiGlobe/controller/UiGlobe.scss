@@ -10,7 +10,7 @@
     flex-direction: column;
     @media(max-width:900px){
         height: inherit;
-        margin-left: calc(var(--default-padding) * -1.5);
+        margin-left: calc(var(--padding) * -1.5);
         width: 100%;
     }
 }

@@ -91,8 +91,8 @@ export default class ApiService {
     }
 
     if (error.response) {
-      const response = error.response;
-      const data = response.data;
+      const response:any = error.response;
+      const data:any = response.data;
       // Standard Microservice Errors
       if (data && data.status) {
         const status = data.status.toString() as string;

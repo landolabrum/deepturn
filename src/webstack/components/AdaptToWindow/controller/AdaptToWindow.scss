@@ -30,7 +30,7 @@
         //         padding: 10px;
         //         top: 0;
         //         left: 10px;
-        //         background-color: var(--color-gray-90-opaque);
+        //         background-color: var(--gray-90-opaque);
         //     }
         // }
         .adapt-to-window__element {
@@ -51,7 +51,7 @@
                 max-width:calc(100vw - 40px);
             }
             &__top {
-                top: var(--default-padding);
+                top: var(--padding);
             }
             &__center {
                 top: 50%;
@@ -60,25 +60,25 @@
             }
 
             &__right {
-                right: var(--default-padding);
+                right: var(--padding);
             }
 
             &__bottom {
-                bottom: var(--default-padding);
+                bottom: var(--padding);
             }
             
             &__left {
-                left: var(--default-padding);
+                left: var(--padding);
             }
 
             &__card {
-                padding: var(--default-padding);
-                background-color: var(--color-gray-40);
-                border: solid 1px var(--color-gray-60);
-                outline: solid 1px var(--color-gray-80);
-                border-radius: var(--default-border-radius);
-                color: var(--color-white);
-                --ui-icon-color: var(--color-white);
+                padding: var(--padding);
+                background-color: var(--gray-40);
+                border: solid 1px var(--gray-60);
+                outline: solid 1px var(--gray-80);
+                border-radius: var(--border-radius);
+                color: var(--white);
+                --ui-icon-color: var(--white);
                 width: max-content;
                 height: max-content;
             }

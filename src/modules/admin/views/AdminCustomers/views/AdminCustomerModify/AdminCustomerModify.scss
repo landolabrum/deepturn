@@ -5,26 +5,26 @@
 }
 
 .admin-customer-modify {
-    border-radius: var(--default-border-radius);
-    background-color: var(--color-gray-90);
-    border: solid 1px var(--color-gray-70);
-    padding: var(--s-3) var(--default-padding);
+    border-radius: var(--border-radius);
+    background-color: var(--gray-90);
+    border: solid 1px var(--gray-70);
+    padding: var(--s-3) var(--padding);
     @extend .d-flex;
     flex-direction: column;
     overflow: hidden;
     width: auto;
     align-items: stretch;
-    gap: var(--default-padding);
+    gap: var(--padding);
 
     &__title {
         font-size: var(--s-1);
-        height: var(--default-element-height);
-        color: var(--color-gray-40);
+        height: var(--element-height);
+        color: var(--gray-40);
     }
     &__delete {
     
         margin-left: auto;
-        padding: var(--default-padding);
+        padding: var(--padding);
         width: max-content;
     }
 
@@ -34,9 +34,9 @@
         flex-direction: column;
         gap: var(--s-9);
         width: auto;
-        border-radius: var(--default-border-radius);
-        padding: var(--default-padding);
-        background-color: var(--color-gray-70);
+        border-radius: var(--border-radius);
+        padding: var(--padding);
+        background-color: var(--gray-70);
 
         &--field {
             &--key {

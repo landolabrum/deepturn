@@ -2,7 +2,6 @@ import Head from "next/head";
 import type { AppProps } from "next/app";
 import DefaultLayout from "../layouts/default/DefaultLayout";
 import ServiceContainer from "@webstack/components/ServiceContainer/ServiceContainer";
-import { appWithTranslation } from 'next-i18next';
 import styles from "~/src/layouts/default/DefaultLayout.scss"
 import { OverlayProvider } from "@webstack/components/Overlay/Overlay";
 import { HeaderProvider } from "@webstack/components/Header/controller/Header";
@@ -12,10 +11,7 @@ import { ModalProvider } from "@webstack/components/modal/contexts/modalContext"
 import { ModalOverlay } from "@webstack/components/modal/views/modalOverlay";
 import { LoaderProvider } from "@webstack/components/Loader/Loader";
 
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-
-export const stripePromise = loadStripe('pk_live_qBiVh0MkAYVU7o3oVmP1Tzg900DLvxesSw');
+// import { appWithTranslation } from 'next-i18next';
 
 
 
@@ -38,10 +34,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
                 <ModalOverlay />
 
                 <DefaultLayout>
-                  <Elements stripe={stripePromise}>
 
                     <Component {...pageProps} />
-                  </Elements>
                 </DefaultLayout>
               </HeaderProvider>
             </ModalProvider>

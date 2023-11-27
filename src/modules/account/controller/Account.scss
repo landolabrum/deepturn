@@ -20,8 +20,8 @@
   }
 
   .account__view {
-    background-color: var(--color-gray-50);
-    border-radius: var(--default-border-radius);
+    background-color: var(--gray-50);
+    border-radius: var(--border-radius);
     width:calc(100% - calc(var(--s-6) * 2));
     padding:var(--s-7);
     .account__view__title {
@@ -31,7 +31,7 @@
       font-size: var(--s-1);
       line-height: 1.5;
       margin-bottom: var(--s-9);
-      color: var(--color-gray-20);
+      color: var(--gray-20);
     }
   }
 }

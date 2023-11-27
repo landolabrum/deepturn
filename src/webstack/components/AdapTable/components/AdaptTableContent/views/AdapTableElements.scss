@@ -24,7 +24,7 @@ $bRad: 5px;
   justify-content: center;
   height: max-content;
   border-radius: $bRad;
-  background-color: var(--color-gray-70);
+  background-color: var(--gray-90);
   padding: 10px;
   width: inherit;
   gap: 5px;
@@ -36,7 +36,7 @@ $bRad: 5px;
     padding: 0 8px;
   }
   &:hover {
-    background-color: var(--color-gray-60);
+    background-color: var(--gray-60);
   }
   @media (max-width: $xs) {
     max-width: calc(100% - 8px);
@@ -63,7 +63,7 @@ $bRad: 5px;
     text-transform: capitalize;
     content: attr(data-key);
     align-items: center;
-    color: var(--color-gray-50);
+    color: var(--gray-50);
   }
 
 }
@@ -76,14 +76,14 @@ table {
     display: table;
   }
   &.hide-header{
-    border-radius: var(--default-border-radius);
+    border-radius: var(--border-radius);
     border: solid 1px transparent;
     overflow: hidden;
   }
   &.table-mini {
     margin-top: 15px;
     padding-top: 15px;
-    border-top: solid 1px var(--color-gray-60);;
+    border-top: solid 1px var(--gray-60);;
 
     tr {
       td,
@@ -105,7 +105,7 @@ table {
       display: none;
     }
     tr {
-      background-color: var(--color-gray-80);
+      background-color: var(--gray-80);
       th {
         text-transform: capitalize;
       }
@@ -117,7 +117,7 @@ table {
       height: 50px;
       width: 100%;
       &:hover {
-        background-color: var(--color-gray-80);
+        background-color: var(--gray-80);
       }
 
       &.mobile-tr {
@@ -190,10 +190,10 @@ table {
         }
 
         &:not(:last-child) {
-          border-right: solid 1px var(--color-gray-60);;
+          border-right: solid 1px var(--gray-60);;
         }
 
-        border-bottom: solid 1px var(--color-gray-60);;
+        border-bottom: solid 1px var(--gray-60);;
 
         &.mobile-td {
           @include mobileTd();

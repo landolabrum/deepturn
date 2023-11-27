@@ -14,7 +14,7 @@ $agg: 5px;
   }
   .bar__container {
     border-radius: $agg;
-    border: solid 1px var(--color-gray-60);
+    border: solid 1px var(--gray-60);
     padding: 10px 6px;
     &:hover {
       .bar__bars-container {
@@ -23,7 +23,7 @@ $agg: 5px;
         }
       }
       .bars__icon {
-        --ui-icon-color: var(--color-gray-30);
+        --ui-icon-color: var(--gray-30);
       }
     }
     .bar__header {
@@ -33,7 +33,7 @@ $agg: 5px;
       @extend .d-flex;
       padding-top: 20px;
       --ui-icon-size: 30px;
-      --ui-icon-color: var(--color-gray-60);
+      --ui-icon-color: var(--gray-60);
       padding: 30px 0 20px;
     }
     .bars__status {
@@ -74,7 +74,7 @@ $agg: 5px;
 .bar__bars-content {
   height: 50px;
   border-radius: $agg;
-  border: solid 1px var(--color-gray-60);
+  border: solid 1px var(--gray-60);
   transform: rotate(180deg);
   .bar__bars-bar {
     height: 100%;

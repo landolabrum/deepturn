@@ -8,7 +8,7 @@
     display: none;
    
     width: auto;
-    margin: var(--default-element-height) 0;
+    margin: var(--element-height) 0;
     @media(max-width: 1260px) {
         flex-direction: column;
         display: flex;
@@ -19,23 +19,23 @@
         width: 100%;
     }
     &--content {
-        border-radius: var(--default-border-radius);
+        border-radius: var(--border-radius);
         display: flex;
         justify-content: space-around;
         flex-direction: column;
         gap: var(--s-9);
-        padding: var(--s-5) var(--default-padding);
+        padding: var(--s-5) var(--padding);
         .nav__nav-item {
             @extend .d-flex;
-            background-color: var(--color-gray-90);
-            color: var(--color-gray-10);
-            border-radius: var(--default-border-radius);
-            width: calc(100% - calc(var(--default-padding) * 2));
-            height: var(--default-element-height);
-            border: solid 1px var(--color-gray-80);
+            background-color: var(--gray-90);
+            color: var(--gray-10);
+            border-radius: var(--border-radius);
+            width: calc(100% - calc(var(--padding) * 2));
+            height: var(--element-height);
+            border: solid 1px var(--gray-80);
             font-size: var(--s-7);
             text-align: center;
-            padding: var(--default-padding);
+            padding: var(--padding);
             &--account {
                 margin-left: auto;
             }
@@ -47,8 +47,8 @@
             &:hover,
             :focus {
                 cursor: pointer;
-                background-color: var(--color-gray-100);
-                color: var(--color-primary);
+                background-color: var(--gray-100);
+                color: var(--primary);
             }
         }
     }

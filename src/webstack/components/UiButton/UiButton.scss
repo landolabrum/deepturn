@@ -4,7 +4,7 @@
     cursor: default;
     position: relative;
     color: transparent;
-    text-shadow: 0 0 2px var(--color-gray-60);
+    text-shadow: 0 0 2px var(--gray-60);
   }
   100%{
     color: inherit;
@@ -20,7 +20,7 @@
     cursor: default;
     position: relative;
     color: transparent;
-    text-shadow: 0 0 2px var(--color-gray-60);
+    text-shadow: 0 0 2px var(--gray-60);
   }
 }
 
@@ -69,7 +69,7 @@ button {
     align-items: center;
     border-radius: var(--input-border-radius);
     // background-color: #00000045;
-    --ui-icon-color: var(--color-blue);
+    --ui-icon-color: var(--blue);
   }
   &.icon, &.disabled-icon{
     padding: 0 7px;

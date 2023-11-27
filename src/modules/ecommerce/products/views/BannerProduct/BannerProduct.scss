@@ -8,24 +8,24 @@ $space: var(--s-7);
 }
 
 .products-listing__banner {
-    width: calc(100% - calc(var(--default-padding) * 2));
-    padding: var(--default-padding);
-    background-color: var(--color-gray-30);
+    width: calc(100% - calc(var(--padding) * 2));
+    padding: var(--padding);
+    background-color: var(--gray-30);
     gap: var(--s-7);
-    border-radius: var(--default-border-radius);
+    border-radius: var(--border-radius);
     &--title {
         width: 100%;
         font-size: var(--s-3);
-        color: var(--color-gray-100);
+        color: var(--gray-100);
         line-height: calc(var(--s-3) * 1.5);
     }
     
     &--body {
         @extend .d-flex;
         align-items: flex-start;
-        gap: var(--default-element-height);
+        gap: var(--element-height);
         width: 100%;
-        color: var(--color-gray-60);
+        color: var(--gray-60);
     }
 }
 

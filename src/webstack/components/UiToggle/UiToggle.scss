@@ -40,9 +40,9 @@
   }
   input:checked + .slider.slider--disabled {
     cursor: not-allowed;
-    background-color: var(--color-primary-opaque);
+    background-color: var(--primary-opaque);
     &:before {
-      background-color: var(--color-gray-50);
+      background-color: var(--gray-50);
     }
   }
   

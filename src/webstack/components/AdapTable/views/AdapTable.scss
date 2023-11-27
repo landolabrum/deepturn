@@ -16,11 +16,14 @@ $overBreakPoint: 1350px;
   flex-direction: column;
   border-radius: $bRad;
   font-weight: 300;
-  background-color: var(--color-gray-90);
+  @media(max-width:900px){
+    background-color: var(--gray-80);
+  }
+  background-color: var(--gray-90);
   font-size: 14px;
   &.adaptable-mini{
     font-size: 16px;
     background-color: transparent;
-    color: var(--color-gray-30);
+    color: var(--gray-30);
   }
 }

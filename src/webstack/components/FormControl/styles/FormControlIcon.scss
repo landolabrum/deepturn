@@ -18,24 +18,24 @@
 .form-control__icon {
     --ui-icon-color: inherit;
     &:first-child {
-      border-radius: var(--default-border-radius) 0 0 var(--default-border-radius);
+      border-radius: var(--border-radius) 0 0 var(--border-radius);
     }
     &:focus { --ui-icon-color: inherit; }
-    &:hover { --ui-icon-color: var(--color-primary); }
+    &:hover { --ui-icon-color: var(--primary); }
     &:last-child {
-      border-radius: 0 var(--default-border-radius) var(--default-border-radius) 0;
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
     }
     &.form-control__icon-round {
       &:last-child { padding-right: 5px; }
     }
     @extend .d-flex;
-    height: var(--default-element-height);
-    width: var(--default-element-height);
+    height: var(--element-height);
+    width: var(--element-height);
     --ui-icon-width: var(--s-5);
     --ui-icon-height: var(--s-5);
 
     &.form-control__icon-dark {
-      color: var(--color-gray-30);
-      background-color: var(--color-gray-70-opaque);
+      color: var(--gray-30);
+      background-color: var(--gray-70-opaque);
     }
   }

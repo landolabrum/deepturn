@@ -1,4 +1,4 @@
-// $line_height: calc(var(--default-element-height) * 2);
+// $line_height: calc(var(--element-height) * 2);
 
 // .d-flex {
 //     display: flex;
@@ -7,20 +7,20 @@
 // }
 
 // .body {
-//     padding: 0 var(--default-padding);
-//     width: calc(100% - calc(var(--default-padding) * 2));
+//     padding: 0 var(--padding);
+//     width: calc(100% - calc(var(--padding) * 2));
 // }
 
 // .profile-form {
-//     background-color: var(--color-gary-80);
+//     background-color: var(--gary-80);
 //     width: 100%;
 //     height: 100%;
 //     .profile-form__title {
 //         @extend .d-flex, .body;
-//         height: var(--default-element-height);
+//         height: var(--element-height);
 //         font-size: var(--s-6);
-//         color: var(--color-gray-20);
-//         background-color: var(--color-gray-60);
+//         color: var(--gray-20);
+//         background-color: var(--gray-60);
 //     }
 //     &__body {
 //         @extend .d-flex, .body;
@@ -38,7 +38,7 @@
 //     }
 //     .profile-form__action {
 //         width: 100%;
-//         margin-top:calc(var(--default-element-height) * 1.5);
+//         margin-top:calc(var(--element-height) * 1.5);
 //     }
 // }
 // .profile-form__collapse-label{
@@ -72,6 +72,6 @@
 .profile-form{
     width: 100%;
     padding: var(--s-5) var(--s-9);
-    border-radius: var(--default-border-radius);
-    background-color: var(--color-gray-80);
+    border-radius: var(--border-radius);
+    background-color: var(--gray-80);
 }

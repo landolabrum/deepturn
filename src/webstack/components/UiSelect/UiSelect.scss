@@ -59,7 +59,7 @@ $el_gap: 7px;
   .select__options {
     left: 0;
     position: absolute;
-    // box-shadow: var(--default-box-shadow);
+    // box-shadow: var(--box-shadow);
     z-index: 3;
     &.right {
       left: auto;

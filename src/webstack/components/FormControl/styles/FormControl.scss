@@ -55,10 +55,10 @@ $elPad: 14px;
     min-height: var(--s-4);
 
     label {
-      text-indent: calc(var(--default-padding) + 2px);
+      text-indent: calc(var(--padding) + 2px);
       text-transform: capitalize;
       font-style: italic;
-      color: var(--color-gray-50);
+      color: var(--gray-50);
       line-height: 2;
       font-size: 14px;
       font-weight: bold;
@@ -77,7 +77,7 @@ $elPad: 14px;
 
   &.form-control--invalid {
     label {
-      color: var(--color-orange);
+      color: var(--orange);
     }
   }
 
@@ -90,7 +90,7 @@ $elPad: 14px;
   &--dark {
     .form-control__header {
       label {
-        color: var(--color-gray-100);
+        color: var(--gray-100);
       }
     }
   }

@@ -41,7 +41,7 @@ input, textarea {
   &:-internal-autofill-selected
   {
     background-color: transparent !important;
-    -webkit-text-fill-color: var(--color-primary) !important;
+    -webkit-text-fill-color: var(--primary) !important;
     -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
     transition: background-color 5000s ease-in-out 0s !important;
   }
@@ -51,17 +51,17 @@ input, textarea {
   &.center {
     text-align: center;
     text-indent: 0;
-    min-height: var(--default-element-height);
+    min-height: var(--element-height);
     height: 100%;
     width: max-content;
     @media(max-width: 900px) {}
 
     &:focus {
-      background-color: var(--color-gray-70);
+      background-color: var(--gray-70);
     }
 
     &:hover {
-      background-color: var(--color-gray-70-opaque);
+      background-color: var(--gray-70-opaque);
     }
   }
 
@@ -71,7 +71,7 @@ input, textarea {
     z-index: 2;
     text-decoration: underline dashed;
     border-width: 0px 0px 2px 0px;
-    border-bottom-color: var(--color-invalid-border);
+    border-bottom-color: var(--invalid-border);
   }
   // &:focus,
   // &:-webkit-autofill:focus{
@@ -81,7 +81,7 @@ input, textarea {
 
 input::placeholder {
   font-style: italic;
-  color: var(--default-placeholder-color);
+  color: var(--placeholder-color);
   padding: 0;
   font-size: 16px;
 }
@@ -90,11 +90,11 @@ input::placeholder {
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  color: var(--color-orange);
-  height: var(--default-element-height);
+  color: var(--orange);
+  height: var(--element-height);
   line-height: 1;
   display: none;
-  text-indent: var(--default-padding);
+  text-indent: var(--padding);
   &.input__message-show{
     display: flex;
   }

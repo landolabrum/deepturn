@@ -12,9 +12,9 @@ $brdr: 14px;
   flex-direction: column;
 }
 h1{
-    color: var(--color-gray-40);
+    color: var(--gray-40);
     text-transform: capitalize;
-    margin-top: var(--default-element-height);
+    margin-top: var(--element-height);
 }
 .cart__empty-cart {
     @extend .d-flex-col;
@@ -27,7 +27,7 @@ h1{
     .cart__emtpy-cart-canvas {
         z-index: 1;
         @extend .d-flex;
-        --ui-icon-color: var(--color-gray-100-opaque);
+        --ui-icon-color: var(--gray-100-opaque);
         --ui-icon-height: 90%;
         overflow: hidden;
         --ui-icon-width: 100%;

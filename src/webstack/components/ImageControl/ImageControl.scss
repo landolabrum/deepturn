@@ -11,7 +11,7 @@
     }
     overflow: hidden;
     @media(max-width: 900px){
-        max-width: calc(100vw - calc(var(--default-padding) * 2));
+        max-width: calc(100vw - calc(var(--padding) * 2));
     }
     &:hover .image-control__controls {
         bottom: 0;
@@ -30,7 +30,7 @@
     }
 
     .image-control__controls {
-        background-color: var(--color-gray-100);
+        background-color: var(--gray-100);
         z-index: 2;
         @extend .d-flex;
         justify-content: space-between;
@@ -40,13 +40,13 @@
         /* Start hidden below the container */
         width: calc(100% - calc(var(--s-9) * 2));
         left: 0;
-        height: var(--default-element-height);
+        height: var(--element-height);
         opacity: 0;
         transition: bottom .5s ease, opacity .5s ease;
         &__control{
             cursor: pointer;
             &:hover{
-                --ui-icon-color: var(--color-primary);
+                --ui-icon-color: var(--primary);
             }
         }
     }

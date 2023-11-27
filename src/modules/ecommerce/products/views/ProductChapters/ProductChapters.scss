@@ -8,14 +8,14 @@
     justify-content: flex-start;
     width: 100%;
     list-style: none;
-    margin: var(--default-padding) 0 var(--default-element-height);
+    margin: var(--padding) 0 var(--element-height);
     padding: 0;
-    color:var(--color-primary);
+    color:var(--primary);
     gap: var(--s-5);
     &__chapter{
         cursor: pointer;
-        height: calc(var(--default-element-height) * 4);
-        $color:var(--color-gray-40);
+        height: calc(var(--element-height) * 4);
+        $color:var(--gray-40);
         width: 100%;
         max-width: 122px;
         color: $color;
@@ -43,7 +43,7 @@
                 .chapter__title{
                     font-weight: 900;
                     font-size: var(--s-6);
-                    color: var(--color-primary);
+                    color: var(--primary);
                 }
                 .chapter__extras{
                     font-size: var(--s-8);

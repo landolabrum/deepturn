@@ -21,7 +21,7 @@
   z-index: 2;
   animation: fadeIn 3s ease-in-out;
   &__content {
-    padding: var(--default-padding);
+    padding: var(--padding);
     @extend .d-flex;
     flex-direction: column;
     // border: solid 1px #f00;
@@ -30,7 +30,7 @@
       width: 100%;
       min-width: 150px;
       --ui-icon-size: 100%;
-      --ui-icon-color: var(--color-gray-30);
+      --ui-icon-color: var(--gray-30);
       // border: solid 1px #f0f;
     }
 
@@ -38,16 +38,16 @@
       @extend .d-flex;
       flex-direction: column;
       height: 100%;
-      min-height: var(--default-element-height);
+      min-height: var(--element-height);
       width: 100%;
-      color: var(--color-gray-30);
-      margin-top: var(--default-padding);
+      color: var(--gray-30);
+      margin-top: var(--padding);
       text-transform: capitalize;
     }
   }
   &--fixed{
     position: fixed;
-    background: var(--color-gray-100-opaque);
+    background: var(--gray-100-opaque);
     backdrop-filter: blur(4px);
     top: 0;
     bottom: 0;

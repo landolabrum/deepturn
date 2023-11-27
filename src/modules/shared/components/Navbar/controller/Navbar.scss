@@ -5,10 +5,10 @@
 
 nav {
   @extend .d-flex;
-  min-height: var(--default-element-height);
+  min-height: var(--element-height);
   width: 100%;
   margin: 0 auto;
-  // gap: var(--default-padding);
+  // gap: var(--padding);
   @media(min-width: 1262px) {
     inline-size: 1260px;
     padding: 0;
@@ -16,13 +16,35 @@ nav {
   @media(max-width: 900px) {
       padding: 0;
   }
-
+@keyframes fade {
+  0%{
+    filter:brightness(2);
+    --ui-icon-color: var(--body);
+    transform: scale(1);
+  }
+  50%{
+    filter:brightness(1.5);
+    --ui-icon-color: var(--primary-opaque);
+    transform: scale(1.1);
+  }
+  100%{
+    filter:brightness(1);
+    --ui-icon-color: var(--primary);
+    transform: scale(1);
+  }
+}
   .navbar__trigger {
     cursor: pointer;
-    width: var(--default-padding);
-    padding: var(--default-padding);
+    padding: var(--padding) var(--s-8);
     &:hover{
-      --ui-icon-color: var(--color-primary);
+      animation: fade 1s forwards;
+    }
+    @media(max-width: 1100px) {
+      padding: var(--padding) var(--s-4);
+    }
+    @media(max-width: 900px) {
+      padding: var(--padding) var(--s-8);
+
     }
     @media(min-width: 1100px) {
       display: none;
@@ -30,7 +52,7 @@ nav {
   }
 
   .nav__nav-item {
-    height: var(--default-element-height);
+    height: var(--element-height);
     @media(max-width: 1100px) {
       display: none;
     }

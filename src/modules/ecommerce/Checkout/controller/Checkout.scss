@@ -14,8 +14,8 @@
         font-size: var(--s-4);
         gap:7px;
         @extend .d-flex;
-        color: var(--color-gray-30);
-        --ui-icon-color: var(--color-gray-30);
+        color: var(--gray-30);
+        --ui-icon-color: var(--gray-30);
     }
 }
 
@@ -23,13 +23,13 @@
     @extend .d-flex;
     justify-content: center;
     flex-direction: column;
-    gap:var(--default-padding);
+    gap:var(--padding);
     height: 100%;
     width: 100%;
     i{
         width: 100%;
         line-height: 1;
-        color: var(--color-orange);
+        color: var(--orange);
         padding:0;
         margin:0;
     }

@@ -1,7 +1,7 @@
 .breadcrumbs {
   display: flex;
   align-items: center;
-  height: var(--default-element-height);
+  height: var(--element-height);
   
   .crumb {
     display: flex;
@@ -9,8 +9,8 @@
     white-space: nowrap;
     --ui-icon-width: 26px;
     --ui-icon-height: 14px;
-    --ui-icon-color: var(--color-gray-50);
-    color: var(--color-gray-50);
+    --ui-icon-color: var(--gray-50);
+    color: var(--gray-50);
     text-transform: capitalize;
     font-weight: 300;
     cursor: pointer;

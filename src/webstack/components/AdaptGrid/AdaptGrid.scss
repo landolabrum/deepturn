@@ -37,24 +37,24 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: var(--color-gray-90);
-      border-radius: var(--default-border-radius);
-      box-shadow: var(--default-box-shadow-xl);
+      background-color: var(--gray-90);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow-xl);
       transition: all 0.3s ease-out;
 
       // &:hover {
       //   // Futuristic lift effect on hover
       //   box-shadow: 
-      //     0 2px 3px var(--color-secondary),
-      //     0 .5px 1px var(--color-primary),
-      //     0 1px 3px var(--color-secondary);
+      //     0 2px 3px var(--secondary),
+      //     0 .5px 1px var(--primary),
+      //     0 1px 3px var(--secondary);
       //   transform: translateY(-1px);
       // }
     }
 
     &.adaptgrid_card-border {
-      outline: solid 1px var(--color-gray-80);
-      border: solid 1px var(--color-gray-60);
+      outline: solid 1px var(--gray-80);
+      border: solid 1px var(--gray-60);
     }
   }
 }
