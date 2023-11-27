@@ -3,7 +3,6 @@ import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-
 import { getService } from "@webstack/common";
 import IMemberService from "~/src/core/services/MemberService/IMemberService";
 import styles from "./AccountCreateMethod.scss";
-import { stripePromise } from '~/src/pages/_app';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UserContext from '~/src/models/UserContext';
 import { loadStripe } from '@stripe/stripe-js';
