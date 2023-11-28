@@ -29,18 +29,8 @@ const AccountCreateMethod = ({ onSuccess, open, collapse, user, shippable }: IAc
 
     const onSubmit = useCallback(async (event: any) => {
         event.preventDefault();
-        console.log('[ event ]', event)
-        // if (!stripe || !user) return;
         let confirmParams: any = {
-            // Replace the following example parameters with the ones you need for your specific implementation.
-
-            // The 'return_url' is used for redirecting the customer back to your site after completing the payment on the hosted payment page.
-            return_url: `https://${environment.merchant.name}/account?vid=billing+info`,
-
-            // 'receipt_email' is where Stripe will send a receipt upon successful payment, if email receipts are enabled in your Stripe dashboard.
-            // receipt_email: user.email, // Assuming 'user.email' contains the customer's email address.
-
-            // 'payment_method' is used to specify a particular payment method if needed.
+            return_url: `${environment.site.url}/account?vid=billing+info`,
         };
         if (shippable && user?.address != undefined) {
             confirmParams.shipping = {
@@ -48,7 +38,6 @@ const AccountCreateMethod = ({ onSuccess, open, collapse, user, shippable }: IAc
                 address: user.address,
             };
         };
-        console.log('[ confirmParams ]', confirmParams)
         try {
             const result: any = await stripe?.confirmSetup({
                 elements,
@@ -69,23 +58,41 @@ const AccountCreateMethod = ({ onSuccess, open, collapse, user, shippable }: IAc
         }
     }, [stripe, elements]);
     // }, [stripe, elements, clientSecret]);
+    const [isApplePaySupported, setIsApplePaySupported] = useState(false);
 
     useEffect(() => {
-        if (elements && elements.getElement('payment') == null) {
+        // Check if Apple Pay is supported
+        if (stripe) {
+            stripe.paymentRequest({
+                country: 'US',
+                currency: 'usd',
+                total: {
+                    label: 'Demo Total',
+                    amount: 199,
+                },
+                requestPayerName: true,
+                requestPayerEmail: true,
+            }).canMakePayment().then(result => {
+                setIsApplePaySupported(!!result?.applePay);
+            });
+        }
+    }, [stripe]);
+    const hasPayElem = elements?.getElement('payment') || false;
+    useEffect(() => {
+        if (elements && !hasPayElem) {
             const paymentElement = elements.create('payment', options);
             paymentElement.mount('#payment-element');
         }
-
-    }, [stripe]);
+    }, [elements]);
 
     return (
         <>
             <style jsx>{styles}</style>
-
             <form onSubmit={onSubmit} className='account-create-method'>
-                <div id="payment-element" >
+                <div className='account-create-method__content'>
+                    <div id="payment-element" />
                     <div className='account-create-method__submit'>
-                        <UiButton type="submit" variant='primary'>
+                        <UiButton type="submit" variant={hasPayElem?'primary':'disabled'}>
                             Add Payment Method
                         </UiButton>
                     </div>

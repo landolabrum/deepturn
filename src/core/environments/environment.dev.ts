@@ -3,6 +3,9 @@ const serverUrl ="http://localhost:8000"
 const devEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: false,
+  site:{
+    url: 'http://localhost:3000'
+  },
   merchant:{
     name:"deepturn",
     mid: "us",

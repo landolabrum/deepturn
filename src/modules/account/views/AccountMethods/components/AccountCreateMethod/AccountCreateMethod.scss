@@ -45,7 +45,7 @@
 // }
 .account-create-method {
     width: 100%;
-    #payment-element{
+    &__content{
         @extend .d-flex;
         flex-direction: column;
         align-items: stretch;
@@ -54,6 +54,7 @@
         background-color: var(--gray-80);
         padding: calc(var(--element-height) * 1.5) var(--s-5) var(--s-5);
         position: relative;
+    #payment-element{
         &::before{
             position: absolute;
             top: var(--s-9);
@@ -66,5 +67,6 @@
     &__submit{
         margin: 0;
         width: 100%;
+    }
     }
 }

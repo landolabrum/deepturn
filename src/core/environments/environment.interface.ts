@@ -11,6 +11,9 @@
 export interface IEnvironment {
   useMockApi: any;
   isProduction: boolean;
+  site:{
+    url: string;
+  },
   merchant:{
     logo?: string;
     name?: string;

@@ -3,6 +3,9 @@ const serverUrl ="https://tiktok.soy"
 const prodEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: true,
+  site:{
+    url: 'https://deepturn.com'
+  },
   merchant:{
     name:"deepturn",
     mid: "mb1",
