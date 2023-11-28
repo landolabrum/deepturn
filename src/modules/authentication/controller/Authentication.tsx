@@ -9,12 +9,16 @@ import { useRouter } from "next/router";
 import VerifyEmail from "../views/VerifyEmail/VerifyEmail";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import UiButton from "@webstack/components/UiButton/UiButton";
+import { useLoader } from "@webstack/components/Loader/Loader";
+import { useClearance } from "~/src/core/authentication/hooks/useUser";
 
 
 
 const Authentication: React.FC<any> = (props: any) => {
   const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
   const [view, setView] = useState<string>(props?.view || "sign-in");
+  const [loader, setLoader] = useLoader();
+
   const router = useRouter();
   const handleView = () => {
     switch (view) {
@@ -35,6 +39,7 @@ const Authentication: React.FC<any> = (props: any) => {
     }
   }
 
+
   const [notification, setNotification] = useNotification();
   useEffect(() => {
     //  if(router.pathname.includes('authentication')){setNotification({
@@ -53,7 +58,7 @@ const Authentication: React.FC<any> = (props: any) => {
       setNewCustomerEmail(view);
     }
     if (newCustomerEmail != undefined) setView("sign-in");
-  }, [newCustomerEmail])
+  }, [])
 
   return (
     <>

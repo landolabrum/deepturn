@@ -21,7 +21,7 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
       <>
         <style jsx>{styles}</style>
         <UiSettingsLayout
-          defaultView='billing info'
+          defaultView='edit profile'
           name='account'
           variant="full-screen"
           views={views}

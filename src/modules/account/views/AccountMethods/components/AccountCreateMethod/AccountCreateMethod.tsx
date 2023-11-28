@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { useStripe, useElements } from '@stripe/react-stripe-js';
 import styles from "./AccountCreateMethod.scss";
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UserContext from '~/src/models/UserContext';
@@ -58,25 +58,25 @@ const AccountCreateMethod = ({ onSuccess, open, collapse, user, shippable }: IAc
         }
     }, [stripe, elements]);
     // }, [stripe, elements, clientSecret]);
-    const [isApplePaySupported, setIsApplePaySupported] = useState(false);
+    // const [isApplePaySupported, setIsApplePaySupported] = useState(false);
 
-    useEffect(() => {
-        // Check if Apple Pay is supported
-        if (stripe) {
-            stripe.paymentRequest({
-                country: 'US',
-                currency: 'usd',
-                total: {
-                    label: 'Demo Total',
-                    amount: 199,
-                },
-                requestPayerName: true,
-                requestPayerEmail: true,
-            }).canMakePayment().then(result => {
-                setIsApplePaySupported(!!result?.applePay);
-            });
-        }
-    }, [stripe]);
+    // useEffect(() => {
+    //     // Check if Apple Pay is supported
+    //     if (stripe) {
+    //         stripe.paymentRequest({
+    //             country: 'US',
+    //             currency: 'usd',
+    //             total: {
+    //                 label: 'Demo Total',
+    //                 amount: 199,
+    //             },
+    //             requestPayerName: true,
+    //             requestPayerEmail: true,
+    //         }).canMakePayment().then(result => {
+    //             setIsApplePaySupported(!!result?.applePay);
+    //         });
+    //     }
+    // }, [stripe]);
     const hasPayElem = elements?.getElement('payment') || false;
     useEffect(() => {
         if (elements && !hasPayElem) {

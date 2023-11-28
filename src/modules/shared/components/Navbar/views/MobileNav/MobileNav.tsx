@@ -28,6 +28,7 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }) => {
                         <span key={key}>
                             <UiButton
                                 onClick={() => handleClick(route)}
+                                variant='dark'
 
                             >{route.label}</UiButton>
                         </span>

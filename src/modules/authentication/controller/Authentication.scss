@@ -7,11 +7,27 @@ $cardWidth: 500px;
   width: 100%;
 }
 
+a{
+  text-decoration: none !important;
+}
 .d-flex-col {
   @extend .d-flex;
   flex-direction: column;
 }
-
+.authentication__status{
+  margin: var(--element-height) auto;
+  &--success{
+    @extend .d-flex-col;
+    gap: var(--s-3);
+    width: 100%;
+    width: inherit;
+    text-align: center;
+    color:var(--dark);
+    &--header{
+      font-size: var(--s-3);
+    }
+  }
+}
 
 .authentication {
   width: 100%;

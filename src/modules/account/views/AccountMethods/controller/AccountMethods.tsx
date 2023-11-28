@@ -1,5 +1,5 @@
 // Relative Path: ./AccountMethod.tsx
-import React, {  useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './AccountMethods.scss';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { getService } from '@webstack/common';
@@ -11,6 +11,7 @@ import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { useLoader } from '@webstack/components/Loader/Loader';
 const appearance = {
   theme: 'night' as 'stripe',
   variables: {
@@ -24,9 +25,12 @@ interface IAccountMethods {
   customerMethods?: any;
 }
 const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethods) => {
-  const [loading, setLoading] = useState<any>(true);
+  const [loader, setLoader]=useLoader();
+  setLoader({active: true});
   const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
+  const [clientSecret, setClientSecret] = useState(undefined);
+
   const memberService = getService<IMemberService>("IMemberService");
   const user = useUser();
 
@@ -38,12 +42,10 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
   }
 
   const getAccountMethods = async () => {
-    setLoading(true);
     const methodsResponse = await memberService.getMethods();
     if (methodsResponse) {
       setMethods(methodsResponse?.data);
     }
-    setLoading(false);
   }
   const handleLabel = () => {
     if (user && methods.length) {
@@ -56,8 +58,8 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
       }
     }
   }
-  const [clientSecret, setClientSecret] = useState(undefined);
   const fetchClientSecret = async () => {
+    if(clientSecret)return;
     const response = await memberService.createPaymentIntent();
     if (response?.client_secret) {
       setClientSecret(response.client_secret);
@@ -65,29 +67,22 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
       console.error("Client secret not found in the response", response);
     }
   };
+
   useEffect(() => {
     fetchClientSecret();
-  }, []);
-  useEffect(() => {
-
     handleLabel();
     !customerMethods && getAccountMethods();
     customerMethods && setMethods(customerMethods);
-  }, [methods.length]);
+    setTimeout(() => {
+      setLoader({active: false});
+    }, 2000);
+  }, []);
 
   if (open) return (
     <>
       <style jsx>{styles}</style>
       <div className='account-methods'>
-        {clientSecret && <Elements
-          stripe={loadStripe('pk_live_qBiVh0MkAYVU7o3oVmP1Tzg900DLvxesSw')}
-          options={{ clientSecret, appearance }}
-        >
-          <AccountCreateMethod
-            user={user}
-            onSuccess={handleCreated}
-          />
-        </Elements>}
+
         {methods.length > 0 && <>
           <div className='account-methods__existing'>
             <div className='account-methods__list'>
@@ -97,28 +92,33 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
                     default_source={user?.default_source}
                     method={method}
                     onDeleteSuccess={handleDelete}
-                    response={loading}
+                    response={loader?.active}
                   />
                 </div>
               })}
             </div>
           </div></>}
-        {loading == true && <h1>LOADIN</h1>}
+        {clientSecret && <Elements
+          stripe={loadStripe('pk_live_qBiVh0MkAYVU7o3oVmP1Tzg900DLvxesSw')}
+          options={{ clientSecret, appearance }}
+        >
+          <AccountCreateMethod
+            user={user}
+            onSuccess={handleCreated}
+          />
+        </Elements>}
+
       </div>
     </>
   );
   return (
     <>
       <style jsx>{styles}</style>
-      <UiCollapse label={label} open={open || !loading || user?.default_source == undefined}>
+      <UiCollapse label={label} open={open || !loader.active || user?.default_source == undefined}>
         <div className='account-methods'>
-          <AccountCreateMethod
-            user={user}
-            onSuccess={handleCreated}
-          />
           {methods.length > 0 && <>
             <div className='account-methods__existing'>
-
+              current methods
               <div className='account-methods__list'>
                 {Object.entries(methods).map(([key, method]) => {
                   return <div className='account-methods__list-item' key={key} >
@@ -126,13 +126,16 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
                       default_source={user?.default_source}
                       method={method}
                       onDeleteSuccess={handleDelete}
-                      response={loading}
+                      response={loader.active}
                     />
                   </div>
                 })}
               </div>
             </div></>}
-          {loading == true && <h1>LOADIN</h1>}
+          <AccountCreateMethod
+            user={user}
+            onSuccess={handleCreated}
+          />
         </div>
       </UiCollapse>
     </>

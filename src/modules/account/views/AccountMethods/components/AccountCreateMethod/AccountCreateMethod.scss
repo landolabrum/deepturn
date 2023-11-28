@@ -54,6 +54,7 @@
         background-color: var(--gray-80);
         padding: calc(var(--element-height) * 1.5) var(--s-5) var(--s-5);
         position: relative;
+        border: solid 1px var(--gray-60);
     #payment-element{
         &::before{
             position: absolute;

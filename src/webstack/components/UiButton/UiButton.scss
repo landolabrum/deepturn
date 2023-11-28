@@ -23,7 +23,6 @@
     text-shadow: 0 0 2px var(--gray-60);
   }
 }
-
 button {
   display: flex;
   align-items: inherit;
@@ -48,6 +47,9 @@ button {
   &.flat {
     margin: 0;
     
+  }
+  &.lite{
+    text-decoration: none;
   }
   &.link,
   &.flat {

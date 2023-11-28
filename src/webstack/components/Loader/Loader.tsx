@@ -9,7 +9,7 @@ import { UiIcon } from "../UiIcon/UiIcon";
 
 
 type ILoader = {
-  isLoading: boolean;
+  active: boolean;
   onClick?: any;
   body?: any;
   children?: any
@@ -19,7 +19,7 @@ const LoaderContext =
   createContext<[ILoader, (Loader: ILoader) => any]>
     (
       [
-        { isLoading: false },
+        { active: false },
         () => { }
       ]
     );
@@ -31,7 +31,7 @@ type LoaderProviderProps = {
 export const LoaderProvider: React.FC<LoaderProviderProps> = ({
   children,
 }) => {
-  const LoaderState = useState<ILoader>({ isLoading: false });
+  const LoaderState = useState<ILoader>({ active: false });
 
   return (
     <LoaderContext.Provider value={LoaderState}>
@@ -47,9 +47,9 @@ const Loader: React.FC = () => {
 
   useEffect(() => {
     setLoaderState(context);
-  }, []);
+  }, [context?.active != LoaderState?.active]);
 
-  if (LoaderState?.isLoading) {
+  if (LoaderState?.active) {
     return (
       <>
         <style jsx>{styles}</style>

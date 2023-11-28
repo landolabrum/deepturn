@@ -25,22 +25,6 @@
     .account-methods__existing {
         @extend .d-flex;
         flex-direction: column;
-
-        // .account-methods__header {
-        //     @extend  .d-flex, .brdr, .body;
-        //     line-height: 1;
-        //     height: var(--element-height);
-        //     border-radius: var(--border-radius) var(--border-radius) 0 0;
-        //     background-color: var(--gray-60);
-        //     color: var(--gray-30);
-        //     text-transform: capitalize;
-        //     font-size: var(--s-6);
-
-        //     @media(max-width: 900px) {
-        //         font-size: var(--s-8);
-        //     }
-        // }
-
         .account-methods__list {
             @extend .d-flex;
             flex-direction: column;

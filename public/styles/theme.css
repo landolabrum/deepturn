@@ -471,7 +471,6 @@ button {
   --input-border-radius: calc(var(--border-radius) * .66);
   --select-option-selected: var(--blue);
   --select-option-selected-bg: #c8def0;
-
   --select-default-color: var(--gray-50);
 }
 
@@ -483,7 +482,11 @@ button {
   --header-height: 80px;
   --header-border-radius: var(--border-radius);
 }
-
+a:-webkit-any-link {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
 .dev {
   position: fixed;
   display: flex;

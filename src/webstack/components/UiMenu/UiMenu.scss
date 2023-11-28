@@ -4,12 +4,15 @@ $el_gap: 7px;
 
 .menu {
   color: var(--gray-10);
-  --ui-icon-color: var(--gray-70);
+  --ui-icon-color: var(--gray-90);
   min-width: calc(100% - calc($el_gap * 2));
   border-radius: var(--border-radius);
   overflow: hidden;
   z-index: 2;
+  background-color: var(--gray-90-opaque);
 
+  backdrop-filter: blur(4px);
+  border: solid 1px var(--gray-90);
   .menu__search {
     padding: 12px;
   }
@@ -48,6 +51,9 @@ $el_gap: 7px;
   }
 
   .menu__option {
+    &:not(:last-child){
+      border-bottom: solid 1px var(--gray-90);
+    }
     z-index: 1;
     display: flex;
     align-items: center;
@@ -60,7 +66,8 @@ $el_gap: 7px;
     width: inherit;
 
     &:hover {
-      background-color: var(--gray-70);
+      background-color: var(--primary-opaque);
+      border-bottom-color: var(--color-primary-opaque);
     }
 
     &.active {
