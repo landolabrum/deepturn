@@ -6,16 +6,14 @@ $el_gap: 7px;
   color: var(--gray-10);
   --ui-icon-color: var(--gray-70);
   min-width: calc(100% - calc($el_gap * 2));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  height: max-content;
+  border-radius: var(--border-radius);
   overflow: hidden;
+  z-index: 2;
+
   .menu__search {
     padding: 12px;
   }
+
   .menu__no-results {
     height: var(--element-height);
     line-height: 1;
@@ -32,24 +30,25 @@ $el_gap: 7px;
 
 
   &.menu__flat {
-    border-radius: unset;
     width: 100%;
+    overflow: hidden;
+    
     .menu__option {
-      overflow: hidden;
-      &:hover{
+      &:hover {
         background-color: var(--primary-opaque);
       }
-      &.active{
+
+      &.active {
         color: var(--gray-30);
         --ui-icon-color: var(--gray-30);
       }
     }
-    
+
     // background-color: var(--primary);
   }
 
   .menu__option {
-    $brdr: 1px;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,22 +57,18 @@ $el_gap: 7px;
     line-height: 1;
     cursor: pointer;
     justify-content: space-between;
-    width: calc(100% - calc($brdr * 2));
-    &:first-child{border-radius: var(--border-radius) var(--border-radius) 0 0;}
-    &:last-child{border-radius:0 0 var(--border-radius) var(--border-radius);}
-    border-width: $brdr;
-    border-style: solid;
-    border-color: var(--gray-80);
-    background-color: var(--gray-80);
+    width: inherit;
 
-    &:hover{
+    &:hover {
       background-color: var(--gray-70);
     }
-    &.active{
+
+    &.active {
       background-color: var(--primary);
       color: var(--gray-30);
       --ui-icon-color: var(--gray-30);
     }
+
     &.disabled {
       --ui-icon-color: var(--gray-50);
       color: var(--gray-50);

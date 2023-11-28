@@ -11,8 +11,8 @@ import { ModalProvider } from "@webstack/components/modal/contexts/modalContext"
 import { ModalOverlay } from "@webstack/components/modal/views/modalOverlay";
 import { LoaderProvider } from "@webstack/components/Loader/Loader";
 
-// import { appWithTranslation } from 'next-i18next';
 
+// import { appWithTranslation } from 'next-i18next';
 
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
@@ -35,7 +35,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
                 <DefaultLayout>
 
-                    <Component {...pageProps} />
+                  <Component {...pageProps} />
+
                 </DefaultLayout>
               </HeaderProvider>
             </ModalProvider>

@@ -39,44 +39,26 @@ export default class MemberService
       }
     }
     if (id) {
-        return await memberMethod();
+      return await memberMethod();
     }
     if (!id) {
-        throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
+      throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
     }
     if (!method) {
-        throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+      throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
     }
-}
-//   public async createCustomerMethod(method: IPaymentMethod): Promise<any> {
-//     let id = this._getCurrentUser(false)?.id;
-//     const memberMethod = async () => {
-//       // Convert method object to string
-//       const methodString = JSON.stringify(method);
-//       const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
-//       const encryptedMethod = encryptString(methodString, ENCRYPTION_KEY); // Replace 'YOUR_SECRET_KEY' with your actual secret key
-//       try {
-//         return await this.post<any, any>(
-//           `usage/customer/method?id=${id}`,
-//           { data: encryptedMethod } // send encrypted data as payload
-//         );
-//       } catch (e: any) {
-//         console.log("[ MEMBER S]: ", e)
-//         return e;
-//       }
-//     }
-//     if (id && method) {
-//         return await memberMethod();
-//     }
-//     if (!id) {
-//         throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
-//     }
-//     if (!method) {
-//         throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
-//     }
-// }
+  }
+  public async getSetupIntent(client_secret: string) {
+    if (client_secret) {
 
-
+      const res = await this.get<any>(
+        `usage/customer/method/confirm?setup_intent_client_secret=${client_secret}`
+      )
+        return res
+    } else {
+      throw new ApiError("No ID Provided", 400, "MS.SI.02");
+    }
+  }
   public async prospectRequest(quote: any, test: boolean = false) {
     if (quote) {
 
@@ -146,7 +128,7 @@ export default class MemberService
     }
   }
 
-  public async signUp( 
+  public async signUp(
     {
       name,
       email,
@@ -208,7 +190,7 @@ export default class MemberService
           memberData
         );
         let memberJwt: any = null;
-        if(res)memberJwt = res;
+        if (res) memberJwt = res;
         // res && console.log('[ RES ]', res)
         this.saveMemberToken(memberJwt);
         this.saveLegacyCookie(memberJwt);
@@ -225,7 +207,7 @@ export default class MemberService
       throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
     }
   };
-  
+
   public async getPersonalInformation(): Promise<any | null> {
     return this.get<any | null>(
       "member/profile-info"

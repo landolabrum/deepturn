@@ -7,6 +7,7 @@ import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
 export default interface IMemberService {
   // METHODS
   getCurrentUser(): UserContext | undefined;
+  getSetupIntent(client_secret: string): any;
   prospectRequest(quote: any, test?:boolean): any | undefined;
   updateCurrentUser(user: UserContext): void;
   getMethods(customerId?: string): Promise<any>;
