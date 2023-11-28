@@ -1,0 +1,88 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.custom-404{
+    background: url(/assets/backgrounds/404.gif) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow: hidden;
+    position: absolute;
+    top: auto;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    &__container{
+
+        @extend .d-flex;
+        align-items: flex-start;
+        @media(max-width: 900px){
+            justify-content: flex-start;
+        }
+        backdrop-filter: blur(7px) brightness(.5) sepia(100%) invert(90%);
+    }
+    &__content{
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+        // background-color: var(--gray-100-opaque);
+        // box-shadow: var(--box-shadow);
+        // border: solid 1px;
+        // border-radius: var(--border-radius);
+        z-index: 999;
+        
+        padding: var(--padding);
+        @media(max-width:900px){
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+        }
+        &--header{
+            font-family: Play;
+            @extend .d-flex;
+            width: 100%;
+            gap:var(--s-3);
+            line-height: 1;
+            justify-content: space-between;
+            color: var(--secondary);
+            --ui-icon-color: var(--secondary);
+            @media(max-width:900px){
+                gap: var(--s-9);
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            &__title{
+                font-style: oblique;
+                gap: var(--s-9);
+                @extend .d-flex;
+                font-size: var(--s-2);
+                --ui-icon-width: var(--s-2);
+                --ui-icon-height: 100%;
+                @media(max-width:900px){
+                    gap: 5px;
+                    font-size: var(--s-5);
+                    --ui-icon-width: var(--s-5);
+                }
+            }
+            &__location{
+                color: var(--white);
+                border: solid 1px;
+                border-radius: var(--border-radius);
+                @extend .d-flex;
+                padding: var(--s-9) var(--padding);
+                background-color: var(--secondary);
+                
+                @media(max-width:900px){
+                    padding: 4px var(--s-9);
+                    font-size: var(--s-9);
+                }
+            }
+        }
+    }
+}

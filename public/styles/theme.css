@@ -20,6 +20,12 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'Game';
+  src: url('/fonts/gamestationdisplayoutline.otf') format('opentype');
+  font-weight: 500;
+  font-style: oblique;
+}
 
 
 /* GOOGLE ADDRESS STYLES */

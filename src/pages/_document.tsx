@@ -16,7 +16,7 @@ export default class MyDocument extends Document {
         <body id="app-body">
           <Main />
           <NextScript />
-          <span style={{ visibility: 'hidden' }}>
+          <span style={{ display: 'none' }}>
           {`☠☠☠☠☠☠☠☠☠☠☠☠☠ Property of MindBurner Corporation © ☠☠☠☠☠☠☠☠☠☠☠☠☠`}
           {` ☠☠☠☠☠☠☠☠☠☠☠☠☠ Unauthorized use is prohibited ☠☠☠☠☠☠☠☠☠☠☠☠☠`}  
           {`BUILD DATE: ( ${buildDate} )`}

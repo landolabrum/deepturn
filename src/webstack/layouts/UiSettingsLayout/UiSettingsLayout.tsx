@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import useClass from '@webstack/hooks/useClass';
 import useWindow from '@webstack/hooks/useWindow';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
+import { head } from 'lodash';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ISettingsLayout {
@@ -32,7 +33,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   const [view, setView] = useState<string | undefined>(defaultView);
   const { width, height } = useWindow();
   const [actionStyles, setActionStyles] = useState({ width: 350 });
-
+  const containerRef = useRef<any>();
   const handleView = (view: string) => {
     // console.log('[ handleView ]', view)
     router.push({
@@ -50,9 +51,10 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   const viewClass = useClass('settings__view', undefined, variant);
   const handleLayout = () => {
     setTimeout(() => {
-      const headerElem: any = document.getElementById('header-container')?.firstChild;
+      const headerElem: any = document.getElementById('header-container');
       if (headerElem) {
-        const style = headerElem && window.getComputedStyle(headerElem);
+        const style = headerElem.firstChild && window.getComputedStyle(headerElem.firstChild);
+        if(headerElem.offsetHeight && containerRef.current)containerRef.current.style.marginTop=`${Number(headerElem.offsetHeight)}px`;
         // CREATE WIDTH & ADJUST FOR GAP
         const mL = Number(style.marginLeft.replace('px', '')) - 14;
         let newActionStyles: any = { width: width > 1700 ? mL : 300 };
@@ -80,7 +82,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   return (
     <>
       <style jsx>{styles}</style>
-      <div id="settings-container" className={containerClass}>
+      <div ref={containerRef} id="settings-container" className={containerClass}>
 
         <div className={contentClass}>
 

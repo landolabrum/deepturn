@@ -33,7 +33,7 @@ $actionsBg: var(--gray-90);
     width: 100%;
     transform: translateY(-2px);
     min-height: inherit;
-
+    z-index: 999;
     @media(min-width:1100px) {
         padding-top: var(--padding);
         background-color: $actionsBg;
