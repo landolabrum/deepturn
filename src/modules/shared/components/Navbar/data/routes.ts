@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useUser, useClearance } from "~/src/core/authentication/hooks/useUser";
+import environment from "~/src/environment";
 
 export type SelectableRoute = {
   href: string;
@@ -30,8 +31,13 @@ export interface HandleRouteProps {
 
 export const routes: IRoute[] = [
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
+  {
+    label: environment.merchant.name,
+    icon: `${environment.merchant.name}-logo`,
+    href:"/",
+  },
   // { label: "configure", href: "/configure", icon: "fa-tags", active: true },
-  // { label: "products", href: "/products", icon: "fa-tags", active: true },
+  { label: "products", href: "/products", icon: "fa-tags", active: true },
   // {
   //   label: "Store",
   //   icon: "fa-store",
@@ -40,30 +46,25 @@ export const routes: IRoute[] = [
   //     // { label: "customers", href: "/customers", icon: "fa-user-group", active: true },
   //   ],
   // },
-  {
-    label: "Deepturn",
-    icon: "deepturn-logo",
-    href:"/",
-  },
-  {
-    label: "Social",
-    icon: "fa-biohazard",
-    href: '/social',
-    clearance: 10,
-    items: [
-      { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
-    ],
-  },
-  {
-    label: "Home",
-    icon: "fa-home",
-    href:"/home",
-    clearance: 6,
-    items: [
-      { label: "stream",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
-      { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
-    ],
-  },
+  // {
+  //   label: "Social",
+  //   icon: "fa-biohazard",
+  //   href: '/social',
+  //   clearance: 10,
+  //   items: [
+  //     { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
+  //   ],
+  // },
+  // {
+  //   label: "Home",
+  //   icon: "fa-home",
+  //   href:"/home",
+  //   clearance: 6,
+  //   items: [
+  //     { label: "stream",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
+  //     { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
+  //   ],
+  // },
   // {
   //   label: "auto",
   //   icon: "fa-engine",
@@ -92,25 +93,30 @@ export const routes: IRoute[] = [
 
 export const useClearanceRoutes = () => {
   const user = useUser();
-  // const [level, setLevel] = useState(0);
   const level = useClearance();
   const [access, setAccess] = useState<IRoute[]>([]);
+
   useEffect(() => {
-    // user && user?.metadata?.clearance && setLevel(user?.metadata?.clearance);
     const filterRoutes = (routeItems: IRoute[]) => {
-      // console.log('[ LEVEL ]', level)
       return routeItems
         .filter(route => {
-          // If the route doesn't have clearance property or the user's clearance level is greater than or equal to the route's clearance level
-          // console.log('[ clearance ]: ', route.clearance, level, user)
-          return route.clearance == undefined ||
-            Boolean(user && route?.clearance && route?.clearance <= level && route.clearance != 0) || Boolean(!user && route?.clearance == 0)
+          // Include the route if there's no clearance requirement
+          // or if the user is authenticated and their clearance level is sufficient
+          // or if the user is not authenticated and the route clearance is 0
+          return typeof route.clearance === 'undefined' ||
+                 (user && route.clearance && route.clearance <= level) ||
+                 (!user && route.clearance === 0);
         })
         .map(route => {
+          // Filter sub-items (if any) based on clearance
           if (route.items) {
             return {
               ...route,
-              items: route.items.filter(item => !item.clearance || item.clearance <= level),
+              items: route.items.filter(item => 
+                typeof item.clearance === 'undefined' ||
+                (user && item.clearance && item.clearance <= level) ||
+                (!user && item.clearance === 0)
+              ),
             };
           }
           return route;
@@ -118,10 +124,11 @@ export const useClearanceRoutes = () => {
     };
 
     setAccess(filterRoutes(routes));
-  }, [user]);
+  }, [user, level]);
 
   return access;
 };
+
 
 export const pruneRoutes = (pruneLabels: string[]) => {
   const pruned: IRoute[] = [];

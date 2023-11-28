@@ -44,7 +44,6 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
     const clearAllSelected = () => setForm(defaultForm);
     const { features: formFeatures, contact: fields } = form;
     const [disabled, setDisabled] = useState<boolean>(false);
-    // const [view, setView] = useState<string>('loading');
     const [view, setView] = useState<string>('feature');
     const [message, setMessage] = useState<string | null>(null);
     const memberService = getService<IMemberService>('IMemberService');
@@ -317,7 +316,7 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
                     </AdaptGrid>
                     <div className='product-feature-form__submit'>
                         <UiButton
-                            disabled={selected.length == 0}
+                            disabled={selected.length == 0?true: undefined}
                             onClick={handleView}
                             variant='primary'
                         >Proceed to Quote</UiButton>

@@ -1,9 +1,15 @@
 import { OrderHistoryDetailsResponse, OrderHistoryResponse } from "~/src/models/Shopping/MemberOrderHistory";
 import RevenueRequest, { RevenueTotalsResponse } from "~/src/models/Shopping/Revenue";
-
+export type IProductMetaData = {
+  mid?: string;
+}
+export type IProductImages = string | string[] | undefined;
 export interface IProduct {
-  id?: string
-  pri?: string
+  id?: string;
+  pri?: string;
+  name?: string;
+  images: IProductImages;
+  metadata?:IProductMetaData
 }
 export type IProducts = {
   ending_before?: string | undefined,

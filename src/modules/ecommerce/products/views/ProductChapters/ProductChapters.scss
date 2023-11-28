@@ -26,7 +26,8 @@
             // border: solid 1px;
             height: 100%;
             .chapter__icon{
-                width: 100%;
+                width: auto;
+                padding: var(--s-8);
                 @extend .d-flex;
                 justify-content: center;
                 // border: solid 1px;

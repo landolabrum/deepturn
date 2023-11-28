@@ -65,7 +65,7 @@ export default function useRoute(handleSideNav?: () => void) {
         router.push('/');
       } else if (!router.pathname.includes(VERIFICATION_LANDING)) {
         DEV && console.log('[ HANDLE USER ]( 4 )', conlog)
-        handleRoute({href:UNAUTHED_LANDING});
+        // handleRoute({href:UNAUTHED_LANDING});
       }
     } else {
       DEV && console.log('[ HANDLE USER ]( 5 )', conlog)

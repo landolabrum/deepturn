@@ -24,7 +24,13 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
   };
   const cart = getCartItems();
   const handleProduct = (product: any) =>{
-    router.push({pathname:"/product", query:{id: product.id, pri: product.price_object.id}})
+    console.log('[ handle prod ]', product)
+    if(product.price_object?.id)router.push({
+      pathname:"/product",
+      query:{
+        id: product.id, pri: product.price_object.id
+        }
+    })
   }
   useEffect(() => { }, [products]);
   return (

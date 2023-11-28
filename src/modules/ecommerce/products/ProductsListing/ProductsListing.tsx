@@ -10,6 +10,8 @@ import { useUser } from '~/src/core/authentication/hooks/useUser';
 import IShoppingService from "~/src/core/services/ShoppingService/IShoppingService";
 import BannerProduct from "../views/BannerProduct/BannerProduct";
 import ProductChapters from "../views/ProductChapters/ProductChapters";
+import environment from "~/src/environment";
+import UiLoader from "@webstack/components/UiLoader/view/UiLoader";
 
 interface Filter {
   [key: string]: {
@@ -46,7 +48,13 @@ const ProductsListing: NextPage = () => {
         const memberResponse = await shoppingService.getProducts();
         const fetchedProducts: any = memberResponse?.data;
         if (fetchedProducts) {
-          const formatted = fetchedProducts.map((product: any) => ({
+          // First, filter the products
+          const filteredProducts = fetchedProducts.filter((product: any) => 
+            product.metadata.mid === environment.merchant.mid
+          );
+  
+          // Then, map the filtered products to format them
+          const formatted = filteredProducts.map((product: any) => ({
             id: product.id,
             description: product.description,
             name: product.name,
@@ -57,7 +65,7 @@ const ProductsListing: NextPage = () => {
             price: numberToUsd(product.price?.unit_amount),
             metadata: product.metadata
           }));
-
+  
           setHasMore(memberResponse.has_more);
           setProducts(formatted);
         }
@@ -67,17 +75,17 @@ const ProductsListing: NextPage = () => {
         setLoading(false);
       }
     };
-
+  
     if (!products.length) fetchProducts();
-  }, []);
+  }, [setLoading, products.length]);
+  
 
-  // return loading ? (
-  //   <UiLoader />
-  // ) : (<>
-  return (<>
+  return loading ? (
+    <UiLoader />
+  ) : (<>
   <style jsx>{styles}</style>
     <div className="product-listing">
-      <ProductChapters/>
+      {products?.length && <ProductChapters products={products}/>}
       <div className="product-listing__header">
         <div className="product-listing__filters">
           {['categories', 'types'].map(filterKey => (

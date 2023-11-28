@@ -54,7 +54,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       const headerElem: any = document.getElementById('header-container');
       if (headerElem) {
         const style = headerElem.firstChild && window.getComputedStyle(headerElem.firstChild);
-        if(headerElem.offsetHeight && containerRef.current)containerRef.current.style.marginTop=`${Number(headerElem.offsetHeight)}px`;
+        // if(headerElem.offsetHeight && containerRef.current)containerRef.current.style.marginTop=`${Number(headerElem.offsetHeight)}px`;
         // CREATE WIDTH & ADJUST FOR GAP
         const mL = Number(style.marginLeft.replace('px', '')) - 14;
         let newActionStyles: any = { width: width > 1700 ? mL : 300 };

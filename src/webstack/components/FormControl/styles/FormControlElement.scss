@@ -80,7 +80,7 @@
     &:not(&--primary, &--dark, &--lite, &--flat, &--secondary, &--link,  &--nav-item, &--nav-item__active, &--select, &--invalid, &--input, &--textarea){
         @extend .element-color;
     }
-    &:not(&--nav-item,&--nav-item__active){
+    &:not(&--nav-item,&--nav-item__active, &--flat){
         @extend .b-rad;
     }
     // HANDLE ICONS
@@ -95,7 +95,7 @@
     }
     // ELEMENTS
     &--button{
-        border: solid 1px transparent;
+        border: solid 1px var(--gray-70);
     }
     &--input, &--textarea {
         --ui-icon-color: var(--gray-50);
@@ -106,17 +106,17 @@
             font-style: italic;
         }
         &:focus-within{
-            border: solid 1px var(--gray-100);
+            border: solid 1px var(--gray-50);
             --ui-icon-color: var(--gray-100);
-            color: var(--gray-100);
-            background-color: var(--gray-50);
+            color: var(--gray-10);
+            background-color: var(--gray-80);
         }
         &:hover:not(&:focus-within){
             font-weight: 500;
             border-color:var(--gray-60);
             color: var(--gray-100);
             --ui-icon-color: var(--gray-100);
-            background-color: var(--gray-60);
+            background-color: var(--gray-80);
         }
         &:nth-child(2) {
             padding-left: var(--s-8);
@@ -139,9 +139,9 @@
 
 
     // FORM CONTROL ELEMENTS - VARIANT DEFINITIONS
-    // &--flat{
-
-    // }
+    &--flat{
+        border: unset;
+    }
 
     &--primary{
         background-color: var(--dark);
@@ -205,9 +205,14 @@
         var(--secondary-opaque), var(--gray-20), var(--gray-20)
     );
     &--link{
-        &:hover{animation: glowTxt 1s infinite;}
+        border: none;
+        &:hover{
+            color: var(--primary);
+            animation: glowTxt 1s infinite forwards;
+        }
     }
     &--nav-item{
+        border: unset;
         --ui-icon-color: var(--gray-50) !important;
         
         &:hover{
@@ -215,6 +220,7 @@
         }
     }
     &--nav-item__active{
+        border: unset;
         --ui-icon-color: var(--gray-50);
         background-color: transparent;
         border-bottom: solid 1px var(--secondary) !important;
