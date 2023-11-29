@@ -77,7 +77,7 @@ const ProductsListing: NextPage = () => {
     };
   
     if (!products.length) fetchProducts();
-  }, [setLoading, products.length]);
+  }, [setLoading]);
   
 
   return loading ? (
