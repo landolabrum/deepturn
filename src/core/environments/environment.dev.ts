@@ -8,7 +8,7 @@ const devEnvironment: IEnvironment = {
   },
   merchant:{
     name:"deepturn",
-    mid: "us",
+    mid: "mb1",
   },
   legacyJwtCookie: {
     name: "auth-token",

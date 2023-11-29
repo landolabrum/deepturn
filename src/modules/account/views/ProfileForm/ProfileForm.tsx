@@ -81,14 +81,14 @@ const ProfileForm = ({ user, open = false }: any) => {
     if (user && JSON.stringify(fields) === JSON.stringify(initialFields)) {
       onUser();
     }
-  }, [user, fields]);
+  }, [user, setFields]);
   
-  if (!user) return <>no user</>;
   return (
     <>
       <style jsx>{styles}</style>
       <div className='profile-form'>
       <UiForm
+        title="update profile"
         fields={fields}
         onChange={onChange}
         onSubmit={onSubmit}

@@ -5,6 +5,7 @@ import { useUser } from "~/src/core/authentication/hooks/useUser";
 import ProfileForm from "../views/ProfileForm/ProfileForm";
 import UiSettingsLayout from "@webstack/layouts/UiSettingsLayout/UiSettingsLayout";
 import Subscriptions from "../views/Subscriptions/controller/Subscriptions";
+import Documents from "../views/Documents/Documents";
 
 interface Props { }
 
@@ -15,7 +16,8 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
     "edit profile": <ProfileForm user={user} open />,
     "email notification": "email notification",
     "privacy & security": "privacy & security",
-    'billing info': <AccountMethods open='opened' />,
+    'documents': <Documents user={user} />,
+    'methods': <AccountMethods open='opened' />,
   };
     return (
       <>
@@ -25,7 +27,6 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
           name='account'
           variant="full-screen"
           views={views}
-          setViewCallback={console.log}
         />
       </>
     );

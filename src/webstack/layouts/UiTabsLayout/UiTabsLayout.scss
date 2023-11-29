@@ -7,104 +7,101 @@
 
 
 .tabs {
-    @media(max-width:900px){
+    @media(max-width:900px) {
         width: 100vw;
         height: 100vh;
     }
-
+    height: inherit;
+    background-color: var(--gray-90);
+    border-radius: var(--border-radius);
+    border: solid 1px var(--gray-70);
+    overflow: hidden;
+    
     &__content {
         @extend .d-flex;
-        min-height: calc(100vh - 190px);
         flex-direction: column;
-        width: 100%;
-        @media(max-width:900px){
-            min-height: unset;
-        }
         align-items: stretch;
-        /* Updated to stretch */
-        border-radius: var(--border-radius);
+        height: inherit;
         width: 100%;
-        .tabs__tabs{
-            // height: 100px;
+        .tabs__tabs {
+            border-bottom: solid 1px var(--gray-70);
+            background-color: var(--gray-80);
+            --ui-icon-color: transparent;
             @extend .d-flex;
             justify-content: center;
-            .tabs-layout__tab{
-                background-color: var(--gray-70);
+            overflow: hidden;
+            z-index: 1;
+            .active{
+                background-color: var(--gray-60);
+                --ui-icon-color: var(--gray-60);
+            }
+            .tabs-layout__tab {
                 position: relative;
                 @extend .d-flex;
                 text-transform: capitalize;
                 width: 100%;
                 height: var(--element-height);
-                box-shadow: 2px 2px 10px var(--gray-100);
-                &:after {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    left: 0;
-                    width: auto;
-                    height: 0;
-                    border-style: solid;
-                    border-width: 0 5px 5px;
-                    border-color: transparent var(--gray-100) transparent var(--gray-100);
-                  }
-                &:hover{
+
+                &:hover {
+                    z-index: 2;
                     cursor: pointer;
-                    background-color: var(--gray-50);
+                    @extend .active;
                 }
-                &__active{
-                    background-color: var(--primary);
-                    &:not(:last-child):before {
-                        content: '';
-                        position: absolute;
-                        bottom: 0;
-                        z-index: 1;
-                        right: -5px;
-                        width: 10px;
-                        height: 0;
-                        border-style: solid;
-                        border-width: 0 10px 10px 10px;
-                        border-color: transparent transparent var(--primary) var(--primary);
-                    }
-                    &:hover{
-                        &:not(:last-child):before {
-                            border-color: transparent transparent var(--gray-50) var(--gray-50);
-                        }
-                    }
+                &--icon {
+                    width: var(--element-height);
+                    position: absolute;
+                    --ui-icon-width: var(--element-height);
+                    --ui-icon-height: var(--element-height);
+                    right: unset;
+                    left: unset;
+                }
+
+                &--icon:first-child {
+                    right: calc(var(--element-height) * -1);
+                }
+
+                &--icon:last-child {
+                    transform: rotate(180deg);
+                    left: calc(var(--element-height) * -1);
+                }
+                &__active {
+                    position: relative;
+                    z-index: 2;
+                    @extend .active;
                 }
             }
+
         }
+
     }
+
     .tabs__actions {
         background-color: var(--dark);
         // background-color: #f30;
         border-right: inset 1px var(--primary);
         width: 400px;
-        @media(max-width:900px){
+
+        @media(max-width:900px) {
             padding: var(--padding);
             width: calc(100% - calc(var(--padding) * 2));
         }
     }
 
     .tabs__view {
-
-        
-        background-color: var(--gray-90);
         padding: var(--padding);
+        width: auto;
         @extend .d-flex;
         flex-direction: column;
         justify-content: flex-start;
-        border-left: solid 5px var(--gray-100);
         align-items: stretch;
-        height: 100%;
-        min-height: calc(100vh - 230px);
-        // width: calc(100% - 400px);
-        @media(max-width:900px){
+        height: inherit;
+        @media(max-width:900px) {
+            border-left: solid 5px var(--gray-100);
             height: max-content;
             overflow: visible;
             width: inherit;
         }
-        border: solid 1px;
+        
         .tabs__view__title {
             font-size: var(--s-1);
             line-height: 2.5;
