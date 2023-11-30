@@ -82,7 +82,12 @@ $elPad: 14px;
   }
 
   // VARIANT DEFINITIONS
-
+&--signature{
+  background-color: var(--gray-90);
+  &:hover{
+    background-color: var(--gray-90);
+  }
+}
   &--link {
     width: 100%;
   }

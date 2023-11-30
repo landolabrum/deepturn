@@ -17,12 +17,15 @@ export default class ShoppingService extends ApiService implements IShoppingServ
   public async getProducts(
     request?: any
   ): Promise<any> {
-    if (request === undefined) return await this.get<any>(
-      `/api/products`,
-    );
-    return await this.get<any>(
-      `/api/products${request}`,
-    );
+    if (request === undefined){
+      return await this.get<any>(
+        `/api/products`,
+      )
+    }else{
+      return await this.get<any>(
+        `/api/products${request}`,
+      );
+    }
   }
   public async getProduct({ id, pri }: IProduct): Promise<any> {
     if (pri) {

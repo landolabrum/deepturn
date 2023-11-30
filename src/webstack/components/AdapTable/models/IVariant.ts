@@ -42,6 +42,8 @@ export type IVariant =
   | "primary round mini"
   | "round primary"
   | "secondary"
+  | "signature"
+  | "signature invalid"
   | false
   // Add other combinations as needed
   ;

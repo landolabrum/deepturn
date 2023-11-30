@@ -77,8 +77,29 @@ input, textarea {
   // &:-webkit-autofill:focus{
   //   background-color: #f30 !important;
   // }
-}
+  &.signature{
+    padding-left: var(--s-3);
+    ::placeholder {
+      color: var(--gray-70);
+      padding: 0;
+      font-size: var(--s-2);
+    }
+    &::placeholder:hover{
+      color: var(--gray-10);
+    }
+    &::placeholder:focus-within:not(&:hover) {
+      &::before {
+          color: var(--gray-40);
+      }
+      &::after {
+          border-top-color: var(--gray-40);
+      }
+  }
 
+    font-size: var(--s-2);
+    font-family: 'Ephesis', cursive;
+  }
+}
 input::placeholder {
   font-style: italic;
   color: var(--placeholder-color);
