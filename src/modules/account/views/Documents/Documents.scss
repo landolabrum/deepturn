@@ -9,23 +9,29 @@
 
 
 .documents {
-    width: 100%;
     margin: auto;
     height: 100%;
-
+    &__header{
+        @extend .d-flex;
+        justify-content: flex-start;
+        padding: 0 0 var(--padding);
+        &--title{
+            font-size: var(--s-3);
+            color: var(--gray-30);
+            font-style: italic;
+            font-weight: 900;
+        }
+    }
     .documents__list {
-        background-color: var(--gray-90);
-        padding: var(--padding);
-        border-radius: var(--border-radius);
         .documents--document{
-
             &__terms{
                 @extend .d-flex;
                 align-items: flex-start;
                 flex-direction: column;
                 gap: var(--padding);
-                margin: var(--element-height) auto;
+                margin: var(--s-9);
                 &--term{
+                    max-width: calc(100% - calc(var(--s-5) * 2));
                     &__title{
                         font-size: var(--s-5);
                         color:var(--gray-40);
@@ -40,8 +46,9 @@
         }
     }
     &__actions{
+        padding: calc(var(--element-height) * 2) var(--padding) calc(var(--element-height) * 2);
         @extend .d-flex;
         flex-direction: column;
-        gap: var(--padding);
+        gap: var(--element-height);
     }
 }

@@ -12,6 +12,14 @@ import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import { useRouter } from 'next/router';
 
 
+interface CustomerRequest {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  metadata: { [key: string]: any };
+}
+
 const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
   const router = useRouter();
   const [methods, setMethods] = useState([]);
@@ -19,7 +27,7 @@ const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
   const findField:any= (name:string)=>customer && customer.find((f:IFormField)=>f.name == name)?.value;
   const customerName = findField('name');
   const [notification, setNotification]=useNotification();
-  function modifyCustomerData(data: any): any {
+  function modifyCustomerData(data: any, round2?: string): any {
     const hideKeys = ['id', 'methods', 'default_source', 'shipping', 'object', 'currency', 'invoice_settings', 'next_invoice_sequence', 'preferred_locales', 'test_clock', 'invoice_prefix'];
     const modKeys = ['metadata'];
     const disabledKeys = ['created', 'server_url', 'referrer_url', 'email_verified','delinquent','livemode','balance'];
@@ -40,12 +48,12 @@ const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
       if(key == 'email_verified')t='checkbox';
       return t;
     }
-    const formatted = (dta?: any) => {
+    const formatted = (dta?: any, parent?:string ) => {
      return Object.entries(dta || data)
       .filter(([key]) => !modKeys.includes(key) && !hideKeys.includes(key))
       .map(([key, value]) => (
         {
-          name: key,
+          name: parent?`${parent}.${key}`:key,
           label: keyStringConverter(key),
           value: handleFormatValue(key, value),
           type: handleFormatType(key, handleFormatValue(key, value)),
@@ -56,7 +64,7 @@ const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
       )
       )
     }
-    return [...formatted(), ...formatted(data.metadata)];
+    return [...formatted(), ...formatted(data.metadata, 'metadata')];
   }
   const {openModal, closeModal} = useModal();
   const confirmDelete = () =>{
@@ -84,24 +92,38 @@ const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
       name: findField('name'),
       email: findField('email'),
       phone: phoneFormat(String(findField('phone')), 'US', true),
-      address: findField('address')
-    }
-    try{
+      address: findField('address'),
+      metadata: {}
+    };
+  
+    // Extract metadata fields from the customer state and add them to the request
+    customer.forEach((field : any)=> {
+      if (field.name.startsWith('metadata.')) {
+        const metadataKey = field.name.substring('metadata.'.length);
+        request.metadata[metadataKey] = field.value;
+      }
+    });
+  
+    console.log("Final request with metadata:", request); // For debugging
+  
+    try {
       const updatedCustomer = await adminService.updateMember(customerId, request);
-
+  
       setCustomer(modifyCustomerData(updatedCustomer));
       setNotification({
         active: true,
         persistance: 3000,
         list: [
-          {label: 'success', message:`Updated Customer: ${request.name}`}
+          { label: 'success', message: `Updated Customer: ${request.name}` }
         ]
       });
-
-    }catch(e:any){
+  
+    } catch (e) {
       console.log("[ MODIFY CUSTOMER (ERROR) ]", e);
     }
   }
+  
+  
 
 
   useEffect(() => {},[onSubmit]);

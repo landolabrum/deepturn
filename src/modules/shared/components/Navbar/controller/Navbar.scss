@@ -11,41 +11,43 @@ nav {
   // gap: var(--padding);
   @media(min-width: 1262px) {
     inline-size: 1260px;
-    padding: 0;
   }
-  @media(max-width: 900px) {
-      padding: 0;
+  @media(max-width:1100px) {
+      padding: var(--padding) var(--s-4);
   }
 @keyframes fade {
   0%{
     filter:brightness(2);
     --ui-icon-color: var(--body);
+    background-color: var(--gray-80-opaque);
+
     transform: scale(1);
   }
   50%{
     filter:brightness(1.5);
     --ui-icon-color: var(--primary-opaque);
+    background-color: var(--gray-40-opaque);
     transform: scale(1.1);
   }
   100%{
     filter:brightness(1);
-    --ui-icon-color: var(--primary);
+    background-color: var(--primary-opaque);
+    --ui-icon-color: var(--white);
     transform: scale(1);
   }
 }
   .navbar__trigger {
     cursor: pointer;
-    padding: var(--padding) var(--s-8);
+    --ui-icon-size: var(--s-3);
+    padding: var(--s-9) var(--s-8);
+    border-radius: var(--border-radius);
+    border: solid 3px var(--gray-80-opaque);
     &:hover{
       animation: fade 1s forwards;
     }
     @media(max-width: 1100px) {
-      padding: var(--padding) var(--s-4);
     }
-    @media(max-width: 900px) {
-      padding: var(--padding) var(--s-8);
 
-    }
     @media(min-width: 1100px) {
       display: none;
     }

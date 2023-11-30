@@ -261,7 +261,7 @@ h6 {
 }
 
 /* DIV */
-div {
+div , ol{
 
   --padding: 20px;
   --padding-sm: calc(--padding * 2);
@@ -269,10 +269,10 @@ div {
     background-color: var(--primary);
     width: 11px;
     overflow: hidden;
+    border-radius: 3px;
   }
 
   &::-webkit-scrollbar {
-
     overflow: hidden;
     border-radius: 0 7px 7px 0;
     width: 10px;

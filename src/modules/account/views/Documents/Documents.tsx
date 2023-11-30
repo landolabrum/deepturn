@@ -84,7 +84,7 @@ const Documents = ({ user }: IDocuments) => {
         <div className='documents__list'>
           {docs.length && docs.map((doc: any, i: number) => {
             return <div key={i} className='documents--document'>
-              <UiCollapse label={doc?.name} open={true}>
+              <UiCollapse variant='document' label={doc?.name} open={true}>
                 < >
                   <ol className='documents--document__terms'>
                     {doc?.metadata && Object.entries(doc?.metadata).filter(([key, bullShit]) => key.substr(0, 2) === 't-').map(([key, value]: any) => {
