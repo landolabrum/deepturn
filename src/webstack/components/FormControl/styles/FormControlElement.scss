@@ -329,11 +329,16 @@
 
         &.form-control__element--signature {
             border: solid 1px transparent !important;
+            .form-control__invalid {
+                color: var(--invalid-bg) !important;
+            }
         }
 
         .form-control__invalid {
             position: absolute;
+            font-family: Play;
             font-style: italic;
+
             right: var(--s-2);
             font-size: var(--s-3);
             font-weight: bold;

@@ -41,12 +41,12 @@ const Documents = ({ user }: IDocuments) => {
   const isComplete =()=>{
     const fNLen = fullName.length;
     console.log('[ isComplete ]', fNLen, user?.name, fullName)
-    if(!user || user?.name == undefined)return false;
+    if(!user || user?.name == undefined)return 'no user';
     else if(fNLen < 3)return true;
     else if(fNLen >= 3 && String(user.name).toLowerCase().includes(fullName.toLowerCase())){
       return true;
     }else{
-      return false;
+      return 'full name incorrect';
     }
   };
   const fetch = async () => {
@@ -67,6 +67,7 @@ const Documents = ({ user }: IDocuments) => {
     }
     setLoader({ active: false })
   }
+  const complete = isComplete();
   useEffect(() => {
   Boolean( !Object(docs).length) && fetch();
   }, []);
@@ -102,12 +103,13 @@ const Documents = ({ user }: IDocuments) => {
                   </ol>
                   <div className='documents__actions'>
                     <UiInput 
-                      variant={`signature${isComplete()?'':' invalid'}`}
+                      variant={`signature${typeof complete != 'string'?'':' invalid'}`}
                       name='name'
                       value={fullName}
                       label='sign your full name & agree, to continue.' 
                       placeholder={user?.name}
                       onChange={handleFullName}
+                      error={typeof complete == 'string'&&complete||undefined}
                     />
                     <UiButton 
                       variant={String(user?.name).toLowerCase() == fullName.toLowerCase()?'primary':'disabled'}

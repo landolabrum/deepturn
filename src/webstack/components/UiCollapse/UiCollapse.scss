@@ -175,7 +175,8 @@ $wid: calc(100%);
             overflow-y: scroll;
         }
         .collapse__action{
-        background-color: var(--dark-opaque);
+        background: var(--primary-opaque);
+            backdrop-filter: blur(4px);
 
         }
     }
