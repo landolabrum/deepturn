@@ -9,6 +9,8 @@
 
 
 .documents {
+    width: 100%;
+
     margin: auto;
     height: 100%;
     &__header{
@@ -43,6 +45,7 @@
                     }
                 }
             }
+            
         }
     }
     &__actions{

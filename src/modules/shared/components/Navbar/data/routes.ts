@@ -64,13 +64,14 @@ export const routes: IRoute[] = [
       { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
     ],
   },
-  // {
-  //   label: "auto",
-  //   icon: "fa-engine",
-  //   items: [
-  //     { label: "Raptor", href: "/auto/raptor", icon: "fmc-logo", active: true },
-  //   ],
-  // },
+  {
+    label: "auto",
+    icon: "fa-engine",
+    clearance: 10,
+    items: [
+      { label: "Raptor", href: "/auto/raptor", icon: "fmc-logo", active: true },
+    ],
+  },
   {
     label: "account",
     icon: 'fal-circle-user',

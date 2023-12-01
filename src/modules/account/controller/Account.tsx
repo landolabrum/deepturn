@@ -5,7 +5,7 @@ import { useUser } from "~/src/core/authentication/hooks/useUser";
 import ProfileForm from "../views/ProfileForm/ProfileForm";
 import UiSettingsLayout from "@webstack/layouts/UiSettingsLayout/UiSettingsLayout";
 import Subscriptions from "../views/Subscriptions/controller/Subscriptions";
-import Documents from "../views/Documents/Documents";
+import Documents from "../views/Documents/controller/Documents";
 
 interface Props { }
 

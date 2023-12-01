@@ -83,7 +83,7 @@ const SignIn = ({ email }: { email: string | undefined }) => {
       try{
         const signInResponse = await memberService.signIn({
           email: credentials.email,
-          password: credentials.password,
+          password: credentials.password.replace(/\s+/g, ''),
           ...(validTFA && { code: credentials.code }),
           user_agent,
         });

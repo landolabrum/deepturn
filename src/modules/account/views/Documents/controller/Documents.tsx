@@ -12,6 +12,7 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import useScroll from '@webstack/hooks/useScroll';
 import UiInput from '@webstack/components/UiInput/UiInput';
+import DocumentsNone from '../views/DocumentsNone';
 
 
 
@@ -34,7 +35,6 @@ const Documents = ({ user }: IDocuments) => {
   const [loader, setLoader] = useLoader();
   const [fullName, setFullName]=useState<string>('');
   const handleFullName = (e: any)=>{
-    // e.preventDefault();
     const {value}=e.target;
     setFullName(value);
   };
@@ -58,8 +58,8 @@ const Documents = ({ user }: IDocuments) => {
         prod?.metadata?.mid == environment.merchant.mid &&
         // IS A DOCUMENT
         prod?.metadata?.type == 'document' &&
-        // Document is for Customer type
-        prod?.metadata?.customer_type == user?.metadata.type
+        // Document is for Customer clearance
+        prod?.metadata?.clearance == user?.metadata.clearance
       );
       setDocs(newDocs);
     } catch (e: any) {
@@ -80,15 +80,15 @@ const Documents = ({ user }: IDocuments) => {
         <div className='documents__header--title'>
           {user?.name}&apos;s Documents
         </div>
-
         </div>
         <div className='documents__list'>
-          {docs.length && docs.map((doc: any, i: number) => {
-            return <div key={i} className='documents--document'>
+        <div className='documents--document'>
+          {docs.length  ? docs.map((doc: any, i: number) => {
+            return <div key={i} >
               <UiCollapse variant='document' label={doc?.name} open={true}>
                 < >
                   <ol className='documents--document__terms'>
-                    {doc?.metadata && Object.entries(doc?.metadata).filter(([key, bullShit]) => key.substr(0, 2) === 't-').map(([key, value]: any) => {
+                    {doc?.metadata && Object.entries(doc?.metadata).filter(([key, bullShit]) => key.substring(0, 2) === 't-').map(([key, value]: any) => {
                       const termTitle: string = `${capitalize(key?.split('_')[1])}`;
                       return <li key={key} className='documents--document__terms--term'>
                         <div className='documents--document__terms--term__title'>{
@@ -111,15 +111,17 @@ const Documents = ({ user }: IDocuments) => {
                       onChange={handleFullName}
                       error={typeof complete == 'string'&&complete||undefined}
                     />
-                    <UiButton 
+                    <UiButton
                       variant={String(user?.name).toLowerCase() == fullName.toLowerCase()?'primary':'disabled'}
                       >agree</UiButton>
                   </div>
                 </>
               </UiCollapse>
-
             </div>
-          }) || ''}
+          }) :(!loader.active && 
+            <DocumentsNone/>
+          )}
+        </div>
         </div>
       </div>
     </>
