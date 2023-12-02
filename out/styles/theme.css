@@ -195,6 +195,12 @@ body {
   }
 }
 
+.d-flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
+ 
 
 .no-scroll::-webkit-scrollbar {
   display: none;
