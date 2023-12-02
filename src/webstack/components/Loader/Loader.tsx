@@ -6,6 +6,7 @@ import {
 } from "react";
 import styles from "./Loader.scss";
 import { UiIcon } from "../UiIcon/UiIcon";
+import environment from "~/src/environment";
 
 
 type ILoader = {
@@ -59,7 +60,7 @@ const Loader: React.FC = () => {
         >
         <div className='loader__content'>
           <div className='loader__content--icon'>
-            <UiIcon icon='deepturn-logo' glow/>
+            <UiIcon icon={`${environment.merchant.name}-logo`} glow/>
           </div>
         <div className='loader__content--body'>
           {LoaderState.body || 'loading'}

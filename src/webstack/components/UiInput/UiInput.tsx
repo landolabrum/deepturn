@@ -22,7 +22,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
     // console.log('[ UiInput ]', _e)
     let [newV, extra] = maskInput(e, type);
     _e.target.value = extra !== undefined ? [newV, extra] : newV;
-    // console.log('[ _e.target.value ]', _e.target.value)
+    console.log('[ _e.target.value ]', _e.target.value)
     if (onChange) onChange(_e);
   };
 
@@ -59,7 +59,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
           placeholder={props.placeholder}
           min={props.min}
           max={props.max}
-          defaultValue={value}
+          value={value}
           onChange={handleChange}
           autoComplete={props.autoComplete}
           onKeyDown={onKeyDown}

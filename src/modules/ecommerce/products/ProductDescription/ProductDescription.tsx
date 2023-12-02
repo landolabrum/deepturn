@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './ProductDescription.scss';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { useRouter } from 'next/router';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
@@ -26,8 +25,9 @@ const ProductDescription = () => {
     async () => {
       if ([product_query_id, price_query_id].includes(undefined)) return;
       setIsLoading(true); // Start loading
+      const request: any  = { id: product_query_id, pri: price_query_id };
       const shoppingService = getService<IShoppingService>("IShoppingService");
-      const productResponse = await shoppingService.getProduct({ id: product_query_id, pri: price_query_id });
+      const productResponse = await shoppingService.getProduct(request);
       if (productResponse?.id) {
         productResponse.price_object.qty = 0;
         setProduct(productResponse);
@@ -54,14 +54,6 @@ const ProductDescription = () => {
     <>
       <style jsx>{styles}</style>
       <div className="product-description">
-        <AdaptGrid
-          sm={1}
-          md={2}
-          gapX={10}
-          gapY={300}
-          margin='10px'
-          variant='card'
-        >
           <div className={`product__img-default `} >
             <ProductImage options={{ view: 'description' }} image={product.images} />
           </div>
@@ -75,11 +67,9 @@ const ProductDescription = () => {
                 product={product}
                 cart={cart}
                 setCart={setCart}
-                traits={{ width: "100%" }}
               />
             </div>
           </div>
-        </AdaptGrid>
  
         {/* {product?.metadata?.type == 'generator' &&
           <div className='product-description__table'>

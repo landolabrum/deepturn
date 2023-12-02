@@ -50,6 +50,7 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
 
     const onChange = (e: any, handleErrors = true) => {
         const { name: name, value: value, error: error } = e.target;
+        console.log('  [ onCHange  ]', e)
         const onChangeErrors = () => {
             const noValue = () => {return `${name} cannot be blank.`}
             if(e.target.error) return e.target.error;
@@ -58,20 +59,15 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
                 case 'name':
                     if (value?.split(' ')?.length == 1) return 'need last name';
                     if (value?.split(' ')?.length > 2) return '**( syntax ERROR )**';
-                    break;
                 case 'email':
                     if (value == null) return noValue();
                     if(!Boolean(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)))return '**( syntax ERROR )**';
-                    break;
                 case 'phone':
                     if (value == null) return noValue();
-                    break;
                 case 'address':
                     if (value == null) return noValue();
                     else setDisabled(false);
-                    break;
-                default:
-                    break;
+            
             }
         }
         let updatedContact = fields.map((contactField: any) => {
@@ -243,6 +239,7 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
 
     if (formFeatures?.length) return (
         <>
+        {JSON.stringify(form)}
             <style jsx>{styles}</style>
             {title && <div className='product-feature-form__title'>{title}s</div>}
             <div className='product-feature-form'>

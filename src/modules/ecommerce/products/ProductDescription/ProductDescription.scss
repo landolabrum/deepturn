@@ -5,53 +5,52 @@
     align-items: center;
 }
 .product-description{
-    width: 100%;
-    justify-content: flex-start;
-    margin-top: var(--element-height);
+    display: flex;
+    gap: var(--element-height);
+    height: 100%;
+    min-height: max-content;
+    max-width: 1260px;
+    margin: var(--element-height) auto 0;
     color: var(--gray-30);
-    flex-direction: column;
-    // min-height: calc(100vh - 230px);
-    // overflow: hidden; 
-    // border: solid 1px var(--gray-70);
-    // border-radius: var(--border-radius);
-    // background-color: var(--gray-80);
-    @extend .d-flex;
     .product__img-default{
+        width: 100%;
+        height: max-content;
         .img-placeholder{
-            // background-color: var(--gray-90);
+            height: max-content;
             padding: var(--element-height) 10px;
             height: auto;
             width: 100%;
             @extend .d-flex;
+            --ui-icon-height: 66%;
+            width: 100%;
+            --ui-icon-width: 66%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            @extend .d-flex;
+            --ui-icon-color: var(--gray-70);
         }
-        --ui-icon-height: 66%;
-        width: 100%;
-        --ui-icon-width: 66%;
-        border-radius: var(--border-radius);
-        overflow: hidden;
-        @extend .d-flex;
-        --ui-icon-color: var(--gray-70);
     
     }
     .product-description__info-panel{
+        border-radius: var(--border-radius);
+        color: var(--dark);
+        padding: var(--s-9);
+        box-shadow: var(--box-shadow);
+        background-color: var(--gray-40);
         display: flex;
-        height: 100%;
         flex-direction: column;
         justify-content: space-between;
-        gap: 20px;
-        padding: 20px 10px 10px;
-        align-items: flex-start;
-        width: calc(100% - 40px);
-        
+        flex-grow: 1;
+        width: 100%;
         .product-description__info-panel_header{
-            display: flex;
-            border-bottom: solid 1px var(--gray-60);
-            min-height: var(--element-height);
-            flex-direction: column;
+            @extend .d-flex;
+            text-transform: capitalize;
             width: 100%;
-
+            min-height: var(--element-height);
+            border-bottom: solid 1px var(--gray-60);
             .product-description__info-panel_title{
-                font-size: calc(var(--element-height) * .66);
+                width: 100%;
+                font-size: var(--s-3);
             }
         }
         .product-description__info-panel_body{

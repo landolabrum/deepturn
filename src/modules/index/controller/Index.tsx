@@ -8,6 +8,7 @@ import HomeGridItem from '../views/HomeGridItem/HomeGridItem';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { capitalizeAll } from '@webstack/helpers/Capitalize';
 import { applianceArray } from '../../ecommerce/products/ProductRequest/data/applianceArray';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 const Index = () => {
     const volts = 240;
@@ -35,13 +36,29 @@ const Index = () => {
         return <ol>{selectedAppliances}</ol>;
     };
 
-
+    const Nirvo = ({prod}:{prod?: string}) =>{
+        const nStyle = `.nirv{
+            display: flex;
+            color: var(--blue-10);
+            --ui-icon-color: var(--blue-10);
+            gap: var(--s-9);
+            font-size: var(--s-5);
+        }`;
+        return <>
+        <style jsx>{nStyle}</style>
+        <div className='nirv'>
+            <UiIcon icon='nirvana-logo'/>
+            Nirvana Energy 
+        </div>
+        </>
+    }
     const comparisonData = [
         { manufacturer: 'Tesla', 'capacity': 13, 'output': 5.5 },
         { manufacturer: 'LG', 'capacity': 15, 'output': 6.4 },
         { manufacturer: 'Enphase', 'capacity': 12, 'output': 5 },
-        { manufacturer: 'Generack', 'capacity': 0, 'output': 7.6 },
-        { manufacturer: 'GrowWatt', 'capacity': 0, 'output': 6 },
+        { manufacturer: 'Generack', 'capacity': 15.5, 'output': 4.5 },
+        { manufacturer: 'GrowWatt', 'capacity': 10, 'output': 6 },
+        { manufacturer: <Nirvo />, 'capacity': 15, 'output': 12 },
     ];
     const [tableData, setTableData] = useState<any>(comparisonData);
     const handleTableData = () => {
@@ -64,7 +81,6 @@ const Index = () => {
         <style jsx>{styles}</style>
         <div className='home'>
             <ProductRequest/>
-            {/* <BannerProduct /> */}
             <div className='home__full'>
                 <div className='home--title'>
                     Time to Create your Nirvana!
@@ -118,7 +134,6 @@ const Index = () => {
                 options={{ hide: ['header', 'footer'] }}
                 data={tableData}
             />
-            {/* <h1>Appliance Amp List</h1> */}
         </div>
     </>
     );
