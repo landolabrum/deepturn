@@ -79,7 +79,7 @@ const Navbar = () => {
         .filter(r => !(r.href === '/cart' && cartTotal === 0))
         .map(r => r);
 
-      setCurrentRoutes(newRoutes);
+      setCurrentRoutes(newRoutes.reverse());
     }
     toggled != null && setToggled(null);
   }, [routes, setCurrentRoutes, ]);
@@ -96,7 +96,8 @@ const Navbar = () => {
             onClick={handleTrigger}
           />
         </div>
-        {currentRoutes && currentRoutes.map((route, key) => (
+       {/* <div className='nav-bar__nav-items'> */}
+       {currentRoutes && currentRoutes.map((route, key) => (
           <div
           key={key}
           className={
@@ -132,6 +133,7 @@ const Navbar = () => {
             )}
           </div>
         ))}
+       {/* </div> */}
         {/* <MobileNav routes={currentRoutes} handleClick={handleMobileClick}/> */}
       </nav>
     </>
