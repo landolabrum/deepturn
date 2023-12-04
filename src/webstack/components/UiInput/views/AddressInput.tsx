@@ -24,7 +24,6 @@ const AutocompleteAddressInput = ({ address, setAddress, traits, inputClasses, l
     const google = await loader.load();
     const inputElement = document.getElementById('autocomplete-address');
     const autocomplete = new google.maps.places.Autocomplete(inputElement);
-    console.log('[ AUTO COMPLETE ]', autocomplete)
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
       if (place && place.address_components) {

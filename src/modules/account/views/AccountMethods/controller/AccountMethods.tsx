@@ -12,21 +12,18 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useLoader } from '@webstack/components/Loader/Loader';
-const appearance = {
-  theme: 'night' as 'stripe',
-  variables: {
-    colorPrimary: '#1e88e5',
-    colorBackground: '#262626',
-    colorText: '#e0e0e0',
-  },
-};
+import StripePaymentForm from '../components/StripePaymentForm/StripePaymentForm';
+
+
+
+
+
 interface IAccountMethods {
   open?: boolean | 'opened';
   customerMethods?: any;
 }
 const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethods) => {
   const [loader, setLoader]=useLoader();
-  setLoader({active: true});
   const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
   const [clientSecret, setClientSecret] = useState(undefined);
@@ -67,16 +64,21 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
       console.error("Client secret not found in the response", response);
     }
   };
-
   useEffect(() => {
+    setLoader({active: true});
+
     fetchClientSecret();
     handleLabel();
-    !customerMethods && getAccountMethods();
-    customerMethods && setMethods(customerMethods);
-    setTimeout(() => {
-      setLoader({active: false});
-    }, 2000);
-  }, []);
+    if (!customerMethods) {
+      getAccountMethods();
+    } else {
+      setMethods(customerMethods);
+    }
+    return () => {
+      setLoader({ active: false });
+    };
+  }, [customerMethods]);
+
 
   if (open) return (
     <>
@@ -98,16 +100,7 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
               })}
             </div>
           </div></>}
-        {clientSecret && <Elements
-          stripe={loadStripe('pk_live_qBiVh0MkAYVU7o3oVmP1Tzg900DLvxesSw')}
-          options={{ clientSecret, appearance }}
-        >
-          <AccountCreateMethod
-            user={user}
-            onSuccess={handleCreated}
-          />
-        </Elements>}
-
+          {clientSecret && <StripePaymentForm clientSecret={clientSecret} onSuccess={handleCreated} />}
       </div>
     </>
   );
@@ -134,7 +127,7 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
             </div></>}
           <AccountCreateMethod
             user={user}
-            onSuccess={handleCreated}
+            onSuccess={getAccountMethods}
           />
         </div>
       </UiCollapse>

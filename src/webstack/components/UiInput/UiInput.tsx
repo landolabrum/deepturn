@@ -36,6 +36,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   const elType = show && type === "password" ? "text" : type;
   useEffect(() => { }, [props?.variant, value]);
   const isTextArea = String(value).length > 100 || type == 'textarea';
+  const inputValue = value !== undefined && value !== null ? value : '';
 
   return (
     <>
@@ -61,7 +62,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             placeholder={props.placeholder}
             min={props.min}
             max={props.max}
-            value={value}
+            value={inputValue}
             onChange={handleChange}
             autoComplete={props.autoComplete}
             onKeyDown={onKeyDown}
@@ -76,7 +77,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             className={inputClasses}
             name={props.name}
             placeholder={props.placeholder}
-            value={value}
+            value={inputValue}
             onChange={handleChange}
             autoComplete={props.autoComplete}
             onKeyDown={onKeyDown}

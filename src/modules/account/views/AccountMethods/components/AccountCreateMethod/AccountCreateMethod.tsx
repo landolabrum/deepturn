@@ -83,7 +83,7 @@ const AccountCreateMethod = ({ onSuccess, open, collapse, user, shippable }: IAc
             const paymentElement = elements.create('payment', options);
             paymentElement.mount('#payment-element');
         }
-    }, []);
+    }, [stripe, elements]);
 
     return (
         <>

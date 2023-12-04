@@ -114,7 +114,7 @@ const Navbar = () => {
             {!route?.items ? (
               <UiButton
                 traits={
-                  route?.icon && { beforeIcon: { icon: route.icon } } || undefined
+                  route?.icon && { afterIcon: { icon: route.icon } } || undefined
                 }
                 variant={toggled == route.label || current == '/' && route.label?.toLowerCase() == environment.merchant.name ? 'nav-item__active':'nav-item'}
                 onClick={() => handleClick(route)}
@@ -123,6 +123,9 @@ const Navbar = () => {
               </UiButton>
             ) : (
               <UiSelect
+              traits={
+                route?.icon && { afterIcon: { icon: route.icon } } || undefined
+              }
                 openState={Boolean(toggled && toggled == route.label) && 'open' || 'closed'}
                 variant={toggled == route.label? 'nav-item__active':'nav-item'}
                 value={route.label === 'account' ? displayName : route.label}

@@ -55,11 +55,20 @@ const UiSelect: React.FC<SelectProps> = ({
     return typeof title === "object" && !React.isValidElement(title);
   };
 
-  const postIconHandler = (title:any, variant: IVariant) =>{
-    if(variant && variant == 'nav-item'){
-      // console.log(variant)
+  const postIconHandler = (title:any, variant: any) =>{
+    const isNavItem = variant && variant.includes('nav-item');
+    if(isTitleObject(title) && title.postIcon){
+      if( title.postIcon && variant !== 'disabled' && bOpen){
+        return "fa-xmark";
+      }else{
+        return `fa-chevron-${openDirection}`
+      }
+    } 
+    else if(isNavItem){
+      if(!bOpen)return traits?.afterIcon;
+      else return "fa-xmark";
     }
-    return isTitleObject(title) && title.postIcon ? title.postIcon: variant !== 'disabled' && bOpen ? "fa-xmark" : `fa-chevron-${openDirection}`;
+    return;
    }
 
 
