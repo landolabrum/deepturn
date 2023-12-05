@@ -6,7 +6,10 @@ interface IStripePaymentForm {
     clientSecret: string;
     onSuccess:(e:any)=>void;
 }
-const stripePromise = loadStripe('pk_live_yourPublishableKey');
+const stripeKey:string = String(process.env.NEXT_PUBLIC_STRIPE_API_KEY?.trim())
+
+const stripePromise = loadStripe(stripeKey);
+
 
 const StripePaymentForm = ({ clientSecret, onSuccess }:IStripePaymentForm) => {
     const user = useUser();

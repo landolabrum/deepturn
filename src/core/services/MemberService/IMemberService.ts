@@ -24,7 +24,7 @@ export default interface IMemberService {
   signUp({
     name,
     email,
-    password,
+    password, 
     referrer_url,
     user_agent
   }: any): Promise<any>;
@@ -33,4 +33,5 @@ export default interface IMemberService {
   getPersonalInformation(): Promise<any | null>;
   getMemberProfileInformation(memberId: string): Promise<any | null>;
   updateMember(id: string, memberData: any): Promise<any>;
+  toggleDefaultPaymentMethod(paymentMethodId: string): Promise<any>;
 }

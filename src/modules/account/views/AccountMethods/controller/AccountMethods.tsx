@@ -5,17 +5,11 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { getService } from '@webstack/common';
 import { IMethod } from '../../../model/IMethod';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
-import AccountCreateMethod from '../components/AccountCreateMethod/AccountCreateMethod';
 import AccountCurrentMethod from '../components/AccountCurrentMethod/AccountCurrentMethod';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import StripePaymentForm from '../components/StripePaymentForm/StripePaymentForm';
-
-
-
 
 
 interface IAccountMethods {
@@ -40,16 +34,17 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
 
   const getAccountMethods = async () => {
     const methodsResponse = await memberService.getMethods();
+    console.log(methodsResponse)
     if (methodsResponse) {
       setMethods(methodsResponse?.data);
     }
   }
   const handleLabel = () => {
     if (user && methods.length) {
-      let default_method: any = methods.find(m => m.id == user?.default_source);
+      let default_method: any = methods.find(m => m.id == user?.invoice_settings?.default_payment_method);
       if (default_method?.card) {
         default_method = <div style={{ display: 'flex', alignItems: "center", gap: '16px' }}>
-          <UiIcon icon={default_method.card.brand} /> {`**** **** **** ${default_method.card.last4}`}
+          <UiIcon icon={default_method.card.brand} /> DEF {`**** **** **** ${default_method.card.last4}`}
         </div>
         setLabel(default_method);
       }
@@ -74,24 +69,24 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
     } else {
       setMethods(customerMethods);
     }
-    return () => {
-      setLoader({ active: false });
-    };
-  }, [customerMethods]);
+    setLoader({ active: false });
+  }, []);
 
 
   if (open) return (
     <>
       <style jsx>{styles}</style>
       <div className='account-methods'>
-
         {methods.length > 0 && <>
           <div className='account-methods__existing'>
+            <div className='account-methods__existing--title'>
+            current methods
+            </div>
             <div className='account-methods__list'>
               {Object.entries(methods).map(([key, method]) => {
                 return <div className='account-methods__list-item' key={key} >
                   <AccountCurrentMethod
-                    default_source={user?.default_source}
+                    default_payment_method={user?.invoice_settings?.default_payment_method}
                     method={method}
                     onDeleteSuccess={handleDelete}
                     response={loader?.active}
@@ -107,7 +102,7 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
   return (
     <>
       <style jsx>{styles}</style>
-      <UiCollapse label={label} open={open || !loader.active || user?.default_source == undefined}>
+      <UiCollapse label={label} open={open || !loader.active || user?.invoice_settings?.default_payment_method == undefined}>
         <div className='account-methods'>
           {methods.length > 0 && <>
             <div className='account-methods__existing'>
@@ -115,8 +110,9 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
               <div className='account-methods__list'>
                 {Object.entries(methods).map(([key, method]) => {
                   return <div className='account-methods__list-item' key={key} >
+                    
                     <AccountCurrentMethod
-                      default_source={user?.default_source}
+                      default_source={user?.invoice_settings?.default_payment_method}
                       method={method}
                       onDeleteSuccess={handleDelete}
                       response={loader.active}
@@ -125,10 +121,7 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
                 })}
               </div>
             </div></>}
-          <AccountCreateMethod
-            user={user}
-            onSuccess={getAccountMethods}
-          />
+            {clientSecret && <StripePaymentForm clientSecret={clientSecret} onSuccess={handleCreated} />}
         </div>
       </UiCollapse>
     </>

@@ -18,17 +18,29 @@
     @extend .d-flex;
     flex-direction: column;
     gap: var(--padding);
-    justify-content: flex-start;
+    justify-content: stretch;
     min-height: var(--element-height);
     width: 100%;
-
     .account-methods__existing {
+        width: calc(100% - calc(var(--padding) * 2));
         @extend .d-flex;
         flex-direction: column;
+        gap: var(--padding);
+        padding: var(--padding);
+        background-color: var(--gray-80);
+        border-radius: var(--border-radius);
+        border: solid 1px var(--gray-70);
+        &--title{
+            width: 100%;
+            font-size: var(--s-3);
+            text-transform: capitalize;
+            color: var(--gray-40);
+        }
         .account-methods__list {
             @extend .d-flex;
             flex-direction: column;
             gap: var(--s-7);
+            width: 100%;
             .account-methods__list-item {
                 width: 100%;
                 min-height: var(--element-height);
