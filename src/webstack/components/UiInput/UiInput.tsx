@@ -35,50 +35,62 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   if (props.variant == 'invalid' && value?.length == 0) props.variant == undefined;
   const elType = show && type === "password" ? "text" : type;
   useEffect(() => { }, [props?.variant, value]);
+  const isTextArea = String(value).length > 100 || type == 'textarea';
+  const inputValue = value !== undefined && value !== null ? value : '';
 
   if (String(value)?.length < 100 && props.name != 'address') {
     return <>
       <style jsx>{styles}</style>
-      <FormControl
-        {...props}
-        traits={{
-          ...props.traits,
-          disabled: props.disabled,
-          afterIcon: type === "password" ? {
-            icon: show ? "fa-eye" : "fa-eye-slash",
-            onClick: () => setShow(!show)
-          } : props.traits?.afterIcon,
-        }}>
-        <input
-          data-element={props['data-element'] || 'input'}
-          disabled={props?.disabled || undefined}
-          id={props?.id}
-          className={inputClasses}
-          name={props.name}
-          type={elType}
-          placeholder={props.placeholder}
-          min={props.min}
-          max={props.max}
-          value={value}
-          onChange={handleChange}
-          autoComplete={props.autoComplete}
-          onKeyDown={onKeyDown}
-          onKeyUp={onKeyUp}
-          onPaste={props.onPaste}
-          required={Boolean(required)}
-        // defaultValue={ props.defaultValue ? props.defaultValue :  value}
-        />
-      </FormControl>
-      <div className={`input__message ${message ? 'input__message-show' : ''}${props?.variant ? ' input__message-' + props.variant : ''}`}>
-        {message && message}
-      </div>
-    </>
-  }
-  // ADDRESS INPUT
-  if (props.name == 'address') {
-    return <>
-      <style jsx>{styles}</style>
-      <AutocompleteAddressInput
+      {props.name != 'address' &&
+        <FormControl
+          {...props}
+          traits={{
+            ...props.traits,
+            disabled: props.disabled,
+            afterIcon: type === "password" ? {
+              icon: show ? "fa-eye" : "fa-eye-slash",
+              onClick: () => setShow(!show)
+            } : props.traits?.afterIcon,
+          }}>
+          {!isTextArea ? <input
+            data-element={props['data-element'] || 'input'}
+            disabled={props?.disabled || undefined}
+            id={props?.id}
+            className={inputClasses}
+            name={props.name}
+            type={elType}
+            placeholder={props.placeholder}
+            min={props.min}
+            max={props.max}
+            value={inputValue}
+            onChange={handleChange}
+            autoComplete={props.autoComplete}
+            onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
+            onPaste={props.onPaste}
+            required={Boolean(required)}
+          // defaultValue={ props.defaultValue ? props.defaultValue :  value}
+          /> : <textarea
+            data-element={props['data-element'] || 'textarea'}
+            disabled={props?.disabled || undefined}
+            id={props?.id}
+            className={inputClasses}
+            name={props.name}
+            placeholder={props.placeholder}
+            value={inputValue}
+            onChange={handleChange}
+            autoComplete={props.autoComplete}
+            onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
+            onPaste={props.onPaste}
+            required={Boolean(required)}
+          // defaultValue={ props.defaultValue ? props.defaultValue :  value}
+          />}
+
+
+        </FormControl>
+      }
+      {props.name == 'address' && <AutocompleteAddressInput
         label={props.label}
         inputClasses={inputClasses} traits={{
           ...props.traits,

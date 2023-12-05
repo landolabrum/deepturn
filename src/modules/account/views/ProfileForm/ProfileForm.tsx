@@ -1,9 +1,10 @@
+
 import { useEffect, useState } from 'react';
 import styles from './ProfileForm.scss';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useNotification } from '@webstack/components/Notification/Notification';
-import UiForm from '@webstack/components/UiForm/UiForm';
+import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import UiMarkdown from '@webstack/components/UiMarkDown/UiMarkDown';
@@ -81,14 +82,14 @@ const ProfileForm = ({ user, open = false }: any) => {
     if (user && JSON.stringify(fields) === JSON.stringify(initialFields)) {
       onUser();
     }
-  }, [user, fields]);
+  }, [user, setFields]);
   
-  if (!user) return <>no user</>;
   return (
     <>
       <style jsx>{styles}</style>
       <div className='profile-form'>
       <UiForm
+        title="update profile"
         fields={fields}
         onChange={onChange}
         onSubmit={onSubmit}

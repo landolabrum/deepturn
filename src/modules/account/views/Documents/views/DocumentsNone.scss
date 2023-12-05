@@ -1,0 +1,18 @@
+
+.d-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
+   
+
+.documents-none{
+    border-radius: var(--border-radius);
+    background-color: var(--gray-90);
+    @extend .d-flex;
+    width: 100%;
+    min-height: 500px;
+    font-size: var(--s-2);
+    color: var(--secondary);
+    text-transform: capitalize;
+}

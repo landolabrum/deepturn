@@ -10,12 +10,15 @@ export type IVariant =
   | "center dark"
   | "account"
   | "active"
+  | "pill"
   | "blue"
   | "center"
   | "disabled"
   | "select__disabled"
   | "disabled-icon"
   | "false"
+  | "bump"
+  | "bump pill"
   | "flat"
   | "gray"
   | "hide-sort"
@@ -26,6 +29,7 @@ export type IVariant =
   | "mini"
   | "miniactive"
   | "nav-item"
+  | "center nav-item"
   | "nav-item__active"
   | "null"
   | "undefined"
@@ -42,6 +46,8 @@ export type IVariant =
   | "primary round mini"
   | "round primary"
   | "secondary"
+  | "signature"
+  | "signature invalid"
   | false
   // Add other combinations as needed
   ;

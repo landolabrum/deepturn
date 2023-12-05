@@ -6,7 +6,6 @@
 
 .navbar__mobile {
     display: none;
-   
     width: auto;
     margin: var(--element-height) 0;
     @media(max-width: 1260px) {
@@ -16,39 +15,21 @@
     &--actions{
         @extend .d-flex;
         justify-content: flex-start;
-        width: 100%;
     }
     &--content {
         border-radius: var(--border-radius);
         display: flex;
-        justify-content: space-around;
         flex-direction: column;
         gap: var(--s-9);
         padding: var(--s-5) var(--padding);
-        .nav__nav-item {
+        width: auto;
+        &__nav-item{
             @extend .d-flex;
-            background-color: var(--gray-90);
-            color: var(--gray-10);
+            border: solid 1px var(--gray-70);
             border-radius: var(--border-radius);
-            width: calc(100% - calc(var(--padding) * 2));
-            height: var(--element-height);
-            border: solid 1px var(--gray-30);
-            font-size: var(--s-7);
-            text-align: center;
-            padding: var(--padding);
-            &--account {
-                margin-left: auto;
-            }
-
-            &__label {
-                font-size: var(--s-3);
-                text-transform: capitalize;
-            }
-            &:hover,
-            :focus {
-                cursor: pointer;
-                background-color: var(--gray-100);
-                color: var(--primary);
+            width: 100%;
+            &:hover{
+                background-color: var(--gray-90);
             }
         }
     }

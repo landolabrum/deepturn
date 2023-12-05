@@ -24,7 +24,6 @@ const AutocompleteAddressInput = ({ address, setAddress, traits, inputClasses, l
     const google = await loader.load();
     const inputElement = document.getElementById('autocomplete-address');
     const autocomplete = new google.maps.places.Autocomplete(inputElement);
-    console.log('[ AUTO COMPLETE ]', autocomplete)
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
       if (place && place.address_components) {
@@ -45,7 +44,6 @@ const AutocompleteAddressInput = ({ address, setAddress, traits, inputClasses, l
       }
     });
   };
-  useEffect(()=>{initAutocomplete()}, [address]);
   const addressDisplay = address != undefined ?
     `${address?.line1 ? address?.line1 + ', ' : ''
     }${address?.line2 ? address?.line2 + ' ' : ''
@@ -53,6 +51,8 @@ const AutocompleteAddressInput = ({ address, setAddress, traits, inputClasses, l
     }${address?.state ? address?.state + ', ' : ''
     }${address?.postal_code ? address?.postal_code + ', ' : ''
     }${address?.country ? address?.country : ''}` : undefined;
+  useEffect(()=>{initAutocomplete()}, [address]);
+
   return (<>
     <style jsx>{styles}</style>
     <style jsx>{aStyles}</style>

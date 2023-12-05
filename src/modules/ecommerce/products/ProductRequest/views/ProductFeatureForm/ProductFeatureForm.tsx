@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './ProductFeatureForm.scss';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import UiButton from '@webstack/components/UiButton/UiButton';
-import UiForm from '@webstack/components/UiForm/UiForm';
+import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import useUserAgent from '@webstack/hooks/getUserAgentInfo';

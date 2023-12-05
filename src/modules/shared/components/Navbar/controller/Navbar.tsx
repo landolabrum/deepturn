@@ -79,7 +79,7 @@ const Navbar = () => {
         .filter(r => !(r.href === '/cart' && cartTotal === 0))
         .map(r => r);
 
-      setCurrentRoutes(newRoutes);
+      setCurrentRoutes(newRoutes.reverse());
     }
     toggled != null && setToggled(null);
   }, [routes, setCurrentRoutes, ]);
@@ -96,7 +96,8 @@ const Navbar = () => {
             onClick={handleTrigger}
           />
         </div>
-        {currentRoutes && currentRoutes.map((route, key) => (
+       <div className='nav-bar__nav-items'>
+       {currentRoutes && currentRoutes.map((route, key) => (
           <div
           key={key}
           className={
@@ -113,7 +114,7 @@ const Navbar = () => {
             {!route?.items ? (
               <UiButton
                 traits={
-                  route?.icon && { beforeIcon: { icon: route.icon } } || undefined
+                  route?.icon && { afterIcon: { icon: route.icon } } || undefined
                 }
                 variant={toggled == route.label || current == '/' && route.label?.toLowerCase() == environment.merchant.name ? 'nav-item__active':'nav-item'}
                 onClick={() => handleClick(route)}
@@ -122,6 +123,9 @@ const Navbar = () => {
               </UiButton>
             ) : (
               <UiSelect
+              traits={
+                route?.icon && { afterIcon: { icon: route.icon } } || undefined
+              }
                 openState={Boolean(toggled && toggled == route.label) && 'open' || 'closed'}
                 variant={toggled == route.label? 'nav-item__active':'nav-item'}
                 value={route.label === 'account' ? displayName : route.label}
@@ -132,7 +136,8 @@ const Navbar = () => {
             )}
           </div>
         ))}
-        {/* <MobileNav routes={currentRoutes} handleClick={handleMobileClick}/> */}
+        </div>
+
       </nav>
     </>
   );

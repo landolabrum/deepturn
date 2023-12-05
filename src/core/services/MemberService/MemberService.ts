@@ -9,8 +9,8 @@ import ApiService, { ApiError } from "../ApiService";
 import IMemberService from "./IMemberService";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
-import { encryptString } from "@webstack/helpers/Encryption";
 const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
+
 export default class MemberService
   extends ApiService
   implements IMemberService {
@@ -21,7 +21,29 @@ export default class MemberService
   private _userToken: string | undefined;
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
-
+  public async toggleDefaultPaymentMethod(paymentMethodId: string): Promise<any> {
+    let customerId = this._getCurrentUser(false)?.id;
+    if (!paymentMethodId || !customerId) {
+      throw new ApiError("Payment method ID or customer ID not provided", 400, "MS.TDPM.01");
+    }
+  
+    try {
+      // Assuming the second type argument is for the request body type
+      const response:any = await this.post<any, { paymentMethodId: string; customerId: string }>(
+        `api/method/toggle-default?mid=${paymentMethodId}&cid=${customerId}`,
+        { paymentMethodId, customerId }
+      );
+      if(response?.data){
+        console.log('[ RESPO DATA ]', response)
+        this.updateContext(response.data, undefined);
+      }
+      return response;
+    } catch (error: any) {
+      console.error("[MemberService]: ", error);
+      throw new ApiError("Error toggling default payment method", 500, "MS.TDPM.02");
+    }
+  }
+  
   public async createPaymentIntent(method?: IPaymentMethod): Promise<any> {
     let id = this._getCurrentUser(false)?.id;
     const memberMethod = async () => {

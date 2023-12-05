@@ -6,11 +6,11 @@ export default class ApiService {
 
   }
   
-
-  protected get<T>(uri: string, headers?: { 'Content-Type': 'application/json' }): Promise<T> {
+  protected get<T>(uri: string, responseType: 'json' | 'blob' = 'json'): Promise<T> {
     return new Promise<T>((resolve, reject) => {
       axios.get<T>(this.getFullUrl(uri), {
         headers: this.getDefaultHeaders(),
+        responseType: responseType // Set the response type here
       }).then(resp => {
         resolve(resp.data);
       }).catch((error: AxiosError) => {
@@ -18,6 +18,17 @@ export default class ApiService {
       });
     });
   }
+  // protected get<T>(uri: string, headers?: { 'Content-Type': 'application/json' }): Promise<T> {
+  //   return new Promise<T>((resolve, reject) => {
+  //     axios.get<T>(this.getFullUrl(uri), {
+  //       headers: this.getDefaultHeaders(),
+  //     }).then(resp => {
+  //       resolve(resp.data);
+  //     }).catch((error: AxiosError) => {
+  //       reject(this.createApiErrorForAxios(error));
+  //     });
+  //   });
+  // }
   
 
   protected post<TInput, TResult>(uri: string, input?: TInput, headers?: {[key: string]: string}): Promise<TResult> {

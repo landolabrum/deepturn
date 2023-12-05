@@ -25,21 +25,14 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }) => {
                 </div>}
                 <div className='navbar__mobile--content'>
                     {routes && routes.map((route: IRoute, key: number) => (
-                        <span key={key}>
+                        <div key={key} className='navbar__mobile--content__nav-item' 
+                            onClick={() => handleClick(route)}
+                        >
                             <UiButton
-                                onClick={() => handleClick(route)}
-                                variant='dark'
-
+                                traits={{beforeIcon:route?.icon}}
+                                variant='nav-item'
                             >{route.label}</UiButton>
-                        </span>
-                        //   <div
-                        //     key={key}
-                        //     className={`nav__nav-item nav__nav-item--${route?.label}`}
-                        //   >
-                        //     <div className='nav__nav-item__label'>
-                        //       {route.label}
-                        //     </div>
-                        //   </div>
+                        </div>
                     ))}
                 </div>
             </div>

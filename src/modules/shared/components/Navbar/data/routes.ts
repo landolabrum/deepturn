@@ -28,7 +28,7 @@ export interface HandleRouteProps {
 // 1 - 5 Customer
 // 6 Tennant
 // 7 + Admin
-
+const merchantName = environment.merchant?.name || 'deepturn';
 export const routes: IRoute[] = [
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
   {
@@ -100,12 +100,10 @@ export const useClearanceRoutes = () => {
     const filterRoutes = (routeItems: IRoute[]) => {
       return routeItems
         .filter(route => {
-          // Include the route if there's no clearance requirement
-          // or if the user is authenticated and their clearance level is sufficient
-          // or if the user is not authenticated and the route clearance is 0
-          return typeof route.clearance === 'undefined' ||
-                 (user && route.clearance && route.clearance <= level) ||
-                 (!user && route.clearance === 0);
+          // If the route doesn't have a clearance property or the user's clearance level is greater than or equal to the route's clearance level
+          return route.clearance === undefined ||
+            (user && route.clearance && route.clearance <= level) ||
+            (!user && route.clearance === 0);
         })
         .map(route => {
           // Filter sub-items (if any) based on clearance
@@ -113,7 +111,7 @@ export const useClearanceRoutes = () => {
             return {
               ...route,
               items: route.items.filter(item => 
-                typeof item.clearance === 'undefined' ||
+                item.clearance === undefined ||
                 (user && item.clearance && item.clearance <= level) ||
                 (!user && item.clearance === 0)
               ),
@@ -122,9 +120,10 @@ export const useClearanceRoutes = () => {
           return route;
         });
     };
+    
 
-    setAccess(filterRoutes(routes));
-  }, [user, level]);
+    setAccess(filterRoutes(routes).reverse());
+  }, [user]);
 
   return access;
 };

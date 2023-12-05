@@ -1,0 +1,19 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.admin-list-documents{
+@extend .d-flex;
+justify-content: flex-start;
+align-items: flex-start;
+flex-direction: column;
+width: 100%;
+overflow: hidden;
+flex-wrap: wrap;
+&__list{
+    width: 700px;
+    padding: 0;
+    margin: 0;
+}
+}

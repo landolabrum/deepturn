@@ -1,7 +1,7 @@
 // Relative Path: ./AddProduct.tsx
 import React, { useState } from 'react';
 import styles from './AddProduct.scss';
-import UiForm from '@webstack/components/UiForm/UiForm';
+import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 
 // Remember to create a sibling SCSS file with the same name as this component

@@ -151,5 +151,4 @@ function renderIcon(iconProps: FormIconProps | undefined, position: string) {
   </>
   );
 }
-
 export default FormControl;

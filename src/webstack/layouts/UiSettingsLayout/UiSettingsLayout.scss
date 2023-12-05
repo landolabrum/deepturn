@@ -33,16 +33,18 @@ $actionsBg: var(--gray-90);
     width: 100%;
     transform: translateY(-2px);
     min-height: inherit;
+    height: inherit;
     z-index: 999;
     @media(min-width:1100px) {
         padding-top: var(--padding);
         background-color: $actionsBg;
     }
-
+    
     &__content {
         @extend .d-flex;
-        justify-content: flex-start;
+        justify-content: stretch;
         align-items: stretch;
+        height: inherit;
         min-height: inherit;
 
         @media(min-width: 1100px) {
@@ -65,11 +67,12 @@ $actionsBg: var(--gray-90);
 
         &--content {
             border-bottom: solid 1px var(--gray-70);
+            background-color: var(--gray-80);
+
             border-radius: var(--border-radius);
             border: solid 1px var(--gray-60);
             @extend .d-flex;
             width: 100%;
-
             @media(min-width:2100px) {
                 margin-left: auto;
                 max-width: 350px;
@@ -84,7 +87,7 @@ $actionsBg: var(--gray-90);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1px var(--padding) var(--padding);
+            padding: 1px var(--s-9) var(--padding);
             width: auto;
             height: max-content;
             border-bottom: solid 1px var(--gray-70);
@@ -97,11 +100,12 @@ $actionsBg: var(--gray-90);
         width: 100%;
         color: var(--gray-40);
         background-color: var(--gray-100);
+        height: auto;
+        overflow: hidden;
         @media(min-width: 1100px) {
-            width: calc(100% - 300px);
             min-height: 100%;
             justify-content: flex-start;
-            align-items: stretch;
+            align-items: flex-start;
             position: unset;
             border-top: solid 1px;
             border-left: solid 1px;
@@ -116,7 +120,7 @@ $actionsBg: var(--gray-90);
 
         &__content {
             z-index: 1000;
-            min-height: max-content;
+            height: calc(100% - calc(var(--s-5) * 2));
             @extend .d-flex;
             flex-direction: column;
             width: auto;

@@ -9,6 +9,20 @@
     width: calc(100% - calc(var(--padding) * 2))
 }
 
+.background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    background-size: cover;
+    overflow: hidden;
+    backdrop-filter: blur(14px);
+}
+
 .home {
     color: var(--gray-20);
     display: flex;
@@ -30,6 +44,7 @@
         flex-wrap: wrap;
         gap: var(--padding);
         margin: var(--padding) 0;
+
         /* Adjust the gap as needed */
         &--title {
             width: 100%;
@@ -44,7 +59,7 @@
         // border: solid 1px;
         text-transform: capitalize;
         font-size: var(--s-4);
-        color:var(--gray-40)
+        color: var(--gray-40)
     }
 
 

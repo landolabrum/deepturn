@@ -6,6 +6,7 @@ import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/UiSettingsLayou
 import AdminCustomer from '../views/AdminCustomers/controller/AdminCustomer';
 import AdminProducts from '../views/AdminProducts/controller/AdminProducts';
 import { useRouter } from 'next/router';
+import AdminListDocuments from '../views/AdminDocuments/controller/AdminListDocuments';
 
 
 const UiGlobe = dynamic(
@@ -17,11 +18,12 @@ const UiGlobe = dynamic(
 
 const Admin = () => {
   const router = useRouter();
-  const [currentView, setCurrentView]=useState<string | undefined>('customers');
+  const [currentView, setCurrentView]=useState<string | undefined>('documents');
   const views = {
     globe:<UiGlobe/>,
     customers: <AdminCustomer/>,
-    products: <AdminProducts/>
+    products: <AdminProducts/>,
+    documents: <AdminListDocuments/>
   }
   useEffect(() => {
     // if(router?.query?.view)setCurrentView(String(router.query.view))

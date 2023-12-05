@@ -1,7 +1,6 @@
 // Relative Path: ./SettingsView.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './UiSettingsLayout.scss';
-import { useUser } from '~/src/core/authentication/hooks/useUser';
 import { default as Div } from "@webstack/components/UiDiv/UiDiv";
 import UiMenu from '../../components/UiMenu/UiMenu';
 import UiSelect from '../../components/UiSelect/UiSelect';
@@ -11,7 +10,6 @@ import { useRouter } from 'next/router';
 import useClass from '@webstack/hooks/useClass';
 import useWindow from '@webstack/hooks/useWindow';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
-import { head } from 'lodash';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ISettingsLayout {
@@ -35,7 +33,6 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   const [actionStyles, setActionStyles] = useState({ width: 350 });
   const containerRef = useRef<any>();
   const handleView = (view: string) => {
-    // console.log('[ handleView ]', view)
     router.push({
       pathname: router?.pathname,
       query: {
@@ -54,14 +51,18 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       const headerElem: any = document.getElementById('header-container');
       if (headerElem) {
         const style = headerElem.firstChild && window.getComputedStyle(headerElem.firstChild);
-        // if(headerElem.offsetHeight && containerRef.current)containerRef.current.style.marginTop=`${Number(headerElem.offsetHeight)}px`;
+         if( width >= 1100){
+           if(headerElem.offsetHeight && containerRef.current)containerRef.current.style.marginTop=`${Number(headerElem.offsetHeight + 15)}px`;
+          }else if(width < 1100){
+           if(headerElem.offsetHeight && containerRef.current)containerRef.current.style.marginTop=undefined;
+         }
         // CREATE WIDTH & ADJUST FOR GAP
         const mL = Number(style.marginLeft.replace('px', '')) - 14;
         let newActionStyles: any = { width: width > 1700 ? mL : 300 };
 
         setActionStyles(newActionStyles);
       } else {
-        console.log('headerContainer not found');
+        console.log('headerContainer not found or width > 1100');
       }
     }, 100);
   }

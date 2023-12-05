@@ -56,7 +56,7 @@ const AccountCreateMethod = ({ onSuccess, open, collapse, user, shippable }: IAc
         } catch (e: any) {
             alert(JSON.stringify(e))
         }
-    }, [stripe, elements]);
+    }, [ elements]);
     // }, [stripe, elements, clientSecret]);
     // const [isApplePaySupported, setIsApplePaySupported] = useState(false);
 
@@ -83,7 +83,7 @@ const AccountCreateMethod = ({ onSuccess, open, collapse, user, shippable }: IAc
             const paymentElement = elements.create('payment', options);
             paymentElement.mount('#payment-element');
         }
-    }, [elements]);
+    }, [stripe, elements]);
 
     return (
         <>

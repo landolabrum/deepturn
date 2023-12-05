@@ -19,6 +19,8 @@
     "d3-fetch": "^3.0.1",
     "globe.gl": "^2.29.2",
     "google-libphonenumber": "^3.2.32",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
     "next": "^13.2.3",
     "next-i18next": "^11.3.0",

@@ -10,11 +10,11 @@ $colorGray60: var(--gray-60);
 $colorGray70: var(--gray-70);
 $colorGray90: var(--gray-90);
 $colorBlue: var(--blue);
-.adapt-table-content__scroll-to-top {
+.adapt-table-content__scroll-to-top{
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
+  position: absolute;
   bottom: 20px;
   right: 10px;
   width: var(--element-height);

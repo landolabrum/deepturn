@@ -86,7 +86,7 @@ $wid: calc(100%);
     }
 
     100% {
-        transform: translateY(-100%);
+        transform: translateY(calc(-100% + var(--element-height)));
         height: 0;
     }
 }
@@ -99,8 +99,6 @@ $wid: calc(100%);
 .collapse {
     width: 100%;
     border: solid 1px var(--gray-70);
-    // padding: 0 $pad;
-    // width: calc(100% - calc($pad * 2) - 2px);
     position: relative;
     z-index: 1;
     border-radius: var(--border-radius);
@@ -165,7 +163,23 @@ $wid: calc(100%);
             animation: closeAction 1s forwards;
         }
     }
+    &__document{
+        .collapse__body {
+            $btm: var(--element-height);
+            $nbtm: calc($btm * -1);
+            box-shadow: inset 0 $nbtm $btm $nbtm var(--gray-100), inset 0 8px 8px -8px var(--gray-90);
+            width: 100%;
+            max-height: 800px;
+            overflow-x: none;
+            border: solid 1px var(--gray-70);
+            overflow-y: scroll;
+        }
+        .collapse__action{
+        background: var(--primary-opaque);
+            backdrop-filter: blur(4px);
 
+        }
+    }
     &__flat {
         padding: 0;
         width: $wid;
