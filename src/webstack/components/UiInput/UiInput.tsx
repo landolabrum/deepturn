@@ -90,7 +90,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
 
         </FormControl>
       }
-      {props.name == 'address' && <AutocompleteAddressInput
+      {props.name == 'address' && <><AutocompleteAddressInput
         label={props.label}
         inputClasses={inputClasses} traits={{
           ...props.traits,
@@ -108,8 +108,10 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
       </div>
     </>
   }
+    </>
+  }
   // TEXT AREA
-  if(type == 'textarea' || value.length >= 100 )
+  if(type == 'textarea' || value?.length >= 100 )
   return (
     <>
       <style jsx>{styles}</style>
