@@ -40,11 +40,11 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
     }
   }
   const handleLabel = () => {
-    if (user && methods.length) {
+    if (user && methods.length && !open) {
       let default_method: any = methods.find(m => m.id == user?.invoice_settings?.default_payment_method);
       if (default_method?.card) {
         default_method = <div style={{ display: 'flex', alignItems: "center", gap: '16px' }}>
-          <UiIcon icon={default_method.card.brand} /> DEF {`**** **** **** ${default_method.card.last4}`}
+          <UiIcon icon={default_method.card.brand} /> {`**** **** **** ${default_method.card.last4}`}
         </div>
         setLabel(default_method);
       }
@@ -95,7 +95,7 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
               })}
             </div>
           </div></>}
-          {clientSecret && <StripePaymentForm clientSecret={clientSecret} onSuccess={handleCreated} />}
+          {clientSecret && <StripePaymentForm clientSecret={clientSecret} onSuccess={getAccountMethods} />}
       </div>
     </>
   );
@@ -121,7 +121,7 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
                 })}
               </div>
             </div></>}
-            {clientSecret && <StripePaymentForm clientSecret={clientSecret} onSuccess={handleCreated} />}
+            {clientSecret && <StripePaymentForm clientSecret={clientSecret} onSuccess={getAccountMethods} />}
         </div>
       </UiCollapse>
     </>

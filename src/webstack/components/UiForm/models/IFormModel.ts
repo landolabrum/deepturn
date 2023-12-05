@@ -18,6 +18,8 @@ export type IFormField = {
     width?: string;
     value?: string | boolean | UserAddress | number;
     label?: string;
+    min?: number;
+    max?: number;
     placeholder?: string;
     type?: string;
     traits?: ITraits;

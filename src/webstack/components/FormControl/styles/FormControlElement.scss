@@ -5,6 +5,25 @@
 }
 
 
+@keyframes bump {
+    0% {
+        transform: rotate(0deg);
+        background-color: var(--gray-70);
+    }
+    30%{
+        transform: rotate(10deg);
+        background-color: var(--error);
+    }
+    70%{
+        transform: rotate(-5deg);
+        background-color: var(--gary-70);
+    }
+    100% {
+        transform: rotate(0deg);
+        background-color: var(--error);
+    }
+}
+
 @keyframes glow {
     0% {
         box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.5);
@@ -302,13 +321,28 @@
             animation: glowTxt 1s infinite;
         }
     }
-
+    &--bump{
+        animation: bump .3s;
+    }
+    &--pill{
+        border: solid 1px transparent;
+        width: max-content;
+    }
     &--nav-item {
-        --ui-icon-color: var(--gray-50) !important;
-
+        --ui-icon-color: var(--gray-50);
         &:hover {
             border-bottom: solid 1px var(--blue);
         }
+        @media(max-width: 1100px){
+            margin: 0 auto;
+            border-bottom: unset;
+            &:hover {
+                color: var(--primary);
+                --ui-icon-color: var(--primary);
+                border-bottom: unset;
+            }
+        }
+        
     }
 
     &--nav-item__active {
@@ -330,7 +364,7 @@
         &.form-control__element--signature {
             border: solid 1px transparent !important;
             .form-control__invalid {
-                color: var(--invalid-bg) !important;
+                color: var(--error) !important;
             }
         }
 

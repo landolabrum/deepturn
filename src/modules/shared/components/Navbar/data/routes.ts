@@ -40,15 +40,6 @@ export const routes: IRoute[] = [
   { label: "configure", href: "/configure", icon: "fa-tags", active: true },
   { label: "products", href: "/products", icon: "fa-tags", active: true },
   {
-    label: "Store",
-    icon: "fa-store",
-    altLabel: 'store',
-    items: [
-
-    ],
-  },
-
-  {
     label: "Social",
     icon: "fa-biohazard",
     href: '/social',

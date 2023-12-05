@@ -46,9 +46,6 @@ nav {
     &:hover{
       animation: fade 1s forwards;
     }
-    @media(max-width: 1100px) {
-    }
-
     @media(min-width: 1100px) {
       display: none;
     }
@@ -57,12 +54,11 @@ nav {
 .nav-bar__nav-items {
     @extend .d-flex;
     width: 100%;
-  .nav__nav-item {
-    height: var(--element-height);
     @media(max-width: 1100px) {
       display: none;
     }
-
+  .nav__nav-item {
+    height: var(--element-height);
     &--account, &--login  {
       margin-right: var(--s-9);
       margin-left: auto;

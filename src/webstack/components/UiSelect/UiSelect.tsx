@@ -57,8 +57,8 @@ const UiSelect: React.FC<SelectProps> = ({
 
   const postIconHandler = (title:any, variant: any) =>{
     const isNavItem = variant && variant.includes('nav-item');
-    if(isTitleObject(title) && title.postIcon){
-      if( title.postIcon && variant !== 'disabled' && bOpen){
+    if(!isNavItem && isTitleObject(title) && title.postIcon){
+      if(  bOpen){
         return "fa-xmark";
       }else{
         return `fa-chevron-${openDirection}`
@@ -96,6 +96,7 @@ const UiSelect: React.FC<SelectProps> = ({
   return (
     <>
       <style jsx>{styles}</style>
+
         <div
           className={`select ${openDirection}`}
           style={traits?.width?{width:`${traits.width}px`}:{}}

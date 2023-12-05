@@ -96,7 +96,7 @@ const Navbar = () => {
             onClick={handleTrigger}
           />
         </div>
-       {/* <div className='nav-bar__nav-items'> */}
+       <div className='nav-bar__nav-items'>
        {currentRoutes && currentRoutes.map((route, key) => (
           <div
           key={key}
@@ -136,8 +136,8 @@ const Navbar = () => {
             )}
           </div>
         ))}
-       {/* </div> */}
-        {/* <MobileNav routes={currentRoutes} handleClick={handleMobileClick}/> */}
+        </div>
+
       </nav>
     </>
   );

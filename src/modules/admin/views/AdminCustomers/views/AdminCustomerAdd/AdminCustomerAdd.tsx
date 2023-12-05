@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminCustomerAdd.scss';
-import UiForm from '@webstack/components/UiForm/UiForm';
-import UserContext from '~/src/models/UserContext';
-import { countries, countriesDisplay } from '@webstack/models/location';
-import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
+import UiForm from '@webstack/components/UiForm/controller/UiForm';
+import findField from '@webstack/components/UiForm/functions/findField';
+import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const AdminCustomerAdd: React.FC = () => {
-  const contactFields = [
+  const contactFields:IFormField[] = [
     {
       name: 'first_name',
       label: 'first name',
       placeholder: 'Elon',
-      width: '50%'
+      width: '50%',
     },
     {
       name: 'last_name',
       label: 'last name',
       placeholder: 'Tusk',
-      width: '50%'
+      width: '50%',
     },
     {
       name: 'phone',
@@ -30,13 +29,21 @@ const AdminCustomerAdd: React.FC = () => {
         min: 11,
         max: 11
       }
-
     },
     {
       name: 'email',
       label: 'email',
       placeholder: 'elontusk@starlink.com',
-      type: 'email'
+      type: 'email',
+    },
+    {
+      name: 'clearance',
+      label: 'clearance',
+      value: 0,
+      min: 1,
+      max: 9,
+      type: 'pill',
+      required: true
     },
     {
       name: 'address',
@@ -57,10 +64,9 @@ const AdminCustomerAdd: React.FC = () => {
     return false;
   }
 
-  const [customer, setCustomer] = useState<any>(contactFields);
+  const [customer, setCustomer] = useState<any>();
   const hasError = (e: any) => {
-    const name = e.name;
-    const value = e.value;
+    const {name, value}=e;
     switch (name) {
       case 'first_name':
           return lenTest(value, {min: 2, max: 20});
@@ -71,32 +77,32 @@ const AdminCustomerAdd: React.FC = () => {
     }
   }
   const updateField = (e: any) => {
-    const tName = e?.target?.name;
-    let tValue = e?.target?.value;
-    const newCustomer = customer.map((field: any) => {
-      if (field.name === tName) {
-        field.error = hasError(e.target);
-        return {
-          ...field,
-          value: tValue,
-          
-        };
-      }
+    const {name, value}=e.target;
+    setCustomer(customer.map((field:IFormField) => {
+      if(field.name == name)field.value = value;
       return field;
-    });
-
-    setCustomer(newCustomer);
+    }));
   };
 
   const handleAddCustomer = (e: any) => {
-    // console.log('[ E ]: ', e)
+    const request = {
+      name:`${findField(customer,'first_name').value} ${findField(customer,'last_name').value}`,
+      email: findField(customer, 'email').value,
+      phone: findField(customer, 'phone').value,
+      address: findField(customer, 'address').value,
+    }
+    console.log('[ request ]',request)
   }
 
-  useEffect(() => { }, [updateField]);
+  useEffect(() => {
+    if(!customer)setCustomer(contactFields);
+   }, [setCustomer]);
   return (
     <>
       <style jsx>{styles}</style>
-      {/* form: {JSON.stringify(customer)} */}
+
+      {JSON.stringify(customer)}
+      {/* form: {JSON.stringify(findField(contactFields, 'name'))} */}
       <UiForm
         fields={customer}
         onChange={updateField}

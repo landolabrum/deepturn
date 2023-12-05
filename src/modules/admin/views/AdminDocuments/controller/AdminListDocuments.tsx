@@ -60,7 +60,7 @@ const AdminListDocuments = () => {
             <h1>Admin List Docs</h1>
             <div className='admin-list-documents'>
                 {documents.length > 0 ? (
-                    documents.map((doc, index) => (
+                    documents.map((doc:any, index:number) => (
                         <div key={index} className='admin-list-documents__list'>
                             {/* ... existing document details ... */}
                             <UiButton onClick={() => downloadFile(doc.id)}>Download</UiButton>

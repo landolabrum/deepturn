@@ -33,7 +33,10 @@ export default class MemberService
         `api/method/toggle-default?mid=${paymentMethodId}&cid=${customerId}`,
         { paymentMethodId, customerId }
       );
-      response?.data && this.updateContext(response.data, undefined);
+      if(response?.data){
+        console.log('[ RESPO DATA ]', response)
+        this.updateContext(response.data, undefined);
+      }
       return response;
     } catch (error: any) {
       console.error("[MemberService]: ", error);

@@ -9,10 +9,10 @@ $el_gap: 7px;
   border-radius: var(--border-radius);
   overflow: hidden;
   z-index: 2;
-  background-color: var(--gray-90-opaque);
+  background-color: var(--gray-10-opaque);
 
-  backdrop-filter: blur(4px);
-  border: solid 1px var(--gray-90);
+  backdrop-filter: blur(7px);
+  border: solid 1px var(--gray-80);
   .menu__search {
     padding: 12px;
   }
@@ -52,7 +52,7 @@ $el_gap: 7px;
 
   .menu__option {
     &:not(:last-child){
-      border-bottom: solid 1px var(--gray-90);
+      border-bottom: solid 1px var(--gray-80);
     }
     z-index: 1;
     display: flex;

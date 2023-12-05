@@ -133,7 +133,7 @@
   --primary-opaque-1: #1e88e530;
   --secondary: #FF5722;
   --secondary-opaque: rgba(255, 87, 34, 0.6);
-  --invalid-bg: #751700;
+  --error: #751700;
   --invalid-border: #E34150;
 
   --box-shadow: 2px 2px 10px var(--gray-100);

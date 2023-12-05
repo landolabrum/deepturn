@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import UiInput from '../UiInput/UiInput';
+import UiInput from '../../UiInput/UiInput';
 import styles from './UiForm.scss';
-import UiButton from '../UiButton/UiButton';
-import { IForm, IFormField } from './models/IFormModel';
-import UiSelect from '../UiSelect/UiSelect';
-import UiLoader from '../UiLoader/view/UiLoader';
-import ToggleSwitch from '../UiToggle/UiToggle';
-import UiCheckBox from '../UiCheckbox/UiCheckBox';
-import FormControl from '../FormControl/FormControl';
+import UiButton from '../../UiButton/UiButton';
+import { IForm, IFormField } from '../models/IFormModel';
+import UiSelect from '../../UiSelect/UiSelect';
+import UiLoader from '../../UiLoader/view/UiLoader';
+import ToggleSwitch from '../../UiToggle/UiToggle';
+import UiCheckBox from '../../UiCheckbox/UiCheckBox';
+import FormControl from '../../FormControl/FormControl';
 
 const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading, disabled }: IForm) => {
     const textTypes = ['', undefined, 'text', 'password', 'email', 'number', 'tel', null, false, 'expiry', 'textarea'];
@@ -71,6 +71,29 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
             onLocalErrors(newErrors);
         }
     };
+    const handlePill = (e:any, field:IFormField, direction?: string)=>{
+            if(direction && onChange){
+                const val = () => {
+                    let newPillVal = Number(field.value);
+                    if(direction == 'minus'){
+                        if(field.min && newPillVal <= field.min)newPillVal = field.min;
+                         else newPillVal = newPillVal - 1;
+                    }
+                    else{
+                        if(field.max && newPillVal >= field.max)newPillVal = field.max;
+                        else newPillVal += 1;
+                    }
+                    return newPillVal;
+                }
+                const target = { target: { name: field.name, value: val() } };
+                return onChange(target);
+            }
+            let { name, value } = e.target;
+            if (value && String(value).charAt(0) == '0') value = value.slice(1, value.length);
+            if(field?.min && Number(value) <= field?.min)value = String(field.min);
+            if(field?.max && Number(value) >= field?.max)value = String(field.max);
+            return handleInputChange({ target: { name: name, value: value } });
+    }
     useEffect(() => { }, [fields, disabled, loading]);
     if (!fields) return<></>;
     return (<>
@@ -121,22 +144,20 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
                     {field.type == 'pill' &&
                         <FormControl
                             label={field?.error? `${field.label} *${field.error}*`: field.label}
-                            variant={field.error && 'invalid'}
+                            variant={field.error && 'invalid' || Boolean(field?.min && field.value == field.min || field.max && field.value == field.max ) && 'bump pill' || 'pill'}
                             traits={{
-                                beforeIcon: { icon: 'fas-minus', onClick: () => onChange && onChange({ target: { name: field.name, value: Number(field.value) - 1 } }) },
-                                afterIcon: { icon: 'fas-plus', onClick: () => onChange && onChange({ target: { name: field.name, value: Number(field.value) + 1 } }) },
-                                width: '120px'
+                                beforeIcon: { icon: 'fas-minus', onClick: ()=>handlePill(undefined, field, 'minus') },
+                                afterIcon: { icon: 'fas-plus', onClick: ()=>handlePill(undefined, field, 'plus') },
                             }}
                         >
                             <input
                                 name={field.name}
+                                type='tel'
+                                min={field?.min}
+                                max={field?.max}
                                 value={isNaN(Number(field.value)) ?  '0' :  String(field.value)}
                                 placeholder={field?.placeholder}
-                                onChange={(e) => {
-                                    let { name, value } = e.target;
-                                    if (value && String(value).charAt(0) == '0') value = value.slice(1, value.length)
-                                    handleInputChange({ target: { name: name, value: value } })
-                                }}
+                                onChange={(e)=>handlePill(e, field, undefined)}
                             />
                         </FormControl>
                     }

@@ -49,6 +49,7 @@ $elPad: 14px;
   text-transform: capitalize;
   height: max-content;
   justify-content: space-around;
+
   .form-control__header {
     @extend .d-flex;
     justify-content: space-between;
@@ -82,12 +83,14 @@ $elPad: 14px;
   }
 
   // VARIANT DEFINITIONS
-&--signature{
-  background-color: var(--gray-90);
-  &:hover{
+  &--signature {
     background-color: var(--gray-90);
+
+    &:hover {
+      background-color: var(--gray-90);
+    }
   }
-}
+
   &--link {
     width: 100%;
   }

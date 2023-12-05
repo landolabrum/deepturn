@@ -4,7 +4,7 @@ import { useUser } from "~/src/core/authentication/hooks/useUser";
 import { getService } from "@webstack/common";
 import IMemberService from "~/src/core/services/MemberService/IMemberService";
 import useUserAgent from "~/src/core/authentication/hooks/useUserAgent";
-import UiForm from "@webstack/components/UiForm/UiForm";
+import UiForm from "@webstack/components/UiForm/controller/UiForm";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { IFormField } from "@webstack/components/UiForm/models/IFormModel";
 import environment from "~/src/environment";

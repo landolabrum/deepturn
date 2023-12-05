@@ -46,8 +46,8 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
         setClicked(4);
         try {
             const newDefaultResp = await memberService.toggleDefaultPaymentMethod(mid);
-            const isRemoved = newDefaultResp.message.includes('removed');
-            handleClick(isRemoved?8:7);
+            const isRemoved = () => newDefaultResp.message.includes('removed');
+            handleClick(isRemoved()?8:7);
         } catch (e: any) {
             console.log('[ SET DEFAULT METHOD ( ERROR ) ]', e);
         }
@@ -136,7 +136,9 @@ const AccountCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response
                     </div>
                 </div>
                 <div className='account-current-method__behind'>
-                    <div className={`account-current-method__set-default`}
+                    <div
+                        data-default={`${method.id == default_payment_method?'remove':'set'} default` }
+                        className={`account-current-method__set-default`}
                         onClick={() => handleClick(4)}>
                         <UiIcon icon={clicked == 4 ? 'spinner' : method.id == default_payment_method ? 'fa-star' : 'fal-star'} />
                     </div>

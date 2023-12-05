@@ -1,9 +1,10 @@
+
 import { useEffect, useState } from 'react';
 import styles from './ProfileForm.scss';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useNotification } from '@webstack/components/Notification/Notification';
-import UiForm from '@webstack/components/UiForm/UiForm';
+import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import UiMarkdown from '@webstack/components/UiMarkDown/UiMarkDown';

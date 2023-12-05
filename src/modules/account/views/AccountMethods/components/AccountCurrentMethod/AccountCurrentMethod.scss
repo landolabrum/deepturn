@@ -181,7 +181,7 @@ $borderColor: var(--gray-40);
                     text-align: center;
                     background-color: var(--gray-30-opaque);
                     color: var(--gray-90);
-                    content:"set as default";
+                    content:attr(data-default);
                     font-size: var(--s-8);
                     aspect-ratio: 1/1;
                     width: var(--element-height);

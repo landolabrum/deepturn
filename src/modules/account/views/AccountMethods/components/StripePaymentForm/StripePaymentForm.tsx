@@ -21,7 +21,7 @@ const StripePaymentForm = ({ clientSecret, onSuccess }:IStripePaymentForm) => {
           colorText: '#e0e0e0',
         },
       };
-    return (
+    if(user?.id && clientSecret)return (
       <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
         <AccountCreateMethod
           user={user}
@@ -29,5 +29,6 @@ const StripePaymentForm = ({ clientSecret, onSuccess }:IStripePaymentForm) => {
         />
       </Elements>
     );
+    return <>... load</>
   };
 export default StripePaymentForm;  
