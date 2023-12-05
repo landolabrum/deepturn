@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ProductFeatureOther.scss';
 import { IMoreInfoField } from '../ProductFeatureForm';
-import UiForm from '@webstack/components/UiForm/UiForm';
+import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import capitalize from '@webstack/helpers/Capitalize';
 import { IForm, IFormField } from '@webstack/components/UiForm/models/IFormModel';
 // Remember to create a sibling SCSS file with the same name as this component

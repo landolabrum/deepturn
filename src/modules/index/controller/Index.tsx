@@ -9,8 +9,11 @@ const Index = () => {
     return(
         <>
             <style jsx>{styles}</style>
+            <video autoPlay={true} loop muted className="background-video">
+    <source src="/assets/backgrounds/contour_bg.webm" type="video/webm"/>
+    Your browser does not support the video tag.
+</video>
             <div className='home'>
-
             </div>
         </>
     );
