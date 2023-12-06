@@ -107,7 +107,7 @@ const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
     console.log("Final request with metadata:", request); // For debugging
   
     try {
-      const updatedCustomer = await adminService.updateMember(customerId, request);
+      const updatedCustomer = await adminService.updateCustomer(customerId, request);
   
       setCustomer(modifyCustomerData(updatedCustomer));
       setNotification({

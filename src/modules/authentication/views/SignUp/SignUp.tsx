@@ -7,8 +7,7 @@ import useUserAgent from "~/src/core/authentication/hooks/useUserAgent";
 import UiForm from "@webstack/components/UiForm/controller/UiForm";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { IFormField } from "@webstack/components/UiForm/models/IFormModel";
-import environment from "~/src/environment";
-import { useRouter } from "next/router";
+import useReferrer from "@webstack/hooks/useReferrer";
 
 const DEFAULT_RESPONSE = { response: "", message: "" };
 const authResponseMessages: any = {
@@ -91,13 +90,9 @@ const SignUp = ({ setView }: ISignUp) => {
     });
     return hasError;
   }
-  const { asPath } = useRouter();
-  const origin =
-      typeof window !== 'undefined' && window.location.origin
-          ? window.location.origin
-          : '';
 
-  const URL = `${origin}${asPath}`;
+
+  const URL = useReferrer();
   const handleChange = (e: any) => {
     const {name, value}=e.target;
     changeField(name, 'value', value);

@@ -3,11 +3,16 @@ import styles from './AdminCustomerAdd.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import findField from '@webstack/components/UiForm/functions/findField';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
+import { getService } from '@webstack/common';
+import IAdminService from '~/src/core/services/AdminService/IAdminService';
+import useReferrer from '@webstack/hooks/useReferrer';
+import { useNotification } from '@webstack/components/Notification/Notification';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const AdminCustomerAdd: React.FC = () => {
-  const contactFields:IFormField[] = [
+
+  const contactFields: IFormField[] = [
     {
       name: 'first_name',
       label: 'first name',
@@ -25,7 +30,7 @@ const AdminCustomerAdd: React.FC = () => {
       label: 'phone',
       placeholder: '4356719245',
       type: 'tel',
-      constraints:{
+      constraints: {
         min: 11,
         max: 11
       }
@@ -52,62 +57,81 @@ const AdminCustomerAdd: React.FC = () => {
     },
   ]
 
-  const lenTest = (value: string, { max, min}:any)=>{
+  const lenTest = (value: string, { max, min }: any) => {
     const valueLen = value?.length;
-    if(valueLen && max && !min)return value?.length > max;
-    if(valueLen && min && !max)return value?.length < min;
-    if(valueLen && min && max){
-      if(max < min)return 'error, invalid constraints!'
-      if(value?.length < min)return 'too short'
-      if(value?.length > max)return 'too long'
+    if (valueLen && max && !min) return value?.length > max;
+    if (valueLen && min && !max) return value?.length < min;
+    if (valueLen && min && max) {
+      if (max < min) return 'error, invalid constraints!'
+      if (value?.length < min) return 'too short'
+      if (value?.length > max) return 'too long'
     }
     return false;
   }
 
   const [customer, setCustomer] = useState<any>();
   const hasError = (e: any) => {
-    const {name, value}=e;
+    const { name, value } = e;
     switch (name) {
       case 'first_name':
-          return lenTest(value, {min: 2, max: 20});
+        return lenTest(value, { min: 2, max: 20 });
       case 'last_name':
-          return lenTest(value, {min: 2, max: 20});
+        return lenTest(value, { min: 2, max: 20 });
       default:
         return false;
     }
   }
   const updateField = (e: any) => {
-    const {name, value}=e.target;
-    setCustomer(customer.map((field:IFormField) => {
-      if(field.name == name)field.value = value;
+    const { name, value } = e.target;
+    setCustomer(customer.map((field: IFormField) => {
+      if (field.name == name) field.value = value;
       return field;
     }));
   };
+  const URL = useReferrer();
 
-  const handleAddCustomer = (e: any) => {
-    const request = {
-      name:`${findField(customer,'first_name').value} ${findField(customer,'last_name').value}`,
+  const adminService = getService<IAdminService>('IAdminService');
+  let notificationMessage = { name: 'error', label: 'Error!', message: "unable to create member" };
+  const handleAddCustomer = async (e: any) => {
+    const customerData = {
+      name: `${findField(customer, 'first_name').value} ${findField(customer, 'last_name').value}`,
       email: findField(customer, 'email').value,
       phone: findField(customer, 'phone').value,
       address: findField(customer, 'address').value,
+      metadata: {
+        clearance: findField(customer, 'clearance').value,
+        referrer_url: URL,
+        email_verified: false
+      }
     }
-    console.log('[ request ]',request)
+    try {
+      const createCustomerResponse = await adminService.createCustomer(customerData);
+      notificationMessage={
+        name: 'success',
+        label: 'Success',
+        message: `Successfully created Customer: ${createCustomerResponse?.name}`
+      }
+    } catch (e: any) { console.log('[ Create Customer ERROR ]', e) }
   }
 
+
+
   useEffect(() => {
-    if(!customer)setCustomer(contactFields);
-   }, [setCustomer]);
+    if (!customer) setCustomer(contactFields);
+  }, []);
   return (
     <>
       <style jsx>{styles}</style>
-
-      {JSON.stringify(customer)}
-      {/* form: {JSON.stringify(findField(contactFields, 'name'))} */}
+      <div className='admin-customer-add'>
+      <div className='admin-customer-add__title'>
+        add customer
+        </div>
       <UiForm
         fields={customer}
         onChange={updateField}
         onSubmit={handleAddCustomer}
       />
+      </div>
     </>
   );
 };

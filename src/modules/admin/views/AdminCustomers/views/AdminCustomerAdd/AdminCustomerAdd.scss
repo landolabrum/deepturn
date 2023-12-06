@@ -1,0 +1,11 @@
+.admin-customer-add{
+    background-color: var(--gray-90);
+    padding: var(--element-height) var(--padding) var(--padding);
+    border-radius: var(--border-radius);
+    &__title{
+        font-size: var(--s-3);
+        color: var(--gray-40);
+        text-transform: capitalize;
+        padding-bottom: var(--padding);
+    }
+}
