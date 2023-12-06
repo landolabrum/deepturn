@@ -1,5 +1,37 @@
-$pb:15px;
-$div:calc(var(--padding) * -1);
+$pb: 15px;
+$div: calc(var(--padding) * -1);
+
+@keyframes fadeInIdentifier {
+  0% {
+    color: var(--gray-80-opaque);
+    background-color: transparent;
+    border-bottom: solid 1.5px var(--primary-opaque);
+    box-shadow: 0 5px 7px var(--gray-70-opaque);
+  }
+  50%{
+    background-color: #00000030;
+  }
+  
+  100% {
+    color: var(--gray-20);
+    border-bottom: solid 1.5px var(--primary);
+    box-shadow: 0 5px 7px var(--gray-70-opaque);
+  }
+}
+@keyframes down {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+    background-color: var(--gray-70-opaque);
+  }
+  
+  100% {
+  opacity: 1;
+    transform: translateY(0%);
+    background-color: var(--dark);
+    height: max-content;
+  }
+}
 
 .header__container {
   z-index: 998;
@@ -11,10 +43,8 @@ $div:calc(var(--padding) * -1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-bottom: solid 1.5px var(--primary);
-  background-color: var(--gray-100);
-  box-shadow: 0 5px 7px var(--gray-70-opaque); /* Add this line */
-  @media(max-width: 1100px){
+
+  @media(max-width: 1100px) {
     position: unset;
     flex-direction: row-reverse;
     background-color: transparent;
@@ -24,93 +54,129 @@ $div:calc(var(--padding) * -1);
     box-shadow: unset;
     align-items: flex-start;
   }
+  background-color: var(--gray-90-opaque);
+  &:hover, &:focus-within{
+    background-color: var(--gray-100);
+    box-shadow: 0 5px 7px var(--gray-70-opaque); 
+  }
+  &:hover,
+  &:focus-within {
+    .header {
+      animation: down 1s forwards;
+    color: var(--gray-20) !important;
+
+    }
+  }
+  .header {
+    height: 0px;
+    opacity: 0;
+  }
 }
 
 
 
 .header {
-  background-color: var(--gray-90);
+  color: var(--gray-70-opaque);
+  &:hover,
+  &:focus-within {
+    animation: fadeInIdentifier 1s forwards;
+    /* Add this line */
+  }
+
+  // background-color: var(--gray-90-opaque);
   left: 0;
-  color: var(--header-primary);
   z-index: 1;
   height: max-content;
   padding: var(--s-8) var(--s-8) 0;
-  
-  @media(max-width:1100px){
+
+  @media(max-width:1100px) {
     width: 100%;
     padding: 0;
     background-color: transparent;
   }
+
   .header-content {
     height: max-content;
     margin: auto;
     width: auto;
-    @media(min-width:1260px){
+
+    @media(min-width:1260px) {
       max-width: 1240px;
     }
-    @media(max-width:1260px){
+
+    @media(max-width:1260px) {
       flex-direction: column;
     }
-    @media(max-width:1100px){
+
+    @media(max-width:1100px) {
       padding: var(--padding);
     }
-    @media(max-width: 1100px){
+
+    @media(max-width: 1100px) {
       padding: 0;
       width: 100%;
     }
+
     .header-left,
-    .header-right { 
+    .header-right {
       display: flex;
       width: 100%;
-    }    
+    }
+
     .header-left {
       flex-direction: column-reverse;
 
-      @media(max-height: 500px){
+      @media(max-height: 500px) {
         flex-direction: row-reverse;
         align-items: center;
-        gap:var(--s-4);
+        gap: var(--s-4);
       }
+
       .header-title {
-        font-size:var(--s-1);
+        font-size: var(--s-1);
+        color: inherit;
         line-height: 1.3;
         font-weight: 700;
         text-transform: capitalize;
-        @media(max-width: 1100px){
+
+        @media(max-width: 1100px) {
           line-height: 1;
         }
       }
     }
-    
+
     .header-right {
       align-items: flex-end;
       justify-content: flex-end;
       height: inherit;
-      gap:10px;
+      gap: 10px;
       margin-top: auto;
     }
   }
-  .subheader{
+
+  .subheader {
     box-sizing: content-box;
     display: flex;
     align-items: center;
     justify-content: center;
     border-top: var(--header-primary-border);
     width: 100%;
-    @media(max-width:1100px){
+
+    @media(max-width:1100px) {
       flex-direction: column;
       height: auto;
       padding: 20px 0;
       justify-content: flex-start;
     }
-    .subheader-content{
-      height:100%;
+
+    .subheader-content {
+      height: 100%;
       width: calc(100% - 40px);
       background-color: var(--header-primary-bg);
       display: flex;
       align-items: center;
-      gap:20px;
-      max-width:1260px;
+      gap: 20px;
+      max-width: 1260px;
     }
   }
 }
