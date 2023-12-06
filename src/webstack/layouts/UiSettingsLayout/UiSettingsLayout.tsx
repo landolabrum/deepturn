@@ -70,9 +70,9 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   const optionViews = (dashed:boolean = true) => Object.keys(views).map(v => {
     return keyStringConverter(v, dashed)
   });
-  useEffect(() => {
-    handleLayout();
-  }, [width, height]);
+  // useEffect(() => {
+  //   handleLayout();
+  // }, [width, height]);
   useEffect(() => {
     if (views) {
       const firstView = queryViewId || defaultView || Object.keys(views)[0];

@@ -58,6 +58,7 @@ const ButtonContext = ({ context }: IButtonContext) => {
   return (
     <>
       <style jsx>{styles}</style>
+     {/* | uib {JSON.stringify(traits?.disabled)} */}
       <FormControl label={context.label} variant={context.variant} traits={traits}>
         <button
           data-element='button'
@@ -67,7 +68,7 @@ const ButtonContext = ({ context }: IButtonContext) => {
           disabled={context?.disabled || context?.variant == "disabled"}
         >
           {context?.busy && (
-            <div className="busy-spinner">
+          <div className="busy-spinner">
               <UiIcon icon="spinner" />
             </div>
           )}

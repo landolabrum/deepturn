@@ -1,7 +1,7 @@
 // Relative Path: ./OtherFeature.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './ProductFeatureOther.scss';
-import { IMoreInfoField } from '../ProductFeatureForm';
+import { IMoreInfoField } from '../../ProductFeatureForm';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import capitalize from '@webstack/helpers/Capitalize';
 import { IForm, IFormField } from '@webstack/components/UiForm/models/IFormModel';

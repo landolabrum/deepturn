@@ -86,67 +86,70 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             required={Boolean(required)}
           // defaultValue={ props.defaultValue ? props.defaultValue :  value}
           />}
-
-
+          <div className={`input__message ${message ? 'input__message-show' : ''}${props?.variant ? ' input__message-' + props.variant : ''}`}>
+            {message && message}
+          </div>
         </FormControl>
       }
-      {props.name == 'address' && <><AutocompleteAddressInput
-        label={props.label}
-        inputClasses={inputClasses} traits={{
-          ...props.traits,
-          afterIcon: type === "password" ? {
-            icon: show ? "fa-eye" : "fa-eye-slash",
-            onClick: () => setShow(!show)
-          } : props.traits?.afterIcon,
-        }}
-        error={props.error}
-        address={value}
-        setAddress={handleChange}
-      />
-      <div className={`input__message ${message ? 'input__message-show' : ''}${props?.variant ? ' input__message-' + props.variant : ''}`}>
-        {message && message}
-      </div>
-    </>
-  }
-    </>
-  }
-  // TEXT AREA
-  if(type == 'textarea' || value?.length >= 100 )
-  return (
-    <>
-      <style jsx>{styles}</style>
-      <FormControl
-        {...props}
-        traits={{
-          ...props.traits,
-          disabled: props.disabled,
-          afterIcon: type === "password" ? {
-            icon: show ? "fa-eye" : "fa-eye-slash",
-            onClick: () => setShow(!show)
-          } : props.traits?.afterIcon,
-        }}>
-        <textarea
-          data-element={props['data-element'] || 'textarea'}
-          disabled={props?.disabled || undefined}
-          id={props?.id}
-          className={inputClasses}
-          name={props.name}
-          placeholder={props.placeholder}
-          defaultValue={value}
-          onChange={handleChange}
-          autoComplete={props.autoComplete}
-          onKeyDown={onKeyDown}
-          onKeyUp={onKeyUp}
-          onPaste={props.onPaste}
-          required={Boolean(required)}
-        />
-      </FormControl>
 
-      <div className={`input__message ${message ? 'input__message-show' : ''}${props?.variant ? ' input__message-' + props.variant : ''}`}>
-        {message && message}
-      </div>
     </>
-  );
+  }
+  if (props.name == 'address') return (<>
+    <AutocompleteAddressInput
+      label={props.label}
+      inputClasses={inputClasses} traits={{
+        ...props.traits,
+        afterIcon: type === "password" ? {
+          icon: show ? "fa-eye" : "fa-eye-slash",
+          onClick: () => setShow(!show)
+        } : props.traits?.afterIcon,
+      }}
+      error={props.error}
+      address={value}
+      setAddress={handleChange}
+    />
+    <div className={`input__message ${message ? 'input__message-show' : ''}${props?.variant ? ' input__message-' + props.variant : ''}`}>
+      {message && message}
+    </div>
+  </>);
+  // TEXT AREA
+  if (type == 'textarea' || value?.length >= 100)
+    return (
+      <>
+        <style jsx>{styles}</style>
+        <FormControl
+          {...props}
+          traits={{
+            ...props.traits,
+            disabled: props.disabled,
+            afterIcon: type === "password" ? {
+              icon: show ? "fa-eye" : "fa-eye-slash",
+              onClick: () => setShow(!show)
+            } : props.traits?.afterIcon,
+          }}>
+          <textarea
+            data-element={props['data-element'] || 'textarea'}
+            disabled={props?.disabled || undefined}
+            id={props?.id}
+            className={inputClasses}
+            name={props.name}
+            placeholder={props.placeholder}
+            defaultValue={value}
+            onChange={handleChange}
+            autoComplete={props.autoComplete}
+            onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
+            onPaste={props.onPaste}
+            required={Boolean(required)}
+          />
+        </FormControl>
+
+        <div className={`input__message ${message ? 'input__message-show' : ''}${props?.variant ? ' input__message-' + props.variant : ''}`}>
+          {message && message}
+        </div>
+      </>
+    );
+    return <></>;
 };
 
 export default UiInput;

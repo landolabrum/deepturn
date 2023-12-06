@@ -10,7 +10,7 @@ import useUserAgent from '@webstack/hooks/getUserAgentInfo';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
-import ProductFeatureOther from './views/ProductFeatureOther';
+import ProductFeatureOther from './views/ProductFeatureOther/ProductFeatureOther';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import useScrollTo from '@webstack/components/AdapTable/hooks/useScrollTo';
@@ -34,8 +34,8 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
     const user = useUser();
     const { scrollTo, setScrollTo } = useScrollTo({ max: 1100 });
     const contactFields = [
-        { name: 'name', label: 'full name', type: 'text', placeholder: 'John Smith', required: true, },
-        { name: 'email', label: 'email', type: 'email', placeholder: 'test@email.com', required: true, },
+        { name: 'name', label: 'full name', type: 'text', placeholder: 'first last', required: true, },
+        { name: 'email', label: 'email', type: 'email', placeholder: 'your@email.com', required: true, },
         { name: 'phone', label: 'phone', type: 'tel', placeholder: '1 (555) 555 5555', required: true, },
         { name: 'address', label: 'address', required: true, },
     ];
@@ -50,30 +50,38 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
 
     const onChange = (e: any, handleErrors = true) => {
         const { name: name, value: value, error: error } = e.target;
-        console.log('  [ onCHange  ]', e)
-        const onChangeErrors = () => {
-            const noValue = () => {return `${name} cannot be blank.`}
-            if(e.target.error) return e.target.error;
-
-            switch (name) {
-                case 'name':
-                    if (value?.split(' ')?.length == 1) return 'need last name';
-                    if (value?.split(' ')?.length > 2) return '**( syntax ERROR )**';
-                case 'email':
-                    if (value == null) return noValue();
-                    if(!Boolean(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)))return '**( syntax ERROR )**';
-                case 'phone':
-                    if (value == null) return noValue();
-                case 'address':
-                    if (value == null) return noValue();
-                    else setDisabled(false);
-            
+        const handleDisabled = () =>{
+            const fieldsHaveValues = !Boolean(form.contact.filter((f: IFormField)=>!f.value)?.length);
+            fieldsHaveValues && setDisabled(false);
+        }
+        const onChangeErrors = (name: string, value: any) => {
+            const noValue = () => {return `${name} cannot be blank.`};
+            handleDisabled()
+            if(name == 'name'){
+                const valLen = value?.split(' ')?.length;
+                if (valLen == 2) return;
+                else if (valLen == 1) return 'need last name';
+                else if (valLen >= 3) return '**( syntax ERROR )**';
+                else return false;
             }
+            else if(name == 'email'){
+                if (value == null) return noValue();
+                if(!Boolean(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)))return '**( syntax ERROR )**';
+            }
+            else if(name == 'phone'){
+                if (value == null) return noValue();
+            }
+            else if(name == 'address'){
+                if (value == null) return noValue();
+            }
+            // if(e.target.error) return e.target.error;
+     
         }
         let updatedContact = fields.map((contactField: any) => {
             if (contactField.name === name) {
                 contactField.value = value;
-                if (handleErrors) contactField.error = onChangeErrors();
+                if (handleErrors) contactField.error = onChangeErrors(name, value);
+                else delete contactField.errors;
             }
             return contactField;
         });
@@ -108,7 +116,6 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
         const updatedFeatures = formFeatures.map(feature =>
             feature.name === choice.name ? { ...feature, selected: !feature.selected } : feature
         );
-        // console.log('[ updatedFeatures ]', updatedFeatures)
         setForm({ ...form, features: updatedFeatures });
     };
 
@@ -164,23 +171,19 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
         const isComplete = () => {
             let complete = true;
             if (user) return complete;
-            // Check if each key in the contact object has a value
             for (const key in request.contact) {
                 const value = request.contact[key];
                 if (!value || (typeof value === 'string' && value.trim() === "")) {
-                    // console.log(`Incomplete field: ${key}`);
                     complete = false;
                     break;
                 }
             }
 
-            // Additional check for address object if it has nested fields
             if (complete && typeof request.contact.address === 'object') {
                 for (const key in request.contact.address) {
                     // Allow line2 to be an empty string
                     if (key === 'line2') continue;
                     else if (!request.contact.address[key] || request.contact.address[key].trim() === "") {
-                        // console.log(`Incomplete address field: ${key}, value: ${JSON.stringify(request.contact.address[key].trim())}`);
                         complete = false;
                         break;
                     }
@@ -269,8 +272,6 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
 
                 </div>
                 {view == 'feature' && <>
-
-                    {/* {selected?.length ? ( */}
                         <div className='product-feature-form__selected'>
                             <div className='product-feature-form__selected--header'>
                                 {`Selected ${title}s`} | total amps estimate {calculateTotalValue()}
