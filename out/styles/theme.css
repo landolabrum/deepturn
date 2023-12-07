@@ -120,7 +120,8 @@
   --blue: #4f96ff;
   --blue-10: #54E3FF;
 
-  --body:#292a34;
+  /* --body:#292a34; */
+  --body:var(--gray-90);
 
   --lite: #e0e0e0;
 
