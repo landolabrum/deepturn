@@ -90,6 +90,7 @@ const Navbar = () => {
     <>
       <style jsx>{styles}</style>
       <nav id="nav-bar">
+        <div className='navbar'>
         <div className='navbar__trigger'>
           <UiIcon
             icon={isModalOpen ? 'fa-xmark' : 'fa-bars'}
@@ -137,7 +138,7 @@ const Navbar = () => {
           </div>
         ))}
         </div>
-
+        </div>
       </nav>
     </>
   );

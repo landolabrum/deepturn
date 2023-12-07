@@ -73,7 +73,6 @@ const Documents = ({ user }: IDocuments) => {
   };
   const isComplete = () => {
     const fNLen = fullName.length;
-    console.log('[ isComplete ]', fNLen, user?.name, fullName)
     if (!user || user?.name == undefined) return 'no user';
     else if (fNLen < 3) return true;
     else if (fNLen >= 3 && String(user.name).toLowerCase().includes(fullName.toLowerCase())) {
@@ -82,7 +81,7 @@ const Documents = ({ user }: IDocuments) => {
       return 'full name incorrect';
     }
   };
-  const fetch = async () => {
+  const getDocuments = async () => {
     setLoader({ active: true, body: 'getting your documents' })
     try {
       const entireProducts = await shoppingService.getProducts();
@@ -102,7 +101,7 @@ const Documents = ({ user }: IDocuments) => {
   }
   const complete = isComplete();
   useEffect(() => {
-    Boolean(!Object(docs).length) && fetch();
+    Boolean(!Object(docs).length) && getDocuments();
   }, [setDocs]);
   return (
     <>

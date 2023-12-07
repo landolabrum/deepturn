@@ -16,14 +16,14 @@ interface ISettingsLayout {
   views: any;
   setViewCallback?: (e: any) => void;
   variant?: string;
-  name?: string;
+  title?: string;
   defaultView?: string
 }
 const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   views,
   setViewCallback,
   variant,
-  name,
+  title,
   defaultView
 }: ISettingsLayout) => {
   const router = useRouter();
@@ -47,27 +47,27 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   const contentClass = useClass('settings__content', undefined, variant);
   const viewClass = useClass('settings__view', undefined, variant);
   const handleLayout = () => {
-    setTimeout(() => {
-      const headerElem: any = document.getElementById('header-container');
-      if (headerElem) {
-        const style = headerElem.firstChild && window.getComputedStyle(headerElem.firstChild);
-         if( width >= 1100){
-           if(headerElem.offsetHeight && containerRef.current)containerRef.current.style.marginTop=`${Number(headerElem.offsetHeight + 15)}px`;
-          }else if(width < 1100){
-           if(headerElem.offsetHeight && containerRef.current)containerRef.current.style.marginTop=undefined;
-         }
-        // CREATE WIDTH & ADJUST FOR GAP
-        const mL = Number(style.marginLeft.replace('px', '')) - 14;
-        let newActionStyles: any = { width: width > 1700 ? mL : 300 };
+    // setTimeout(() => {
+    //   const headerElem: any = document.getElementById('header-container');
+    //   if (headerElem) {
+    //     const style = headerElem.firstChild && window.getComputedStyle(headerElem.firstChild);
+    //      if( width >= 1100){
+    //        if(headerElem.offsetHeight && containerRef.current)containerRef.current.style.marginTop=`${Number(headerElem.offsetHeight)}px`;
+    //       }else if(width < 1100){
+    //        if(headerElem.offsetHeight && containerRef.current)containerRef.current.style.marginTop=undefined;
+    //      }
+    //     // CREATE WIDTH & ADJUST FOR GAP
+    //     const mL = Number(style.marginLeft.replace('px', '')) - 14;
+    //     let newActionStyles: any = { width: width > 1700 ? mL : 300 };
 
-        setActionStyles(newActionStyles);
-      } else {
-        console.log('headerContainer not found or width > 1100');
-      }
-    }, 100);
+    //     setActionStyles(newActionStyles);
+    //   } else {
+    //     console.log('headerContainer not found or width > 1100');
+    //   }
+    // }, 100);
   }
 
-  const optionViews = (dashed:boolean = true) => Object.keys(views).map(v => {
+  const optionViews = (dashed: boolean = true) => Object.keys(views).map(v => {
     return keyStringConverter(v, dashed)
   });
   useEffect(() => {
@@ -84,12 +84,12 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     <>
       <style jsx>{styles}</style>
       <div ref={containerRef} id="settings-container" className={containerClass}>
-
         <div className={contentClass}>
-
           <div className="settings__actions">
             <Div maxWidth={1100} style={actionStyles}>
+         
               <div className="settings__actions--content">
+
                 <UiMenu
                   options={optionViews(false)}
                   variant="flat"
@@ -100,6 +100,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
             </Div>
 
             <Div minWidth={1100} >
+              
               <div className="settings__actions--content">
                 <UiSelect
                   onSelect={handleView}
@@ -112,7 +113,9 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
 
           </div>
           <div className={viewClass}>
-
+          {title && <div className='settings__view--title'>
+                {title}
+              </div>}
             <div className='settings__view__content'>
               {view && views[view]}
             </div>

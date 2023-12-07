@@ -16,7 +16,8 @@ interface Props {
     | "date"
     | "licenses-date"
     | "copy-id"
-    | "check";
+    | "check"
+    | "address";
   data?: any;
 }
 export const NaCell = () => {
@@ -55,6 +56,23 @@ const AdaptTableCell: NextComponentType<NextPageContext, {}, Props> = ({ cell, d
       if (["wallet-address", "id", "copy-id", "currency-crypto", "icon-label"].includes(cell) && data) setValid(true);
       else if(cell == 'check' && data != undefined)setValid(true);
       else if (cell === "member" && data.email && data.name && data.id) setValid(true);
+      else if (cell === "address" && data) {
+        setValid(true);
+        if(typeof data == 'object'){
+          // const address: any = data && typeof data !== 'string'
+          // ? `${data.line1 || ''} ${data.line2 || ''} ${data.city || ''} ${data.state || ''} ${data.postal_code || ''} ${data.country || ''}`
+          // : data;
+          data?.line1 && setMut({
+            line1:data?.line1,
+            line2:data?.line2,
+            city:data?.city,
+            state:data?.state,
+            postal_code:data?.postal_code,
+            country:data?.country,
+          });
+          // setMut(address)
+        };
+      }
       else if (cell === "date" && data) {
         setMut(dateFormat(data, { time: true, isTimestamp: true, returnType: "object" }));
         setValid(true);
@@ -98,6 +116,15 @@ const AdaptTableCell: NextComponentType<NextPageContext, {}, Props> = ({ cell, d
         )}
         {cell == 'date' && mut}
         {cell == 'id' && <div className='adapt-table-cell__id'>{data}</div>}
+        {cell == 'address' && 
+          <div className='adapt-table-cell__address'>
+            {typeof mut == 'string' && mut}
+            {typeof mut == 'object' && Object.entries(mut).map(([key, val]:any, i:number)=>{
+              return <div key={i} className={`adapt-table-cell__address--${key}`}>
+                {val}
+                </div>
+            })}
+          </div>}
         {cell == 'check' && <div className='adapt-table-cell__center'><UiIcon color={data?'#090':'#ff990050'} icon={data?'fas-circle-check':'fa-xmark'}/></div>}
       </>
     );

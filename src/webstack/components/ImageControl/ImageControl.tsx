@@ -26,7 +26,6 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
   const { openModal, closeModal, isModalOpen } = useModal();
 
   const handleExpand = () => {
-    console.log('[ EXPAND ]')
     !isModalOpen ? openModal(
       {
         children: <ImageControl

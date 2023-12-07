@@ -1,42 +1,64 @@
 $pb: 15px;
 $div: calc(var(--padding) * -1);
 
-@keyframes fadeInIdentifier {
-  0% {
-    color: var(--gray-80-opaque);
-    background-color: transparent;
-    border-bottom: solid 1.5px var(--primary-opaque);
-    box-shadow: 0 5px 7px var(--gray-70-opaque);
-  }
-  50%{
-    background-color: #00000030;
+// @keyframes down {
+//   0% {
+//     opacity: 0;
+//     transform: translateY(-100%);
+//     background-color: var(--gray-70-opaque);
+//   }
+
+//   90% {
+//     box-shadow: unset;
+//   }
+
+//   100% {
+//     opacity: 1;
+//     transform: translateY(0%);
+//     background-color: var(--dark);
+//     box-shadow: 0 5px 7px var(--gray-70-opaque);
+//     height: max-content;
+//   }
+// }
+@keyframes down {
+  from {
+    height: 0;
+    opacity: 0;
+    transform: translateY(-100%);
+    background-color: #ffffff00;
+    box-shadow: 0 2px 1px #ffffff00;
   }
   
-  100% {
-    color: var(--gray-20);
-    border-bottom: solid 1.5px var(--primary);
+  to {
+    height: max-content;
+    opacity: 1;
+    transform: translateY(0%);
+    background-color: var(--dark);
     box-shadow: 0 5px 7px var(--gray-70-opaque);
   }
 }
-@keyframes down {
-  0% {
-    opacity: 0;
-    transform: translateY(-100%);
-    background-color: var(--gray-70-opaque);
-  }
-  
-  100% {
-  opacity: 1;
+
+@keyframes up {
+  from {
+    height: max-content;
+    opacity: 1;
     transform: translateY(0%);
     background-color: var(--dark);
-    height: max-content;
+    box-shadow: 0 5px 7px var(--gray-70-opaque);
+  }
+  
+  to {
+    height: 0;
+    opacity: 0;
+    transform: translateY(-100%);
+    background-color: #ffffff00;
+    box-shadow: 0 2px 1px #ffffff00;
   }
 }
 
 .header__container {
   z-index: 998;
   width: 100vw;
-  position: fixed;
   left: 0;
   top: 0;
   right: 0;
@@ -54,42 +76,68 @@ $div: calc(var(--padding) * -1);
     box-shadow: unset;
     align-items: flex-start;
   }
-  background-color: var(--gray-90-opaque);
-  &:hover, &:focus-within{
-    background-color: var(--gray-100);
-    box-shadow: 0 5px 7px var(--gray-70-opaque); 
-  }
-  &:hover,
-  &:focus-within {
-    .header {
-      animation: down 1s forwards;
-    color: var(--gray-20) !important;
 
+  background-color: var(--gray-90-opaque);
+
+  .header {
+    // Default state
+    height: 0px;
+    padding: 0;
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity 0.5s, transform 0.5s;
+
+    // Hover/Focus state
+    @media(min-width: 1100px) {
+
+      &:hover,
+      &:focus-within {
+        background-color: var(--dark);
+        animation: down 1s forwards;
+      }
     }
   }
-  .header {
-    height: 0px;
-    opacity: 0;
+
+  // When not hovered/focused
+  @media(min-width: 1100px) {
+    &:not(:hover):not(:focus-within) {
+      .header {
+        animation: up 1s forwards;
+      }
+    }
   }
+
+  // @media(min-width: 1100px) {
+  //   &:hover,
+  //   &:focus-within {
+  //     .header {
+  //       @media(min-width: 1100px) {
+  //         color: var(--gray-20);
+  //         padding: var(--s-9) var(--padding);
+  //         animation: down 1s forwards;
+  //       }
+  //     }
+  //   }
+
+  //   .header {
+  //     height: 0px;
+  //     padding: 0;
+  //     opacity: 0;
+  //   }
+  // }
 }
 
 
 
 .header {
-  color: var(--gray-70-opaque);
-  &:hover,
-  &:focus-within {
-    animation: fadeInIdentifier 1s forwards;
-    /* Add this line */
-  }
-
-  // background-color: var(--gray-90-opaque);
   left: 0;
   z-index: 1;
   height: max-content;
   padding: var(--s-8) var(--s-8) 0;
+  color: var(--gray-70-opaque);
 
   @media(max-width:1100px) {
+    color: var(--gray-20);
     width: 100%;
     padding: 0;
     background-color: transparent;

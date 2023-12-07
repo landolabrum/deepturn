@@ -325,7 +325,7 @@
         animation: bump .3s;
     }
     &--pill{
-        border: solid 1px transparent;
+        border: solid 1px var(--gray-70);
         width: max-content;
     }
     &--nav-item {

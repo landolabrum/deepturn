@@ -28,6 +28,14 @@ export default class AdminService
       }
     }else throw new ApiError("No Token Provided", 400, "MS.SI.02");
   };
+  public async getSystemInfo(): Promise<any> {
+      try {
+        const systemDate = await this.get<any>(`/api/system/`);
+        return systemDate;
+      } catch (error: any) {
+        return error;
+      }
+  };
 
 
   public async deleteCustomer(customerId: string): Promise<any> {

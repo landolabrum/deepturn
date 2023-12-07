@@ -41,13 +41,13 @@ const UiSelect: React.FC<SelectProps> = ({
   const hasOptions = Boolean(typesBypass?.every((element: any) => element !== undefined));
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const bOpen = isOpen === 'open';
-  const handleSelect=(value:any)=>{
+  const handleSelect = (value: any) => {
     setSelectedOption(value);
-    onSelect&&onSelect(value);
+    onSelect && onSelect(value);
     variant !== 'disabled' && setIsOpen("closed");
   }
-  const handleOpen = (e:any) => {
-    hasOptions && setIsOpen(isOpen === "closed"?"open":"closed");
+  const handleOpen = (e: any) => {
+    hasOptions && setIsOpen(isOpen === "closed" ? "open" : "closed");
   };
   const isTitleObject = (
     title?: TitleProps
@@ -55,80 +55,71 @@ const UiSelect: React.FC<SelectProps> = ({
     return typeof title === "object" && !React.isValidElement(title);
   };
 
-  const postIconHandler = (title:any, variant: any) =>{
-    const isNavItem = variant && variant.includes('nav-item');
-    if(!isNavItem && isTitleObject(title) && title.postIcon){
-      if(  bOpen){
-        return "fa-xmark";
-      }else{
-        return `fa-chevron-${openDirection}`
-      }
-    } 
-    else if(isNavItem){
-      if(!bOpen)return traits?.afterIcon;
+  const postIconHandler = (title: any, variant: any) => {
+    if (variant?.includes('nav-item')) {
+      if (!bOpen) return traits?.afterIcon;
       else return "fa-xmark";
     }
-    return;
-   }
+    if (bOpen) {
+      return "fa-xmark";
+    } else {
+      return `fa-chevron-${openDirection}`
+    }
+  }
 
 
   useEffect(() => {
     if (openState !== undefined) {
       setIsOpen(openState);
-      // setIsOpen(openState?"open":"closed");
     }
   }, [openState]);
 
   useEffect(() => {
     if (title_ !== title) {
-      // Set Title if Available
       if (typeof title === "string") setTitle(title);
       if (typeof title === "object" && "text" in title && title.text !== undefined) setTitle(title.text);
     }
-  }, [ title, onSelect]);
+  }, [title, onSelect]);
   useEffect(() => {
-    // Modify Toggle State
     if (bOpen && onToggle) onToggle(bOpen);
-    // Set Width if Available
-    // if (width && ref.current) ref.current.style.width = `${width}px`;
   }, [isOpen]);
 
   return (
     <>
       <style jsx>{styles}</style>
 
-        <div
-          className={`select ${openDirection}`}
-          style={traits?.width?{width:`${traits.width}px`}:{}}
-          onClick={handleOpen}
-          >
-            {/* t: {title_} | s: {selectedOption} */}
-          <UiInput 
-            data-element='select'
-            type="button"
-            label={label}
-            variant={hasOptions && variant !== 'disabled'? variant:"select__disabled"}
-            value={typeof value === 'string'? capitalize(value): title_ || selectedOption || "Select"}
-            traits={{
-              beforeIcon: isTitleObject(title) && title.preIcon ? title.preIcon: undefined,
-              afterIcon: postIconHandler(traits, variant)
-            }}
-            />
-          {bOpen && variant !== 'disabled' && (
-            <div 
-              className={`select__options ${variant ? " " + variant : ""}`}>
-              <UiMenu 
+      <div
+        className={`select ${openDirection}`}
+        style={traits?.width ? { width: `${traits.width}px` } : {}}
+        onClick={handleOpen}
+      >
+        {/* t: {title_} | s: {selectedOption} */}
+        <UiInput
+          data-element='select'
+          type="button"
+          label={label}
+          variant={hasOptions && variant !== 'disabled' ? variant : "select__disabled"}
+          value={typeof value === 'string' ? capitalize(value) : title_ || selectedOption || "Select"}
+          traits={{
+            beforeIcon: isTitleObject(title) && title.preIcon ? title.preIcon : undefined,
+            afterIcon: postIconHandler(traits, variant)
+          }}
+        />
+        {bOpen && variant !== 'disabled' && (
+          <div
+            className={`select__options ${variant ? " " + variant : ""}`}>
+            <UiMenu
               traits={traits}
               search={search}
               setSearch={setSearch}
               options={options}
               onSelect={handleSelect}
-              variant={hasOptions?variant:"disabled"}
+              variant={hasOptions ? variant : "disabled"}
               value={value}
-              />
-            </div>
-          )}
-        </div>
+            />
+          </div>
+        )}
+      </div>
     </>
   );
 };

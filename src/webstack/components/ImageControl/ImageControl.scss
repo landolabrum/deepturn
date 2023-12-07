@@ -4,21 +4,18 @@
  align-items: center;
 }
 .image-control {
-    width: 100%;
+    width: auto;
+    
     position: relative;
-    height: max-content;
-    &__loading{
-    }
+    height: auto;
     overflow: hidden;
+    outline: solid 1px var(--gray-80);
     @media(max-width: 900px){
         max-width: calc(100vw - calc(var(--padding) * 2));
     }
     &:hover .image-control__controls {
         bottom: 0;
-        /* Position to show on hover */
         opacity: 1;
-
-        /* Fully visible on hover */
     }
 
     .image-control__element {

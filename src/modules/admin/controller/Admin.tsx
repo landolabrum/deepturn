@@ -7,6 +7,7 @@ import AdminCustomer from '../views/AdminCustomers/controller/AdminCustomer';
 import AdminProducts from '../views/AdminProducts/controller/AdminProducts';
 import { useRouter } from 'next/router';
 import AdminListDocuments from '../views/AdminDocuments/controller/AdminListDocuments';
+import AdminSystem from '../views/AdminSystem/AdminSystem';
 
 
 const UiGlobe = dynamic(
@@ -23,7 +24,8 @@ const Admin = () => {
     globe:<UiGlobe/>,
     customers: <AdminCustomer/>,
     products: <AdminProducts/>,
-    documents: <AdminListDocuments/>
+    documents: <AdminListDocuments/>,
+    system: <AdminSystem/>,
   }
   useEffect(() => {
     // if(router?.query?.view)setCurrentView(String(router.query.view))
@@ -33,8 +35,8 @@ const Admin = () => {
       <style jsx>{styles}</style>
       <UiSettingsLayout
         defaultView={currentView}
-        name='admin'
-        variant="full-screen"
+        title='admin'
+        // variant="full-screen"
         views={views}
         setViewCallback={console.log}
       />

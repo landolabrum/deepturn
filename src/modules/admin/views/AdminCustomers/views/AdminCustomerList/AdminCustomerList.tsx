@@ -80,9 +80,7 @@ const AdminCustomerList: React.FC<any> = ({onRowClick}:any) => {
   
       // Use a for loop or reduce function to transform the customer data
       const transformedCustomerList = customerList.map((customer: ICustomer) => {
-        const address: any = customer?.address && typeof customer.address !== 'string'
-          ? `${customer.address.line1 || ''} ${customer.address.line2 || ''} ${customer.address.city || ''} ${customer.address.state || ''} ${customer.address.postal_code || ''} ${customer.address.country || ''}`
-          : customer.address;
+
   
         // Create a new dictionary for each customer
         const extras = {
@@ -102,13 +100,17 @@ const AdminCustomerList: React.FC<any> = ({onRowClick}:any) => {
             email: customer.email,
           }}/>,
           id: customer.id,
-          address: address ? address.trim() : '',
+          address:  <AdaptTableCell cell='address' data={
+            customer?.address
+            // address.trim()
+          }/> || '',
           phone: customer.phone && phoneFormat(customer.phone),
           balance: customer.balance,
           created: <AdaptTableCell cell='date' data={customer.created}/>,
           default_source: customer.default_source && <UiIcon icon='fas-circle-check'/>,
           delinquent: customer.delinquent,
           tax_exempt: <AdaptTableCell cell='check' data={Boolean(customer.tax_exempt == 'exempt')}/>,
+          clearance: <AdaptTableCell cell='id' data={customer?.metadata?.clearance}/>,
           extras:extras
         };
       });

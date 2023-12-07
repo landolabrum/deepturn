@@ -10,7 +10,7 @@ import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/UiSettingsLayou
 const Home: React.FC = () => {
   const views = {
     surveillance: <Surveillance/>,
-    hi: <h1>Hi</h1>
+    lights: <h1>Hi World</h1>
   };
    
   return (
@@ -18,6 +18,7 @@ const Home: React.FC = () => {
       <style jsx>{styles}</style>
       <UiSettingsLayout
       variant="flat"
+      title='home'
       views={views}
       />
 

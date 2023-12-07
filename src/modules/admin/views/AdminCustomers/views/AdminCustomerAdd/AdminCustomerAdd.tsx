@@ -44,7 +44,7 @@ const AdminCustomerAdd: React.FC = () => {
     {
       name: 'clearance',
       label: 'clearance',
-      value: 0,
+      value: 1,
       min: 1,
       max: 9,
       type: 'pill',
