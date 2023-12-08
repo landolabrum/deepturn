@@ -120,11 +120,8 @@
   --blue: #4f96ff;
   --blue-10: #54E3FF;
 
-  /* --body:#292a34; */
   --body:var(--gray-90);
-
   --lite: #e0e0e0;
-
   --dark:#111f3d;
   --dark-opaque:#111f3d50;
   
@@ -136,6 +133,10 @@
   --secondary-opaque: rgba(255, 87, 34, 0.6);
   --error: #751700;
   --invalid-border: #E34150;
+
+  --warning: #ff3c00; /* Let's say a sunny yellow for a gentle warning */
+  --warning-hover: #ff564d; /* A slightly lighter shade, like a ray of sunshine when you hover over */
+  --warning-focus: #ff1e00;
 
   --box-shadow: 2px 2px 10px var(--gray-100);
   --box-shadow-inset:inset 2px 2px 10px var(--gray-100);
