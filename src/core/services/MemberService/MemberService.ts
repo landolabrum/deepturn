@@ -9,6 +9,7 @@ import ApiService, { ApiError } from "../ApiService";
 import IMemberService from "./IMemberService";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
+import { encryptString } from "@webstack/helpers/Encryption";
 const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
 
 export default class MemberService
@@ -259,22 +260,22 @@ export default class MemberService
     }
   }
 
-  public async signIn(
-    { email,
-      password,
-      code,
-      user_agent: user_agent
-    }: any
-  ): Promise<UserContext> {
+  public async signIn({ email, password, code, user_agent }: any): Promise<UserContext> {
     if (!email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
     if (!password) {
       throw new ApiError("Password is required", 400, "MS.SI.02");
     }
+  
+    // Encrypt the login data
+    const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
+
+    const encryptedLoginData = encryptString(JSON.stringify({ email, password, code, user_agent }), ENCRYPTION_KEY);
+  
     const res = await this.post<{}, any>(
       "usage/auth/sign-in",
-      { email: email, password: password, code: code, user_agent: user_agent },
+      { data: encryptedLoginData },
     );
     const memberJwt = await res;
     this.saveMemberToken(memberJwt);

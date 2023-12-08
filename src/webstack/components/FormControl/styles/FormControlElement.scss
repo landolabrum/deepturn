@@ -44,24 +44,13 @@
     }
 }
 
-//  HELPERS
-.b-rad {
-    &:not(.form-control__element--input) {
-        outline: solid 1px unset;
-        border: solid 1px unset;
-    }
-
-    border-radius: var(--border-radius);
-}
-
-// COLORS
-.element-color {
+// Helpers
+%element-color {
     --ui-icon-color: var(--gray-40);
-    background-color: var(--gray-90);
+    background-color: var(--gray-80);
 
     &:focus-within {
         color: var(--gray-40);
-
         .form-control__icon {
             --ui-icon-color: var(--gray-40);
         }
@@ -75,19 +64,25 @@
         border: solid 1px var(--gray-60);
     }
 
-
     &-disabled {
         filter: brightness(.7);
-
         &:hover {
             color: var(--gray-60);
             --ui-icon-color: var(--gray-60);
             background-color: var(--gray-70);
             outline: solid 1px var(--gray-60);
         }
-
     }
 }
+
+.b-rad {
+    &:not(.form-control__element--input) {
+        outline: solid 1px unset;
+        border: solid 1px unset;
+    }
+    border-radius: var(--border-radius);
+}
+
 
 
 // FORM CONTROL ELEMENT
@@ -115,7 +110,7 @@
     // FORM CONTROL ELEMENTS - APPLY HELPERS
 
     &:not(&--warning, &--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item, &--nav-item__active, &--select, &--invalid, &--input, &--textarea, &--signature) {
-        @extend .element-color;
+        @extend %element-color;
     }
 
     &:not(&--nav-item, &--nav-item__active, &--signature) {
@@ -320,6 +315,10 @@
         var(--secondary-opaque), var(--gray-20), var(--gray-20),
         var(--secondary-opaque), var(--gray-20), var(--gray-20),
         var(--secondary-opaque), var(--gray-20), var(--gray-20));
+    @include variant('link',
+        transparent, var(--blue-10), transparent,
+        transparent, var(--blue-10), transparent,
+        transparent, var(--blue-10), transparent);
 
     &--link {
         &:hover {

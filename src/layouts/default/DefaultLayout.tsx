@@ -1,24 +1,47 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import styles from './DefaultLayout.scss';
 import Title from "@webstack/components/Title/Title";
-
+import useWindow, {IWindow} from "@webstack/hooks/useWindow";
 
 interface IProps {
   children: ReactElement;
 }
 
-
 const DefaultLayout = (props: IProps) => {
-  // Empty dependency array means this effect will only run once after the initial render
+  const mainRef = useRef<HTMLDivElement>(null);
+  const windowSize = useWindow();
+
+  useEffect(() => {
+    const adjustMainHeight = () => {
+      if (mainRef.current) {
+        const mainHeight = mainRef.current.offsetHeight;
+        const windowHeight = windowSize.height;
+        console.log('[MRF]', mainRef.current.childNodes)
+        if (mainHeight < windowHeight) {
+          mainRef.current.style.height = `${windowHeight - mainRef.current.offsetTop}px`;
+        } else {
+          mainRef.current.style.height = 'unset';
+        }
+      }
+    };
+
+    adjustMainHeight();
+    window.addEventListener("resize", adjustMainHeight);
+
+    return () => {
+      window.removeEventListener("resize", adjustMainHeight);
+    };
+  }, [windowSize]);
 
   return (
     <>
       <style jsx>{styles}</style>
       <Title />
-      <main>
+      <main ref={mainRef}>
         {props.children}
       </main>
     </>
   );
 }
+
 export default DefaultLayout;
