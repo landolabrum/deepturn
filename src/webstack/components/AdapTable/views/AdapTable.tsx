@@ -139,7 +139,7 @@ const AdapTable = ({
           variant={variant}
           options={options}
         />
-        {setPage && page && setLimit && (
+        {setPage && page && setLimit && totalPages && (
           <AdapTableFooter
             handlePageChange={handlePageChange}
             page={page}

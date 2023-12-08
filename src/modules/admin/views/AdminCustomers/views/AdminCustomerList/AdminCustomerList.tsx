@@ -131,6 +131,11 @@ const AdminCustomerList: React.FC<any> = ({onRowClick}:any) => {
       <div className='admin-customer-list'>
       <div className='admin-customer-list__table'>
       <AdapTable 
+        // page={1}
+        // limit={5}
+        // total={Number(Object(customers)?.length)}
+        // setPage={console.log}
+        // setLimit={console.log}
         options={{
           hideColumns:hideColumns,
           tableTitle:'customer list'

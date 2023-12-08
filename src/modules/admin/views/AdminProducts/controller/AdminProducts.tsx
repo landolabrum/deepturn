@@ -8,6 +8,7 @@ import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTable
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import AddProduct from '../AddProduct/AddProduct';
+import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
@@ -57,8 +58,8 @@ useEffect(() => {
         <UiButton onClick={()=>openModal(<AddProduct/>)}>add product</UiButton>
       </div>
       </div>
-        <AddProduct/>
-        {/* <AdapTable options={{tableTitle:'admin products'}} data={products}/> */}
+        {/* <AddProduct/> */}
+        <AdapTable options={{tableTitle:'admin products'}} data={products}/>
       </div>
     </>
   );

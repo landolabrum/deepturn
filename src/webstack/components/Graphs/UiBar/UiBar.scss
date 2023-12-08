@@ -38,11 +38,12 @@ $agg: 5px;
     }
     .bars__status {
       position: absolute;
-      right: 0;
-      top: 0;
-      font-size: 12px;
-      --ui-icon-width: 16px;
-      --ui-icon-height: 16px;
+      right: var(--s-9);
+      top: 4px;
+      text-transform: capitalize;
+      font-size: var(--s-7);
+      color: var(--yellow-opaque);
+      --ui-icon-width: var(--s-6);
       .bars__status-low {
         align-items: center;
         justify-content: flex-end;
@@ -57,7 +58,7 @@ $agg: 5px;
       flex-direction: column-reverse;
       gap: $agg;
       .bar__percentage {
-        font-size: 20px;
+        font-size: var(--s-1);
         visibility: hidden;
         position: absolute;
         top: 0;
@@ -66,7 +67,7 @@ $agg: 5px;
         height: 100%;
         @extend .d-flex;
         text-align: center;
-        color: white;
+        color: var(--gray-20-opaque);
       }
     }
   }
@@ -82,8 +83,10 @@ $agg: 5px;
 }
 .bar__timestamp {
   width: 100%;
-  font-size: 0.7rem;
-  padding-bottom: 10px;
+  font-size: var(--s-9);
+  padding-bottom: var(--s-9);
+  line-height: 1;
+  color: var(--gray-50);
   white-space: nowrap;
   text-align: right;
 }

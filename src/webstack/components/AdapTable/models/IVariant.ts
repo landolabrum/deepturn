@@ -7,6 +7,7 @@ export type IVariant =
   | "dark"
   | "glow"
   | "lite"
+  | "warning"
   | "center dark"
   | "account"
   | "active"

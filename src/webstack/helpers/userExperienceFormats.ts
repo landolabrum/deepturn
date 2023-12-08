@@ -184,7 +184,20 @@ export function dateFormat(
     }
   }
 }
+export function colorPercentage(percentage: number, colorReverse?: boolean) {
+  // Define color components for normal and reversed scenarios
+  const greenStart = parseInt(colorReverse ? "00" : "ff", 16);
+  const greenEnd = parseInt(colorReverse ? "ff" : "00", 16);
+  const redStart = parseInt(colorReverse ? "ff" : "33", 16);
+  const redEnd = parseInt(colorReverse ? "33" : "ff", 16);
 
+  const red = Math.round((redStart - redEnd) * (percentage / 100) + redEnd);
+  const green = Math.round((greenStart - greenEnd) * (percentage / 100) + greenEnd);
+
+  const color = `#${red.toString(16).padStart(2, "0")}${green.toString(16).padStart(2, "0")}00`;
+
+  return color;
+}
 export function numberToUsd(amount: number) {
   if (!amount) return "loading"
   const formattedAmount = (amount / 100).toFixed(2);

@@ -114,7 +114,7 @@
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
 
-    &:not(&--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item, &--nav-item__active, &--select, &--invalid, &--input, &--textarea, &--signature) {
+    &:not(&--warning, &--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item, &--nav-item__active, &--select, &--invalid, &--input, &--textarea, &--signature) {
         @extend .element-color;
     }
 
@@ -248,6 +248,11 @@
         }
     }
 
+    @include variant('warning',
+         var(--gray-80),var(--warning), var(--warning-hover),
+        var(--warning-hover), var(--gray-40), var(--warning-focus),
+        var(--warning-focus), var(--gray-10), transparent,
+    );
     @include variant('signature',
         inherit, var(--gray-40), transparent,
         inherit, var(--gray-50), transparent,

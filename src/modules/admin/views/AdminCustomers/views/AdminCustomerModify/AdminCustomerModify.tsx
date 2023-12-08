@@ -159,7 +159,12 @@ const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
         <UiForm btnText='Modify'  fields={customer} onChange={onChange} onSubmit={onSubmit} />
         <hr style={{width:'100%'}}/>
         <div className='admin-customer-modify__delete'>
-        <UiButton onClick={handleDelete} variant='secondary'>delete {customer?.length && customerName}</UiButton>
+        <UiButton
+          onClick={handleDelete}
+          variant='warning'
+        >
+          delete {customer?.length && customerName}
+        </UiButton>
         </div>
       </div>
     </>

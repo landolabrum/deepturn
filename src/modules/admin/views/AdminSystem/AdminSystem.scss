@@ -1,34 +1,137 @@
-
-.d-flex{
- display: flex;
- justify-content: center;
- align-items: center;
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.admin-system{
+
+.admin-system {
     @extend .d-flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap: var(--s-3);
-    width: auto;
+    gap: var(--s-1);
     min-width: 700px;
     padding: var(--padding);
     background-color: var(--gray-90);
     border-radius: var(--border-radius);
-    &__title{
+
+    &__temp {
+        @extend .d-flex;
+        flex-direction: column;
+        padding: var(--s-7) var(--s-9);
+        background-color: var(--gray-100);
+        border-radius: inherit;
+        border: solid 1px var(--primary-opaque);
+        font-size: var(--s-7);
+        color: var(--gray-5z0);
+        gap: var(--s-7);
+        &--name{
+            text-transform: uppercase;
+            font-style: italic;
+        }
+        &--percent{
+            // color: var(--gray-40);
+            font-size: var(--s-5);
+            @extend .d-flex;
+        }
+    }
+
+    &__header{
+        width: 100%;
+        @extend .d-flex;
+        color: var(--gray-50);
+        justify-content: space-between;
+        
+        // align-items: flex-start;
+    }
+    
+    &__title {
+        text-decoration: underline;
         font-size: var(--s-3);
         text-transform: capitalize;
-        color: var(--gray-50);
-        text-decoration: underline;
+        &--container{
+            background-color: #f30;
+        }
+        &--timestamp{
+            font-size: var(--s-9);
+            text-decoration: unset !important;
+        }
     }
-    &__list{
+
+    &__overview {
+        @extend .d-flex;
+        width: 100%;
+        flex-direction: column;
+        gap: var(--s-9);
+
+        &--item {
+            width: inherit;
+            border-radius: var(--border-radius);
+            margin: 0 var(--padding);
+            background-color: var(--gray-100);
+            overflow: hidden;
+            &--title {
+                @extend .d-flex;
+                justify-content: flex-start;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                text-decoration: underline;
+                color: var(--gray-60);
+                --ui-icon-color: var(--gray-60);
+                padding: 0 var(--s-9);
+                height: var(--element-height);
+                font-size: var(--s-6);
+                --ui-icon-width: var(--s-1);
+            }
+
+            &--content {
+                background-color: var(--gray-80-opaque);
+                border: solid 1px var(--gray-70);
+                @extend .d-flex;
+                flex-direction: column;
+                align-items: flex-start;
+                border-radius: inherit;
+                margin: var(--s-9);
+                padding: var(--s-9);
+                color: var(--gray-50);
+                line-height: 1;
+                gap: var(--s-9);
+                &__info{
+                    font-size: var(--s-5);
+                    color: var(--gray-30);
+                }
+            }
+
+        }
+    }
+
+    &__percentages {
+        @extend .d-flex;
+        width: 100%;
+        justify-content: flex-start;
+        // justify-content: space-between;
+        &--item {
+            @extend .d-flex;
+            flex-direction: column;
+
+            &--name {
+                text-transform: capitalize;
+                color: var(--gray-50);
+                line-height: 1;
+            }
+        }
+    }
+
+    &__list {
+        width: 100%;
         @extend .d-flex;
         flex-direction: column;
         gap: 5px;
-        &--item{
+
+        &--item {
             width: 100%;
             @extend .d-flex;
             gap: var(--s-1);
-            &__key{
+
+            &__key {
                 white-space: nowrap;
                 font-weight: 900;
                 background-color: var(--gray-80);
@@ -37,12 +140,14 @@
                 border-radius: 4px;
                 // text-decoration: underline;
             }
-            &__val{
+
+            &__val {
                 width: 100%;
                 @extend .d-flex;
                 justify-content: flex-end;
             }
         }
     }
+
     // height: 100%;
 }

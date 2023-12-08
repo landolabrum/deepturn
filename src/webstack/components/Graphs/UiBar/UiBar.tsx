@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import styles from "./UiBar.scss";
 import { UiIcon } from "../../UiIcon/UiIcon";
 
-import { dateFormat } from "@webstack/helpers/userExperienceFormats";
+import { colorPercentage, dateFormat } from "@webstack/helpers/userExperienceFormats";
+import keyStringConverter from "@webstack/helpers/keyStringConverter";
 
 interface BarProps {
   barCount: number;
@@ -12,22 +13,11 @@ interface BarProps {
   status?: string;
   timestamp?: string;
   header?: string | React.ReactElement;
+  colorReverse?: boolean; // Add this line
 }
 
-const UiBar = ({ barCount, percentage, icon, status, timestamp, header }: BarProps) => {
-  function generateColorByPercentage(percentage: number) {
-    const greenStart = parseInt("ff", 16); // Red component at 100% (255 in decimal)
-    const greenEnd = parseInt("00", 16); // Red component at 0% (0 in decimal)
-    const redStart = parseInt("33", 16); // Green component at 100% (51 in decimal)
-    const redEnd = parseInt("ff", 16); // Green component at 0% (255 in decimal)
+const UiBar = ({colorReverse, barCount, percentage, icon, status, timestamp, header }: BarProps) => {
 
-    const red = Math.round((redStart - redEnd) * (percentage / 100) + redEnd);
-    const green = Math.round((greenStart - greenEnd) * (percentage / 100) + greenEnd);
-
-    const color = `#${red.toString(16).padStart(2, "0")}${green.toString(16).padStart(2, "0")}00`;
-
-    return color;
-  }
 
   const renderBars = () => {
     const bars = [];
@@ -51,7 +41,7 @@ const UiBar = ({ barCount, percentage, icon, status, timestamp, header }: BarPro
             <div className="bar__bars-content">
               <div
                 className={`bar__bars-bar ${barClassName}`}
-                style={{ height: `${fillPercentage}%`, backgroundColor: generateColorByPercentage(percentage) }}
+                style={{ height: `${fillPercentage}%`, backgroundColor: colorPercentage(percentage, colorReverse) }}
               ></div>
             </div>
           </div>
@@ -67,7 +57,7 @@ const UiBar = ({ barCount, percentage, icon, status, timestamp, header }: BarPro
           <div className="bar__bars-content">
             <div
               style={
-                barClassName !== "bar__bars-bar-empty" ? { backgroundColor: generateColorByPercentage(percentage) } : {}
+                barClassName !== "bar__bars-bar-empty" ? { backgroundColor: colorPercentage(percentage, colorReverse) } : {}
               }
               className={`bar__bars-bar ${barClassName}`}
             ></div>
@@ -82,7 +72,7 @@ const UiBar = ({ barCount, percentage, icon, status, timestamp, header }: BarPro
   return (
     <>
       <style jsx>{styles}</style>
-      <div className={`bar ${styles.graphContainer}`}>
+      <div className={`bar${styles.graphContainer && ` ${styles.graphContainer}` || ''}`}>
         {timestamp && <div className="bar__timestamp">{dateFormat(timestamp, { time: true })}</div>}
         <div className="bar__container">
           <div className="bar__header">
@@ -93,12 +83,13 @@ const UiBar = ({ barCount, percentage, icon, status, timestamp, header }: BarPro
             )}
             {status && (
               <div className="bars__status">
-                {status === "STATUS_LOW" && (
+                {["STATUS_LOW", 'low', 'high'].includes(status) && (
                   <div className="bars__status-low">
                     <UiIcon color="#f90" icon="fa-exclamation-triangle" />
-                    low
+                    {keyStringConverter(status)}
                   </div>
                 )}
+          
               </div>
             )}
             {header && (
@@ -109,8 +100,8 @@ const UiBar = ({ barCount, percentage, icon, status, timestamp, header }: BarPro
           </div>
           <div className={`bar__bars-container ${styles.barsContainer}`}>
             {renderBars()}
-            <div className={`bar__percentage ${styles.percentageText}`}>
-              <div>{percentage}%</div>
+            <div className={`bar__percentage${styles.percentageText?` ${styles.percentageText}`:''}`}>
+              <div>{String(percentage)?.split('.')[0]}%</div>
             </div>
           </div>
         </div>
