@@ -53,6 +53,7 @@ const AdminSystem: React.FC = () => {
       </div>
     </>
   }
+  const lActive = loader?.active;
   useEffect(() => {
     if (!systemData) fetchSystemData().then(() => {
       setLoader({ active: false });
@@ -64,16 +65,16 @@ const AdminSystem: React.FC = () => {
       <div className='admin-system'>
         <div className='admin-system__header'>
           <div className='admin-system__title--container'>
-          <div className='admin-system__title'>
-          admin system 
+            <div className='admin-system__title'>
+              admin system
+            </div>
             <div className='admin-system__title--timestamp'>
               {dateFormat(systemData?.timestamp, { isTimestamp: true })}
             </div>
           </div>
-          </div>
 
           <div >
-            <UiButton variant='dark' >Refresh</UiButton>
+            <UiButton busy={loader?.active}  variant='dark' >Refresh</UiButton>
           </div>
         </div>
         <div className='admin-system__overview'>
@@ -88,7 +89,7 @@ const AdminSystem: React.FC = () => {
           </div>
           <div className='admin-system__overview--item'>
             <div className='admin-system__overview--item--title'>
-              <UiIcon icon='fa-disc-drive' /> Processor
+              <UiIcon icon={lActive?'spinner':'fa-disc-drive'} /> Processor
             </div>
             <div className='admin-system__overview--item--content'>
               <div className='admin-system__overview--item--content__info'>{systemData?.cpu_info}</div>
@@ -97,19 +98,24 @@ const AdminSystem: React.FC = () => {
           </div>
           <div className='admin-system__overview--item'>
             <div className='admin-system__overview--item--title'>
-              <UiIcon icon='fa-memory' /> Memory
+              <UiIcon icon={lActive?'spinner':'fa-memory'} /> Memory
+            </div>
+            <div className='admin-system__overview--item--content'>
+              <div className='admin-system__overview--item--content__info'>
+                <div className='d-flex' style={{flexDirection:'column'}}>
+                  Usage
+                  <UiBar
+                    colorReverse={true}
+                    percentage={systemData?.memory_percentage}
+                    barCount={4}
+                    status={systemData?.memory_percentage >= 90 && 'high' || undefined}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div className='admin-system__list'>
-          {/* .filter(([key, val]) => !key.includes('temp')) */}
-          {systemData && Object.entries(systemData).map(([key, val]: any) => {
-            return <div key={key} className='admin-system__list--item'>
-              <div className='admin-system__list--item__key'>{keyStringConverter(key)}</div>
-              <div className='admin-system__list--item__val'>{key != 'timestamp' && val || dateFormat(val, { isTimestamp: true })}</div>
-            </div>
-          })}
-        </div>
+ 
       </div>
     </>
   );
@@ -139,5 +145,17 @@ export default AdminSystem;
 //       />
 //     </div>
 //   );
+// })}
+// </div>
+
+
+
+// <div className='admin-system__list'>
+// {/* .filter(([key, val]) => !key.includes('temp')) */}
+// {systemData && Object.entries(systemData).map(([key, val]: any) => {
+//   return <div key={key} className='admin-system__list--item'>
+//     <div className='admin-system__list--item__key'>{keyStringConverter(key)}</div>
+//     <div className='admin-system__list--item__val'>{key != 'timestamp' && val || dateFormat(val, { isTimestamp: true })}</div>
+//   </div>
 // })}
 // </div>

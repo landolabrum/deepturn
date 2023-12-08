@@ -47,8 +47,12 @@
         text-decoration: underline;
         font-size: var(--s-3);
         text-transform: capitalize;
+        color: var(--gray-30);
         &--container{
-            background-color: #f30;
+            @extend .d-flex;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: var(--s-9);
         }
         &--timestamp{
             font-size: var(--s-9);
