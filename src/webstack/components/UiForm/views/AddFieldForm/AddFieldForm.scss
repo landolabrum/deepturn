@@ -1,0 +1,9 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.form__add-field {
+    @extend .d-flex;
+    align-items: flex-start;
+}

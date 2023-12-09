@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useRef, useState } from "react";
 import styles from './DefaultLayout.scss';
 import Title from "@webstack/components/Title/Title";
 import useWindow, {IWindow} from "@webstack/hooks/useWindow";
+import useElement from "@webstack/hooks/useElement";
 
 interface IProps {
   children: ReactElement;
@@ -11,6 +12,7 @@ const DefaultLayout = (props: IProps) => {
   const mainRef = useRef<HTMLDivElement>(null);
   const windowSize = useWindow();
 
+  const {element, }=useElement();
   useEffect(() => {
     const adjustMainHeight = () => {
       if (mainRef.current) {
@@ -24,7 +26,6 @@ const DefaultLayout = (props: IProps) => {
         }
       }
     };
-
     adjustMainHeight();
     window.addEventListener("resize", adjustMainHeight);
 

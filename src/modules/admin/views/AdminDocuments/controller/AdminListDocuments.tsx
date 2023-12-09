@@ -18,21 +18,20 @@ const AdminListDocuments = () => {
             }
         };
 
-        if (documents.length === 0) {
+        if (documents?.length === 0) {
             getDocs();
         }
-    }, [documents.length]);
+    }, [documents?.length]);
 
-    const downloadFile = async (fileId: string) => {
+    const downloadFile = async (fileUrl: string, fileName: string) => {
         try {
-            const response = await fetch(`/api/download-stripe-file/${fileId}`);
+            const response = await fetch(fileUrl);
             if (!response.ok) throw new Error('Network response was not ok');
-
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = fileId; // You can give a more meaningful filename here
+            a.download = fileName; // Use the extracted filename
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
@@ -41,16 +40,26 @@ const AdminListDocuments = () => {
             console.error("Error downloading file:", error);
         }
     };
+    const retreive = async (fileId: string) =>{
+        try {
+            const doc = await docService.retrieveDocument(fileId);
+            console.log('[ DOCUMENT ]', doc)
+        } catch (error) {
+            console.log('[ DOCUMENT (error) ]', error)
+            
+        }
+    }
 
-    const renderFile = (doc:any) => {
+
+    const renderFile = (doc: any) => {
         const fileUrl = `/api/fetch-stripe-file/${doc.id}`;
-    
+
         if (doc.type === 'pdf') {
             return <iframe src={fileUrl} title={doc.filename} width="100%" height="500px"></iframe>;
         } else if (doc.type === 'png' || doc.type === 'jpeg') {
             return <img src={fileUrl} alt={doc.filename} />;
         }
-    
+
         return <p>No preview available</p>;
     };
 
@@ -59,13 +68,23 @@ const AdminListDocuments = () => {
             <style jsx>{styles}</style>
             <h1>Admin List Docs</h1>
             <div className='admin-list-documents'>
-                {documents.length > 0 ? (
-                    documents.map((doc:any, index:number) => (
-                        <div key={index} className='admin-list-documents__list'>
-                            {/* ... existing document details ... */}
-                            <UiButton onClick={() => downloadFile(doc.id)}>Download</UiButton>
-                        </div>
-                    ))
+                {documents?.length > 0 ? (
+                    documents.map((doc: any, index: number) => {
+                        const fileUrl = doc?.links?.data[0]?.url;
+                        return (
+                            <div key={index} className='admin-list-documents__list'>
+                                <div className='admin-list-documents__list--item'>
+                                    <div >{doc?.filename}</div>
+                                    <div >{doc?.purpose}</div>
+                                     
+                                    <UiButton 
+                                    onClick={()=>retreive(doc.id)}
+                                    // onClick={() => downloadFile(fileUrl, doc?.filename)}
+                                    >Download </UiButton>
+                                </div>
+                            </div>
+                        )
+                    })
                 ) : (
                     <p>No documents found.</p>
                 )}

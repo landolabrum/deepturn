@@ -1,7 +1,7 @@
-export default function keyStringConverter(str: string, dashed = false, bypass = false) {
+export default function keyStringConverter(str: string, dashed = false, lowerCase = false) {
   // Replace all occurrences of capital letters with a space and the capital letter
   let result = str.replace(/([A-Z])/g, " $1").toLowerCase();
-  if (bypass) result = str.toLowerCase();
+  if (lowerCase) result = str.toLowerCase();
   // replace all spaces with dashes
   if (dashed) result = result.replaceAll(" ", "-");
   // replace dashes with spaces

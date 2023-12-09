@@ -16,6 +16,15 @@
   width: 100%;
   flex-wrap: wrap;
   gap: var(--s-8);
+  &--mini{
+    border: solid 1px var(--gray-80);
+    border-radius: var(--border-radius);
+    padding: 9px 7px;
+    gap: 4px;
+    &__submit {
+      border-top: unset !important;
+    }
+  }
   &__title{
     text-transform: capitalize;
     font-size: var(--s-2);
@@ -29,6 +38,7 @@
       @extend .d-flex-col;
       // margin: auto;
   }
+
   &__submit {
     // existing styles
     border-style: outset;
@@ -38,7 +48,11 @@
     width: calc(100%);
     margin-top: var(--padding);
     padding-top: var(--element-height);
-    
+    &--mini{
+      margin-top: 0;
+      padding-top: var(--s-9);
+        border-top: unset !important;
+    }
     // // new gradient background
     // background-image: linear-gradient(to bottom, var(--gray-60), transparent);
   }

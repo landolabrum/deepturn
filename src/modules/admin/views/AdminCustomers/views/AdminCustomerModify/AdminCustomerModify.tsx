@@ -23,7 +23,7 @@ interface CustomerRequest {
 const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
   const router = useRouter();
   const [methods, setMethods] = useState([]);
-  const [customer, setCustomer] = useState<any>(null);
+  const [customer, setCustomer] = useState<IFormField[] | undefined>();
   const findField:any= (name:string)=>customer && customer.find((f:IFormField)=>f.name == name)?.value;
   const customerName = findField('name');
   const [notification, setNotification]=useNotification();
@@ -48,22 +48,19 @@ const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
       if(key == 'email_verified')t='checkbox';
       return t;
     }
-    const formatted = (dta?: any, parent?:string ) => {
-     return Object.entries(dta || data)
-      .filter(([key]) => !modKeys.includes(key) && !hideKeys.includes(key))
-      .map(([key, value]) => (
-        {
-          name: parent?`${parent}.${key}`:key,
+    const formatted = (dta?: any, parent?: string) => {
+      return Object.entries(dta || data)
+        .filter(([key]) => !modKeys.includes(key) && !hideKeys.includes(key))
+        .map(([key, value]) => ({
+          name: parent ? `${parent}.${key}` : key,
           label: keyStringConverter(key),
           value: handleFormatValue(key, value),
           type: handleFormatType(key, handleFormatValue(key, value)),
           variant: 'default',
           disabled: disabledKeys.includes(key) || undefined,
           placeholder: '',
-        }
-      )
-      )
-    }
+        }));
+    };
     return [...formatted(), ...formatted(data.metadata, 'metadata')];
   }
   const {openModal, closeModal} = useModal();
@@ -82,10 +79,16 @@ const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
   const adminService = getService<IAdminService>('IAdminService');
   const onChange = (e:{target:{name: string, value: any}}) => {
     const {name, value}=e.target;
-    setCustomer(customer.map((field: IFormField) => {
-      if(field.name == name)field.value = value;
-      return field;
-    }));
+    const isNewField = customer && customer.find(f=>f.name == name) == undefined;
+    if(customer != undefined && !isNewField){
+      setCustomer(customer.map((field: IFormField) => {
+        if(field.name == name )field.value = value;
+        return field;
+      }));
+    }else if(isNewField){
+      setCustomer([...customer, ...[{name: `metadata.${name}`, label: value}]]);
+    }
+
   }
   const onSubmit = async () => {
     let request:any = {
@@ -97,7 +100,7 @@ const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
     };
   
     // Extract metadata fields from the customer state and add them to the request
-    customer.forEach((field : any)=> {
+    customer != undefined && customer.forEach((field : any)=> {
       if (field.name.startsWith('metadata.')) {
         const metadataKey = field.name.substring('metadata.'.length);
         request.metadata[metadataKey] = field.value;
@@ -156,7 +159,13 @@ const AdminCustomerModify: React.FC<any> = ({ customerId }: any) => {
         <div className='admin-customer-modify__title'>
           Admin Customer Modify
         </div>
-        <UiForm btnText='Modify'  fields={customer} onChange={onChange} onSubmit={onSubmit} />
+        <UiForm 
+          onAddField={onChange}
+          btnText='Modify'
+          fields={customer}
+          onChange={onChange}
+          onSubmit={onSubmit} 
+        />
         <hr style={{width:'100%'}}/>
         <div className='admin-customer-modify__delete'>
         <UiButton

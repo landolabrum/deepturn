@@ -8,7 +8,7 @@ import maskInput from "./helpers/maskInput";
 import AutocompleteAddressInput from "./views/AddressInput";
 
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
-  const { type, value, onChange, onKeyDown, onKeyUp, message, required } = props;
+  const { name, type, value, onChange, onKeyDown, onKeyUp, message, required } = props;
   const [show, setShow] = useState<boolean>(false);
 
   const handleChange = (e: any) => {
@@ -57,7 +57,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             disabled={props?.disabled || undefined}
             id={props?.id}
             className={inputClasses}
-            name={props.name}
+            name={name}
             type={elType}
             placeholder={props.placeholder}
             min={props.min}
@@ -75,7 +75,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             disabled={props?.disabled || undefined}
             id={props?.id}
             className={inputClasses}
-            name={props.name}
+            name={name}
             placeholder={props.placeholder}
             value={inputValue}
             onChange={handleChange}

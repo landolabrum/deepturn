@@ -85,13 +85,16 @@ const Documents = ({ user }: IDocuments) => {
     setLoader({ active: true, body: 'getting your documents' })
     try {
       const entireProducts = await shoppingService.getProducts();
+      const userRequirements = user?.metadata?.requirements;
+      console.log('[ USER REQs ]', userRequirements)
       const newDocs = entireProducts?.data.filter((prod: any) =>
         // IS MERCHANT
         prod?.metadata?.mid == environment.merchant.mid &&
         // IS A DOCUMENT
         prod?.metadata?.type == 'document' &&
-        // Document is for Customer clearance
-        Number(user?.metadata.clearance) >= Number(prod?.metadata?.clearance)
+        // Document is for Customer
+        userRequirements?.includes(prod.id)
+        // Number(user?.metadata.clearance) >= Number(prod?.metadata?.clearance)
       );
       setDocs(newDocs);
     } catch (e: any) {
@@ -114,7 +117,7 @@ const Documents = ({ user }: IDocuments) => {
         </div>
         <div className='documents__list'>
           <div className='documents--document'>
-            {docs.length ? docs.map((doc: any, i: number) => {
+            {docs?.length ? docs.map((doc: any, i: number) => {
               return <div key={i} >
                 <UiCollapse variant='document' label={doc?.name} open={true}>
                   < >
