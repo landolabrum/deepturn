@@ -3,25 +3,13 @@ import styles from './AdminListDocuments.scss';
 import { getService } from '@webstack/common';
 import IDocumentService from '~/src/core/services/DocumentService/IDocumentService';
 import UiButton from '@webstack/components/UiButton/UiButton';
+import { useLoader } from '@webstack/components/Loader/Loader';
 
 const AdminListDocuments = () => {
     const docService = getService<IDocumentService>("IDocumentService");
     const [documents, setDocuments] = useState([]);
-
-    useEffect(() => {
-        const getDocs = async () => {
-            try {
-                const documentsList = await docService.listDocuments();
-                setDocuments(documentsList.data);
-            } catch (error) {
-                console.error("Error fetching documents:", error);
-            }
-        };
-
-        if (documents?.length === 0) {
-            getDocs();
-        }
-    }, [documents?.length]);
+    const [currentDoc, setCurrentDoc] = useState<any>(null);
+    const [loader, setLoader] = useLoader();
 
     const downloadFile = async (fileUrl: string, fileName: string) => {
         try {
@@ -40,47 +28,73 @@ const AdminListDocuments = () => {
             console.error("Error downloading file:", error);
         }
     };
-    const retreive = async (fileId: string) =>{
+
+    const retreive = async (fileId: string) => {
         try {
-            const doc = await docService.retrieveDocument(fileId);
-            console.log('[ DOCUMENT ]', doc)
+            const retrieved = await docService.retrieveDocument(fileId);
+            setCurrentDoc(retrieved);
+            console.log('[ DOCUMENT ]', retrieved);
         } catch (error) {
-            console.log('[ DOCUMENT (error) ]', error)
-            
+            console.log('[ DOCUMENT (error) ]', error);
         }
-    }
-
-
-    const renderFile = (doc: any) => {
-        const fileUrl = `/api/fetch-stripe-file/${doc.id}`;
-
-        if (doc.type === 'pdf') {
-            return <iframe src={fileUrl} title={doc.filename} width="100%" height="500px"></iframe>;
-        } else if (doc.type === 'png' || doc.type === 'jpeg') {
-            return <img src={fileUrl} alt={doc.filename} />;
-        }
-
-        return <p>No preview available</p>;
     };
+
+    const RenderFile = () => {
+        if (currentDoc) {
+            const fileUrl = `/api/fetch-stripe-file/${currentDoc.id}`;
+
+            // if (currentDoc.type === 'pdf') {
+                return (
+                    <embed
+                        src={currentDoc.url}
+                        type="application/pdf"
+                        width="100%"
+                        height="500px"
+                    />
+                );
+            // } else if (currentDoc.type === 'png' || currentDoc.type === 'jpeg') {
+                // return <img src={fileUrl} alt={currentDoc.filename} />;
+            // }
+        }
+
+        return null; // No document to render
+    };
+
+    useEffect(() => {
+        const getDocs = async () => {
+            try {
+                const documentsList = await docService.listDocuments();
+                setDocuments(documentsList.data);
+            } catch (error) {
+                console.error("Error fetching documents:", error);
+            }
+        };
+
+        if (documents?.length === 0) {
+            setLoader({ active: true, body: 'Getting admin documents' });
+            getDocs().then(() => setLoader({ active: false }));
+        }
+    }, [documents?.length, setCurrentDoc]);
 
     return (
         <>
             <style jsx>{styles}</style>
             <h1>Admin List Docs</h1>
             <div className='admin-list-documents'>
+                {JSON.stringify(currentDoc)}
+                {currentDoc?.id === (currentDoc && currentDoc.id)  && (
+                    <RenderFile />
+                )}
                 {documents?.length > 0 ? (
                     documents.map((doc: any, index: number) => {
-                        const fileUrl = doc?.links?.data[0]?.url;
                         return (
                             <div key={index} className='admin-list-documents__list'>
                                 <div className='admin-list-documents__list--item'>
                                     <div >{doc?.filename}</div>
                                     <div >{doc?.purpose}</div>
-                                     
-                                    <UiButton 
-                                    onClick={()=>retreive(doc.id)}
-                                    // onClick={() => downloadFile(fileUrl, doc?.filename)}
-                                    >Download </UiButton>
+                                    <UiButton
+                                        onClick={() => retreive(doc.id)}
+                                    >Download</UiButton>
                                 </div>
                             </div>
                         )

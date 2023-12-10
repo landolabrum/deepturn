@@ -12,11 +12,12 @@ export default class DocumentService extends ApiService implements IDocumentServ
     super(environment.serviceEndpoints.social);
     this.memberService = getService<IMemberService>('IMemberService');
   }
-  public async uploadDocument(formData: FormData, purpose:IDocumentPurpose='customer_signature'): Promise<any> {
+  public async uploadDocument(formData: FormData, purpose:IDocumentPurpose='pci_document'): Promise<any> {
     try {
+      const encodedPurpose = encodeURIComponent(purpose);
       const response = await this.post<FormData, any>(
-        `api/document/upload?purpose=${purpose}`,
-        formData,
+          `api/document/upload?purpose=${encodedPurpose}`,
+          formData,
       );
       return response;
     } catch (error: any) {

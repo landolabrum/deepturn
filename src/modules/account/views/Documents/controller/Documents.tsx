@@ -58,7 +58,7 @@ const Documents = ({ user }: IDocuments) => {
   
     // Use DocumentService to send the data
     try {
-      const response = await documentService.uploadDocument(formData, 'identity_document');
+      const response = await documentService.uploadDocument(formData, 'tax_document_user_upload');
       console.log('PDF uploaded successfully', response);
     } catch (error) {
       console.error('Error uploading PDF', error);
