@@ -26,6 +26,9 @@
     }
     .documents__list {
         .documents--document{
+            .documents__pdf{
+                background-color: var(--gray-90);
+            }
             &__terms{
                 @extend .d-flex;
                 align-items: flex-start;

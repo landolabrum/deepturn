@@ -11,28 +11,29 @@ interface ICollapse {
     label?: string | React.ReactElement;
     style?: { [key: string]: string };
     variant?: string,
+    id?: string,
 }
-const UiCollapse: React.FC<ICollapse> = ({ open, children, variant, label = "Collapse", style }) => {
-    let _style = {...style, height: undefined};
+const UiCollapse: React.FC<ICollapse> = ({ id, open, children, variant, label = "Collapse", style }) => {
+    let _style = { ...style, height: undefined };
     let elStyle = {}
-    if(style?.height)elStyle={height: style.height};
+    if (style?.height) elStyle = { height: style.height };
     const [oOpen, setOpen] = useState<number | 'opened'>(0);
-    
+
     const handleOpen = () => {
-        if(oOpen == 'opened')setOpen(2);
+        if (oOpen == 'opened') setOpen(2);
         if (oOpen != 'opened' && [0, 1].includes(oOpen)) setOpen(oOpen + 1);
         if (oOpen == 2) setOpen(1);
     }
-    const createClass = (clzz: string) =>{
+    const createClass = (clzz: string) => {
         switch (oOpen) {
             case 'opened':
-                return `${clzz} ${clzz}__opened ${variant?` ${clzz}__${variant}`:''}`;
+                return `${clzz} ${clzz}__opened ${variant ? ` ${clzz}__${variant}` : ''}`;
             case 0:
-                return `${clzz} ${variant?` ${clzz}__${variant}`:''}`;
+                return `${clzz} ${variant ? ` ${clzz}__${variant}` : ''}`;
             case 1:
-                return `${clzz} ${clzz}__open ${variant?` ${clzz}__${variant}`:''}`;
+                return `${clzz} ${clzz}__open ${variant ? ` ${clzz}__${variant}` : ''}`;
             case 2:
-                return `${clzz} ${clzz}__close ${variant?` ${clzz}__${variant}`:''}`;
+                return `${clzz} ${clzz}__close ${variant ? ` ${clzz}__${variant}` : ''}`;
             default:
                 break;
         }
@@ -46,15 +47,16 @@ const UiCollapse: React.FC<ICollapse> = ({ open, children, variant, label = "Col
         <>
             <style jsx>{styles}</style>
             <div
+                id={id}
                 style={_style}
                 className={`${createClass('collapse')}`}
             >
                 <div onClick={handleOpen} className={createClass('collapse__action')} style={elStyle}>
-                   {label}
-                    <UiIcon icon={`fa-chevron-${oOpen == 1 ? "down" : "right"}`}/>
+                    {label}
+                    <UiIcon icon={`fa-chevron-${oOpen == 1 ? "down" : "right"}`} />
                 </div>
                 <div className={createClass('collapse__body')}>
-                    { children}
+                    {children}
                 </div>
             </div>
         </>
