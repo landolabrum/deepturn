@@ -12,11 +12,5 @@ export type IProducts = {
 export default interface IShoppingService {
   getProducts(request?: any): Promise<any>;
   getProduct({ id, pri }: IProduct): Promise<any>;
-  // revenueTotals({skip, limit, dateFrom, dateTo}: RevenueRequest): Promise<RevenueTotalsResponse>;
-  // orderHistory(memberId: string): Promise<OrderHistoryResponse>;
-  // orderHistoryDetails(orderId: string ): Promise<OrderHistoryDetailsResponse>;
-
-  // nodesPurchasedByDate({dateFrom, dateTo, customDateRange}: any): Promise<any>;
-  // revenueDetails({skip, limit, dateFrom, dateTo}: RevenueRequest): Promise<any>;
 }
 

@@ -9,7 +9,7 @@ import { ICartItem } from '../../cart/model/ICartItem';
 import useCart from '../../cart/hooks/useCart';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import AccountMethods from '~/src/modules/account/views/AccountMethods/controller/AccountMethods';
-import ProfileForm from '~/src/modules/account/views/ProfileForm/ProfileForm';
+import AccountModify from '~/src/modules/account/views/ProfileForm/ProfileForm';
 import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
@@ -53,7 +53,7 @@ const Checkout: React.FC<ICheckout> = () => {
                 <UiCollapse label={keyStringConverter(view)} open={true}>
                     <>
                         {view == 'create-account' && <Authentication view={'sign-up'}/>}
-                        {view == 'create-method' && <ProfileForm user={user} open={user?.address == undefined} />}
+                        {view == 'create-method' && <AccountModify user={user} open={user?.address == undefined} />}
                     </>
                 </UiCollapse>
                 {/* <div className='checkout__body'> */}

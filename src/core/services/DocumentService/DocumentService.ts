@@ -13,10 +13,12 @@ export default class DocumentService extends ApiService implements IDocumentServ
     this.memberService = getService<IMemberService>('IMemberService');
   }
   public async uploadDocument(formData: FormData, purpose:IDocumentPurpose='pci_document'): Promise<any> {
+    let customerId = this.memberService.getCurrentUser()?.id;
+    // console.log('[ CYu ]', customerId)
     try {
       const encodedPurpose = encodeURIComponent(purpose);
       const response = await this.post<FormData, any>(
-          `api/document/upload?purpose=${encodedPurpose}`,
+          `api/document/upload?purpose=${encodedPurpose}&customerId=${customerId}`,
           formData,
       );
       return response;

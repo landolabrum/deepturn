@@ -255,10 +255,9 @@
     );
 
     &--signature {
-        height: calc(var(--element-height) * 1.5);
+        @extend .d-flex;
         position: relative;
         overflow: visible;
-
         &:hover {
             border-color: transparent;
         }

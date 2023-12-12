@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import styles from './ProfileForm.scss';
+import styles from './AccountModify.scss';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useNotification } from '@webstack/components/Notification/Notification';
@@ -9,7 +9,7 @@ import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import UiMarkdown from '@webstack/components/UiMarkDown/UiMarkDown';
 
-const ProfileForm = ({ user, open = false }: any) => {
+const AccountModify = ({ user, open = false }: any) => {
   const memberService = getService<IMemberService>('IMemberService');
   const [notifiication, setNotification]=useNotification();
   const [busy, setBusy]=useState(false);
@@ -100,7 +100,7 @@ const ProfileForm = ({ user, open = false }: any) => {
   );
 };
 
-export default ProfileForm;
+export default AccountModify;
 
 {/* <UiCollapse label={fields?.address ? <>
         <div className='profile-form__collapse-label'>

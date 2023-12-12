@@ -84,8 +84,9 @@ $elPad: 14px;
 
   // VARIANT DEFINITIONS
   &--signature {
+    gap: var(--s-4);
     background-color: var(--gray-90);
-
+    height: max-content;
     &:hover {
       background-color: var(--gray-90);
     }
