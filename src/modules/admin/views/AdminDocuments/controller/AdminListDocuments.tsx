@@ -5,7 +5,7 @@ import IDocumentService from '~/src/core/services/DocumentService/IDocumentServi
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useLoader } from '@webstack/components/Loader/Loader';
 
-const AdminListDocuments = () => {
+const AdminListDocuments = ({docs}:any) => {
     const docService = getService<IDocumentService>("IDocumentService");
     const [documents, setDocuments] = useState([]);
     const [currentDoc, setCurrentDoc] = useState<any>(null);
@@ -41,9 +41,7 @@ const AdminListDocuments = () => {
 
     const RenderFile = () => {
         if (currentDoc) {
-            const fileUrl = `/api/fetch-stripe-file/${currentDoc.id}`;
-
-            // if (currentDoc.type === 'pdf') {
+            if (currentDoc.type === 'pdf') {
                 return (
                     <embed
                         src={currentDoc.url}
@@ -52,9 +50,9 @@ const AdminListDocuments = () => {
                         height="500px"
                     />
                 );
-            // } else if (currentDoc.type === 'png' || currentDoc.type === 'jpeg') {
-                // return <img src={fileUrl} alt={currentDoc.filename} />;
-            // }
+            } else if (currentDoc.type === 'png' || currentDoc.type === 'jpeg') {
+                return <img src={currentDoc.url} alt={currentDoc.filename} />;
+            }
         }
 
         return null; // No document to render
@@ -62,11 +60,15 @@ const AdminListDocuments = () => {
 
     useEffect(() => {
         const getDocs = async () => {
-            try {
-                const documentsList = await docService.listDocuments();
-                setDocuments(documentsList.data);
-            } catch (error) {
-                console.error("Error fetching documents:", error);
+            if(!docs){
+                try {
+                    const documentsList = await docService.listDocuments();
+                    setDocuments(documentsList.data);
+                } catch (error) {
+                    console.error("Error fetching documents:", error);
+                }
+            }else{
+                setDocuments(docs);
             }
         };
 
@@ -79,9 +81,8 @@ const AdminListDocuments = () => {
     return (
         <>
             <style jsx>{styles}</style>
-            <h1>Admin List Docs</h1>
+            {!docs && <h1>Admin List Docs</h1>}
             <div className='admin-list-documents'>
-                {JSON.stringify(currentDoc)}
                 {currentDoc?.id === (currentDoc && currentDoc.id)  && (
                     <RenderFile />
                 )}

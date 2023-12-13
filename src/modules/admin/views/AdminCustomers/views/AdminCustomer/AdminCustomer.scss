@@ -1,0 +1,86 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-customer {
+    margin-top: var(--s-8);
+    border-radius: var(--border-radius);
+    background-color: var(--gray-100);
+    border: solid 1px var(--gray-70);
+    padding: var(--s-3) var(--padding);
+    @extend .d-flex;
+    justify-content: flex-start;
+    $rat: 20px;
+    $nrat: calc($rat * -1);
+    flex-direction: column;
+    box-shadow: inset 0 -10px 25px -10px #000; 
+    height: max-content;
+    width: auto;
+    align-items: stretch;
+    gap: var(--padding);
+    &__header {
+        font-size: var(--s-1);
+        color: var(--gray-40);
+        .customer--info, .customer--contact{
+            @extend .d-flex;
+            gap: var(--s-9);
+            padding: var(--s-9) 0;
+            align-items: flex-start;
+            font-size: var(--s-4);
+            height: 100%; 
+        }
+        .customer--info{
+            justify-content: flex-start;
+            flex-direction: column;
+            &__address, &__contact{
+                font-size: var(--s-5);
+                color: var(--gray-50);
+                cursor: pointer;
+                &:hover{
+                    color: var(--primary)
+                }
+            }
+        }
+        .customer--contact{
+            align-items: flex-start;
+            justify-content: flex-end;
+        }
+    }
+    &__content{
+        @extend .d-flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: var(--padding);
+    }
+    &__delete {
+        width: max-content;
+        margin: var(--s-1) 0 0 auto;
+        opacity: 0.5;
+        transition: opacity 1s; /* Use transition for smooth animation */
+        
+        &:hover {
+            opacity: 1;
+        }
+    }
+    
+
+    &__info {
+        @extend .d-flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: var(--s-9);
+        width: auto;
+        border-radius: var(--border-radius);
+        padding: var(--padding);
+        background-color: var(--gray-70);
+
+        &--field {
+            &--key {
+                font-weight: 900;
+                text-transform: capitalize;
+            }
+        }
+    }
+}

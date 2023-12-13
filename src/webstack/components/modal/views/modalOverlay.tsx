@@ -45,7 +45,7 @@ const ModalOverlay: React.FC = () => {
 
             {Object.values(confirm?.statements).map((btn:any, key: number)=>{
               return <div key={key} className='modal-overlay__confirm-btn'>
-              <UiButton onClick={btn.onClick} variant={btn?.variant}>{btn.text}</UiButton>
+              <UiButton onClick={btn.onClick} variant={btn.text=='yes'?'primary':btn?.variant}>{btn.text}</UiButton>
             </div>
             })}
             </div>

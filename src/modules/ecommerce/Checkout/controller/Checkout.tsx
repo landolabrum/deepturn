@@ -2,18 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Checkout.scss';
 import { useRouter } from 'next/router';
-import CartList from '../../cart/views/CartList/CartList';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
 import { ICartItem } from '../../cart/model/ICartItem';
 import useCart from '../../cart/hooks/useCart';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
-import AccountMethods from '~/src/modules/account/views/AccountMethods/controller/AccountMethods';
-import AccountModify from '~/src/modules/account/views/ProfileForm/ProfileForm';
-import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import Authentication from '~/src/pages/authentication';
+import AccountModify from '~/src/modules/account/views/AccountModify/AccountModify';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
     cart: any;

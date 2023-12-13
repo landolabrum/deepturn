@@ -51,6 +51,10 @@ button {
   &.lite{
     text-decoration: none;
   }
+  &.link, &.lowercase{
+    text-transform: lowercase;
+    width: max-content;
+  }
   &.link,
   &.flat {
     padding: 0;

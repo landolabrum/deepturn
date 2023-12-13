@@ -160,7 +160,7 @@ const AccountDocuments = ({ user, previewPdf }: IDocuments) => {
     return <>
       <style jsx>{styles}</style>
       <div className='account-documents__status'>
-        {status} Document's
+        {status} Documents
         <div className='account-documents__status--docs'>
           {docs?.length && Object.entries(docs).map(([k, s]: any) => {
             return <div key={k} className='account-documents__status--docs--doc'>
@@ -168,7 +168,7 @@ const AccountDocuments = ({ user, previewPdf }: IDocuments) => {
               {Number(k + 1)}. <UiButton variant='link'>{s?.name}</UiButton>
             </div>
           }) || <div className='account-documents__status--docs--none'>
-              NO document's are {status}
+              NO documents are {status}
             </div>}
         </div>
       </div>

@@ -1,5 +1,6 @@
 export type IVariant =
   | ""
+  | "lowercase"
   | "inherit"
   | "left"
   | "card"

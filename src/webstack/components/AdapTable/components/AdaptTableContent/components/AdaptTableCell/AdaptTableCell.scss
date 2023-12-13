@@ -180,18 +180,21 @@ $cell-height: 100%;
   display: grid;
   grid-template-rows: auto auto auto; // Adjust as needed
   grid-template-columns: auto auto auto; // Adjust as needed
-  padding: 4px;
-
+  font-size: inherit;
   &--line1, &--line2, &--city, &--state, &--postal_code, &--country {
+    font-size: inherit;
+    padding: 0 2px;
+    line-height: 1.2;
+    color: inherit;
     white-space: nowrap;
     overflow: hidden;
+    font-size: inherit;
     text-overflow: ellipsis;
   }
 
   &--line1 {
     grid-row: 1;
     grid-column: 1 / -1; // Span across all columns
-    font-size: var(--s-7); 
     font-weight: 900;
   }
 

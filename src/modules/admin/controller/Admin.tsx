@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Admin.scss';
 import dynamic from 'next/dynamic';
 import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/UiSettingsLayout';
-import AdminCustomer from '../views/AdminCustomers/controller/AdminCustomer';
+import AdminCustomerPage from '../views/AdminCustomers/controller/AdminCustomers';
 import AdminProducts from '../views/AdminProducts/controller/AdminProducts';
 import { useRouter } from 'next/router';
 import AdminListDocuments from '../views/AdminDocuments/controller/AdminListDocuments';
@@ -22,7 +22,7 @@ const Admin = () => {
   const [currentView, setCurrentView]=useState<string | undefined>('documents');
   const views = {
     globe:<UiGlobe/>,
-    customers: <AdminCustomer/>,
+    customers: <AdminCustomerPage/>,
     products: <AdminProducts/>,
     documents: <AdminListDocuments/>,
     system: <AdminSystem/>,

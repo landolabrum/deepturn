@@ -6,12 +6,14 @@
 .form-control-icon{
     @extend .d-flex;
     position: absolute;
-    width: var(--s-1);
+    width: var(--element-height);
     &:hover{
         filter: brightness(1.5);
     }
     &__before{left: 0;}
-    &__after{right: 0;}
+    &__after{
+      right: 0;
+    }
 }
 
 

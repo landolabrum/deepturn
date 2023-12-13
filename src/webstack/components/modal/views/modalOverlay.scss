@@ -184,11 +184,16 @@
         }
 
         .modal-overlay__confirm {
-            width: 100%;
-            margin: var(--element-height) 0 var(--padding);
             @extend .d-flex;
-            flex-direction: column;
-            gap: var(--padding);
+            gap: var(--s-9);
+            padding: var(--s-8) var(--s-9);
+            background-color: var(--gray-70-opaque);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-top: var(--padding);
+            @media(max-width: 1100px){
+                flex-direction: column;
+            }
             &-btn{
                 width: 100%;
             }

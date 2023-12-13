@@ -7,10 +7,12 @@ import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
 import useReferrer from '@webstack/hooks/useReferrer';
 import { useNotification } from '@webstack/components/Notification/Notification';
+import { useLoader } from '@webstack/components/Loader/Loader';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const AdminCustomerAdd: React.FC = () => {
+  const [ loader, setLoader ] = useLoader();
 
   const contactFields: IFormField[] = [
     {
@@ -93,8 +95,11 @@ const AdminCustomerAdd: React.FC = () => {
   const adminService = getService<IAdminService>('IAdminService');
   let notificationMessage = { name: 'error', label: 'Error!', message: "unable to create member" };
   const handleAddCustomer = async (e: any) => {
+    const customerName = `${findField(customer, 'first_name').value} ${findField(customer, 'last_name').value}`;
+    setLoader({active: true, body:`Creating ${customerName}`});
+
     const customerData = {
-      name: `${findField(customer, 'first_name').value} ${findField(customer, 'last_name').value}`,
+      name: customerName,
       email: findField(customer, 'email').value,
       phone: findField(customer, 'phone').value,
       address: findField(customer, 'address').value,
@@ -104,17 +109,20 @@ const AdminCustomerAdd: React.FC = () => {
         email_verified: false
       }
     }
-    try {
-      const createCustomerResponse = await adminService.createCustomer(customerData);
-      notificationMessage={
-        name: 'success',
-        label: 'Success',
-        message: `Successfully created Customer: ${createCustomerResponse?.name}`
-      }
-    } catch (e: any) { console.log('[ Create Customer ERROR ]', e) }
+    const handleSubmit = async () =>{
+      try {
+        const createCustomerResponse = await adminService.createCustomer(customerData);
+        notificationMessage={
+          name: 'success',
+          label: 'Success',
+          message: `Successfully created Customer: ${createCustomerResponse?.name}`
+        }
+      } catch (e: any) { console.log('[ Create Customer ERROR ]', e) }
+    }
+    handleSubmit().then(()=>{
+      setLoader({active: false})
+    })
   }
-
-
 
   useEffect(() => {
     if (!customer) setCustomer(contactFields);
