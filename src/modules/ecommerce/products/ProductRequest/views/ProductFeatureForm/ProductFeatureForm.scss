@@ -8,8 +8,8 @@
     @extend .d-flex;
     flex-direction: column;
     justify-content: space-between;
-    width: calc(100% - 40px);
     border-radius: var(--border-radius);
+    width: auto;
     padding: var(--s-3) var(--s-6) var(--s-1);
     background-color: var(--gray-90);
     gap: var(--padding);
@@ -41,10 +41,7 @@
         padding-left: var(--s-5);
         line-height: 2;
         text-transform: capitalize;
-        width: 100%;
         color:var(--gray-30);
-
-
     }
     &__instructions{
         text-transform: capitalize;

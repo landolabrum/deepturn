@@ -6,9 +6,11 @@
 }
 $space: var(--s-7);
 .product-listing{
+    background-color: var(--gray-100);
+    margin: var(--padding) 0;
+    padding: var(--padding);
     @extend .d-flex;
     justify-content: flex-start;
-    width: 100%;
     .product-listing__header {
         width: 100%;
     }

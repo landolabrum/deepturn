@@ -13,26 +13,26 @@ const DefaultLayout = (props: IProps) => {
   const windowSize = useWindow();
 
   const {element, }=useElement();
-  useEffect(() => {
-    const adjustMainHeight = () => {
-      if (mainRef.current) {
-        const mainHeight = mainRef.current.offsetHeight;
-        const windowHeight = windowSize.height;
-        // console.log('[MRF]', mainRef.current.childNodes)
-        if (mainHeight < windowHeight) {
-          mainRef.current.style.height = `${windowHeight - mainRef.current.offsetTop}px`;
-        } else {
-          mainRef.current.style.height = 'unset';
-        }
-      }
-    };
-    adjustMainHeight();
-    window.addEventListener("resize", adjustMainHeight);
+  // useEffect(() => {
+  //   const adjustMainHeight = () => {
+  //     if (mainRef.current) {
+  //       const mainHeight = mainRef.current.offsetHeight;
+  //       const windowHeight = windowSize.height;
+  //       // console.log('[MRF]', mainRef.current.childNodes)
+  //       if (mainHeight < windowHeight) {
+  //         mainRef.current.style.height = `${windowHeight - mainRef.current.offsetTop}px`;
+  //       } else {
+  //         mainRef.current.style.height = 'unset';
+  //       }
+  //     }
+  //   };
+  //   adjustMainHeight();
+  //   window.addEventListener("resize", adjustMainHeight);
 
-    return () => {
-      window.removeEventListener("resize", adjustMainHeight);
-    };
-  }, [windowSize]);
+  //   return () => {
+  //     window.removeEventListener("resize", adjustMainHeight);
+  //   };
+  // }, [windowSize]);
 
   return (
     <>
