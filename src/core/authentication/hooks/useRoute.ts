@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useHeader } from "@webstack/components/Header/controller/Header";
 import { IRoute } from "@shared/components/Navbar/data/routes";
 import environment from "~/src/environment";
+import { useLoader } from "@webstack/components/Loader/Loader";
 
 const AUTHED_LANDING = "/account";
 const UNAUTHED_LANDING = "/";
@@ -12,17 +13,35 @@ const VERIFICATION_LANDING = '/verify';
 const LOGOUT_LANDING = '/authentication/[function]';
 const DEV = false;
 
-export default function useRoute(handleSideNav?: () => void) {
+export default function useRoute(handleSideNav?: () => void):any {
+  const [loader, setLoader]=useLoader();
   const userResponse = useUser();
   const [user, setUser] = useState<UserContext | null>(null);
   const [header, setHeader] = useHeader();
   const router = useRouter();
   const query: { [key: string]: string } | {} = router?.query;
 
-  const handleRoute = (route: IRoute) => {
-    if (route?.href) return router.push(route?.href, undefined, { shallow: false });
-    else router.push(route);
+  const handleRoute = async (route: IRoute) => {
+    const makeLoadingBody = (routeString:string) => {
+      const splitty = routeString.split('/');
+      const lastSegment = splitty[splitty.length - 1];
+      setLoader({ active: true, body: lastSegment });
+    };
+  
+    const makeLoadingContext = () => {
+      const routeHref = typeof route === 'string' ? route : route?.href;
+      if (routeHref) {
+        makeLoadingBody(routeHref);
+        router.push(routeHref, undefined, { shallow: true });
+      }
+    };
+  
+    makeLoadingContext();
+    setTimeout(() => {
+      setLoader({ active: false });
+    }, 1000);
   };
+  
 
   const current = router.pathname.substring(1);
   const isCurrent = current === header?.title;

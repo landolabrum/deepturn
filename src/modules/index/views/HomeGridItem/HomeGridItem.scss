@@ -13,7 +13,7 @@
     background-color: var(--gray-90);
     // padding: var(--padding);
     padding: var(--element-height) var(--padding);
-    width: calc(100% - calc(var(--padding) * 2));
+    width: var(--padding-width);
     // @media(max-width: 900px){
     // }
     &__header{

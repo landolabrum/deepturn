@@ -3,19 +3,17 @@
   align-items: center;
 }
 
-nav {
+.navbar__container {
   @extend .d-flex;
   min-height: var(--element-height);
-  width: 100%;
+  // position: absolute;
   z-index: 2;
-
-  @media(min-width: 1100px) {
-    background-color: var(--gray-100);
-  }
-
+  background-color: var(--gray-100);
+  width: 100%;    
   .navbar {
     padding: 0 0 var(--s-9);
-    @media(min-width: 1100px) {
+    width: 100%;
+    @media (min-width: 1100px) {
       min-height: var(--element-height);
       padding: 0;
       margin: 0 auto;
@@ -23,10 +21,7 @@ nav {
     }
   }
 
-  // gap: var(--padding);
-
-
-  @media(max-width:1100px) {
+  @media (max-width: 1100px) {
     justify-content: flex-end;
   }
 
@@ -35,49 +30,44 @@ nav {
       filter: brightness(2);
       --ui-icon-color: var(--body);
       background-color: var(--gray-80-opaque);
-
-      transform: scale(1);
     }
 
     50% {
       filter: brightness(1.5);
       --ui-icon-color: var(--primary-opaque);
       background-color: var(--gray-40-opaque);
-      transform: scale(1.1);
     }
 
     100% {
       filter: brightness(1);
       background-color: var(--primary-opaque);
       --ui-icon-color: var(--white);
-      transform: scale(1);
     }
   }
 
   .navbar__trigger {
     cursor: pointer;
-    --ui-icon-size: var(--s-3);
+    width: var(--element-height);
+    height: var(--element-height);
+    --ui-icon-height: var(--s-5);
+    --ui-icon-width: var(--s-5);
     --ui-icon-color: var(--primary-opaque);
-
-    padding: var(--s-9) var(--s-8);
+    @extend .d-flex;
+    justify-content: center;
     border-radius: var(--border-radius);
-
+    display: none;
     &:hover {
       animation: fade 1s forwards;
     }
 
-    @media(min-width: 1100px) {
-      display: none;
-    }
   }
 
   .nav-bar__nav-items {
     @extend .d-flex;
     width: 100%;
+    
 
-    @media(max-width: 1100px) {
-      display: none;
-    }
+
 
     .nav__nav-item {
       height: var(--element-height);
@@ -90,3 +80,33 @@ nav {
     }
   }
 }
+// HIDE
+.navbar__container {
+  &--hide{
+    width: auto;
+    background-color: transparent;
+    .navbar__trigger{
+      display: flex;
+      position: fixed;
+      top: var(--padding);
+      right: var(--padding);
+      @media(min-width:1100px) {
+        // display: none;
+      }
+    }
+    .nav-bar__nav-items {
+      display: none;
+      &--hide {
+        border: solid 1px #F30;
+        // display: none;
+      }
+      @media (max-width: 1100px) {
+        // display: none;
+      }
+      }
+  }
+  @media (max-width: 1100px) {
+    // background-color: transparent;
+  }
+}
+// END HIDE

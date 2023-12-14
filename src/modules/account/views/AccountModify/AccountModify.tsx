@@ -85,18 +85,13 @@ const AccountModify = ({ user, open = false }: any) => {
   }, [user, setFields]);
   
   return (
-    <>
-      <style jsx>{styles}</style>
-      <div className='profile-form'>
       <UiForm
-        title="update profile"
+        variant='card'
         fields={fields}
         onChange={onChange}
         onSubmit={onSubmit}
         loading={busy}
       />
-      </div>
-    </>
   );
 };
 

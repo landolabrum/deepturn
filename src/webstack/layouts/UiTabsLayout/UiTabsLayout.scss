@@ -83,7 +83,7 @@
 
         @media(max-width:900px) {
             padding: var(--padding);
-            width: calc(100% - calc(var(--padding) * 2));
+            width: var(--padding-width);
         }
     }
 

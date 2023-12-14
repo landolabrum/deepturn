@@ -23,7 +23,7 @@
     filter: blur(5px);
     backdrop-filter: blur(5px);
     cursor: pointer;
-    z-index: 998;
+    z-index: 1000;
     background: var(--gray-90-opaque);
     -webkit-backdrop-filter: blur(6.6px);
 }
@@ -37,7 +37,7 @@
     left: 0;
     right: 0;
     cursor: auto;
-    z-index: 999;
+    z-index: 1000;
     @extend .d-flex;
     align-items: flex-start;
     width: $hundredWidth;
@@ -158,7 +158,7 @@
             right: 0;
             z-index: 2;
             padding: 0 var(--padding);
-            width: calc(100% - calc(var(--padding) * 2));
+            width: var(--padding-width);
             min-height: var(--element-height);
 
             &:hover {

@@ -41,7 +41,7 @@ export const HeaderProvider: React.FC<HeaderProviderProps> = ({ children }) => {
   </>
   );
 };
-
+const HOVER_TIME = 500;
 const Header: React.FC = () => {
   const [hover, setHover] = useState<string>('');
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
@@ -57,8 +57,8 @@ const Header: React.FC = () => {
     }
     // Set hover state after 2 seconds
     const timeout = setTimeout(() => {
-      setHover(' header__hover');
-    }, 2000);
+      setHover('__hover');
+    }, HOVER_TIME);
     setHoverTimeout(timeout);
   };
 
@@ -69,12 +69,12 @@ const Header: React.FC = () => {
     }
     // Set upClass and resetClass with a total delay of 4 seconds
     const upClass = setTimeout(() => {
-      setHover(' header__hover--end');
+      setHover('--end');
       const resetClass = setTimeout(() => {
         setHover('');
-      }, 2000);
+      }, HOVER_TIME);
       setHoverTimeout(resetClass);
-    }, 2000);
+    }, HOVER_TIME);
     setHoverTimeout(upClass);
   };
 
@@ -88,7 +88,7 @@ const Header: React.FC = () => {
       setContext(null);
       setRoute(router.asPath);
     }
-  }, [setContext, headerState]);
+  }, [setContext]);
 
 
   return (
@@ -96,13 +96,12 @@ const Header: React.FC = () => {
       <style jsx>{styles}</style>
       {headerState && <>
         <div
-          className={`header${hover}`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-        >
+          className="header"
+          >
           <div
-            className="header-content"
-
+            className={`header-content${hover!==''?` header-content${hover}`:''}`}
           >
             <div
               className="header-left"

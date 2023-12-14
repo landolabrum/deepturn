@@ -12,7 +12,7 @@ const Index = () => {
         <>
             <style jsx>{styles}</style>
             {isClient && (
-                <video loop muted className="background-video">
+                <video autoPlay={true} muted={true} loop className="background-video" controls={false}>
                     <source src="/assets/backgrounds/contour_bg.webm" type="video/webm" />
                     Your browser does not support the video tag.
                 </video>

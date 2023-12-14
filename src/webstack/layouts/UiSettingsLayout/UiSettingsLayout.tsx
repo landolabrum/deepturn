@@ -10,6 +10,8 @@ import { useRouter } from 'next/router';
 import useClass from '@webstack/hooks/useClass';
 import useWindow from '@webstack/hooks/useWindow';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
+import UiButton from '@webstack/components/UiButton/UiButton';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ISettingsLayout {
@@ -26,10 +28,10 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   title,
   defaultView
 }: ISettingsLayout) => {
+
   const router = useRouter();
   const queryViewId = router?.query?.vid && router.query.vid;
   const [view, setView] = useState<string | undefined>(defaultView);
-  const { width, height } = useWindow();
   const [actionStyles, setActionStyles] = useState({ width: 350 });
   const containerRef = useRef<any>();
   const handleView = (view: string) => {
@@ -66,13 +68,21 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     //   }
     // }, 100);
   }
-
+const [hide, setHide]=useState('');
+const handleHide = () =>{
+  if(hide == '')setHide('hide');
+  else if(hide == 'hide')setHide('show');
+  else if(hide == 'show')setHide('hide');
+  else setHide('');
+}
   const optionViews = (dashed: boolean = true) => Object.keys(views).map(v => {
     return keyStringConverter(v, dashed)
   });
-  useEffect(() => {
-    handleLayout();
-  }, [width, height]);
+  
+  useEffect(() => {}, [setHide]);
+  // useEffect(() => {
+  //   handleLayout();
+  // }, [width, height]);
   useEffect(() => {
     if (views) {
       const firstView = queryViewId || defaultView || Object.keys(views)[0];
@@ -84,8 +94,9 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     <>
       <style jsx>{styles}</style>
       <div ref={containerRef} id="settings-container" className={containerClass}>
+
         <div className={contentClass}>
-          <div className="settings__actions">
+          <div className={`settings__actions ${hide!==''?`settings__actions--${hide}`:''}`}>
             <Div maxWidth={1100} style={actionStyles}>
          
               <div className="settings__actions--content">
@@ -113,8 +124,18 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
 
           </div>
           <div className={viewClass}>
-          {title && <div className='settings__view--title'>
-                {title}
+          {title && <div className={`settings__view--header${
+                  hide==''?' settings__view--header--init':hide=='show'?' settings__view--header--show':' settings__view--header--hide'}`}>
+          <div className='settings__view--header--icon'>
+                <UiIcon 
+                  icon={hide==''?"fa-xmark" : hide=='hide'?'fa-bars':'fa-xmark'}
+                  onClick={handleHide}
+                />
+                  </div>
+
+                  <div className='settings__view--header--title'>
+                    {title}
+                  </div>
               </div>}
             <div className='settings__view__content'>
               {view && views[view]}

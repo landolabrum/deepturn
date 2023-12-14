@@ -65,7 +65,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
 
       // Apply outline, disabled and responsive styles
       if (typeof traits.outline === "string") formElement.style.outline = traits.outline;
-      formElement.classList.toggle('form-control__element-disabled', traits?.disabled != undefined);
+      // formElement.classList.toggle('form-control__element-disabled', traits?.disabled != undefined);
       if (traits?.responsive) formElement.classList.add('form-control__element-responsive');
 
       // Special handling for USABLE elements

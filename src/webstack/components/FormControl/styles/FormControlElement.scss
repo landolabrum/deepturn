@@ -65,7 +65,7 @@
     }
 
     &-disabled {
-        filter: brightness(.7);
+        filter: brightness(.7) blur(2px);
         &:hover {
             color: var(--gray-60);
             --ui-icon-color: var(--gray-60);
@@ -385,9 +385,7 @@
         }
     }
 
-    &-disabled {
-        filter: brightness(.7) blur(1px);
-    }
+
 
     // FORM CONTROL ELEMENTS - ELEM TYPES
     &--select:not(&--nav-item, &--nav-item__active) {

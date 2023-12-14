@@ -259,7 +259,7 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
                 {view == 'success' && <UiDiv id='feature_message' jsx={successJsx}>{message || ''}</UiDiv>}
                 {view == 'contact' && <div className='product-feature-form__action'>
                     <div>
-                        <UiButton variant='flat' onClick={() => handleView(true)} traits={{
+                        <UiButton  onClick={() => handleView(true)} traits={{
                             beforeIcon: {
                                 icon: 'fa-chevron-left',
                             }
@@ -325,6 +325,7 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
                 </>}
                 {view == 'contact' && <div className='product-feature-form__contact'>
                     <UiForm 
+                        variant='card'
                         fields={fields}
                         disabled={disabled}
                         onChange={onChange}

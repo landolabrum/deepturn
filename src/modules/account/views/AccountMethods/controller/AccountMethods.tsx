@@ -121,7 +121,7 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
                 })}
               </div>
             </div></>}
-            {clientSecret && <StripePaymentForm clientSecret={clientSecret} onSuccess={getAccountMethods} />}
+            {clientSecret && <div><StripePaymentForm clientSecret={clientSecret} onSuccess={getAccountMethods} /></div>}
         </div>
       </UiCollapse>
     </>

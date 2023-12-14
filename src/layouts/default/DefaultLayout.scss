@@ -3,4 +3,9 @@ main {
   overflow-y: visible;
   min-height: inherit;
   position: relative;
+  @media(min-width: 1260px){
+    width: auto;
+    margin: 0 auto;
+    max-width: calc(1260px - calc(var(--padding) * 2));
+  }
 }

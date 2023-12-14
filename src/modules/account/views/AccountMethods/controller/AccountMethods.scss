@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
 }
 
 
@@ -12,18 +11,15 @@
 }
 .body {
     padding: 0 var(--padding);
-    width: calc(calc(100% - 1px) - calc(var(--padding) * 2));
 }
 .account-methods {
-    @extend .d-flex;
+    display: flex;
     flex-direction: column;
     gap: var(--padding);
-    justify-content: stretch;
-    min-height: var(--element-height);
     width: 100%;
     .account-methods__existing {
-        width: calc(100% - calc(var(--padding) * 2));
         @extend .d-flex;
+        box-sizing: border-box; /* Include padding and border in the width calculation */
         flex-direction: column;
         gap: var(--padding);
         padding: var(--padding);
@@ -38,13 +34,14 @@
         }
         .account-methods__list {
             @extend .d-flex;
+            width: 100%;
             flex-direction: column;
             gap: var(--s-7);
-            width: 100%;
             .account-methods__list-item {
                 width: 100%;
                 min-height: var(--element-height);
             }
         }
     }
+    
 }

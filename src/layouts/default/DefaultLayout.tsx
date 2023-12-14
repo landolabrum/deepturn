@@ -18,7 +18,7 @@ const DefaultLayout = (props: IProps) => {
       if (mainRef.current) {
         const mainHeight = mainRef.current.offsetHeight;
         const windowHeight = windowSize.height;
-        console.log('[MRF]', mainRef.current.childNodes)
+        // console.log('[MRF]', mainRef.current.childNodes)
         if (mainHeight < windowHeight) {
           mainRef.current.style.height = `${windowHeight - mainRef.current.offsetTop}px`;
         } else {
