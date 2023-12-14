@@ -272,6 +272,7 @@ h6 {
 div , ol{
 
   --padding: 20px;
+  --padding-width: calc(100% - calc(var(--padding) * 2));
   --padding-sm: calc(--padding * 2);
   &::-webkit-scrollbar-thumb {
     background-color: var(--primary);
