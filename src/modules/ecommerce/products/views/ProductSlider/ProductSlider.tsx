@@ -30,6 +30,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
   return (
     <>
       <style jsx>{styles}</style>
+      <div className='product-slider__container'>
       <div className='product-slider'>
         <div className='product-slider__carousel'>
           {Array(products).length > 0 && products.map((product: any, key: number) => {
@@ -51,6 +52,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
             );
           })}
         </div>
+      </div>
       </div>
     </>
   );

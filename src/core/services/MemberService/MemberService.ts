@@ -360,22 +360,41 @@ export default class MemberService
     if (jwtCookie.domain) props.domain = jwtCookie.domain;
     CookieHelper.setCookie(jwtCookie.name, "", props);
   }
-
   private parseMemberToken(jwt: string): MemberToken | null {
-    const a = jwt.split(".");
-    if (a.length != 3) {
+    const segments = jwt.split('.');
+    if (segments.length !== 3) {
+      console.error('Invalid JWT: does not contain 3 segments');
       return null;
     }
-    const encodedBody = a[1];
+  
+    const encodedPayload = segments[1].replace(/-/g, '+').replace(/_/g, '/');
+  
     try {
-      return JSON.parse(window.atob(encodedBody)) as MemberToken;;
+      const decodedPayload = window.atob(encodedPayload);
+      return JSON.parse(decodedPayload) as MemberToken;
     } catch (error) {
-      let e: any = error;
-      if (typeof error == 'object') e.loc = '[ MemberService.ts ]';
-      alert(JSON.stringify(error))
+      console.error('Error decoding JWT payload', error, '[MemberService.ts]');
+      // For production, consider removing the alert and handling the error more gracefully
+      alert('Error decoding JWT payload: ' + JSON.stringify(error));
+      return null;
     }
-    return null;
   }
+  
+  // private parseMemberToken(jwt: string): MemberToken | null {
+  //   const a = jwt.split(".");
+  //   if (a.length != 3) {
+  //     return null;
+  //   }
+  //   const encodedBody = a[1];
+  //   try {
+  //     return JSON.parse(window.atob(encodedBody)) as MemberToken;;
+  //   } catch (error) {
+  //     let e: any = error;
+  //     if (typeof error == 'object') e.loc = '[ MemberService.ts ]';
+  //     alert(JSON.stringify(error))
+  //   }
+  //   return null;
+  // }
 
   private deleteMemberToken() {
     if (this.isBrowser) {

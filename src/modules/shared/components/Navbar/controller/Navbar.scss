@@ -30,12 +30,14 @@
       filter: brightness(2);
       --ui-icon-color: var(--body);
       background-color: var(--gray-80-opaque);
+      box-shadow: -10px 5px 5px var(--gray-10-opaque);
     }
 
     50% {
       filter: brightness(1.5);
       --ui-icon-color: var(--primary-opaque);
-      background-color: var(--gray-40-opaque);
+      background-color: var(--gray-10-opaque);
+      box-shadow: -10px 10px 10px var(--gray-10-opaque);
     }
 
     100% {
@@ -45,17 +47,24 @@
     }
   }
 
+
   .navbar__trigger {
     cursor: pointer;
     width: var(--element-height);
     height: var(--element-height);
     --ui-icon-height: var(--s-5);
     --ui-icon-width: var(--s-5);
-    --ui-icon-color: var(--primary-opaque);
+    border: solid 1px var(--gray-60);
     @extend .d-flex;
     justify-content: center;
     border-radius: var(--border-radius);
     display: none;
+    background-color: var(--gray-70);
+    --ui-icon-color: var(--primary);
+    &--opaque{
+      background-color: var(--dark-opaque);
+      border: solid 1px var(--gray-70-opaque);
+    }
     &:hover {
       animation: fade 1s forwards;
     }
@@ -65,7 +74,6 @@
   .nav-bar__nav-items {
     @extend .d-flex;
     width: 100%;
-    
 
 
 
@@ -76,6 +84,10 @@
       &--login {
         margin-right: var(--s-9);
         margin-left: auto;
+      }
+      &--cart{
+        width: 40px;
+        background-color: #f30 !important;
       }
     }
   }

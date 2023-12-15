@@ -11,10 +11,14 @@ import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import MobileNav from "../views/MobileNav/MobileNav";
 import environment from "~/src/environment";
 import useNavMobile from "../hooks/useNavBreak"; // Ensure this path is correct
+import FormControl from "@webstack/components/FormControl/FormControl";
+import useScroll from "@webstack/hooks/useScroll";
 
 const Navbar = () => {
   const [user, current, setRoute ] = useRoute();
   const routes = useClearanceRoutes();
+  const [scroll, setScroll]=useScroll();
+  // console.log('[ SCROLL ]', scroll > 200)
   const { openModal, closeModal, isModalOpen } = useModal();
   const [currentRoutes, setCurrentRoutes] = useState<IRoute[] | undefined>(undefined);
   const [toggled, setToggled] = useState<string | null>(null);
@@ -53,7 +57,7 @@ const Navbar = () => {
 
   // Handle click events for routes and modals
   const handleClick = (route: any) => {
-    console.log('[ ROUTE ]', route)
+    // console.log('[ ROUTE ]', route)
     if (typeof route === 'string') {
       setRoute(route);
     } else if (route?.href) {
@@ -75,12 +79,15 @@ const Navbar = () => {
 
   const cartTotal = useCartTotal();
   const cartRoute = routes.find((r: any) => r.href === '/cart');
-
   // Mobile navigation component
   const modals: any = {
     login: <Authentication />,
   };
+  // console.log(cartRoute)
   // const currents = [navRef?.current, navItemsRef?.current];
+  useEffect(() => {
+    // setScroll("nav-bar")
+  },[]);
   useEffect(() => {
     if (routes) {
       const newRoutes = routes
@@ -96,22 +103,28 @@ const Navbar = () => {
       <style jsx>{styles}</style>
       <nav id="nav-bar" className={`navbar__container ${isMobile ? 'navbar__container--hide' : ''}`} >
         <div className='navbar' ref={navRef}>
-          <div className={`navbar__trigger `}>
+          <div className={`navbar__trigger${ scroll > 90 ?' navbar__trigger--opaque':''}`}>
             <UiIcon
               icon={isModalOpen ? 'fa-xmark' : 'fa-bars'}
               onClick={handleTrigger}
             />
           </div>
           <div ref={navItemsRef} className={`nav-bar__nav-items`}>
-            {currentRoutes && currentRoutes.map((route, key) => (
-              <div
+            {currentRoutes && currentRoutes.map((route, key) => <div
                 key={key}
                 className={
-                  `nav__nav-item nav__nav-item--${String(route?.label).toLowerCase()}${toggled === route.label ? ' nav__nav-item__active' : ''}`
+                  `nav__nav-item nav__nav-item--${
+                    route.label ? (
+                      route.label.toLowerCase()
+                    ):(
+                      String(route.href).split('/')[1]
+                    )}${
+                      toggled === route.label ? ' nav__nav-item__active' : ''
+                    }`
                 }
                 onDoubleClick={() => route?.href && handleClick({ href: route.href })}
               >
-                {!route?.items ? (
+                {route.href !== '/cart' ? !route?.items ? (
                   <UiButton
                     traits={route?.icon ? { afterIcon: { icon: route.icon } } : undefined}
                     variant={toggled === route.label || (current === '/' && route.label?.toLowerCase() === environment.merchant.name) ? 'nav-item__active' : 'nav-item'}
@@ -129,9 +142,18 @@ const Navbar = () => {
                     onSelect={handleClick}
                     onToggle={() => route.label && handleToggle(route.label)}
                   />
+                ):(<FormControl
+                    variant={toggled === route.label ? 'nav-item__active' : 'nav-item'}
+                    >
+                  <UiIcon
+                    onClick={() => handleClick(route)}
+                    icon={route?.icon}
+                  />
+                  </FormControl>
                 )}
+                
               </div>
-            ))}
+            )}
           </div>
         </div>
       </nav>

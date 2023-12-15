@@ -28,6 +28,8 @@
 .cart {
     @extend .d-flex-col;
     width: 100%;
+    z-index: 1;
+    margin-top: var(--element-height);
     .cart__header {
         @extend .d-flex;
         gap: 7px;

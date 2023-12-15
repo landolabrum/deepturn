@@ -30,13 +30,12 @@ $actionsBg: var(--gray-90);
     min-height: inherit;
     height: 100%;
     z-index: 999;
-    position: fixed;
     left: 0;
     z-index: 1;
-    // @media (min-width: 1100px) {
-    //     position: relative;
+    position: relative;
+    @media (min-width: 1100px) {
         padding-top: var(--padding);
-    // }
+    }
 
     &__content {
         padding-top: 0;
