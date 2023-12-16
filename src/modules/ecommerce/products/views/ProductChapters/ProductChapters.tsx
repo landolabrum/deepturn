@@ -18,9 +18,9 @@ const ProductChapters: React.FC = () => {
     return (
         <>
             <style jsx>{styles}</style>
-            <ul className='product-chapters' >
+            <div className='product-chapters' >
                 {(categories).map((icon, index) => (
-                    <li
+                    <div
                         key={index} className='product-chapters__chapter'>
                         <div className='chapter__content'>
                             <div className='chapter__icon'>
@@ -35,9 +35,9 @@ const ProductChapters: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </>
     );
 };

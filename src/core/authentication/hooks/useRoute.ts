@@ -11,6 +11,7 @@ const AUTHED_LANDING = "/account";
 const UNAUTHED_LANDING = "/";
 const VERIFICATION_LANDING = '/verify';
 const LOGOUT_LANDING = '/authentication/[function]';
+const BYPASS_ROUTES = ['/cart']
 const DEV = false;
 
 export default function useRoute(handleSideNav?: () => void):any {
@@ -81,7 +82,7 @@ export default function useRoute(handleSideNav?: () => void):any {
         router.push('/');
       } else if (!router.pathname.includes(VERIFICATION_LANDING)) {
         DEV && console.log('[ HANDLE USER ]( 4 )', conlog);
-        handleRoute({ href: UNAUTHED_LANDING });
+        if (!BYPASS_ROUTES.includes(router.pathname))handleRoute({ href: UNAUTHED_LANDING });
       }
     } else {
       DEV && console.log('[ HANDLE USER ]( 5 )', conlog);

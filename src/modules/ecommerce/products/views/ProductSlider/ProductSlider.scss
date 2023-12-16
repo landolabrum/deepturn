@@ -1,5 +1,4 @@
-$dur: 1s; // Duration of the animation
-$hite: 450px;
+$item-height: 500px;
 
 .d-flex {
   display: flex;
@@ -7,136 +6,212 @@ $hite: 450px;
   align-items: center;
 }
 
-.product-slider__container {
+.product-slider--container {
+
+  height: max-content;
   width: 100%;
-  white-space: nowrap;
-  scroll-snap-type: mandatory;
-  scroll-snap-type: x mandatory;
-  overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  margin: var(--s-7) 0;
-  position: relative;
-  z-index: 2; /* higher z-index to bring it in front */
-  min-height: calc(calc($hite  + 2px) + calc(var(--padding) * 2));
-  border-radius: var(--border-radius);
-  @media(max-width:1100px){
-    height: 100%;
+  @media(min-width: 1100px){
+    overflow: hidden; // Hide overflow here
+    border-radius: var(--border-radius);
+    position: relative;
+    height: $item-height;
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: var(--padding); // Width of the shadow
+      z-index: 2;
+    }
+    
+    &:before {
+      left: 0;
+      background: linear-gradient(to right, var(--gray-50-opaque), transparent);
+      mix-blend-mode: difference;
+    }
+    
+    &:after {
+      right: 0;
+      background: linear-gradient(to left,  var(--gray-50-opaque), transparent);
+    }
   }
+  .product-slider__left, .product-slider__right{
+    position: absolute;
+    height: 100%;
+    top: 0;
+    @extend .d-flex;
+    z-index: 1000;
+    width: var(--element-height);
+    --ui-icon-width: var(--s-1);
+    --ui-icon-height: var(--s-1);
+    --ui-icon-color: var(--gray-70-opaque)
+    cursor: pointer;
+  }  
+  .product-slider__left{
+    &:hover{
+      --ui-icon-color: var(--gray-70)
+    }
+    &:focus{
+      --ui-icon-color: var(--primary)
+    }
+    left: 0;
+  }
+  .product-slider__right{
+    &:hover{
+      --ui-icon-color: var(--gray-50)
+    }
+    &:focus{
+      --ui-icon-color: var(--primary)
+    }
+    right: 0;
+  }
+.product-slider {
+  height: max-content;
+  @media(min-width: 1100px) {
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: scroll; // Enable horizontal scrolling
+    height: $item-height;
+    width: 100%;
+  }
+  
   &::-webkit-scrollbar {
     display: none;
   }
-  .product-slider{
-    // background-color: #f30;
-    z-index: 1000;
-    width: 100%;
-    height: 100%;
-  }
-  .product-slider__carousel {
-    position: absolute;
+
+  &__items {
     @extend .d-flex;
-    height: calc(100% - 16px);
-    margin: var(--s-9) 0;
+    flex-direction: column;
     gap: var(--s-9);
-    @media(max-width:1100px){
-      width: 100%;
+    @media(min-width: 1100px) {
+      width: max-content;
+      height: 100%; // Use 100% of the parent's height
+      flex-direction: row;
+      z-index: 1; // Ensure it's below the shadows
+    }
+  }
 
-      position: unset;
-      justify-content: flex-start;
-      gap:var(--s-2);
+
+
+  &__item{
+    cursor: pointer;
+    width: 100%;
+    background-color: var(--gray-80);
+    color: var(--gray-10);
+    
+    &:hover{
+      color: var(--primary);
+      background-color: var(--gray-70);
+    }
+    &--image, &--info{
+      height: var(--padding-width);
+      width: var(--padding-width);
+    }
+    &--image{
+      @extend .d-flex;
+      height: 100%; 
+    }
+    &--info{
+      padding: var(--padding);
+      border-radius: var(--border-radius);
+      @extend .d-flex;
       flex-direction: column;
+      justify-content: flex-start;
       align-items: flex-start;
+      gap: var(--padding);
+      &__name{
+        text-transform: capitalize;
+        font-size: var(--s-4);
+      }
+      &__description {
+        line-height: 1.5;
+        color: var(--gray-30);
+        white-space: normal; /* Allows for wrapping text */
+        overflow: hidden; 
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 15; /* Approximate number of lines based on max-height and line-height */
+        -webkit-box-orient: vertical;
     }
     
-    @media(max-width:600px){
+      &__action{
+        width: 100%;
+        @extend .d-flex;
+        margin: auto auto 0;
+        min-height: var(--element-height);
+      }
+    }
+
+    
+    @extend .d-flex;
+    height: $item-height;
+    border-radius: var(--border-radius);
+    width: 100%;
+    aspect-ratio: 4/5;
+
+
+
+    
+    @media(min-width: 1100px){
       flex-direction: column;
-      width: 100%;
+      overflow: hidden;
+      border-radius: var(--border-radius);
+      &--image, &--info{
+        padding: 0;
+        width: 100%;
+      }
+      &--image{
+        height: calc($item-height * .7);
+        width: 100%;
+      }
+    
+      &--info{
+        width: 100%;
+
+        height: calc($item-height * .3);
+        border-radius: unset;
+        &__name{
+          padding: 0 var(--padding);
+        }
+        &__description {
+          padding: 0 var(--padding);
+          -webkit-line-clamp: 3; /* Approximate number of lines based on max-height and line-height */
+        }
+        &__action{
+          margin-bottom: var(--s-9);
+          width: auto;
+          padding: 0 var(--padding);
+        }
+      }
+    }
+    @media(max-width: 900px){
+      flex-direction: column;
+      background-color: var(--gray-90);
+      &--image{
+        height: 60%;
+        margin-bottom: auto;
+        // height: calc($item-height * .6);
+      }
+    
+      &--info{
+        justify-content: flex-end;
+        height: max-content;
+        border-radius: unset;
+        background-color: transparent;
+        padding: 0 var(--padding) 0;
+        
+        &__description {
+          -webkit-line-clamp: 2; /* Approximate number of lines based on max-height and line-height */
+        }
+        &__action{
+          justify-content: flex-end;
+          width: 100%;
+          margin-bottom: var(--padding);
+        }
+      }
     }
   }
 }
-.product-slider__product{
-  width: 450px;
-  color: var(--white);
 }
-// .product-slider__product{
-//   z-index: 1;
-//   // background-color: var(--primary);
-//   position: relative; /* ensure it's positioned for z-index to work */
-//   border-radius: var(--border-radius);
-//   border: solid 1px var(--blue-10);
-//   outline: solid 1px var(--blue);
-//   padding: var(--padding);
-//   cursor: pointer;
-//   $dHite: 80px;
-//   width: $hite;
-//   display: flex;
-//   flex-direction: column;
-//   height: $hite;
-//   @media(max-width:1100px){
-//     width: inherit;
-//     height: max-content;
-//     border-radius: var(--border-radius);
-//     border-color: transparent;
-//     outline: none;
-//     flex-direction: row;
-//     background-color: var(--gray-90);
-
-//     padding:var(--s-7) var(--padding);
-//   }
-//   @media(max-width:600px){
-//     background-color: var(--gray-50);
-//     flex-direction: column-reverse;
-//     padding: var(--s-8) 0;
-//   }
- 
-//   &__description{
-//     color:var(--gray-30);
-//     font-size: var(--s-5);
-//     line-height: 2;
-//     font-weight: 500;
-//     margin-bottom: var(--s-9);
-//     text-transform: capitalize;
-//     height: $dHite;
-//     @media(max-width:600px){
-//       height: max-content;
-//     }
-//   }
-//   @media(max-width:1100px){
-//     &-title{
-//       font-size: var(--s-2);
-//       line-height: 1;
-//     }
-//   }
-//   @media(max-width:600px){
-    
-//     padding: 0;
-//     &-title{
-//       color: var(--gray-100);
-//       font-weight: 1100;
-//       padding:var(--s-8) 0 0 var(--s-9);
-//     }
-//   }
-//   &__image{
-//     height: calc($hite - $dHite);
-//     position: relative;
-//     @media(max-width:1100px){
-//       height: 500px;
-//       width: calc(50vw - var(--padding));
-//     }
-//     @media(max-width:600px){
-//       width: 100%;
-//       height: auto;
-//     }
-//     &__action{
-//       margin: auto;
-//       @media(max-width:1100px){
-//         right: 0;
-//       }
-//       @media(max-width:600px){
-//         right: var(--s-4);
-//       }
-//       bottom: var(--s-7);
-//       right: var(--s-9);
-//     }
-//   }
-// }

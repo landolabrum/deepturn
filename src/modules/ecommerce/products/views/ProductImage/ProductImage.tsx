@@ -7,15 +7,12 @@ const ProductImage: React.FC<{ image?: any, options?: any }> = ({ image, options
     return (
         <>
             <style jsx>{styles}</style>
-            <div      className={`product-image ${options?.view?`product-image__${options?.view}`:''}`}>
-                {/* <div style={options?.style} > */}
+            <div className={`product-image ${options?.view?`product-image__${options?.view}`:''}`}>
                     {image && !imageLoadError ? (
                         <img
                             src={image}
                             alt="img"
                             className={`product-image__content ${options?.view?`product-image__content__${options?.view}`:''}`}
-                            // width={options?.size ?`${options.size}`:"100%"}
-                            // height="auto" // Set the appropriate height for your image
                             onError={() => setImageLoadError(true)}
                         />
 

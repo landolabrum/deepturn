@@ -7,11 +7,8 @@
     @extend .d-flex;
     justify-content: flex-start;
     width: 100%;
-    list-style: none;
-    margin: var(--padding) 0 var(--element-height);
-    padding: 0;
     color:var(--primary);
-    gap: var(--s-5);
+    gap: var(--padding);
     &__chapter{
         cursor: pointer;
         height: calc(var(--element-height) * 4);

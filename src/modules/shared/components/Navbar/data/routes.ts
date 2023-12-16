@@ -82,7 +82,7 @@ export const routes: IRoute[] = [
     icon: 'fa-circle-user',
     clearance: 0,
   },
-  { label: "", href: "/cart", icon: "fal-bag-shopping" },
+  { label: "", href: "/cart", icon: "fal-bag-shopping",clearance: 0, },
 ];
 
 export const useClearanceRoutes = () => {

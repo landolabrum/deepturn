@@ -11,22 +11,15 @@ import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import MobileNav from "../views/MobileNav/MobileNav";
 import environment from "~/src/environment";
 import useNavMobile from "../hooks/useNavBreak"; // Ensure this path is correct
-import FormControl from "@webstack/components/FormControl/FormControl";
 import useScroll from "@webstack/hooks/useScroll";
 
 const Navbar = () => {
   const [user, current, setRoute ] = useRoute();
   const routes = useClearanceRoutes();
   const [scroll, setScroll]=useScroll();
-  // console.log('[ SCROLL ]', scroll > 200)
   const { openModal, closeModal, isModalOpen } = useModal();
   const [currentRoutes, setCurrentRoutes] = useState<IRoute[] | undefined>(undefined);
   const [toggled, setToggled] = useState<string | null>(null);
-  // const setRoute = (route: IRoute | string) => {
-  //   if (typeof routeSetter === 'function') {
-  //     routeSetter(route);
-  //   }
-  // };
   const navRef = useRef(null);
   const navItemsRef = useRef(null);
   const breakpointWidth = 1100; // Adjust breakpoint width as needed
@@ -142,14 +135,11 @@ const Navbar = () => {
                     onSelect={handleClick}
                     onToggle={() => route.label && handleToggle(route.label)}
                   />
-                ):(<FormControl
-                    variant={toggled === route.label ? 'nav-item__active' : 'nav-item'}
-                    >
+                ):(
                   <UiIcon
                     onClick={() => handleClick(route)}
                     icon={route?.icon}
                   />
-                  </FormControl>
                 )}
                 
               </div>

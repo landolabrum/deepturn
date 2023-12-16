@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./DashboardPage.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { useRouter } from "next/router";
@@ -13,15 +13,17 @@ export const DashboardPage: React.FC<IDashboard> = ({ links }: IDashboard) => {
   const dashboardLinks = pruneRoutes(["dashboard", "account"]);
   const access = useClearanceRoutes();
   const handleClick = (link: any) => {
+    console.log('link: ', link)
     if (!link.href) return;
     router.push(link.href);
   };
+  
+  useEffect(() => {}, [handleClick]);
   if (Array(dashboardLinks) || Array(dashboardLinks)) return (
     <>
       <style jsx>{styles}</style>
       <div className="dashboard">
-        {JSON.stringify(access)}
-        <AdaptGrid variant="card" xs={2} md={4} gap={10}>
+        <AdaptGrid xs={2} md={4} gap={10}>
           {Object.entries(links || access).map(([key, link]) => {
             return (
               <div

@@ -78,7 +78,7 @@ const ProductsListing: NextPage = () => {
   <style jsx>{styles}</style>
     <div className="product-listing">
       <ProductChapters/>
-      <div className="product-listing__header">
+      {/* <div className="product-listing__header">
         <div className="product-listing__filters">
           {['categories', 'types'].map(filterKey => (
             <UiSelect
@@ -92,7 +92,7 @@ const ProductsListing: NextPage = () => {
             />
           ))}
         </div>
-      </div>
+      </div> */}
       <ProductSlider products={products} />
       <div className="product-listing__footer">
         <UiButton disabled={!hasMore} variant="dark" onClick={() => {/* Pagination code here */ }}>Next</UiButton>

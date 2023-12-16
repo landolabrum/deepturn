@@ -68,16 +68,18 @@ const ProductDescription = () => {
           <div className="product-description__info-panel">
             <div className="product-description__info-panel_header">
               <div className="product-description__info-panel_title">{product.name}</div>
-              <p>{product.description}</p>
             </div>
             <div className="product-description__info-panel_body">
+              {product.description}
+            </div>
+            <div>
               <ProductBuyNow
                 product={product}
                 cart={cart}
                 setCart={setCart}
                 traits={{ width: "100%" }}
               />
-            </div>
+              </div>
           </div>
         </AdaptGrid>
  

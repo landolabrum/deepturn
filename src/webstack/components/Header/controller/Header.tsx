@@ -3,7 +3,7 @@ import styles from "./Header.scss";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Navbar from "@shared/components/Navbar/controller/Navbar";
-import { debounce } from "lodash";
+import useWindow from "@webstack/hooks/useWindow";
 
 
 export type HeaderDispatch = React.Dispatch<React.SetStateAction<HeaderProps | null>>;
@@ -49,8 +49,9 @@ const Header: React.FC = () => {
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
   const [route, setRoute] = useState<string | null>(null);
   const router = useRouter();
-
+  const width = useWindow()?.width;
   const handleMouseEnter = () => {
+    if(width < 1100)return;
     // Clear any existing leave timeout
     if (hoverTimeout) {
       clearTimeout(hoverTimeout);
@@ -63,6 +64,7 @@ const Header: React.FC = () => {
   };
 
   const handleMouseLeave = () => {
+    if(width < 1100)return;
     // Clear the enter timeout if it's set
     if (hoverTimeout) {
       clearTimeout(hoverTimeout);
@@ -84,6 +86,11 @@ const Header: React.FC = () => {
   }, [context]);
 
   useEffect(() => {
+    if(width < 1100){
+      setHover('__hover')
+    }else{
+      setHover('')
+    }
     if (router.asPath !== route) {
       setContext(null);
       setRoute(router.asPath);
@@ -101,7 +108,7 @@ const Header: React.FC = () => {
           className="header"
           >
           <div
-            className={`header-content${hover!==''?` header-content${hover}`:''}`}
+            className={`header-content ${hover!==''?` header-content${hover}`:''}`}
           >
             <div
               className="header-left"

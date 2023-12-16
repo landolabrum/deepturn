@@ -4,10 +4,9 @@
 }
 
 .navbar__container {
+  z-index: 1000;
   @extend .d-flex;
   min-height: var(--element-height);
-  // position: absolute;
-  z-index: 2;
   background-color: var(--gray-100);
   width: 100%;    
   .navbar {
@@ -86,8 +85,18 @@
         margin-left: auto;
       }
       &--cart{
-        width: 40px;
-        background-color: #f30 !important;
+        cursor: pointer;
+        height: var(--element-height);
+        width: var(--element-height);
+        --ui-icon-width: var(--s-6);
+        --ui-icon-height: 100%;
+        --ui-icon-color: var(--gray-50);
+        &:hover{
+          --ui-icon-color: var(--primary-opaque);
+        }
+        &:focus-within{
+          --ui-icon-color: var(--primary);
+        }
       }
     }
   }
