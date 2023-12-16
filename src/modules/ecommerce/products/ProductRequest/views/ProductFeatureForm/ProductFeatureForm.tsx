@@ -142,7 +142,8 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
             user_agent: user_agent,
             src: 'prod-feature',
             features: {},
-            contact: {}
+            contact: {},
+            url:window?.location?.origin
         };
 
         // Convert features

@@ -9,6 +9,10 @@
     color: var(--gray-30);
     flex-direction: column;
     @extend .d-flex;
+    width: var(--padding-width);
+    padding: var(--padding);
+    margin: var(--padding) 0;
+    border-radius: var(--border-radius);
     height: 100%;
     background-color: var(--gray-100);
     .product__img-default{
@@ -32,7 +36,7 @@
         height: 100%;
         flex-direction: column;
         justify-content: space-between;
-        gap: 20px;
+        gap: var(--padding);
         padding: 20px 10px 10px;
         align-items: flex-start;
         width: calc(100% - 40px);

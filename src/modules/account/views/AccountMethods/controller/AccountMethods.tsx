@@ -34,7 +34,7 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
 
   const getAccountMethods = async () => {
     const methodsResponse = await memberService.getMethods();
-    console.log(methodsResponse)
+    // console.log(methodsResponse)
     if (methodsResponse) {
       setMethods(methodsResponse?.data);
     }

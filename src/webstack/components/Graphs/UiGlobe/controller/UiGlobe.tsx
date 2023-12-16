@@ -54,7 +54,7 @@ const UiGlobe: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      {JSON.stringify(places)}
+      {/* {JSON.stringify(places)} */}
       <div className='globe'>
         <Globe
           ref={globeEl}

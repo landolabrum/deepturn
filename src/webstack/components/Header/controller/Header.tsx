@@ -1,20 +1,18 @@
-import BreadCrumbs, { BreadCrumbLinkProps } from "../components/BreadCrumbs/BreadCrumbs";
-import styles from "./Header.scss";
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import { useRouter } from "next/router";
 import Navbar from "@shared/components/Navbar/controller/Navbar";
+import BreadCrumbs, { BreadCrumbLinkProps } from "../components/BreadCrumbs/BreadCrumbs";
+import styles from "./Header.scss";
 import useWindow from "@webstack/hooks/useWindow";
 
+const HOVER_TIME = 500;
 
-export type HeaderDispatch = React.Dispatch<React.SetStateAction<HeaderProps | null>>;
-export type useHeaderProp = any;
-export type HeaderProps = IHeader | null;
-export type IHeader = {
+export type HeaderProps = {
   breadcrumbs?: BreadCrumbLinkProps[];
   title?: string;
   right?: React.ReactElement | React.ReactFragment | string;
   subheader?: React.ReactElement | React.ReactFragment | string;
-}
+} | null
 
 const HeaderContext = createContext<[HeaderProps | null, (header: HeaderProps) => any]>([
   null,
@@ -23,32 +21,62 @@ const HeaderContext = createContext<[HeaderProps | null, (header: HeaderProps) =
 
 export const useHeader = () => useContext(HeaderContext);
 
-type HeaderProviderProps = {
-  children: React.ReactNode;
-};
+export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
+  const [hover, setHover] = useState<string>('');
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const width = useWindow()?.width;
 
-export const HeaderProvider: React.FC<HeaderProviderProps> = ({ children }) => {
-  const headerState = useState<HeaderProps | null>(null);
-  return (<>
-    <style jsx>{styles}</style>
-    <HeaderContext.Provider value={headerState}>
-      <div className='header__container' id="header-container">
-        <Navbar />
-        <Header />
-      </div>
-      {children}
-    </HeaderContext.Provider>
-  </>
+  const handleMouseEnter = () => {
+    if (width < 1100) return;
+    if (hoverTimeout) {
+      clearTimeout(hoverTimeout);
+    }
+    const timeout = setTimeout(() => {
+      setHover('__hover');
+    }, HOVER_TIME);
+    setHoverTimeout(timeout);
+  };
+
+  const handleMouseLeave = () => {
+    if (width < 1100) return;
+    if (hoverTimeout) {
+      clearTimeout(hoverTimeout);
+    }
+    const upClass = setTimeout(() => {
+      setHover('--end');
+      const resetClass = setTimeout(() => {
+        setHover('');
+      }, HOVER_TIME);
+      setHoverTimeout(resetClass);
+    }, HOVER_TIME);
+    setHoverTimeout(upClass);
+  };
+
+  return (
+    <>
+      <style jsx>{styles}</style>
+      <HeaderContext.Provider value={[headerState, setHeaderState]}>
+        
+        <div className={`header__container${hover!=''?`header__container${hover}`:''}`} id="header-container"
+             onMouseEnter={handleMouseEnter}
+             onMouseLeave={handleMouseLeave}>
+          <Navbar />
+          <Header />
+        </div>
+        {children}
+      </HeaderContext.Provider>
+    </>
   );
 };
-const HOVER_TIME = 500;
 const Header: React.FC = () => {
-  const [hover, setHover] = useState<string>('');
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [context, setContext] = useContext(HeaderContext);
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
   const [route, setRoute] = useState<string | null>(null);
   const router = useRouter();
+
+  const [hover, setHover] = useState<string>('');
   const width = useWindow()?.width;
   const handleMouseEnter = () => {
     if(width < 1100)return;
@@ -103,12 +131,11 @@ const Header: React.FC = () => {
       <style jsx>{styles}</style>
       {headerState && <>
         <div
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+
           className="header"
           >
           <div
-            className={`header-content ${hover!==''?` header-content${hover}`:''}`}
+            className={`header-content`}
           >
             <div
               className="header-left"

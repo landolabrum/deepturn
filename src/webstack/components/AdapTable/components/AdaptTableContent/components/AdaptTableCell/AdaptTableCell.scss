@@ -177,57 +177,45 @@ $cell-height: 100%;
  align-items: center;
 }
 .adapt-table-cell__address {
-  display: grid;
-  grid-template-rows: auto auto auto; // Adjust as needed
-  grid-template-columns: auto auto auto; // Adjust as needed
-  font-size: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  // display: grid;
+  // grid-template-rows: auto auto auto; // Adjust as needed
+  // grid-template-columns: auto auto auto; // Adjust as needed
+  // font-size: inherit;
   &--line1, &--line2, &--city, &--state, &--postal_code, &--country {
     font-size: inherit;
     padding: 0 2px;
     line-height: 1.2;
     color: inherit;
-    white-space: nowrap;
     overflow: hidden;
     font-size: inherit;
     text-overflow: ellipsis;
   }
 
   &--line1 {
-    grid-row: 1;
-    grid-column: 1 / -1; // Span across all columns
     font-weight: 900;
   }
 
   &--line2 {
-    grid-row: 2;
-    grid-column: 1 / -1; // Span across all columns
   }
 
   &--city {
-    grid-row: 3;
-    grid-column: 1;
-    position: relative;
     &::after {
       content: ', ';
     }
   }
 
   &--state {
-    grid-row: 3;
-    grid-column: 2;
     &::after {
       content: ', ';
     }
   }
 
   &--postal_code {
-    grid-row: 3;
-    grid-column: 3;
   }
 
   &--country {
-    grid-row: 4;
-    grid-column: 1 / -1; // Span across all columns
   }
 }
 

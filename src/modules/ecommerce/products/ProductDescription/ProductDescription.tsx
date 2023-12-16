@@ -57,9 +57,7 @@ const ProductDescription = () => {
         <AdaptGrid
           sm={1}
           md={2}
-          gapX={10}
-          gapY={300}
-          margin='10px'
+          gapX={16}
           variant='card'
         >
           <div className={`product__img-default `} >

@@ -11,7 +11,7 @@ const AUTHED_LANDING = "/account";
 const UNAUTHED_LANDING = "/";
 const VERIFICATION_LANDING = '/verify';
 const LOGOUT_LANDING = '/authentication/[function]';
-const BYPASS_ROUTES = ['/cart']
+const BYPASS_ROUTES = ['/cart', '/configure']
 const DEV = false;
 
 export default function useRoute(handleSideNav?: () => void):any {
