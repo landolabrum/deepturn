@@ -109,6 +109,7 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
+    // console.log('[ HEADER CONTEXT ]', context)
     setHeaderState(context);
     setRoute(router.asPath);
   }, [context]);
@@ -129,7 +130,8 @@ const Header: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      {headerState && <>
+      {/* {headerState &&  */}
+      <>
         <div
 
           className="header"
@@ -141,20 +143,21 @@ const Header: React.FC = () => {
               className="header-left"
 
             >
-              <BreadCrumbs links={headerState.breadcrumbs} />
-              <div className="header-title">{headerState.title}</div>
+              <BreadCrumbs links={headerState?.breadcrumbs} />
+              <div className="header-title">{headerState?.title}</div>
             </div>
-            {headerState.right && (
-              <div className="header-right">{headerState.right}</div>
+            {headerState?.right && (
+              <div className="header-right">{headerState?.right}</div>
             )}
           </div>
-          {headerState.subheader && (
+          {headerState?.subheader && (
             <div className="subheader">
-              <div className="subheader-content">{headerState.subheader}</div>
+              <div className="subheader-content">{headerState?.subheader}</div>
             </div>
           )}
         </div>
-      </>}
+      </>
+      {/* } */}
     </>
   );
 };

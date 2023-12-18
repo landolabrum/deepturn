@@ -49,12 +49,11 @@ const Navbar = () => {
   };
 
   // Handle click events for routes and modals
-  const handleClick = (route: any) => {
-    // console.log('[ ROUTE ]', route)
-    if (typeof route === 'string') {
+  const handleClick = (_route: IRoute | string) => {
+    let route: IRoute = typeof _route == 'string'? {href: _route}: _route;
+    // console.log('[ ROUTE nav ]', route)
+    if (route?.href) {
       setRoute(route);
-    } else if (route?.href) {
-      setRoute(route?.href);
     } else if (route?.modal && !isModalOpen) {
       openModal(modals[route.modal]);
     }
@@ -67,11 +66,11 @@ const Navbar = () => {
 
   // Compute user display name
   const displayName = useMemo(() => {
-    return user ? `${user.name.split(" ")[0]} ${user.name.split(" ")[1][0]}.` : "";
+    return user?.name ? `${user.name.split(" ")[0]} ${user.name.split(" ")[1][0]}.` : "";
   }, [user]);
 
   const cartTotal = useCartTotal();
-  const cartRoute = routes.find((r: any) => r.href === '/cart');
+  const cartRoute = routes && routes.find((r: any) => r.href === '/cart');
   // Mobile navigation component
   const modals: any = {
     login: <Authentication />,

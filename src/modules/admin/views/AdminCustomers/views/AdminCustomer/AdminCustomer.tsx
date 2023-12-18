@@ -25,17 +25,27 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
   const [files, setFiles] = useState<any[] | undefined>();
   const { openModal, closeModal } = useModal();
   const [loader, setLoader] = useLoader();
-  const [info, setInfo]=useState({
+  const [info, setInfo] = useState({
     name: '',
     address: {},
     phone: '',
-    email:''
+    email: ''
   })
-
+  const [productRequest, setProductRequest] = useState<any>()
   const findField: any = (name: string) => customer && customer.find((f: IFormField) => f.name == name)?.value;
 
   const [notification, setNotification] = useNotification();
   function modifyCustomerData(data: any, round2?: string): any {
+    const hasProductRequest = () => {
+      const pmis = Object.entries(data?.metadata || {}).reduce((acc: any, [key, value]) => {
+        if (key.includes('pmi_') && value) {
+          acc[key.split('pmi_')[1]] = value;
+        }
+        return acc;
+      }, {});
+      setProductRequest(pmis);
+    }
+    hasProductRequest()
     const removeKeys = ['id', 'methods', 'files', 'default_source', 'shipping', 'object', 'currency', 'invoice_settings', 'next_invoice_sequence', 'preferred_locales', 'test_clock', 'invoice_prefix'];
     const modifiedKeys = ['metadata'];
     const disabledKeys = ['created', 'server_url', 'referrer_url', 'email_verified', 'delinquent', 'livemode', 'balance'];
@@ -62,9 +72,11 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
       if (key == 'email_verified') t = 'checkbox';
       return t;
     }
+
     const formatted = (parentData?: any, parent?: string) => {
+
       return Object.entries(parentData || data)
-        .filter(([key]) => !modifiedKeys.includes(key) && !removeKeys.includes(key))
+        .filter(([key]) => !modifiedKeys.includes(key) && !removeKeys.includes(key) && !key.includes('pmi_'))
         .map(([key, value]) => ({
           name: parent ? `${parent}.${key}` : key,
           label: keyStringConverter(key),
@@ -155,7 +167,7 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
         if (response) {
           setInfo({
             name: response?.name,
-            phone:response?.phone,
+            phone: response?.phone,
             address: response?.address || {},
             email: response?.email
           })
@@ -172,10 +184,10 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
     }
   };
 
-  useEffect(() => { }, [onSubmit]);
   useEffect(() => {
     getCustomer();
-  }, [customerId, ]);
+  }, [customerId,]);
+  useEffect(() => { }, [onSubmit, setProductRequest]);
 
   if (customerId) return (
     <>
@@ -186,53 +198,60 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
           <AdaptGrid xs={1} md={2} gap={10} margin='18px 0' >
             <div className='customer--info'>
               <div className='customer--info__name'>{info?.name}</div>
-              {Object.entries(info?.address)?.length && 
+              {Object.entries(info?.address)?.length &&
                 <div className='customer--info__address'>
-                  <AdaptTableCell cell='address' data={info.address}/>
+                  <AdaptTableCell cell='address' data={info.address} />
                 </div>
               }
             </div>
             <div className='customer--contact'>
               <div>
-                <UiButton variant='lowercase' traits={{beforeIcon:'fa-envelope'}} href={`mailto://${info?.email}`} >{info.email}</UiButton>
+                <UiButton variant='lowercase' traits={{ beforeIcon: 'fa-envelope' }} href={`mailto://${info?.email}`} >{info.email}</UiButton>
               </div>
-              {String(info?.phone).length > 3 && 
-              <div>
-                <UiButton traits={{beforeIcon:'fa-circle-phone-flip'}} >{phoneFormat(info?.phone)}</UiButton>
-              </div>
+              {String(info?.phone).length > 3 &&
+                <div>
+                  <UiButton traits={{ beforeIcon: 'fa-circle-phone-flip' }} >{phoneFormat(info?.phone)}</UiButton>
+                </div>
               }
             </div>
+            {productRequest && Object.entries(productRequest)?.length && <div className='admin-customer__product-request'>
+              {Object.entries(productRequest).map(([k, v]: any) => 
+                <div key={k}>
+                  {k}:{v}
+                </div>
+              )}
+            </div>}
           </AdaptGrid>
         </div>
         <div className='admin-customer__content'>
-        <UiCollapse label={`modify ${info?.name}`} open={Boolean(info?.name)}>
-          <>
-            <UiForm
-              onAddField={onChange}
-              btnText='Modify'
-              fields={customer}
-              onChange={onChange}
-              onSubmit={onSubmit}
-            />
-            <div className='admin-customer__delete'>
-              <UiButton
-                onClick={handleDelete}
-                variant='warning'
-              >
-                delete {customer?.length && info?.name}
-              </UiButton>
+          <UiCollapse label={`modify ${info?.name}`} open={Boolean(info?.name)}>
+            <>
+              <UiForm
+                onAddField={onChange}
+                btnText='Modify'
+                fields={customer}
+                onChange={onChange}
+                onSubmit={onSubmit}
+              />
+              <div className='admin-customer__delete'>
+                <UiButton
+                  onClick={handleDelete}
+                  variant='warning'
+                >
+                  delete {customer?.length && info?.name}
+                </UiButton>
+              </div>
+            </>
+          </UiCollapse>
+          <UiCollapse
+            open={Boolean(files?.length)}
+            label={`files ( ${files?.length && Number(files.length) || 0} )`}
+          >
+            <div className='admin-customer__files'>
+              {files && <AdminListDocuments docs={files} /> || <div>no files</div>}
             </div>
-          </>
-        </UiCollapse>
-        <UiCollapse
-          open={Boolean(files?.length)}
-          label={`files ( ${files?.length && Number(files.length) || 0} )`}
-        >
-          <div className='admin-customer__files'>
-            {files && <AdminListDocuments docs={files} /> || <div>no files</div>}
-          </div>
-        </UiCollapse>
-  
+          </UiCollapse>
+
         </div>
       </div>
     </>

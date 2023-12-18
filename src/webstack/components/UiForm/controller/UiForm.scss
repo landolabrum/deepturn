@@ -44,7 +44,7 @@
   .form__field {
       width: 100%;
       @extend .d-flex-col;
-      // margin: auto;
+      align-items: flex-start;
   }
 
   &__submit {
@@ -61,8 +61,6 @@
       padding-top: var(--s-9);
         border-top: unset !important;
     }
-    // // new gradient background
-    // background-image: linear-gradient(to bottom, var(--gray-60), transparent);
   }
 }
 input{

@@ -13,7 +13,7 @@ export const DashboardPage: React.FC<IDashboard> = ({ links }: IDashboard) => {
   const dashboardLinks = pruneRoutes(["dashboard", "account"]);
   const access = useClearanceRoutes();
   const handleClick = (link: any) => {
-    console.log('link: ', link)
+    // console.log('link: ', link)
     if (!link.href) return;
     router.push(link.href);
   };
@@ -23,7 +23,7 @@ export const DashboardPage: React.FC<IDashboard> = ({ links }: IDashboard) => {
     <>
       <style jsx>{styles}</style>
       <div className="dashboard">
-        <AdaptGrid xs={2} md={4} gap={10}>
+      {access && <AdaptGrid xs={2} md={4} gap={10}>
           {Object.entries(links || access).map(([key, link]) => {
             return (
               <div
@@ -36,7 +36,7 @@ export const DashboardPage: React.FC<IDashboard> = ({ links }: IDashboard) => {
               </div>
             );
           })}
-        </AdaptGrid>
+        </AdaptGrid>}
       </div>
     </>
   );

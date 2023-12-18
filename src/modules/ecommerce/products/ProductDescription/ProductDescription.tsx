@@ -75,7 +75,7 @@ const ProductDescription = () => {
                 product={product}
                 cart={cart}
                 setCart={setCart}
-                traits={{ width: "100%" }}
+                // traits={{ width: "100%" }}
               />
               </div>
           </div>

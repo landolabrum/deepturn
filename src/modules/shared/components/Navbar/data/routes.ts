@@ -36,9 +36,9 @@ export const routes: IRoute[] = [
     href:"/",
   },
 
-  { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
-  { label: "configure", href: "/configure", icon: "fa-tags", active: true, clearance: 0 },
-  { label: "products", href: "/products", icon: "fa-tags", active: true },
+  // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
+  { label: "configure", href: "/configure", icon: "fa-tags", active: true },
+  { label: "products", href: "/product", icon: "fa-tags", active: true },
   {
     label: "Social",
     icon: "fa-biohazard",
@@ -82,14 +82,14 @@ export const routes: IRoute[] = [
     icon: 'fa-circle-user',
     clearance: 0,
   },
-  { label: "", href: "/cart", icon: "fal-bag-shopping",clearance: 0, },
+  { label: "", href: "/cart", icon: "fal-bag-shopping" },
 ];
 
 export const useClearanceRoutes = () => {
   const user = useUser();
   // const [level, setLevel] = useState(0);
   const level = useClearance();
-  const [access, setAccess] = useState<IRoute[]>([]);
+  const [access, setAccess] = useState<IRoute[] | undefined>(undefined);
   useEffect(() => {
     // user && user?.metadata?.clearance && setLevel(user?.metadata?.clearance);
     const filterRoutes = (routeItems: IRoute[]) => {
