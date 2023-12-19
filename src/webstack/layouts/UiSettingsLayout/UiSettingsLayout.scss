@@ -1,21 +1,25 @@
 $actionsBg: var(--gray-90);
+
 @keyframes borderAnimation {
-    0%, 100% {
+
+    0%,
+    100% {
         border-color: var(--dark);
     }
-    
+
     25% {
         border-color: var(--dark-opaque);
     }
-  
+
     50% {
         border-color: var(--primary);
     }
-  
+
     75% {
         border-color: var(--primary-opaque);
     }
-  }
+}
+
 .d-flex {
     display: flex;
     justify-content: space-between;
@@ -32,14 +36,24 @@ $actionsBg: var(--gray-90);
     position: relative;
     padding: var(--padding) 0 0;
     width: 100%;
-    &--icon{
+
+    &--icon {
         @extend .d-flex;
         --ui-icon-width: 100%;
         --ui-icon-height: var(--s-5);
-        @media(min-width: 1100px){ display: flex; }
+
+        @media(min-width: 1100px) {
+            display: flex;
+        }
+
         display: none;
         position: absolute;
-        &--hide{ opacity: .5; left: var(--s-5); }
+
+        &--hide {
+            opacity: .5;
+            left: var(--s-5);
+        }
+
         top: var(--s-4);
         border-radius: var(--border-radius);
         left: 0;
@@ -51,49 +65,61 @@ $actionsBg: var(--gray-90);
 
         line-height: 1;
         font-size: var(--s-7);
-        &:hover{ border:solid 1px var(--gray-70); }
+
+        &:hover {
+            border: solid 1px var(--gray-70);
+        }
     }
+
     &__content {
         @extend .d-flex;
         justify-content: stretch;
         align-items: flex-start;
+       
         @media (min-width: 1100px) {
             padding: var(--element-height) 0 0;
             height: calc(100% - var(--element-height));
         }
-        
+
         @media (max-width: 1100px) {
             height: 100%;
             flex-direction: column;
-            
+
         }
-        @media(max-width: 1260px){
+
+        @media(max-width: 1260px) {
             margin: 0 auto var(--s-1);
             justify-content: center;
         }
+     
     }
+
     @keyframes hideActions {
-        0%{
+        0% {
             transform: translateX(0);
             opacity: 1;
             display: flex;
             width: auto;
         }
-        10%{
+
+        10% {
             opacity: 0.3;
         }
-        65%{
+
+        65% {
             opacity: 0;
         }
-        98%{
+
+        98% {
             display: flex;
         }
-        100%{
+
+        100% {
             opacity: 0;
             transform: translateX(-100%);
             width: 0px;
         }
-        
+
     }
 
     // ACTIONS
@@ -102,32 +128,31 @@ $actionsBg: var(--gray-90);
         position: relative;
         z-index: 3;
 
-
-
-       
-
-
-        &--hide{
+        &--hide {
             animation: hideActions 1s ease-in-out forwards;
         }
-        &--show{
+
+        &--show {
             animation: hideActions 1s ease-in-out forwards reverse;
         }
+
         &--content {
             background-color: var(--gray-100);
 
             border-radius: var(--border-radius);
             @extend .d-flex;
             width: 100%;
-           @media(max-width: 1100px) {
-            border: solid 1px;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-            animation: borderAnimation 5s infinite alternate;
-            border-bottom: solid 0px transparent !important;
-            width: var(--padding-width);
-            padding: var(--padding);
-            box-shadow: var(--box-shadow);
-           }
+
+            @media(max-width: 1100px) {
+                border: solid 1px;
+                border-radius: var(--border-radius) var(--border-radius) 0 0;
+                animation: borderAnimation 5s infinite alternate;
+                border-bottom: solid 0px transparent !important;
+                width: var(--padding-width);
+                padding: var(--padding);
+                box-shadow: var(--box-shadow);
+            }
+
             @media (min-width: 2100px) {
                 margin-left: auto;
                 max-width: 350px;
@@ -140,7 +165,6 @@ $actionsBg: var(--gray-90);
         }
 
         @media (max-width: 1100px) {
-
             display: flex;
             justify-content: center;
             align-items: center;
@@ -148,6 +172,7 @@ $actionsBg: var(--gray-90);
             height: max-content;
             overflow: visible;
         }
+
     }
 
     // VIEW
@@ -167,16 +192,21 @@ $actionsBg: var(--gray-90);
             position: unset;
             border-width: 1px;
         }
+
         border-style: solid;
-        border-width: 0  1px  1px  1px;
+        border-width: 0 1px 1px 1px;
 
         border-radius: var(--border-radius);
         animation: borderAnimation 5s infinite alternate;
-        
+        @media (max-width: 900px) {
+            border: none;
+            border-radius: none;
+            background-color: transparent;
+        }
         @media (max-width: 1100px) {
-            border-radius: 0  0 var(--border-radius) var(--border-radius);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
             height: calc(100vh - 170px);
-            border-top-color:  transparent !important;
+            border-top-color: transparent !important;
         }
 
         &--header {
@@ -186,17 +216,21 @@ $actionsBg: var(--gray-90);
             color: var(--gray-30);
             text-transform: capitalize;
             @extend .d-flex;
-       
+
             @media (max-width: 1100px) {
                 display: none;
             }
-            &--title{
+
+            &--title {
                 font-size: var(--s-1);
             }
+
             z-index: -1;
-            &--hide{
+
+            &--hide {
                 transform: translateX(var(--element-height));
             }
+
             // $headerPositionLeft: calc(var(--element-height) * -1);
             // @keyframes showHeader {
             //     0%{
@@ -206,7 +240,7 @@ $actionsBg: var(--gray-90);
             //         transform: translateX($headerPositionLeft);
             //     }
             // }
-    
+
             // // transform: translateX($headerPositionLeft);
             // &--show{
             //     animation: showHeader .7s forwards;
@@ -214,7 +248,7 @@ $actionsBg: var(--gray-90);
             // &--hide{
             //     animation: showHeader .7s forwards reverse;
             // }
-      
+
         }
 
         &__content {
@@ -224,6 +258,7 @@ $actionsBg: var(--gray-90);
             justify-content: flex-start;
             align-items: flex-start;
             padding: var(--s-4) var(--s-5);
+
             @media (max-width: 1100px) {
                 padding: var(--s-5) var(--s-8);
             }
