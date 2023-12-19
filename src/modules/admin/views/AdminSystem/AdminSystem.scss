@@ -12,7 +12,9 @@
     padding: var(--padding);
     background-color: var(--gray-90);
     border-radius: var(--border-radius);
-
+@media(max-width:900px){
+    min-width: var(--padding-width);
+}
     &__temp {
         @extend .d-flex;
         flex-direction: column;

@@ -170,7 +170,8 @@
 
     &__body {
         word-wrap: break-word;
-        width: calc(100% - 2px);
+        width: var(--padding-width);
+        padding: var(--padding) var(--padding) var(--element-height); 
         max-height: calc(100vh - var(--element-height));
         /* Limit the modal body height to 75% of the viewport height */
         overflow-y: auto;

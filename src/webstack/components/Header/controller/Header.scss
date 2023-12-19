@@ -1,4 +1,8 @@
-
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
 
 .header__container {
   z-index: 998;
@@ -116,8 +120,12 @@
       }
       padding-top: var(--s-9);
       .header-title {
+        @extend .d-flex;
         font-size: var(--s-1);
+        --ui-icon-size: var(--s-2);
+        gap:var(--s-9);
         color: var(--secondary);
+        --ui-icon-color: var(--secondary);
         line-height: 1;
         font-weight: 700;
         text-transform: capitalize;

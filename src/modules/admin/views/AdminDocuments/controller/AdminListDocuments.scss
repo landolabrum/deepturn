@@ -13,7 +13,6 @@ overflow: hidden;
 flex-wrap: wrap;
 &__list{
     width: 700px;
-    padding: 0;
     margin: 0;
     @extend .d-flex;
     flex-direction: column;
@@ -21,8 +20,18 @@ flex-wrap: wrap;
     gap: var(--s-9);
     padding: var(--s-9);
     border: solid 1px var(--gray-70);
+    @media(max-width: 900px){
+        width: calc(100% - 2px);
+        padding: 0;
+    }
     &--item{
         @extend .d-flex;
+        @media(max-width: 900px){
+            flex-direction: column;
+            padding: var(--s-9);
+            width: auto;
+            margin: auto;
+        }
         // white-space: nowrap;
         gap: var(--s-9);
         & > div{

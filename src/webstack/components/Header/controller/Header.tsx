@@ -4,6 +4,8 @@ import Navbar from "@shared/components/Navbar/controller/Navbar";
 import BreadCrumbs, { BreadCrumbLinkProps } from "../components/BreadCrumbs/BreadCrumbs";
 import styles from "./Header.scss";
 import useWindow from "@webstack/hooks/useWindow";
+import environment from "~/src/environment";
+import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 
 const HOVER_TIME = 700;
 
@@ -150,7 +152,7 @@ const Header: React.FC = () => {
 
             >
               <BreadCrumbs links={headerState?.breadcrumbs} />
-              <div className="header-title">{headerState?.title}</div>
+              <div className="header-title">{width<900&&<UiIcon icon={`${environment.merchant.name}-logo`}/>}{headerState?.title}</div>
             </div>
             {headerState?.right && (
               <div className="header-right">{headerState?.right}</div>

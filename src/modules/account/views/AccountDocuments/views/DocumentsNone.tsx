@@ -9,7 +9,9 @@ const DocumentsNone: React.FC = () => {
     <>
       <style jsx>{styles}</style>
       <div className='documents-none'>
+      <div className='documents-none--content'>
               no docs
+        </div> 
         </div> 
     </>
   );

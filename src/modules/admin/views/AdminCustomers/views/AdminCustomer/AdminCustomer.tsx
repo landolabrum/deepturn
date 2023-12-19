@@ -207,7 +207,7 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
   if (customerId) return (
     <>
       <style jsx>{styles}</style>
-     <div className='dev'>{JSON.stringify(productRequest)}</div> 
+     {/* <div className='dev'>{JSON.stringify(productRequest)}</div>  */}
       <div className='admin-customer'>
         <div className='admin-customer__header'>
           Admin Customer
