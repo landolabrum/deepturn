@@ -118,7 +118,7 @@ const Navbar = () => {
               >
                 {route.href !== '/cart' ? !route?.items ? (
                   <UiButton
-                    traits={route?.icon ? { afterIcon: { icon: route.icon } } : undefined}
+                    traits={route?.icon ? { afterIcon: { icon: route.icon },  } : undefined}
                     variant={toggled === route.label || (current === '/' && route.label?.toLowerCase() === environment.merchant.name) ? 'nav-item__active' : 'nav-item'}
                     onClick={() => handleClick(route)}
                   >

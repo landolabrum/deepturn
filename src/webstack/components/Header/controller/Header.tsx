@@ -5,7 +5,7 @@ import BreadCrumbs, { BreadCrumbLinkProps } from "../components/BreadCrumbs/Brea
 import styles from "./Header.scss";
 import useWindow from "@webstack/hooks/useWindow";
 
-const HOVER_TIME = 500;
+const HOVER_TIME = 700;
 
 export type HeaderProps = {
   breadcrumbs?: BreadCrumbLinkProps[];
@@ -58,11 +58,18 @@ export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       <style jsx>{styles}</style>
       <HeaderContext.Provider value={[headerState, setHeaderState]}>
         
-        <div className={`header__container${hover!=''?`header__container${hover}`:''}`} id="header-container"
-             onMouseEnter={handleMouseEnter}
-             onMouseLeave={handleMouseLeave}>
+        <div 
+            id="header-container"
+            className={`header__container${hover!=''?`header__container${hover}`:''}`} 
+            onMouseLeave={handleMouseLeave}
+        >
           <Navbar />
+          <span
+            onMouseEnter={handleMouseEnter}
+             >
+
           <Header />
+          </span>
         </div>
         {children}
       </HeaderContext.Provider>
@@ -133,7 +140,6 @@ const Header: React.FC = () => {
       {/* {headerState &&  */}
       <>
         <div
-
           className="header"
           >
           <div

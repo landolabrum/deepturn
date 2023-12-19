@@ -21,7 +21,7 @@ interface ProductSliderProps {
 const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
   const itemsRef = useRef<any>(null);
   const router = useRouter();
-  const [_products, setProducts]=useState<any>(Array.from({ length: 10 }, (_, i) => i + 1));
+  const [_products, setProducts]=useState<any>(Array.from({ length: 1 }, (_, i) => i + 1));
   const { getCartItems, handleQtyChange } = useCart();
   const [isScrolledLeft, setIsScrolledLeft] = useState(true);
   const [isScrolledRight, setIsScrolledRight] = useState(false);
@@ -66,7 +66,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='product-slider--container'>
+      <div className={`product-slider--container${_products?.length > 3 &&' product-slider--container--overflow'|| ''}`}>
       { !isScrolledLeft && (
         <div className='product-slider__left' onClick={() => handleScroll(false)}>
           <UiIcon icon='fa-chevron-left'  />

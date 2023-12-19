@@ -73,6 +73,7 @@ const viewportHeight = useDocument()?.viewport.height;
     setResizeColumnIndex(columnIndex);
     setResizeStartX(e.clientX);
   };
+  const rowRefs = useRef<any>([]);
 
   const handleResize = (e:any) => {
     if (isResizing && resizeColumnIndex >= 0) {
@@ -88,6 +89,27 @@ const viewportHeight = useDocument()?.viewport.height;
 
   const handleResizeEnd = () => {
     setIsResizing(false);
+  };
+
+  const handleDoubleClick = (columnIndex:number) => {
+    let maxWidth = 0;
+    rowRefs.current.forEach((row:any) => {
+      if (row && row.children[columnIndex]) {
+        console.log('[width]: ',row.children[columnIndex])
+        maxWidth = Math.max(maxWidth, row.children[columnIndex].offsetWidth);
+      }
+    });
+    const newColumnWidths = { ...columnWidths, [Object.keys(data[0])[columnIndex]]: maxWidth + "px" };
+    setColumnWidths(newColumnWidths);
+  };
+ 
+
+  const setRowRef = (row:any, index:number) => {
+    if (rowRefs.current.length <= index) {
+      // Expand the array if necessary
+      rowRefs.current = [...rowRefs.current, ...new Array(index + 1 - rowRefs.current.length)];
+    }
+    rowRefs.current[index] = row;
   };
   useEffect(() => {
     status && setView(status);
@@ -107,7 +129,6 @@ const viewportHeight = useDocument()?.viewport.height;
       onRowClick?.(item);
     }
   };
-
   const handleScrollToTop = () => {
     scrollToPosition(undefined, 0, 'top');
   };
@@ -124,7 +145,7 @@ const viewportHeight = useDocument()?.viewport.height;
           }
         >
           <thead className={hideHeader && 'hide-header' || ''}>
-            <tr>
+            <tr >
               {index !== 0 && <th className="index">#</th>}
               {data &&
                 data[0] &&
@@ -135,6 +156,7 @@ const viewportHeight = useDocument()?.viewport.height;
                     !options?.hideColumns?.includes(key) && (
                       <th
                         key={key}
+                        onDoubleClick={() => handleDoubleClick(columnIndex)}
                         style={{ width: columnWidths[key] || "auto" }}
                         className={`resizeable ${resizeColumnIndex === columnIndex ? "resizing" : ""
                           }`}
@@ -159,6 +181,7 @@ const viewportHeight = useDocument()?.viewport.height;
                   className={`${variant ? variant : ""}`}
                   key={startIndex + i_}
                   onClick={(e) => handleRowClick(e, item)}
+                  ref={(el) => (rowRefs.current[i_] = el)}
                 >
                   {index !== 0 && (
                     <td data-key="#" className="index">

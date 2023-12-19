@@ -5,7 +5,7 @@ import { getService } from '@webstack/common';
 import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
 import environment from '~/src/environment';
 import UiButton from '@webstack/components/UiButton/UiButton';
-import capitalize from '@webstack/helpers/Capitalize';
+import capitalize, { capitalizeAll } from '@webstack/helpers/Capitalize';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
@@ -165,7 +165,7 @@ const AccountDocuments = ({ user, previewPdf }: IDocuments) => {
           {docs?.length && Object.entries(docs).map(([k, s]: any) => {
             return <div key={k} className='account-documents__status--docs--doc'>
               {/* {s?.name} */}
-              {Number(k + 1)}. <UiButton variant='link'>{s?.name}</UiButton>
+              {Number(k + 1)}. <UiButton variant='link'>{capitalizeAll(s?.name)}</UiButton>
             </div>
           }) || <div className='account-documents__status--docs--none'>
               NO documents are {status}
@@ -180,13 +180,13 @@ const AccountDocuments = ({ user, previewPdf }: IDocuments) => {
       <div className='account-documents' ref={docRef}>
         <div className='account-documents__header'>
           <div className='account-documents__header--title'>
-            {user?.name}&apos;s Documents
+            {user?.name && `${capitalizeAll(user.name)}'s Documents`}
           </div>
         </div>
-        {docs?.length && <AdaptGrid xs={1} md={2} variant='card' gapX={10} margin="10px 0">
+        {docs?.length && <AdaptGrid xs={1} md={2} variant='card' gapX={10} margin="var(--padding) 0">
           <DocStatusBox status='incomplete' docs={docs} />
           <DocStatusBox status='complete' />
-        </AdaptGrid>}
+        </AdaptGrid> || null}
         <div className='account-documents__list'>
           <div className='account-documents--document'>
             {docs?.length ? docs.map((doc: any, i: number) => {

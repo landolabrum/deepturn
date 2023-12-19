@@ -31,15 +31,8 @@
       filter: brightness(2);
       --ui-icon-color: var(--body);
       background-color: var(--gray-80-opaque);
-      box-shadow: -10px 5px 5px var(--gray-10-opaque);
     }
 
-    50% {
-      filter: brightness(1.5);
-      --ui-icon-color: var(--primary-opaque);
-      background-color: var(--gray-10-opaque);
-      box-shadow: -10px 10px 10px var(--gray-10-opaque);
-    }
 
     100% {
       filter: brightness(1);
@@ -55,12 +48,12 @@
     height: var(--element-height);
     --ui-icon-height: var(--s-5);
     --ui-icon-width: var(--s-5);
-    border: solid 1px var(--gray-60);
+    border: solid 1px var(--gray-70-opaque);
     @extend .d-flex;
     justify-content: center;
     border-radius: var(--border-radius);
     display: none;
-    background-color: var(--gray-70);
+    background-color: var(--gray-90);
     --ui-icon-color: var(--primary);
     &--opaque{
       background-color: var(--dark-opaque);
@@ -69,6 +62,7 @@
     &:hover {
       animation: fade 1s forwards;
     }
+ 
 
   }
 

@@ -10,6 +10,7 @@ import { useUser } from '~/src/core/authentication/hooks/useUser';
 import IShoppingService from "~/src/core/services/ShoppingService/IShoppingService";
 import BannerProduct from "../views/BannerProduct/BannerProduct";
 import ProductChapters from "../views/ProductChapters/ProductChapters";
+import environment from "~/src/environment";
 
 interface Filter {
   [key: string]: {
@@ -45,8 +46,9 @@ const ProductsListing: NextPage = () => {
       try {
         const memberResponse = await shoppingService.getProducts();
         const fetchedProducts: any = memberResponse?.data;
+        const merchantId = environment?.merchant?.mid;
         if (fetchedProducts) {
-          const formatted = fetchedProducts.map((product: any) => ({
+          const formatted = fetchedProducts.filter((product: any)=>product?.metadata?.mid == merchantId).map((product: any) => ({
             id: product.id,
             description: product.description,
             name: product.name,
@@ -94,9 +96,6 @@ const ProductsListing: NextPage = () => {
         </div>
       </div> */}
       <ProductSlider products={products} />
-      <div className="product-listing__footer">
-        <UiButton disabled={!hasMore} variant="dark" onClick={() => {/* Pagination code here */ }}>Next</UiButton>
-      </div>
     </div>
   </>
   );

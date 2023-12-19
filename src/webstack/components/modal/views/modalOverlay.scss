@@ -94,7 +94,6 @@
         box-shadow: var(--box-shadow-xl);
         min-height: max-content;
         transition: all 1s;
-
         &::-webkit-scrollbar-thumb {
             background-color: var(--blue);
             border-radius: 5px;
@@ -169,11 +168,11 @@
 
     &__body {
         word-wrap: break-word;
-        width: 100%;
+        width: calc(100% - 2px);
         max-height: calc(100vh - var(--element-height));
         /* Limit the modal body height to 75% of the viewport height */
         overflow-y: auto;
-
+        overflow-x: hidden;
         @media(max-width: 900px) {
             max-height: calc(100vh - 60px);
             /* Adjust the height to account for other modal elements */

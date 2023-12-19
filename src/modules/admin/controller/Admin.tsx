@@ -36,9 +36,8 @@ const Admin = () => {
       <UiSettingsLayout
         defaultView={currentView}
         title='admin'
-        // variant="full-screen"
         views={views}
-        setViewCallback={console.log}
+        // setViewCallback={console.log}
       />
     </>
   );

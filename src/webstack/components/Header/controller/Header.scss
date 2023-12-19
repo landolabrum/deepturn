@@ -51,8 +51,10 @@
   .header {
     color: var(--gray-30);
     .header-content{
-      display: none;
-      height: 0;
+      @media(min-width: 1100px){
+        display: none;
+        height: 0;
+      }
       transition: opacity 0.5s, transform 0.5s;
       
 
@@ -62,7 +64,6 @@
 
 .header {
   $t: var(--s-9);
-  box-shadow: 0 0 $t $t var(--dark-opaque);
   left: 0;
   z-index: 1;
   height: max-content;
@@ -71,7 +72,7 @@
   background-color: var(--gray-100);
 
   @media(max-width:1100px) {
-    color: var(--gray-20);
+    color: var(--gray-100);
     width: 100%;
     padding: 0;
     background-color: transparent;
@@ -116,12 +117,14 @@
       padding-top: var(--s-9);
       .header-title {
         font-size: var(--s-1);
-        color: var(--gray-30);
+        color: var(--secondary);
         line-height: 1;
         font-weight: 700;
         text-transform: capitalize;
-
+        color: var(--gray-30);
+        
         @media(max-width: 1100px) {
+          color: var(--secondary);
           line-height: 1;
         }
       }

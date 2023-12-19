@@ -1,5 +1,21 @@
 $actionsBg: var(--gray-90);
-
+@keyframes borderAnimation {
+    0%, 100% {
+        border-color: var(--dark);
+    }
+    
+    25% {
+        border-color: var(--dark-opaque);
+    }
+  
+    50% {
+        border-color: var(--primary);
+    }
+  
+    75% {
+        border-color: var(--primary-opaque);
+    }
+  }
 .d-flex {
     display: flex;
     justify-content: space-between;
@@ -9,38 +25,51 @@ $actionsBg: var(--gray-90);
 
 
 .settings {
-    transform: translateY(-2px);
-    min-height: inherit;
-    height: max-content;
     z-index: 999;
+    height: 100%;
     left: 0;
     z-index: 1;
     position: relative;
-    padding-top: var(--padding);
+    padding: var(--padding) 0 0;
     width: 100%;
- 
+    &--icon{
+        @extend .d-flex;
+        --ui-icon-width: 100%;
+        --ui-icon-height: var(--s-5);
+        @media(min-width: 1100px){ display: flex; }
+        display: none;
+        position: absolute;
+        &--hide{ opacity: .5; left: var(--s-5); }
+        top: var(--s-4);
+        border-radius: var(--border-radius);
+        left: 0;
+        z-index: 2;
+        color: var(--primary);
+        text-align: center;
+        height: var(--s-2);
+        width: var(--s-2);
+
+        line-height: 1;
+        font-size: var(--s-7);
+        &:hover{ border:solid 1px var(--gray-70); }
+    }
     &__content {
-        padding-top: 0;
-        @media(max-width: 1260px){
-            padding-right: var(--s-9);
-        }
         @extend .d-flex;
         justify-content: stretch;
-        align-items: stretch;
-        height: inherit;
-        min-height: inherit;
-        
+        align-items: flex-start;
         @media (min-width: 1100px) {
-            padding-top: var(--element-height);
-            gap: var(--s-9);
-            margin-left: var(--s-9);
+            padding: var(--element-height) 0 0;
+            height: calc(100% - var(--element-height));
         }
-
+        
         @media (max-width: 1100px) {
-            
             height: 100%;
             flex-direction: column;
-
+            
+        }
+        @media(max-width: 1260px){
+            margin: 0 auto var(--s-1);
+            justify-content: center;
         }
     }
     @keyframes hideActions {
@@ -71,6 +100,13 @@ $actionsBg: var(--gray-90);
     .settings__actions {
         height: inherit;
         position: relative;
+        z-index: 3;
+
+
+
+       
+
+
         &--hide{
             animation: hideActions 1s ease-in-out forwards;
         }
@@ -78,12 +114,20 @@ $actionsBg: var(--gray-90);
             animation: hideActions 1s ease-in-out forwards reverse;
         }
         &--content {
-            border-bottom: solid 1px var(--gray-70);
-            background-color: var(--gray-80);
+            background-color: var(--gray-100);
+
             border-radius: var(--border-radius);
-            border: solid 1px var(--gray-60);
             @extend .d-flex;
             width: 100%;
+           @media(max-width: 1100px) {
+            border: solid 1px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            animation: borderAnimation 5s infinite alternate;
+            border-bottom: solid 0px transparent !important;
+            width: var(--padding-width);
+            padding: var(--padding);
+            box-shadow: var(--box-shadow);
+           }
             @media (min-width: 2100px) {
                 margin-left: auto;
                 max-width: 350px;
@@ -92,16 +136,16 @@ $actionsBg: var(--gray-90);
 
         @media (min-width: 1100px) {
             min-height: auto;
+            margin-right: var(--padding);
         }
 
         @media (max-width: 1100px) {
+
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0 var(--s-8) var(--padding);
-            width: auto;
+            width: 100%;
             height: max-content;
-            border-bottom: solid 1px var(--gray-70);
             overflow: visible;
         }
     }
@@ -113,39 +157,26 @@ $actionsBg: var(--gray-90);
         height: auto;
         width: 100%;
         position: relative;
-   
+        overflow-x: hidden;
+        overflow-y: auto;
+
         @media (min-width: 1100px) {
-            @keyframes borderAnimation {
-                0%, 100% {
-                    border-color: #ff303040;
-                }
-            
-                25% {
-                    border-color: #ff990050;
-                }
-            
-                50% {
-                    border-color: #0099ff90;
-                }
-            
-                75% {
-                    border-color: #0f00ff;
-                }
-            }
             min-height: 100%;
             justify-content: flex-start;
             align-items: flex-start;
             position: unset;
-            border: solid 1px;
-            animation: borderAnimation 5s infinite alternate;
+            border-width: 1px;
         }
+        border-style: solid;
+        border-width: 0  1px  1px  1px;
+
         border-radius: var(--border-radius);
-
+        animation: borderAnimation 5s infinite alternate;
+        
         @media (max-width: 1100px) {
-               height: calc(100vh - 135px);
-
-            border-left: unset;
-            min-height: inherit;
+            border-radius: 0  0 var(--border-radius) var(--border-radius);
+            height: calc(100vh - 170px);
+            border-top-color:  transparent !important;
         }
 
         &--header {
@@ -155,38 +186,39 @@ $actionsBg: var(--gray-90);
             color: var(--gray-30);
             text-transform: capitalize;
             @extend .d-flex;
-            gap: var(--s-5);
-            padding-left: var(--s-9);
-            --ui-icon-width: var(--s-5);
-            --ui-icon-height: var(--s-5);
+       
             @media (max-width: 1100px) {
                 display: none;
             }
             &--title{
                 font-size: var(--s-1);
             }
-            @keyframes showHeader {
-                0%{
-                    transform: translateX(0px);
-                }
-                100%{
-                    transform: translateX(calc(var(--s-1) * -1));
-                }
-            }
-    
-            transform: translateX(calc(var(--s-1) * -1));
-            &--show{
-                animation: showHeader .7s forwards;
-            }
+            z-index: -1;
             &--hide{
-                animation: showHeader .7s forwards reverse;
+                transform: translateX(var(--element-height));
             }
+            // $headerPositionLeft: calc(var(--element-height) * -1);
+            // @keyframes showHeader {
+            //     0%{
+            //         transform: translateX(0px);
+            //     }
+            //     100%{
+            //         transform: translateX($headerPositionLeft);
+            //     }
+            // }
+    
+            // // transform: translateX($headerPositionLeft);
+            // &--show{
+            //     animation: showHeader .7s forwards;
+            // }
+            // &--hide{
+            //     animation: showHeader .7s forwards reverse;
+            // }
       
         }
 
         &__content {
             z-index: 1000;
-            height: calc(100% - calc(var(--s-5) * 2));
             @extend .d-flex;
             flex-direction: column;
             justify-content: flex-start;

@@ -4,6 +4,7 @@
     align-items: center;
 }
 
+
 .admin-customer {
     margin-top: var(--s-8);
     @extend .d-flex;
@@ -12,16 +13,16 @@
     $nrat: calc($rat * -1);
     flex-direction: column;
     height: max-content;
-    width: auto;
+    width: 100%;
     align-items: stretch;
     gap: var(--padding);
+
     &__header {
         font-size: var(--s-1);
         color: var(--gray-40);
         .customer--info, .customer--contact{
             @extend .d-flex;
             gap: var(--s-9);
-            padding: var(--s-9) 0;
             align-items: flex-start;
             font-size: var(--s-4);
             height: 100%; 
@@ -39,9 +40,11 @@
             }
         }
         .customer--contact{
+            display: flex;
             align-items: flex-start;
             justify-content: flex-end;
         }
+     
     }
     &__content{
         @extend .d-flex;
@@ -59,7 +62,7 @@
             opacity: 1;
         }
     }
-    
+  
 
     &__info {
         @extend .d-flex;

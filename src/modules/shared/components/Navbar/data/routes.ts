@@ -1,4 +1,5 @@
 
+import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { useEffect, useState } from "react";
 import { useUser, useClearance } from "~/src/core/authentication/hooks/useUser";
 import environment from "~/src/environment";
@@ -31,7 +32,7 @@ export interface HandleRouteProps {
 const merchantName = environment.merchant?.name || 'deepturn';
 export const routes: IRoute[] = [
   {
-    label: merchantName,
+    label: keyStringConverter(merchantName),
     icon: `${merchantName}-logo`,
     href:"/",
   },
@@ -39,33 +40,33 @@ export const routes: IRoute[] = [
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
   { label: "configure", href: "/configure", icon: "fa-tags", active: true },
   { label: "products", href: "/product", icon: "fa-tags", active: true },
-  {
-    label: "Social",
-    icon: "fa-biohazard",
-    href: '/social',
-    clearance: 10,
-    items: [
-      { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
-    ],
-  },
-  {
-    label: "Home",
-    icon: "fa-home",
-    href:"/home",
-    clearance: 6,
-    items: [
-      { label: "stream",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
-      { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
-    ],
-  },
-  {
-    label: "auto",
-    icon: "fa-engine",
-    clearance: 10,
-    items: [
-      { label: "Raptor", href: "/auto/raptor", icon: "fmc-logo", active: true },
-    ],
-  },
+  // {
+  //   label: "Social",
+  //   icon: "fa-biohazard",
+  //   href: '/social',
+  //   clearance: 10,
+  //   items: [
+  //     { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
+  //   ],
+  // },
+  // {
+  //   label: "Home",
+  //   icon: "fa-home",
+  //   href:"/home",
+  //   clearance: 6,
+  //   items: [
+  //     { label: "stream",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
+  //     { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
+  //   ],
+  // },
+  // {
+  //   label: "auto",
+  //   icon: "fa-engine",
+  //   clearance: 10,
+  //   items: [
+  //     { label: "Raptor", href: "/auto/raptor", icon: "fmc-logo", active: true },
+  //   ],
+  // },
   {
     label: "account",
     icon: 'fal-circle-user',

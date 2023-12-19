@@ -4,6 +4,10 @@
  justify-content: center;
 }
 .admin-customer{
+
+    @extend .d-flex;
+    flex-direction: column;
+    gap: var(--padding);
     width: 100%;
     &__header{
         width: 100%;
@@ -13,7 +17,6 @@
         .admin-customer__actions{
             gap: var(--s-9);
             @extend .d-flex;
-            padding: var(--s-9) 0;
         }
     }
 }

@@ -17,6 +17,8 @@ import useScrollTo from '@webstack/components/AdapTable/hooks/useScrollTo';
 import UiDiv from '@webstack/components/UiDiv/UiDiv';
 import dFlex from '@webstack/jsx/dFlex';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import environment from '~/src/environment';
+import createMerchantKey from '../../functions/createMerchantKey';
 
 export type IMoreInfoField = {
     name: string;
@@ -34,9 +36,15 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
     const user = useUser();
     const { scrollTo, setScrollTo } = useScrollTo({ max: 1100 });
     const contactFields = [
-        { name: 'name', label: 'full name', type: 'text', placeholder: 'John Smith', required: true, },
-        { name: 'email', label: 'email', type: 'email', placeholder: 'test@email.com', required: true, },
-        { name: 'phone', label: 'phone', type: 'tel', placeholder: '1 (555) 555 5555', required: true, },
+        { name: 'name', label: 'full name', type: 'text', 
+        placeholder: 'First Last',
+         required: true, },
+        { name: 'email', label: 'email', type: 'email', 
+        placeholder: 'your@email.com',
+         required: true, },
+        { name: 'phone', label: 'phone', type: 'tel', 
+        placeholder: '1 (555) 555 5555',
+         required: true, },
         { name: 'address', label: 'address', required: true, },
     ];
     const defaultForm = { features: features, contact: contactFields };
@@ -149,7 +157,7 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
         // Convert features
         formFeatures.forEach((feature: any) => {
             if (feature.selected) {  // Only add selected features
-                request.features['pmi_' + feature.name] = feature.name == 'phone' ? phoneFormat(feature.value, 'US', true) : feature.value
+                request.features[createMerchantKey('configure', feature.name)] = feature.name == 'phone' ? phoneFormat(feature.value, 'US', true) : feature.value
             }
         });
 
@@ -219,7 +227,8 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
         }, 0);
     };
     const gridProps = {
-        xs: 2,
+        xs: 1,
+        sm: 2,
         lg: 4,
         gap: 10,
     }
@@ -271,14 +280,12 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
                 <div className='product-feature-form__select-title'>
                     {view == 'feature' && `${title} select`}
                     {view == 'contact' && 'contact info'}
-
                 </div>
                 {view == 'feature' && <>
 
-                    {/* {selected?.length ? ( */}
                         <div className='product-feature-form__selected'>
                             <div className='product-feature-form__selected--header'>
-                                {`Selected ${title}s`} | total amps estimate {calculateTotalValue()}
+                                {`Selected ${title}s`} | total amps  {calculateTotalValue()}
                             </div>
                             <div className='product-feature-form__tools' >
                                 <div className='product-feature-form__tools--tool'>  <div onClick={clearAllSelected}>clear all</div> </div>
@@ -303,7 +310,6 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
                             })}
                             {!selected.length && <div className='product-feature-form__instructions'>please Select, {title} to continue.</div>}
                         </div>
-                    {/* // ) : (<div className='product-feature-form__sub-title'>{subtitle}</div>)} */}
                     <div id='product-feature-form__options' />
                     <AdaptGrid {...gridProps} >
                         {formFeatures != null && formFeatures.map((feature, index) => {
@@ -326,7 +332,6 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
                 </>}
                 {view == 'contact' && <div className='product-feature-form__contact'>
                     <UiForm 
-                        variant='card'
                         fields={fields}
                         disabled={disabled}
                         onChange={onChange}

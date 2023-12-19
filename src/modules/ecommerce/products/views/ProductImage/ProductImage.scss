@@ -32,8 +32,9 @@ $hite: calc(100% - 20px);
 
     .product-image__content {
         @extend .d-flex;
-        --ui-icon-width: calc(100% - 22px);
-        --ui-icon-height: calc(100% - 22px);
+        --ui-icon-width: 50%;
+        --ui-icon-height: 50%;
+        --ui-icon-color: var(--gray-10);
         @media(max-width:1100px){
             --ui-icon-width: inherit;
             --ui-icon-height: 100px;
@@ -60,7 +61,9 @@ $hite: calc(100% - 20px);
         @media(min-width:1100px){
             margin: auto;
         }
+        --ui-icon-color: var(--gray-10);
         .product-image__content{
+
             height: var(--padding-width);
             width: auto;
             @media(max-width: 1100px){

@@ -15,6 +15,9 @@ import AdminListDocuments from '../../../AdminDocuments/controller/AdminListDocu
 import { useLoader } from '@webstack/components/Loader/Loader';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
+import { capitalizeAll } from '@webstack/helpers/Capitalize';
+import environment from '~/src/environment';
+import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 
 
 
@@ -35,17 +38,9 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
   const findField: any = (name: string) => customer && customer.find((f: IFormField) => f.name == name)?.value;
 
   const [notification, setNotification] = useNotification();
+  const merchantId = String(environment.merchant.mid);
   function modifyCustomerData(data: any, round2?: string): any {
-    const hasProductRequest = () => {
-      const pmis = Object.entries(data?.metadata || {}).reduce((acc: any, [key, value]) => {
-        if (key.includes('pmi_') && value) {
-          acc[key.split('pmi_')[1]] = value;
-        }
-        return acc;
-      }, {});
-      setProductRequest(pmis);
-    }
-    hasProductRequest()
+
     const removeKeys = ['id', 'methods', 'files', 'default_source', 'shipping', 'object', 'currency', 'invoice_settings', 'next_invoice_sequence', 'preferred_locales', 'test_clock', 'invoice_prefix'];
     const modifiedKeys = ['metadata'];
     const disabledKeys = ['created', 'server_url', 'referrer_url', 'email_verified', 'delinquent', 'livemode', 'balance'];
@@ -76,7 +71,7 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
     const formatted = (parentData?: any, parent?: string) => {
 
       return Object.entries(parentData || data)
-        .filter(([key]) => !modifiedKeys.includes(key) && !removeKeys.includes(key) && !key.includes('pmi_'))
+        .filter(([key]) => !modifiedKeys.includes(key) && !removeKeys.includes(key) && !key.includes(merchantId))
         .map(([key, value]) => ({
           name: parent ? `${parent}.${key}` : key,
           label: keyStringConverter(key),
@@ -139,7 +134,7 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
       }
     });
 
-    console.log("Final request with metadata:", request); // For debugging
+    // console.log("Final request with metadata:", request); // For debugging
 
     try {
       const updatedCustomer = await adminService.updateCustomer(customerId, request);
@@ -171,8 +166,23 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
             address: response?.address || {},
             email: response?.email
           })
+          const hasProductRequest = () => {
+            const requestItems = Object.entries(response?.metadata || {}).reduce((acc: any, [key, value]) => {
+              const keyParts = keyStringConverter(key).split('.');
+              if (keyParts[0] === merchantId && value) {
+                // Assuming the key format is always 'merchantId.form.item'
+      
+                const [, form, item ] = keyParts;
+                acc.push({ form, item, value });
+              }
+              return acc;
+            }, []);
+            if(Boolean(requestItems?.length))setNotification({active:true, list:[{label:`${info?.name}, has a new product request.`}]})
+            setProductRequest(requestItems);
+          }
+          hasProductRequest();
           const transformedData = modifyCustomerData(response);
-          setCustomer(transformedData);
+         setCustomer(transformedData);
         } else {
           alert("Couldn't get customer");
         }
@@ -184,22 +194,28 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
     }
   };
 
+  const productRequestTotal = () => productRequest && 
+    Object.entries(productRequest || {}).reduce((acc: any, [key, value]) => {
+      acc = acc += Number(value) 
+      return acc;
+  }, 0);
   useEffect(() => {
+    productRequestTotal()
     getCustomer();
   }, [customerId,]);
   useEffect(() => { }, [onSubmit, setProductRequest]);
-
   if (customerId) return (
     <>
       <style jsx>{styles}</style>
+     <div className='dev'>{JSON.stringify(productRequest)}</div> 
       <div className='admin-customer'>
         <div className='admin-customer__header'>
           Admin Customer
-          <AdaptGrid xs={1} md={2} gap={10} margin='18px 0' >
+          <AdaptGrid xs={1} md={2} gap={10} margin='0 0 17px' >
             <div className='customer--info'>
               <div className='customer--info__name'>{info?.name}</div>
               {Object.entries(info?.address)?.length &&
-                <div className='customer--info__address'>
+                <div className='customer--info__address' onClick={console.log}>
                   <AdaptTableCell cell='address' data={info.address} />
                 </div>
               }
@@ -214,15 +230,11 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
                 </div>
               }
             </div>
-            {productRequest && Object.entries(productRequest)?.length && <div className='admin-customer__product-request'>
-              {Object.entries(productRequest).map(([k, v]: any) => 
-                <div key={k}>
-                  {k}:{v}
-                </div>
-              )}
-            </div>}
+           
           </AdaptGrid>
+          {productRequest && <AdapTable data={productRequest} options={{tableTitle: 'Product Request'}}/>|| ''}
         </div>
+        
         <div className='admin-customer__content'>
           <UiCollapse label={`modify ${info?.name}`} open={Boolean(info?.name)}>
             <>

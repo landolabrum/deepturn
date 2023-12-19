@@ -61,7 +61,9 @@ const SignUp = ({ setView }: ISignUp) => {
       const vl = fv?.length;
       const minMsg = `${fnd}, is not long enough`;
       const maxMsg = `${fnd}, is not long enough`;
-      switch (fn) {
+      console.log('[ fn ]', fn)
+      if(!fv)hasError = changeField(fn, 'error', `${fnd}, can't be empty`);
+      else switch (fn) {
         case 'first_name':
           if (vl < 3) hasError = changeField(fn, 'error', minMsg);
           else if (vl > 20) hasError = changeField(fn, 'error', maxMsg);
@@ -71,8 +73,8 @@ const SignUp = ({ setView }: ISignUp) => {
           else if (vl > 20) hasError = changeField(fn, 'error', maxMsg);
           break;
         case 'email':
-          if (!fv.includes('@')) hasError = changeField(fn, 'error', `${fnd}, missing "@"`);
-          else if (!fv.includes('.')) hasError = changeField(fn, 'error', `${fnd}, missing "."`);
+          if (fv && !fv.includes('@')) hasError = changeField(fn, 'error', `${fnd}, missing "@"`);
+          else if (fv && !fv.includes('.')) hasError = changeField(fn, 'error', `${fnd}, missing "."`);
           break;
         case 'password':
           const cpw_val = fields.find((f: any) => f.name == 'confirm_password')?.value;
@@ -109,27 +111,27 @@ const SignUp = ({ setView }: ISignUp) => {
       request.user_agent = user_agent;
       request.referrer_url = URL;
       // console.log('[ REQ ]', request)
-      try {
-        const resp = await memberService.signUp(request);
-        if (resp.status == 'created' && resp.email != undefined && setView) setView(resp.email);setLoading(false);
-      } catch (_e: any) {
-        const e = JSON.parse(JSON.stringify(_e));
-        if (e.name === "AuthenticationError") {
-          alert(JSON.stringify(e))
-          // console.log("[ ERROR 1 ]", e);
-        }
-        if (e.error) {
-          if (e.detail?.fields) {
-            const errorFields = e.detail?.fields;
-            const newFields = fields.map((field: IFormField) => {
-              const isError = errorFields.find((f: IFormField) => {return field.name == f.name});
-              if(isError)field.error = isError.message;
-              return field
-            })
-            setFields(newFields)
-          }
-        }
-      }
+      // try {
+      //   const resp = await memberService.signUp(request);
+      //   if (resp.status == 'created' && resp.email != undefined && setView) setView(resp.email);setLoading(false);
+      // } catch (_e: any) {
+      //   const e = JSON.parse(JSON.stringify(_e));
+      //   if (e.name === "AuthenticationError") {
+      //     alert(JSON.stringify(e))
+      //     // console.log("[ ERROR 1 ]", e);
+      //   }
+      //   if (e.error) {
+      //     if (e.detail?.fields) {
+      //       const errorFields = e.detail?.fields;
+      //       const newFields = fields.map((field: IFormField) => {
+      //         const isError = errorFields.find((f: IFormField) => {return field.name == f.name});
+      //         if(isError)field.error = isError.message;
+      //         return field
+      //       })
+      //       setFields(newFields)
+      //     }
+      //   }
+      // }
     }
   };
 

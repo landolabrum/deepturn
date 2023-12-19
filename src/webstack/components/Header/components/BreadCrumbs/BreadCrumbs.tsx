@@ -5,6 +5,7 @@ import capitalize from "@webstack/helpers/Capitalize";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import useWindow from "@webstack/hooks/useWindow";
 import environment from "~/src/environment";
+import keyStringConverter from "@webstack/helpers/keyStringConverter";
 
 export type BreadCrumbLinkProps = {
   href?: string;
@@ -13,9 +14,10 @@ export type BreadCrumbLinkProps = {
   onClick?: (e:any)=>void;
 }
 export interface BreadCrumbsProps {
+  defaultLink?: BreadCrumbLinkProps;
   links?: BreadCrumbLinkProps[]
 }
-export default function BreadCrumbs({ links }: BreadCrumbsProps) {
+export default function BreadCrumbs({ defaultLink, links }: BreadCrumbsProps) {
   const router = useRouter();
   const width = useWindow().width;
   function handleClick(route: string) {
@@ -29,8 +31,8 @@ export default function BreadCrumbs({ links }: BreadCrumbsProps) {
   return <>
     <style jsx >{styles}</style>
     <div className="breadcrumbs">
-      <div className="crumb" onClick={() => handleClick("/")}>
-        {environment?.merchant?.name} <UiIcon icon="fa-chevron-right" />
+      <div className="crumb" onClick={() => defaultLink?.href&& handleClick(defaultLink.href) || handleClick( "/")}>
+        {defaultLink?.label || keyStringConverter(String(environment.merchant.name))} <UiIcon icon="fa-chevron-right" />
       </div>
       {links && width > 900 && links.map((link, key) => {
         return <div key={key} onClick={() => key + 1 !== links.length && handleClick(link.href ? link.href : "/" + link.label)} className={`crumb ${key === linkLen ? "active" : ""}`}>

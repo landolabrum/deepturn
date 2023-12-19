@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ProductImage.scss';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import environment from '~/src/environment';
 
 const ProductImage: React.FC<{ image?: any, options?: any }> = ({ image, options }) => {
     const [imageLoadError, setImageLoadError] = useState<boolean>(false);
+    
+    useEffect(() => {
+        if(!image)setImageLoadError(true);
+    }, []);
     return (
         <>
             <style jsx>{styles}</style>
             <div className={`product-image ${options?.view?`product-image__${options?.view}`:''}`}>
-                    {image && !imageLoadError ? (
+                    {image != undefined && !imageLoadError ? (
                         <img
                             src={image}
                             alt="img"
@@ -16,8 +21,7 @@ const ProductImage: React.FC<{ image?: any, options?: any }> = ({ image, options
                             onError={() => setImageLoadError(true)}
                         />
 
-                    ) : <UiIcon icon='nirvana-logo' />}
-                {/* </div> */}
+                    ) : <UiIcon icon={`${environment.merchant.name}-logo`} />}
             </div>
         </>
     );

@@ -1,10 +1,14 @@
 main {
-  width: 100%;
+  width: var(--padding-width);
   overflow-y: visible;
   position: relative;
+  margin: 0 auto 0;
   @media(min-width: 1260px){
     width: auto;
-    margin: 0 auto 0;
     max-width: calc(1260px - calc(var(--padding) * 2));
+  }
+  @media(min-width: 1280px){
+    max-width: 1260px;
+    padding: 0;
   }
 }

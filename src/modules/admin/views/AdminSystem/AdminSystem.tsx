@@ -54,10 +54,13 @@ const AdminSystem: React.FC = () => {
     </>
   }
   const lActive = loader?.active;
-  useEffect(() => {
-    if (!systemData) fetchSystemData().then(() => {
+  const getData = async () =>{
+    fetchSystemData().then(() => {
       setLoader({ active: false });
     });
+  }
+  useEffect(() => {
+    if (!systemData) getData()
   }, [setSystemData]);
   return (
     <>
@@ -74,7 +77,7 @@ const AdminSystem: React.FC = () => {
           </div>?!?
 
           <div >
-            <UiButton busy={loader?.active}  variant='dark' >Refresh</UiButton>
+            <UiButton busy={loader?.active}  variant='dark' onClick={getData}>Refresh</UiButton>
           </div>
         </div>
         <div className='admin-system__overview'>
