@@ -43,8 +43,8 @@
     width: $hundredWidth;
     margin: var(--element-height) 5px 0;
     height: max-content;
-    overflow-y: auto;
-    overflow-x: hidden;
+    max-height: 800px;
+    overflow: hidden;
 
     @media (orientation: portrait) {
         height: 100vh;
@@ -65,7 +65,7 @@
             // margin-top: 100px;
             margin: 0;
             // max-width: $hundredWidth;
-            transform: translate(calc(50vw - 400px), 200px); // Center the modal
+            transform: translate(calc(50vw - 400px), var(--element-height)); // Center the modal
         }
 
         &__fullscreen {
@@ -90,19 +90,22 @@
         border: solid 1px var(--gray-70);
         background: var(--gray-90);
         border-radius: var(--border-radius);
-        padding: calc(var(--padding) * 1.5) var(--padding);
+
         box-shadow: var(--box-shadow-xl);
         min-height: max-content;
         transition: all 1s;
-        &::-webkit-scrollbar-thumb {
-            background-color: var(--blue);
-            border-radius: 5px;
-        }
-
+        position: relative;
         &:hover {
             transition: all 1s;
             background-color: var(--gray-100);
         }
+        &::-webkit-scrollbar-thumb {
+          
+            background-color: var(--blue);
+            border-radius: 5px;
+        }
+
+      
 
         &::-webkit-scrollbar {
             width: 10px;
@@ -138,12 +141,11 @@
         @extend .d-flex;
         align-self: flex-start;
         justify-content: space-between;
-        width: 100%;
+        width: var(--padding-width);
         font-size: var(--s-4);
-
+        padding: var(--padding);
         .modal-overlay__icon {
             --ui-icon-color: var(--gray-40);
-
             &:hover {
                 cursor: pointer;
                 --ui-icon-color: var(--primary);

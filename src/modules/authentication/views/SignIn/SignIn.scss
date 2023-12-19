@@ -35,6 +35,8 @@
 
 $brk: 25px;
 .sign-in {
+  margin: var(--element-height) 0;
+  gap:var(--padding);
   display: flex;
   flex-direction: column;
   justify-content: space-between;

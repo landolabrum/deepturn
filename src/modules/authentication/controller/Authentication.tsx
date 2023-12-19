@@ -1,5 +1,4 @@
-import type { NextComponentType, NextPageContext } from "next";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import SignIn from "../views/SignIn/SignIn";
 import styles from "./Authentication.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
@@ -10,7 +9,6 @@ import VerifyEmail from "../views/VerifyEmail/VerifyEmail";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import { useLoader } from "@webstack/components/Loader/Loader";
-import { useClearance } from "~/src/core/authentication/hooks/useUser";
 
 
 

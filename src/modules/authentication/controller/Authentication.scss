@@ -35,7 +35,7 @@ a{
   z-index: 1;
   height: max-content;
 overflow: hidden;
-  &:not(.authentication__sign-in) {
+&:not(.authentication__sign-in) {
 
     // background-color: var(--gray-90);
     // border-radius: var(--border-radius);
