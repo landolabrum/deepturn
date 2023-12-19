@@ -86,7 +86,6 @@ const AccountModify = ({ user, open = false }: any) => {
   
   return (
       <UiForm
-        variant='card'
         fields={fields}
         onChange={onChange}
         onSubmit={onSubmit}
@@ -96,47 +95,3 @@ const AccountModify = ({ user, open = false }: any) => {
 };
 
 export default AccountModify;
-
-{/* <UiCollapse label={fields?.address ? <>
-        <div className='profile-form__collapse-label'>
-          <div>
-            {fields.first_name} {fields.last_name}
-          </div>
-          <div>
-            {fields?.address?.line1}, {fields?.address?.city}, {fields?.address?.state}
-          </div>
-        </div>
-      </> : 'Profile Form'} open={open}>
-        <div className='profile-form'>
-          <div className='profile-form__body'>
-            <div className='profile-form__name'>
-              <UiInput required value={fields?.first_name || ''} label='First Name' name='first_name' onChange={handleChange} error={errors.first_name} />
-              <UiInput required value={fields?.last_name || ''} label='Last Name' name='last_name' onChange={handleChange} error={errors.last_name} />
-            </div>
-            <div className='profile-form__contact'>
-              <UiInput value={fields?.email || ''} type='email' label='Email'
-                error={errors.email}
-                name='email' onChange={handleChange} />
-              <UiInput value={phoneFormat(fields?.phone, fields?.country)} label='Phone' type='tel' name='phone' onChange={handleChange} />
-            </div>
-            <div className="profile-form__address">
-              <UiInput
-                label='address'
-                type="text"
-                error={errors.address}
-                placeholder="Enter your address"
-                value={fields.address}
-                onChange={handleChange}
-                name="address"
-              />
-            </div>
-            <div className='profile-form__action'>
-              <UiButton
-                disabled={disabled}
-                variant='primary'
-                busy={loading}
-                onClick={handleSubmit}>Update Account</UiButton>
-            </div>
-          </div>
-        </div>
-      </UiCollapse> */}
