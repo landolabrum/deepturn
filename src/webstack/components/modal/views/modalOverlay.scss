@@ -42,8 +42,7 @@
     align-items: flex-start;
     width: $hundredWidth;
     margin: var(--element-height) 5px 0;
-    height: max-content;
-    max-height: 800px;
+    height: 100%;
     overflow: hidden;
 
     @media (orientation: portrait) {
@@ -55,10 +54,10 @@
         width: 800px; // Set a fixed width for larger screens
         // max-width: 90%; // Add a max-width to ensure it doesn't get too wide on very large screens
         height: auto; // Height can be auto for scrollable content
-        margin: var(--element-height) auto;
+        margin: var(--element-height) auto 0;
 
         @media (orientation: landscape) {
-            height: calc(100vh - 90px);
+            overflow: visible;
         }
 
         @media (orientation: portrait) {
@@ -85,6 +84,8 @@
         flex-direction: column;
         width: 800px;
         height: auto;
+        padding-bottom: var(--padding);
+        margin: auto;
         backdrop-filter: blur(5px);
         color: var(--gray-30);
         border: solid 1px var(--gray-70);
@@ -122,6 +123,8 @@
 
         @media(max-width:900px) {
             margin: var(--s-9);
+            padding: var(--padding) var(--padding) var(--element-height); 
+            width: var(--padding-width);
             // background-color: var(--gray-100-opaque);
             justify-content: flex-start;
         }
@@ -170,11 +173,9 @@
 
     &__body {
         word-wrap: break-word;
-        width: var(--padding-width);
-        padding: var(--padding) var(--padding) var(--element-height); 
-        max-height: calc(100vh - var(--element-height));
-        /* Limit the modal body height to 75% of the viewport height */
         overflow-y: auto;
+        width: var(--padding-width);
+        margin-bottom: var(--padding);
         overflow-x: hidden;
         @media(max-width: 900px) {
             max-height: calc(100vh - 60px);

@@ -7,40 +7,39 @@ $cardWidth: 500px;
   width: 100%;
 }
 
-a{
+a {
   text-decoration: none !important;
 }
+
 .d-flex-col {
   @extend .d-flex;
   flex-direction: column;
 }
-.authentication__status{
+
+.authentication__status {
   margin: var(--element-height) auto;
-  &--success{
+
+  &--success {
     @extend .d-flex-col;
-    gap: var(--s-3);
-    width: 100%;
+    gap: var(--padding);
     width: inherit;
     text-align: center;
-    color:var(--dark);
-    &--header{
+    color: var(--dark);
+
+    &--header {
       font-size: var(--s-3);
     }
   }
 }
 
 .authentication {
-  margin: auto;
   min-width: 350px;
   z-index: 1;
   height: max-content;
-overflow: hidden;
-width: var(--padding-width);
-
-&:not(.authentication__sign-in) {
-
-    // background-color: var(--gray-90);
-    // border-radius: var(--border-radius);
+  overflow: hidden;
+  @extend .d-flex-col;
+  gap: var(--padding);
+  &:not(.authentication__sign-in) {
     @media(max-width: 1100px) {
       max-width: 500px;
     }
@@ -73,7 +72,7 @@ width: var(--padding-width);
     .authentication__view-name {
       color: var(--gray-10);
     }
-    
+
   }
 
   .authentication__view-action {
@@ -102,7 +101,7 @@ width: var(--padding-width);
       margin: var(--padding) 0 0;
       background-color: inherit;
       width: 100%;
-      
+
     }
   }
 

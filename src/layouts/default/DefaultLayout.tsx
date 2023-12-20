@@ -13,7 +13,7 @@ const DefaultLayout = (props: IProps) => {
   const handleLayout = () =>{
     const headerHeight = document.getElementById('header-container')?.offsetHeight;
     if(headerHeight && mainRef.current){
-      mainRef.current.style.height = `calc(100% - calc(${headerHeight}px + calc( var(--padding) * 2)))`;
+      mainRef.current.style.height = `calc(100% - calc(${headerHeight}px + calc( var(--padding) * 3)))`;
     }
   }
   const mainRef = useRef<HTMLDivElement>(null);

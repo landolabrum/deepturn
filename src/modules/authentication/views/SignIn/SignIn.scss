@@ -10,11 +10,11 @@
 }
 .sign-in__status{
   overflow: hidden;
-  width: inherit;
+  width:100%;
   &--success{
     width:100%;
     @extend .d-flex-col;
-    gap: var(--s-8);
+    gap: var(--padding);
     &--header{
       color:var(--gray-30);
       --ui-icon-color:var(--gray-30);
@@ -22,13 +22,14 @@
       font-size: var(--s-3);
       @extend .d-flex;
       justify-content: flex-start;
+      align-items: flex-start;
       gap: var(--padding);
-      width: calc(calc(100% - 2px) - calc(var(--padding) * 2));
       padding: var(--padding) var(--padding) var(--element-height);
+      width: calc(var(--padding-width) - 2px);
       margin: var(--s-9) 0 var(--element-height);
       border-radius: var(--border-radius);
       border: solid 1px var(--gray-60);
-      background-color: var(--gray-70);
+      background-color: var(--gray-80);
     }
   }
 }

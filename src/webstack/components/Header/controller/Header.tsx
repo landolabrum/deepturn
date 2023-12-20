@@ -7,7 +7,6 @@ import useWindow from "@webstack/hooks/useWindow";
 import environment from "~/src/environment";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 
-const HOVER_TIME = 700;
 
 export type HeaderProps = {
   breadcrumbs?: BreadCrumbLinkProps[];
@@ -25,36 +24,6 @@ export const useHeader = () => useContext(HeaderContext);
 
 export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
-  const [hover, setHover] = useState<string>('');
-  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
-  const width = useWindow()?.width;
-
-  const handleMouseEnter = () => {
-    if (width < 1100) return;
-    if (hoverTimeout) {
-      clearTimeout(hoverTimeout);
-    }
-    const timeout = setTimeout(() => {
-      setHover('__hover');
-    }, HOVER_TIME);
-    setHoverTimeout(timeout);
-  };
-
-  const handleMouseLeave = () => {
-    if (width < 1100) return;
-    if (hoverTimeout) {
-      clearTimeout(hoverTimeout);
-    }
-    const upClass = setTimeout(() => {
-      setHover('--end');
-      const resetClass = setTimeout(() => {
-        setHover('');
-      }, HOVER_TIME);
-      setHoverTimeout(resetClass);
-    }, HOVER_TIME);
-    setHoverTimeout(upClass);
-  };
-
   return (
     <>
       <style jsx>{styles}</style>
@@ -62,16 +31,11 @@ export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         
         <div 
             id="header-container"
-            className={`header__container${hover!=''?`header__container${hover}`:''}`} 
-            onMouseLeave={handleMouseLeave}
+            className={`header__container`} 
         >
           <Navbar />
-          <span
-            onMouseEnter={handleMouseEnter}
-             >
 
           <Header />
-          </span>
         </div>
         {children}
       </HeaderContext.Provider>
@@ -79,44 +43,15 @@ export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   );
 };
 const Header: React.FC = () => {
-  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [context, setContext] = useContext(HeaderContext);
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
   const [route, setRoute] = useState<string | null>(null);
   const router = useRouter();
 
-  const [hover, setHover] = useState<string>('');
   const width = useWindow()?.width;
-  const handleMouseEnter = () => {
-    if(width < 1100)return;
-    // Clear any existing leave timeout
-    if (hoverTimeout) {
-      clearTimeout(hoverTimeout);
-    }
-    // Set hover state after 2 seconds
-    const timeout = setTimeout(() => {
-      setHover('__hover');
-    }, HOVER_TIME);
-    setHoverTimeout(timeout);
-  };
 
-  const handleMouseLeave = () => {
-    if(width < 1100)return;
-    // Clear the enter timeout if it's set
-    if (hoverTimeout) {
-      clearTimeout(hoverTimeout);
-    }
-    // Set upClass and resetClass with a total delay of 4 seconds
-    const upClass = setTimeout(() => {
-      setHover('--end');
-      const resetClass = setTimeout(() => {
-        setHover('');
-      }, HOVER_TIME);
-      setHoverTimeout(resetClass);
-    }, HOVER_TIME);
-    setHoverTimeout(upClass);
-  };
 
+  
   useEffect(() => {
     // console.log('[ HEADER CONTEXT ]', context)
     setHeaderState(context);
@@ -124,11 +59,7 @@ const Header: React.FC = () => {
   }, [context]);
 
   useEffect(() => {
-    if(width < 1100){
-      setHover('__hover')
-    }else{
-      setHover('')
-    }
+
     if (router.asPath !== route) {
       setContext(null);
       setRoute(router.asPath);

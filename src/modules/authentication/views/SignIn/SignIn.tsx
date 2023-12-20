@@ -89,6 +89,7 @@ const SignIn = ({ email }: { email: string | undefined }) => {
         });
         if(signInResponse){
           const response = {status:'success', data:signInResponse}
+          console.log('[респ]', response)
           openModal(<Success {...response} />);
         }
         // console.log(`[  signInResponse]:`, signInResponse);
