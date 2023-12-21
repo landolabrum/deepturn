@@ -67,7 +67,7 @@ $item-height: 500px;
     right: 0;
   }
 .product-slider {
-  height: max-content;
+  height: 100%;
   @media(min-width: 1100px) {
     white-space: nowrap;
     scroll-snap-type: x mandatory;
@@ -101,6 +101,8 @@ $item-height: 500px;
     width: 100%;
     color: var(--gray-10);
     
+    background-color: var(--gray-80-opaque);
+    border: solid 1px var(--gray-80);
     &:hover{
       color: var(--primary);
       background-color: var(--gray-70);

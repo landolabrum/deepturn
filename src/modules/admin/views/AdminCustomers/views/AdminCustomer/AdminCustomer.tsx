@@ -232,7 +232,7 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
             </div>
            
           </AdaptGrid>
-          {productRequest && <AdapTable data={productRequest} options={{tableTitle: 'Product Request'}}/>|| ''}
+          {productRequest?.length  && <AdapTable data={productRequest} options={{tableTitle: 'Product Request'}}/>|| ''}
         </div>
         
         <div className='admin-customer__content'>

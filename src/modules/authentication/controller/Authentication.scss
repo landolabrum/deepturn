@@ -39,6 +39,9 @@ a {
   overflow: hidden;
   @extend .d-flex-col;
   gap: var(--padding);
+  @media(max-width: 900px) {
+    min-width: unset;
+  }
   &:not(.authentication__sign-in) {
     @media(max-width: 1100px) {
       max-width: 500px;

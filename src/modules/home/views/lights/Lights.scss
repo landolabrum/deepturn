@@ -15,5 +15,13 @@
         padding: var(--padding);
         min-height: 200px;
         gap: var(--padding);
+        &-header{
+            width: 100%;
+            @extend .d-flex;
+            text-transform: capitalize;
+            justify-content: flex-start;
+            border-radius: var(--border-radius);
+            background-color: var(--gray-80);
+        }
     }
 }

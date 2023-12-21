@@ -1,5 +1,5 @@
 $hite: 50px;
-$agg: 5px;
+$agg: var(--border-radius);
 
 .d-flex {
   display: flex;
@@ -7,32 +7,41 @@ $agg: 5px;
   align-items: center;
 }
 .bar {
-  width: 140px;
-  margin: 20px;
+  // width: 140px;
+  // margin: 20px;
+  width: 100%;
   @media(max-width:900px){
     margin: 20px 5px;
   }
   .bar__container {
+    background-color: var(--gray-90);
     border-radius: $agg;
     border: solid 1px var(--gray-60);
     padding: 10px 6px;
     &:hover {
       .bar__bars-container {
         .bar__percentage {
+          color: var(--white);
+          text-shadow: #f30 1px 0 10px;
+          user-select: none;
           visibility: visible;
         }
       }
-      .bars__icon {
-        --ui-icon-color: var(--gray-30);
-      }
     }
     .bar__header {
+      color: var(--gray-30);
+      --ui-icon-color: var(--gray-30);
+      @extend .d-flex;
       position: relative;
+      gap: var(--s-9);
+      line-height: 1;
+      height: var(--element-height);
+      --ui-icon-height: var(--s-5);
     }
     .bars__icon {
       @extend .d-flex;
+      height: var(--element-height);
       padding-top: 20px;
-      --ui-icon-size: 30px;
       --ui-icon-color: var(--gray-60);
       padding: 30px 0 20px;
     }

@@ -44,7 +44,11 @@
     margin: var(--element-height) 5px 0;
     height: 100%;
     overflow: hidden;
-
+    @media(max-width: 900px) {
+        margin: var(--element-height) auto 0;
+        // max-height: calc(100vh - 60px);
+        /* Adjust the height to account for other modal elements */
+    }
     @media (orientation: portrait) {
         height: 100vh;
         /* Limit the modal height to 80% of the viewport height */
@@ -116,7 +120,8 @@
 
         @media(max-width:1260px) {
             @media (orientation: portrait) {
-                margin-top: 100px;
+                margin: 100px 0 0;
+
                 max-width: $hundredWidth;
             }
         }
@@ -178,7 +183,8 @@
         margin-bottom: var(--padding);
         overflow-x: hidden;
         @media(max-width: 900px) {
-            max-height: calc(100vh - 60px);
+            padding: 0;
+            // max-height: calc(100vh - 60px);
             /* Adjust the height to account for other modal elements */
         }
 
