@@ -9,12 +9,6 @@
     &__light {
         @extend .d-flex;
         overflow: hidden;
-        flex-direction: column;
-        justify-content: flex-start;
-        width: var(--padding-width);
-        padding: var(--padding);
-        min-height: 200px;
-        gap: var(--padding);
         &-header{
             width: 100%;
             @extend .d-flex;

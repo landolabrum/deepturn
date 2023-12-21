@@ -11,13 +11,12 @@ $agg: var(--border-radius);
   // margin: 20px;
   width: 100%;
   @media(max-width:900px){
-    margin: 20px 5px;
   }
   .bar__container {
     background-color: var(--gray-90);
     border-radius: $agg;
     border: solid 1px var(--gray-60);
-    padding: 10px 6px;
+    padding: var(--s-9);
     &:hover {
       .bar__bars-container {
         .bar__percentage {
@@ -32,6 +31,7 @@ $agg: var(--border-radius);
       color: var(--gray-30);
       --ui-icon-color: var(--gray-30);
       @extend .d-flex;
+      justify-content: space-around;
       position: relative;
       gap: var(--s-9);
       line-height: 1;

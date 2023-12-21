@@ -56,27 +56,23 @@ const Lights: React.FC = () => {
       <div className='lights'>
         <h1>lights</h1>
 
-        {lights && <AdaptGrid xs={2} sm={3} md={5} gap={18}>
+        {lights && <AdaptGrid xs={2} sm={3} md={4} gap={15}>
           {Object.entries(lights).map(
             ([key, light]: any, index: number) =>
               <div className='lights__light' key={index}>
                 <UiBar
-
                   header={<>
                     {light?.name}
                     <UiIcon
                       icon={light?.is_on ? 'fa-lightbulb-on' : 'fa-lightbulb-slash'}
                     />
+                    <ToggleSwitch name={light?.id_} onChange={console.log}/>
                   </>}
                   onChange={console.log}
                   background={{ start: 'fffffff', end: "e0e0e0" }}
                   barCount={5}
                   percentage={light.bri * 100 / 254}
                 />
-                {/* <UiInput type='color' value={light?.hex}/>
-              <small>
-            </small> */}
-                {/* {JSON.stringify(light)} */}
               </div>
           )}
         </AdaptGrid>}
