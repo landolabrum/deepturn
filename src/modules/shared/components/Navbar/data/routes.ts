@@ -49,16 +49,16 @@ export const routes: IRoute[] = [
   //     { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
   //   ],
   // },
-  // {
-  //   label: "Home",
-  //   icon: "fa-home",
-  //   href:"/home",
-  //   clearance: 6,
-  //   items: [
-  //     { label: "stream",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
-  //     { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
-  //   ],
-  // },
+  {
+    label: "Home",
+    icon: "fa-home",
+    href:"/home",
+    clearance: 6,
+    items: [
+      { label: "stream",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
+      { label: "lights", href: "/lights", icon: "fa-lightbulb-on", active: true },
+    ],
+  },
   // {
   //   label: "auto",
   //   icon: "fa-engine",

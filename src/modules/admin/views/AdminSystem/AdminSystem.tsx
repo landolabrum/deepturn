@@ -8,7 +8,6 @@ import UiBar from '@webstack/components/Graphs/UiBar/UiBar';
 import { colorPercentage, dateFormat } from '@webstack/helpers/userExperienceFormats';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { useLoader } from '@webstack/components/Loader/Loader';
-import capitalize from '@webstack/helpers/Capitalize';
 import UiButton from '@webstack/components/UiButton/UiButton';
 
 // Remember to create a sibling SCSS file with the same name as this component
@@ -125,40 +124,3 @@ const AdminSystem: React.FC = () => {
 };
 
 export default AdminSystem;
-
-// <div className='admin-system__percentages'>
-// {systemData && Object.entries(systemData).filter(([key, val]) => key.includes('percentage')).map(([key, val]: any) => {
-//   if (key.includes('temp')) return (
-//     <div
-//       key={key}
-//       className='admin-system__percentages--item'
-//     >
-//       <div className='admin-system__percentages--item--name'>
-//         {key}
-//         {/* {keyStringConverter(key.replace('percentage', ''))} */}
-//       </div>
-//       <UiBar
-//         colorReverse={true}
-//         percentage={val}
-//         barCount={4}
-//         status={val >= 90 && 'high' || undefined}
-//         timestamp={
-//           systemData.timestamp && dateFormat(systemData.timestamp, { isTimestamp: true })
-//         }
-//       />
-//     </div>
-//   );
-// })}
-// </div>
-
-
-
-// <div className='admin-system__list'>
-// {/* .filter(([key, val]) => !key.includes('temp')) */}
-// {systemData && Object.entries(systemData).map(([key, val]: any) => {
-//   return <div key={key} className='admin-system__list--item'>
-//     <div className='admin-system__list--item__key'>{keyStringConverter(key)}</div>
-//     <div className='admin-system__list--item__val'>{key != 'timestamp' && val || dateFormat(val, { isTimestamp: true })}</div>
-//   </div>
-// })}
-// </div>

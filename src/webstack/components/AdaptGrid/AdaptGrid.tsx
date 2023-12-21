@@ -79,7 +79,7 @@ export default function AdaptGrid({
         { id: "xl", breakpoint: 1600, value: xl },
       ])}, 1fr)`,
       gridColumnGap: `${gapX ? gapX : gap}px`,
-      gridRowGap: `${gapY ? gapX : gap}px`,
+      gridRowGap: `${gapY ? gapY : gap}px`,
       paddingTop: `${gap ? gap / 2 : 0}px`,
       paddingBottom: `${gap ? gap / 2 : 0}px`,
       margin: `${margin ? margin : "0px"}`,

@@ -1,0 +1,19 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.lights {
+    width: 100%;
+
+    &__light {
+        @extend .d-flex;
+        overflow: hidden;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: var(--padding-width);
+        padding: var(--padding);
+        min-height: 200px;
+        gap: var(--padding);
+    }
+}

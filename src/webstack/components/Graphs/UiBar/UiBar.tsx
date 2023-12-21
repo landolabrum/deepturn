@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./UiBar.scss";
 import { UiIcon } from "../../UiIcon/UiIcon";
@@ -13,10 +13,29 @@ interface BarProps {
   status?: string;
   timestamp?: string;
   header?: string | React.ReactElement;
-  colorReverse?: boolean; // Add this line
+  colorReverse?: boolean;
+  onChange?: (newPercentage: number) => void; // Add this line
 }
 
-const UiBar = ({colorReverse, barCount, percentage, icon, status, timestamp, header }: BarProps) => {
+const UiBar = ({
+  colorReverse,
+  barCount,
+  percentage,
+  icon,
+  status,
+  timestamp,
+  header,
+  onChange // Add this line
+}: BarProps) => {
+  const [localPercentage, setLocalPercentage] = useState(percentage);
+
+  const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPercentage = Number(e.target.value);
+    setLocalPercentage(newPercentage);
+    if (onChange) {
+      onChange(newPercentage);
+    }
+  };
 
 
   const renderBars = () => {
@@ -114,6 +133,7 @@ UiBar.propTypes = {
   barCount: PropTypes.number.isRequired,
   percentage: PropTypes.number.isRequired,
   icon: PropTypes.string,
+  onChange: PropTypes.func, // Add this line
 };
 
 export default UiBar;

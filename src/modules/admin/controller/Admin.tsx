@@ -19,7 +19,7 @@ const UiGlobe = dynamic(
 
 const Admin = () => {
   const router = useRouter();
-  const [currentView, setCurrentView]=useState<string | undefined>('customers');
+  const [currentView, setCurrentView]=useState<string | undefined>('products');
   const views = {
     globe:<UiGlobe/>,
     customers: <AdminCustomerPage/>,
