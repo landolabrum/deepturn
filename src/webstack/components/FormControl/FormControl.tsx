@@ -35,6 +35,7 @@ export interface IFormControl {
   children?: string | React.ReactElement | React.ReactFragment | number;
   traits?: ITraits;
   error?: string | null;
+  type?: string;
 }
 
 // FormControl component for rendering form controls with label, icons, and overlay support
@@ -45,6 +46,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   overlay,
   setOverlay,
   traits,
+  type,
   error
 }: IFormControl) => {
   const ref = useRef<any>(null);
@@ -71,7 +73,9 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
       // Special handling for USABLE elements
       const hasDataElem:any = Object.values(formElement.children)
       .find((e:any) => e.getAttribute('data-element') && ['button', 'input', 'select', 'textarea'].includes(e.getAttribute('data-element')));
-      if(hasDataElem)formElement.classList.add(`form-control__element--${hasDataElem.getAttribute('data-element')}`);
+      if(hasDataElem)formElement.classList.add(
+        `form-control__element--${hasDataElem.getAttribute('data-element')}${type && type=='color'?'-color':''}`
+      );
     }
 
     // Overlay management
@@ -87,6 +91,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   }, [overlay, traits, variant, setOverlay, setOverlayState]);
 
   const varClasses = (className: string) => {
+    
     const createElemIconClass = () => {
       if (traits?.beforeIcon && traits?.afterIcon) return ` ${className}--has-icon`;
       else if (traits?.beforeIcon) return ` ${className}--before-icon`;
@@ -99,6 +104,10 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
         return acc.includes(variantClass) ? acc : `${acc} ${variantClass}`.trim();
       }, className);
     }
+    const isColor = () =>{
+      if(type == 'color' )return ` ${className}-input-color`;
+      return '';
+    }
     if (!variant) return `${className}${createElemIconClass()}`;
     return `${createVariantClass()}${createElemIconClass()}`
   };
@@ -107,7 +116,12 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
     <>
       <style jsx>{styles}</style>
       <style jsx>{elStyles}</style>
-      <div className={`form-control ${variant ? `form-control--${variant}` : ''}`} ref={ref}>
+      <div 
+        className={
+          `form-control ${variant ? `form-control--${variant}` : ''}${type == 'color'?'form-control--maxY':''}`
+        }
+        ref={ref}
+      >
         {label && (
           <div className='form-control__header'>
             <label>{typeof label === 'string' ? <UiMarkdown text={label} /> : label}</label>

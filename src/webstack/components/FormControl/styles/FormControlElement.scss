@@ -109,11 +109,11 @@
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
 
-    &:not(&--warning, &--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item, &--nav-item__active, &--select, &--invalid, &--input, &--textarea, &--signature) {
+    &:not(&--warning, &--checkbox, &--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item, &--nav-item__active, &--select, &--invalid, &--input, &--textarea, &--signature) {
         @extend %element-color;
     }
 
-    &:not(&--nav-item, &--nav-item__active, &--signature) {
+    &:not(&--nav-item, &--nav-item__active, &--signature, &--checkbox) {
         @extend .b-rad;
     }
 
@@ -133,6 +133,10 @@
     // ELEMENTS
     &--button {
         border: solid 1px transparent;
+    }
+    &--checkbox{
+        padding:  0;
+        height: var(--element-height);
     }
 
     &--input,
@@ -184,7 +188,11 @@
         }
     }
 
-
+    &--input-color{
+        padding: 0 !important;
+        height: 100%;
+        background-color: transparent !important;
+    }
 
 
     // FORM CONTROL ELEMENTS - VARIANT DEFINITIONS

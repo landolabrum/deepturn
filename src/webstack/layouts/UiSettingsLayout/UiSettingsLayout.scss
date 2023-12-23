@@ -54,9 +54,14 @@ $actionsBg: var(--gray-90);
             left: var(--s-5);
         }
 
+        // &--hide {
+        //     opacity: .5;
+        //     left: var(--s-5);
+        // }
+
         top: var(--s-4);
         border-radius: var(--border-radius);
-        left: 0;
+        left: var(--padding);
         z-index: 2;
         color: var(--primary);
         text-align: center;
@@ -71,6 +76,12 @@ $actionsBg: var(--gray-90);
         }
     }
 
+    @media (min-width: 1100px) {
+        margin: var(--padding) 0;
+        padding: var(--padding);
+        width: var(--padding-width);
+    }
+
     &__content {
         @extend .d-flex;
         justify-content: stretch;
@@ -78,17 +89,18 @@ $actionsBg: var(--gray-90);
        
         @media (min-width: 1100px) {
             padding: var(--element-height) 0 0;
-            height: calc(100% - var(--element-height));
+            gap: var(--padding);
         }
 
         @media (max-width: 1100px) {
             height: 100%;
+
             flex-direction: column;
 
         }
 
         @media(max-width: 1260px) {
-            margin: 0 auto var(--s-1);
+            margin: auto;
             justify-content: center;
         }
      
@@ -151,6 +163,7 @@ $actionsBg: var(--gray-90);
         
         &--show {
             animation: hideActions 1s ease-in-out forwards reverse;
+            margin-right: var(--padding);
             @media(max-width: 1100px){
                 animation: unset;
                 transform: translateX(0);
@@ -162,22 +175,18 @@ $actionsBg: var(--gray-90);
         }
 
         &--content {
-            background-color: var(--gray-100);
             border-radius: var(--border-radius);
             @extend .d-flex;
             width: 100%;
-            border: solid 1px;
             animation: borderAnimation 5s infinite alternate;
             @media(max-width: 900px) {
                 animation: unset;
             }
             @media(max-width: 1100px) {
-
                 border-radius: var(--border-radius) var(--border-radius) 0 0;
                 border-bottom: solid 0px transparent !important;
                 width: var(--padding-width);
                 padding: var(--padding);
-                box-shadow: var(--box-shadow);
             }
 
             @media (min-width: 2100px) {
@@ -188,7 +197,6 @@ $actionsBg: var(--gray-90);
 
         @media (min-width: 1100px) {
             min-height: auto;
-            margin-right: var(--padding);
         }
 
         @media (max-width: 1100px) {
@@ -205,8 +213,7 @@ $actionsBg: var(--gray-90);
     // VIEW
     .settings__view {
         color: var(--gray-40);
-        background-color: var(--gray-100);
-        height: auto;
+        height: 100%;
         width: 100%;
         position: relative;
         overflow-x: hidden;
@@ -218,6 +225,7 @@ $actionsBg: var(--gray-90);
             align-items: flex-start;
             position: unset;
             border-width: 1px;
+            background-color: var(--gray-100);
         }
 
         border-style: solid;
@@ -225,15 +233,17 @@ $actionsBg: var(--gray-90);
 
         border-radius: var(--border-radius);
         animation: borderAnimation 5s infinite alternate;
-        @media (max-width: 900px) {
+        
+        @media (max-width: 1100px) {
+            background-color: var(--gray-100);
+            border-radius: var(--border-radius);
             border: none;
-            border-radius: none;
-            // padding: 0 var(--padding);
-            // width: var(--padding-width);
+            width: var(--padding-width);
+            margin: 0 auto;
+            overflow-y: hidden;
         }
         @media (max-width: 1100px) {
             border-radius: 0 0 var(--border-radius) var(--border-radius);
-            height: calc(100vh - 170px);
             border-top-color: transparent !important;
         }
 
@@ -258,25 +268,6 @@ $actionsBg: var(--gray-90);
             &--hide {
                 transform: translateX(var(--element-height));
             }
-
-            // $headerPositionLeft: calc(var(--element-height) * -1);
-            // @keyframes showHeader {
-            //     0%{
-            //         transform: translateX(0px);
-            //     }
-            //     100%{
-            //         transform: translateX($headerPositionLeft);
-            //     }
-            // }
-
-            // // transform: translateX($headerPositionLeft);
-            // &--show{
-            //     animation: showHeader .7s forwards;
-            // }
-            // &--hide{
-            //     animation: showHeader .7s forwards reverse;
-            // }
-
         }
 
         &__content {
@@ -286,13 +277,13 @@ $actionsBg: var(--gray-90);
             justify-content: flex-start;
             align-items: flex-start;
             padding: var(--s-4) var(--s-5);
-
+            height: 100%;
             @media (max-width: 1100px) {
                 padding: var(--s-5) var(--s-8);
             }
 
             @media (max-width: 900px) {
-                padding: var(--s-7) var(--s-9);
+                padding: 0 var(--s-9) var(--element-height);
             }
         }
     }

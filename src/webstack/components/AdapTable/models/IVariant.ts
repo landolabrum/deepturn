@@ -29,6 +29,7 @@ export type IVariant =
   | "invalid"
   | "link"
   | "mini"
+  | "checkbox"
   | "miniactive"
   | "nav-item"
   | "center nav-item"

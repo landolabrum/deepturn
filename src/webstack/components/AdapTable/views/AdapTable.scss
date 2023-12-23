@@ -16,6 +16,9 @@ $overBreakPoint: 1350px;
   flex-direction: column;
   border-radius: $bRad;
   font-weight: 300;
+  @media(max-width:1100px){
+    overflow: hidden;
+  }
   @media(max-width:900px){
     background-color: var(--gray-80);
   }

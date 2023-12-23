@@ -10,10 +10,9 @@ $agg: var(--border-radius);
   // width: 140px;
   // margin: 20px;
   width: 100%;
-  @media(max-width:900px){
-  }
   .bar__container {
-    background-color: var(--gray-90);
+    // background: (to right, rgb(255, 255, 255), rgba(255, 255, 255, 0));
+
     border-radius: $agg;
     border: solid 1px var(--gray-60);
     padding: var(--s-9);
@@ -28,15 +27,12 @@ $agg: var(--border-radius);
       }
     }
     .bar__header {
-      color: var(--gray-30);
-      --ui-icon-color: var(--gray-30);
       @extend .d-flex;
-      justify-content: space-around;
+      overflow: hidden;
+      min-height: var(--element-height);
+      white-space: nowrap;
       position: relative;
-      gap: var(--s-9);
       line-height: 1;
-      height: var(--element-height);
-      --ui-icon-height: var(--s-5);
     }
     .bars__icon {
       @extend .d-flex;
@@ -66,6 +62,11 @@ $agg: var(--border-radius);
       justify-content: stretch;
       flex-direction: column-reverse;
       gap: $agg;
+      overflow: hidden;
+      border-radius: var(--border-radius);
+      // &--is-color{
+      //   background: linear-gradient(to top, red 0%, #ff0 17%, lime 33%, cyan 50%, blue 66%, #f0f 83%, red 100%);
+      // }
       .bar__percentage {
         font-size: var(--s-1);
         visibility: hidden;
@@ -81,14 +82,18 @@ $agg: var(--border-radius);
     }
   }
 }
-.bar__bars-content {
-  height: 50px;
-  border-radius: $agg;
-  border: solid 1px var(--gray-60);
-  transform: rotate(180deg);
-  .bar__bars-bar {
-    height: 100%;
-  }
+  .bar__bars-content {
+    overflow: hidden;
+    border-radius: $agg;
+    border: solid 1px var(--gray-60);
+    transform: rotate(180deg);
+    height: var(--element-height);
+    .bar__bars-bar {
+      &-filled, &-partial{
+        height: 100%;
+        background-color: var(--bar-background, var(--yellow));
+      }
+    }
 }
 .bar__timestamp {
   width: 100%;

@@ -8,6 +8,7 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 import UiBar from '@webstack/components/Graphs/UiBar/UiBar';
 import ToggleSwitch from '@webstack/components/UiToggle/UiToggle';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import UiInput from '@webstack/components/UiInput/UiInput';
 
 // Remember to create a sibling SCSS file with the same name as this component
 type ILight = {
@@ -15,25 +16,38 @@ type ILight = {
   name: string;
   is_on: boolean;
   view?: string;
+  bri?: number;
 }
 const Lights: React.FC = () => {
   const [loader, setLoader] = useLoader();
 
-  const [lights, setLights] = useState<any>(null);
+  const [lights, setLights] = useState<any>(undefined);
   const homeService = getService<IHomeService>('IHomeService');
-  const handleToggle = (e: any) => {
-    const { name, value } = e?.target;
-    const updatedViews = lights.map((light: ILight) => {
-      if(light?.id_ == name){
-        if(!light?.view ){
+  const handleView = (id: string) => {
+    const updateLightsWithView = lights.map((light: ILight) => {
+      if (light?.id_ == id) {
+        if (light?.view == undefined) {
           light.view = 'color'
-        }else delete light.view
+        } else if (light?.view != undefined) delete light.view
 
       }
       return light
     });
-    console.log('[ e ]', updatedViews)
-    console.log('[ e ]', name, value)
+    setLights(updateLightsWithView)
+  }
+  const handleToggle = (id: string) => {
+    const updateLightsWithView = lights.map((light: ILight) => {
+      if (light?.id_ == id) {
+        if (light?.bri != 0) {
+          light.bri = 0
+        } else {
+          light.bri = 255
+        }
+
+      }
+      return light
+    });
+    setLights(updateLightsWithView)
   }
   const fetchLights = async () => {
     setLoader({ active: true, body: 'loading lights' });
@@ -56,23 +70,30 @@ const Lights: React.FC = () => {
       <div className='lights'>
         <h1>lights</h1>
 
-        {lights && <AdaptGrid xs={2} sm={3} md={4} gap={15}>
+        {lights && <AdaptGrid xs={1} sm={2} lg={3} gap={15}>
           {Object.entries(lights).map(
             ([key, light]: any, index: number) =>
               <div className='lights__light' key={index}>
                 <UiBar
-                  header={<>
-                    {light?.name}
-                    <UiIcon
-                      icon={light?.is_on ? 'fa-lightbulb-on' : 'fa-lightbulb-slash'}
-                    />
-                    <ToggleSwitch name={light?.id_} onChange={console.log}/>
-                  </>}
+                  header={<div className='lights__light-header'>
+                    <div className='lights__light-header-title'>
+                      {light?.name}
+                      <ToggleSwitch name={light?.id_} onChange={() => handleToggle(light.id_)} />
+                    </div>
+                    <div className='lights__light-header-action'>
+                      <UiIcon
+                        onClick={() => handleView(light.id_)}
+                        icon={light?.view != 'color' ? 'fa-palette' : 'fa-sun'}
+                      />
+                    </div>
+
+                  </div>}
                   onChange={console.log}
-                  background={{ start: 'fffffff', end: "e0e0e0" }}
+                  isColor={light.view == 'color'}
                   barCount={5}
                   percentage={light.bri * 100 / 254}
                 />
+         
               </div>
           )}
         </AdaptGrid>}

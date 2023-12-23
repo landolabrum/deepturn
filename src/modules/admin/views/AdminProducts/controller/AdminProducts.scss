@@ -8,6 +8,10 @@
     flex-direction: column;
     gap: var(--s-9);
     width: 100%;
+    @media(max-with: 1100px){
+        width: var(--padding-width);
+        overflow: hidden;
+    }
     &__header{
         @extend .d-flex;
         justify-content: space-between;

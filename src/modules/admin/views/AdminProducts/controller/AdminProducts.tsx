@@ -46,7 +46,7 @@ async function getProducts(){
       let context = {
         id: <AdaptTableCell cell='id' data={field.id}/>,
         name: field.name,
-        image: <ProductImage image={field.images[0]}/>,
+        image: <ProductImage options={{view: 'table'}} image={field.images[0]}/>,
         type: field.type,
         default_price: <AdaptTableCell cell='id' data={field.default_price}/>,
         updated: dateFormat(field.updated, {isTimestamp: true}),

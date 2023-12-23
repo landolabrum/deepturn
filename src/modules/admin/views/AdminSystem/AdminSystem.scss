@@ -8,13 +8,7 @@
     @extend .d-flex;
     flex-direction: column;
     gap: var(--s-1);
-    min-width: 700px;
-    padding: var(--padding);
-    background-color: var(--gray-90);
-    border-radius: var(--border-radius);
-@media(max-width:900px){
-    min-width: var(--padding-width);
-}
+    width: 100%;
     &__temp {
         @extend .d-flex;
         flex-direction: column;
@@ -103,6 +97,7 @@
                 &__info{
                     font-size: var(--s-5);
                     color: var(--gray-30);
+                    min-width: 100px;
                 }
             }
 

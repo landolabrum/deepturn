@@ -1,17 +1,19 @@
 import styles from "./UiInput.scss";
 import type { NextComponentType, NextPageContext } from "next";
 import FormControl from "../FormControl/FormControl";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IInput } from "@webstack/models/input";
 import { validateInput } from "./helpers/validateInput";
 import maskInput from "./helpers/maskInput";
 import AutocompleteAddressInput from "./views/AddressInput";
+import { debounce } from "lodash";
 
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
   const { name, type, value, onChange, onKeyDown, onKeyUp, message, required } = props;
   const [show, setShow] = useState<boolean>(false);
-
+  
   const handleChange = (e: any) => {
+    console.log('handleChange')
     if (props?.max && props.max < e.target.value.length) return;
     let _e: any = {
       target: {
@@ -25,6 +27,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
     // console.log('[ _e.target.value ]', _e.target.value)
     if (onChange) onChange(_e);
   };
+  const debouncedChangeHandler = useCallback(debounce(handleChange, 1000), []);
 
   const inputClasses = [
     props.variant || "",
@@ -63,7 +66,11 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             min={props.min}
             max={props.max}
             value={inputValue}
-            onChange={handleChange}
+            // onClick={(e)=>{
+            //   e.preventDefault()
+            //   console.log('[ click ]', e)
+            // }}
+            onChange={elType != 'color'?handleChange:debouncedChangeHandler}
             autoComplete={props.autoComplete}
             onKeyDown={onKeyDown}
             onKeyUp={onKeyUp}

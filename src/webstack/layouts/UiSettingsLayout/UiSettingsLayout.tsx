@@ -11,7 +11,6 @@ import useClass from '@webstack/hooks/useClass';
 import useWindow from '@webstack/hooks/useWindow';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import BreadCrumbs from '@webstack/components/Header/components/BreadCrumbs/BreadCrumbs';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ISettingsLayout {

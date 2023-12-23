@@ -75,7 +75,9 @@ $elPad: 14px;
   &.form-control--inherit {
     @extend .inherit;
   }
-
+  &--maxY{
+    height: 100%;
+  }
   &.form-control--invalid {
     label {
       color: var(--orange);
@@ -92,8 +94,7 @@ $elPad: 14px;
     }
   }
 
-  &--link {
-    // width: 100%;
+  &--link, &--checkbox {
     width: auto;
   }
 

@@ -5,17 +5,40 @@
 }
 .lights {
     width: 100%;
-
+    &__bar-header{
+        @extend .d-flex;
+        justify-content: space-between;
+        width: 100%;
+        color: var(--gray-30);
+    }
+    height: max-content;
     &__light {
+        margin: 0;
+        height: auto;
         @extend .d-flex;
         overflow: hidden;
         &-header{
             width: 100%;
             @extend .d-flex;
+            justify-content: space-between;
             text-transform: capitalize;
-            justify-content: flex-start;
             border-radius: var(--border-radius);
-            background-color: var(--gray-80);
+            align-items: flex-start;
+            &-action{
+                min-height: var(--element-height);
+                @extend .d-flex;
+                justify-content: flex-end;
+                gap: var(--s-9);
+                --ui-icon-color: var(--gray-40);
+                &:hover{
+                    --ui-icon-color: var(--gray-20);
+                }
+            }
+            &-title{
+                min-height: var(--element-height);
+                gap: var(--s-9);
+                @extend .d-flex;
+            }
         }
     }
 }

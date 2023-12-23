@@ -61,7 +61,7 @@ const AdminSystem: React.FC = () => {
   useEffect(() => {
     if (!systemData) getData()
   }, [setSystemData]);
-  return (
+  if(systemData)return (
     <>
       <style jsx>{styles}</style>
       <div className='admin-system'>
@@ -105,9 +105,8 @@ const AdminSystem: React.FC = () => {
             <div className='admin-system__overview--item--content'>
               <div className='admin-system__overview--item--content__info'>
                 <div className='d-flex' style={{flexDirection:'column'}}>
-                  Usage
                   <UiBar
-                    colorReverse={true}
+                    header='Usage'
                     percentage={systemData?.memory_percentage}
                     barCount={4}
                     status={systemData?.memory_percentage >= 90 && 'high' || undefined}
@@ -121,6 +120,7 @@ const AdminSystem: React.FC = () => {
       </div>
     </>
   );
+  return <>..load</>
 };
 
 export default AdminSystem;

@@ -33,7 +33,7 @@ const ToggleSwitch = ({ value, onChange, name, label, disabled }: IToggle) => {
   return (
     <>
       <style jsx>{styles}</style>
-      <FormControl variant='link' label={label}>
+      <FormControl variant='checkbox' label={label}>
         <label className="toggle-switch">
           <input 
             disabled={disabled}

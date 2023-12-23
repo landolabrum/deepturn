@@ -18,19 +18,19 @@ const DefaultLayout = (props: IProps) => {
   }
   const mainRef = useRef<HTMLDivElement>(null);
   
-  useEffect(()=>{
-    const handleDOMContentLoaded = async () => {
-      handleLayout();
-    };
+  // useEffect(()=>{
+  //   const handleDOMContentLoaded = async () => {
+  //     handleLayout();
+  //   };
 
-    if (document.readyState === "complete") {
-      handleDOMContentLoaded();
-    } else {
-      handleLayout();
-      window.addEventListener("load", handleDOMContentLoaded);
-      return () => window.removeEventListener("load", handleDOMContentLoaded);
-    }
-  }, [mainRef?.current, height, width]);
+  //   if (document.readyState === "complete") {
+  //     handleDOMContentLoaded();
+  //   } else {
+  //     handleLayout();
+  //     window.addEventListener("load", handleDOMContentLoaded);
+  //     return () => window.removeEventListener("load", handleDOMContentLoaded);
+  //   }
+  // }, [mainRef?.current, height, width]);
   return (
     <>
       <style jsx>{styles}</style>
