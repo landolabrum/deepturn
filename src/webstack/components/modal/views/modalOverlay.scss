@@ -152,10 +152,15 @@
         width: var(--padding-width);
         font-size: var(--s-4);
         padding: var(--padding);
+        cursor: pointer;
+        // cursor: url(''), auto;
+        &__dragging{
+            background-color: var(--gray-70);
+        }
+        min-height: var(--element-height);
         .modal-overlay__icon {
             --ui-icon-color: var(--gray-40);
             &:hover {
-                cursor: pointer;
                 --ui-icon-color: var(--primary);
             }
         }

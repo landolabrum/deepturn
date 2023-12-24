@@ -8,7 +8,6 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 import UiBar from '@webstack/components/Graphs/UiBar/UiBar';
 import ToggleSwitch from '@webstack/components/UiToggle/UiToggle';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import UiInput from '@webstack/components/UiInput/UiInput';
 
 // Remember to create a sibling SCSS file with the same name as this component
 type ILight = {
@@ -23,6 +22,25 @@ const Lights: React.FC = () => {
 
   const [lights, setLights] = useState<any>(undefined);
   const homeService = getService<IHomeService>('IHomeService');
+
+
+  const handlePowerToggle = async (id: number) =>{
+    try{
+     const toggledLight = await homeService.lightToggle(id);
+     console.log("[Toggle]",toggledLight)
+   }catch(e:any){
+      console.log("[Toggle](ERROR)",e)
+    }
+  }
+  const handleBrightness = async (id: number, bri: number | string) =>{
+   try{
+    const brightnessChangedLight = await homeService.lightBrightness(id, Number(bri));
+    console.log("[brightnessChangedLight]",brightnessChangedLight)
+  }catch(e:any){
+     console.log("[brightnessChangedLight](ERROR)",e)
+   }
+  console.log('[handleBrightness]',bri)
+  }
   const handleView = (id: string) => {
     const updateLightsWithView = lights.map((light: ILight) => {
       if (light?.id_ == id) {
@@ -36,18 +54,19 @@ const Lights: React.FC = () => {
     setLights(updateLightsWithView)
   }
   const handleToggle = (id: string) => {
-    const updateLightsWithView = lights.map((light: ILight) => {
-      if (light?.id_ == id) {
-        if (light?.bri != 0) {
-          light.bri = 0
-        } else {
-          light.bri = 255
-        }
+    handlePowerToggle(Number(id))
+    // const updateLightsWithView = lights.map((light: ILight) => {
+    //   if (light?.id_ == id) {
+    //     if (light?.bri != 0) {
+    //       light.bri = 0
+    //     } else {
+    //       light.bri = 255
+    //     }
 
-      }
-      return light
-    });
-    setLights(updateLightsWithView)
+    //   }
+    //   return light
+    // });
+    // setLights(updateLightsWithView)
   }
   const fetchLights = async () => {
     setLoader({ active: true, body: 'loading lights' });
@@ -86,7 +105,7 @@ const Lights: React.FC = () => {
                     </div>
 
                   </div>}
-                  onChange={console.log}
+                  onChange={(bri)=>{handleBrightness(light.id_, bri)}}
                   isColor={light.view == 'color'}
                   barCount={5}
                   percentage={light.bri * 100 / 254}

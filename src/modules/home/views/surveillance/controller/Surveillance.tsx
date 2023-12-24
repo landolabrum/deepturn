@@ -4,9 +4,13 @@ import styles from './Surveillance.scss';
 import UiMedia from '@webstack/components/UiVideo/controller/UiMedia';
 import environment from '~/src/environment';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import { useUser } from '~/src/core/authentication/hooks/useUser';
+import { useEffect } from 'react';
 // Remember to create a sibling SCSS file with the same name as this component
 
 const Surveillance: React.FC = () => {
+  const level = useUser();
+  useEffect(() => {}, []);
   return (
     <>
       <style jsx>{styles}</style>

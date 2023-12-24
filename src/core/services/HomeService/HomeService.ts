@@ -41,12 +41,27 @@ export default class HomeService extends ApiService implements IHomeService {
         `/cam-${cameraId}`,
       );
     }
+    public async lightBrightness(
+      id: number, brightness: number
+    ): Promise<any> {
+      return this.post<any, any>(
+        `/api/home/hue/light-bri?id=${id}&brightness=${brightness}`,
+        
+      );
+    }
     public async light(
       request: any
     ): Promise<any> {
       return this.post<any, any>(
         "/hue/light",
         request
+      );
+    }
+    public async lightToggle(
+      id: any
+    ): Promise<any> {
+      return this.get<any>(
+        `/api/home/hue/light_toggle?id=${id}`,
       );
     }
     public async getVehicles(

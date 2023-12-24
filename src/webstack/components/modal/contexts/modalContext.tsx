@@ -11,7 +11,7 @@ export type IModalContent = {
   confirm?: IConfirm;
 } | ReactNode | null;
 
-interface ModalContextType {
+export interface ModalContextType {
   isModalOpen: boolean;
   openModal: (content: IModalContent) => void;
   closeModal: () => void;
@@ -45,7 +45,8 @@ export const ModalProvider: React.FC<Props> = ({ children }) => {
 };
 
 export const useModal = () => {
-  const context = useContext(ModalContext);
+  const context = useContext<ModalContextType | undefined>(ModalContext);
+
 
   const defaultContext: ModalContextType = {
     isModalOpen: false,
