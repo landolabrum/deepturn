@@ -68,8 +68,6 @@ const Lights: React.FC = () => {
     <>
       <style jsx>{styles}</style>
       <div className='lights'>
-        <h1>lights</h1>
-
         {lights && <AdaptGrid xs={1} sm={2} lg={3} gap={15}>
           {Object.entries(lights).map(
             ([key, light]: any, index: number) =>

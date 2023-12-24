@@ -190,6 +190,8 @@
 
         &__fullscreen {
             z-index: 1;
+            width: 100%;
+            margin-bottom: 0;
         }
 
         .modal-overlay__confirm {

@@ -218,7 +218,6 @@ $actionsBg: var(--gray-90);
         position: relative;
         overflow-x: hidden;
         overflow-y: auto;
-
         @media (min-width: 1100px) {
             min-height: 100%;
             justify-content: flex-start;
@@ -235,10 +234,9 @@ $actionsBg: var(--gray-90);
         animation: borderAnimation 5s infinite alternate;
         
         @media (max-width: 1100px) {
-            background-color: var(--gray-100);
             border-radius: var(--border-radius);
+            background-color: var(--gray-100);
             border: none;
-            width: var(--padding-width);
             margin: 0 auto;
             overflow-y: hidden;
         }
@@ -276,7 +274,7 @@ $actionsBg: var(--gray-90);
             flex-direction: column;
             justify-content: flex-start;
             align-items: flex-start;
-            padding: var(--s-4) var(--s-5);
+            // padding: var(--s-4) var(--s-5); 
             height: 100%;
             @media (max-width: 1100px) {
                 padding: var(--s-5) var(--s-8);

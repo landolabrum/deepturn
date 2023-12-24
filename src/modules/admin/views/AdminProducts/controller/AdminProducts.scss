@@ -14,6 +14,8 @@
     }
     &__header{
         @extend .d-flex;
+        min-height: var(--element-height);
+        padding: var(--padding) 0;
         justify-content: space-between;
         width: auto;
         &--actions{
