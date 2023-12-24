@@ -91,8 +91,12 @@ const AdminListDocuments = ({docs}:any) => {
                         return (
                             <div key={index} className='admin-list-documents__list'>
                                 <div className='admin-list-documents__list--item'>
-                                    <div >{doc?.filename}</div>
-                                    <div >{doc?.purpose}</div>
+                                    <div className='admin-list-documents__list--item-content'>
+                                        <strong>file: </strong>
+                                        {doc?.filename}<br/><br/>
+                                        <strong>porpose:</strong>
+                                        {doc?.purpose}
+                                        </div>
                                     <UiButton
                                         onClick={() => retreive(doc.id)}
                                     >Download</UiButton>

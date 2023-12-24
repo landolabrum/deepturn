@@ -7,8 +7,10 @@ const devEnvironment: IEnvironment = {
     url: 'http://localhost:3000'
   },
   merchant:{
-    name:"nirvana-energy",
-    mid: "nirv1",
+    name:"deepturn",
+    // name:"nirvana-energy",
+    mid: "mb1",
+    // mid: "nirv1",
   },
   legacyJwtCookie: {
     name: "auth-token",

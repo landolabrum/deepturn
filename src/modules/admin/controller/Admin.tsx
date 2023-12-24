@@ -34,6 +34,7 @@ const Admin = () => {
     <>
       <style jsx>{styles}</style>
       <UiSettingsLayout
+      // variant='fullwidth'
         defaultView={currentView}
         title='admin'
         views={views}

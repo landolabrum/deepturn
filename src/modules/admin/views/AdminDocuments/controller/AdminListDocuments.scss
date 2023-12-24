@@ -19,25 +19,44 @@ flex-wrap: wrap;
     align-items: flex-start;
     gap: var(--s-9);
     padding: var(--s-9);
-    border: solid 1px var(--gray-70);
     @media(max-width: 900px){
         width: calc(100% - 2px);
         padding: 0;
+        margin: var(--s-9) 0;
+        border-radius: var(--border-radius);
     }
     &--item{
         @extend .d-flex;
+        background-color: var(--gray-90);
+        border-radius: var(--border-radius) ;
         @media(max-width: 900px){
             flex-direction: column;
-            padding: var(--s-9);
-            width: auto;
-            margin: auto;
+            justify-content: space-between;
+            padding: var(--padding);
+            width: var(--padding-width);
+            gap: var(--s-5);
         }
-        // white-space: nowrap;
-        gap: var(--s-9);
-        & > div{
-            background-color: var(--gray-90);
-            padding: var(--s-9);
-            
+        & > &-content{
+            @extend .d-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border: solid 1px var(--gray-70);
+
+            width: var(--padding-width);
+            line-height: 1;
+            border-radius: var(--border-radius);
+
+            background-color: var(--gray-80);
+            padding: var(--padding) var(--padding) var(--s-4);
+            font-family: Game;
+            font-style: oblique;
+            font-size: var(--s-5);
+
+            strong{
+                font-style: normal;
+                color: var(--gray-50);
+                margin-right: var(--s-9);
+            }
         }
 
     }
