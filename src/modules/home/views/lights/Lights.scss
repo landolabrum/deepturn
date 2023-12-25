@@ -4,7 +4,8 @@
  align-items: center;
 }
 .lights {
-    width: 100%;
+    width: var(--padding-width);
+    padding: var(--padding);
     &__bar-header{
         @extend .d-flex;
         justify-content: space-between;

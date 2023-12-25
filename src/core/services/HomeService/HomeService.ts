@@ -45,7 +45,7 @@ export default class HomeService extends ApiService implements IHomeService {
       id: number, brightness: number
     ): Promise<any> {
       return this.post<any, any>(
-        `/api/home/hue/light-bri?id=${id}&brightness=${brightness}`,
+        `/api/home/hue/light-bri?id=${id}&bri=${brightness}`,
         
       );
     }
@@ -62,6 +62,14 @@ export default class HomeService extends ApiService implements IHomeService {
     ): Promise<any> {
       return this.get<any>(
         `/api/home/hue/light_toggle?id=${id}`,
+      );
+    }
+    public async lightColor(
+      id: any,
+      hex: string
+    ): Promise<any> {
+      return this.get<any>(
+        `/api/home/hue/light-hex-color?id=${id}&hex=${hex.replaceAll('#','')}`,
       );
     }
     public async getVehicles(

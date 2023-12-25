@@ -242,14 +242,14 @@ $actionsBg: var(--gray-90);
         @media (max-width: 1100px) {
             border-radius: var(--border-radius);
             background-color: var(--gray-100);
-            border: none;
-            margin: 0 auto;
+            border: solid 1px transparent;
+            animation:unset;
+            margin: auto;
+            width: calc(var(--padding-width) - 2px);
+            
             overflow-y: hidden;
         }
-        @media (max-width: 1100px) {
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-            border-top-color: transparent !important;
-        }
+       
 
         &--header {
             position: absolute;

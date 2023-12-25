@@ -5,6 +5,10 @@ export default interface IHomeService {
   lights(): Promise<any>;
   light(request: ILight): Promise<any>;
   lightBrightness(id: number, brightness: number): Promise<any>;
+  lightColor(
+    id: any,
+    hex: string
+  ): Promise<any>;
   lightsOff(): Promise<any>;
   lightToggle(
     id: any

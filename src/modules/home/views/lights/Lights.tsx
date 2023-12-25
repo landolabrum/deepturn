@@ -23,25 +23,35 @@ const Lights: React.FC = () => {
   const [lights, setLights] = useState<any>(undefined);
   const homeService = getService<IHomeService>('IHomeService');
 
+  const updateLight = (changedLight: ILight) => {
+    setLights(() => lights.map((light: ILight) => {
+      if (light.id_ == changedLight.id_) light = changedLight;
+      return light;
+    }))
+  };
 
-  const handlePowerToggle = async (id: number) =>{
-    try{
-     const toggledLight = await homeService.lightToggle(id);
-     console.log("[Toggle]",toggledLight)
-   }catch(e:any){
-      console.log("[Toggle](ERROR)",e)
+  const handleToggle = async (id: number | string) => {
+    try {
+      updateLight(await homeService.lightToggle(Number(id)));
+    } catch (e: any) {
+      console.log("[Toggle](ERROR)", e)
     }
   }
-  const handleBrightness = async (id: number, bri: number | string) =>{
-   try{
-    const brightnessChangedLight = await homeService.lightBrightness(id, Number(bri));
-    console.log("[brightnessChangedLight]",brightnessChangedLight)
-  }catch(e:any){
-     console.log("[brightnessChangedLight](ERROR)",e)
-   }
-  console.log('[handleBrightness]',bri)
+  const handleBrightness = async (id: number, bri: number | string) => {
+    try {
+      updateLight(await homeService.lightBrightness(id, Number(bri)));
+    } catch (e: any) {
+      console.log("[brightnessChangedLight](ERROR)", e)
+    }
   }
-  const handleView = (id: string) => {
+  const handleColor = async (id: number, hex:  string) => {
+    try {
+      updateLight(await homeService.lightColor(id, hex));
+    } catch (e: any) {
+      console.log("[brightnessChangedLight](ERROR)", e)
+    }
+  }
+  const toggleView = (id: string) => {
     const updateLightsWithView = lights.map((light: ILight) => {
       if (light?.id_ == id) {
         if (light?.view == undefined) {
@@ -53,21 +63,7 @@ const Lights: React.FC = () => {
     });
     setLights(updateLightsWithView)
   }
-  const handleToggle = (id: string) => {
-    handlePowerToggle(Number(id))
-    // const updateLightsWithView = lights.map((light: ILight) => {
-    //   if (light?.id_ == id) {
-    //     if (light?.bri != 0) {
-    //       light.bri = 0
-    //     } else {
-    //       light.bri = 255
-    //     }
 
-    //   }
-    //   return light
-    // });
-    // setLights(updateLightsWithView)
-  }
   const fetchLights = async () => {
     setLoader({ active: true, body: 'loading lights' });
     try {
@@ -75,7 +71,7 @@ const Lights: React.FC = () => {
       setLights(response);
 
     } catch (e: any) {
-      alert(JSON.stringify(e))
+      console.log('[ FETCH LIGHTS (ERR) ]',JSON.stringify(e))
     }
   }
   useEffect(() => {
@@ -95,22 +91,22 @@ const Lights: React.FC = () => {
                   header={<div className='lights__light-header'>
                     <div className='lights__light-header-title'>
                       {light?.name}
-                      <ToggleSwitch name={light?.id_} onChange={() => handleToggle(light.id_)} />
+                      <ToggleSwitch name={light?.id_} value={light.is_on} onChange={() => handleToggle(light.id_)} />
                     </div>
                     <div className='lights__light-header-action'>
                       <UiIcon
-                        onClick={() => handleView(light.id_)}
+                        onClick={() => toggleView(light.id_)}
                         icon={light?.view != 'color' ? 'fa-palette' : 'fa-sun'}
                       />
                     </div>
 
                   </div>}
-                  onChange={(bri)=>{handleBrightness(light.id_, bri)}}
+                  onChange={(bri) => { String(bri).includes('#') ? handleColor(light.id_, String(bri)) : handleBrightness(light.id_, bri) }}
                   isColor={light.view == 'color'}
                   barCount={5}
                   percentage={light.bri * 100 / 254}
                 />
-         
+
               </div>
           )}
         </AdaptGrid>}
