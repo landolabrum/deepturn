@@ -24,14 +24,23 @@ export const useHeader = () => useContext(HeaderContext);
 
 export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
+  const [hover,setHover]=useState<string>('');
+const handleMouseLeave = () =>{
+const s = async () =>setHover(' header__container--hover-end');
+s().then(()=>setTimeout(() => {
+  setHover('')
+}, 2000))
+}
   return (
     <>
       <style jsx>{styles}</style>
       <HeaderContext.Provider value={[headerState, setHeaderState]}>
         
         <div 
+            onMouseEnter={()=>setHover(' header__container--hover')}
+            onMouseLeave={ handleMouseLeave}
             id="header-container"
-            className={`header__container`} 
+            className={`header__container${hover}`}
         >
           <Navbar />
 
@@ -49,7 +58,6 @@ const Header: React.FC = () => {
   const router = useRouter();
 
   const width = useWindow()?.width;
-
 
   
   useEffect(() => {
@@ -72,15 +80,12 @@ const Header: React.FC = () => {
       <style jsx>{styles}</style>
       {/* {headerState &&  */}
       <>
-        <div
-          className="header"
-          >
+        <div className='header'>
           <div
             className={`header-content`}
           >
             <div
               className="header-left"
-
             >
               <BreadCrumbs links={headerState?.breadcrumbs} />
               <div className="header-title">{width<900&&<UiIcon icon={`${environment.merchant.name}-logo`}/>}{headerState?.title}</div>

@@ -17,7 +17,7 @@ const Home: React.FC = () => {
     <>
       <style jsx>{styles}</style>
       <UiSettingsLayout
-      variant="flat"
+      variant="fullwidth"
       title='home'
       defaultView='lights'
       views={views}
