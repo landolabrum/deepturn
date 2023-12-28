@@ -7,7 +7,7 @@ $agg: var(--border-radius);
   align-items: center;
 }
 .bar {
-  // width: 140px;
+  min-width: 140px;
   // margin: 20px;
   width: 100%;
   .bar__container {

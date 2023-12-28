@@ -15,6 +15,7 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
   const text = !props?.text && typeof props.text != 'string' ? "Loading" : props.text;
   const [dots, setDots] = useState("");
   const ref = useRef<any>(null);
+  const textRef = useRef<any>(null);
   useEffect(() => {
     if (props?.position && ref?.current) ref.current.style.position = `${props.position}`;
     if (props?.width && ref?.current) ref.current.style.width = `${typeof props.width === "number" ? props.width + "px" : props.width}`;
@@ -29,6 +30,7 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
       setDots((prevText) => {
         const dotCount = (prevText.match(/\./g) || []).length;
         if (dotCount === 3) {
+        if(!textRef.current.style.transform)textRef.current.style.transform=`translateX(calc(50% - ${textRef?.current?.offsetWidth/2}px))`;
           return "";
         } else {
           return prevText + " .";
@@ -42,24 +44,22 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
   }, [text, props.dots]);
   return (
     <>
-      <style jsx>{styles}</style>
-      <div ref={ref} className="ui-loader">
-        <div className="ui-loader__loading">
-          <div className="ui-loader__icon-container">
-            <div className="ui-loader__icon">
-              <UiIcon icon="deepturn-logo" />
+        <style jsx>{styles}</style>
+        <div ref={ref} className="ui-loader">
+            <div className="ui-loader__loading">
+                <div className="ui-loader__icon-container">
+                    <div className="ui-loader__icon">
+                        <UiIcon icon="deepturn-logo" />
+                    </div>
+                </div>
+                <div ref={textRef} className={`ui-loader__loading-text-container${props.dots === false ? ' ui-loader__loading-text-container-no-dots' : ''}`}>
+                    <div className="ui-loader__loading-text">{text}</div>
+                    {props.dots !== false && <div className="ui-loader__loading-text-dots">{dots}</div>}
+                </div>
             </div>
-          </div>
-          <div
-            className={`ui-loader__loading-text-container${props.dots == false ? ' ui-loader__loading-text-container-no-dots' : ''}`}
-          >
-            <div className={`ui-loader__loading-text`}>{text}</div>
-            {props.dots !== false && <div className="ui-loader__loading-text-dots">{dots}</div>}
-          </div>
         </div>
-      </div>
     </>
-  );
+);
 };
 
 export default UiLoader;

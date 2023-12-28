@@ -27,11 +27,12 @@ $defaultPadding: 15px;
   }
   .adaptable-header__table-title { 
     display: flex;
+    width: 100%;
     align-items: center;
     height: var(--element-height);
     gap: calc($defaultPadding / 2);
     text-transform: capitalize;
-
+    
     .adaptable-header__logo {
       --ui-icon-width: var(--s-2); 
       --ui-icon-height: var(--s-2);
@@ -42,13 +43,14 @@ $defaultPadding: 15px;
         --ui-icon-height: var(--s-2);
       }
     }
-
+    
     .adaptable-header__title {
       display: flex;
+      width: 100%;
       align-items: center;
       padding: 0;
       height: inherit;
-      font-size: var(--s-3);
+      font-size: var(--s-4);
       font-weight: 500;
     }
   }

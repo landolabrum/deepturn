@@ -1,14 +1,18 @@
 import { IVariant } from '@webstack/components/AdapTable/models/IVariant';
-import { IButton } from '@webstack/components/UiButton/UiButton';
 import { createContext, ReactNode, useContext, useState } from 'react';
+
 type IConfirm ={
   title?: string;
   statements?: {text?: string, onClick?:(e:any)=>void, variant?: IVariant}[];
 } | undefined;
+
+
 export type IModalContent = {
   children?: ReactNode | null | string;
+  footer?: ReactNode;
   variant?: "popup" | 'fullscreen';
   confirm?: IConfirm;
+  zIndex?: number;
 } | ReactNode | null;
 
 export interface ModalContextType {
@@ -36,7 +40,6 @@ export const ModalProvider: React.FC<Props> = ({ children }) => {
     setIsModalOpen(false);
     setModalContent(null);
   };
-
   return (
     <ModalContext.Provider value={{ isModalOpen, openModal, closeModal, modalContent }}>
       {children}
@@ -46,7 +49,6 @@ export const ModalProvider: React.FC<Props> = ({ children }) => {
 
 export const useModal = () => {
   const context = useContext<ModalContextType | undefined>(ModalContext);
-
 
   const defaultContext: ModalContextType = {
     isModalOpen: false,

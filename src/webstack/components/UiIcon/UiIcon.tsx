@@ -16,6 +16,7 @@ interface Props {
   width?: number | string | undefined;
   height?: number | string | undefined;
   size?: number | string | undefined;
+  badge?: string | number;
 }
 
 interface State {
@@ -316,16 +317,26 @@ export class UiIcon extends React.Component<Props, State> {
       ...(glowClass ? { textShadow: `0 0 5px ${this.state.iconStyles.color || 'currentColor'}` } : {})
     };
 
+    const badgeElement = this.props.badge ? (<>
+      <style jsx>{styles}</style>
+      <div className="ui-icon__badge">{this.props.badge}</div>
+      </>
+    ) : null;
+  
     return (
       <>
         <style jsx>{styles}</style>
         <div 
-          className={glowClass} // Adding the glow class conditionally
+          className={`ui-icon ${glowClass}`} // Updated class name
           onClick={e => this.buttonClicked(e)}
-          dangerouslySetInnerHTML={{ __html: this.state?.innerHtml }}
           style={combinedStyles}
           data-testid={this.getDataTestId()}
-        />
+        >
+          <div
+            dangerouslySetInnerHTML={{ __html: this.state?.innerHtml }}
+          />
+          {badgeElement} {/* Add the badge element here */}
+        </div>
       </>
     );
   }

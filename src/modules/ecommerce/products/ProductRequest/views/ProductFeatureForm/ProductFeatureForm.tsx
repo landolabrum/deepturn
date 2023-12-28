@@ -157,10 +157,10 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
         // Convert features
         formFeatures.forEach((feature: any) => {
             if (feature.selected) {  // Only add selected features
-                request.features[createMerchantKey('configure', feature.name)] = feature.name == 'phone' ? phoneFormat(feature.value, 'US', true) : feature.value
+                request.features[createMerchantKey('configure', feature.name)] = feature.name == 'phone' ? phoneFormat(feature.value, 'US', true) : feature.value;
             }
         });
-
+        request.features[createMerchantKey('configure', 'timestamp')]=Date.now()
         // Convert contact
         fields.forEach((contactField: { [key: string]: any }) => {
             switch (contactField.name) {

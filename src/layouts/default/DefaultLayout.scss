@@ -4,13 +4,13 @@ main {
   position: relative;
   margin: 0 auto 0;
   @media(min-width: 1260px){
-    width: auto;
-    max-width: calc(1260px - calc(var(--padding) * 2));
-  }
-  @media(min-width: 1280px){
     max-width: 1260px;
-    padding: 0;
+    inline-size: var(--padding-width);
   }
+  // @media(min-width: 1280px){
+  //   max-width: calc(1260px - calc(var(--padding) * 2));
+  //   padding: 0;
+  // }
   @media(max-width: 900px){
     padding: 0 0 100px;
     width: 100%;

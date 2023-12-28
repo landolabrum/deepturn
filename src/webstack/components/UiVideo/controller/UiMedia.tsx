@@ -7,15 +7,16 @@ export interface IMedia {
   alt?: string;
   variant?: IImageVariant;
   type?: IImageMediaType;
+  loadingText?: string;
 }
 
-const UiMedia: React.FC<IMedia> = ({ src, variant, type, alt }: IMedia) => {
+const UiMedia: React.FC<IMedia> = ({ src, variant, type, alt, loadingText }: IMedia) => {
   const [imageControlProps, setImageControlProps] = useState<any>({ variant, type });
   const handleError = (event: any) => {
     event.preventDefault();
     if(!imageControlProps.error)setImageControlProps({ ...imageControlProps, error: 'failed to load media' });
   }
-
+imageControlProps.loadingText = loadingText
   useEffect(() => { }, [handleError]);
   return (
     <>

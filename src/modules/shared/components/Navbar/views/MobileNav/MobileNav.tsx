@@ -28,10 +28,16 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }) => {
                     {routes && routes.map((route: IRoute, key: number) => 
                        {
                         if(route?.href == '/')return <div 
+                            key={key}
                             className='navbar__mobile--content__brand'
                             onClick={() => handleClick(route)}
                         >
-                            <UiIcon icon={route?.icon}/> {route.label}
+                            <div>
+                                <UiIcon icon={route?.icon} width={100} height={100}/> 
+                            </div>
+                            <div>
+                                {route.label}
+                            </div>
                         </div>;
                         return (
                             <div 

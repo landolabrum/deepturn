@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./UiSelect.scss";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { IRoute } from "@shared/components/Navbar/data/routes";
-import FormControl from "../FormControl/FormControl";
-import UiMenu, { UiMenuProps } from "../UiMenu/UiMenu";
+import UiMenu from "../UiMenu/UiMenu";
 import UiInput from "../UiInput/UiInput";
 import { capitalize } from "lodash";
+import { useModal } from "../modal/contexts/modalContext";
+import { ITraits } from "../FormControl/FormControl";
 import { IVariant } from "../AdapTable/models/IVariant";
 type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string } | string | React.ReactElement;
 
-export interface SelectProps extends UiMenuProps {
+export interface ISelect  {
   label?: string;
   options?: (string | IRoute | number)[] | React.ReactElement[];
   onSelect?: (value: any) => void;
@@ -19,9 +19,13 @@ export interface SelectProps extends UiMenuProps {
   openState?: string;
   search?: boolean;
   setSearch?: (value: string) => void;
+  overlay?: boolean | {zIndex : number};
+  value?: string;
+  traits?: ITraits;
+  variant?: IVariant
 }
 
-const UiSelect: React.FC<SelectProps> = ({
+const UiSelect: React.FC<ISelect> = ({
   options,
   onSelect,
   openDirection = "down",
@@ -33,21 +37,27 @@ const UiSelect: React.FC<SelectProps> = ({
   label,
   traits,
   search,
-  setSearch
+  setSearch,
+  overlay
 }) => {
   const [isOpen, setIsOpen] = useState<string>("closed");
   const [title_, setTitle] = useState<string | number>("");
+  const {isModalOpen, openModal, closeModal}=useModal();
   const typesBypass: any = options;
   const hasOptions = Boolean(typesBypass?.every((element: any) => element !== undefined));
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const bOpen = isOpen === 'open';
+  const isMobileNavOpen = Boolean(isOpen === 'open');
   const handleSelect = (value: any) => {
     setSelectedOption(value);
     onSelect && onSelect(value);
     variant !== 'disabled' && setIsOpen("closed");
   }
-  const handleOpen = (e: any) => {
-    hasOptions && setIsOpen(isOpen === "closed" ? "open" : "closed");
+  const handleOpen = () => {
+    if(hasOptions)setIsOpen(isOpen === "closed" ? "open" : "closed");
+    if(overlay){
+      if(isOpen == 'closed')typeof overlay == "object" && overlay?.zIndex?openModal({zIndex: overlay?.zIndex}):openModal(null);
+      else closeModal();
+    }
   };
   const isTitleObject = (
     title?: TitleProps
@@ -57,10 +67,10 @@ const UiSelect: React.FC<SelectProps> = ({
 
   const postIconHandler = (title: any, variant: any) => {
     if (variant?.includes('nav-item')) {
-      if (!bOpen) return traits?.afterIcon;
+      if (!isMobileNavOpen) return traits?.afterIcon;
       else return "fa-xmark";
     }
-    if (bOpen) {
+    if (isMobileNavOpen) {
       return "fa-xmark";
     } else {
       return `fa-chevron-${openDirection}`
@@ -81,8 +91,11 @@ const UiSelect: React.FC<SelectProps> = ({
     }
   }, [title, onSelect]);
   useEffect(() => {
-    if (bOpen && onToggle) onToggle(bOpen);
-  }, [isOpen]);
+    if (isMobileNavOpen && onToggle) onToggle(isMobileNavOpen);
+    // if(!isModalOpen && selectedOption){
+    //   console.log('fdsa', selectedOption)
+    // }
+  }, [isOpen, isModalOpen]);
 
   return (
     <>
@@ -105,7 +118,7 @@ const UiSelect: React.FC<SelectProps> = ({
             afterIcon: postIconHandler(traits, variant)
           }}
         />
-        {bOpen && variant !== 'disabled' && (
+        {isMobileNavOpen && variant !== 'disabled' && (
           <div
             className={`select__options ${variant ? " " + variant : ""}`}>
             <UiMenu

@@ -4,7 +4,7 @@ import styles from "./UiMenu.scss";
 import Input from "../UiInput/UiInput";
 import UiButton from "../UiButton/UiButton";
 
-export interface UiMenuProps extends IFormControl {
+export interface IMenu extends IFormControl {
   options?: any;
   onSelect?: (value: any) => void;
   value?: string;
@@ -13,7 +13,7 @@ export interface UiMenuProps extends IFormControl {
   traits?: any;
 }
 
-const UiMenu: FC<UiMenuProps> = ({ options, variant, onSelect, value, search, setSearch, traits }) => {
+const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearch, traits }) => {
   const [searchValue, setSearchValue] = useState("");
   const typesBypass: any = options;
   const hasOptions = !Boolean(typesBypass?.every((element: any) => element === undefined));

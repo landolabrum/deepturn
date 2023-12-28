@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import styles from "./AdapTable.scss";
 import AdapTableContent, { TableFunctionProps } from "../components/AdaptTableContent/views/AdapTableContent";
 import AdapTableHeader from "../components/AdapTableHeader/AdapTableHeader";
@@ -12,7 +12,7 @@ export type TableOptions = {
   hide?: "footer" | "header" | ["footer", "header"] | ["header", "footer"] | "entries";
   index?: number;
   cellHeight?: number;
-  tableTitle?: string;
+  tableTitle?: string | React.ReactElement;
   title?: string;
   hideColumns?: string[];
   hoverable?: boolean;

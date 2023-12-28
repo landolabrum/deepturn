@@ -121,7 +121,8 @@ const UiBar = ({
     //   containerRef = containerRef
     // }
 
-}, [Boolean(percentage != localPercentage && !isColor) ]);
+}, [Boolean(percentage != localPercentage 
+  && !isColor) ]);
   return (
     <>
       <style jsx>{styles}</style>

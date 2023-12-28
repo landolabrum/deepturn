@@ -11,6 +11,7 @@ import IShoppingService from "~/src/core/services/ShoppingService/IShoppingServi
 import BannerProduct from "../views/BannerProduct/BannerProduct";
 import ProductChapters from "../views/ProductChapters/ProductChapters";
 import environment from "~/src/environment";
+import { useLoader } from "@webstack/components/Loader/Loader";
 
 interface Filter {
   [key: string]: {
@@ -19,11 +20,11 @@ interface Filter {
 }
 
 const ProductsListing: NextPage = () => {
+  const [loader, setLoader]=useLoader();
   const user = useUser();
   const [filters, setFilters] = useState<Filter>({ categories: {}, types: {} });
   const [products, setProducts] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
   const shoppingService = getService<IShoppingService>("IShoppingService");
   const getSelectedCategories = (filter: any) => {
     const selectedEntries = Object.entries(filter).filter(([, value]: any) => value.selected);
@@ -41,14 +42,16 @@ const ProductsListing: NextPage = () => {
     }));
   };
   useEffect(() => {
-    setLoading(true);
+    setLoader({active:true, body:'loding prod'});
     const fetchProducts = async () => {
       try {
         const memberResponse = await shoppingService.getProducts();
         const fetchedProducts: any = memberResponse?.data;
         const merchantId = environment?.merchant?.mid;
         if (fetchedProducts) {
-          const formatted = fetchedProducts.filter((product: any)=>product?.metadata?.mid == merchantId).map((product: any) => ({
+          const formatted = fetchedProducts
+          // .filter((product: any)=>product?.metadata?.mid == merchantId)
+          .map((product: any) => ({
             id: product.id,
             description: product.description,
             name: product.name,
@@ -65,9 +68,8 @@ const ProductsListing: NextPage = () => {
         }
       } catch (error) {
         console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
+      } 
+      finally {  setLoader({active:false});}
     };
 
     if (!products.length) fetchProducts();

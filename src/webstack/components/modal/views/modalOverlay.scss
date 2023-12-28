@@ -12,89 +12,65 @@
     top: 0;
     left: 0;
 }
-
 .modal__overlay {
     @extend .d-flex;
     @extend .p-fix;
-    width: 100%;
-    min-width: 100vw;
-    height: 100%;
-    min-height: 100vh;
-    filter: blur(5px);
-    backdrop-filter: blur(5px);
     cursor: pointer;
-    z-index: 1000;
-    background: var(--gray-90-opaque);
-    -webkit-backdrop-filter: blur(6.6px);
+    z-index: 999;
+    background: var(--gray-70-opaque); // Adjusted for semi-transparent overlay
+    backdrop-filter: blur(5px);
+    &__dragging{
+        cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+    }
 }
 
 .modal {
-    min-height: 500px;
-    $hundredWidth: calc(100% - 10px);
-    $maxWidth: 900px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    cursor: auto;
+    position: fixed; // Use fixed to keep it relative to the viewport
     z-index: 1000;
-    @extend .d-flex;
-    align-items: flex-start;
-    width: $hundredWidth;
-    margin: var(--element-height) 5px 0;
-    height: 100%;
-    overflow: hidden;
-    @media(max-width: 900px) {
-        margin: var(--element-height) auto 0;
-        // max-height: calc(100vh - 60px);
-        /* Adjust the height to account for other modal elements */
+    top: 50%; // Center vertically
+    left: 50%; // Center horizontally
+    transform: translate(-50%, -50%); // Adjust position to truly center the modal
+    overflow-y: auto; // Allow scrolling for overflow content
+    background-color: var(--gray-90);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    padding: var(--s-9);
+    @media(max-width: 900px){
+        margin: var(--element-height) auto;
+        top: 30%;
+        width: calc(100% - calc(var(--padding) * 4));
     }
-    @media (orientation: portrait) {
-        height: 100vh;
-        /* Limit the modal height to 80% of the viewport height */
+    &__dragging{
+        cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+        filter: blur(3px);
     }
-
-    @media(min-width: 1100px) {
-        width: 800px; // Set a fixed width for larger screens
-        // max-width: 90%; // Add a max-width to ensure it doesn't get too wide on very large screens
-        height: auto; // Height can be auto for scrollable content
-        margin: var(--element-height) auto 0;
-
-        @media (orientation: landscape) {
-            overflow: visible;
-        }
-
-        @media (orientation: portrait) {
-            // margin-top: 100px;
-            margin: 0;
-            // max-width: $hundredWidth;
-            transform: translate(calc(50vw - 400px), var(--element-height)); // Center the modal
-        }
-
-        &__fullscreen {
-            transform: unset;
-        }
+    &:hover {
+        background-color: var(--gray-100);
     }
-
     &__fullscreen {
-        width: 100vw;
-        height: auto;
-        margin: 0;
+        padding: 0;
     }
-
+    
     &__content {
-        position: relative;
+        
+        border: solid 1px var(--gray-80);
         @extend .d-flex;
         flex-direction: column;
-        width: 800px;
+        // width: 800px;
+        width: var(--padding-width);
+        padding: var(--padding) 0 0;
+
         height: auto;
         padding-bottom: var(--padding);
         margin: auto;
         backdrop-filter: blur(5px);
         color: var(--gray-30);
-        border: solid 1px var(--gray-70);
-        background: var(--gray-90);
+        // background: var(--gray-90);
         border-radius: var(--border-radius);
+        min-width: 600px;
 
         box-shadow: var(--box-shadow-xl);
         min-height: max-content;
@@ -102,7 +78,6 @@
         position: relative;
         &:hover {
             transition: all 1s;
-            background-color: var(--gray-100);
         }
         &::-webkit-scrollbar-thumb {
           
@@ -118,20 +93,11 @@
             background-color: #00000033;
         }
 
-        @media(max-width:1260px) {
-            @media (orientation: portrait) {
-                margin: 100px 0 0;
-
-                max-width: $hundredWidth;
-            }
-        }
-
         @media(max-width:900px) {
-            margin: var(--s-9);
-            padding: var(--padding) var(--padding) var(--element-height); 
-            width: var(--padding-width);
-            // background-color: var(--gray-100-opaque);
+            padding: var(--padding) 0;
             justify-content: flex-start;
+            width: 100%;
+            min-width: unset;
         }
 
         &__fullscreen {
@@ -149,18 +115,34 @@
         @extend .d-flex;
         align-self: flex-start;
         justify-content: space-between;
-        width: var(--padding-width);
         font-size: var(--s-4);
-        padding: var(--padding);
-        cursor: pointer;
-        // cursor: url(''), auto;
+        width: var(--padding-width);
+        margin: 0 var(--padding);
+        border-radius: var(--border-radius);
+        border: solid 1px transparent;
+        overflow: hidden;
+        &:hover{
+            border: solid 1px var(--gray-70);
+            cursor: url('/icons/fa-hand.svg'), auto;
+            background-color: var(--gray-80);
+        }
+        &:focus, &:focus-within, &:visited, &:active{
+            cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+        }
         &__dragging{
-            background-color: var(--gray-70);
+            cursor: url('/icons/fa-hand-back-fist.svg'), auto;
         }
         min-height: var(--element-height);
         .modal-overlay__icon {
+            @extend .d-flex;
+            
             --ui-icon-color: var(--gray-40);
+            --ui-icon-size: var(--s-5);
+            cursor: pointer;
+            width: var(--element-height);
+            height: var(--element-height);
             &:hover {
+                background-color: var(--gray-60);
                 --ui-icon-color: var(--primary);
             }
         }
@@ -171,10 +153,12 @@
             left: 0;
             right: 0;
             z-index: 2;
-            padding: 0 var(--padding);
-            width: var(--padding-width);
+            padding: 0;
+            width: 100%;
+            margin: 0;
             min-height: var(--element-height);
-
+            border-radius: unset;
+            border: unset;
             &:hover {
                 background-color: var(--gray-100);
             }
@@ -184,26 +168,25 @@
     &__body {
         word-wrap: break-word;
         overflow-y: auto;
-        width: var(--padding-width);
+        // width: var(--padding-width);
         margin-bottom: var(--padding);
         overflow-x: hidden;
-        @media(max-width: 900px) {
-            padding: 0;
-            // max-height: calc(100vh - 60px);
-            /* Adjust the height to account for other modal elements */
-        }
+        width: var(--padding-width);
+        padding: var(--padding);
+      
 
         &__fullscreen {
             z-index: 1;
-            width: 100%;
             margin-bottom: 0;
+            padding: 0;
+            width: 100%;
         }
 
         .modal-overlay__confirm {
             @extend .d-flex;
             gap: var(--s-9);
             padding: var(--s-8) var(--s-9);
-            background-color: var(--gray-70-opaque);
+            // background-color: var(--gray-70-opaque);
             border-radius: var(--border-radius);
             overflow: hidden;
             margin-top: var(--padding);

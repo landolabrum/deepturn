@@ -7,7 +7,7 @@ interface IToggle {
   disabled?: boolean;
   label?: string;
   value?: boolean | 'true' | 'false';
-  onChange: (checked: any) => void;
+  onChange?: (checked: any) => void;
 }
 
 const ToggleSwitch = ({ value, onChange, name, label, disabled }: IToggle) => {
@@ -20,7 +20,7 @@ const ToggleSwitch = ({ value, onChange, name, label, disabled }: IToggle) => {
       }
     }
     // // Call the provided onChange handler with the new checked state
-    !disabled && onChange(newE);
+    !disabled && onChange && onChange(newE);
   };
   
   useEffect(() => {
@@ -29,7 +29,7 @@ const ToggleSwitch = ({ value, onChange, name, label, disabled }: IToggle) => {
     }else{
       togRef.current.removeAttribute("checked");
     }
-  }, [value]);
+  }, [value, togRef?.current]);
   return (
     <>
       <style jsx>{styles}</style>

@@ -309,7 +309,7 @@
             }
         }
     }
-
+    
     @include variant('lite',
         var(--gray-40), var(--primary-opaque), var(--primary),
         var(--gray-30), var(--gray-70), var(--secondary),

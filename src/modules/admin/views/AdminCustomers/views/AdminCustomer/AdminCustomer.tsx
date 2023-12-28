@@ -193,7 +193,9 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
       }
     }
   };
-
+  const productRequestNoTimeStamp = ()=> productRequest?.length && productRequest.map((p: any)=>{
+    if(p.item != 'timestamp')return p;
+  })
   const productRequestTotal = () => productRequest && 
     Object.entries(productRequest || {}).reduce((acc: any, [key, value]) => {
       acc = acc += Number(value) 
@@ -232,7 +234,17 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
             </div>
            
           </AdaptGrid>
-          {productRequest?.length  && <AdapTable data={productRequest} options={{tableTitle: 'Product Request'}}/>|| ''}
+
+          {productRequest?.length  && <AdapTable data={productRequestNoTimeStamp()} options={{tableTitle: 
+          <div className='d-flex' style={{width: '100%', justifyContent:"space-between"}}>
+          <div>
+            Product Request 
+          </div>
+          <div>
+              {`${new Date(Number(productRequest.find((p:any)=>p?.item == 'timestamp').value)).toLocaleString()|| ''}`}
+          </div>
+          </div>
+          }} />|| ''}
         </div>
         
         <div className='admin-customer__content'>
@@ -272,21 +284,3 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
 };
 
 export default AdminCustomer;
-
-// {info?.name && <>
-//   <div className='admin-customer__customer--info'>
-//     <div className='admin-customer__customer--info__name'>{info?.name}</div>
-//   </div>
-//     {Object.entries(info?.address)?.length && 
-//     <div className='admin-customer__customer--info__address'>
-//       <AdaptTableCell cell='address' data={info.address}/>
-//     </div>
-//     }
-//   <div className='admin-customer__customer--info__contact'>
-//     {info?.phone.length > 3 && 
-//       <div onClick={()=>router.push(`tel://${info?.phone}`)}>{phoneFormat(info?.phone)}</div>
-//     }
-//     <div onClick={()=>router.push(`mailto://${info?.email}`)}>{info.email}</div>
-//   </div>
-//   </>
-// }

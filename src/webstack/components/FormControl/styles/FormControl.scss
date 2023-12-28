@@ -49,7 +49,17 @@ $elPad: 14px;
   text-transform: capitalize;
   height: max-content;
   justify-content: space-around;
-
+&__badge{
+  @extend .d-flex;
+  top:0;
+  right:0;
+  position: absolute;
+    background-color: #f30;
+    width: var(--s-5);
+    height: var(--s-5);
+    font-size: var(--s-7);
+    color: var(--white);
+}
   .form-control__header {
     @extend .d-flex;
     justify-content: space-between;

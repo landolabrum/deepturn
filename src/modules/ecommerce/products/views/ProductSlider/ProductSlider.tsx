@@ -5,7 +5,7 @@ import ProductImage from '../ProductImage/ProductImage';
 import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
 import { ICartItem } from '~/src/modules/ecommerce/cart/model/ICartItem';
 import { useRouter } from 'next/router';
-import useScroll from '@webstack/hooks/useScroll';
+// import useScroll from '@webstack/hooks/useScroll';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 interface Product {
@@ -34,14 +34,20 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
       setIsScrolledRight(scrollLeft + offsetWidth >= scrollWidth);
     }
   };
-
   const handleScroll = (right: boolean = true) => {
     if (itemsRef.current) {
-      const amount = right ? itemsRef.current.offsetWidth : -itemsRef.current.offsetWidth;
-      itemsRef.current.scrollLeft += amount * 0.2;
-      setTimeout(updateScrollButtons, 150); // Update after scroll animation
+      const scrollAmount = right ? itemsRef.current.offsetWidth : -itemsRef.current.offsetWidth;
+      const newScrollPosition = itemsRef.current.scrollLeft + scrollAmount;
+  
+      itemsRef.current.scrollTo({
+        left: newScrollPosition,
+        behavior: 'smooth'  // Smooth scrolling
+      });
+  
+      setTimeout(updateScrollButtons, 150); // Update buttons after scroll animation
     }
   };
+  
 
   useEffect(() => {
     loadProducts();
@@ -98,7 +104,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
            )}
         </div>
       </div>
-      { !isScrolledRight && (
+      { !isScrolledRight && _products?.length > 2 && (
         <div className='product-slider__right' onClick={() => handleScroll(true)}>
           <UiIcon icon='fa-chevron-right'  />
         </div>

@@ -89,9 +89,12 @@ const Lights: React.FC = () => {
               <div className='lights__light' key={index}>
                 <UiBar
                   header={<div className='lights__light-header'>
-                    <div className='lights__light-header-title'>
+                    <div className='lights__light-header-title' >
+                      <span onClick={() => handleToggle(light.id_)}>
                       {light?.name}
-                      <ToggleSwitch name={light?.id_} value={light.is_on} onChange={() => handleToggle(light.id_)} />
+                      <ToggleSwitch name={light?.id_} value={light.is_on} 
+                       />
+                       </span>
                     </div>
                     <div className='lights__light-header-action'>
                       <UiIcon

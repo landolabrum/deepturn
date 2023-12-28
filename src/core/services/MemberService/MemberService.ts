@@ -340,7 +340,7 @@ export default class MemberService
 
   private saveMemberToken(memberJwt: string) {
     if (this.isBrowser) {
-      sessionStorage?.setItem(STORAGE_TOKEN_NAME, memberJwt);
+      localStorage?.setItem(STORAGE_TOKEN_NAME, memberJwt);
     }
   }
   private get isBrowser(): boolean {
@@ -398,14 +398,14 @@ export default class MemberService
 
   private deleteMemberToken() {
     if (this.isBrowser) {
-      sessionStorage?.removeItem(STORAGE_TOKEN_NAME);
+      localStorage?.removeItem(STORAGE_TOKEN_NAME);
     }
   }
   private getMemberTokenFromStorage(): string | null {
     if (!this.isBrowser) {
       return null;
     }
-    const jwt = sessionStorage?.getItem(STORAGE_TOKEN_NAME);
+    const jwt = localStorage?.getItem(STORAGE_TOKEN_NAME);
     // console.log("[ JWT ** ]", jwt)
     if (jwt == null) {
       return null;

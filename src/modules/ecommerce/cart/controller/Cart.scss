@@ -31,16 +31,18 @@
     z-index: 1;
     margin-top: var(--element-height);
     .cart__header {
+        gap:var(--s-9);
         @extend .d-flex;
-        gap: 7px;
         width: 100%;
         align-items: flex-start;
+        justify-content: space-around;
         .cart__header-title {
             font-size: 22px;
         }
         @media(max-width:900px){
+            gap: 7px;
             flex-direction: column;
-            width: 100%;
+            width: var(--padding-width);
         }
     }
 

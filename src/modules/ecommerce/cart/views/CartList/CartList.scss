@@ -18,7 +18,12 @@ $space: 14px;
         border-radius: 7px;
         background-color: var(--gray-80-opaque);
         padding: $space;
-
+        &-image{
+            @extend .d-flex;
+            --ui-icon-width: var(--s-3);
+            --ui-icon-color:var(--gray-40);
+            --ui-icon-height:100%;
+        }
         &:not(:last-child) {
             margin-bottom: calc($space * .75);
         }
@@ -38,7 +43,7 @@ $space: 14px;
                 flex-direction: column;
             }
             @extend .d-flex;
-            gap: 7px;
+            gap: var(--s-9);
             height: 100%;
             margin: auto;
             justify-content: flex-start;
@@ -62,6 +67,7 @@ $space: 14px;
                 }
 
                 .cart-list__item-image {
+
                     &::before {
                         line-height: 1.5;
                         content: attr(data-name);
@@ -114,6 +120,7 @@ $space: 14px;
             .cart-list__item-action {
                 @extend .d-flex;
                 height: 100%;
+                width: 137px;
                 @media(max-width: 900px) {
                     order: 3;
                 }

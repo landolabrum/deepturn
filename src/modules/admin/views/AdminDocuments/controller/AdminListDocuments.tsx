@@ -97,9 +97,12 @@ const AdminListDocuments = ({docs}:any) => {
                                         <strong>porpose:</strong>
                                         {doc?.purpose}
                                         </div>
+                                    <div className='admin-list-documents__list--item-action'>
+
                                     <UiButton
                                         onClick={() => retreive(doc.id)}
-                                    >Download</UiButton>
+                                        >Download</UiButton>
+                                        </div>
                                 </div>
                             </div>
                         )

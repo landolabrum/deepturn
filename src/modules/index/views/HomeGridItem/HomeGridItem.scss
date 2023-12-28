@@ -10,12 +10,14 @@
     border-radius: var(--border-radius);
     gap: var(--padding);
     flex-direction: column;
-    background-color: var(--gray-90);
+    // background-color: var(--gray-90);
+    overflow: hidden;
     // padding: var(--padding);
     padding: var(--element-height) var(--padding);
     width: var(--padding-width);
     // @media(max-width: 900px){
     // }
+   
     &__header{
         width: 100%;
         @extend .d-flex;

@@ -2,7 +2,6 @@ import React, { Children, cloneElement, useEffect, useRef, useState, isValidElem
 import styles from './ImageControl.scss';
 import UiLoader from '../UiLoader/view/UiLoader';
 import useClass from '@webstack/hooks/useClass';
-import UiButton from '../UiButton/UiButton';
 import { UiIcon } from '../UiIcon/UiIcon';
 import { useModal } from '../modal/contexts/modalContext';
 
@@ -17,9 +16,10 @@ interface IImageControl {
   refreshInterval?: number; // Interval in milliseconds to refresh the image
   error?: string;
   fixedLoad?: boolean;
+  loadingText?: string
 }
 
-const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 'image', refreshInterval = 1000, error,  fixedLoad=false }) => {
+const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 'image', refreshInterval = 1000, error, loadingText, fixedLoad=false }) => {
   const childRef = useRef<HTMLDivElement | null>(null); // Change to HTMLDivElement
   const [loading, setLoading] = useState<boolean>(true);
   const clzz: string = useClass('image-control__element', mediaType, variant);
@@ -63,7 +63,7 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
         {loading == true && <UiLoader
           height={300}
           position={!fixedLoad?'relative':undefined}
-          text={error || undefined}
+          text={loadingText || error || undefined}
           dots={typeof error == 'string' ? false : undefined}
         />}
         <div id='image-control__element' className={`${clzz}`} ref={childRef}>

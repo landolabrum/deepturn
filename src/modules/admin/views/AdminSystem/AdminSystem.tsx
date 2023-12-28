@@ -53,15 +53,19 @@ const AdminSystem: React.FC = () => {
     </>
   }
   const lActive = loader?.active;
-  const getData = async () =>{
+  const getData = async () => {
     fetchSystemData().then(() => {
       setLoader({ active: false });
     });
   }
+  function bytesToGigabytes(bytes: number) {
+    return (bytes / (1024 ** 3)).toFixed(2);  // Convert to GB and round to 2 decimal places
+  }
+
   useEffect(() => {
     if (!systemData) getData()
   }, [setSystemData]);
-  if(systemData)return (
+  if (systemData) return (
     <>
       <style jsx>{styles}</style>
       <div className='admin-system'>
@@ -76,7 +80,7 @@ const AdminSystem: React.FC = () => {
           </div>?!?
 
           <div >
-            <UiButton busy={loader?.active}  variant='dark' onClick={getData}>Refresh</UiButton>
+            <UiButton busy={loader?.active} variant='dark' onClick={getData}>Refresh</UiButton>
           </div>
         </div>
         <div className='admin-system__overview'>
@@ -91,7 +95,7 @@ const AdminSystem: React.FC = () => {
           </div>
           <div className='admin-system__overview--item'>
             <div className='admin-system__overview--item--title'>
-              <UiIcon icon={lActive?'spinner':'fa-disc-drive'} /> Processor
+              <UiIcon icon={lActive ? 'spinner' : 'fa-disc-drive'} /> Processor
             </div>
             <div className='admin-system__overview--item--content'>
               <div className='admin-system__overview--item--content__info'>{systemData?.cpu_info}</div>
@@ -100,11 +104,11 @@ const AdminSystem: React.FC = () => {
           </div>
           <div className='admin-system__overview--item'>
             <div className='admin-system__overview--item--title'>
-              <UiIcon icon={lActive?'spinner':'fa-memory'} /> Memory
+              <UiIcon icon={lActive ? 'spinner' : 'fa-memory'} /> Memory
             </div>
             <div className='admin-system__overview--item--content'>
               <div className='admin-system__overview--item--content__info'>
-                <div className='d-flex' style={{flexDirection:'column'}}>
+                <div className='d-flex' style={{ flexDirection: 'column' }}>
                   <UiBar
                     header='Usage'
                     percentage={systemData?.memory_percentage}
@@ -115,8 +119,25 @@ const AdminSystem: React.FC = () => {
               </div>
             </div>
           </div>
+            <div className='admin-system__overview--item'>
+            <div className='admin-system__overview--item--title'>
+              <UiIcon icon='fa-microchip' /> Storage
+            </div>
+            <div className='admin-system__overview--item--content'>
+              <div className='d-flex' style={{ flexDirection: 'column' }}>
+              <UiBar
+                    header={systemData?.storage_info?.drive}
+                    percentage={systemData?.storage_info?.percent_used}
+                    barCount={4}
+                    status={systemData?.storage_info?.percent_used >= 90 && 'high' || undefined}
+                  />
+                {/* <div>{bytesToGigabytes(systemData?.storage_info?.available)}</div> */}
+                {/* <div>{bytesToGigabytes(systemData?.storage_info?.total)}</div> */}
+              </div>
+            </div>
         </div>
- 
+        </div>
+
       </div>
     </>
   );

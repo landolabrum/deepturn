@@ -176,8 +176,8 @@ const viewportHeight = useDocument()?.viewport.height;
           <tbody>
             {data &&
               data[0] &&
-              data.map((item: ItemType, i_: number) => (
-                <tr
+              data.map((item: ItemType, i_: number) =>{
+                if(item)return   <tr
                   className={`${variant ? variant : ""}`}
                   key={startIndex + i_}
                   onClick={(e) => handleRowClick(e, item)}
@@ -188,7 +188,7 @@ const viewportHeight = useDocument()?.viewport.height;
                       {index + i_}
                     </td>
                   )}
-                  {Object.entries(item).map(
+                  { Object.entries(item).map(
                     ([key, value], index) =>
                       key !== "keywords" &&
                       !options?.hideColumns?.includes(key) && (
@@ -201,7 +201,8 @@ const viewportHeight = useDocument()?.viewport.height;
                       )
                   )}
                 </tr>
-              ))}
+                }
+              )}
           </tbody>
         </table>
         {["error", "empty", "loading"].includes(view) && (

@@ -11,8 +11,8 @@ const useClass = (cls: string, type?: string, variant?: string, extras?:string[]
             newClass += ` ${cls}__${type}`;
         }
         if(extras){
-            const extraClasses = () => extras.map((extra: string)=>` ${cls}__${extra}`);
-            newClass += ` ${cls}__${extraClasses}`
+            const extraClasses = () => extras.map((extra: string)=>extra?.length && ` ${cls}__${extra}`);
+           newClass += ` ${cls}__${extraClasses}`
         }
         setClassState(newClass);
     }, [cls, variant, type]);
