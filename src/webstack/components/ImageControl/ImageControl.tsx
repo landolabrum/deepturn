@@ -59,7 +59,9 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
   return (
     <>
       <style jsx>{styles}</style>
-      <div className={`image-control${loading?' image-control__loading':""}`} > {/* Attach the ref here */}
+      <div 
+        className={`image-control${loading?' image-control__loading':""}`} 
+      > {/* Attach the ref here */}
         {loading == true && <UiLoader
           height={300}
           position={!fixedLoad?'relative':undefined}
