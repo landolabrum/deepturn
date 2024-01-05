@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import environment from '~/src/environment';
 import capitalize, { capitalizeAll } from '@webstack/helpers/Capitalize';
+import useDarkMode from "@webstack/hooks/useDarkMode";
 
 const Title: React.FC = () => {
   const [title, setTitle] = useState<string>(String(environment.merchant.name));
@@ -19,6 +20,10 @@ const Title: React.FC = () => {
   return (
     <Head>
       <title>{title}</title>
+      {useDarkMode() ? (
+        // servers/Deepturn/public/merchant/nirv1/favicon-lite.ico
+        <link rel="shortcut icon" href={`/merchant/${environment.merchant.mid}/favicon-lite.ico`} />
+      ) : <link rel="shortcut icon" href={`/merchant/${environment.merchant.mid}/favicon-dark.ico`} />}
     </Head>
   );
 };

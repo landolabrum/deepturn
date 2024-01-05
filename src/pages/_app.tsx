@@ -5,7 +5,6 @@ import ServiceContainer from "@webstack/components/ServiceContainer/ServiceConta
 import styles from "~/src/layouts/default/DefaultLayout.scss"
 import { OverlayProvider } from "@webstack/components/Overlay/Overlay";
 import { HeaderProvider } from "@webstack/components/Header/controller/Header";
-import useDarkMode from "@webstack/hooks/useDarkMode";
 import { NotificationProvider } from "@webstack/components/Notification/Notification";
 import { ModalProvider } from "@webstack/components/modal/contexts/modalContext";
 import { ModalOverlay } from "@webstack/components/modal/views/modalOverlay";
@@ -22,7 +21,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {useDarkMode() ? <link rel="shortcut icon" href="/assets/favicon-dark.ico" /> : <link rel="shortcut icon" href="/assets/favicon-lite.ico" />}
+  
       </Head>
       <style jsx>{styles}</style>
       <ServiceContainer />

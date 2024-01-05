@@ -11,7 +11,6 @@ export default class MyDocument extends Document {
         <Head>
           <link rel="stylesheet" href="./styles/global.css" />
           <link rel="stylesheet" href="./styles/theme.css" />
-          {/* Other head elements */}
         </Head>
         <body id="app-body">
           <Main />
