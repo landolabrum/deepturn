@@ -19,7 +19,6 @@ interface Vector3 {
   
   interface ICubeCamera {
     position: Vector3;
-    fov?: number;
     animation?: Animation;
   }
   
@@ -33,9 +32,9 @@ interface Vector3 {
     opacity: number;
   }
   
-  interface ICubeProps {
+  interface ICube {
     size: Vector3;
-    shadow?: ICubeShadow;
+    shadow?: boolean;
     animation?: Animation;
     color?: string;
     draggable?: boolean;
@@ -43,4 +42,4 @@ interface Vector3 {
     camera: ICubeCamera;
     light?: ICubeLight;
   }
-  export default ICubeProps
+  export default ICube
