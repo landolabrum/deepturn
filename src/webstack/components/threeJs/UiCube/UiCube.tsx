@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame, ThreeEvent } from '@react-three/fiber';
-import { Mesh, Euler, BoxGeometry, MeshStandardMaterial, PointLight } from 'three';
+import { Mesh, Euler } from 'three';
 
 const SENSITIVITY = 0.1;
+interface ICube {size:{x: number, y: number, z: number}};
 
-const Cube: React.FC = () => {
+
+const CubeMesh: React.FC<ICube> = ({ size }) => {
   const meshRef = useRef<Mesh>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [rotation, setRotation] = useState<Euler>(new Euler(0, 0, 0));
@@ -55,7 +57,7 @@ const Cube: React.FC = () => {
       castShadow
       receiveShadow
     >
-      <boxGeometry />
+      <boxGeometry args={[size.x, size.y, size.z]} />
       <meshStandardMaterial color={'orange'} />
     </mesh>
   );
@@ -74,9 +76,12 @@ const Plane: React.FC = () => {
   );
 };
 
-const CubeScene: React.FC = () => {
+const Cube: React.FC = ({size={x: 1, y: 1, z: 1}}:Size) => {
+
+  // You can adjust this value as needed
+
   return (
-    <Canvas shadows gl={{ alpha: true }}>
+    <Canvas shadows gl={{ alpha: true }} style={{height:'600px'}}>
       <ambientLight intensity={1} />
       <pointLight 
         position={[10, 10, 10]} 
@@ -84,10 +89,10 @@ const CubeScene: React.FC = () => {
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
       />
-      <Cube />
+      <CubeMesh size={size} />
       <Plane />
     </Canvas>
   );
 };
 
-export default CubeScene;
+export default Cube;
