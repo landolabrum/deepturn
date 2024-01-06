@@ -76,7 +76,7 @@ const Plane: React.FC = () => {
   );
 };
 
-const Cube: React.FC = ({size={x: 1, y: 1, z: 1}}:Size) => {
+const Cube: React.FC<any> = ({size={x: 1, y: 1, z: 1}}:ICube) => {
 
   // You can adjust this value as needed
 
