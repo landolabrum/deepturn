@@ -1,15 +1,25 @@
+
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame, ThreeEvent } from '@react-three/fiber';
-import { Mesh, Euler } from 'three';
+import { Mesh, Euler, BoxGeometry, MeshStandardMaterial, PointLight } from 'three';
 
 const SENSITIVITY = 0.1;
-interface ICube {size:{x: number, y: number, z: number}};
-
+interface ICube {
+  size: { x: number; y: number; z: number };
+};
 
 const CubeMesh: React.FC<ICube> = ({ size }) => {
   const meshRef = useRef<Mesh>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [rotation, setRotation] = useState<Euler>(new Euler(0, 0, 0));
+
+  useFrame(() => {
+    if (meshRef.current && !isDragging) {
+      meshRef.current.rotation.x += 0.01;
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
 
   useFrame(() => {
     if (meshRef.current && !isDragging) {
@@ -43,19 +53,17 @@ const CubeMesh: React.FC<ICube> = ({ size }) => {
   };
 
   useEffect(() => {
-    if (meshRef?.current) {
-      document.addEventListener('pointermove', handlePointerMove);
-      document.addEventListener('pointerup', handlePointerUp);
-    };
-  }, [isDragging, meshRef?.current]);
+    if (meshRef.current) {
+      meshRef.current.rotation.copy(rotation);
+      meshRef.current.castShadow = true;
+      meshRef.current.receiveShadow = true;
+    }
+  }, [rotation]);
 
   return (
     <mesh
       ref={meshRef}
       onPointerDown={handlePointerDown}
-      rotation={rotation}
-      castShadow
-      receiveShadow
     >
       <boxGeometry args={[size.x, size.y, size.z]} />
       <meshStandardMaterial color={'orange'} />
@@ -64,31 +72,40 @@ const CubeMesh: React.FC<ICube> = ({ size }) => {
 };
 
 const Plane: React.FC = () => {
+  const planeRef = useRef<Mesh>(null);
+
+  useEffect(() => {
+    if (planeRef.current) {
+      planeRef.current.rotation.set(-Math.PI / 4, 0, 0);
+      planeRef.current.position.set(0, -5, 0);
+      planeRef.current.receiveShadow = true;
+    }
+  }, []);
+
   return (
-    <mesh
-      rotation={[-Math.PI / 4, 0, 0]}
-      position={[0, -5, 0]}
-      receiveShadow
-    >
+    <mesh ref={planeRef}>
       <planeGeometry args={[500, 500]} />
       <meshStandardMaterial color={'white'} />
     </mesh>
   );
 };
 
-const Cube: React.FC<any> = ({size={x: 1, y: 1, z: 1}}:ICube) => {
+const Cube: React.FC<ICube> = ({ size = { x: 1, y: 1, z: 1 } }) => {
+  const lightRef = useRef<PointLight>(null);
 
-  // You can adjust this value as needed
+  useEffect(() => {
+    if (lightRef.current) {
+      lightRef.current.position.set(10, 10, 10);
+      lightRef.current.castShadow = true;
+      lightRef.current.shadow.mapSize.width = 2048;
+      lightRef.current.shadow.mapSize.height = 2048;
+    }
+  }, []);
 
   return (
-    <Canvas shadows gl={{ alpha: true }} style={{height:'600px'}}>
+    <Canvas shadows gl={{ alpha: true }} style={{ height: '600px' }}>
       <ambientLight intensity={1} />
-      <pointLight 
-        position={[10, 10, 10]} 
-        castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
-      />
+      <pointLight ref={lightRef} />
       <CubeMesh size={size} />
       <Plane />
     </Canvas>
