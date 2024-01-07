@@ -1,8 +1,6 @@
-
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame, ThreeEvent } from '@react-three/fiber';
-import { Mesh, Euler, BoxGeometry, MeshStandardMaterial, PointLight } from 'three';
+import { Mesh, Euler, BoxGeometry, MeshStandardMaterial, PointLight, PlaneGeometry, AmbientLight } from 'three';
 
 const SENSITIVITY = 0.1;
 interface ICube {
@@ -13,13 +11,6 @@ const CubeMesh: React.FC<ICube> = ({ size }) => {
   const meshRef = useRef<Mesh>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [rotation, setRotation] = useState<Euler>(new Euler(0, 0, 0));
-
-  useFrame(() => {
-    if (meshRef.current && !isDragging) {
-      meshRef.current.rotation.x += 0.01;
-      meshRef.current.rotation.y += 0.01;
-    }
-  });
 
   useFrame(() => {
     if (meshRef.current && !isDragging) {
@@ -84,7 +75,7 @@ const Plane: React.FC = () => {
 
   return (
     <mesh ref={planeRef}>
-      <planeGeometry args={[500, 500]} />
+      {/* <planeGeometry  args={[500, 500]} /> */}
       <meshStandardMaterial color={'white'} />
     </mesh>
   );
@@ -92,6 +83,7 @@ const Plane: React.FC = () => {
 
 const Cube: React.FC<ICube> = ({ size = { x: 1, y: 1, z: 1 } }) => {
   const lightRef = useRef<PointLight>(null);
+  const ambientRef = useRef<AmbientLight>(null);
 
   useEffect(() => {
     if (lightRef.current) {
@@ -100,11 +92,14 @@ const Cube: React.FC<ICube> = ({ size = { x: 1, y: 1, z: 1 } }) => {
       lightRef.current.shadow.mapSize.width = 2048;
       lightRef.current.shadow.mapSize.height = 2048;
     }
+    if (ambientRef.current) {
+      ambientRef.current.intensity = 1;
+    }
   }, []);
 
   return (
     <Canvas shadows gl={{ alpha: true }} style={{ height: '600px' }}>
-      <ambientLight intensity={1} />
+      <ambientLight ref={ambientRef} />
       <pointLight ref={lightRef} />
       <CubeMesh size={size} />
       <Plane />
