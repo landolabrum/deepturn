@@ -81,7 +81,7 @@ const Plane: React.FC = () => {
   );
 };
 
-const Cube: React.FC<ICube> = ({ size = { x: 1, y: 1, z: 1 } }) => {
+const Cube: React.FC<ICube> = ({ size = { x: 1, y: 1, z: 1 } }:ICube) => {
   const lightRef = useRef<PointLight>(null);
   const ambientRef = useRef<AmbientLight>(null);
 

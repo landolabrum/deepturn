@@ -7,7 +7,7 @@ const Index = () => {
     <>
       <style jsx>{styles}</style>
       <div className='home'>
-        <Cube/>
+        <Cube />
       </div>
     </>
   );
