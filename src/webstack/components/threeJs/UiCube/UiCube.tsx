@@ -56,7 +56,7 @@ const CubeMesh: React.FC<ICube> = ({ size }) => {
       ref={meshRef}
       onPointerDown={handlePointerDown}
     >
-      <boxGeometry args={[size.x, size.y, size.z]} />
+      {/* <boxGeometry args={[size.x, size.y, size.z]} /> */}
       <meshStandardMaterial color={'orange'} />
     </mesh>
   );
@@ -75,7 +75,7 @@ const Plane: React.FC = () => {
 
   return (
     <mesh ref={planeRef}>
-      {/* <planeGeometry  args={[500, 500]} /> */}
+      <planeGeometry  args={[500, 500]} />
       <meshStandardMaterial color={'white'} />
     </mesh>
   );
