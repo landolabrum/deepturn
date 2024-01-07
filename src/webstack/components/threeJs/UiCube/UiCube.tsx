@@ -75,7 +75,7 @@ const Plane: React.FC = () => {
 
   return (
     <mesh ref={planeRef}>
-      <planeGeometry  args={[500, 500]} />
+      {/* <planeGeometry  args={[500, 500]} /> */}
       <meshStandardMaterial color={'white'} />
     </mesh>
   );
