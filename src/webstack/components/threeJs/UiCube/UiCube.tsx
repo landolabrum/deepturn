@@ -7,7 +7,7 @@ interface ICube {
   size: { x: number; y: number; z: number };
 };
 
-const CubeMesh: React.FC<ICube> = ({ size }:ICube) => {
+const CubeMesh: React.FC<ICube> = ({ size }) => {
   const meshRef = useRef<Mesh>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [rotation, setRotation] = useState<Euler>(new Euler(0, 0, 0));
