@@ -36,6 +36,10 @@ export const routes: IRoute[] = [
     icon: `${merchantName}-logo`,
     href:"/",
   },
+  {
+    href:"/payment",
+    clearance: 0
+  },
 
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
   { label: "configure", href: "/configure", icon: "fa-gear", active: true },
