@@ -5,7 +5,7 @@ import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import SignUp from "../views/SignUp/SignUp";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { useRouter } from "next/router";
-import VerifyEmail from "../views/VerifyEmail/VerifyEmail";
+// import VerifyEmail from "../views/VerifyEmail/VerifyEmail";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import { useLoader } from "@webstack/components/Loader/Loader";
@@ -15,9 +15,8 @@ import { useLoader } from "@webstack/components/Loader/Loader";
 const Authentication: React.FC<any> = (props: any) => {
   const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
   const [view, setView] = useState<string>(props?.view || "sign-in");
-  const [loader, setLoader] = useLoader();
-
   const router = useRouter();
+  const query = router.query;
   const handleView = () => {
     switch (view) {
       case "sign-in":
@@ -26,8 +25,8 @@ const Authentication: React.FC<any> = (props: any) => {
       case "sign-up":
         setView("sign-in")
         break;
-      case "verify":
-        setView("verify")
+      // case "verify":
+        // setView("verify")
         break;
       case "customer-created":
         setView("sign-in")
@@ -51,10 +50,11 @@ const Authentication: React.FC<any> = (props: any) => {
     //      </div>
     //    </>
     //  })}else{setNotification({active: false})}
-    if (router.pathname.includes('verify')) setView('verify');
-    if (view.includes("@")) {
-      setNewCustomerEmail(view);
+    if (query && query.verify){
+      setView('verify');
+      console.log('[router]',router)
     }
+
     if (newCustomerEmail != undefined) setView("sign-in");
   }, [])
 
@@ -79,7 +79,7 @@ const Authentication: React.FC<any> = (props: any) => {
         </div>}
         {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
         {view == 'sign-up' && <SignUp setView={setView} />}
-        {view == 'verify' && router.query.token && <VerifyEmail token={router.query.token} onSuccess={setNewCustomerEmail} />}
+        {/* {view == 'verify' && router.query.token && <VerifyEmail token={router.query.token} onSuccess={setNewCustomerEmail} />} */}
         <div className="authentication__view-action">
           <div className="authentication__view-label">
             {view == 'sign-in' && "no account?"}

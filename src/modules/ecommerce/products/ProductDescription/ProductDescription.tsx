@@ -47,7 +47,17 @@ const ProductDescription = () => {
   useEffect(() => {
   }, [product]); // Dependencies updated
   useEffect(() => { }, [handleQtyChange]);
-  if (isLoading) return <UiLoader />; // Return loader when loading
+  if(product == null)return (
+    <>
+      <style jsx>{styles}</style>
+      <div className="product-description">
+        <div>
+          <UiLoader
+            height={500} />
+        </div>
+      </div>
+    </>
+  ); // Return loader when loading
 
 
   return (
@@ -75,12 +85,12 @@ const ProductDescription = () => {
                 product={product}
                 cart={cart}
                 setCart={setCart}
-                // traits={{ width: "100%" }}
+              // traits={{ width: "100%" }}
               />
-              </div>
+            </div>
           </div>
         </AdaptGrid>
- 
+
         {/* {product?.metadata?.type == 'generator' &&
           <div className='product-description__table'>
             <h4>Scalable</h4>

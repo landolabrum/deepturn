@@ -5,7 +5,7 @@ import styles from './UiCube.scss';
 import { Canvas, useFrame, ThreeEvent } from '@react-three/fiber';
 import { Mesh, Euler, PointLight, AmbientLight } from 'three';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-
+import useWindow from '@webstack/hooks/useWindow';
 
 const SENSITIVITY = 0.1;
 const SHADOW_RESOLUTION = 2048;
@@ -17,11 +17,12 @@ type ICube = {
 };
 
 const CubeMesh: React.FC<ICube> = ({
-    size = { x: 1, y: 1, z: 1 },
-    color='orange'
-  }) => {
+  size = { x: 1, y: 1, z: 1 },
+  color='orange'
+}) => {
   const meshRef = useRef<Mesh>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const {width}=useWindow();
   const [rotation, setRotation] = useState<Euler>(new Euler(0, 0, 0));
 
   useFrame(() => {
@@ -68,18 +69,18 @@ const CubeMesh: React.FC<ICube> = ({
       ref={meshRef}
       onPointerDown={handlePointerDown}
     >
+      {/* eslint-disable-next-line react/no-unknown-property */}
       <boxGeometry args={[size.x, size.y, size.z]} />
       <meshStandardMaterial color={color} />
     </mesh>
   );
 };
 
-const Plane: React.FC<{ size: { x: number; y: number; z: number } }> = ({ size }) => {
+const Plane: React.FC<{ size: { x: number; y: number; z: number }, color?: string }> = ({ size, color }) => {
   const groundRef = useRef<Mesh>(null);
   const wallRef = useRef<Mesh>(null);
   const planeSize = Math.max(size.x, size.z) * ROOM_SIZE; // Ensuring the plane is larger than the cube
   const spotRef = useRef<PointLight>(null);
-  const sizeSum = size.x + size.y + size.z;
   const spotPos: [number, number, number] = [
     -10,
     100,
@@ -113,26 +114,19 @@ const Plane: React.FC<{ size: { x: number; y: number; z: number } }> = ({ size }
     }
   }, [size]);
   return (<>
-    <mesh ref={groundRef}>
-      <planeGeometry args={[planeSize, planeSize]} />
-      <meshStandardMaterial color={'white'} />
-    </mesh>
-    <mesh ref={wallRef}>
-      <planeGeometry args={[planeSize, planeSize]} />
-      <meshStandardMaterial color={'white'} />
-    </mesh>
-    <ambientLight intensity={.2} color="#87CEEB"/>
+    {/* eslint-disable-next-line react/no-unknown-property */}
+    <ambientLight intensity={.2} color='#ffffff30'/>
+    {/* eslint-disable-next-line react/no-unknown-property */}
     <pointLight
       ref={spotRef}
-      castShadow
-      color='white'
+      color={color}
     />
   </>
   );
 };
 
 const Cube: React.FC<ICube> = (
-  { size = { x: 1, y: 1, z: 1 } }
+  { size = { x: 2, y: 3, z: 1 }, color }
 ) => {
   const percentMaker = (num: number) => {
     return num * 100 / Math.max(size.x, size.y, size.z);
@@ -161,7 +155,7 @@ const Cube: React.FC<ICube> = (
           makeDefault
           position={[0, -45, 300]} // Adjust as needed
         />
-        <CubeMesh size={pSize} />
+        <CubeMesh size={pSize} color={color} />
         <Plane size={pSize} />
         <OrbitControls />
       </Canvas>

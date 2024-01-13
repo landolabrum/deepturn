@@ -15,7 +15,7 @@ interface IAccountCreateMethod {
 }
 
 
-const AccountCreateMethod = ({ onSuccess, open, collapse, user, shippable }: IAccountCreateMethod) => {
+const AccountCreateMethod = ({ onSuccess, user, shippable }: IAccountCreateMethod) => {
     const stripe = useStripe();
     const elements: any = useElements();
     const options = {

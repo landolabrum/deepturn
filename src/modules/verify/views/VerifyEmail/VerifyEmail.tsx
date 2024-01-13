@@ -29,23 +29,24 @@ const VerifyEmail: React.FC<any> = ({token, onSuccess}:IVerifyEmail) => {
 
     const handleVerify = async () =>{
         if(!token){
-            alert('no token')
+            setState({status:'no_token_present'});
             return;
         }
         const verifiedResponse = await memberService.verifyEmail(String(token));
-        // console.log("[ IS VER ]", verifiedResponse)
         if(verifiedResponse.status == 'incomplete')setState(verifiedResponse);
         else if(verifiedResponse.status == 'success' && verifiedResponse.customer)onSuccess(`${verifiedResponse.customer?.email}`);
+        else if([404,400].includes(verifiedResponse.status))setState({...verifiedResponse, status: verifiedResponse?.detail, error: verifiedResponse?.detail});
     }
 
-    const loadingText = (): string=>{
+    const loadingText = (): string => {
         let context = '';
         const isString = (e: any) => typeof e == 'string';
-        if(isString(state.status))context = String(state.status)
-        else if(isString(state.detail))context = String(state.detail);
-        else if(state.detail?.detail && isString(state.detail?.detail))context = state.detail.detail;
+        if (isString(state.status)) context = String(state.status)
+        else if (isString(state.detail)) context = String(state.detail);
+        else if (state.detail?.detail && isString(state.detail?.detail)) context = state.detail.detail;
         return keyStringConverter(context);
     }
+    
     const onChange = (e: any) => {
         const { name, value } = e.target;
         const stateFields = state?.fields;
@@ -77,15 +78,12 @@ const VerifyEmail: React.FC<any> = ({token, onSuccess}:IVerifyEmail) => {
         const newPassword = state?.fields?.find((f:IFormField)=>f.name == 'password')?.value;
         let customer = state.customer;
         customer.metadata.password = newPassword;
-            const updateMember = await memberService.updateMember(customer.id, customer);
-            // console.log('[ updateMember ]', updateMember);
-            if(updateMember)onSuccess(updateMember.email);
-        
-
+        const updateMember = await memberService.updateMember(customer.id, customer);
+        if(updateMember)onSuccess(updateMember.email);
     }
     useEffect(() => {
         handleVerify()
-    }, [token, state?.status]);
+    }, [token]);
   return (
     <>
       <style jsx>{styles}</style>
@@ -100,7 +98,9 @@ const VerifyEmail: React.FC<any> = ({token, onSuccess}:IVerifyEmail) => {
                 onSubmit={onSubmit}
             />
         }
-       {state?.status && ['verifying_email', 'success'].includes(state?.status) && <UiLoader position='relative' text={loadingText()} dots={!Boolean(state.status == 'success')}/>}
+        <UiLoader position='relative' text={loadingText()} dots={state?.status != undefined && ['verifying_email'].includes(state?.status)}/>
+       {/* {state?.status && ['verifying_email', 'success','error'].includes(state?.status) && <UiLoader position='relative' text={loadingText()} dots={!Boolean(state.status == 'success')}/>} */}
+
       </div>
       </div>
     </>

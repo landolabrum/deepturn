@@ -85,7 +85,7 @@ useEffect(() => {
   useEffect(() => {
     if (routes) {
       const newRoutes = routes
-        .filter(r => !(r.href === '/cart' && cartTotal === 0))
+        .filter(r => !(r.href === '/cart' && cartTotal === 0) && r.hide != true )
         .map(r => r);
 
       setCurrentRoutes(newRoutes.reverse());

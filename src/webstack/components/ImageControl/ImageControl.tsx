@@ -65,8 +65,8 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
         {loading == true && <UiLoader
           height={300}
           position={!fixedLoad?'relative':undefined}
-          text={loadingText || error || undefined}
-          dots={typeof error == 'string' ? false : undefined}
+          text={ error || loadingText  || undefined}
+          dots={['string','object'].includes(typeof error) ? false : undefined}
         />}
         <div id='image-control__element' className={`${clzz}`} ref={childRef}>
           {Children.map(children, child =>

@@ -115,7 +115,7 @@ export default class MemberService
     try {
       if (token) {
         const encodedToken = encodeURIComponent(token);
-        const verifiedMemberResp = await this.get<any>(`/usage/auth/verify?token=${encodedToken}`);
+        const verifiedMemberResp = await this.get<any>(`/usage/auth/verify-email?token=${encodedToken}`);
         const customer_token = verifiedMemberResp?.customer_token;
         if (customer_token) {
           this.saveMemberToken(customer_token);
@@ -163,9 +163,16 @@ export default class MemberService
     if (!email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
-    if (!password) {
-      throw new ApiError("Password is required", 400, "MS.SI.02");
-    }
+    // if (!password) {
+    //   throw new ApiError("Password is required", 400, "MS.SI.02");
+    // }
+    console.log('[ SIGN UP REQUREST ]',   {
+      name,
+      email,
+      password,
+      user_agent,
+      referrer_url
+    })
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",
       {
@@ -175,7 +182,8 @@ export default class MemberService
         referrer_url: referrer_url,
         user_agent: user_agent
       },
-    );
+      );
+      console.log('[ SIGN UP RES ]', res)
     return res;
   }
   public async getMethods(customerId?: string): Promise<any> {
@@ -329,10 +337,12 @@ export default class MemberService
       const expires = parseInt(memberToken.exp as any) * 1000;
       const diff = expires - now;
       if (diff > 0) {
+        alert(1)
         this._timeout = setTimeout(() => {
           this._getCurrentUser(true);
         }, diff + 1000) as any;
       }
+      alert(2)
     }
 
     return this._userContext;

@@ -1,15 +1,9 @@
 
-import CookieHelper from "@webstack/helpers/CookieHelper";
-import { EventEmitter } from "@webstack/helpers/EventEmitter";
 import environment from "~/src/environment";
-import CustomToken from "~/src/models/CustomToken";
-import MemberToken from "~/src/models/MemberToken";
-import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
 
 import IAdminService from "./IAdminService";
 
-const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
 
 
 export default class AdminService
@@ -32,6 +26,14 @@ export default class AdminService
       try {
         const systemDate = await this.get<any>(`/api/system/`);
         return systemDate;
+      } catch (error: any) {
+        return error;
+      }
+  };
+  public async listAccounts(): Promise<any> {
+      try {
+        const accountsList = await this.get<any>(`/api/accounts/`);
+        return accountsList;
       } catch (error: any) {
         return error;
       }

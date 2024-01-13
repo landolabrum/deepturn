@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './UiMedia.scss';
 import ImageControl, { IImageMediaType, IImageVariant } from '@webstack/components/ImageControl/ImageControl';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { useRouter } from 'next/router';
 
 export interface IMedia {
   src: string;
@@ -9,24 +11,53 @@ export interface IMedia {
   type?: IImageMediaType;
   loadingText?: string;
 }
-
 const UiMedia: React.FC<IMedia> = ({ src, variant, type, alt, loadingText }: IMedia) => {
   const [imageControlProps, setImageControlProps] = useState<any>({ variant, type });
+  const [reloadTrigger, setReloadTrigger] = useState(0); // state to trigger reload
+  const router = useRouter();
+
+  const handleReload = () => {
+    setImageControlProps({ ...imageControlProps, error: null }); // Reset error state
+    setReloadTrigger(prev => prev + 1); // Increment reload trigger to re-render the image
+  };
+  const RefreshLoadingText = () => {
+    return <>
+    <style jsx>{styles}</style>
+      <div className='media__refresh'>
+        <div>failed to load media</div>
+        <div>
+          <UiIcon icon='fa-arrows-rotate' onClick={handleReload} />
+        </div>
+      </div>
+
+    </>
+  }
   const handleError = (event: any) => {
     event.preventDefault();
-    if(!imageControlProps.error)setImageControlProps({ ...imageControlProps, error: 'failed to load media' });
-  }
-imageControlProps.loadingText = loadingText
-  useEffect(() => { }, [handleError]);
+    if (!imageControlProps.error) {
+      setImageControlProps({ ...imageControlProps, error: <RefreshLoadingText />});
+    }
+  };
+
+
+
+  imageControlProps.loadingText = loadingText;
+  useEffect(() => {
+    // if(imageControlProps.loadingText && imageControlProps.error){
+    //   imageControlProps.loadingText= <RefreshLoadingText/>
+    // }else{
+    // }
+  }, [handleError, imageControlProps]);
+
   return (
     <>
       <style jsx>{styles}</style>
-      <ImageControl
-        {...imageControlProps}
-      >
+      <ImageControl {...imageControlProps}>
         {!imageControlProps.error &&
-          <img src={src} alt={alt} onError={handleError} />
+          <img src={src} alt={alt} onError={handleError} key={reloadTrigger} /> // key added here
         }
+        {/* {imageControlProps.error && <div className='media__refresh'>
+          <UiIcon icon='fa-arrows-rotate' onClick={handleReload} /></div>}  */}
       </ImageControl>
     </>
   );

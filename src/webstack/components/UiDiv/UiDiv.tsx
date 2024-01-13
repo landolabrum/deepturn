@@ -48,10 +48,10 @@ const UiDiv: FC<IDiv> = ({ children, variant, style, jsx = ``, id, minWidth, max
       jsxRef.current.parentNode.insertBefore(styleJsx, jsxRef.current);
     }
   }, [jsxRef.current]);
+  if(Boolean(!id && jsx)) return <h1 style={{color:"var(--orange"}}>JSX FOR UIDIV NEEDS ID PROP</h1>;
   if(show && Boolean(id && jsx) || show && Boolean(!jsx && !id))return (
     <>
       <style jsx>{styles}</style>
-      {Boolean(!id && jsx) && 'jsx needs [props.id]'}
         <div
           ref={jsxRef}
           style={style}

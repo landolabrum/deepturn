@@ -1,5 +1,6 @@
 
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useUser, useClearance } from "~/src/core/authentication/hooks/useUser";
 import environment from "~/src/environment";
@@ -13,6 +14,7 @@ export type SelectableRoute = {
 };
 export interface IRoute extends HandleRouteProps {
   icon?: string;
+  hide?: boolean;
   clearance?: number;
   label?: string;
   active?: boolean;
@@ -32,14 +34,19 @@ export interface HandleRouteProps {
 const merchantName = environment.merchant?.name || 'deepturn';
 export const routes: IRoute[] = [
   {
+    href:"/payment",
+    hide: true
+  },
+  {
+    href:"/verify",
+    hide: true
+  },
+  {
     label: keyStringConverter(merchantName),
     icon: `${merchantName}-logo`,
     href:"/",
   },
-  {
-    href:"/payment",
-    clearance: 0
-  },
+  
 
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
   { label: "configure", href: "/configure", icon: "fa-gear", active: true },
@@ -77,7 +84,7 @@ export const routes: IRoute[] = [
     clearance: 1,
     items: [
       { href: "/account", label: "account" , clearance: 1},
-      { href: "/admin", label: "admin", clearance: 10 },
+      { href: "/admin", label: "admin", clearance: 10},
       { href: "/authentication/signout", label: "logout", clearance: 1 },
     ],
   },
@@ -92,40 +99,40 @@ export const routes: IRoute[] = [
 
 export const useClearanceRoutes = () => {
   const user = useUser();
-  // const [level, setLevel] = useState(0);
   const level = useClearance();
   const [access, setAccess] = useState<IRoute[] | undefined>(undefined);
+
   useEffect(() => {
-    // user && user?.metadata?.clearance && setLevel(user?.metadata?.clearance);
     const filterRoutes = (routeItems: IRoute[]) => {
       return routeItems
         .filter(route => {
-          // If the route doesn't have a clearance property or the user's clearance level is greater than or equal to the route's clearance level
-          return route.clearance === undefined ||
-            (user && route.clearance && route.clearance <= level) ||
-            (!user && route.clearance === 0);
-        })
-        .map(route => {
+          // Check if the main route is accessible based on clearance
+          const isRouteAccessible = route.clearance === undefined 
+            ||(route.clearance === 0 && level === 0)
+            || (user && route.clearance !== undefined && route.clearance <= level && route.clearance !== 0); // User's clearance meets or exceeds the route's clearance
+
           if (route.items) {
-            return {
-              ...route,
-              items: route.items.filter(item => 
-                item.clearance === undefined ||
-                (user && item.clearance && item.clearance <= level) ||
-                (!user && item.clearance === 0)
-              ),
-            };
+            // Filter sub-items based on clearance
+            route.items = route.items.filter(item => {
+              return item.clearance === undefined || // No clearance required
+                (item.clearance === 0 ) || // Clearance explicitly set to 0
+                (user && item.clearance !== undefined && item.clearance <= level); // User's clearance meets or exceeds the item's clearance
+            });
           }
-          return route;
+
+          // Return true if the main route is accessible
+          return isRouteAccessible;
         });
     };
-    
 
     setAccess(filterRoutes(routes).reverse());
-  }, [user]);
+  }, [level]);
 
   return access;
 };
+
+
+
 
 export const pruneRoutes = (pruneLabels: string[]) => {
   const pruned: IRoute[] = [];

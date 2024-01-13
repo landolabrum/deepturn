@@ -2,6 +2,7 @@ import styles from "./UiLoader.scss";
 import type { NextComponentType, NextPageContext } from "next";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { useEffect, useRef, useState } from "react";
+import environment from "~/src/environment";
 interface Props {
   text?: string | boolean;
   dots?: boolean;
@@ -23,14 +24,13 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
     if (props?.fontSize && ref?.current) ref.current.style.fontSize = `${typeof props.fontSize === "number" ? props.fontSize + "px" : props.fontSize}`;
   }, [props]);
   useEffect(() => {
-    if(props.dots == false){
+    if (props.dots == false) {
       return;
     };
     const intervalId = setInterval(() => {
       setDots((prevText) => {
         const dotCount = (prevText.match(/\./g) || []).length;
         if (dotCount === 3) {
-        if(!textRef.current.style.transform)textRef.current.style.transform=`translateX(calc(50% - ${textRef?.current?.offsetWidth/2}px))`;
           return "";
         } else {
           return prevText + " .";
@@ -44,22 +44,25 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
   }, [text, props.dots]);
   return (
     <>
-        <style jsx>{styles}</style>
-        <div ref={ref} className="ui-loader">
-            <div className="ui-loader__loading">
-                <div className="ui-loader__icon-container">
-                    <div className="ui-loader__icon">
-                        <UiIcon icon="deepturn-logo" />
-                    </div>
-                </div>
-                <div ref={textRef} className={`ui-loader__loading-text-container${props.dots === false ? ' ui-loader__loading-text-container-no-dots' : ''}`}>
-                    <div className="ui-loader__loading-text">{text}</div>
-                    {props.dots !== false && <div className="ui-loader__loading-text-dots">{dots}</div>}
-                </div>
-            </div>
+      <style jsx>{styles}</style>
+      <div ref={ref} className="ui-loader">
+      <div className="ui-loader--content">
+        <div className="ui-loader__icon">
+        <div className="ui-loader__icon-content">
+          <UiIcon icon={`${environment.merchant.name}-logo`} />
         </div>
+        </div>
+        <div 
+          className={`ui-loader__text${
+            props.dots === false ? ' ui-loader__text-no-dots' : ''
+          }`}>
+            {text}
+            {props.dots !== false && <UiIcon icon='spinner'/>}
+        </div>
+      </div>
+      </div>
     </>
-);
+  );
 };
 
 export default UiLoader;

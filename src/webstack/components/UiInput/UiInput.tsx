@@ -13,7 +13,6 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   const [show, setShow] = useState<boolean>(false);
   
   const handleChange = (e: any) => {
-    console.log('handleChange')
     if (props?.max && props.max < e.target.value.length) return;
     let _e: any = {
       target: {

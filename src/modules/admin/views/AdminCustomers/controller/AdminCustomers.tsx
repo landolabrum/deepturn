@@ -13,7 +13,7 @@ interface IAdminData {
   data?: string
 }
 
-const AdminCustomerPage: React.FC = () => {
+const AdminCustomers: React.FC = () => {
   const initialData = {
     view: 'list'
   }
@@ -56,4 +56,4 @@ const AdminCustomerPage: React.FC = () => {
   );
 };
 
-export default AdminCustomerPage;
+export default AdminCustomers;

@@ -226,7 +226,7 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
               <div>
                 <UiButton variant='lowercase' traits={{ beforeIcon: 'fa-envelope' }} href={`mailto://${info?.email}`} >{info.email}</UiButton>
               </div>
-              {String(info?.phone).length > 3 &&
+              {String(info?.phone).length > 2 &&
                 <div>
                   <UiButton traits={{ beforeIcon: 'fa-circle-phone-flip' }} >{phoneFormat(info?.phone)}</UiButton>
                 </div>
