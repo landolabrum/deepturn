@@ -156,11 +156,11 @@
   }
 
   /* SIZES */
-  --s-1: 33px;
-  --s-2: 31px;
-  --s-3: 26px;
-  --s-4: 23px;
-  --s-5: 19px;
+  --s-1: 32px;
+  --s-2: 28px;
+  --s-3: 24px;
+  --s-4: 20px;
+  --s-5: 18px;
   --s-6: 16px;
   --s-7: 14px;
   --s-8: 12px;
@@ -277,6 +277,7 @@ div , ol{
 
   --padding: 20px;
   --padding-width: calc(100% - calc(var(--padding) * 2));
+  --border-width: calc(100% - 2px);
   --padding-sm: calc(--padding * 2);
   &::-webkit-scrollbar-thumb {
     background: linear-gradient(
