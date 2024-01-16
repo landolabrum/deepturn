@@ -22,14 +22,10 @@ const UiMedia: React.FC<IMedia> = ({ src, variant, type, alt, loadingText }: IMe
   };
   const RefreshLoadingText = () => {
     return <>
-    <style jsx>{styles}</style>
-      <div className='media__refresh'>
-        <div>failed to load media</div>
+        <div style={{color: "#f90"}}>{loadingText}, Failed</div>
         <div>
           <UiIcon icon='fa-arrows-rotate' onClick={handleReload} />
         </div>
-      </div>
-
     </>
   }
   const handleError = (event: any) => {

@@ -13,10 +13,8 @@ interface Props {
 }
 
 const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) => {
-  const text = !props?.text && typeof props.text != 'string' ? "Loading" : props.text;
-  const [dots, setDots] = useState("");
+  const text = !props?.text && typeof props.text != 'string' ? "Loading " : props.text;
   const ref = useRef<any>(null);
-  const textRef = useRef<any>(null);
   useEffect(() => {
     if (props?.position && ref?.current) ref.current.style.position = `${props.position}`;
     if (props?.width && ref?.current) ref.current.style.width = `${typeof props.width === "number" ? props.width + "px" : props.width}`;
@@ -24,23 +22,7 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
     if (props?.fontSize && ref?.current) ref.current.style.fontSize = `${typeof props.fontSize === "number" ? props.fontSize + "px" : props.fontSize}`;
   }, [props]);
   useEffect(() => {
-    if (props.dots == false) {
-      return;
-    };
-    const intervalId = setInterval(() => {
-      setDots((prevText) => {
-        const dotCount = (prevText.match(/\./g) || []).length;
-        if (dotCount === 3) {
-          return "";
-        } else {
-          return prevText + " .";
-        }
-      });
-    }, 500);
 
-    return () => {
-      clearInterval(intervalId);
-    };
   }, [text, props.dots]);
   return (
     <>
@@ -57,7 +39,7 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
             props.dots === false ? ' ui-loader__text-no-dots' : ''
           }`}>
             {text}
-            {props.dots !== false && <UiIcon icon='spinner'/>}
+            {props.dots !== false && <UiIcon spin={true} icon='spinner'/>}
         </div>
       </div>
       </div>

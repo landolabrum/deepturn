@@ -16,11 +16,3 @@ img{
  justify-content: center;
  align-items: center;
 }
-.media__refresh{
-    // position: absolute;
-    width: 200px;
-    // height: 100%;
-    gap: var(--padding);
-    @extend .d-flex;
-
-}

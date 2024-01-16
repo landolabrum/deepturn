@@ -1,8 +1,9 @@
-.d-flex{
- display: flex;
- justify-content: center;
- align-items: center;
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 div {
   width: var(--ui-icon-width, var(--ui-icon-size, 20px));
   height: var(--ui-icon-height, var(--ui-icon-size, 20px));
@@ -21,28 +22,49 @@ div {
     // }
   }
 }
+
 @keyframes shadowAnimation {
-  0% {filter: drop-shadow( 0 0 5px #fff);}
+  0% {
+    filter: drop-shadow(0 0 5px #fff);
+  }
+
   // 30% {filter: drop-shadow( 0 0 15px #fff);}
-  100% {filter: drop-shadow( 0 0 20px #fff);}
+  100% {
+    filter: drop-shadow(0 0 20px #fff);
+  }
 }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg)
+  }
+
+  100% {
+    transform: rotate(180deg)
+  }
+}
+
+.spinner {
+  animation: spin .7s forwards infinite ease-in-out;
+}
+
 .iconGlow {
   color: #e0e0e0;
   mix-blend-mode: color-dodge;
   animation: shadowAnimation 1.5s ease-in-out infinite alternate;
-  }
-  
-  .ui-icon__badge {
-    position: absolute;
-    @extend .d-flex;
-    top: 0;
-    right: calc(var(--ui-icon-width, 50%) * -1);
-    background-color: red; // Example background color
-    color: white; // Text color
-    border-radius: 50%; // Circular badge
-    font-size:calc(var(--ui-icon-width, 50%) * .8); // Smaller font size for the badge
-    min-width: calc(var(--ui-icon-width, 50%) * 1.2); // Minimum width for the badge
-    min-height: calc(var(--ui-icon-width, 50%) * 1.3); // Minimum width for the badge
-    text-align: center; // Center the text inside the badge
-    height: auto;
-  }
+}
+
+.ui-icon__badge {
+  position: absolute;
+  @extend .d-flex;
+  top: 0;
+  right: calc(var(--ui-icon-width, 50%) * -1);
+  background-color: red; // Example background color
+  color: white; // Text color
+  border-radius: 50%; // Circular badge
+  font-size: calc(var(--ui-icon-width, 50%) * .8); // Smaller font size for the badge
+  min-width: calc(var(--ui-icon-width, 50%) * 1.2); // Minimum width for the badge
+  min-height: calc(var(--ui-icon-width, 50%) * 1.3); // Minimum width for the badge
+  text-align: center; // Center the text inside the badge
+  height: auto;
+}
