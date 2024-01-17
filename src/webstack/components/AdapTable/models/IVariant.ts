@@ -1,4 +1,4 @@
-export type IVariant =
+export type IFormControlVariant =
   | ""
   | "lowercase"
   | "inherit"

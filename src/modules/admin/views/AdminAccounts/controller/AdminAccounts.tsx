@@ -1,116 +1,93 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminAccounts.scss';
 import { getService } from '@webstack/common';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
-import { Address } from '@stripe/stripe-js';
+import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
+import AdaptTableCell, { NaCell } from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
+import UiButton from '@webstack/components/UiButton/UiButton';
+import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
+import IAccount from '~/src/core/services/AdminService/adminModels/iAdminAccounts';
+import AdminAccount from '../views/AdminAccount/AdminAccount';
 
 // Remember to create a sibling SCSS file with the same name as this component
-interface IAccountBusinessProfile{
-  mcc: string | null;
-  name?: string;
-  support_address: Address;
-  support_email?: string;
-  support_phone?: string;
-  support_url?: string;
-  url?: string;
-}
-interface IAccountExternalAccountsData{
-  id: string | null;
-  object: string | null;
-  account: string | null;
-  account_holder_name: string | null;
-  account_holder_type: string | null;
-  available_payout_methods: string | null;
-  bank_name:string | null;
-  country: string | null;
-  currency: string | null;
-  default_for_currency: boolean;
-  fingerprint: string;
-  future_requirements:string[];
-  last4: string | null;
-  metadata: any;
-  requirements: any;
-  routing_number: number | string;
-  status: 'active' | 'inactive' | 'canceled'
-}
-interface IAccountExternalAccount{
-  object: string | null;
-  data: IAccountExternalAccountsData[];
-  has_more: boolean;
-  total_count: number;
-  url: string | null;
-}
 
-interface IAccount {
-  id: string;
-  object: string;
-  business_profile?: IAccountBusinessProfile;
-  capabilities?: {[key:string]: 'active' | 'inactive'}[];
-  charges_enabled?:any; // unknown
-  controller?: any; // unknown
-  country: string | null;
-  created: number;
-  default_currency: string | null;
-  details_submitted: boolean;
-  email: string | null;
-  external_accounts: IAccountExternalAccount;
-  future_requirements:any;
-  metadata?: {[key: string]: any;}
-  payouts_enabled: boolean;
-  requirements: any;
-  settings: object | null;
-  tos_acceptance?:{
-    date?: number | string;
-    ip?: string;
-    service_agreement: string;
-    user_agent: string;
-  }
-  type: string;
 
-}
-
-const AdminAccounts: React.FC = () => {
+const AdminAccounts = () => {
   const adminService = getService<IAdminService>("IAdminService");
-  const [accounts, setaccounts] = useState<IAccount[]>([]);
+  const [accounts, setaccounts] = useState<IAccount[] | undefined>();
+  const [view, setView]=useState<'list' | 'description'>('list');
   const listAccounts = async () => {
+    const formatAccounts = (newAccounts: any)=>{
+      const formatted = newAccounts.map((account:IAccount,index: number)=>{
+        const business_profile = account.business_profile ?? null;
+        return {
+          // business_profile:JSON.stringify(business_profile),
+          id: account.id,
+          account: <AdaptTableCell cell='member' data={{
+            id:account.id,
+            name:business_profile.name,
+            email:account.email ?? 'no email',
+            phone:business_profile.support_phone
+          }}/>,
+          support: <AdaptTableCell cell='member' data={{
+            id:account.id,
+            name:business_profile.name,
+            email:business_profile.support_email ?? 'no email',
+            phone:business_profile.support_phone
+          }}/>,
+          address:<AdaptTableCell cell='address' data={business_profile?.support_address}/>,
+          phone: business_profile.support_phone?<UiButton variant='link' size='sm' href={`tel://${business_profile?.support_phone}`}>{
+            phoneFormat(business_profile.support_phone)
+          }</UiButton>:<NaCell/>,
+          url: business_profile.url?<UiButton size='sm' variant='link' target='_blank' href={`https://${business_profile.url}`}>{business_profile.url}</UiButton>:<NaCell/>,
+        }
+      })
+      // console.log('[ AN ACCOUNTS ]', formatted);
+      setaccounts(formatted)
+    };
     try {
+      // const response:any = mockAccountsResponse;
       const response = await adminService.listAccounts();
+      // console.log(response)
       response?.data && setaccounts(response.data);
+      formatAccounts(response.data)
     } catch (e: any) {
       console.log('[ ADMIN ACCONTS get Account Err ]', e)
     }
   }
-  const accountsList = Boolean(Object.keys(accounts).length) ? (
-    Object.entries(accounts)
-  ) : (
-    false
-  );
   useEffect(() => {
-    if (!accounts.length) {
+    if (!accounts && view === 'list') {
       listAccounts()
+    }else if(view !== 'list'){
+
     }
-  }, [setaccounts]);
+  }, []);
   return (
     <>
       <style jsx>{styles}</style>
 
-      <h1>Admin Accounts</h1>
-      {accountsList && (
-        accountsList.map(([key, value], index) => {
-          return <div key={index} style={{whiteSpace:'wrap !important',height: '100%', width:'100%', overflow:'hidden', }}>
-            {/* {JSON.stringify(value)} */}
-            {/* {Object.values(value.external_accounts.data).map((a)=>{
-              return JSON.stringify(Object.keys(a?.future_requirements))
-            })}<hr/> */}
-            {JSON.stringify(Object.values(value))}
-          {/* {Object.entries(value).map(([a,i])=>{return JSON.stringify(a)})} */}
-          </div>
-        })
-      )
-      }
+      <div className='admin-accounts'>
+        <h1>Admin Accounts</h1>
+        {accounts && view === 'list' && <AdapTable data={accounts} options={{hideColumns:['id']}} onRowClick={(account: any)=>setView(account.id)}/>}
+        {view !== 'list' && <AdminAccount accountId={view}/>}
+      </div>
     </>
   );
 };
 
 export default AdminAccounts;
+
+
+
+       {/* {accounts && (
+          accounts.map((key, index) => {
+            return <div key={index} className='admin-accounts__account'>
+              {Object.entries(key).map(([key, value]) => {
+                return <div key={key} className='admin-accounts__account--line'>
+                  <div className='admin-accounts__account--line-key'>{key}
+                  </div>
+                  <div className='admin-accounts__account--line-value'>{value}</div>
+                </div>
+              })}
+            </div>
+          }) */}

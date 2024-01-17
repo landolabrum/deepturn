@@ -280,6 +280,7 @@ $actionsBg: var(--gray-90);
 
         &__content {
             z-index: 1000;
+            min-height: 600px;
             @extend .d-flex;
             flex-direction: column;
             justify-content: flex-start;

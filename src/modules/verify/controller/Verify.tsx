@@ -3,10 +3,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './Verify.scss';
 import { useRouter } from 'next/router';
 import VerifyEmail from '../views/VerifyEmail/VerifyEmail';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import Cube from '@webstack/components/threeJs/UiCube/controller/UiCube';
 import SignIn from '../../authentication/views/SignIn/SignIn';
-import UiDiv from '@webstack/components/UiDiv/UiDiv';
 
 
 // Remember to create a sibling SCSS file with the same name as this component
@@ -42,11 +40,11 @@ const Verify = () => {
         {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
         {view == 'email' && <VerifyEmail token={token} onSuccess={(v: string) => setNewCustomerEmail(v)} />}
         {!Boolean(['email', 'sign-in'].includes(view)) && (
-          <div className='verify__default'
-          >
+          <div className='verify__default'>
             <h1>Verify</h1>
             <p>Here is where you will verify a token in which you should have recieved via a specified contact method.</p>
-          </div>)}
+          </div>
+        )}
       </div>
     </>
   );

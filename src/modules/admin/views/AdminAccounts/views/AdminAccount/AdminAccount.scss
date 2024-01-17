@@ -1,0 +1,42 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.info-key{color: var(--primary); position: relative;&::after{content:':'}}
+.info-value{color: var(--gray-10)}
+.admin-account{
+    width: 100%;
+    &__header{
+        @extend .d-flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: auto;
+        padding: var(--s-8) var(--padding);
+        border: solid 1px var(--gray-70);
+        border-radius: var(--border-radius);
+        background-color: var(--gray-80);
+        gap: var(--s-9);
+        @media(max-width:900px){
+            flex-direction: column;
+        }
+        &--title, &--contact{
+            @extend .d-flex;
+            gap: 4px;
+        }
+        &--title{
+            font-size: var(--s-4);
+            color: var(--gray-50);
+        }
+    }
+    &__info{
+        @extend .d-flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        white-space: wrap;
+        &--line{
+            width: 100%;
+        }
+    }
+}

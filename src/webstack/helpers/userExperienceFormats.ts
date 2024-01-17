@@ -24,15 +24,15 @@ export function stringToKebab(str?: string) {
 
 
 export const phoneFormat = (
-  phoneNumber: string,
+  phoneNumber: string | null,
   countryCode: string = 'US',
   reverse: boolean = false
 ): string => {
   const phoneUtil = PhoneNumberUtil.getInstance();
-  let formattedNumber: string = phoneNumber;
-
+  let formattedNumber = phoneNumber;
+  if(formattedNumber == null )return 'n/a';
   if (reverse) {
-    const cleanedNumber = phoneNumber.replace(/\D/g, '');
+    const cleanedNumber = formattedNumber.replace(/\D/g, '');
     if (cleanedNumber.startsWith('1')) {
       return `+${cleanedNumber}`;
     } else {
@@ -42,7 +42,7 @@ export const phoneFormat = (
 
   try {
     const parsedNumber = phoneUtil.parseAndKeepRawInput(
-      phoneNumber,
+      formattedNumber,
       countryCode
     );
     formattedNumber = phoneUtil.format(
@@ -50,7 +50,7 @@ export const phoneFormat = (
       PhoneNumberFormat.NATIONAL
     );
   } catch (e) {
-    return phoneNumber;
+    return formattedNumber;
   }
 
   return formattedNumber;

@@ -4,10 +4,12 @@ import { getService } from '@webstack/common';
 import IDocumentService from '~/src/core/services/DocumentService/IDocumentService';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useLoader } from '@webstack/components/Loader/Loader';
+import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 
 const AdminListDocuments = ({docs}:any) => {
     const docService = getService<IDocumentService>("IDocumentService");
-    const [documents, setDocuments] = useState([]);
+    const [documents, setDocuments] = useState<any | undefined
+    >();
     const [currentDoc, setCurrentDoc] = useState<any>(null);
     const [loader, setLoader] = useLoader();
 
@@ -65,6 +67,7 @@ const AdminListDocuments = ({docs}:any) => {
                     const documentsList = await docService.listDocuments();
                     setDocuments(documentsList.data);
                 } catch (error) {
+                    setDocuments(false);
                     console.error("Error fetching documents:", error);
                 }
             }else{
@@ -72,11 +75,11 @@ const AdminListDocuments = ({docs}:any) => {
             }
         };
 
-        if (documents?.length === 0) {
+        if (documents === undefined) {
             setLoader({ active: true, body: 'Getting admin documents' });
             getDocs().then(() => setLoader({ active: false }));
         }
-    }, [documents?.length, setCurrentDoc]);
+    }, [ setCurrentDoc]);
 
     return (
         <>
@@ -86,7 +89,7 @@ const AdminListDocuments = ({docs}:any) => {
                 {currentDoc?.id === (currentDoc && currentDoc.id)  && (
                     <RenderFile />
                 )}
-                {documents?.length > 0 ? (
+                {documents ? (
                     documents.map((doc: any, index: number) => {
                         return (
                             <div key={index} className='admin-list-documents__list'>
@@ -107,8 +110,10 @@ const AdminListDocuments = ({docs}:any) => {
                             </div>
                         )
                     })
-                ) : (
-                    <p>No documents found.</p>
+                ) : (<>
+                    {documents === false  && <p>No documents found.</p>}
+                    {documents === undefined  && <UiLoader />}
+                    </>
                 )}
             </div>
         </>

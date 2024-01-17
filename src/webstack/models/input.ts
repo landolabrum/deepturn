@@ -1,4 +1,4 @@
-import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
+import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 import { IFormControl } from "@webstack/components/FormControl/FormControl";
 import { UserAddress } from "~/src/models/UserContext";
 
@@ -19,7 +19,7 @@ export interface IInput extends IFormControl {
   onKeyDown?: (e: any) => void;
   onKeyUp?: (e: any) => void;
   placeholder?: string;
-  variant?: IVariant;
+  variant?: IFormControlVariant;
   min?: number;
   max?: number;
   autoComplete?: string;

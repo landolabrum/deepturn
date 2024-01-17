@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Transaction.scss';
 import { useRouter } from 'next/router';
-import { decryptString } from '@webstack/helpers/Encryption';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 

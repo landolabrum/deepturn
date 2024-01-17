@@ -77,7 +77,7 @@ const AdminSystem: React.FC = () => {
             <div className='admin-system__title--timestamp'>
               {dateFormat(systemData?.timestamp, { isTimestamp: true })}
             </div>
-          </div>?!?
+          </div>
 
           <div >
             <UiButton busy={loader?.active} variant='dark' onClick={getData}>Refresh</UiButton>

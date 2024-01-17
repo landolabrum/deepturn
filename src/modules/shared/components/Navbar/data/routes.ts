@@ -66,7 +66,7 @@ export const routes: IRoute[] = [
     href:"/home",
     clearance: 6,
     items: [
-      { label: "stream",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
+      { label: "surveillance",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
       { label: "lights", href: "home?vid=lights", icon: "fa-lightbulb-on", active: true },
     ],
   },
@@ -83,8 +83,8 @@ export const routes: IRoute[] = [
     icon: 'fal-circle-user',
     clearance: 1,
     items: [
-      { href: "/account", label: "account" , clearance: 1},
       { href: "/admin", label: "admin", clearance: 10},
+      { href: "/account", label: "account" , clearance: 1},
       { href: "/authentication/signout", label: "logout", clearance: 1 },
     ],
   },

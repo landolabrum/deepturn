@@ -27,9 +27,6 @@
 .verify{
     width: 100%;
     margin: var(--padding) 0;
-    @extend .d-flex;
-    flex-direction: column;
-    overflow: hidden;
     &--header{
         color: var(--gray-40);
         width: var(--padding-width);
@@ -44,18 +41,19 @@
         }
     }
     &__default{
-        background-color: var(--gray-70);
-        color: var(--gray-30);
+        background-color: var(--gray-80);
+        min-height: 50vh;
+        color: var(--gray-40);
         line-height: 1;
         padding: var(--padding);
         @extend .d-flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: flex-start;
         gap: var(--padding);
         align-items: flex-start;
-        width: calc(var(--padding-width) - 2px);
         border-radius: var(--border-radius);
-        border: solid 1px var(--gray-30);
+        border: solid 1px var(--gray-60);
+        box-shadow: var(--box-shadow-xl);
         h1,p{
             line-height: 1;
             margin: 0;

@@ -12,6 +12,23 @@ import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
 const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
 
+const TIMEOUT=1000;
+function timeoutPromise<T>(promise: Promise<T>, ms: number): Promise<T> {
+  let timeoutHandle: NodeJS.Timeout;
+  const timeoutPromise = new Promise<null>((resolve, reject) => {
+      timeoutHandle = setTimeout(() => reject(new Error("Timeout after " + ms + "ms")), ms);
+  });
+
+  return Promise.race([
+      promise,
+      timeoutPromise
+  ]).then((result) => {
+      clearTimeout(timeoutHandle);
+      return result;
+  }) as Promise<T>;
+}
+
+
 export default class MemberService
   extends ApiService
   implements IMemberService {
@@ -44,7 +61,7 @@ export default class MemberService
       throw new ApiError("Error toggling default payment method", 500, "MS.TDPM.02");
     }
   }
-  
+
   public async createPaymentIntent(method?: IPaymentMethod): Promise<any> {
     let id = this._getCurrentUser(false)?.id;
     const memberMethod = async () => {
@@ -112,26 +129,32 @@ export default class MemberService
 
 
   public async verifyEmail(token: string): Promise<any> {
+    if (!token) {
+        throw new ApiError("No Token Provided", 400, "MS.SI.02");
+    }
+    
     try {
-      if (token) {
         const encodedToken = encodeURIComponent(token);
-        const verifiedMemberResp = await this.get<any>(`/usage/auth/verify-email?token=${encodedToken}`);
+        // Wrap the API call with the timeout promise
+        const verifiedMemberResp = await timeoutPromise(
+            this.get<any>(`/usage/auth/verify-email?token=${encodedToken}`),
+            TIMEOUT // 10 seconds timeout
+        );
         const customer_token = verifiedMemberResp?.customer_token;
         if (customer_token) {
-          this.saveMemberToken(customer_token);
-          this.saveLegacyCookie(customer_token);
-          this._getCurrentUser(true)!;
+            this.saveMemberToken(customer_token);
+            this.saveLegacyCookie(customer_token);
+            this._getCurrentUser(true)!;
         }
         // console.log('[ VERIFY RESPONSE ]', verifiedMemberResp)
         return verifiedMemberResp;
-      }
     } catch (error: any) {
-      return error;
+        // Handle both API errors and timeout errors here
+        console.error('Error in verifyEmail: ', error);
+        return {status: 409, details: "server is down"};
     }
-    if (!token) {
-      throw new ApiError("No Token Provided", 400, "MS.SI.02");
-    }
-  };
+}
+
 
 
   public updateCurrentUser(user: any): void {
@@ -321,6 +344,7 @@ export default class MemberService
       return;
     }
     const memberToken = this.parseMemberToken(jwtString);
+    console.log('[ MEMBER TOKEN ]', memberToken)
     const user = memberToken?.user;
     if (user == null) {
       this.updateContext(undefined, undefined);

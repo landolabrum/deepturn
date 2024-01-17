@@ -3,6 +3,30 @@
  justify-content: center;
  align-items: center;
 }
-.admin-accounts{
+.admin-accounts {
     @extend .d-flex;
+    flex-direction: column;
+    width: 100%;
+    &__account {
+        width: 100%;
+        @extend .d-flex;
+        flex-direction: column;
+        &--line {
+            border: solid 1px;
+            @extend .d-flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            width: var(--border-width);
+            gap: 2px;
+            line-height: 20px;
+            font-size: 16px;
+            &-key {
+                color: var(--primary);
+            }
+            &-value {
+                color: var(--gray-10);
+                word-break: break-word;
+            }
+        }
+    }
 }

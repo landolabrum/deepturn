@@ -12,6 +12,25 @@ export default class AdminService
   constructor() {
     super(environment.serviceEndpoints.membership);
   }
+  // ACCOUNTS
+  public async getAccount(accountId:string): Promise<any> {
+    try {
+      const account = await this.get<any>(`/api/account?id=${accountId}`);
+      return account;
+    } catch (error: any) {
+      return error;
+    }
+};
+public async listAccounts(): Promise<any> {
+    try {
+      const accountsList = await this.get<any>(`/api/accounts/`);
+      return accountsList;
+    } catch (error: any) {
+      return error;
+    }
+};
+
+
   public async getCustomer(customerId: string): Promise<any> {
     if (customerId) {
       try {
@@ -26,14 +45,6 @@ export default class AdminService
       try {
         const systemDate = await this.get<any>(`/api/system/`);
         return systemDate;
-      } catch (error: any) {
-        return error;
-      }
-  };
-  public async listAccounts(): Promise<any> {
-      try {
-        const accountsList = await this.get<any>(`/api/accounts/`);
-        return accountsList;
       } catch (error: any) {
         return error;
       }

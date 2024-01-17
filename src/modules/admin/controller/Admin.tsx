@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/UiSettingsLayout';
 import AdminCustomers from '../views/AdminCustomers/controller/AdminCustomers';
 import AdminProducts from '../views/AdminProducts/controller/AdminProducts';
-import { useRouter } from 'next/router';
 import AdminListDocuments from '../views/AdminDocuments/controller/AdminListDocuments';
 import AdminSystem from '../views/AdminSystem/AdminSystem';
 import AdminBilling from '../views/AdminBilling/controller/AdminBilling';
@@ -29,10 +28,9 @@ const Admin = () => {
     documents: <AdminListDocuments/>,
     system: <AdminSystem/>
   }
-  const router = useRouter();
   const level = useClearance();
   const [views, setViews]=useState<any>(initialViews);
-  const [currentView, setCurrentView]=useState<string | undefined>('customers');
+  const [currentView, setCurrentView]=useState<string | undefined>('accounts');
   useEffect(() => {
     if(level > 10){
       views.accounts = <AdminAccounts/>;

@@ -1,11 +1,9 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import buildTimestamp  from '@webstack/hooks/useBuildDate'; // Ensure this import path is correct
+import createBuildDate from "@webstack/helpers/createBuildDate";
 
 export default class MyDocument extends Document {
   render() {
     // Assuming buildTimestamp is a function that returns the timestamp string
-    const buildDate = buildTimestamp();
-
     return (
       <Html>
         <Head>
@@ -18,7 +16,7 @@ export default class MyDocument extends Document {
           <span style={{ display: 'none' }}>
           {`☠☠☠☠☠☠☠☠☠☠☠☠☠ Property of MindBurner Corporation © ☠☠☠☠☠☠☠☠☠☠☠☠☠`}
           {` ☠☠☠☠☠☠☠☠☠☠☠☠☠ Unauthorized use is prohibited ☠☠☠☠☠☠☠☠☠☠☠☠☠`}  
-          {`BUILD DATE: ( ${buildDate} )`}
+          {`BUILD DATE: ( ${createBuildDate()} )`}
           </span>
         </body>
       </Html>

@@ -106,6 +106,20 @@
     height: calc(var(--element-height) - 2px);
     white-space: nowrap;
     width: auto;
+    // SIZES
+    &-xs,&-sm,&-md,&-lg,&-xl,&-xxl{
+        height: auto;
+        width: max-content !important;
+        line-height: 1.5;
+    }
+    &-xs{font-size: var(--s-9);}
+    &-sm{font-size: var(--s-7); 
+        padding: 0 var(--s-9);
+    }
+    &-md{font-size: var(--s-6);}
+    &-lg{font-size: var(--s-4);}
+    &-xl{font-size: var(--s-3);}
+    &-xxl{font-size: var(--s-2);}
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
 
@@ -118,21 +132,21 @@
     }
 
     // HANDLE ICONS
-    &--before-icon {
-        padding-left: var(--element-height);
+    &--before-icon  {
+        padding: 0 var(--s-1);
     }
-
-    &--after-icon {
-        padding-right: var(--element-height);
+    &--after-icon  {
+        padding: 0 var(--s-1);
     }
-
-    &--has-icon {
-        padding: 0 var(--element-height);
-    }
-
     // ELEMENTS
     &--button {
+        color: inherit;
         border: solid 1px transparent;
+        filter: brightness(.8);
+        &:hover, &:focus{
+            filter: brightness(1);
+        }
+        // box-shadow: var(--box-shadow);
     }
     &--checkbox{
         padding:  0;
@@ -323,7 +337,7 @@
         var(--secondary-opaque), var(--gray-20), var(--gray-20),
         var(--secondary-opaque), var(--gray-20), var(--gray-20));
     @include variant('link',
-        transparent, var(--blue-10), transparent,
+        transparent, var(--blue), transparent,
         transparent, var(--blue-10), transparent,
         transparent, var(--blue-10), transparent);
 

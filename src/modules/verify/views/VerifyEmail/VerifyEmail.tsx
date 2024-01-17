@@ -32,10 +32,12 @@ const VerifyEmail: React.FC<any> = ({token, onSuccess}:IVerifyEmail) => {
             setState({status:'no_token_present'});
             return;
         }
+        try{}catch(e:any){}
         const verifiedResponse = await memberService.verifyEmail(String(token));
         if(verifiedResponse.status == 'incomplete')setState(verifiedResponse);
         else if(verifiedResponse.status == 'success' && verifiedResponse.customer)onSuccess(`${verifiedResponse.customer?.email}`);
-        else if([404,400].includes(verifiedResponse.status))setState({...verifiedResponse, status: verifiedResponse?.detail, error: verifiedResponse?.detail});
+        else if([409,404,400,304,500].includes(verifiedResponse.status))setState({...verifiedResponse, status: verifiedResponse?.detail, error: verifiedResponse?.detail});
+        console.log(verifiedResponse)
     }
 
     const loadingText = (): string => {

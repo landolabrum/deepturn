@@ -6,6 +6,7 @@ import { TableFunctionProps } from "../AdaptTableContent/views/AdapTableContent"
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import { TableOptions } from "../../views/AdapTable";
+import environment from "~/src/environment";
 
 interface TableHeaderProps extends TableFunctionProps {
   title?: string;
@@ -31,7 +32,7 @@ export default function AdapTableHeader({
     <div className='adaptable-header'>
       <div className='adaptable-header__table-title'>
         <div className='adaptable-header__logo'>
-          <UiIcon icon="deepturn-logo" />
+          <UiIcon icon={`${environment.merchant.name}-logo`} />
         </div>
         <div className='adaptable-header__title'>{traits?.tableTitle}</div>
       </div>

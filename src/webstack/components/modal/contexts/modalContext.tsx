@@ -1,9 +1,9 @@
-import { IVariant } from '@webstack/components/AdapTable/models/IVariant';
+import { IFormControlVariant } from '@webstack/components/AdapTable/models/IVariant';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 type IConfirm ={
   title?: string;
-  statements?: {text?: string, onClick?:(e:any)=>void, variant?: IVariant}[];
+  statements?: {text?: string, onClick?:(e:any)=>void, variant?: IFormControlVariant}[];
 } | undefined;
 
 

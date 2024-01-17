@@ -1,5 +1,5 @@
 import { IRoute } from "@shared/components/Navbar/data/routes";
-import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
+import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 import { ITraits } from "@webstack/components/FormControl/FormControl";
 import { UserAddress } from "~/src/models/UserContext";
 
@@ -23,7 +23,7 @@ export type IFormField = {
     placeholder?: string;
     type?: string;
     traits?: ITraits;
-    variant?: IVariant;
+    variant?: IFormControlVariant;
     required?: boolean;
     disabled?: boolean;
     constraints?: {
@@ -38,7 +38,7 @@ export type IFormField = {
 export interface IForm {
     onAddField?: (e:any)=>void;
     traits?: ITraits;
-    variant?: IVariant;
+    variant?: IFormControlVariant;
     disabled?: boolean;
     loading?: OForm;
     fields?: IFormField[];

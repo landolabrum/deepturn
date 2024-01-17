@@ -89,12 +89,9 @@ const SignIn = ({ email }: { email: string | undefined }) => {
         });
         if(signInResponse){
           const response = {status:'success', data:signInResponse}
-          console.log('[респ]', response)
           openModal(<Success {...response} />);
         }
-        // console.log(`[  signInResponse]:`, signInResponse);
       }catch(e:any){
-        // onSubmit({status:'error', data:signInResponse, error:e})
         if(e.detail!=undefined){
           e.detail?.fields && setNotif({
             active: true,

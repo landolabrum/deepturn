@@ -6,7 +6,7 @@ import UiInput from "../UiInput/UiInput";
 import { capitalize } from "lodash";
 import { useModal } from "../modal/contexts/modalContext";
 import { ITraits } from "../FormControl/FormControl";
-import { IVariant } from "../AdapTable/models/IVariant";
+import { IFormControlVariant } from "../AdapTable/models/IVariant";
 type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string } | string | React.ReactElement;
 
 export interface ISelect  {
@@ -22,7 +22,7 @@ export interface ISelect  {
   overlay?: boolean | {zIndex : number};
   value?: string;
   traits?: ITraits;
-  variant?: IVariant
+  variant?: IFormControlVariant
 }
 
 const UiSelect: React.FC<ISelect> = ({

@@ -12,7 +12,9 @@ import MobileNav from "../views/MobileNav/MobileNav";
 import environment from "~/src/environment";
 import useNavMobile from "../hooks/useNavBreak"; // Ensure this path is correct
 import useScroll from "@webstack/hooks/useScroll";
-import FormControl from "@webstack/components/FormControl/FormControl";
+import { getService } from "@webstack/common";
+import IMemberService from "~/src/core/services/MemberService/IMemberService";
+
 
 const Navbar = () => {
   const [user, current, setRoute] = useRoute();
@@ -24,7 +26,7 @@ const Navbar = () => {
   const navRef = useRef(null);
   const navItemsRef = useRef(null);
   const breakpointWidth = 1100; // Adjust breakpoint width as needed
-
+  const memberService = getService<IMemberService>('IMemberService');
   const isMobile = useNavMobile(navRef, navItemsRef, breakpointWidth);
   // Handle mobile navigation click
   const handleMobileClick = (selectedRoute: IRoute) => {
@@ -78,14 +80,13 @@ const Navbar = () => {
     login: <Authentication />,
   };
 
-
-useEffect(() => {
-  if(!isModalOpen && toggled)setToggled('');
-}, [setToggled, isModalOpen]);
+  useEffect(() => {
+    if (!isModalOpen && toggled) setToggled('');
+  }, [setToggled, isModalOpen]);
   useEffect(() => {
     if (routes) {
       const newRoutes = routes
-        .filter(r => !(r.href === '/cart' && cartTotal === 0) && r.hide != true )
+        .filter(r => !(r.href === '/cart' && cartTotal === 0) && r.hide != true)
         .map(r => r);
 
       setCurrentRoutes(newRoutes.reverse());

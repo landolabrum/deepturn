@@ -1,4 +1,4 @@
-import { IVariant } from "@webstack/components/AdapTable/models/IVariant";
+import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 import React from "react";
 
 // Background Type for Adaptive Window
@@ -40,7 +40,7 @@ export interface IAdaptWinSizes{
 export type windowLoc = IAdaptElLocation | {value: IAdaptElLocation, style: React.CSSProperties };
 export interface IAdaptToWindow {
     children?: React.ReactElement | Iterable<React.ReactNode>;
-    variant?: IVariant;
+    variant?: IFormControlVariant;
     background: IAdaptWinBg;
     sm?: windowLoc;
     md?: windowLoc;

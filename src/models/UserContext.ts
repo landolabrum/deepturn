@@ -9,6 +9,10 @@ export default interface UserContext {
   first_name?: string;
   last_name?: string;
   email?: string;
+  iat: number;
+  exp: number;
+  fresh: number;
+  exp_status: 'expired' | 'authed' | 'expiring';
   phone?: string;
   memberStatus: string;
   memberType: string;
