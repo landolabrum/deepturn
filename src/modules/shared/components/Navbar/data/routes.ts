@@ -39,7 +39,7 @@ export const routes: IRoute[] = [
   },
   {
     href:"/verify",
-    hide: true
+    hide: true,
   },
   {
     label: keyStringConverter(merchantName),
@@ -110,7 +110,7 @@ export const useClearanceRoutes = () => {
            const isRouteAccessible = route.clearance === undefined 
             ||(route.clearance === 0 && level === 0)
             || (user && route.clearance !== undefined && route.clearance <= level && route.clearance !== 0); // User's clearance meets or exceeds the route's clearance
-
+          // if(isRouteAccessible)console.log('[ isRouteAccessible ]',route)
           if (route.items) {
             // Filter sub-items based on clearance
             route.items = route.items.filter(item => {

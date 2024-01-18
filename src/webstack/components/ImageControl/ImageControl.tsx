@@ -36,7 +36,8 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
           error={error}>
           {children}
         </ImageControl>,
-        variant: 'fullscreen'
+        variant: 'fullscreen',
+        drag: true
       }
     ): closeModal();
   };

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Canvas, useFrame, useLoader, useThree, ThreeEvent } from '@react-three/fiber';
+import { Canvas, useFrame, useThree, ThreeEvent } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
@@ -29,7 +29,20 @@ interface TSJSvgOptions {
   bevelSegments?: number;
 };
 
-
+const findSVGElement = (element: HTMLElement | SVGElement): SVGElement | null => {
+  if (element.tagName.toLowerCase() === 'svg') {
+    return element as SVGElement;
+  }
+  if (element.children) {
+    // Convert HTMLCollection to array before iterating
+    const elemChildren = Array.from(element.children);
+    for (const child of elemChildren) {
+      const svgElement = findSVGElement(child as HTMLElement);
+      if (svgElement) return svgElement;
+    }
+  }
+  return null;
+};
 const CubeMesh: React.FC<ICube> = ({
   size = { x: 1, y: 1, z: 1 },
   color = 'orange',
@@ -185,26 +198,7 @@ const Plane: React.FC<{ size: { x: number; y: number; z: number }, color?: strin
   </>
   );
 };
-const WebGLContextLossHandler: React.FC = () => {
-  const { gl } = useThree(); // 'gl' is the renderer
 
-  useEffect(() => {
-    const canvas = gl.domElement; // Access the canvas from the renderer
-    const onContextLost = (event: Event) => {
-      event.preventDefault();
-      console.warn('WebGL context lost. Attempting to restore...');
-      // Handle the context lost event, try to restore, or display a message to the user.
-    };
-
-    canvas.addEventListener('webglcontextlost', onContextLost);
-
-    return () => {
-      canvas.removeEventListener('webglcontextlost', onContextLost);
-    };
-  }, [gl]);
-
-  return null; // This component does not render anything
-};
 const TJSCube = ({ svg, svgOptions, size }: ICube) => {
   const { width, height } = useWindow();
 
@@ -221,68 +215,89 @@ const TJSCubeContent = ({ svg, svgOptions, size }: ICube) => {
   const [svgContent, setSvgContent] = useState<string | null>(null);
 
   useEffect(() => {
-    if (typeof svg === 'string') {
-      // SVG is a URL string
-      setSvgContent(svg);
-    } else if (React.isValidElement(svg)) {
-      // SVG is a React element
-      const container = document.createElement('div');
-      const root = createRoot(container); // Create root instance
-      root.render(svg); // Render the SVG
-
-      // Delay serialization until after the SVG has been rendered
-      setTimeout(() => {
-        if (container.firstChild && container.firstChild instanceof SVGElement) {
-          const serializedSvg = new XMLSerializer().serializeToString(container.firstChild);
-          const svgBlob = new Blob([serializedSvg], { type: 'image/svg+xml' });
-          const url = URL.createObjectURL(svgBlob);
-          setSvgContent(url);
-        } else {
-          console.error('SVG content is not properly rendered.');
-        }
-        
-        root.unmount();
-        container.remove();
-      }, 0);
-    }
-  }, [svg]);
-  
-  
-
-  useEffect(() => {
     if (svgContent) {
-      // Proceed with loading and processing the SVG
+      // Load and render SVG
       const loader = new SVGLoader();
       loader.load(svgContent, (svgData) => {
-        const shapes = svgData.paths.flatMap((path: any) => path.toShapes(true));
-        const extrudeSettings = {
-          depth: svgOptions?.depth || 100,
-          bevelEnabled: svgOptions?.bevelEnabled || false,
-          // ... other extrude options from svgOptions
-        };
-        const geometry = new THREE.ExtrudeGeometry(shapes, extrudeSettings);
-        const material = new THREE.MeshStandardMaterial({ color: svgOptions?.color || '#FFFFFF' });
-        const mesh = new THREE.Mesh(geometry, material);
-
-        mesh.scale.multiplyScalar(0.1);
-        mesh.position.set(-50, 50, 0);
-        mesh.rotation.x = -Math.PI / 2;
-
-        if (meshRef.current) {
-          scene.remove(meshRef.current);
+        if (typeof svg === 'string') {
+          setSvgContent(svg);
+        } else if (React.isValidElement(svg)) {
+          const container = document.createElement('div');
+          const root = createRoot(container);
+          root.render(svg);
+    
+          setTimeout(() => {
+            const svgElement = findSVGElement(container);
+            if (svgElement) {
+              const serializedSvg = new XMLSerializer().serializeToString(svgElement);
+              const svgBlob = new Blob([serializedSvg], { type: 'image/svg+xml' });
+              const url = URL.createObjectURL(svgBlob);
+              setSvgContent(url);
+              console.log('[svgElement]',{
+                serializedSvg:serializedSvg,
+                svgBlob:svgBlob,
+                url: url
+              })
+            } else {
+              console.error('SVG content is not properly rendered.');
+            }
+            root.unmount();
+            container.remove();
+          }, 0);
         }
-
-        meshRef.current = mesh;
-        scene.add(mesh);
       }, undefined, (error) => {
         console.error('Error loading SVG:', error);
       });
+    } else {
+      const defaultSize = { x: 1, y: 1, z: 1 }; // Default size
+      const actualSize = size || defaultSize; // Use provided size or fallback to default
+      const geometry = new THREE.BoxGeometry(actualSize.x, actualSize.y, actualSize.z);
+      const material = new THREE.MeshStandardMaterial({ color: svgOptions?.color || '#FFFFFF' });
+      const cube = new THREE.Mesh(geometry, material);
+
+
+
+      if (meshRef.current) {
+        scene.remove(meshRef.current);
+      }
+
+      meshRef.current = cube;
+      scene.add(cube);
+
+      console.log('Default cube added to scene:', cube);
     }
-  }, [svgContent, svgOptions, scene]);
+  }, [svgContent, svgOptions, scene, size]);
+  
+  useEffect(() => {
+    if (svgContent) {
+      // Load and render SVG
+      const loader = new SVGLoader();
+      loader.load(svgContent, (svgData) => {
+      }, undefined, (error) => {
+        console.error('Error loading SVG:', error);
+      });
+    } else if(size && size?.x && size?.y && size?.z){
+      // Render default cube if no SVG is provided
+      const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
+      const material = new THREE.MeshStandardMaterial({ color: svgOptions?.color || '#FFFFFF' });
+      const cube = new THREE.Mesh(geometry, material);
+
+      if (meshRef.current) {
+        scene.remove(meshRef.current);
+      }
+
+      meshRef.current = cube;
+      scene.add(cube);
+
+      console.log('Default cube added to scene:', cube);
+    }
+  }, [svgContent, svgOptions, scene, size]);
 
   return (
     <>
-      <ambientLight intensity={1} />
+      <ambientLight 
+      // intensity={1}
+       />
       <PerspectiveCamera makeDefault position={[0, -45, 300]} />
       <OrbitControls />
       {/* Add other components if needed */}

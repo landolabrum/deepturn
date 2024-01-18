@@ -26,10 +26,6 @@ const ModalOverlay: React.FC = () => {
   const modalHeaderClass = useClass('modal__header', undefined, modalContent?.variant || undefined);
   const modalBodyClass = useClass('modal__body', undefined, modalContent?.variant || undefined);
 
-
-
-
-
   let title = modalContent?.title;
 
 
@@ -50,8 +46,6 @@ const ModalOverlay: React.FC = () => {
       const dx = position.x - startPosition.x + Number(modalRef.current?.offsetWidth * -0.5);
       const dy = position.y - startPosition.y + +Number(modalRef.current?.offsetHeight * -0.5);
       modalRef.current.style.transform = `translate(${dx}px, ${dy}px)`;
-      // console.log('[ modalRef.current ]',modalRef.current?.offsetHeight)
-      // console.log('[ modalRef.current.children ]',modalRef.current.children)
     }
   }, [position.x, position.y, startPosition, isDragging, closeModal]);
 

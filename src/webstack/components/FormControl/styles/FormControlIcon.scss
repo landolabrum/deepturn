@@ -3,50 +3,17 @@
  justify-content: center;
  align-items: center;
 }
-// .form-control-icon{
-//     @extend .d-flex;
-//     position: absolute;
-//     width: var(--element-height);
-//     &:hover{
-//         filter: brightness(1.5);
-//     }
-//     &__before{left: 0;}
-//     &__after{
-//       right: 0;
-//     }
-// }
-
 
 .form-control-icon {
     --ui-icon-color: inherit;
     position: absolute;
+
     width: var(--s-5);
-    --ui-icon-width: 100%;
+    --ui-icon-width: var(--s-5);
     &__before{
-      left: calc(var(--s-5) * 0.5);
+      left: 0;
     }
     &__after{
-      right: calc(var(--s-5) * 0.5);
+      right: 0;
     }
-    // &:first-child {
-    //   border-radius: var(--border-radius) 0 0 var(--border-radius);
-    // }
-    // &:focus { --ui-icon-color: inherit; }
-    // &:hover { --ui-icon-color: var(--primary); }
-    // &:last-child {
-    //   border-radius: 0 var(--border-radius) var(--border-radius) 0;
-    // }
-    // &.form-control__icon-round {
-    //   &:last-child { padding-right: 5px; }
-    // }
-    // @extend .d-flex;
-    // height: var(--element-height);
-    // width: var(--s-6);
-    // padding: 0;
-    // --ui-icon-width: 100%;
-    // --ui-icon-height: var(--s-6);
-    // &.form-control__icon-dark {
-    //   color: var(--gray-30);
-    //   background-color: var(--gray-70-opaque);
-    // }
   }

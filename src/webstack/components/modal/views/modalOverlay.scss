@@ -39,8 +39,8 @@
     overflow-x: hidden;
     
     @media(max-width: 900px){
-        margin: var(--element-height) auto;
-        top: 30%;
+        margin: 0 auto;
+        top: 70px;
         width: var(--padding-width);
     }
     &__dragging{
@@ -51,6 +51,8 @@
         background-color: var(--gray-100);
     }
     &__fullscreen {
+        top: 0;
+        height: 100%;
         padding: 0;
     }
     
@@ -147,8 +149,7 @@
             left: 0;
             right: 0;
             z-index: 2;
-            padding: 0;
-            width: 100%;
+            padding-right: var(--padding);
             margin: 0;
             min-height: var(--element-height);
             border-radius: unset;
