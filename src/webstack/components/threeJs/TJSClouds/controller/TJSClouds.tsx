@@ -61,9 +61,11 @@ const Cloud = ({ size = 500, speed = 5, amount = 10, width }: any) => {
 
   return (
     <>
-      {clouds.map((cloud, i) => (
-        <primitive key={i} object={cloud} ref={(el: any) => cloudRef.current[i] = el} />
-      ))}
+      {/* {clouds.map((cloud, i) => (
+        <primitive key={i} 
+        object={cloud}
+         ref={(el: any) => cloudRef.current[i] = el} />
+      ))} */}
     </>
   );
 };
@@ -73,7 +75,9 @@ const TJSClouds = () => {
 
   return (
     <Canvas orthographic camera={{ position: [0, 0, 50], zoom: 1, left: width / -2, right: width / 2, top: height / 2, bottom: height / -2, near: 0.1, far: 100 }}>
-      <ambientLight intensity={1} />
+      <ambientLight 
+      // intensity={1}
+      />
       <Cloud {...{ width }} />
     </Canvas>
   );
