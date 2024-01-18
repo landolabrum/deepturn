@@ -125,7 +125,6 @@ const Plane: React.FC<{ size: { x: number; y: number; z: number }, color?: strin
   return (<>
     {/* eslint-disable-next-line react/no-unknown-property */}
     <ambientLight 
-    // intensity={.2}
      color='#ffffff30'/>
     {/* eslint-disable-next-line react/no-unknown-property */}
     <pointLight
