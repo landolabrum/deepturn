@@ -67,7 +67,6 @@ const CubeMesh: React.FC<ICube> = ({
     <mesh
       ref={meshRef}
       onPointerDown={handlePointerDown}
-      // castShadow={true}
     >
       {/* eslint-disable-next-line react/no-unknown-property */}
       <boxGeometry args={[size.x, size.y, size.z]} />
