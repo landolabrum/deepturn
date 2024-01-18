@@ -128,7 +128,6 @@ const Plane: React.FC<{ size: { x: number; y: number; z: number }, color?: strin
     {/* eslint-disable-next-line react/no-unknown-property */}
     <pointLight
       ref={spotRef}
-      castShadow={true}
       color={color}
     />
   </>
