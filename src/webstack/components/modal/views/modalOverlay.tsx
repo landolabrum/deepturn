@@ -5,11 +5,12 @@ import { ModalContext, ModalContextType } from '../contexts/modalContext';
 import useClass from '@webstack/hooks/useClass';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import useMouse from '@webstack/hooks/interfaces/useMouse/useMouse';
+import { useRouter } from 'next/router';
 
 const ModalOverlay: React.FC = () => {
   const modalRef = useRef<HTMLDivElement>(null);
   const context = useContext<ModalContextType | undefined>(ModalContext);
-
+  const router = useRouter();
   const [isDragging, setIsDragging] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
 
@@ -60,36 +61,37 @@ const ModalOverlay: React.FC = () => {
   if (!isModalOpen) {
     return null;
   }
-
+  const handleClick = (btn: any) =>{
+    if(btn?.onClick)btn.onClick;
+    else if(btn.href){
+      router.push(btn.href, undefined, {shallow: false})
+    };
+    closeModal();
+  }
   if (hasZindex) return <>
     <style jsx>{styles}</style>
-
     <div
     style={{zIndex: modalContentInfer.zIndex}}
       onClick={closeModal}
       className={modalOverlayClass}
-      onMouseUp={stopDrag}
+      onMouseUp={modalContent.drag && stopDrag}
     />
   </>;
-  // console.log('[ CONTEXT ]', context?.modalContent)
   return (
     <>
       <style jsx>{styles}</style>
       <div
         onClick={closeModal}
         className={modalOverlayClass}
-        onMouseUp={stopDrag}
-      />
+        />
       <div
         ref={modalRef}
-
-        // onMouseMove={(e) => {if (isDragging) {console.log('[ isDraging (54)]', isDragging)}}} 
         className={modalClass}>
         <div className={modalContentClass}>
           <a
-            onMouseDown={startDrag}
-            onMouseUp={stopDrag}
-            className={`${modalHeaderClass}${isDragging ? ' modal__header__dragging' : ''}`}
+            onMouseUp={modalContent.drag && stopDrag}
+            onMouseDown={modalContent.drag && startDrag}
+            className={`${modalHeaderClass}${ isDragging ? ' modal__header__dragging' : modalContent.drag ?'':' modal__header__no-drag'}`}
           >
             <div className='modal-overlay__title'>
               {title || confirm?.title}
@@ -103,10 +105,9 @@ const ModalOverlay: React.FC = () => {
             {children}
             {Object(confirm?.statements)?.length &&
               <div className='modal-overlay__confirm'>
-
                 {Object.values(confirm?.statements).map((btn: any, key: number) => {
                   return <div key={key} className='modal-overlay__confirm-btn'>
-                    <UiButton onClick={btn.onClick} variant={btn.text == 'yes' ? 'primary' : btn?.variant}>{btn.text}</UiButton>
+                    <UiButton onClick={()=>handleClick(btn)} variant={btn.text == 'yes' ? 'primary' : btn?.variant}>{btn.text}</UiButton>
                   </div>
                 })}
               </div>

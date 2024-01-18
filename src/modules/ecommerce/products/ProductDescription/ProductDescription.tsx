@@ -9,6 +9,7 @@ import ProductBuyNow from '../views/ProductBuyNow/ProductBuyNow';
 import { ICartItem } from '../../cart/model/ICartItem';
 import useCart from '../../cart/hooks/useCart';
 import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
+import { useModal } from '@webstack/components/modal/contexts/modalContext';
 
 
 const ProductDescription = () => {
@@ -18,6 +19,7 @@ const ProductDescription = () => {
   const [product, setProduct] = useState<any>(null); // Changed from {} to null
   const [isLoading, setIsLoading] = useState<boolean>(true); // Add a loading state
   const { getCartItems, handleQtyChange } = useCart();
+
   const setCart = (item: ICartItem) => {
     handleQtyChange(item);
   };
@@ -45,6 +47,7 @@ const ProductDescription = () => {
   }, [product_query_id, price_query_id, fetchProduct]); // Dependencies updated
 
   useEffect(() => {
+ 
   }, [product]); // Dependencies updated
   useEffect(() => { }, [handleQtyChange]);
   if(product == null)return (

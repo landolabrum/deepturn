@@ -3,16 +3,18 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 
 type IConfirm ={
   title?: string;
-  statements?: {text?: string, onClick?:(e:any)=>void, variant?: IFormControlVariant}[];
+  statements?: {text?: string, onClick?:(e:any)=>void, href?: string, variant?: IFormControlVariant}[];
 } | undefined;
 
 
 export type IModalContent = {
+  title?: string;
   children?: ReactNode | null | string;
   footer?: ReactNode;
   variant?: "popup" | 'fullscreen';
   confirm?: IConfirm;
   zIndex?: number;
+  drag?: boolean;
 } | ReactNode | null;
 
 export interface ModalContextType {

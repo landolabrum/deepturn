@@ -43,15 +43,16 @@ const useRoute = (): ORoute => {
       if (clearanceRoutes) {
         const matchingRoute = clearanceRoutes.find(clearRoute => {
           const routePathWithoutQuery = clearRoute?.href;
-          if (
+          console.log('[ clearRoute ]', clearRoute, level)
+          if (routePathWithoutQuery === router.pathname) {
+            return true;
+          }
+          else if (
             (
               Boolean(clearRoute.clearance && clearRoute.clearance >= level) ||
               Boolean(!clearRoute.clearance)
             )) {
             return false;
-          }
-          else if (routePathWithoutQuery === router.pathname) {
-            return true;
           }
           else if (clearRoute?.items) {
             return clearRoute.items.some(item => {
@@ -59,9 +60,12 @@ const useRoute = (): ORoute => {
               return itemPathWithoutQuery === router.pathname;
             });
           }
+          alert()
           return false;
         });
         if (matchingRoute) {
+          console.log('[ matchingRoute ]', matchingRoute)
+
           handleHeader(matchingRoute?.label && capitalizeAll(matchingRoute?.label))
           matchingRoute?.href && router.push(matchingRoute.href, undefined, { shallow: false });
         } else {

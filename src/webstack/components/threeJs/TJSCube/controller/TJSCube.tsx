@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import styles from './UiCube.scss';
+import styles from './TJSCube.scss';
 
 import { Canvas, useFrame, ThreeEvent } from '@react-three/fiber';
 import { Mesh, Euler, PointLight, AmbientLight } from 'three';
@@ -22,7 +22,6 @@ const CubeMesh: React.FC<ICube> = ({
 }) => {
   const meshRef = useRef<Mesh>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const {width}=useWindow();
   const [rotation, setRotation] = useState<Euler>(new Euler(0, 0, 0));
 
   useFrame(() => {
@@ -68,6 +67,7 @@ const CubeMesh: React.FC<ICube> = ({
     <mesh
       ref={meshRef}
       onPointerDown={handlePointerDown}
+      castShadow={true}
     >
       {/* eslint-disable-next-line react/no-unknown-property */}
       <boxGeometry args={[size.x, size.y, size.z]} />
@@ -75,18 +75,27 @@ const CubeMesh: React.FC<ICube> = ({
     </mesh>
   );
 };
-
 const Plane: React.FC<{ size: { x: number; y: number; z: number }, color?: string }> = ({ size, color }) => {
   const groundRef = useRef<Mesh>(null);
   const wallRef = useRef<Mesh>(null);
-  const planeSize = Math.max(size.x, size.z) * ROOM_SIZE; // Ensuring the plane is larger than the cube
+  const planeSize = Math.max(size.x, size.z) * ROOM_SIZE;
   const spotRef = useRef<PointLight>(null);
-  const spotPos: [number, number, number] = [
-    -10,
-    100,
-    200,
-  ];
+  
+  // Dynamically calculate spotPos based on the size of the cube
+  const [spotPos, setSpotPos] = useState<[number, number, number]>([
+    size.x * -1,
+    size.z * 2,
+    size.y * 1.5,
+  ]);
 
+  useEffect(() => {
+    // Recalculate spotPos when the size of the cube changes
+    setSpotPos([
+      size.x * -1, // X position - to the left of the cube
+      size.z * 2,  // Y position - above the cube
+      size.y * 1.5, // Z position - in front of the cube
+    ]);
+  }, [size]);
 
   useEffect(() => {
     if (spotRef.current) {
@@ -119,15 +128,18 @@ const Plane: React.FC<{ size: { x: number; y: number; z: number }, color?: strin
     {/* eslint-disable-next-line react/no-unknown-property */}
     <pointLight
       ref={spotRef}
+      castShadow={true}
       color={color}
     />
   </>
   );
 };
 
-const Cube: React.FC<ICube> = (
+const TJSCube: React.FC<ICube> = (
   { size = { x: 2, y: 3, z: 1 }, color }
 ) => {
+  const {width, height}=useWindow();
+
   const percentMaker = (num: number) => {
     return num * 100 / Math.max(size.x, size.y, size.z);
   }
@@ -141,11 +153,7 @@ const Cube: React.FC<ICube> = (
     <style jsx>{styles}</style>
     <div
       className='cube-scene'
-      style={{
-        aspectRatio: 
-        `${Number(pSize.x).toFixed(2)}/${Number(pSize.y).toFixed(2)}`,
-
-      }}
+      style={{aspectRatio: `${height}/${width}`}}
     >
       <Canvas
         shadows
@@ -164,4 +172,4 @@ const Cube: React.FC<ICube> = (
   );
 };
 
-export default Cube;
+export default TJSCube;

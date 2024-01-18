@@ -107,7 +107,7 @@ export const useClearanceRoutes = () => {
       return routeItems
         .filter(route => {
           // Check if the main route is accessible based on clearance
-          const isRouteAccessible = route.clearance === undefined 
+           const isRouteAccessible = route.clearance === undefined 
             ||(route.clearance === 0 && level === 0)
             || (user && route.clearance !== undefined && route.clearance <= level && route.clearance !== 0); // User's clearance meets or exceeds the route's clearance
 

@@ -6,6 +6,7 @@ import FormControl, { IFormControl as IFormControl, IFormControlSize } from "../
 import Link from "next/link";
 import type { FC } from "react";
 import { IFormControlVariant } from "../AdapTable/models/IVariant";
+import { useRouter } from "next/router";
 
 interface ILinkProvider {
   href?: string;
@@ -96,6 +97,11 @@ const UiButton: NextComponentType<NextPageContext, {}, IButton> = ({
   type,
   size
 }: IButton) => {
+  const router = useRouter();
+  if(href && router.pathname.includes(href)){
+    disabled = true
+  }
+
   if (href)
     return (
       <>

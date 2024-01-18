@@ -2,37 +2,33 @@ import styles from './ProductBuyNow.scss';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UiPill from '@webstack/components/UiPill/UiPill';
 import { ICartItem } from '../../../cart/model/ICartItem';
-import { useNotification } from '@webstack/components/Notification/Notification';
 import { useEffect, useState } from 'react';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
+import { useModal } from '@webstack/components/modal/contexts/modalContext';
 
 
 const ProductBuyNow: React.FC<any> = ({ product, cart, setCart, traits }: any) => {
-
     const [label, setLabel] = useState<string | null>(null);
+    const { openModal, closeModal } = useModal();
     let cookieProduct = cart?.find((item: ICartItem) => item.id === product.id);
     const qty = cookieProduct?.price_object?.qty ? cookieProduct.price_object.qty : 0;
-    const [notif, setNotif] = useNotification();
+ 
     const handleCart = (newQty?: number) => {
         product.price_object.qty = newQty;
         setCart(product);
-        setNotif({
-            active: true,
-            list: [{ label: product?.name, message: "added to cart", href: "cart" }]
-        })
+        if(!cart.length )openModal({
+            confirm:{
+              title: 'product added to cart',
+              statements:[{text:'cart', href: '/cart'}]
+            }
+          });
     }
-
-
     useEffect(() => {
         const price_object = product?.price_object;
-        if(!product?.metadata?.hide_price){
+        if (!product?.metadata?.hide_price) {
             setLabel(
-                `${numberToUsd(product.price_object?.unit_amount)} ${price_object?.recurring?.interval ? ' / ' + price_object?.recurring?.interval : ''}`
-            )
-        }else{
-            setLabel('get quote');
-        }
-        
+                `${numberToUsd(product.price_object?.unit_amount)} ${price_object?.recurring?.interval ? ' / ' + price_object?.recurring?.interval : ''}`)
+        } else { setLabel('get quote'); }
     }, [product]);
     return <>
         <style jsx>{styles}</style>
@@ -41,12 +37,8 @@ const ProductBuyNow: React.FC<any> = ({ product, cart, setCart, traits }: any) =
                 variant='dark'
                 onClick={() => handleCart(1 + qty)}
                 traits={traits}
-            >
-                    {label || 'add'}
-            </UiButton>
-        ) : (
-            <UiPill traits={traits} variant="center dark" amount={qty} setAmount={handleCart} />
-        )
+            >{label || 'add'}</UiButton>
+        ) : (<UiPill traits={traits} variant="center dark" amount={qty} setAmount={handleCart} />)
         }
     </>;
 };

@@ -1,0 +1,25 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.added-to-cart{
+    @extend .d-flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var(--element-height);
+    &-title{
+        font-size: var(--s-2);
+        
+        color: var(--gray-30);
+    }
+    &-body{
+        width: 100%;
+        align-items: flex-start;
+        color: var(--gray-40);
+        @extend .d-flex;
+        flex-direction: column;
+        width: 100%;
+    }
+}

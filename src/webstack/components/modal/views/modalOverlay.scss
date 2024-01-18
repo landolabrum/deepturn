@@ -7,8 +7,8 @@
 
 .p-fix {
     position: fixed;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     top: 0;
     left: 0;
 }
@@ -27,9 +27,9 @@
 .modal {
     position: fixed; // Use fixed to keep it relative to the viewport
     z-index: 1000;
-    top: 50%; // Center vertically
+    top: 350px; // Center vertically
     left: 50%; // Center horizontally
-    transform: translate(-50%, -50%); // Adjust position to truly center the modal
+    transform: translateX(-50%); // Adjust position to truly center the modal
     overflow-y: auto; // Allow scrolling for overflow content
     background-color: var(--gray-90);
     border-radius: var(--border-radius);
@@ -37,11 +37,11 @@
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-    padding: var(--s-9);
+    
     @media(max-width: 900px){
         margin: var(--element-height) auto;
         top: 30%;
-        width: calc(100% - calc(var(--padding) * 4));
+        width: var(--padding-width);
     }
     &__dragging{
         cursor: url('/icons/fa-hand-back-fist.svg'), auto;
@@ -55,38 +55,25 @@
     }
     
     &__content {
-        
+        overflow: hidden;
         border: solid 1px var(--gray-80);
-        @extend .d-flex;
-        flex-direction: column;
-        // width: 800px;
-        width: var(--padding-width);
-        padding: var(--padding) 0 0;
-
+        padding: 0 var(--padding);
         height: auto;
-        padding-bottom: var(--padding);
         margin: auto;
         backdrop-filter: blur(5px);
         color: var(--gray-30);
-        // background: var(--gray-90);
         border-radius: var(--border-radius);
         min-width: 600px;
-
+        min-height: 600px;
         box-shadow: var(--box-shadow-xl);
         min-height: max-content;
         transition: all 1s;
         position: relative;
-        &:hover {
-            transition: all 1s;
-        }
+        &:hover {transition: all 1s;}
         &::-webkit-scrollbar-thumb {
-          
             background-color: var(--blue);
             border-radius: 5px;
         }
-
-      
-
         &::-webkit-scrollbar {
             width: 10px;
             aspect-ratio: 1/1;
@@ -94,16 +81,14 @@
         }
 
         @media(max-width:900px) {
-            padding: var(--padding) 0;
             justify-content: flex-start;
-            width: 100%;
+            width: var(--padding-width);
             min-width: unset;
         }
 
         &__fullscreen {
             width: 100vw;
             padding: 0;
-
             &:hover {
                 background-color: #ffffff00;
             }
@@ -112,39 +97,48 @@
     }
 
     &__header {
+        position: absolute;
+        left: 0;
         @extend .d-flex;
-        align-self: flex-start;
         justify-content: space-between;
-        font-size: var(--s-4);
-        width: var(--padding-width);
-        margin: 0 var(--padding);
-        border-radius: var(--border-radius);
-        border: solid 1px transparent;
-        overflow: hidden;
-        &:hover{
-            border: solid 1px var(--gray-70);
-            cursor: url('/icons/fa-hand.svg'), auto;
-            background-color: var(--gray-80);
+        padding: 0 var(--s-9);
+        width: calc(100% - calc(var(--s-9) * 2));
+        @media(max-width: 1100px){
+            right: 0;
         }
-        &:focus, &:focus-within, &:visited, &:active{
-            cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+        background-color: var(--gray-80);
+        &:not(&__no-drag){
+            &:hover{
+                cursor: url('/icons/fa-hand.svg'), auto;
+            }
+            :focus, &:focus-within, &:visited, &:active{
+                cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+            }
         }
         &__dragging{
             cursor: url('/icons/fa-hand-back-fist.svg'), auto;
         }
+        &__no-drag{
+            cursor: default;
+        }
         min-height: var(--element-height);
+        --ui-icon-color: var(--gray-40);
+        color: var(--gray-40);
+        .modal-overlay__title{
+            font-size: var(--s-4);
+            text-transform: capitalize;
+        }
         .modal-overlay__icon {
-            @extend .d-flex;
+            // @extend .d-flex;
             
-            --ui-icon-color: var(--gray-40);
-            --ui-icon-size: var(--s-5);
-            cursor: pointer;
-            width: var(--element-height);
-            height: var(--element-height);
-            &:hover {
-                background-color: var(--gray-60);
-                --ui-icon-color: var(--primary);
-            }
+            // --ui-icon-size: var(--s-5);
+            // cursor: pointer;
+            // width: var(--element-height);
+            // height: var(--element-height);
+            // &:hover {
+            //     background-color: var(--gray-60);
+            //     --ui-icon-color: var(--primary);
+            // }
         }
 
         &__fullscreen {
@@ -168,13 +162,9 @@
     &__body {
         word-wrap: break-word;
         overflow-y: auto;
-        // width: var(--padding-width);
         margin-bottom: var(--padding);
         overflow-x: hidden;
-        width: var(--padding-width);
-        padding: var(--padding);
-      
-
+        padding-top: var(--element-height);
         &__fullscreen {
             z-index: 1;
             margin-bottom: 0;

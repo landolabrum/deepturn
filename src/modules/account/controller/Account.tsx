@@ -7,6 +7,7 @@ import UiSettingsLayout from "@webstack/layouts/UiSettingsLayout/UiSettingsLayou
 import Subscriptions from "../views/Subscriptions/controller/Subscriptions";
 import AccountDocuments from "../views/AccountDocuments/controller/AccountDocuments";
 import { useEffect, useState } from "react";
+import Loader from "@webstack/components/Loader/Loader";
 
 interface Props { }
 
@@ -33,12 +34,12 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
     return (
       <>
         <style jsx>{styles}</style>
-        <UiSettingsLayout
+        {level && <UiSettingsLayout
           defaultView='edit profile'
           title='account'
           variant="full-screen"
           views={views}
-        />
+        /> || ''}
       </>
     );
 };

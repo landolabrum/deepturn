@@ -40,13 +40,13 @@ const Admin = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      <UiSettingsLayout
+    {level && <UiSettingsLayout
       // variant='fullwidth'
         defaultView={currentView}
         title='admin'
         views={views}
         // setViewCallback={console.log}
-      />
+      />}
     </>
   );
 };

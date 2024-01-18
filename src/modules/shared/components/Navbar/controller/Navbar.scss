@@ -68,9 +68,7 @@
 
   .nav-bar__nav-items {
     @extend .d-flex;
-    width: 100%;
-
-
+    gap: var(--s-3);
 
     .nav__nav-item {
       color: var(--gray-40);

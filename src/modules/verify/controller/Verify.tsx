@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './Verify.scss';
 import { useRouter } from 'next/router';
 import VerifyEmail from '../views/VerifyEmail/VerifyEmail';
-import Cube from '@webstack/components/threeJs/UiCube/controller/UiCube';
 import SignIn from '../../authentication/views/SignIn/SignIn';
+import TJSCube from '@webstack/components/threeJs/TJSCube/controller/TJSCube';
 
 
 // Remember to create a sibling SCSS file with the same name as this component
@@ -12,7 +12,7 @@ const LoadSlider = ({ props }: { props: any }) => {
   return (<>
     <style jsx>{styles}</style>
     <div className='loadslider'>
-      <Cube
+      <TJSCube
         color="#e0e0e0"
       />
     </div>
