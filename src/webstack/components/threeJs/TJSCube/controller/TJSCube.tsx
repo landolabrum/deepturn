@@ -67,7 +67,7 @@ const CubeMesh: React.FC<ICube> = ({
     <mesh
       ref={meshRef}
       onPointerDown={handlePointerDown}
-      castShadow={true}
+      // castShadow={true}
     >
       {/* eslint-disable-next-line react/no-unknown-property */}
       <boxGeometry args={[size.x, size.y, size.z]} />
@@ -124,7 +124,9 @@ const Plane: React.FC<{ size: { x: number; y: number; z: number }, color?: strin
   }, [size]);
   return (<>
     {/* eslint-disable-next-line react/no-unknown-property */}
-    <ambientLight intensity={.2} color='#ffffff30'/>
+    <ambientLight 
+    // intensity={.2}
+     color='#ffffff30'/>
     {/* eslint-disable-next-line react/no-unknown-property */}
     <pointLight
       ref={spotRef}
