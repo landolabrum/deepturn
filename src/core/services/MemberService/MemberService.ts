@@ -52,12 +52,12 @@ export default class MemberService
         { paymentMethodId, customerId }
       );
       if(response?.data){
-        console.log('[ RESPO DATA ]', response)
+        // console.log('[ RESPO DATA ]', response)
         this.updateContext(response.data, undefined);
       }
       return response;
     } catch (error: any) {
-      console.error("[MemberService]: ", error);
+      // console.error("[MemberService]: ", error);
       throw new ApiError("Error toggling default payment method", 500, "MS.TDPM.02");
     }
   }
@@ -74,7 +74,6 @@ export default class MemberService
           `usage/customer/method/create?id=${id}`// send encrypted data as payload
         );
       } catch (e: any) {
-        console.log("[ MEMBER S]: ", e)
         return e;
       }
     }
@@ -150,7 +149,7 @@ export default class MemberService
         return verifiedMemberResp;
     } catch (error: any) {
         // Handle both API errors and timeout errors here
-        console.error('Error in verifyEmail: ', error);
+        // console.error('Error in verifyEmail: ', error);
         return {status: 409, details: "server is down"};
     }
 }
@@ -189,13 +188,13 @@ export default class MemberService
     // if (!password) {
     //   throw new ApiError("Password is required", 400, "MS.SI.02");
     // }
-    console.log('[ SIGN UP REQUREST ]',   {
-      name,
-      email,
-      password,
-      user_agent,
-      referrer_url
-    })
+    // console.log('[ SIGN UP REQUREST ]',   {
+    //   name,
+    //   email,
+    //   password,
+    //   user_agent,
+    //   referrer_url
+    // })
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",
       {
@@ -206,7 +205,7 @@ export default class MemberService
         user_agent: user_agent
       },
       );
-      console.log('[ SIGN UP RES ]', res)
+      // console.log('[ SIGN UP RES ]', res)
     return res;
   }
   public async getMethods(customerId?: string): Promise<any> {
@@ -250,7 +249,7 @@ export default class MemberService
         this.saveLegacyCookie(memberJwt);
         return this._getCurrentUser(true)!;
       } catch (error) {
-        console.error("Error updating member: ", error);
+        // console.error("Error updating member: ", error);
         // Handle error accordingly
       }
     }
@@ -344,7 +343,7 @@ export default class MemberService
       return;
     }
     const memberToken = this.parseMemberToken(jwtString);
-    console.log('[ MEMBER TOKEN ]', memberToken)
+    // console.log('[ MEMBER TOKEN ]', memberToken)
     const user = memberToken?.user;
     if (user == null) {
       this.updateContext(undefined, undefined);
@@ -397,7 +396,7 @@ export default class MemberService
   private parseMemberToken(jwt: string): MemberToken | null {
     const segments = jwt.split('.');
     if (segments.length !== 3) {
-      console.error('Invalid JWT: does not contain 3 segments');
+      // console.error('Invalid JWT: does not contain 3 segments');
       return null;
     }
   
