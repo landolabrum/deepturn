@@ -57,21 +57,17 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   useEffect(() => {
     if (!traits) return;
     let formElement = ref.current.querySelector('.form-control__element');
-    // if (variant === 'link') ref.current.style.width = 'max-content';
-
-    // Apply styles from traits
     if (formElement) {
       Object.keys(traits).forEach(key => {
         if (key in formElement.style) {
           formElement.style[key] = traits[key];
         }
       });
-
       // Apply outline, disabled and responsive styles
       if (typeof traits.outline === "string") formElement.style.outline = traits.outline;
       // formElement.classList.toggle('form-control__element-disabled', traits?.disabled != undefined);
       if (traits?.responsive) formElement.classList.add('form-control__element-responsive');
-
+      if(error)formElement.classList.add('form-control__element--error');
       // Special handling for USABLE elements
       const hasDataElem:any = Object.values(formElement.children)
       .find((e:any) => e.getAttribute('data-element') && ['button', 'input', 'select', 'textarea'].includes(e.getAttribute('data-element')));

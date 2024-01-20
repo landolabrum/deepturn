@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminCustomerAdd.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
-import findField from '@webstack/components/UiForm/functions/findField';
+import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';

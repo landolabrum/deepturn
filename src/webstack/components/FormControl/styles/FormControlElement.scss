@@ -133,10 +133,10 @@
 
     // HANDLE ICONS
     &--before-icon  {
-        padding-left:  var(--padding);
+        padding-left:  var(--element-height);
     }
     &--after-icon  {
-        padding-right:  var(--s-3);
+        padding-right:  var(--element-height);
     }
     // ELEMENTS
     &--button {
@@ -342,6 +342,7 @@
         transparent, var(--blue-10), transparent);
 
     &--link {
+        width: 100%;
         &:hover {
             animation: glowTxt 1s infinite;
         }
@@ -354,11 +355,14 @@
         width: max-content;
     }
     &--nav-item {
+        padding-right: var(--element-height);
         --ui-icon-color: var(--gray-50);
         &:hover {
             border-bottom: solid 1px var(--blue);
         }
         @media(max-width: 1100px){
+            padding-right: 0;
+            padding-left: var(--s-1);
             margin: 0 auto;
             border-bottom: unset;
             &:hover {
@@ -377,7 +381,7 @@
     }
 
     // FORM CONTROL ELEMENTS - INVALID DEFINITIONS
-    &--invalid {
+    &--error {
         position: relative;
         color: var(--invalid-border) !important;
         --ui-icon-color: var(--invalid-border) !important;

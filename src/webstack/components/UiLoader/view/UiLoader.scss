@@ -5,7 +5,6 @@
 }
 
 .ui-loader {
-  height: 100%;
   width: 100%;
   --ui-icon-color: var(--gray-10-opaque);
   color: var(--gray-50);
@@ -15,27 +14,17 @@
     @extend .d-flex;
     gap: var(--padding);
     flex-direction: column;
-    aspect-ratio: 1;
-    width: 50%;
     position: relative;
     height: 100%;
   }
   &__icon {
     flex: 1;
-    padding-top: 20%;
-    @extend .d-flex;
-    align-items: flex-end;
-    width: 100%;
+    width: var(--padding-width);
     &-content{
-      width: 50%;
-      @media(max-width: 1100px){
-        width: 70%;
-      }
-      @media(max-width: 900px){
-        width: var(--padding-width);
-      }
-      --ui-icon-width: 100%;
-      --ui-icon-height: 100%;
+      @extend .d-flex;
+      width: 100%;
+      --ui-icon-width: var(--icon-size, --padding-width);
+      --ui-icon-height: var(--icon-size, --padding-width);
     }
   }
   
@@ -44,7 +33,6 @@
     line-height: 1;
     @extend .d-flex;
     white-space: nowrap;
-    align-items: flex-start;
     font-size: var(--s-5);
     --ui-icon-size: var(--s-5);
     text-transform: uppercase;

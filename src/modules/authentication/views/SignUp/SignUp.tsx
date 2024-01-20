@@ -7,8 +7,6 @@ import useUserAgent from "~/src/core/authentication/hooks/useUserAgent";
 import UiForm from "@webstack/components/UiForm/controller/UiForm";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import useReferrer from "@webstack/hooks/useReferrer";
-import findField from "@webstack/components/UiForm/functions/findField";
-import { IFormField } from "@webstack/components/UiForm/models/IFormModel";
 
 
 export interface ISignUp {

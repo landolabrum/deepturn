@@ -12,8 +12,6 @@ import MobileNav from "../views/MobileNav/MobileNav";
 import environment from "~/src/environment";
 import useNavMobile from "../hooks/useNavBreak"; // Ensure this path is correct
 import useScroll from "@webstack/hooks/useScroll";
-import { getService } from "@webstack/common";
-import IMemberService from "~/src/core/services/MemberService/IMemberService";
 
 
 const Navbar = () => {
@@ -26,7 +24,6 @@ const Navbar = () => {
   const navRef = useRef(null);
   const navItemsRef = useRef(null);
   const breakpointWidth = 1100; // Adjust breakpoint width as needed
-  const memberService = getService<IMemberService>('IMemberService');
   const isMobile = useNavMobile(navRef, navItemsRef, breakpointWidth);
   // Handle mobile navigation click
   const handleMobileClick = (selectedRoute: IRoute) => {

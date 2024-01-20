@@ -108,10 +108,11 @@
         @media(max-width: 1100px){
             right: 0;
         }
-        background-color: var(--gray-80);
         &:not(&__no-drag){
             &:hover{
                 cursor: url('/icons/fa-hand.svg'), auto;
+                background-color: var(--gray-80);
+
             }
             :focus, &:focus-within, &:visited, &:active{
                 cursor: url('/icons/fa-hand-back-fist.svg'), auto;

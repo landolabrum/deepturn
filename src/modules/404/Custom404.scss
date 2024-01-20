@@ -10,9 +10,9 @@
     -o-background-size: cover;
     background-size: cover;
     overflow: hidden;
-    position: absolute;
-    top: auto;
-    z-index: -1;
+    position: fixed;
+    top: 100px;
+    z-index: 1;
     left: 0;
     right: 0;
     bottom: 0;
@@ -26,17 +26,14 @@
             justify-content: flex-start;
         }
         backdrop-filter: blur(7px) brightness(.5) sepia(100%) invert(90%);
+        background-color: var(--gray-50);
     }
     &__content{
         display: flex;
         align-items: stretch;
         justify-content: stretch;
-        // background-color: var(--gray-100-opaque);
-        // box-shadow: var(--box-shadow);
-        // border: solid 1px;
-        // border-radius: var(--border-radius);
         z-index: 999;
-        
+        width: 100%;
         padding: var(--padding);
         @media(max-width:900px){
             width: 100%;
@@ -46,10 +43,12 @@
         &--header{
             font-family: Play;
             @extend .d-flex;
+            flex-direction: column;
             width: 100%;
             gap:var(--s-3);
             line-height: 1;
             justify-content: space-between;
+            align-items: flex-start;
             color: var(--secondary);
             --ui-icon-color: var(--secondary);
             @media(max-width:900px){
@@ -59,8 +58,10 @@
             }
             &__title{
                 font-style: oblique;
+                width: 100%;
                 gap: var(--s-9);
                 @extend .d-flex;
+                justify-content: flex-start;
                 font-size: var(--s-2);
                 --ui-icon-width: var(--s-2);
                 --ui-icon-height: 100%;

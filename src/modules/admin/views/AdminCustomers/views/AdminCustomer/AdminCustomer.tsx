@@ -18,6 +18,7 @@ import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTable
 import { capitalizeAll } from '@webstack/helpers/Capitalize';
 import environment from '~/src/environment';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
+import { findField, updateField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 
 
 
@@ -35,7 +36,7 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
     email: ''
   })
   const [productRequest, setProductRequest] = useState<any>()
-  const findField: any = (name: string) => customer && customer.find((f: IFormField) => f.name == name)?.value;
+
 
   const [notification, setNotification] = useNotification();
   const merchantId = String(environment.merchant.mid);
@@ -109,7 +110,10 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
     const isNewField = customer && customer.find(f => f.name == name) == undefined;
     if (customer != undefined && !isNewField) {
       setCustomer(customer.map((field: IFormField) => {
-        if (field.name == name) field.value = value;
+        if (field.name == name){
+          if(field.error)delete field.error;
+           field.value = value;
+        }
         return field;
       }));
     } else if (isNewField) {
@@ -118,11 +122,12 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
 
   }
   const onSubmit = async () => {
+    if(!customer) return;
     let request: any = {
-      name: findField('name'),
-      email: findField('email'),
-      phone: phoneFormat(String(findField('phone')), 'US', true),
-      address: findField('address'),
+      name: findField(customer, 'name').value,
+      email: findField(customer, 'email').value,
+      phone: phoneFormat(String(findField(customer, 'phone').value), 'US', true),
+      address: findField(customer, 'address').value,
       metadata: {}
     };
 
@@ -138,7 +143,6 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
 
     try {
       const updatedCustomer = await adminService.updateCustomer(customerId, request);
-
       setCustomer(modifyCustomerData(updatedCustomer));
       setNotification({
         active: true,
@@ -148,8 +152,21 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
         ]
       });
 
-    } catch (e) {
-      console.log("[ MODIFY CUSTOMER (ERROR) ]", e);
+    } catch (errorResponse: any) {
+      if (errorResponse.detail?.detail) {
+        const errorDetail = errorResponse.detail?.detail;
+        if (errorDetail) {
+          for (let index = 0; index < Object.values(errorDetail).length; index++) {
+            const error: any = Object.values(errorDetail)[index];
+            if (error.loc.includes('address')) {
+              const newFields = updateField(customer, 'address', { error: error.msg });
+              setCustomer(newFields);
+              console.log(findField(newFields, 'address'))
+              break; // Break the loop when 'address' is found
+            }
+          }
+        }
+      }
     }
   }
 
@@ -171,18 +188,17 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
               const keyParts = keyStringConverter(key).split('.');
               if (keyParts[0] === merchantId && value) {
                 // Assuming the key format is always 'merchantId.form.item'
-      
-                const [, form, item ] = keyParts;
+                const [, form, item] = keyParts;
                 acc.push({ form, item, value });
               }
               return acc;
             }, []);
-            if(Boolean(requestItems?.length))setNotification({active:true, list:[{label:`${info?.name}, has a new product request.`}]})
+            if (Boolean(requestItems?.length)) setNotification({ active: true, list: [{ label: `${info?.name}, has a new product request.` }] })
             setProductRequest(requestItems);
           }
           hasProductRequest();
           const transformedData = modifyCustomerData(response);
-         setCustomer(transformedData);
+          setCustomer(transformedData);
         } else {
           alert("Couldn't get customer");
         }
@@ -193,14 +209,14 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
       }
     }
   };
-  const productRequestNoTimeStamp = ()=> productRequest?.length && productRequest.map((p: any)=>{
-    if(p.item != 'timestamp')return p;
+  const productRequestNoTimeStamp = () => productRequest?.length && productRequest.map((p: any) => {
+    if (p.item != 'timestamp') return p;
   })
-  const productRequestTotal = () => productRequest && 
+  const productRequestTotal = () => productRequest &&
     Object.entries(productRequest || {}).reduce((acc: any, [key, value]) => {
-      acc = acc += Number(value) 
+      acc = acc += Number(value)
       return acc;
-  }, 0);
+    }, 0);
   useEffect(() => {
     productRequestTotal()
     getCustomer();
@@ -209,7 +225,6 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
   if (customerId) return (
     <>
       <style jsx>{styles}</style>
-     {/* <div className='dev'>{JSON.stringify(productRequest)}</div>  */}
       <div className='admin-customer'>
         <div className='admin-customer__header'>
           Admin Customer
@@ -232,21 +247,22 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
                 </div>
               }
             </div>
-           
+
           </AdaptGrid>
 
-          {productRequest?.length  && <AdapTable data={productRequestNoTimeStamp()} options={{tableTitle: 
-          <div className='d-flex' style={{width: '100%', justifyContent:"space-between"}}>
-          <div>
-            Product Request 
-          </div>
-          <div>
-              {`${new Date(Number(productRequest.find((p:any)=>p?.item == 'timestamp').value)).toLocaleString()|| ''}`}
-          </div>
-          </div>
-          }} />|| ''}
+          {productRequest?.length && <AdapTable data={productRequestNoTimeStamp()} options={{
+            tableTitle:
+              <div className='d-flex' style={{ width: '100%', justifyContent: "space-between" }}>
+                <div>
+                  Product Request
+                </div>
+                <div>
+                  {`${new Date(Number(productRequest.find((p: any) => p?.item == 'timestamp').value)).toLocaleString() || ''}`}
+                </div>
+              </div>
+          }} /> || ''}
         </div>
-        
+
         <div className='admin-customer__content'>
           <UiCollapse label={`modify ${info?.name}`} open={Boolean(info?.name)}>
             <>

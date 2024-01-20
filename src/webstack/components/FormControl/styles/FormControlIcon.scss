@@ -5,10 +5,10 @@
 }
 
 .form-control-icon {
+    @extend .d-flex;
     --ui-icon-color: inherit;
     position: absolute;
-
-    width: var(--s-5);
+    width: var(--element-height);
     --ui-icon-width: var(--s-5);
     &__before{
       left: 0;

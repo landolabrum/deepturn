@@ -25,8 +25,9 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }) => {
                     </div>
                 </div>}
                 <div className='navbar__mobile--content'>
-                    {routes && routes.map((route: IRoute, key: number) => 
+                    {routes && routes.reverse().map((route: IRoute, key: number) => 
                        {
+                        if(route?.hide)return;
                         if(route?.href == '/')return <div 
                             key={key}
                             className='navbar__mobile--content__brand'

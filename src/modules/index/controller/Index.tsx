@@ -16,10 +16,11 @@ const Index = () => {
       <div className='home'>
       <div
         className='home__full' 
-        style={{height:'500px', width:'100%'}}>
+        style={{height:'500px', width:'100%'}}
+      >
         <TJSCube
-          // svgOptions={{depth:100}}
-          svg={<UiIcon icon='deepturn-logo'/>}
+          svgOptions={{depth:100}}
+          svg={'/icons/fa-hand.svg'}
           size={{x:200,y:300,z:100}}
         />
       </div>

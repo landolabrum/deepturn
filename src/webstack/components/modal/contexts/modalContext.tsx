@@ -22,7 +22,9 @@ export interface ModalContextType {
   openModal: (content: IModalContent) => void;
   closeModal: () => void;
   modalContent: IModalContent;
+  replaceModal: (content: IModalContent) => void; // Add this line
 }
+
 
 export const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
@@ -32,7 +34,8 @@ interface Props {
 
 export const ModalProvider: React.FC<Props> = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [modalContent, setModalContent] = useState<IModalContent>(null); // Updated type here
+  const [modalContent, setModalContent] = useState<IModalContent>(null);
+  
   const openModal = (content: IModalContent) => {
     setIsModalOpen(true);
     setModalContent(content);
@@ -42,12 +45,18 @@ export const ModalProvider: React.FC<Props> = ({ children }) => {
     setIsModalOpen(false);
     setModalContent(null);
   };
+
+  const replaceModal = (content: IModalContent) => { // Implement replaceModal function
+    setModalContent(content);
+  };
+
   return (
-    <ModalContext.Provider value={{ isModalOpen, openModal, closeModal, modalContent }}>
+    <ModalContext.Provider value={{ isModalOpen, openModal, closeModal, modalContent, replaceModal }}>
       {children}
     </ModalContext.Provider>
   );
 };
+
 
 export const useModal = () => {
   const context = useContext<ModalContextType | undefined>(ModalContext);
@@ -59,6 +68,9 @@ export const useModal = () => {
     },
     closeModal: () => {
       console.warn('closeModal called before ModalProvider is ready.');
+    },
+    replaceModal: () => {
+      console.warn('replaceModal called before ModalProvider is ready.');
     },
     modalContent: null,
   };

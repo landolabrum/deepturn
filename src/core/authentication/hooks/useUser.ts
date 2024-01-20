@@ -6,8 +6,6 @@ import IMemberService from "../../services/MemberService/IMemberService";
 
 export const useUser = () => {
   const memberService = getService<IMemberService>('IMemberService');
- 
-
   const [userContext, setUserContext] = useState<UserContext | undefined>(memberService.getCurrentUser());
   useEffect(() => {
 

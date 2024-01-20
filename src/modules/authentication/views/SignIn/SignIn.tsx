@@ -14,6 +14,7 @@ import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import environment from "~/src/environment";
 import { useRouter } from "next/router";
+import { promises } from "dns";
 
 const DEFAULT_RESPONSE = { response: "", message: "" };
 const defaultCodeValue = "------";
@@ -42,9 +43,11 @@ const SignIn = ({ email }: { email: string | undefined }) => {
     password: "",
     code: defaultCodeValue,
   }
-  const [notif, setNotif]=useNotification();
-  const [signInResponse, setSignInResponse] = useState<any>(DEFAULT_RESPONSE);
+  const [notif, setNotif] = useNotification();
   const { closeModal, openModal } = useModal();
+  const router = useRouter();
+
+  const [signInResponse, setSignInResponse] = useState<any>(DEFAULT_RESPONSE);
   const userResponse = useUser();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const memberService = getService<IMemberService>("IMemberService");
@@ -54,52 +57,32 @@ const SignIn = ({ email }: { email: string | undefined }) => {
   function handleCredentials(e: any) {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   }
-  const Success = (response: any) =>{
-    const router = useRouter();
-    const level = useClearance();
-   const handleRoute = (route: string) =>{
-    closeModal();
-    router.push(route);
-   }
-    return <>
-          <style jsx>{styles}</style>
-          <div className='sign-in__status'>
-            <div className='sign-in__status--success'>
-              <div className='sign-in__status--success--header'>
-                <UiIcon icon={`${environment.merchant.name}-logo`}/>
-                {`Welcome, ${response.data?.name}`}
-              </div>
-              <UiButton  variant='primary' onClick={()=>handleRoute('/account')}>Account</UiButton>
-              {level > 9 && <UiButton   onClick={()=>handleRoute('/admin')}>Admin</UiButton>}
-            </div>
-          </div>
-        </>
-  }
+
 
   async function handleSignIn() {
     setIsSubmitting(true);
     if (credentials.email && credentials.password) {
       const validTFA = /^\d{6}$/.test(credentials.code);
-      try{
-        const signInResponse = await memberService.signIn({
+      try {
+        const resp = await memberService.signIn({
           email: credentials.email,
           password: credentials.password.replace(/\s+/g, ''),
           ...(validTFA && { code: credentials.code }),
           user_agent,
         });
-        if(signInResponse){
-          const response = {status:'success', data:signInResponse}
-          openModal(<Success {...response} />);
+        if (resp?.email){
+          closeModal();
         }
-      }catch(e:any){
-        if(e.detail!=undefined){
+        else setSignInResponse('error');
+      } catch (e: any) {
+        if (e.detail != undefined) {
           e.detail?.fields && setNotif({
             active: true,
             list: e.detail.fields,
             persistance: 3000
           })
           setSignInResponse(e.detail)
-        }else{
+        } else {
           setSignInResponse('*server down')
         }
       }
@@ -111,28 +94,27 @@ const SignIn = ({ email }: { email: string | undefined }) => {
     if (email) setCredentials({ ...credentials, email: email });
     setIsSubmitting(false);
   }, [userResponse, setCredentials, Boolean(credentials == defaultCredentials), email]);
-
   return (
     <>
       <style jsx>{styles}</style>
       <form className="sign-in" style={{ color: 'black' }}>
         {["email", "password"].map((field) => {
-          const hasError = signInResponse?.fields !== undefined && signInResponse?.fields.find((f:any)=>f.name==field)
-          return(
+          const hasError = signInResponse?.fields !== undefined && signInResponse?.fields.find((f: any) => f.name == field)
+          return (
             <UiInput
-            key={field}
-            type={field}
-            autoComplete={field === "email" ? "username" : "current-password"}
-            name={field}
-            variant={hasError && 'invalid'}
-            placeholder={field}
-            error={hasError && hasError.message}
-            label={field}
-            value={credentials[field]}
-            onChange={handleCredentials}
+              key={field}
+              type={field}
+              autoComplete={field === "email" ? "username" : "current-password"}
+              name={field}
+              variant={hasError && 'invalid'}
+              placeholder={field}
+              error={hasError && hasError.message}
+              label={field}
+              value={credentials[field]}
+              onChange={handleCredentials}
             />
-            )
-          })}
+          )
+        })}
         {signInResponse === "Two Factor Authenication code required" &&
           <TwoFactorAuth code={credentials.code} setCode={(e) => { handleCredentials({ target: { value: e, name: "code" } }) }} />
         }

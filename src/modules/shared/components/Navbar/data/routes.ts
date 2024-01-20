@@ -1,8 +1,10 @@
 
+import { getService } from "@webstack/common";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useUser, useClearance } from "~/src/core/authentication/hooks/useUser";
+import IMemberService from "~/src/core/services/MemberService/IMemberService";
 import environment from "~/src/environment";
 
 export type SelectableRoute = {
@@ -67,7 +69,17 @@ export const routes: IRoute[] = [
     clearance: 6,
     items: [
       { label: "surveillance",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
-      { label: "lights", href: "home?vid=lights", icon: "fa-lightbulb-on", active: true },
+      { label: "lights", href: "home?vid=lights", icon: "fa-lightbulb-on", active: true},
+    ],
+  },
+  {
+    label: "account",
+    icon: 'fal-circle-user',
+    clearance: 1,
+    items: [
+      { href: "/admin", label: "admin", clearance: 10},
+      { href: "/account", label: "account" , clearance: 1},
+      { href: "/authentication/signout", label: "logout", clearance: 1 },
     ],
   },
   // {
@@ -79,16 +91,6 @@ export const routes: IRoute[] = [
   //   ],
   // },
   {
-    label: "account",
-    icon: 'fal-circle-user',
-    clearance: 1,
-    items: [
-      { href: "/admin", label: "admin", clearance: 10},
-      { href: "/account", label: "account" , clearance: 1},
-      { href: "/authentication/signout", label: "logout", clearance: 1 },
-    ],
-  },
-  {
     label: "login",
     modal: "login",
     icon: 'fa-circle-user',
@@ -96,41 +98,38 @@ export const routes: IRoute[] = [
   },
   { label: "", href: "/cart", icon: "fal-bag-shopping" },
 ];
-
 export const useClearanceRoutes = () => {
   const user = useUser();
-  const level = useClearance();
+  const memberService = getService<IMemberService>('IMemberService');
   const [access, setAccess] = useState<IRoute[] | undefined>(undefined);
+  
+  const level = user?.metadata.clearance || 0;
+  const accessableRouteFilter = (route: IRoute) => {
+    // console.log('[accessableRouteFilter]', route)
+    if (route.clearance === undefined) return true; // Allow routes without clearance requirements
+    else if (route.clearance === 0 && level === 0) return true;
+    else if (user && route?.clearance && route.clearance <= level) return true;
+    else return false;
+  };
 
+  const filterRoutes = (routeItems: IRoute[]) => {
+    return routeItems
+      .filter((route) => {
+        const isRouteAccessible = accessableRouteFilter(route); // User's clearance meets or exceeds the route's clearance
+        if (isRouteAccessible && route.items) {
+          route.items = route.items.filter((item) => {
+            return accessableRouteFilter(item); // User's clearance meets or exceeds the item's clearance
+          });
+        }
+        return isRouteAccessible;
+      });
+  };
   useEffect(() => {
-    const filterRoutes = (routeItems: IRoute[]) => {
-      return routeItems
-        .filter(route => {
-          // Check if the main route is accessible based on clearance
-           const isRouteAccessible = route.clearance === undefined 
-            ||(route.clearance === 0 && level === 0)
-            || (user && route.clearance !== undefined && route.clearance <= level && route.clearance !== 0); // User's clearance meets or exceeds the route's clearance
-          // if(isRouteAccessible)console.log('[ isRouteAccessible ]',route)
-          if (route.items) {
-            // Filter sub-items based on clearance
-            route.items = route.items.filter(item => {
-              return item.clearance === undefined || // No clearance required
-                (item.clearance === 0 ) || // Clearance explicitly set to 0
-                (user && item.clearance !== undefined && item.clearance <= level); // User's clearance meets or exceeds the item's clearance
-            });
-          }
-
-          // Return true if the main route is accessible
-          return isRouteAccessible;
-        });
-    };
-
     setAccess(filterRoutes(routes).reverse());
-  }, [level]);
+  }, [user, setAccess,]);
 
   return access;
 };
-
 
 
 
@@ -146,3 +145,4 @@ export const pruneRoutes = (pruneLabels: string[]) => {
   });
   return pruned;
 };
+

@@ -92,9 +92,7 @@ const UiSelect: React.FC<ISelect> = ({
   }, [title, onSelect]);
   useEffect(() => {
     if (isMobileNavOpen && onToggle) onToggle(isMobileNavOpen);
-    // if(!isModalOpen && selectedOption){
-    //   console.log('fdsa', selectedOption)
-    // }
+
   }, [isOpen, isModalOpen]);
 
   return (

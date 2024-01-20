@@ -10,13 +10,20 @@ import IMemberService from "./IMemberService";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
+import errorResponse from "../../errors/errorResponse";
 const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
 
-const TIMEOUT=1000;
+const TIMEOUT=5000;
 function timeoutPromise<T>(promise: Promise<T>, ms: number): Promise<T> {
   let timeoutHandle: NodeJS.Timeout;
   const timeoutPromise = new Promise<null>((resolve, reject) => {
-      timeoutHandle = setTimeout(() => reject(new Error("Timeout after " + ms + "ms")), ms);
+      timeoutHandle = setTimeout(() => reject(new ApiError(
+        "Server Down",
+        409,
+        "MS.SI.02",
+        "Server is unreachable"
+      )
+      ), ms);
   });
 
   return Promise.race([
@@ -39,6 +46,48 @@ export default class MemberService
   private _userToken: string | undefined;
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
+
+  public async verifyEmail(token: string): Promise<any> {
+    if (!token) {
+        throw new ApiError("No Token Provided", 400, "MS.SI.02");
+    }
+    
+    try {
+        const encodedToken = encodeURIComponent(token);
+        // Wrap the API call with the timeout promise
+        const verifiedMemberResp = await timeoutPromise(
+            this.get<any>(`/usage/auth/verify-email?token=${encodedToken}`),
+            TIMEOUT // 5 seconds timeout
+        );
+
+        // Check if the response is an ApiError
+        if (verifiedMemberResp instanceof ApiError) {
+            throw verifiedMemberResp;
+        }
+
+        const customer_token = verifiedMemberResp?.customer_token;
+        if (customer_token) {
+            this.saveMemberToken(customer_token);
+            this.saveLegacyCookie(customer_token);
+            this._getCurrentUser(true)!;
+        }
+        
+        // If everything is successful, return the response
+        return verifiedMemberResp;
+    } catch (error) {
+        // Handle the error here
+        if (error instanceof ApiError) {
+            return errorResponse(error);
+        } else {
+            // Handle other types of errors as needed
+            console.error("An unexpected error occurred:", error);
+            const responseError = new ApiError("Internal Server Error", 500, "MS.SI.01","an Unknown Error Occured");
+            return errorResponse(responseError);
+        }
+    }
+}
+
+
   public async toggleDefaultPaymentMethod(paymentMethodId: string): Promise<any> {
     let customerId = this._getCurrentUser(false)?.id;
     if (!paymentMethodId || !customerId) {
@@ -127,32 +176,6 @@ export default class MemberService
   }
 
 
-  public async verifyEmail(token: string): Promise<any> {
-    if (!token) {
-        throw new ApiError("No Token Provided", 400, "MS.SI.02");
-    }
-    
-    try {
-        const encodedToken = encodeURIComponent(token);
-        // Wrap the API call with the timeout promise
-        const verifiedMemberResp = await timeoutPromise(
-            this.get<any>(`/usage/auth/verify-email?token=${encodedToken}`),
-            TIMEOUT // 10 seconds timeout
-        );
-        const customer_token = verifiedMemberResp?.customer_token;
-        if (customer_token) {
-            this.saveMemberToken(customer_token);
-            this.saveLegacyCookie(customer_token);
-            this._getCurrentUser(true)!;
-        }
-        // console.log('[ VERIFY RESPONSE ]', verifiedMemberResp)
-        return verifiedMemberResp;
-    } catch (error: any) {
-        // Handle both API errors and timeout errors here
-        // console.error('Error in verifyEmail: ', error);
-        return {status: 409, details: "server is down"};
-    }
-}
 
 
 
@@ -249,7 +272,7 @@ export default class MemberService
         this.saveLegacyCookie(memberJwt);
         return this._getCurrentUser(true)!;
       } catch (error) {
-        // console.error("Error updating member: ", error);
+        console.error("Error updating member: ", error);
         // Handle error accordingly
       }
     }

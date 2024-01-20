@@ -9,6 +9,7 @@ import ToggleSwitch from '../../UiToggle/UiToggle';
 import UiCheckBox from '../../UiCheckbox/UiCheckBox';
 import FormControl from '../../FormControl/FormControl';
 import AddFieldForm from '../views/AddFieldForm/AddFieldForm';
+import { updateField } from '../functions/formFieldFunctions';
 
 const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading, disabled, onAddField }: IForm) => {
     const textTypes = ['', undefined, 'text', 'password', 'email', 'number', 'tel', null, false, 'expiry', 'textarea'];
@@ -37,7 +38,6 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
     const handleInputChange = (e: any, constraints?: IFormField['constraints']) => {
         handleComplete();
         // const isValid = handleConstraints(e, constraints);
-        // console.log('[ handeInputChange f dsa ]',e)
         // if (!e || !isValid) return;
         if (onChange) { onChange(e); return; }
     };
@@ -70,6 +70,7 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
             onLocalErrors(newErrors);
         }
     };
+  
     const handlePill = (e: any, field: IFormField, direction?: string) => {
         if (direction && onChange) {
             const val = () => {
