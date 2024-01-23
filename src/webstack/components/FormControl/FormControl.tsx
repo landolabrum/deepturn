@@ -26,7 +26,7 @@ export type ITraits = {
   disabled?: boolean;
   [key: string]: any;
 } | undefined;
-export type IFormControlSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+export type pxIFormControlSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 export interface IFormControl {
   label?: string | React.ReactElement;
   variant?: IFormControlVariant;

@@ -9,13 +9,14 @@
   --ui-icon-color: var(--gray-10-opaque);
   color: var(--gray-50);
   @extend .d-flex;
+  height: 100%;
   &--content {
+    height: 100%;
     margin: auto;
     @extend .d-flex;
     gap: var(--padding);
     flex-direction: column;
     position: relative;
-    height: 100%;
   }
   &__icon {
     flex: 1;

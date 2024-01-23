@@ -8,6 +8,7 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 import UiBar from '@webstack/components/Graphs/UiBar/UiBar';
 import ToggleSwitch from '@webstack/components/UiToggle/UiToggle';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import UiInput from '@webstack/components/UiInput/UiInput';
 
 // Remember to create a sibling SCSS file with the same name as this component
 type ILight = {
@@ -19,8 +20,8 @@ type ILight = {
 }
 const Lights: React.FC = () => {
   const [loader, setLoader] = useLoader();
-
-  const [lights, setLights] = useState<any>(undefined);
+  const [newName, setNewName] = useState<any | undefined>();
+  const [lights, setLights] = useState<any>();
   const homeService = getService<IHomeService>('IHomeService');
 
   const updateLight = (changedLight: ILight) => {
@@ -44,7 +45,7 @@ const Lights: React.FC = () => {
       console.log("[brightnessChangedLight](ERROR)", e)
     }
   }
-  const handleColor = async (id: number, hex:  string) => {
+  const handleColor = async (id: number, hex: string) => {
     try {
       updateLight(await homeService.lightColor(id, hex));
     } catch (e: any) {
@@ -71,14 +72,26 @@ const Lights: React.FC = () => {
       setLights(response);
 
     } catch (e: any) {
-      console.log('[ FETCH LIGHTS (ERR) ]',JSON.stringify(e))
+      console.log('[ FETCH LIGHTS (ERR) ]', JSON.stringify(e))
     }
   }
+  const handleNewName = (e: any) => {
+    let { name, value } = e;
+    if(e.target){
+      name = e.target.name;
+      value = e.target.value;
+    }
+    name && console.log('[new name]', name)
+    if(name && value)setNewName(e);
+
+    // if(!name  && typeof e == 'string') console.log('[e]',e);setNewName(e)
+
+  }
   useEffect(() => {
-    if (!lights) {
+    if (lights == undefined) {
       fetchLights().then(() => setLoader({ active: false }));
     }
-  }, [setLights]);
+  }, [setLights, ]);
   return (
     <>
       <style jsx>{styles}</style>
@@ -90,11 +103,17 @@ const Lights: React.FC = () => {
                 <UiBar
                   header={<div className='lights__light-header'>
                     <div className='lights__light-header-title' >
-                      <span onClick={() => handleToggle(light.id_)}>
-                      {light?.name}
-                      <ToggleSwitch name={light?.id_} value={light.is_on} 
-                       />
-                       </span>
+
+                        {newName == undefined || newName?.name != light.id_ ? (
+                          <div onClick={()=>handleNewName({name:light.id_, value:'new light name'})} >
+                            {light?.name}
+                          </div>
+                        ) : (<UiInput size='sm' name={newName.id_} onChange={handleNewName} value={newName.value}/>)}
+
+                            <div onClick={() => handleToggle(light.id_)}>
+                        <ToggleSwitch name={light?.id_} value={light?.is_on}
+                        />
+                      </div>
                     </div>
                     <div className='lights__light-header-action'>
                       <UiIcon

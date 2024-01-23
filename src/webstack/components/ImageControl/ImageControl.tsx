@@ -37,7 +37,7 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
           {children}
         </ImageControl>,
         variant: 'fullscreen',
-        drag: true
+        draggable: true
       }
     ): closeModal();
   };
@@ -64,7 +64,6 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
         className={`image-control${loading?' image-control__loading':""}`} 
       > {/* Attach the ref here */}
         {loading == true && <UiLoader
-          height={300}
           position={!fixedLoad?'relative':undefined}
           text={ error || loadingText  || undefined}
           dots={['string','object'].includes(typeof error) ? false : undefined}

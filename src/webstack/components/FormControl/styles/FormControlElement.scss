@@ -116,6 +116,11 @@
     &-sm{font-size: var(--s-7); 
         padding: 0 var(--s-9);
     }
+    &--input.form-control__element--sm{
+        font-size: var(--s-8);
+        height: var(--s-4);
+        padding: 0 var(--s-9);
+    }
     &-md{font-size: var(--s-6);}
     &-lg{font-size: var(--s-4);}
     &-xl{font-size: var(--s-3);}

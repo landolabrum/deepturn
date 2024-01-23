@@ -86,7 +86,7 @@ const ModalOverlay: React.FC = () => {
         className={modalClass}>
         <div className={modalContentClass}>
           <a
-            onMouseUp={modalContent.drag && stopDrag}
+            onDoubleClick={modalContent.drag && stopDrag}
             onMouseDown={modalContent.drag && startDrag}
             className={`${modalHeaderClass}${ isDragging ? ' modal__header__dragging' : modalContent.drag ?'':' modal__header__no-drag'}`}
           >

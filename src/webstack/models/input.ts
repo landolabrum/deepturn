@@ -1,5 +1,5 @@
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
-import { IFormControl } from "@webstack/components/FormControl/FormControl";
+import { IFormControl, IFormControlSize } from "@webstack/components/FormControl/FormControl";
 import { UserAddress } from "~/src/models/UserContext";
 
 export type ValueType = any;
@@ -7,6 +7,7 @@ export type ValueType = any;
 
 export interface IInput extends IFormControl {
   name?: string;
+  size?: IFormControlSize;
   error?: string | null;
   label?: string;
   type?: string;

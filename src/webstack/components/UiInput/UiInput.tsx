@@ -9,7 +9,7 @@ import AutocompleteAddressInput from "./views/AddressInput";
 import { debounce } from "lodash";
 
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
-  const { name, type, value, onChange, onKeyDown, onKeyUp, message, required } = props;
+  const { name, type, value, onChange, onKeyDown, onKeyUp, message, required, size } = props;
   const [show, setShow] = useState<boolean>(false);
   
   const handleChange = (e: any) => {

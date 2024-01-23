@@ -1,0 +1,15 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.home__default{
+    @extend .d-flex;
+    width: var(--padding-width);
+    padding: var(--padding);
+    &--title{
+        color: var(--gray-30);
+        font-size: var(--s-3);
+    }
+}

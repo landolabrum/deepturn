@@ -14,7 +14,7 @@ export type IModalContent = {
   variant?: "popup" | 'fullscreen';
   confirm?: IConfirm;
   zIndex?: number;
-  drag?: boolean;
+  draggable?: boolean;
 } | ReactNode | null;
 
 export interface ModalContextType {
