@@ -1,7 +1,7 @@
 // Relative Path: ./Surveillance.tsx
 import React from 'react';
 import styles from './Surveillance.scss';
-import UiMedia from '@webstack/components/UiVideo/controller/UiMedia';
+import UiMedia from '@webstack/components/UiMedia/controller/UiMedia';
 import environment from '~/src/environment';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { useUser } from '~/src/core/authentication/hooks/useUser';

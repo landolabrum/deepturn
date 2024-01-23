@@ -31,9 +31,6 @@
     left: 50%; // Center horizontally
     transform: translateX(-50%); // Adjust position to truly center the modal
     overflow-y: auto; // Allow scrolling for overflow content
-    background-color: var(--gray-90);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
@@ -46,9 +43,6 @@
     &__dragging{
         cursor: url('/icons/fa-hand-back-fist.svg'), auto;
         filter: blur(3px);
-    }
-    &:hover {
-        background-color: var(--gray-100);
     }
     &__fullscreen {
         top: 0;

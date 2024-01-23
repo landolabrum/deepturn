@@ -62,7 +62,7 @@ const aspectRatio = lcm(height, width );
   );
 };
 const TJSCubeContent = ({ svg, svgOptions, size }: ICube) => {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<THREE.Mesh | any>(null);
   const controlsRef = useRef<any>(null);
 
   const { scene, camera } = useThree();
@@ -171,7 +171,9 @@ const TJSCubeContent = ({ svg, svgOptions, size }: ICube) => {
   });
   return (
     <>
-      <ambientLight intensity={0.5} />
+      <ambientLight 
+      // intensity={0.5}
+       />
       <PerspectiveCamera makeDefault position={[0, -45, 300]} />
       <OrbitControls  ref={controlsRef} args={[camera]}/>
       {/* Add other components if needed */}

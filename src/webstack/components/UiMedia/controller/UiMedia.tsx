@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import styles from './UiMedia.scss';
 import ImageControl, { IImageMediaType, IImageVariant } from '@webstack/components/ImageControl/ImageControl';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import { useRouter } from 'next/router';
 
 export interface IMedia {
   src: string;
@@ -14,7 +13,6 @@ export interface IMedia {
 const UiMedia: React.FC<IMedia> = ({ src, variant, type, alt, loadingText }: IMedia) => {
   const [imageControlProps, setImageControlProps] = useState<any>({ variant, type });
   const [reloadTrigger, setReloadTrigger] = useState(0); // state to trigger reload
-  const router = useRouter();
 
   const handleReload = () => {
     setImageControlProps({ ...imageControlProps, error: null }); // Reset error state

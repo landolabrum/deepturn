@@ -33,6 +33,7 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
           variant={variant}
           mediaType={mediaType}
           refreshInterval={refreshInterval}
+        
           error={error}>
           {children}
         </ImageControl>,

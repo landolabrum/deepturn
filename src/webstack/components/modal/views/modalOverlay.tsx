@@ -37,19 +37,23 @@ const ModalOverlay: React.FC = () => {
     isDragging && setIsDragging(false);
   };
 
-
+const mouse = useMouse();
+const mousePos = mouse?.position;
   const startDrag = (e: React.MouseEvent) => {
     setStartPosition({ x: position.x, y: position.y }); // Use current mouse position
     setIsDragging(true);
   };
   const modalContentInfer: any = context?.modalContent;
   const hasZindex = modalContentInfer && !['string', 'number'].includes(typeof modalContentInfer) && Boolean(modalContentInfer.zIndex);
+
   useEffect(() => {
     if (isDragging && modalRef.current) {
-      const dx = position.x - startPosition.x + Number(modalRef.current?.offsetWidth * -0.5);
-      const dy = position.y - startPosition.y + +Number(modalRef.current?.offsetHeight * -0.5);
-      modalRef.current.style.transform = `translate(${dx}px, ${dy}px)`;
+      // const dx = position.x - startPosition.x + Number(modalRef.current?.offsetWidth * -0.5);
+      // const dy = position.y - startPosition.y + +Number(modalRef.current?.offsetHeight * -0.1);
+      // modalRef.current.style.transform = `translate(${dx}px, ${dy}px)`;
+      modalRef.current.style.transform = `translate(${mousePos.x + Number(modalRef.current?.offsetWidth * -0.5)}px, ${mousePos.y}px)`;
     }
+
   }, [position.x, position.y, startPosition, isDragging, closeModal]);
 
   if (!context) {
@@ -71,8 +75,8 @@ const ModalOverlay: React.FC = () => {
     style={{zIndex: modalContentInfer.zIndex}}
       onClick={closeModal}
       className={modalOverlayClass}
-      onMouseUp={modalContent.drag && stopDrag}
-    />
+      onMouseUp={modalContent.draggable ? stopDrag : undefined}
+      />
   </>;
   return (
     <>
@@ -80,15 +84,15 @@ const ModalOverlay: React.FC = () => {
       <div
         onClick={closeModal}
         className={modalOverlayClass}
+        onMouseUp={modalContent.draggable ? stopDrag : undefined}
         />
       <div
         ref={modalRef}
         className={modalClass}>
         <div className={modalContentClass}>
           <a
-            onDoubleClick={modalContent.drag && stopDrag}
-            onMouseDown={modalContent.drag && startDrag}
-            className={`${modalHeaderClass}${ isDragging ? ' modal__header__dragging' : modalContent.drag ?'':' modal__header__no-drag'}`}
+onMouseDown={modalContent.draggable ? startDrag : undefined}
+className={`${modalHeaderClass}${ isDragging ? ' modal__header__dragging' : modalContent.draggable ?'':' modal__header__no-drag'}`}
           >
             <div className='modal-overlay__title'>
               {title || confirm?.title}

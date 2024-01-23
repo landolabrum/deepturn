@@ -17,7 +17,7 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
       <style jsx>{styles}</style>
       <div className='home__default'>
         <div className='home__default--title'>
-        {user && user?.name && capitalize(user.name) || ''}'s, Home Automation.
+        {user && user?.name && capitalize(user.name) || ''}, Home Automation.
         </div>
       </div>
     </>
