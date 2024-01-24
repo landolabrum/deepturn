@@ -12,6 +12,7 @@
     top: 0;
     left: 0;
 }
+
 .modal__overlay {
     @extend .d-flex;
     @extend .p-fix;
@@ -19,7 +20,8 @@
     z-index: 999;
     background: var(--gray-70-opaque); // Adjusted for semi-transparent overlay
     backdrop-filter: blur(5px);
-    &__dragging{
+
+    &__dragging {
         cursor: url('/icons/fa-hand-back-fist.svg'), auto;
     }
 }
@@ -34,42 +36,50 @@
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-    
-    @media(max-width: 900px){
+    background-color: var(--gray-90);
+    border: solid 1px var(--gray-80);
+    border-radius: var(--border-radius);
+
+    @media(max-width: 900px) {
         margin: 0 auto;
         top: 70px;
         width: var(--padding-width);
     }
-    &__dragging{
+
+    &__dragging {
         cursor: url('/icons/fa-hand-back-fist.svg'), auto;
         filter: blur(3px);
     }
+
     &__fullscreen {
         top: 0;
         height: 100%;
         padding: 0;
     }
-    
+
     &__content {
         overflow: hidden;
-        border: solid 1px var(--gray-80);
         padding: 0 var(--padding);
         height: auto;
         margin: auto;
         backdrop-filter: blur(5px);
         color: var(--gray-30);
-        border-radius: var(--border-radius);
         min-width: 600px;
         min-height: 600px;
         box-shadow: var(--box-shadow-xl);
         min-height: max-content;
         transition: all 1s;
         position: relative;
-        &:hover {transition: all 1s;}
+
+        &:hover {
+            transition: all 1s;
+        }
+
         &::-webkit-scrollbar-thumb {
             background-color: var(--blue);
             border-radius: 5px;
         }
+
         &::-webkit-scrollbar {
             width: 10px;
             aspect-ratio: 1/1;
@@ -85,6 +95,7 @@
         &__fullscreen {
             width: 100vw;
             padding: 0;
+
             &:hover {
                 background-color: #ffffff00;
             }
@@ -99,35 +110,46 @@
         justify-content: space-between;
         padding: 0 var(--s-9);
         width: calc(100% - calc(var(--s-9) * 2));
-        @media(max-width: 1100px){
+
+        @media(max-width: 1100px) {
             right: 0;
         }
-        &:not(&__no-drag){
-            &:hover{
+
+        &:not(&__no-drag) {
+            &:hover {
                 cursor: url('/icons/fa-hand.svg'), auto;
                 background-color: var(--gray-80);
 
             }
-            :focus, &:focus-within, &:visited, &:active{
+
+            :focus,
+            &:focus-within,
+            &:visited,
+            &:active {
                 cursor: url('/icons/fa-hand-back-fist.svg'), auto;
             }
         }
-        &__dragging{
+
+        &__dragging {
             cursor: url('/icons/fa-hand-back-fist.svg'), auto;
         }
-        &__no-drag{
+
+        &__no-drag {
             cursor: default;
         }
+
         min-height: var(--element-height);
         --ui-icon-color: var(--gray-40);
         color: var(--gray-40);
-        .modal-overlay__title{
+
+        .modal-overlay__title {
             font-size: var(--s-4);
             text-transform: capitalize;
         }
+
         .modal-overlay__icon {
             // @extend .d-flex;
-            
+
             // --ui-icon-size: var(--s-5);
             // cursor: pointer;
             // width: var(--element-height);
@@ -149,6 +171,7 @@
             min-height: var(--element-height);
             border-radius: unset;
             border: unset;
+
             &:hover {
                 background-color: var(--gray-100);
             }
@@ -161,6 +184,7 @@
         margin-bottom: var(--padding);
         overflow-x: hidden;
         padding-top: var(--element-height);
+
         &__fullscreen {
             z-index: 1;
             margin-bottom: 0;
@@ -176,10 +200,12 @@
             border-radius: var(--border-radius);
             overflow: hidden;
             margin-top: var(--padding);
-            @media(max-width: 1100px){
+
+            @media(max-width: 1100px) {
                 flex-direction: column;
             }
-            &-btn{
+
+            &-btn {
                 width: 100%;
             }
         }

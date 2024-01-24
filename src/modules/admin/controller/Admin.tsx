@@ -10,6 +10,7 @@ import AdminSystem from '../views/AdminSystem/AdminSystem';
 import AdminBilling from '../views/AdminBilling/controller/AdminBilling';
 import AdminAccounts from '../views/AdminAccounts/controller/AdminAccounts';
 import { useClearance } from '~/src/core/authentication/hooks/useUser';
+import AdminInvoices from '../views/AdminInvoices/controller/AdminInvoices';
 
 
 const UiGlobe = dynamic(
@@ -24,19 +25,19 @@ const Admin = () => {
     globe:<UiGlobe/>,
     customers: <AdminCustomers/>,
     products: <AdminProducts/>,
-    billing: <AdminBilling/>,
+    invoice: <AdminInvoices/>,
     documents: <AdminListDocuments/>,
     system: <AdminSystem/>
   }
   const level = useClearance();
   const [views, setViews]=useState<any>(initialViews);
   const [currentView, setCurrentView]=useState<string | undefined>('accounts');
-  useEffect(() => {
-    if(level > 10){
-      views.accounts = <AdminAccounts/>;
-      setViews(views)
-    }
-  }, [setCurrentView, level]);
+  // useEffect(() => {
+  //   if(level > 10){
+  //     views.accounts = <AdminAccounts/>;
+  //     setViews(views)
+  //   }
+  // }, [setCurrentView, level]);
   return (
     <>
       <style jsx>{styles}</style>

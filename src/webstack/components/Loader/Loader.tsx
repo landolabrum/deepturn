@@ -7,13 +7,15 @@ import {
 import styles from "./Loader.scss";
 import { UiIcon } from "../UiIcon/UiIcon";
 import environment from "~/src/environment";
+import TJSCube from "../threeJs/TJSCube/controller/TJSCube";
 
 
 type ILoader = {
   active: boolean;
   onClick?: any;
   body?: any;
-  children?: any
+  children?: any;
+  animation?: true;
 };
 
 const LoaderContext =
@@ -45,27 +47,52 @@ export const LoaderProvider: React.FC<LoaderProviderProps> = ({
 const Loader: React.FC = () => {
   const [context, setContext] = useContext(LoaderContext);
   const [LoaderState, setLoaderState] = useState<ILoader | null>(null);
-
+  const bevelOptions = {
+    bevelEnabled: true,
+    bevelThickness: 1, // Set the bevel thickness to 10px
+    bevelSize: 2, // Adjust the bevel size as needed
+    bevelSegments: 2, // Adjust the number of bevel segments as needed
+  };
   useEffect(() => {
-    setLoaderState(context);
-  }, [context?.active != LoaderState?.active]);
+    if (context?.active != LoaderState?.active) setLoaderState(context);
+  }, [context]);
 
   if (LoaderState?.active) {
     return (
       <>
         <style jsx>{styles}</style>
-        <div 
+        <div
           className={`loader ${Boolean(context) && 'loader--fixed' || ''}`}
           onClick={context?.onClick}
         >
-        <div className='loader__content'>
-          <div className='loader__content--icon'>
-            <UiIcon icon={`${environment.merchant.name}-logo`} glow/>
+          <div className='loader__content'>
+            <div className='loader__content--icon'>
+              {context?.animation ? (
+                <TJSCube
+                  color={"#ff3300"}
+                  metalness={1}
+                  svgOptions={bevelOptions} // Pass the bevelOptions object as a 
+                  
+                  animate={{
+                    rotate: {
+                      x: 0,
+                      y: 1, // Specify the desired rotation angles in radians
+                      z: 0, // Specify the desired rotation angles in radians
+                      speed: 5000,
+                      duration: 'infinite'
+                    },
+                  }}
+                  svg={<UiIcon icon={`${environment.merchant.name}-logo`} />}
+                  size={{ x: 100, y: 100, z: 20 }}
+                />
+              ) : (
+                <UiIcon icon={`${environment.merchant.name}-logo`} glow />
+              )}
+            </div>
+            <div className='loader__content--body'>
+              {LoaderState.body || 'loading'}
+            </div>
           </div>
-        <div className='loader__content--body'>
-          {LoaderState.body || 'loading'}
-        </div>
-        </div>
         </div>
         {context?.children}
       </>

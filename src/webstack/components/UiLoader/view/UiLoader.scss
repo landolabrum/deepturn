@@ -14,18 +14,22 @@
     height: 100%;
     margin: auto;
     @extend .d-flex;
-    gap: var(--padding);
+    gap: var(--s-1);
     flex-direction: column;
     position: relative;
   }
   &__icon {
     flex: 1;
-    width: var(--padding-width);
+    width: max-content;
+    height: max-content;
     &-content{
+      overflow: visible;
       @extend .d-flex;
+      align-items: flex-end;
       width: 100%;
-      --ui-icon-width: var(--icon-size, --padding-width);
-      --ui-icon-height: var(--icon-size, --padding-width);
+      height: 100%;
+      --ui-icon-width: var(--icon-size, 150px);
+      --ui-icon-height: var(--icon-size, 150px);
     }
   }
   
@@ -33,6 +37,7 @@
     width: 100%;
     line-height: 1;
     @extend .d-flex;
+    align-items: flex-start;
     white-space: nowrap;
     font-size: var(--s-5);
     --ui-icon-size: var(--s-5);

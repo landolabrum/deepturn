@@ -206,7 +206,9 @@
             cursor: not-allowed;
         }
     }
-
+    &--flat.form-control__element--after-icon{
+        padding: 0 var(--padding);
+    }
     &--input-color{
         padding: 0 !important;
         height: 100%;

@@ -38,7 +38,7 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
           {children}
         </ImageControl>,
         variant: 'fullscreen',
-        draggable: true
+        // draggable: true
       }
     ): closeModal();
   };

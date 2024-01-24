@@ -42,7 +42,7 @@ const ProductsListing: NextPage = () => {
     }));
   };
   useEffect(() => {
-    setLoader({active:true, body:'loding prod'});
+    setLoader({active:true, body:'loding products', animation: true});
     const fetchProducts = async () => {
       try {
         const memberResponse = await shoppingService.getProducts();

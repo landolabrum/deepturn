@@ -251,11 +251,12 @@ const TJSCubeContent: React.FC<ICube> = (
 
 
 const TSJCube = (props: ICube) => {
-  // const { size = { x: 2, y: 3, z: 1 }, color  } = props;
+  const { size = { x: 2, y: 3, z: 1 }, color  } = props;
   const { width, height } = useWindow();
-
   return <>
-    <div className='cube-scene' style={{ aspectRatio: `${height}/${width}` }}>
+    <div className='cube-scene' 
+      style={{aspectRatio: `${size.y}/ ${size.x}`}}      
+    >
       <Canvas shadows >
         <TJSCubeContent {...props}/>
       </Canvas>
