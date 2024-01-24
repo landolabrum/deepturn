@@ -50,7 +50,7 @@ const Navbar = () => {
   // Handle click events for routes and modals
   const handleSelect = (_route: IRoute | string) => {
     let route: IRoute = typeof _route == 'string' ? { href: _route } : _route;
-    // console.log('[ ROUTE nav ]', route)
+    console.log('[ ROUTE nav ]', route)
     if (route?.href) {
       setRoute(route);
     } else if (route?.modal && !isModalOpen) {

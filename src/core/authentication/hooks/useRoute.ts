@@ -36,8 +36,8 @@ const useRoute = (): ORoute => {
     setHeader(headerContext);
   };
 
-  const explicitRouter = async (route: IRoute) => {
-    if (route?.href) router.push(route.href);
+  const explicitRouter = (route: IRoute) => {
+    if (route?.href) router.push(route.href, undefined, {shallow:false});
   };
   const level = useClearance();
   useEffect(() => {

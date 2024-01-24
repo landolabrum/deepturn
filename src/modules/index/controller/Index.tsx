@@ -8,10 +8,8 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 
 const Index = () => {
   const [isClient, setIsClient] = useState(false);
-  const [loader, setLoader]=useLoader();
   useEffect(() => {
       setIsClient(true);
-     setLoader({active: true, animation: true});
   }, []);
   return (
     <>
