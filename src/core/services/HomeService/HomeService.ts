@@ -25,13 +25,13 @@ export default class HomeService extends ApiService implements IHomeService {
     public async lightsOn(
     ): Promise<any> {
       return await this.get<any>(
-        "/hue/all-on",
+        "/api/home/hue/all-on",
       );
     }
     public async lightsOff(
     ): Promise<any> {
       return await this.get<any>(
-        "/hue/all-off",
+        "/api/home/hue/all-off",
       );
     }
     public async stream(

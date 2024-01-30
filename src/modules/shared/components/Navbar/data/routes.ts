@@ -1,10 +1,6 @@
-
-import { getService } from "@webstack/common";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useUser, useClearance } from "~/src/core/authentication/hooks/useUser";
-import IMemberService from "~/src/core/services/MemberService/IMemberService";
+import { useUser } from "~/src/core/authentication/hooks/useUser";
 import environment from "~/src/environment";
 
 export type SelectableRoute = {
@@ -100,7 +96,6 @@ export const routes: IRoute[] = [
 ];
 export const useClearanceRoutes = () => {
   const user = useUser();
-  const memberService = getService<IMemberService>('IMemberService');
   const [access, setAccess] = useState<IRoute[] | undefined>(undefined);
   
   const level = user?.metadata.clearance || 0;
@@ -126,7 +121,7 @@ export const useClearanceRoutes = () => {
   };
   useEffect(() => {
     setAccess(filterRoutes(routes).reverse());
-  }, [user, setAccess,]);
+  }, [user, setAccess]);
 
   return access;
 };

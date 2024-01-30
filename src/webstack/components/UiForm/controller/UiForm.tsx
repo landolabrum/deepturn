@@ -107,7 +107,7 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
                     style={typeof field?.width == 'string' ?
                         { width: `calc(${field.width} - 6px)` } : {}}
                 >
-                    {textTypes.includes(field?.type) && field.name && <>{field.error}
+                    {textTypes.includes(field?.type) && field.name && <>
                         <UiInput
                             label={field.label}
                             variant={

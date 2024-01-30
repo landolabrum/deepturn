@@ -4,7 +4,8 @@ import styles from './Verify.scss';
 import { useRouter } from 'next/router';
 import VerifyEmail from '../views/VerifyEmail/VerifyEmail';
 import SignIn from '../../authentication/views/SignIn/SignIn';
-import TJSCube from '@webstack/components/threeJs/TJSCube/controller/TJSCube';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import environment from '~/src/environment';
 
 
 // Remember to create a sibling SCSS file with the same name as this component
@@ -12,9 +13,7 @@ const LoadSlider = ({ props }: { props: any }) => {
   return (<>
     <style jsx>{styles}</style>
     <div className='loadslider'>
-      <TJSCube
-        color="#e0e0e0"
-      />
+     <UiIcon icon={`${environment.merchant.name}-logo`}/>
     </div>
   </>);
 }

@@ -5,7 +5,8 @@
 }
 .image-control {
     width: auto;
-    
+    --icon-size: 60px;
+    --font-size: var(--s-7);
     position: relative;
     height: auto;
     overflow: hidden;

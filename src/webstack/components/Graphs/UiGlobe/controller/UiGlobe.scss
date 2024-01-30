@@ -3,11 +3,9 @@
  align-items: center;
 }
 .globe{
-    width: max-content;
-    display: flex;
-    justify-content: flex-start;
-    height: 100%;
-    flex-direction: column;
+    width: 100%;
+    @extend .d-flex;
+    
     @media(max-width:900px){
         height: inherit;
         margin-left: calc(var(--padding) * -1.5);

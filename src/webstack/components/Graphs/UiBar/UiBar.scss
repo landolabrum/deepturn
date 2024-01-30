@@ -89,6 +89,9 @@ $agg: var(--border-radius);
     transform: rotate(180deg);
     height: var(--element-height);
     .bar__bars-bar {
+      &-partial{
+        border-top: solid 1px var(--gray-70);
+      }
       &-filled, &-partial{
         height: 100%;
         background-color: var(--bar-background, var(--yellow));

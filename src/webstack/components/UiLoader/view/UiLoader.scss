@@ -14,14 +14,14 @@
     height: 100%;
     margin: auto;
     @extend .d-flex;
-    gap: var(--s-1);
+    gap: var(--font-size, var(--s-1));
     flex-direction: column;
     position: relative;
   }
   &__icon {
     flex: 1;
+    margin-top: var(--font-size, var(--s-9));
     width: max-content;
-    height: max-content;
     &-content{
       overflow: visible;
       @extend .d-flex;
@@ -39,8 +39,8 @@
     @extend .d-flex;
     align-items: flex-start;
     white-space: nowrap;
-    font-size: var(--s-5);
-    --ui-icon-size: var(--s-5);
+    font-size: var(--font-size, var(--s-5));
+    --ui-icon-size: var(--font-size, var(--s-5));
     text-transform: uppercase;
     --ui-icon-color: var(--primary);
     flex: 1;

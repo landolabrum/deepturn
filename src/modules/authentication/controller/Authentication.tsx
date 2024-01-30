@@ -9,12 +9,15 @@ import { useRouter } from "next/router";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import { useLoader } from "@webstack/components/Loader/Loader";
+import { Line } from "@react-three/drei";
+import Link from "next/link";
 
 
 
 const Authentication: React.FC<any> = (props: any) => {
   const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
   const [view, setView] = useState<string>(props?.view || "sign-in");
+  const [hover, setHover] = useState<boolean>(false);
   const router = useRouter();
   const query = router.query;
   const handleView = () => {
@@ -74,8 +77,8 @@ const Authentication: React.FC<any> = (props: any) => {
           </div>
         </div>
         {view.includes("@") && <div className='authentication__email-verify'>
-          <div>An email has been sent to</div>
-          <UiButton variant='link'>{view}</UiButton>, <div>click the link in the email to continue.</div>
+          An email has been sent to
+          <Link onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} style={hover?{color:'var(--primary'}:undefined} href={`mailto://${view}`}>{' '+view+', '}</Link> click the link in the email to continue.
         </div>}
         {view == 'sign-in' && <SignIn email={newCustomerEmail} />}
         {view == 'sign-up' && <SignUp setView={setView} />}

@@ -7,7 +7,6 @@ import {
 import styles from "./Loader.scss";
 import { UiIcon } from "../UiIcon/UiIcon";
 import environment from "~/src/environment";
-import TJSCube from "../threeJs/TJSCube/controller/TJSCube";
 
 
 type ILoader = {
@@ -67,7 +66,9 @@ const Loader: React.FC = () => {
         >
           <div className='loader__content'>
             <div className='loader__content--icon'>
-              {context?.animation ? (
+            <UiIcon icon={`${environment.merchant.name}-logo`} glow />
+
+              {/* {context?.animation ? (
                 <TJSCube
                   color={"#ff3300"}
                   metalness={1}
@@ -87,7 +88,7 @@ const Loader: React.FC = () => {
                 />
               ) : (
                 <UiIcon icon={`${environment.merchant.name}-logo`} glow />
-              )}
+              )} */}
             </div>
             <div className='loader__content--body'>
               {LoaderState.body || 'loading'}

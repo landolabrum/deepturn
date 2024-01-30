@@ -2,15 +2,11 @@ import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import styles from "./ProductsListing.scss";
 import { getService } from "@webstack/common";
-import UiSelect from "@webstack/components/UiSelect/UiSelect";
-import UiButton from "@webstack/components/UiButton/UiButton";
 import ProductSlider from "../views/ProductSlider/ProductSlider";
 import { dateFormat, numberToUsd } from "@webstack/helpers/userExperienceFormats";
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import IShoppingService from "~/src/core/services/ShoppingService/IShoppingService";
-import BannerProduct from "../views/BannerProduct/BannerProduct";
 import ProductChapters from "../views/ProductChapters/ProductChapters";
-import environment from "~/src/environment";
 import { useLoader } from "@webstack/components/Loader/Loader";
 
 interface Filter {
@@ -47,7 +43,6 @@ const ProductsListing: NextPage = () => {
       try {
         const memberResponse = await shoppingService.getProducts();
         const fetchedProducts: any = memberResponse?.data;
-        const merchantId = environment?.merchant?.mid;
         if (fetchedProducts) {
           const formatted = fetchedProducts
           // .filter((product: any)=>product?.metadata?.mid == merchantId)

@@ -17,8 +17,12 @@ import useScrollTo from '@webstack/components/AdapTable/hooks/useScrollTo';
 import UiDiv from '@webstack/components/UiDiv/UiDiv';
 import dFlex from '@webstack/jsx/dFlex';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import environment from '~/src/environment';
-import createMerchantKey from '../../functions/createMerchantKey';
+import keyStringConverter from "@webstack/helpers/keyStringConverter"
+import environment from "~/src/environment"
+
+const createMerchantKey = (parent: string,key: string) =>{
+    return `${environment.merchant.mid}.${parent}.${keyStringConverter(key, true)}`
+}
 
 export type IMoreInfoField = {
     name: string;
@@ -36,15 +40,26 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
     const user = useUser();
     const { scrollTo, setScrollTo } = useScrollTo({ max: 1100 });
     const contactFields = [
-        { name: 'name', label: 'full name', type: 'text', 
-        placeholder: 'First Last',
-         required: true, },
-        { name: 'email', label: 'email', type: 'email', 
-        placeholder: 'your@email.com',
-         required: true, },
-        { name: 'phone', label: 'phone', type: 'tel', 
-        placeholder: '1 (555) 555 5555',
-         required: true, },
+        {
+            name: 'firstName', label: 'first name', type: 'text',
+            placeholder: 'first name',
+            required: true,
+        },
+        {
+            name: 'lastName', label: 'last name', type: 'text',
+            placeholder: 'last name',
+            required: true,
+        },
+        {
+            name: 'email', label: 'email', type: 'email',
+            placeholder: 'your@email.com',
+            required: true,
+        },
+        {
+            name: 'phone', label: 'phone', type: 'tel',
+            placeholder: '1 (555) 555 5555',
+            required: true,
+        },
         { name: 'address', label: 'address', required: true, },
     ];
     const defaultForm = { features: features, contact: contactFields };
@@ -60,17 +75,19 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
     const onChange = (e: any, handleErrors = true) => {
         const { name: name, value: value, error: error } = e.target;
         const onChangeErrors = () => {
-            const noValue = () => {return `${name} cannot be blank.`}
-            if(e.target.error) return e.target.error;
+            const noValue = () => { return `${name} cannot be blank.` }
+            if (e.target.error) return e.target.error;
 
             switch (name) {
-                case 'name':
-                    if (value?.split(' ')?.length == 1) return 'need last name';
-                    if (value?.split(' ')?.length > 2) return '**( syntax ERROR )**';
+                case 'firstName':
+                    if (2 > value?.length ) return 'not long enough';
+                    break;
+                case 'lastName':
+                    if (2 > value?.length ) return 'not long enough';
                     break;
                 case 'email':
                     if (value == null) return noValue();
-                    if(!Boolean(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)))return '**( syntax ERROR )**';
+                    if (!Boolean(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value))) return 'email invalid';
                     break;
                 case 'phone':
                     if (value == null) return noValue();
@@ -151,7 +168,7 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
             src: 'prod-feature',
             features: {},
             contact: {},
-            url:window?.location?.origin
+            url: window?.location?.origin
         };
 
         // Convert features
@@ -160,7 +177,7 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
                 request.features[createMerchantKey('configure', feature.name)] = feature.name == 'phone' ? phoneFormat(feature.value, 'US', true) : feature.value;
             }
         });
-        request.features[createMerchantKey('configure', 'timestamp')]=Date.now()
+        request.features[createMerchantKey('configure', 'timestamp')] = Date.now()
         // Convert contact
         fields.forEach((contactField: { [key: string]: any }) => {
             switch (contactField.name) {
@@ -269,7 +286,7 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
                 {view == 'success' && <UiDiv id='feature_message' jsx={successJsx}>{message || ''}</UiDiv>}
                 {view == 'contact' && <div className='product-feature-form__action'>
                     <div>
-                        <UiButton  onClick={() => handleView(true)} traits={{
+                        <UiButton onClick={() => handleView(true)} traits={{
                             beforeIcon: {
                                 icon: 'fa-chevron-left',
                             }
@@ -283,33 +300,33 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
                 </div>
                 {view == 'feature' && <>
 
-                        <div className='product-feature-form__selected'>
-                            <div className='product-feature-form__selected--header'>
-                                {`Selected ${title}s`} | total amps  {calculateTotalValue()}
-                            </div>
-                            <div className='product-feature-form__tools' >
-                                <div className='product-feature-form__tools--tool'>  <div onClick={clearAllSelected}>clear all</div> </div>
-                            </div>
-                            {formFeatures && Boolean(selected?.length) && Object.values(formFeatures).map((feature, index) => {
-                                if (feature?.selected) return (
-                                    <div key={index}>
-                                        <UiButton
-                                            variant='primary round mini'
-                                            traits={{
-                                                afterIcon: {
-                                                    icon: 'fa-xmark',
-                                                    onClick: () => handleFeature(feature)
-                                                },
-                                            }}
-                                            onClick={() => handleFeature(feature)}
-                                        >
-                                            {feature.name} - {feature?.value}
-                                        </UiButton>
-                                    </div>
-                                )
-                            })}
-                            {!selected.length && <div className='product-feature-form__instructions'>please Select, {title} to continue.</div>}
+                    <div className='product-feature-form__selected'>
+                        <div className='product-feature-form__selected--header'>
+                            {`Selected ${title}s`} | total amps  {calculateTotalValue()}
                         </div>
+                        <div className='product-feature-form__tools' >
+                            <div className='product-feature-form__tools--tool'>  <div onClick={clearAllSelected}>clear all</div> </div>
+                        </div>
+                        {formFeatures && Boolean(selected?.length) && Object.values(formFeatures).map((feature, index) => {
+                            if (feature?.selected) return (
+                                <div key={index}>
+                                    <UiButton
+                                        variant='primary round mini'
+                                        traits={{
+                                            afterIcon: {
+                                                icon: 'fa-xmark',
+                                                onClick: () => handleFeature(feature)
+                                            },
+                                        }}
+                                        onClick={() => handleFeature(feature)}
+                                    >
+                                        {feature.name} - {feature?.value}
+                                    </UiButton>
+                                </div>
+                            )
+                        })}
+                        {!selected.length && <div className='product-feature-form__instructions'>please Select, {title} to continue.</div>}
+                    </div>
                     <div id='product-feature-form__options' />
                     <AdaptGrid {...gridProps} >
                         {formFeatures != null && formFeatures.map((feature, index) => {
@@ -331,7 +348,7 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
                     </div>
                 </>}
                 {view == 'contact' && <div className='product-feature-form__contact'>
-                    <UiForm 
+                    <UiForm
                         fields={fields}
                         disabled={disabled}
                         onChange={onChange}

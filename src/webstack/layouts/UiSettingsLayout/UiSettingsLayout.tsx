@@ -1,5 +1,5 @@
 // Relative Path: ./SettingsView.tsx
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect,  useState } from 'react';
 import styles from './UiSettingsLayout.scss';
 import { default as Div } from "@webstack/components/UiDiv/UiDiv";
 import UiMenu from '../../components/UiMenu/UiMenu';
@@ -27,7 +27,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   title,
   defaultView
 }: ISettingsLayout) => {
-const {width, height }=useWindow();
+const {width }=useWindow();
   const router = useRouter();
   const queryViewId = router?.query?.vid && router.query.vid;
   const [view, setView] = useState<string | undefined>(defaultView);
@@ -60,9 +60,6 @@ const handleHide = () =>{
   
   useEffect(() => {
     if(width < 1100 && hide == 'hide')setHide('show');
-  }, [setHide, width]);
-
-  useEffect(() => {
     if (views) {
       const firstView = queryViewId || defaultView || Object.keys(views)[0];
       firstView && setView(String(firstView));
@@ -107,7 +104,7 @@ const handleHide = () =>{
 
           </div>
    
-          <div className={viewClass}>
+          <div id='settings-view' className={viewClass}>
           {title && <div className={`settings__view--header${
                   hide==''?' settings__view--header--init':hide=='show'?' settings__view--header--show':' settings__view--header--hide'}`}>
       

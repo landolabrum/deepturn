@@ -16,10 +16,11 @@ const ProductBuyNow: React.FC<any> = ({ product, cart, setCart, traits }: any) =
     const handleCart = (newQty?: number) => {
         product.price_object.qty = newQty;
         setCart(product);
-        if(!cart.length )openModal({
+        // if(!cart.length )
+        openModal({
             confirm:{
               title: 'product added to cart',
-              statements:[{text:'cart', href: '/cart'}]
+              statements:[{text:'cart', href: '/cart'},{text:'continue shopping'}]
             }
           });
     }

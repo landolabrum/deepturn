@@ -86,7 +86,7 @@ $actionsBg: var(--gray-90);
         @extend .d-flex;
         justify-content: stretch;
         align-items: flex-start;
-       
+       width: inherit;
         @media (min-width: 1100px) {
             padding: var(--element-height) 0 0;
         }
@@ -244,7 +244,6 @@ $actionsBg: var(--gray-90);
         
         @media (max-width: 1100px) {
             border-radius: var(--border-radius);
-            background-color: var(--gray-100);
             border: solid 1px transparent;
             animation:unset;
             margin: auto;

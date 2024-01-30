@@ -32,7 +32,7 @@ export class UiIcon extends React.Component<Props, State> {
   private currentColor: string | undefined;
 
   private _innerHtml = '';
-  // public renderedIconHTML: string | null = null;
+  public renderedIconHTML: string | null = null;
 
   constructor(props: Props) {
     super(props);
@@ -335,8 +335,10 @@ export class UiIcon extends React.Component<Props, State> {
           style={combinedStyles}
           data-testid={this.getDataTestId()}
         >
-          <div dangerouslySetInnerHTML={{ __html: this.state?.innerHtml }} />
-          {badgeElement} {/* Add the badge element here */}
+          <div 
+          dangerouslySetInnerHTML={{ __html: this.state?.innerHtml }}
+           />
+          {badgeElement&& badgeElement||null} {/* Add the badge element here */}
         </div>
       </>
     );

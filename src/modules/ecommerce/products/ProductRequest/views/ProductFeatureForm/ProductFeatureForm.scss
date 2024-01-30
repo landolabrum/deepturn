@@ -9,22 +9,25 @@
     flex-direction: column;
     justify-content: space-between;
     border-radius: var(--border-radius);
-    width: auto;
+    width: 100%;
     padding: var(--s-3) var(--s-6) var(--s-1);
     background-color: var(--gray-90);
     gap: var(--padding);
     min-height: 490px;
     height: max-content;
-    color:var(--gray-30);
-    #product-feature-form__options{
-        width:100%;
+    color: var(--gray-30);
+
+    #product-feature-form__options {
+        width: 100%;
     }
-    &__select-title{
+
+    &__select-title {
         width: 100%;
         text-transform: capitalize;
         font-size: var(--s-4);
         color: var(--gray-50);
     }
+
     &__contact {
         width: 100%;
         @extend .d-flex;
@@ -41,15 +44,17 @@
         padding-left: var(--s-5);
         line-height: 2;
         text-transform: capitalize;
-        color:var(--gray-30);
+        color: var(--gray-30);
     }
-    &__instructions{
+
+    &__instructions {
         text-transform: capitalize;
-        font-size:var(--s-4);
+        font-size: var(--s-4);
         color: var(--orange-opaque);
         width: 100%;
         text-align: center;
     }
+
     &__submit {
         width: 100%;
         margin: var(--element-height) 0 0;
@@ -136,7 +141,7 @@
         --ui-icon-color: var(--white);
         border: solid 1px var(--gray-50);
         background-color: var(--gray-80);
-        
+
         &:hover {
             color: var(--gray-10);
             border: solid 1px var(--gray-20);
@@ -175,10 +180,12 @@
         }
 
     }
+
     &__action {
         width: 100%;
         justify-content: flex-start;
-        div{
+
+        div {
             width: max-content;
         }
     }

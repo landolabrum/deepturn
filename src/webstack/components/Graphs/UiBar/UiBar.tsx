@@ -84,6 +84,7 @@ const UiBar = ({
       let barStyle: { backgroundColor?: string; height?: string } = {}; // Define barStyle with optional properties
 
       if (isColor) {
+
         barStyle.backgroundColor = percentageToHex(localPercentage);
       }
 
@@ -100,7 +101,6 @@ const UiBar = ({
       bars.push(
         <span key={i}>
           <style jsx>{styles}</style>
-
           <div className="bar__bars-content">
             <div
               className={`bar__bars-bar ${barClassName}`}
@@ -116,13 +116,7 @@ const UiBar = ({
 
   useEffect(() => { 
     setLocalPercentage(percentage)
-
-    // if(isColor && containerRef.current){
-    //   containerRef = containerRef
-    // }
-
-}, [Boolean(percentage != localPercentage 
-  && !isColor) ]);
+}, [percentage]);
   return (
     <>
       <style jsx>{styles}</style>

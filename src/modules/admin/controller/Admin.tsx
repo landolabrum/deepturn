@@ -11,6 +11,7 @@ import AdminBilling from '../views/AdminBilling/controller/AdminBilling';
 import AdminAccounts from '../views/AdminAccounts/controller/AdminAccounts';
 import { useClearance } from '~/src/core/authentication/hooks/useUser';
 import AdminInvoices from '../views/AdminInvoices/controller/AdminInvoices';
+import AdminMesenger from '../views/AdminMesenger/AdminMesenger';
 
 
 const UiGlobe = dynamic(
@@ -22,32 +23,33 @@ const UiGlobe = dynamic(
 
 const Admin = () => {
   const initialViews = {
-    globe:<UiGlobe/>,
-    customers: <AdminCustomers/>,
-    products: <AdminProducts/>,
-    invoice: <AdminInvoices/>,
-    documents: <AdminListDocuments/>,
-    system: <AdminSystem/>
+    globe: <UiGlobe />,
+    customers: <AdminCustomers />,
+    products: <AdminProducts />,
+    invoice: <AdminInvoices />,
+    documents: <AdminListDocuments />,
+    system: <AdminSystem />,
+    messenger: <AdminMesenger />,
   }
   const level = useClearance();
-  const [views, setViews]=useState<any>(initialViews);
-  const [currentView, setCurrentView]=useState<string | undefined>('accounts');
-  // useEffect(() => {
-  //   if(level > 10){
-  //     views.accounts = <AdminAccounts/>;
-  //     setViews(views)
-  //   }
-  // }, [setCurrentView, level]);
+  const [views, setViews] = useState<any>(initialViews);
+  const [currentView, setCurrentView] = useState<string | undefined>('accounts');
+  useEffect(() => {
+    if (level > 10) {
+      views.accounts = <AdminAccounts />;
+      setViews(views)
+    }
+  }, [setCurrentView, level]);
   return (
     <>
       <style jsx>{styles}</style>
-    {level && <UiSettingsLayout
-      // variant='fullwidth'
+      <UiSettingsLayout
+        // variant='fullwidth'
         defaultView={currentView}
         title='admin'
         views={views}
-        // setViewCallback={console.log}
-      />}
+      // setViewCallback={console.log}
+      />
     </>
   );
 };

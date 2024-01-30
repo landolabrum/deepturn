@@ -37,8 +37,8 @@ const ModalOverlay: React.FC = () => {
     isDragging && setIsDragging(false);
   };
 
-const mouse = useMouse();
-const mousePos = mouse?.position;
+  const mouse = useMouse();
+  const mousePos = mouse?.position;
   const startDrag = (e: React.MouseEvent) => {
     setStartPosition({ x: position.x, y: position.y }); // Use current mouse position
     setIsDragging(true);
@@ -62,21 +62,22 @@ const mousePos = mouse?.position;
   if (!isModalOpen) {
     return null;
   }
-  const handleClick = (btn: any) =>{
-    if(btn?.onClick)btn.onClick;
-    else if(btn.href){
-      router.push(btn.href, undefined, {shallow: false})
-    };
+  const handleClick = (btn: any) => {
+    if (btn?.onClick) {
+      btn.onClick(btn); // Make sure to call the function
+    } else if (btn.href) {
+      router.push(btn.href, undefined, { shallow: false });
+    }
     closeModal();
-  }
+  };
   if (hasZindex) return <>
     <style jsx>{styles}</style>
     <div
-    style={{zIndex: modalContentInfer.zIndex}}
+      style={{ zIndex: modalContentInfer.zIndex }}
       onClick={closeModal}
       className={modalOverlayClass}
       onMouseUp={modalContent.draggable ? stopDrag : undefined}
-      />
+    />
   </>;
   return (
     <>
@@ -85,14 +86,14 @@ const mousePos = mouse?.position;
         onClick={closeModal}
         className={modalOverlayClass}
         onMouseUp={modalContent.draggable ? stopDrag : undefined}
-        />
+      />
       <div
         ref={modalRef}
         className={modalClass}>
         <div className={modalContentClass}>
           <a
-onMouseDown={modalContent.draggable ? startDrag : undefined}
-className={`${modalHeaderClass}${ isDragging ? ' modal__header__dragging' : modalContent.draggable ?'':' modal__header__no-drag'}`}
+            onMouseDown={modalContent.draggable ? startDrag : undefined}
+            className={`${modalHeaderClass}${isDragging ? ' modal__header__dragging' : modalContent.draggable ? '' : ' modal__header__no-drag'}`}
           >
             <div className='modal-overlay__title'>
               {title || confirm?.title}
@@ -107,9 +108,13 @@ className={`${modalHeaderClass}${ isDragging ? ' modal__header__dragging' : moda
             {Object(confirm?.statements)?.length &&
               <div className='modal-overlay__confirm'>
                 {Object.values(confirm?.statements).map((btn: any, key: number) => {
-                  return <div key={key} className='modal-overlay__confirm-btn'>
-                    <UiButton onClick={()=>handleClick(btn)} variant={btn.text == 'yes' ? 'primary' : btn?.variant}>{btn.text}</UiButton>
-                  </div>
+                  return (
+                    <div key={key} className='modal-overlay__confirm-btn'>
+                      <UiButton onClick={() => handleClick(btn)} variant={btn.text === 'yes' ? 'primary' : btn?.variant}>
+                        {btn.text}
+                      </UiButton>
+                    </div>
+                  );
                 })}
               </div>
             }

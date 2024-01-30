@@ -1,0 +1,33 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.admin-invoices{
+    width: 100%;
+    min-height: 50vh;
+    @extend .d-flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: var(--padding);
+    &__header{
+        @extend .d-flex;
+        justify-content: space-between;
+        width: 100%;
+        gap: var(--s-9);
+        font-size: var(--s-3);
+        color: var(--gray-40);
+        &-actions{
+            @extend .d-flex;
+            gap: var(--s-9);
+        }
+        // background-color: var(--gray-80);
+        
+    }
+    &__content{
+        padding: var(--padding);
+        background-color: var(--gray-70-opaque);
+        width: var(--padding-width);
+        border-radius: var(--border-radius);
+    }
+}

@@ -1,0 +1,40 @@
+/* Relative Path: ./UiMediaSlider.scss */
+
+.ui-media-slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding:16px 0;
+  }
+  
+  .media-slider {
+    width: 100%;
+    background-color: #f0f0f0; /* Customize the slider background color */
+    height: var(--element-height); /* Customize the slider height */
+    border-radius: 10px; /* Customize the slider border-radius */
+  }
+  
+  .slider-track {
+    height: 100%;
+    width: 100%; /* Customize the initial width of the track */
+    border-radius: 10px; /* Match the border-radius of the slider */
+  }
+  
+  .points {
+    position: relative;
+    width: 100%;
+    max-width: 100%; /* Match the slider's max-width */
+    margin-top: var(--padding); /* Adjust the margin as needed */
+    height: var(--s-6); /* Customize the point height */
+  }
+  
+  .point {
+    position: absolute;
+    height: var(--s-6); /* Customize the point height */
+    aspect-ratio: 1;
+    border-radius: 50%; /* Shape the point as a circle */
+    cursor: pointer;
+  }
+  

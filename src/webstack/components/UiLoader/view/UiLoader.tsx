@@ -1,7 +1,7 @@
 import styles from "./UiLoader.scss";
 import type { NextComponentType, NextPageContext } from "next";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import environment from "~/src/environment";
 interface Props {
   text?: string | boolean;
@@ -21,9 +21,7 @@ const UiLoader: NextComponentType<NextPageContext, {}, Props> = (props: Props) =
     if (props?.height && ref?.current) ref.current.style.height = `${typeof props.height === "number" ? props.height + "px" : props.height}`;
     if (props?.fontSize && ref?.current) ref.current.style.fontSize = `${typeof props.fontSize === "number" ? props.fontSize + "px" : props.fontSize}`;
   }, [props]);
-  useEffect(() => {
 
-  }, [text, props.dots]);
   return (
     <>
       <style jsx>{styles}</style>

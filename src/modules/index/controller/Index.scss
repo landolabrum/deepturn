@@ -8,7 +8,7 @@
     padding: var(--padding);
     width: calc(100% - calc(var(--padding) * 2))
 }
-.home__clouds{
+.index__clouds{
     height: 100vh;
     width: 100vw;
     
@@ -24,7 +24,7 @@
     backdrop-filter: blur(14px);
 }
 
-.home {
+.index {
     width: 100%;
     color: var(--gray-20);
     display: flex;
@@ -41,7 +41,8 @@
         font-size: var(--s-1);
     }
 
-    .home__full {
+    .index__full {
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
         gap: var(--padding);
@@ -56,7 +57,7 @@
         }
     }
 
-    .home__sub-title {
+    .index__sub-title {
         width: 100%;
         // border: solid 1px;
         text-transform: capitalize;

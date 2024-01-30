@@ -15,6 +15,7 @@ export interface IInput extends IFormControl {
   disabled?: boolean;
   value?: ValueType;
   defaultValue?: string | number | readonly string[] | undefined;
+  onClick?: (e:any)=>void;
   onPaste?: (e: any) => void;
   onChange?: (e: any) => void;
   onKeyDown?: (e: any) => void;

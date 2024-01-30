@@ -51,8 +51,6 @@ const UiMedia: React.FC<IMedia> = ({ src, variant, type, alt, loadingText }: IMe
         {!imageControlProps.error &&
           <img src={src} alt={alt} onError={handleError} key={reloadTrigger} /> // key added here
         }
-        {/* {imageControlProps.error && <div className='media__refresh'>
-          <UiIcon icon='fa-arrows-rotate' onClick={handleReload} /></div>}  */}
       </ImageControl>
     </>
   );

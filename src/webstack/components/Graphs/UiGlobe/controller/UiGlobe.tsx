@@ -1,26 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Globe, { GlobeMethods } from 'react-globe.gl';
 import styles from './UiGlobe.scss';
 import useWindow from '@webstack/hooks/useWindow';
 
 const UiGlobe: React.FC = () => {
-  const size = useWindow();
+  const {width} = useWindow();
+  const [x, setx]=useState(width);
   const [places, setPlaces] = useState([]);
-  const [xy, setXy] = useState([0, 0]);
-  const globeEl = useRef<GlobeMethods | undefined>(undefined); // Update the ref type
+  const globeRef = useRef<GlobeMethods | undefined>(undefined); // Update the ref type
+  const containerRef = useRef<any | undefined>(undefined); // Update the ref type
 
   useEffect(() => {
     // Start auto-rotation
     const rotationInterval = setInterval(() => {
-      if (globeEl.current) {
-        globeEl.current.controls().autoRotate = true;
-        globeEl.current.controls().autoRotateSpeed = 0.2; // adjust this value to slow down the rotation
+      if (globeRef.current) {
+        globeRef.current.controls().autoRotate = true;
+        globeRef.current.controls().autoRotateSpeed = 0.2; // adjust this value to slow down the rotation
       }
     }, 1000);
 
     const handleGlobeClick = () => {
-      if (globeEl.current) {
-        globeEl.current.controls().autoRotate = false;
+      if (globeRef.current) {
+        globeRef.current.controls().autoRotate = false;
       }
     };
 
@@ -29,42 +30,32 @@ const UiGlobe: React.FC = () => {
       clearInterval(rotationInterval);
     };
   }, []);
+const handleWidth =()=>{
 
-  const globeSize = () => {
-    const isPortrait: any = size.width < size.height;
-    const isMobile: any = size.width < 900;
-    let x:number = size.width;
-    let y:number = size.height;
-
-    if(isPortrait && isMobile)setXy([x, Math.trunc(y * .5)]);
-    else if(!isPortrait && isMobile)setXy([Math.trunc(x), Math.trunc(x)]);
-    else if(isPortrait && !isMobile)setXy([Math.trunc(x - 400), Math.trunc(x - 100)]);
-    else if(!isPortrait && !isMobile)setXy([Math.trunc(x - 400), Math.trunc(y - 100)]);
-        
-  }
+  if(!containerRef.current)return;
+  setx( containerRef.current.offsetWidth)
+  // containerRef.current.offsetWidth
+ };
   useEffect(() => {
-    globeSize();
-  }, [size, setXy])
+    handleWidth();
+  },[width])
   useEffect(() => {
-    // load data
     fetch('/data/ne_110m_populated_places_simple.geojson.json')
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(({ features }) => setPlaces(features));
   }, []);
+
+ 
+
   return (
     <>
       <style jsx>{styles}</style>
-      {/* {JSON.stringify(places)} */}
-      <div className='globe'>
+      <div ref={containerRef} className='globe'>
         <Globe
-          ref={globeEl}
-          width={xy[0]}
-          // width={size?.width < 900? size?.width : size?.width - 400}
-          height={xy[1]}
-          // height={size?.width < 900? size?.height * .7 : size?.height * .8}
+          ref={globeRef}
           globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
           labelsData={places}
-          backgroundColor='#ffffff00'
+          backgroundColor='#00000000'
           labelLat={(d: any) => d.properties.latitude}
           labelLng={(d: any) => d.properties.longitude}
           labelText={(d: any) => d.properties.name}
@@ -74,7 +65,7 @@ const UiGlobe: React.FC = () => {
           labelResolution={2}
           showAtmosphere={false}
         />
-      </div>
+        </div>
     </>
   );
 };

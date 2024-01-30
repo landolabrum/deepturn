@@ -49,11 +49,9 @@ a {
   }
 
   &__email-verify {
-    @extend .d-flex;
     font-size: var(--s-5);
     min-height: 500px;
-    flex-wrap: wrap;
-    white-space: nowrap;
+   
   }
 
   .authentication__view-header {

@@ -1,4 +1,5 @@
 input, textarea {
+
   // Define your custom styles for the input elements/
   width: 100%;
   height: inherit;
@@ -21,6 +22,7 @@ input, textarea {
     -webkit-appearance: none;
   }
   &[type=button]{
+    cursor: pointer;
     display: flex;
     justify-content: flex-start;
   }

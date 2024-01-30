@@ -7,7 +7,7 @@ import { ICartItem } from '~/src/modules/ecommerce/cart/model/ICartItem';
 import { useRouter } from 'next/router';
 // import useScroll from '@webstack/hooks/useScroll';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-
+const DEFAULT_PRODUCTS_LEN = 4
 interface Product {
   id: string;
   name: string;
@@ -21,7 +21,7 @@ interface ProductSliderProps {
 const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
   const itemsRef = useRef<any>(null);
   const router = useRouter();
-  const [_products, setProducts]=useState<any>(Array.from({ length: 1 }, (_, i) => i + 1));
+  const [_products, setProducts]=useState<any>(Array.from({ length: DEFAULT_PRODUCTS_LEN }, (_, i) => i + 1));
   const { getCartItems, handleQtyChange } = useCart();
   const [isScrolledLeft, setIsScrolledLeft] = useState(true);
   const [isScrolledRight, setIsScrolledRight] = useState(false);

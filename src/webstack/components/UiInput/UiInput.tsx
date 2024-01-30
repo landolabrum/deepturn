@@ -9,7 +9,7 @@ import AutocompleteAddressInput from "./views/AddressInput";
 import { debounce } from "lodash";
 
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
-  const { name, type, value, onChange, onKeyDown, onKeyUp, message, required, size } = props;
+  const { name, type, value, onChange, onKeyDown, onKeyUp, message, required, size, onClick } = props;
   const [show, setShow] = useState<boolean>(false);
   
   const handleChange = (e: any) => {
@@ -36,7 +36,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   ].join(" ");
   if (props.variant == 'invalid' && value?.length == 0) props.variant == undefined;
   const elType = show && type === "password" ? "text" : type;
-  useEffect(() => { }, [props?.variant, value]);
+  // useEffect(() => { }, [props?.variant, value]);
   const isTextArea = String(value).length > 100 || type == 'textarea';
   const inputValue = value !== undefined && value !== null ? value : '';
 
@@ -55,6 +55,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             } : props.traits?.afterIcon,
           }}>
           {!isTextArea ? <input
+            onClick={type == 'button'&& onClick && onClick ||undefined}
             data-element={props['data-element'] || 'input'}
             disabled={props?.disabled || undefined}
             id={props?.id}
