@@ -1,2 +1,2 @@
-import ProductRequest from "~/src/modules/ecommerce/products/ProductRequest/controller/ProductRequest";
-export default ProductRequest;
+import ProductRequestSurvey from "~/src/modules/ecommerce/products/ProductRequestSurvey/ProductRequestSurvey";
+export default ProductRequestSurvey;
