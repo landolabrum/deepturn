@@ -28,7 +28,7 @@ const Custom404: React.FC = () => {
                 <div>
                   <UiButton 
                   variant='lite' 
-                  traits={{beforeIcon:'fa-chevron-left'}} onClick={()=>router.back()}>back</UiButton>
+                  traits={{beforeIcon:'fa-chevron-left'}} onClick={()=>router.push('/')}>back</UiButton>
                 </div>
                 <UiIcon icon='fa-exclamation-triangle' />{`This page does not exist`}
               </div>

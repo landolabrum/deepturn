@@ -67,11 +67,12 @@ const useRoute = (): ORoute => {
         handleHeader(matchingRoute?.label && capitalizeAll(matchingRoute?.label))
         matchingRoute?.href && !router.asPath.includes(matchingRoute?.href) && router.push(matchingRoute.href, undefined, { shallow: true });
       } else if (router.asPath !== '/authentication/signout') {
-        let magicUrl: string = router.asPath;
-      
-        if (magicUrl.includes('/404?')) {
-          magicUrl = magicUrl.replace('/404?', '/');
-          router.push(magicUrl);
+        let routerPath: string = router.asPath;
+        console.log('[ ROUTER PATH ]', routerPath)
+        if (routerPath.includes('/404?')) {
+          router.push(routerPath);
+        }else{
+          router.push(`/404?loc=${routerPath}`);
         }
       }
       
