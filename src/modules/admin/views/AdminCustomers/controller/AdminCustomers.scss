@@ -7,14 +7,16 @@
 
     @extend .d-flex;
     flex-direction: column;
-    gap: var(--padding);
     width: 100%;
     &__header{
         width: 100%;
         @extend .d-flex;
-        justify-content: flex-end;
-        gap: var(--s-9);
-        .admin-customer__actions{
+        justify-content: space-between;
+        &--title{
+            font-size: var(--s-1);
+            color: var(--gray-50);
+        }
+        &--actions{
             gap: var(--s-9);
             @extend .d-flex;
         }

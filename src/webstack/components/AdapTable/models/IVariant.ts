@@ -17,6 +17,7 @@ export type IFormControlVariant =
   | "center"
   | "disabled"
   | "select__disabled"
+  | "fit-text"
   | "disabled-icon"
   | "false"
   | "bump"

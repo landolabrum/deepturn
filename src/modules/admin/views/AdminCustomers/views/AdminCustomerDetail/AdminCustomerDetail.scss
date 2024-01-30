@@ -7,6 +7,8 @@
 
 .admin-customer {
     margin-top: var(--s-8);
+    border-top: solid 1px var(--gray-70);
+    padding-top: var(--s-8);
     @extend .d-flex;
     justify-content: flex-start;
     $rat: 20px;
@@ -18,31 +20,24 @@
     gap: var(--padding);
 
     &__header {
-        font-size: var(--s-1);
         color: var(--gray-40);
-        .customer--info, .customer--contact{
-            @extend .d-flex;
-            gap: var(--s-9);
-            align-items: flex-start;
-            font-size: var(--s-4);
-            height: 100%; 
-        }
-        .customer--info{
-            justify-content: flex-start;
-            flex-direction: column;
-            &__address, &__contact{
-                font-size: var(--s-5);
-                color: var(--gray-50);
-                cursor: pointer;
-                &:hover{
-                    color: var(--primary)
-                }
+        width: 100%;
+        height: auto;
+        @extend .d-flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        &--info{
+            flex: 1;
+            &-name{
+                font-size: var(--s-3);
             }
         }
-        .customer--contact{
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-end;
+        &--contact{
+            @extend .d-flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: var(--padding);
+            width: 100%;
         }
      
     }

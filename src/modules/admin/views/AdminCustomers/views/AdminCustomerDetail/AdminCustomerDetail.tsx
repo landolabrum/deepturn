@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './AdminCustomer.scss';
+import styles from './AdminCustomerDetail.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
@@ -15,7 +15,6 @@ import AdminListDocuments from '../../../AdminDocuments/controller/AdminListDocu
 import { useLoader } from '@webstack/components/Loader/Loader';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
-import { capitalizeAll } from '@webstack/helpers/Capitalize';
 import environment from '~/src/environment';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { findField, updateField } from '@webstack/components/UiForm/functions/formFieldFunctions';
@@ -110,9 +109,9 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
     const isNewField = customer && customer.find(f => f.name == name) == undefined;
     if (customer != undefined && !isNewField) {
       setCustomer(customer.map((field: IFormField) => {
-        if (field.name == name){
-          if(field.error)delete field.error;
-           field.value = value;
+        if (field.name == name) {
+          if (field.error) delete field.error;
+          field.value = value;
         }
         return field;
       }));
@@ -122,7 +121,7 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
 
   }
   const onSubmit = async () => {
-    if(!customer) return;
+    if (!customer) return;
     let request: any = {
       name: findField(customer, 'name').value,
       email: findField(customer, 'email').value,
@@ -138,9 +137,6 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
         request.metadata[metadataKey] = field.value;
       }
     });
-
-    // console.log("Final request with metadata:", request); // For debugging
-
     try {
       const updatedCustomer = await adminService.updateCustomer(customerId, request);
       setCustomer(modifyCustomerData(updatedCustomer));
@@ -161,7 +157,7 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
             if (error.loc.includes('address')) {
               const newFields = updateField(customer, 'address', { error: error.msg });
               setCustomer(newFields);
-              console.log(findField(newFields, 'address'))
+              // console.log(findField(newFields, 'address'))
               break; // Break the loop when 'address' is found
             }
           }
@@ -217,6 +213,8 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
       acc = acc += Number(value)
       return acc;
     }, 0);
+  const addressString = Object.values(info.address).join(' ');
+
   useEffect(() => {
     productRequestTotal()
     getCustomer();
@@ -227,29 +225,29 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
       <style jsx>{styles}</style>
       <div className='admin-customer'>
         <div className='admin-customer__header'>
-          Admin Customer
-          <AdaptGrid xs={1} md={2} gap={10} margin='0 0 17px' >
-            <div className='customer--info'>
-              <div className='customer--info__name'>{info?.name}</div>
+          <div className='admin-customer__header--contact'>
+            <div>
+              <UiButton variant='lowercase' traits={{ beforeIcon: 'fa-envelope' }} href={`mailto:${info?.email}`} >{info.email}</UiButton>
+            </div>
+            <div>
               {Object.entries(info?.address)?.length &&
-                <div className='customer--info__address' onClick={console.log}>
-                  <AdaptTableCell cell='address' data={info.address} />
-                </div>
+                <UiButton
+                  variant='fit-text'
+                  traits={{ beforeIcon: 'fa-home'}}
+                  onClick={() => {
+                    const googleMapsQuery = `https://maps.google.com/?q=${encodeURIComponent(addressString)}`;
+                    window.open(googleMapsQuery, '_blank');
+                  }}>
+                  {addressString}
+                </UiButton>
               }
             </div>
-            <div className='customer--contact'>
+            {String(info?.phone).length > 2 &&
               <div>
-                <UiButton variant='lowercase' traits={{ beforeIcon: 'fa-envelope' }} href={`mailto://${info?.email}`} >{info.email}</UiButton>
+                <UiButton traits={{ beforeIcon: 'fa-circle-phone-flip' }} >{phoneFormat(info?.phone)}</UiButton>
               </div>
-              {String(info?.phone).length > 2 &&
-                <div>
-                  <UiButton traits={{ beforeIcon: 'fa-circle-phone-flip' }} >{phoneFormat(info?.phone)}</UiButton>
-                </div>
-              }
-            </div>
-
-          </AdaptGrid>
-
+            }
+          </div>
           {productRequest?.length && <AdapTable data={productRequestNoTimeStamp()} options={{
             tableTitle:
               <div className='d-flex' style={{ width: '100%', justifyContent: "space-between" }}>

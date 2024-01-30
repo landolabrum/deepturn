@@ -26,7 +26,7 @@
 button {
   display: flex;
   align-items: inherit;
-  justify-content: center;
+  justify-content: inherit;
   color: inherit;
   background-color: transparent;
   outline: none;
@@ -41,12 +41,15 @@ button {
   animation: inherit;
   font-weight: inherit;
   font-family: inherit;
+  text-align: inherit;
   cursor: inherit;
   // border-radius: inherit;
   padding: 0;
   &.flat {
     margin: 0;
-    
+  }
+  &.fit-text{
+    padding: var(--s-9) 0;
   }
   &.lite{
     text-decoration: none;

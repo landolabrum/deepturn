@@ -103,11 +103,7 @@ const AdminCustomerList: React.FC<any> = ({onRowClick}:any) => {
             email: customer.email,
           }}/>,
           id: customer.id,
-          // address:  <AdaptTableCell cell='address' data={
-          //   customer?.address
-          //   // address.trim()
-          // }/> || '',
-          // phone: customer.phone && phoneFormat(customer.phone),
+          name: customer.name,
           balance: customer.balance,
           created: <AdaptTableCell cell='date' data={customer.created}/>,
           default_source:  <AdaptTableCell cell='check' data={Boolean(customer.default_source)}/>,

@@ -7,7 +7,6 @@ import AdminCustomers from '../views/AdminCustomers/controller/AdminCustomers';
 import AdminProducts from '../views/AdminProducts/controller/AdminProducts';
 import AdminListDocuments from '../views/AdminDocuments/controller/AdminListDocuments';
 import AdminSystem from '../views/AdminSystem/AdminSystem';
-import AdminBilling from '../views/AdminBilling/controller/AdminBilling';
 import AdminAccounts from '../views/AdminAccounts/controller/AdminAccounts';
 import { useClearance } from '~/src/core/authentication/hooks/useUser';
 import AdminInvoices from '../views/AdminInvoices/controller/AdminInvoices';
@@ -32,23 +31,22 @@ const Admin = () => {
     messenger: <AdminMesenger />,
   }
   const level = useClearance();
-  const [views, setViews] = useState<any>(initialViews);
-  const [currentView, setCurrentView] = useState<string | undefined>('accounts');
+  const [views, setViews] = useState<any | undefined>();
   useEffect(() => {
-    if (level > 10) {
+    if(views === undefined)setViews(initialViews);
+    if (level >= 10 && views !== undefined) {
       views.accounts = <AdminAccounts />;
       setViews(views)
     }
-  }, [setCurrentView, level]);
+  }, [views, level]);
+  if(level < 10 || views === undefined)return <></>;
   return (
     <>
       <style jsx>{styles}</style>
       <UiSettingsLayout
-        // variant='fullwidth'
-        defaultView={currentView}
-        title='admin'
+        defaultView='globe'
+        // title='admin'
         views={views}
-      // setViewCallback={console.log}
       />
     </>
   );

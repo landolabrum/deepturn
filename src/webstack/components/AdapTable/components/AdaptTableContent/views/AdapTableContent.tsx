@@ -95,7 +95,7 @@ const viewportHeight = useDocument()?.viewport.height;
     let maxWidth = 0;
     rowRefs.current.forEach((row:any) => {
       if (row && row.children[columnIndex]) {
-        console.log('[width]: ',row.children[columnIndex])
+        // console.log('[width]: ',row.children[columnIndex])
         maxWidth = Math.max(maxWidth, row.children[columnIndex].offsetWidth);
       }
     });

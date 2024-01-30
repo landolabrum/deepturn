@@ -99,9 +99,7 @@
     overflow: hidden;
     cursor: pointer;
     font-weight: 300;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    @extend .d-flex;
     line-height: 1;
     height: calc(var(--element-height) - 2px);
     white-space: nowrap;
@@ -154,6 +152,7 @@
         // box-shadow: var(--box-shadow);
     }
     &--checkbox{
+        width: max-content;
         padding:  0;
         height: var(--element-height);
     }
@@ -282,7 +281,11 @@
         inherit, var(--gray-50), transparent,
         inherit, var(--gray-30), transparent,
     );
-
+    &--fit-text{
+        white-space: unset;
+        justify-content: flex-start;
+        height: auto;
+    }
     &--signature {
         @extend .d-flex;
         position: relative;
