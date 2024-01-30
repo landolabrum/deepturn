@@ -19,8 +19,28 @@ import dFlex from '@webstack/jsx/dFlex';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import keyStringConverter from "@webstack/helpers/keyStringConverter"
 import environment from "~/src/environment"
-
-const createMerchantKey = (parent: string,key: string) =>{
+export const applianceArray: IMoreInfoField[] = [
+    { name: "refrigerator", selected: false, value: 6 },
+    { name: "tv", selected: false, value: 2 },
+    { name: "dishwasher", selected: false, value: 15 },
+    { name: "space heater", selected: false, value: 15 },
+    { name: "microwave", selected: false, value: 10 },
+    { name: "washing machine", selected: false, value: 10 },
+    { name: "dryer", selected: false, value: 30 },
+    { name: "oven", selected: false, value: 20 },
+    { name: "air conditioner", selected: false, value: 15 },
+    { name: "vacuum cleaner", selected: false, value: 11 },
+    { name: "toaster", selected: false, value: 9 },
+    { name: "blender", selected: false, value: 6 },
+    { name: "coffee maker", selected: false, value: 10 },
+    { name: "electric kettle", selected: false, value: 13 },
+    { name: "hair dryer", selected: false, value: 13 },
+    { name: "iron", selected: false, value: 10 },
+    { name: "fan", selected: false, value: 3 },
+    { name: "stove top", selected: false, value: 15 },
+    { name: "other", selected: false, value: 10 },
+];
+const createMerchantKey = (parent: string, key: string) => {
     return `${environment.merchant.mid}.${parent}.${keyStringConverter(key, true)}`
 }
 
@@ -32,9 +52,13 @@ export type IMoreInfoField = {
 interface IProductMoreInfoForm {
     title?: string;
     subtitle?: string;
-    features: IMoreInfoField[];
+    features?: IMoreInfoField[];
 }
-const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({ features, title, subtitle }) => {
+const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
+    features = applianceArray,
+    title = 'appliance',
+    subtitle = 'Select applicable appliances that you need power'
+}) => {
     const { openModal, closeModal } = useModal();
     const user_agent = useUserAgent();
     const user = useUser();
@@ -80,10 +104,10 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({ features, title,
 
             switch (name) {
                 case 'firstName':
-                    if (2 > value?.length ) return 'not long enough';
+                    if (2 > value?.length) return 'not long enough';
                     break;
                 case 'lastName':
-                    if (2 > value?.length ) return 'not long enough';
+                    if (2 > value?.length) return 'not long enough';
                     break;
                 case 'email':
                     if (value == null) return noValue();
