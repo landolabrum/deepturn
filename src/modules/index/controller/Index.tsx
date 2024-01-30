@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Index.scss';
-import ProductFeatureForm from '../../ecommerce/products/ProductRequest/views/ProductFeatureForm/ProductFeatureForm';
-import { IMoreInfoField } from '../../ecommerce/products/ProductRequest/views/ProductFeatureForm/ProductFeatureForm';
+import ProductRequestSurvey from '../../ecommerce/products/ProductRequestSurvey/ProductRequestSurvey';
+import { IMoreInfoField } from '../../ecommerce/products/ProductRequestSurvey/ProductRequestSurvey';
 
 export const applianceArray: IMoreInfoField[] = [
     { name: "refrigerator", selected: false, value: 6 },
@@ -41,7 +41,7 @@ const Index = () => {
       <style jsx>{styles}</style>
       <div className='index'>
       <div className='index__full'>
-      <ProductFeatureForm
+      <ProductRequestSurvey
         title='appliance'
         subtitle='Select applicable appliances that you need power'
         features={applianceArray}

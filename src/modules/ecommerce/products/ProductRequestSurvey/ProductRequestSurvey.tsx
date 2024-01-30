@@ -1,6 +1,6 @@
 // Relative Path: ./ProductFeatureForm.tsx
 import React, { useEffect, useState } from 'react';
-import styles from './ProductFeatureForm.scss';
+import styles from './ProductRequestSurvey.scss';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
@@ -34,7 +34,7 @@ interface IProductMoreInfoForm {
     subtitle?: string;
     features: IMoreInfoField[];
 }
-const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, subtitle }) => {
+const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({ features, title, subtitle }) => {
     const { openModal, closeModal } = useModal();
     const user_agent = useUserAgent();
     const user = useUser();
@@ -360,4 +360,4 @@ const ProductFeatureForm: React.FC<IProductMoreInfoForm> = ({ features, title, s
     );
     return <>error: (c-pff)</>
 };
-export default ProductFeatureForm;
+export default ProductRequestSurvey;
