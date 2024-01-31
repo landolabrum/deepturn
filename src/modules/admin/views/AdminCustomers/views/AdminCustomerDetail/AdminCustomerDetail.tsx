@@ -157,7 +157,6 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
             if (error.loc.includes('address')) {
               const newFields = updateField(customer, 'address', { error: error.msg });
               setCustomer(newFields);
-              // console.log(findField(newFields, 'address'))
               break; // Break the loop when 'address' is found
             }
           }
@@ -180,17 +179,19 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
             email: response?.email
           })
           const hasProductRequest = () => {
+            let productRequestTotal = 0;
             const requestItems = Object.entries(response?.metadata || {}).reduce((acc: any, [key, value]) => {
               const keyParts = keyStringConverter(key).split('.');
               if (keyParts[0] === merchantId && value) {
                 // Assuming the key format is always 'merchantId.form.item'
                 const [, form, item] = keyParts;
+                productRequestTotal += Number(value)
                 acc.push({ form, item, value });
               }
               return acc;
             }, []);
-            if (Boolean(requestItems?.length)) setNotification({ active: true, list: [{ label: `${info?.name}, has a new product request.` }] })
-            setProductRequest(requestItems);
+            if (Boolean(requestItems?.length)) setNotification({ active: true, list: [{ label: `${response?.name}, has a new product request.` }] })
+            setProductRequest([...requestItems, {form: 'configure', item:'total', value:productRequestTotal}]);
           }
           hasProductRequest();
           const transformedData = modifyCustomerData(response);
@@ -208,15 +209,15 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
   const productRequestNoTimeStamp = () => productRequest?.length && productRequest.map((p: any) => {
     if (p.item != 'timestamp') return p;
   })
-  const productRequestTotal = () => productRequest &&
-    Object.entries(productRequest || {}).reduce((acc: any, [key, value]) => {
-      acc = acc += Number(value)
-      return acc;
-    }, 0);
+  // const productRequestTotal = () => productRequest &&
+  // Object.entries(productRequest || {}).reduce((acc: any, [key, value]) => {
+  //   acc = acc += Number(value)
+  //   return acc;
+  // }, 0);
+  // console.log('[ productRequestTotal ]',productRequestTotal())
   const addressString = Object.values(info.address).join(' ');
 
   useEffect(() => {
-    productRequestTotal()
     getCustomer();
   }, [customerId,]);
   useEffect(() => { }, [onSubmit, setProductRequest]);
@@ -224,31 +225,12 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
     <>
       <style jsx>{styles}</style>
       <div className='admin-customer'>
-        <div className='admin-customer__header'>
-          <div className='admin-customer__header--contact'>
-            <div>
-              <UiButton variant='lowercase' traits={{ beforeIcon: 'fa-envelope' }} href={`mailto:${info?.email}`} >{info.email}</UiButton>
-            </div>
-            <div>
-              {Object.entries(info?.address)?.length &&
-                <UiButton
-                  variant='fit-text'
-                  traits={{ beforeIcon: 'fa-home'}}
-                  onClick={() => {
-                    const googleMapsQuery = `https://maps.google.com/?q=${encodeURIComponent(addressString)}`;
-                    window.open(googleMapsQuery, '_blank');
-                  }}>
-                  {addressString}
-                </UiButton>
-              }
-            </div>
-            {String(info?.phone).length > 2 &&
-              <div>
-                <UiButton traits={{ beforeIcon: 'fa-circle-phone-flip' }} >{phoneFormat(info?.phone)}</UiButton>
-              </div>
-            }
-          </div>
-          {productRequest?.length && <AdapTable data={productRequestNoTimeStamp()} options={{
+      {productRequest?.length && 
+      <div className='admin-customer--product-request'>
+      <AdapTable
+        data={productRequestNoTimeStamp()} 
+        variant='mini'
+        options={{
             tableTitle:
               <div className='d-flex' style={{ width: '100%', justifyContent: "space-between" }}>
                 <div>
@@ -258,8 +240,37 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
                   {`${new Date(Number(productRequest.find((p: any) => p?.item == 'timestamp').value)).toLocaleString() || ''}`}
                 </div>
               </div>
-          }} /> || ''}
+          }}
+        />
         </div>
+        || ''}
+        <div className='admin-customer__header'>
+          <div className='admin-customer__header--title'>Contact Info</div>
+          <div className='admin-customer__header--contact'>
+            <div>
+              <UiButton variant='lowercase' traits={{ beforeIcon: 'fa-envelope' }} href={`mailto:${info?.email}`} >{info.email}</UiButton>
+            </div>
+              {Object.entries(info?.address)?.length &&
+              <div>
+                <UiButton
+                  variant='fit-text'
+                  traits={{ beforeIcon: 'fa-home'}}
+                  onClick={() => {
+                    const googleMapsQuery = `https://maps.google.com/?q=${encodeURIComponent(addressString)}`;
+                    window.open(googleMapsQuery, '_blank');
+                  }}>
+                  {addressString}
+                    
+                </UiButton></div> || ''
+              }
+            {String(info?.phone).length > 4 &&
+              <div>
+                <UiButton traits={{ beforeIcon: 'fa-circle-phone-flip' }} >{phoneFormat(info?.phone)}</UiButton>
+              </div>
+            }
+          </div>
+        </div>
+        
 
         <div className='admin-customer__content'>
           <UiCollapse label={`modify ${info?.name}`} open={Boolean(info?.name)}>

@@ -29,6 +29,7 @@ interface TableProps extends TableFunctionProps {
   page?: number;
   setPage?: (e: any) => void;
   setLimit?: Dispatch<SetStateAction<number>>;
+  style?: { [key: string]: string }
 }
 
 type SortProp = [key: string];
@@ -49,12 +50,13 @@ const AdapTable = ({
   setLimit,
   page,
   setPage,
+  style
 }: TableProps) => {
   const [limit_, setLimit_] = useState<number>(DEFAULT_LIMIT);
   const [visibleData, setVisibleData] = useState<any>([]);
   const startIndex = page ? (page - 1) * limit_ : 1;
   const totalPages: number = total !== undefined ? Math.ceil(Number(total) / Number(limit_)) : 0;
-  const endIndex = total ? startIndex + limit_ < total ? startIndex + limit_ : total: data?.length;
+  const endIndex = total ? startIndex + limit_ < total ? startIndex + limit_ : total : data?.length;
   // const endIndex = data && Math.min(startIndex + limit_, data.length);
   const hideHeader = options?.hide?.includes("header") || options?.hide === "header";
   function sortByKey(key: any, isAscend: boolean) {
@@ -92,7 +94,7 @@ const AdapTable = ({
   const handlePageChange = async (newPage: number) => {
     if (!setPage) return;
     const lastNum = Number(String(newPage).charAt(1));
-    if (newPage === 0 ) wait = true;
+    if (newPage === 0) wait = true;
     // console.log({newPage, wait})
     if (wait && newPage !== 0) setPage(parseInt(newPage.toString().slice(-1)));
     // setPage(parseInt(newPage.toString().substring(1, 2)));
@@ -115,7 +117,7 @@ const AdapTable = ({
   return (
     <>
       <style jsx>{styles}</style>
-      <div id='adaptable' className={`adaptable${variant && variant?.includes("mini") ? " adaptable-mini" : ""}`}>
+      <div id='adaptable' style={style} className={`adaptable${variant && variant?.includes("mini") ? " adaptable-mini" : ""}`}>
         {!hideHeader && (
           <AdapTableHeader
             data={visibleData}

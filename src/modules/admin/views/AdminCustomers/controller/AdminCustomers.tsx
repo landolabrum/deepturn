@@ -6,6 +6,7 @@ import AdminCustomerList from '../views/AdminCustomerList/AdminCustomerList';
 import AdminCustomer from '../views/AdminCustomerDetail/AdminCustomerDetail';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UserContext from '~/src/models/UserContext';
+import capitalize from '@webstack/helpers/Capitalize';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IAdminData {
@@ -40,7 +41,7 @@ const AdminCustomers: React.FC = () => {
       <div className='admin-customer'>
         <div className='admin-customer__header'>
           {pgData?.data?.name && pgData.view == 'modify' && <div className='admin-customer__header--title'>
-            {String(pgData.data.name)}
+            {capitalize(pgData.data.name)}
           </div> || <div/>}
           <div className='admin-customer__header--actions'>
             {pgData.view != 'add' && <UiButton

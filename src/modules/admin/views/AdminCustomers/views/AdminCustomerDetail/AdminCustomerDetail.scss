@@ -6,9 +6,6 @@
 
 
 .admin-customer {
-    margin-top: var(--s-8);
-    border-top: solid 1px var(--gray-70);
-    padding-top: var(--s-8);
     @extend .d-flex;
     justify-content: flex-start;
     $rat: 20px;
@@ -18,14 +15,33 @@
     width: 100%;
     align-items: stretch;
     gap: var(--padding);
-
+    &--product-request{
+        padding: var(--padding);
+        background-color: var(--primary-opaque);
+        border-radius: var(--border-radius);
+        border: solid 1px var(--primary);
+    }
     &__header {
+        background-color: var(--gray-90);
         color: var(--gray-40);
-        width: 100%;
+        border: solid 1px var(--gray-70);
+        border-radius: var(--border-radius);
         height: auto;
         @extend .d-flex;
         justify-content: space-between;
+        flex-direction: column;
+        gap: var(--padding);
         align-items: flex-start;
+        overflow: hidden;
+        &--title{
+            @extend .d-flex;
+            width: 100%;
+            background-color: var(--gray-70);
+            padding: 0 var(--s-9);
+            height: var(--element-height);
+            justify-content: flex-start;
+            font-size: var(--s-4);
+        }
         &--info{
             flex: 1;
             &-name{
@@ -33,11 +49,12 @@
             }
         }
         &--contact{
+            padding: 0 var(--padding) var(--padding);
             @extend .d-flex;
             flex-direction: column;
             align-items: flex-end;
             gap: var(--padding);
-            width: 100%;
+            width: var(--padding-width);
         }
      
     }

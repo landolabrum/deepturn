@@ -4,7 +4,6 @@
  justify-content: center;
 }
 .admin-customer{
-
     @extend .d-flex;
     flex-direction: column;
     width: 100%;
@@ -12,6 +11,7 @@
         width: 100%;
         @extend .d-flex;
         justify-content: space-between;
+        padding-bottom:var(--padding);
         &--title{
             font-size: var(--s-1);
             color: var(--gray-50);

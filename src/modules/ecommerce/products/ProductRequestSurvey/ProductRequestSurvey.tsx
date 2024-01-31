@@ -21,6 +21,7 @@ import keyStringConverter from "@webstack/helpers/keyStringConverter"
 import environment from "~/src/environment"
 export const applianceArray: IMoreInfoField[] = [
     { name: "refrigerator", selected: false, value: 6 },
+    { name: "freezer", selected: false, value: 6 },
     { name: "tv", selected: false, value: 2 },
     { name: "dishwasher", selected: false, value: 15 },
     { name: "space heater", selected: false, value: 15 },
@@ -184,6 +185,25 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
         }
     };
     const selected = formFeatures?.filter(f => f.selected == true);  // Updated to use formFeatures
+ 
+
+
+
+    const calculateTotalValue = (): number => {
+        return formFeatures.reduce((acc, curr) => {
+            if (curr.selected) {
+                return acc + curr.value;
+            }
+            return acc;
+        }, 0);
+    };
+    const gridProps = {
+        xs: 1,
+        sm: 2,
+        lg: 4,
+        gap: 10,
+    }
+    const successJsx = dFlex({ height: '500px' });
     const onSubmit = async () => {
         setView('loading');
         let request: any = {
@@ -223,12 +243,11 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             for (const key in request.contact) {
                 const value = request.contact[key];
                 if (!value || (typeof value === 'string' && value.trim() === "")) {
-                    // console.log(`Incomplete field: ${key}`);
                     complete = false;
                     break;
                 }
             }
-
+      
             // Additional check for address object if it has nested fields
             if (complete && typeof request.contact.address === 'object') {
                 for (const key in request.contact.address) {
@@ -244,6 +263,9 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             return complete;
         };
         if (isComplete()) {
+            request.contact.name = `${request.contact.firstName} ${request.contact.lastName}`;
+            delete request.contact.firstName;
+            delete request.contact.lastName;
             try {
                 const response = await memberService.prospectRequest(request);
                 if (response?.email) setView(response.email);
@@ -258,29 +280,18 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     }
 
 
-
-    const calculateTotalValue = (): number => {
-        return formFeatures.reduce((acc, curr) => {
-            if (curr.selected) {
-                return acc + curr.value;
-            }
-            return acc;
-        }, 0);
-    };
-    const gridProps = {
-        xs: 1,
-        sm: 2,
-        lg: 4,
-        gap: 10,
-    }
-    const successJsx = dFlex({ height: '500px' });
     useEffect(() => {
-        const user_cust = [
-            { name: 'name', label: 'name', value: user?.name, required: true },
+        const user_cust:IFormField[] = [
+            { name: 'firstName', label: 'name', value: user?.name && user.name.split(' ')[0], required: true },
+            { name: 'lastName', label: 'name', value: user?.name && user.name.split(' ')[1], required: true },
             { name: 'email', label: 'email', value: user?.email, type: 'email', required: true },
-            { name: 'phone', label: 'phone', type: 'tel', value: user?.phone ? user?.phone : null, required: true },
+            { name: 'phone', label: 'phone', type: 'tel', value: user?.phone && user?.phone , required: true },
             { name: 'address', label: 'address', value: user?.address, required: true },
         ]
+
+        // if All fields are valid, setDisabled(false)
+
+
         const account = async () => {
             if (user != undefined) {
                 user_cust.map((f: any) => {
@@ -288,8 +299,15 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                 })
             };
         }
-        account().then(() =>
-            setDisabled(fields.find((f: IFormField) => f.name == 'address').value?.line1 == undefined)
+        account().then(() =>{
+            const isUserFieldsComplete = Boolean(
+                user_cust.filter((field: IFormField)=>!field?.value).length === 0
+            );
+            // console.log('userFieldsComplete',isDisabledCozUserComplete)
+            setDisabled(!isUserFieldsComplete)
+        }
+        
+            // setDisabled(fields.find((f: IFormField) => f.name == 'address').value?.line1 == undefined)
         );
     }, [user, setDisabled]);
 

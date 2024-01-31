@@ -16,21 +16,10 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
     const boolTypes = ['checkbox'];
     const [complete, setComplete] = useState<boolean>(false);
     const [localErrors, setLocalErrors] = useState<any>({});
-
-    // const errorMsg = (name: string) => {
-    //     if (!name) return;
-    //     if (typeof loading === "object" && 'fields' in loading && Array.isArray(loading.fields)) {
-    //         const errorField = loading.fields.find(field => field.name === name);
-    //         if (errorField) return errorField.message;
-    //     }
-    //     return null;
-    // }
     const handleComplete = () => {
         // COMPLETE
         if (!fields) return;
-        fields.forEach((f: any) => {
-            if (f.required && ![undefined, '', null].includes(f.value)) setComplete(true);
-        });
+        fields.forEach((f: any) => f.required && ![undefined, '', null].includes(f.value) && setComplete(true));
         const noneRequired = fields.filter(f => f.required)?.length == 0;
         if (noneRequired && !complete) setComplete(true);
     }
@@ -94,7 +83,9 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
         if (field?.max && Number(value) >= field?.max) value = String(field.max);
         return handleInputChange({ target: { name: name, value: value } });
     }
-    useEffect(() => { }, [fields, disabled, loading]);
+    useEffect(() => {
+        handleComplete()
+     }, [fields, disabled, loading]);
     if (!fields) return <></>;
     return (<>
         <style jsx>{styles}</style>
@@ -165,7 +156,7 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
             )) : (<UiLoader position='relative' />)}
             {onAddField && <AddFieldForm onAddField={onAddField} />}
             <div className={`form__submit ${variant && ` form__submit--${variant}` || ''}`}>
-                <UiButton onClick={handleSubmit} disabled={!complete || disabled} variant={complete && !disabled && 'primary'} type='submit' busy={loading == true} >
+                <UiButton onClick={handleSubmit} disabled={disabled || !complete} variant={!disabled && complete && 'primary'} type='submit' busy={loading == true} >
                     {btnText ? btnText : 'Submit'}
                 </UiButton>
             </div>
