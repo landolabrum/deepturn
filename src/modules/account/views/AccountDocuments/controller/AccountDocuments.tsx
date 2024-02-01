@@ -9,7 +9,6 @@ import capitalize, { capitalizeAll } from '@webstack/helpers/Capitalize';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
-import useScroll from '@webstack/hooks/useScroll';
 import UiInput from '@webstack/components/UiInput/UiInput';
 import DocumentsNone from '../views/DocumentsNone';
 import html2canvas from 'html2canvas';

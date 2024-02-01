@@ -24,7 +24,7 @@ export function stringToKebab(str?: string) {
 
 
 export const phoneFormat = (
-  phoneNumber: string | null,
+  phoneNumber?: string | null,
   countryCode: string = 'US',
   reverse: boolean = false
 ): string => {

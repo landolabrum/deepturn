@@ -11,6 +11,7 @@ import AdminAccounts from '../views/AdminAccounts/controller/AdminAccounts';
 import { useClearance } from '~/src/core/authentication/hooks/useUser';
 import AdminInvoices from '../views/AdminInvoices/controller/AdminInvoices';
 import AdminMesenger from '../views/AdminMesenger/AdminMesenger';
+import AdminMarketing from '../views/AdminMarketing/AdminMarketing';
 
 
 const UiGlobe = dynamic(
@@ -29,6 +30,7 @@ const Admin = () => {
     documents: <AdminListDocuments />,
     system: <AdminSystem />,
     messenger: <AdminMesenger />,
+    marketing: <AdminMarketing />,
   }
   const level = useClearance();
   const [views, setViews] = useState<any | undefined>();

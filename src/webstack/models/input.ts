@@ -19,6 +19,7 @@ export interface IInput extends IFormControl {
   onPaste?: (e: any) => void;
   onChange?: (e: any) => void;
   onKeyDown?: (e: any) => void;
+  onDelete?: (e: any) => void;
   onKeyUp?: (e: any) => void;
   placeholder?: string;
   variant?: IFormControlVariant;

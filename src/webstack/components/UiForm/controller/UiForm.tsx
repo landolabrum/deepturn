@@ -9,7 +9,6 @@ import ToggleSwitch from '../../UiToggle/UiToggle';
 import UiCheckBox from '../../UiCheckbox/UiCheckBox';
 import FormControl from '../../FormControl/FormControl';
 import AddFieldForm from '../views/AddFieldForm/AddFieldForm';
-import { updateField } from '../functions/formFieldFunctions';
 
 const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading, disabled, onAddField }: IForm) => {
     const textTypes = ['', undefined, 'text', 'password', 'email', 'number', 'tel', null, false, 'expiry', 'textarea'];

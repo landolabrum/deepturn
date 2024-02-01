@@ -1,7 +1,7 @@
 import styles from "./UiInput.scss";
 import type { NextComponentType, NextPageContext } from "next";
 import FormControl from "../FormControl/FormControl";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { IInput } from "@webstack/models/input";
 import { validateInput } from "./helpers/validateInput";
 import maskInput from "./helpers/maskInput";
@@ -9,7 +9,7 @@ import AutocompleteAddressInput from "./views/AddressInput";
 import { debounce } from "lodash";
 
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
-  const { name, type, value, onChange, onKeyDown, onKeyUp, message, required, size, onClick } = props;
+  const { name, type, value, onChange, onKeyDown, onKeyUp, message, required, size, onDelete, onClick } = props;
   const [show, setShow] = useState<boolean>(false);
   
   const handleChange = (e: any) => {
@@ -20,10 +20,8 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
         name: e?.target?.name || ""
       }
     };
-    // console.log('[ UiInput ]', _e)
     let [newV, extra] = maskInput(e, type);
     _e.target.value = extra !== undefined ? [newV, extra] : newV;
-    // console.log('[ _e.target.value ]', _e.target.value)
     if (onChange) onChange(_e);
   };
   const debouncedChangeHandler = useCallback(debounce(handleChange, 1000), []);
@@ -36,10 +34,17 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   ].join(" ");
   if (props.variant == 'invalid' && value?.length == 0) props.variant == undefined;
   const elType = show && type === "password" ? "text" : type;
-  // useEffect(() => { }, [props?.variant, value]);
   const isTextArea = String(value).length > 100 || type == 'textarea';
   const inputValue = value !== undefined && value !== null ? value : '';
-
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (onDelete && (e.key === 'Backspace' || e.key === 'Delete')) {
+      let {name, value} = e.currentTarget;
+      onDelete({name:name, value:value});
+    }
+    if (onKeyDown) {
+      onKeyDown(e);
+    }
+  };
   return (
     <>
       <style jsx>{styles}</style>
@@ -66,17 +71,12 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             min={props.min}
             max={props.max}
             value={inputValue}
-            // onClick={(e)=>{
-            //   e.preventDefault()
-            //   console.log('[ click ]', e)
-            // }}
             onChange={elType != 'color'?handleChange:debouncedChangeHandler}
             autoComplete={props.autoComplete}
-            onKeyDown={onKeyDown}
+            onKeyDown={handleKeyDown}
             onKeyUp={onKeyUp}
             onPaste={props.onPaste}
             required={Boolean(required)}
-          // defaultValue={ props.defaultValue ? props.defaultValue :  value}
           /> : <textarea
             data-element={props['data-element'] || 'textarea'}
             disabled={props?.disabled || undefined}
@@ -87,11 +87,10 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             value={inputValue}
             onChange={handleChange}
             autoComplete={props.autoComplete}
-            onKeyDown={onKeyDown}
+            onKeyDown={handleKeyDown}
             onKeyUp={onKeyUp}
             onPaste={props.onPaste}
             required={Boolean(required)}
-          // defaultValue={ props.defaultValue ? props.defaultValue :  value}
           />}
 
 

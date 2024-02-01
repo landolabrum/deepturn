@@ -1,0 +1,15 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.contact-form {
+    width: 100%;
+    @extend .d-flex;
+    align-items: flex-start;
+    flex-direction: column;
+
+    &--action {
+        --ui-icon-color: var(--gray-20);
+    }
+}

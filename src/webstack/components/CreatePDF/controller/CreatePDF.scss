@@ -1,0 +1,31 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.create-pdf{
+    @extend .d-flex;
+    width: 100%;
+}
+.pdf-preview{
+    width: 100%;
+    height: max-content;
+    &--image{
+        width: 100%;
+        height: max-content;
+    }
+    &__options{
+        @extend .d-flex;
+        width: 100%;
+        flex-direction: column;
+        gap: var(--padding);
+        &--actions{
+            width: 100%;
+            @extend .d-flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            height: auto;
+            min-height: 200px;
+        }
+    }
+}
