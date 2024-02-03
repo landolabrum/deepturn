@@ -48,8 +48,8 @@
 
   --body: #1d1d1d;
   --lite: #e0e0e0;
-  --dark: #553497;
-  --dark-opaque: #55349750;
+  --dark: #3c3c27;
+  --dark-opaque: #B08D57;
   /* --dark:#111f3d; */
 
   --warning: #ff3c00;
@@ -211,13 +211,13 @@ body {
   }
 
   body::-webkit-scrollbar-thumb {
-    background-color: var(--blue);
+    background-color: var(--primary);
     border-radius: 5px;
   }
 
   body::-webkit-scrollbar {
     width: 10px;
-    background-color: var(--gray-60);
+    background-color: var(--dark);
   }
 }
 
