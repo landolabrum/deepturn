@@ -10,6 +10,10 @@
     position: absolute;
     width: var(--element-height);
     --ui-icon-width: var(--s-5);
+    &-sm{
+      width: calc(var(--s-9) * 2.33);
+      --ui-icon-width: var(--s-9);
+    }
     &__before{
       left: 0;
     }

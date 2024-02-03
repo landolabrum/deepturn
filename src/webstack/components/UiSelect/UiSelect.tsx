@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./UiSelect.scss";
-import { IRoute } from "@shared/components/Navbar/data/routes";
-import UiMenu from "../UiMenu/UiMenu";
+import UiMenu, { IMenuOption } from "../UiMenu/UiMenu";
 import UiInput from "../UiInput/UiInput";
 import { capitalize } from "lodash";
 import { useModal } from "../modal/contexts/modalContext";
@@ -11,7 +10,7 @@ type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string 
 
 export interface ISelect  {
   label?: string;
-  options?: (string | IRoute | number)[] | React.ReactElement[];
+  options?: IMenuOption[],
   onSelect?: (value: any) => void;
   openDirection?: "up" | "down" | "left" | "right";
   onToggle?: (isOpen: boolean) => void;

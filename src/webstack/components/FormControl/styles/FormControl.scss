@@ -61,6 +61,7 @@ $elPad: 14px;
     font-size: var(--s-7);
     color: var(--white);
 }
+
   .form-control__header {
     @extend .d-flex;
     justify-content: space-between;
@@ -82,7 +83,16 @@ $elPad: 14px;
       }
     }
   }
+  &-sm{
+    .form-control__header {
+      min-height: unset;
+      label{
+        text-indent: var(--s-9);
 
+        font-size: var(--s-9);
+      }
+  }
+  }
   &.form-control--inherit {
     @extend .inherit;
   }

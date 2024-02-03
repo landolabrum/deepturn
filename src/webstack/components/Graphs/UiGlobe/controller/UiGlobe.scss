@@ -5,10 +5,9 @@
 .globe{
     width: 100%;
     @extend .d-flex;
-    
+    overflow: hidden;
     @media(max-width:900px){
         height: inherit;
-        margin-left: calc(var(--padding) * -1.5);
         width: 100%;
     }
 }

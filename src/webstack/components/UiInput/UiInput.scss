@@ -11,10 +11,8 @@ input, textarea {
   outline: none;
   color: inherit;
   border: none;
+  cursor: inherit;
   background-color: transparent;
-  // &:disabled{
-  //   cursor: not-allowed;
-  // }
   // ARROWS for TYPE='number'
   /* Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,

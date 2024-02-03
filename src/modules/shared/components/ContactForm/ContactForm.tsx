@@ -77,6 +77,14 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit }) => {
     });
     setFields(updatedContact);
 };
+const handleFormSubmit = (userFields?:any) => {
+  const fieldsToUse = userFields? userFields: fields;
+  const fieldsObject = fieldsToUse.reduce((obj:any, field:IFormField) => {
+    obj[field.name]=field.value
+    return obj;
+}, {});
+  onSubmit(fieldsObject)
+};
   useEffect(() => {
 
     if (user) {
@@ -97,20 +105,23 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit }) => {
         }
       });
       setFields(updatedFields);
+      // setTimeout(() => {
+      // handleFormSubmit(updatedFields)
+        
+      // }, 1000);
       // Decide whether to disable the submit button initially
       disabled === true && setDisabled(false); // or some logic to determine if the form is initially valid
     }
 
   }, []);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
-    onSubmit(fields); // Propagate the contact data back to the parent component
-  };
+
 
   return (<>
     <style jsx>{styles}</style>
     <div className='contact-form'>
       <UiForm
+        title='contact'
         fields={fields}
         disabled={disabled}
         onChange={onChange}

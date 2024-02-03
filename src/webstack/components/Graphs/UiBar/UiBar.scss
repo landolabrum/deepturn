@@ -7,15 +7,8 @@ $agg: var(--border-radius);
   align-items: center;
 }
 .bar {
-  min-width: 140px;
-  // margin: 20px;
   width: 100%;
   .bar__container {
-    // background: (to right, rgb(255, 255, 255), rgba(255, 255, 255, 0));
-
-    border-radius: $agg;
-    border: solid 1px var(--gray-60);
-    padding: var(--s-9);
     &:hover {
       .bar__bars-container {
         .bar__percentage {
@@ -64,9 +57,6 @@ $agg: var(--border-radius);
       gap: $agg;
       overflow: hidden;
       border-radius: var(--border-radius);
-      // &--is-color{
-      //   background: linear-gradient(to top, red 0%, #ff0 17%, lime 33%, cyan 50%, blue 66%, #f0f 83%, red 100%);
-      // }
       .bar__percentage {
         font-size: var(--s-1);
         visibility: hidden;
@@ -83,11 +73,13 @@ $agg: var(--border-radius);
   }
 }
   .bar__bars-content {
+    box-shadow: inset 0 0 4px 2px var(--gray-100-opaque);
+    border: solid 1px var(--gray-70);
     overflow: hidden;
     border-radius: $agg;
-    border: solid 1px var(--gray-60);
     transform: rotate(180deg);
     height: var(--element-height);
+    background-color: var(--gray-70-opaque);
     .bar__bars-bar {
       &-partial{
         border-top: solid 1px var(--gray-70);

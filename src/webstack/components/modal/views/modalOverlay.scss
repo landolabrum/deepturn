@@ -37,7 +37,8 @@
     flex-direction: column;
     overflow-x: hidden;
     background-color: var(--gray-90);
-    border: solid 1px var(--gray-80);
+    border: solid 1px var(--gray-70);
+    outline: solid 1px var(--gray-50);
     border-radius: var(--border-radius);
 
     @media(max-width: 900px) {

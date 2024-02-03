@@ -16,10 +16,32 @@
     align-items: stretch;
     gap: var(--padding);
     &--product-request{
-        padding: var(--padding);
+        overflow: hidden;
         background-color: var(--primary-opaque);
         border-radius: var(--border-radius);
         border: solid 1px var(--primary);
+
+        @extend .d-flex;
+        flex-direction: column;
+        width: var(--border-width);
+        &__header{
+            width: var(--padding-width);
+            @extend .d-flex;
+            justify-content: flex-start;
+            padding: var(--padding);
+            background-color: var(--gray-100-opaque);
+            .title{
+                white-space: nowrap;
+                font-size: var(--s-3);
+                margin-right: auto;
+            }
+            .actions{
+                @extend .d-flex;
+                flex-direction: column;
+                gap: var(--s-9);
+                align-items: flex-end;
+            }
+        }
     }
     &__header {
         background-color: var(--gray-90);

@@ -6,26 +6,22 @@
 .lights {
     width: var(--padding-width);
     padding: var(--padding);
-    &__bar-header{
-        @extend .d-flex;
-        justify-content: space-between;
-        width: 100%;
-        color: var(--gray-30);
-    }
     height: max-content;
     &__light {
-        margin: 0;
-        height: auto;
         @extend .d-flex;
-        overflow: hidden;
+        flex-direction: column;
+        gap: var(--s-9);
+        border: solid 1px var(--gray-80);
+        border-radius: var(--border-radius);
+        background-color: var(--gray-90);
+        padding: var(--s-9);
         &-header{
-            width: 100%;
             @extend .d-flex;
+            gap: var(--s-9);
             justify-content: space-between;
             text-transform: capitalize;
-            border-radius: var(--border-radius);
-            align-items: flex-start;
-            &-action{
+            &--action{
+                cursor: pointer;
                 min-height: var(--element-height);
                 @extend .d-flex;
                 justify-content: flex-end;

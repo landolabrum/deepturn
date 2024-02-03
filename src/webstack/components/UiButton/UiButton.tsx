@@ -98,7 +98,7 @@ const UiButton: NextComponentType<NextPageContext, {}, IButton> = ({
   size
 }: IButton) => {
   const router = useRouter();
-  if(href && router.pathname.includes(href)){
+  if(href && href !== '/' && router.pathname.includes(href)){
     disabled = true
   }
 

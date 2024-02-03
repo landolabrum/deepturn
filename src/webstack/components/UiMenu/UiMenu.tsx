@@ -3,9 +3,11 @@ import { IFormControl } from "../FormControl/FormControl";
 import styles from "./UiMenu.scss";
 import Input from "../UiInput/UiInput";
 import UiButton from "../UiButton/UiButton";
+import { IRoute } from "@shared/components/Navbar/data/routes";
+export type IMenuOption = string | (string | IRoute | number)[] | React.ReactElement[];
 
 export interface IMenu extends IFormControl {
-  options?: any;
+  options?: IMenuOption[];
   onSelect?: (value: any) => void;
   value?: string;
   search?: boolean;
@@ -37,6 +39,7 @@ const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearc
     onSelect && onSelect(option);
   };
   const currValue = (option: any)=>{
+    if(option.name && option.value)return option;
     return ["string",'number'].includes(typeof option) ? option : option?.href
   }
 
@@ -57,7 +60,7 @@ const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearc
         ) : (
           <>
             {filteredOptions?.map((option: any, index: number) => {
-              const label = ["string",'number'].includes(typeof option)? option : option?.label;
+              const label = ["string",'number'].includes(typeof option)? option : option?.label?option?.label: option?.name;
               const currentValue = currValue(option);
               if (currentValue)
                 return (

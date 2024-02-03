@@ -1,0 +1,34 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.color-picker {
+  @extend .d-flex;
+  flex-direction: column;
+  gap:var(--s-9);
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+  height: 100%;
+  cursor: pointer;
+  &__info{
+    gap:var(--s-9);
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    align-items: flex-start;
+  }
+  
+  .preview-color {
+    width: var(--element-height);
+    aspect-ratio: 1;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+  }
+  
+  .color-canvas {
+    width: 100%;
+    border-radius: var(--border-radius);
+  }
+}

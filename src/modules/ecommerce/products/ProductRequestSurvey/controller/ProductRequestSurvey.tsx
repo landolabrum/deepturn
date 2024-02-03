@@ -16,6 +16,7 @@ import keyStringConverter from "@webstack/helpers/keyStringConverter"
 import environment from "~/src/environment"
 import capitalize from '@webstack/helpers/Capitalize';
 import ContactForm from '@shared/components/ContactForm/ContactForm';
+import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 
 export const applianceArray: IMoreInfoField[] = [
     { name: "refrigerator", selected: false, value: 6 },
@@ -43,8 +44,6 @@ const createMerchantKey = (parent: string, key: string) => {
     return `${environment.merchant.mid}.${parent}.${keyStringConverter(key, true)}`
 }
 
-
-
 export type IMoreInfoField = {
     name: string;
     selected?: boolean;
@@ -62,7 +61,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     title = 'appliance',
     subtitle = 'Select applicable appliances that you need power'
 }) => {
-
+    const userAgentInfo = useUserAgent();
     const defaultForm = { features: features };
     const clearAllSelected = () => setForm(defaultForm);
     const { openModal, closeModal } = useModal();
@@ -93,7 +92,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             setForm({ ...form, features: formFeatures })
             return;
         } else {
-            setScrollTo('product-feature-form__options')
+            setScrollTo('product-request-survey__options')
         }
 
         const updatedFeatures = formFeatures.map(feature =>
@@ -137,24 +136,24 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
         gap: 10,
     };
 
-    const successJsx = dFlex({ height: '500px' });
-
-    const onContactSubmit = (submittedContactData: any) => {
+    const onContactSubmit = async (submittedContactData: any) => {
         setContactData(submittedContactData); // Save the contact data in state
         setView('loading'); // Move to loading view while processing the submission
-        onSubmit(); // Call the main submit function
+        onSubmit(submittedContactData); // Pass the contact data directly to onSubmit
     };
+    
 
-    const onSubmit = async () => {
-        if (!contactData) {
+    const onSubmit = async (submittedContactData: any) => {
+        let contactDataToUse = submittedContactData || contactData;
+        if (!contactDataToUse) {
             console.error("No contact data available.");
             setView('error');
             return;
         }
-
+        console.log('[ contactDataToUse ]',contactDataToUse)
         let request: any = {
             timestamp: new Date().getTime(),
-            user_agent: useUserAgent(),
+            user_agent: userAgentInfo,
             src: 'prod-feature',
             features: form.features.reduce((acc: any, feature: any) => {
                 if (feature.selected) {
@@ -162,7 +161,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                 }
                 return acc;
             }, {}),
-            contact: contactData,
+            contact: contactDataToUse,
             url: window?.location?.origin
         };
 
@@ -183,29 +182,32 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     if (form.features.length) return (
         <>
             <style jsx>{styles}</style>
-            <div className='product-feature-form'>
-                {title && <div className='product-feature-form__title'>{capitalize(title)}{`'`}s </div>}
-                {subtitle && <div className='product-feature-form__sub-title'>{subtitle}</div>}
-                {view.includes("@") && <div className='product-feature-form__success'>
+            <div className='product-request-survey'>
+                {title && <div className='product-request-survey__title'>{capitalize(title)}{`'`}s </div>}
+                {subtitle && view === 'feature' && <div className='product-request-survey__sub-title'>{subtitle}</div>}
+                {view.includes("@") && <div className='product-request-survey__success'>
                     <div>A verification email to
-                        <span className='product-feature-form__success--email'> {view}, </span>
+                        <span className='product-request-survey__success--email'> {view}, </span>
                         has been sent.
                     </div>
                     <div>To complete the process, simply click on the link in the email.</div>
                 </div>}
                 {view == 'error' && <h1>an Error occured</h1>}
                 {view == 'loading' && <div><UiLoader height='500px' position='relative' /></div>}
-                {view == 'success' && <UiDiv id='feature_message' jsx={successJsx}>{message || ''}</UiDiv>}
+                {view == 'success' && <div id='feature_message' className='product-request-survey__success'>
+                    <div className='product-request-survey__success--status'>{view}<UiIcon icon='fa-circle-check'/></div>
+                    <div className='product-request-survey__success--message'>{message || ''}</div>
+                </div>}
                 {view == 'contact' && (
                     <ContactForm onSubmit={onContactSubmit} />
                 )}
                 {view == 'feature' && <>
-                    <div className='product-feature-form__selected'>
-                        <div className='product-feature-form__selected--header'>
+                    <div className='product-request-survey__selected'>
+                        <div className='product-request-survey__selected--header'>
                             {`Selected ${title}s`} | total amps  {calculateTotalValue()}
                         </div>
-                        <div className='product-feature-form__tools' >
-                            <div className='product-feature-form__tools--tool'>
+                        <div className='product-request-survey__tools' >
+                            <div className='product-request-survey__tools--tool'>
                                 {Boolean(selected?.length) && <div onClick={clearAllSelected}>clear all</div>}
                             </div>
                         </div>
@@ -227,9 +229,9 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                                 </div>
                             )
                         })}
-                        {!selected.length && <div className='product-feature-form__instructions'>please Select, {title} to continue.</div>}
+                        {!selected.length && <div className='product-request-survey__instructions'>please Select, {title} to continue.</div>}
                     </div>
-                    <div id='product-feature-form__options' />
+                    <div id='product-request-survey__options' />
                     <AdaptGrid {...gridProps} >
                         {formFeatures !== null && formFeatures.map((feature, index) => {
                             return (
@@ -241,7 +243,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                             )
                         })}
                     </AdaptGrid>
-                    <div className='product-feature-form__submit'>
+                    <div className='product-request-survey__submit'>
                         <UiButton
                             disabled={selected.length == 0}
                             onClick={handleView}

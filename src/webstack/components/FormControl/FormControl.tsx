@@ -66,6 +66,8 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
       // Apply outline, disabled and responsive styles
       if (typeof traits.outline === "string") formElement.style.outline = traits.outline;
       // formElement.classList.toggle('form-control__element-disabled', traits?.disabled != undefined);
+
+      if (traits?.disabled)formElement.classList.add('form-control__element--disabled');
       if (traits?.responsive) formElement.classList.add('form-control__element-responsive');
       if(error)formElement.classList.add('form-control__element--error');
       // Special handling for USABLE elements
@@ -127,14 +129,14 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
           </div>
         )}
         <div className={propClasses('form-control__element')}>
-          {renderIcon(traits?.beforeIcon, 'before')}
+          {renderIcon(traits?.beforeIcon, 'before', size)}
           {Children.map(children, (child: any) => cloneElement(child))}
           {traits?.badge && (
             <div className="form-control__badge">
               <div className="form-control__badge-content">{traits.badge}</div>
             </div>
           )}
-          {renderIcon(traits?.afterIcon, 'after')}
+          {renderIcon(traits?.afterIcon, 'after', size)}
           {error && (
             <div className='form-control__invalid'>
               <UiMarkdown text={error} />
@@ -146,15 +148,16 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   );
 };
 
-function renderIcon(iconProps: FormIconProps | undefined, position: string) {
+function renderIcon(iconProps: FormIconProps | undefined, position: string, size?: string) {
   if (!iconProps) return null;
   const icon = typeof iconProps === 'string' ? iconProps : iconProps.icon;
   const onClick = typeof iconProps === 'object' ? iconProps.onClick : undefined;
   const color = typeof iconProps === 'object' ? iconProps.color : undefined;
   const iCls = 'form-control-icon';
+  
   return (<>
     <style jsx>{iStyles}</style>
-    <div className={`${iCls} ${iCls}__${position}`}>
+    <div className={`${iCls} ${iCls}__${position} ${size ?` ${iCls}-${size}`:""}`}>
       <UiIcon
         icon={icon}
         onClick={onClick}

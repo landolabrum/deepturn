@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
+import React, { useState, useEffect, useContext, createContext, useCallback } from "react";
 import { useRouter } from "next/router";
 import Navbar from "@shared/components/Navbar/controller/Navbar";
 import BreadCrumbs, { BreadCrumbLinkProps } from "../components/BreadCrumbs/BreadCrumbs";
@@ -6,6 +6,7 @@ import styles from "./Header.scss";
 import useWindow from "@webstack/hooks/useWindow";
 import environment from "~/src/environment";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { debounce } from "lodash";
 
 
 export type HeaderProps = {
@@ -24,26 +25,13 @@ export const useHeader = () => useContext(HeaderContext);
 
 export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
-  const [hover,setHover]=useState<string>('');
-const handleMouseLeave = () =>{
-const s = async () =>setHover(' header__container--hover-end');
-s().then(()=>setTimeout(() => {
-  setHover('')
-}, 2000))
-}
+  const [hover, setHover] = useState<string>('');
   return (
     <>
       <style jsx>{styles}</style>
       <HeaderContext.Provider value={[headerState, setHeaderState]}>
-        
-        <div 
-            onMouseEnter={()=>setHover(' header__container--hover')}
-            onMouseLeave={ handleMouseLeave}
-            id="header-container"
-            className={`header__container${hover}`}
-        >
+        <div id="header-container" className={`header__container${hover}`}>
           <Navbar />
-
           <Header />
         </div>
         {children}
@@ -56,12 +44,17 @@ const Header: React.FC = () => {
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
   const [route, setRoute] = useState<string | null>(null);
   const router = useRouter();
-
+  const [show, setShow] = useState(false);
   const width = useWindow()?.width;
+  const debounceShow = useCallback(
+    debounce(() => {
+      setShow(show?false: true)
+    }, 1000),
+    [setShow]
+  );
 
-  
+
   useEffect(() => {
-    // console.log('[ HEADER CONTEXT ]', context)
     setHeaderState(context);
     setRoute(router.asPath);
   }, [context]);
@@ -78,17 +71,16 @@ const Header: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      {/* {headerState &&  */}
       <>
-        <div className='header'>
-          <div
-            className={`header-content`}
-          >
-            <div
-              className="header-left"
-            >
+        <div
+          onClick={debounceShow}
+          onMouseLeave={()=>setShow(false)}
+          className='header'
+        >
+          <div className={`header-content ${show ? ' header-content__show' : ""}`}>
+            <div className="header-left">
               <BreadCrumbs links={headerState?.breadcrumbs} />
-              <div className="header-title">{width<900&&<UiIcon icon={`${environment.merchant.name}-logo`}/>}{headerState?.title}</div>
+              <div className="header-title">{width < 900 && <UiIcon icon={`${environment.merchant.name}-logo`} />}{headerState?.title}</div>
             </div>
             {headerState?.right && (
               <div className="header-right">{headerState?.right}</div>

@@ -138,7 +138,7 @@
     &--before-icon  {
         padding-left:  var(--element-height);
     }
-    &--after-icon  {
+    &--after-icon:not(&-sm)  {
         padding-right:  var(--element-height);
     }
     // ELEMENTS
@@ -159,6 +159,7 @@
 
     &--input,
     &--textarea {
+
         --ui-icon-color: var(--gray-50);
         background-color: var(--gray-70-opaque);
         border: solid 1px var(--gray-70);
@@ -177,7 +178,7 @@
             }
         }
 
-        &:not(.form-control__element--signature) {
+        &:not(.form-control__element--signature,.form-control__element--disabled) {
             &:hover:not(&:focus-within) {
                 background-color: var(--gray-60);
                 border-color: var(--gray-60);
@@ -199,7 +200,7 @@
         min-height: var(--element-height);
     }
 
-    &-disabled {
+    &-disabled, &--disabled {
         &:hover {
             user-select: none;
             cursor: not-allowed;
@@ -335,9 +336,9 @@
     }
     
     @include variant('lite',
-        var(--gray-40), var(--primary-opaque), var(--primary),
+        var(--gray-40), var(--gray-70), var(--gray-10),
         var(--gray-30), var(--gray-70), var(--secondary),
-        var(--dark), var(--gray-50), var(--gray-50));
+        var(--gray-40), var(--gray-50), var(--gray-50));
     @include variant('dark',
         var(--gray-100), var(--gray-50), var(--gray-80),
         var(--dark), var(--gray-50), var(--gray-50),
@@ -372,7 +373,7 @@
         }
         @media(max-width: 1100px){
             padding-right: 0;
-            padding-left: var(--s-1);
+            // padding-left: var(--s-1);
             margin: 0 auto;
             border-bottom: unset;
             &:hover {

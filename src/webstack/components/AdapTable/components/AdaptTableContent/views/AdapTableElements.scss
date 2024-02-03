@@ -80,25 +80,6 @@ table {
     border: solid 1px transparent;
     overflow: hidden;
   }
-  &.table-mini {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: solid 1px var(--gray-60);;
-
-    tr {
-      td,
-      th {
-        border: none !important;
-        &:last-child {
-          .th-content.mini,
-          .td-content {
-            display: flex;
-            justify-content: flex-end;
-          }
-        }
-      }
-    }
-  }
   thead {
   
     @media (max-width: 900px) {
@@ -111,6 +92,26 @@ table {
       }
     }
   }
+  &.table-mini {
+    margin-top: 15px;
+    padding-top: 15px;
+    tr {
+      background-color: unset !important;
+      td,
+      th {
+        border-right: none !important;
+      
+        &:last-child {
+          .th-content.mini,
+          .td-content {
+            display: flex;
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+
   thead,
   tbody {
     tr {

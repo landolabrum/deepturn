@@ -1,10 +1,10 @@
 // Relative Path: ./OtherFeature.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './ProductFeatureOther.scss';
-import { IMoreInfoField } from '../../ProductRequestSurvey';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import capitalize from '@webstack/helpers/Capitalize';
-import { IForm, IFormField } from '@webstack/components/UiForm/models/IFormModel';
+import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
+import { IMoreInfoField } from '../../controller/ProductRequestSurvey';
 // Remember to create a sibling SCSS file with the same name as this component
 interface IOtherItem{
      choice: IMoreInfoField;

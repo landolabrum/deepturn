@@ -13,6 +13,8 @@ import UiMediaSlider from '@webstack/components/UiMedia/views/UiMediaSlider/UiMe
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { calculateHexFromHueSatBri } from './LightHelpers';
 import { reverseString } from '@webstack/helpers/Strings/reverseString';
+import ColorPicker from '@webstack/components/ColorPicker/ColorPicker';
+import keyStringConverter from '@webstack/helpers/keyStringConverter';
 
 // Remember to create a sibling SCSS file with the same name as this component
 type ILight = {
@@ -26,40 +28,14 @@ type ILight = {
   hex: string;
 }
 const Lights = () => {
-  const [, setLoader] = useLoader();
+  const [loader, setLoader] = useLoader();
   const [newName, setNewName] = useState<any | undefined>();
   const [go, setGo] = useState<any | undefined>(false);
   const [currentLight, setCurrentLight] = useState<ILight | undefined>();
   const [lights, setLights] = useState<any>();
   const [isAll, setIsAll] = useState<boolean | ILight>(false);
   const homeService = getService<IHomeService>('IHomeService');
-  const BarHeader = (light: ILight) => {
-    return (
-      <>
-        <style jsx>{styles}</style>
-        <div className='lights__light-header'>
-          <div className='lights__light-header-title' >
-            {newName == undefined || newName?.name != light.id_ ? (
-              <div onClick={() => handleNewName({ name: light.id_, value: 'new light name' })} >
-                {light?.name}
-              </div>
-            ) : (
-              <UiInput size='sm' name={newName.id_} onChange={handleNewName} value={newName.value} />
-            )}
-            <div onClick={() => multiHomeService('toggle', { id: light.id_ })}>
-              <ToggleSwitch name={light?.id_} value={light?.is_on} />
-            </div>
-          </div>
-          <div className='lights__light-header-action'>
-            <UiIcon
-              onClick={() => toggleBarView(light.id_)}
-              icon={light?.view != 'color' ? 'fa-palette' : 'fa-sun'}
-            />
-          </div>
-        </div>
-      </>
-    )
-  }
+
   const updateLight = (changedLight: ILight, isColor?: boolean) => {
     setLights(() => lights.map((light: ILight) => {
       if (light.id_ == changedLight.id_) {
@@ -128,61 +104,69 @@ const Lights = () => {
     }
   }
 
-
   const multiHomeService = async (action: string, data?: any) => {
-    try {
-      let response;
-      switch (action) {
-        case 'all-off':
-          response = await homeService.lightsOff();
-          break;
-        case 'all-on':
-          response = await homeService.lightsOn();
-          console.log('all-on', response)
-          break;
-        case 'toggle':
-          if (data?.id) {
-            response = await homeService.lightToggle(data.id);
-            updateLight(response);
-          }
-          break;
-        case 'brightness':
-          if (data?.id && data?.bri !== undefined) {
-            response = await homeService.lightBrightness(data.id, data.bri);
-            updateLight(response);
-          }
-          break;
-        case 'color':
-          if (data?.id && data?.hex) {
-            const colorResponse = await homeService.lightColor(data.id, data.hex);
-            const calculatedHex = calculateHexFromHueSatBri(colorResponse.hue, colorResponse.sat, colorResponse.bri);
-            updateLight({ ...colorResponse, hex: calculatedHex, isColor: true }, true);
-          }
-          break;
-        case 'all-color':
-          if (data?.hex) {
-            const promises = lights.map((light: ILight) => {
-              if (light.is_on) {  // Assuming you only want to change the color of lights that are on
-                return homeService.lightColor(light.id_, data.hex);
-              }
-            });
-            const responses = await Promise.all(promises);
-            responses.forEach(resp => {
-              const calculatedHex = calculateHexFromHueSatBri(resp.hue, resp.sat, resp.bri);
-              updateLight({ ...resp, hex: calculatedHex, isColor: true }, true);
-            });
-          }
-          break;
-        default:
-          console.log('[multiHomeService] Action not recognized:', action);
-          return;
-      }
-      if (response) {
-        console.log('[multiHomeService] Success:', JSON.stringify(response));
-      }
-    } catch (e: any) {
-      console.log('[multiHomeService] Error:', JSON.stringify(e));
+    const handleLoader =  (active: boolean, action?: string, name?: string) => {
+      setLoader({ active: active, body: `${action}, ${name} `, animation: true });
     }
+    handleLoader(true, action, data.name);
+    const runAction = async () => {
+      try {
+        let response;
+        switch (action) {
+          case 'all-off':
+            response = await homeService.lightsOff();
+            break;
+          case 'all-on':
+            response = await homeService.lightsOn();
+            console.log('all-on', response)
+            break;
+          case 'toggle':
+            if (data?.id) {
+              response = await homeService.lightToggle(data.id);
+              updateLight(response);
+            }
+            break;
+          case 'brightness':
+            if (data?.id && data?.bri !== undefined) {
+              response = await homeService.lightBrightness(data.id, data.bri);
+              updateLight(response);
+            }
+            break;
+          case 'color':
+            if (data?.id && data?.hex) {
+              const colorResponse = await homeService.lightColor(data.id, data.hex);
+              const calculatedHex = calculateHexFromHueSatBri(colorResponse.hue, colorResponse.sat, colorResponse.bri);
+              updateLight({ ...colorResponse, hex: calculatedHex, isColor: true }, true);
+            }
+            break;
+          case 'all-color':
+            if (data?.hex) {
+              const promises = lights.map((light: ILight) => {
+                if (light.is_on) {  // Assuming you only want to change the color of lights that are on
+                  return homeService.lightColor(light.id_, data.hex);
+                }
+              });
+              const responses = await Promise.all(promises);
+              responses.forEach(resp => {
+                const calculatedHex = calculateHexFromHueSatBri(resp.hue, resp.sat, resp.bri);
+                updateLight({ ...resp, hex: calculatedHex, isColor: true }, true);
+              });
+            }
+            break;
+          default:
+            console.log('[multiHomeService] Action not recognized:', action);
+            return;
+        }
+        if (response) {
+          console.log('[multiHomeService] Success:', JSON.stringify(response));
+        }
+      } catch (e: any) {
+        console.log('[multiHomeService] Error:', JSON.stringify(e));
+      }
+      return;
+    }
+    await runAction();
+    handleLoader(false, action, data.name);
   }
 
   useEffect(() => { }, [multiHomeService])
@@ -192,11 +176,8 @@ const Lights = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      {lights?.length && lights[0]?.hex}
       <div className='lights'>
         <AdaptGrid xs={2} lg={3} gap={15}>
-          {/* <UiButton variant={go && 'primary'} onClick={() => multiHomeService('all-on')}>all on</UiButton> */}
-          {/* <UiButton variant={go && 'primary'} onClick={() => multiHomeService('all-off')}>all off</UiButton> */}
           <UiButton variant={go && 'primary'} onClick={() => setGo(!go)}>start animation</UiButton>
           <UiButton variant={go && 'primary'} onClick={() => isAll == false ? setIsAll({ ...onLights[0], id_: 'all-lights' }) : false}>
             Set All
@@ -208,56 +189,57 @@ const Lights = () => {
           duration={10000}
           start={go}
         />
+
+        {lights && !isAll && <AdaptGrid xs={1} sm={2} md={2} lg={3} gap={15}>
+          {Object.entries(lights).map(
+            ([key, light]: any, index: number) =>
+              <div className='lights__light' key={index}>
+
+                <div className='lights__light-header'>
+                  <div className='lights__light-header--action'>
+                    <UiInput size='sm' value={light.name} disabled={true} label='name' />
+                  </div>
+
+                  <div className='lights__light-header--action' onClick={() => multiHomeService('toggle', { id: light.id_ })}>
+                    <ToggleSwitch name={light?.id_} value={light?.is_on} />
+                  </div>
+                  <div
+                    className='lights__light-header--action'
+                    onClick={() => toggleBarView(light.id_)}
+                  >
+                    <UiIcon icon='fa-palette' />
+                  </div>
+                </div>
+
+                {light?.view !== 'color' ? (
+                  <UiBar
+                    onChange={(value) => {
+                      if (String(value).length == 0 || !value) return;
+                      else multiHomeService('brightness', { id: light.id_, bri: value, name: light.name });
+                    }}
+                    barCount={5}
+                    percentage={light?.bri * 100 / 254}
+                  />
+                ) : (
+                  <ColorPicker
+                    hex={light.hex}
+                    onChange={(hex: string) => multiHomeService('color', { id: light.id_, hex: hex, name: light.name })}
+                  />
+                )}
+              </div>
+          )}
+        </AdaptGrid>}
         {typeof isAll == 'object' && (
           <UiBar
-            header={<div className='lights__light-header'>
-              <div className='lights__light-header-title' >
-                {newName == undefined || newName?.name != isAll.id_ ? (
-                  <div onClick={() => handleNewName({ name: isAll.id_, value: 'new light name' })} >
-                    {isAll?.name}
-                  </div>
-                ) : (
-                  <UiInput size='sm' name={newName.id_} onChange={handleNewName} value={newName.value} />
-                )}
-                <div onClick={() => multiHomeService(isAll?.is_on == true ? 'all-off' : 'all-on')}>
-                  <ToggleSwitch name={isAll?.id_} value={isAll?.is_on} />
-                </div>
-              </div>
-              <div className='lights__light-header-action'>
-                <UiIcon
-                  onClick={() => toggleBarView(isAll.id_)}
-                  icon={isAll?.view != 'color' ? 'fa-palette' : 'fa-sun'}
-                />
-              </div>
-            </div>}
             onChange={(value) => {
               if (String(value).length == 0 || !value) return;
               else if (String(value).startsWith('#')) multiHomeService('color', { id: isAll.id_, hex: value });
               else multiHomeService('brightness', { id: isAll.id_, bri: value });
             }}
-            isColor={isAll?.view == 'color'}
             barCount={5}
             percentage={isAll?.bri * 100 / 254}
           />
         )}
-        {lights && isAll == false && <AdaptGrid xs={2} lg={3} gap={15}>
-          {Object.entries(lights).map(
-            ([key, light]: any, index: number) =>
-              <div className='lights__light' key={index}>
-                <UiBar
-                  header={<BarHeader {...light} />}
-                  onChange={(value) => {
-                    if (String(value).length == 0 || !value) return;
-                    else if (String(value).startsWith('#')) multiHomeService('color', { id: light.id_, hex: value });
-                    else multiHomeService('brightness', { id: light.id_, bri: value });
-                  }}
-                  isColor={light?.view == 'color'}
-                  barCount={5}
-                  percentage={light?.bri * 100 / 254}
-                />
-              </div>
-          )}
-        </AdaptGrid>}
       </div>
     </>
   );
