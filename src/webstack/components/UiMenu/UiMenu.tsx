@@ -4,7 +4,7 @@ import styles from "./UiMenu.scss";
 import Input from "../UiInput/UiInput";
 import UiButton from "../UiButton/UiButton";
 import { IRoute, SelectableRoute } from "@shared/components/Navbar/data/routes";
-export type IMenuOption = string | (string | IRoute | number)[] | React.ReactElement[] | SelectableRoute;
+export type IMenuOption = string | IRoute | number | React.ReactElement | SelectableRoute;
 
 export interface IMenu extends IFormControl {
   options?: IMenuOption[];
