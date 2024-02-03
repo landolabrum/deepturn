@@ -150,7 +150,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             setView('error');
             return;
         }
-        console.log('[ contactDataToUse ]',contactDataToUse)
+        // console.log('[ contactDataToUse ]',contactDataToUse)
         let request: any = {
             timestamp: new Date().getTime(),
             user_agent: userAgentInfo,

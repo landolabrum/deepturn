@@ -16,7 +16,7 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 interface ISettingsLayout {
   views: any;
   setViewCallback?: (e: any) => void;
-  variant?: string;
+  variant?: 'fullwidth';
   title?: string;
   defaultView?: string
 }

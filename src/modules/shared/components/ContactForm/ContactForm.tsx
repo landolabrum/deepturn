@@ -57,7 +57,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit }) => {
                 if (!Boolean(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value))) return 'email invalid';
                 break;
             case 'phone':
-                console.log('value',value)
+                // console.log('value',value)
                 if (value == null) return noValue();
                 break;
             case 'address':
@@ -77,14 +77,26 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit }) => {
     });
     setFields(updatedContact);
 };
-const handleFormSubmit = (userFields?:any) => {
-  const fieldsToUse = userFields? userFields: fields;
-  const fieldsObject = fieldsToUse.reduce((obj:any, field:IFormField) => {
-    obj[field.name]=field.value
+const handleFormSubmit = (userFields?: any) => {
+  let firstName = '';
+  let lastName = '';
+  const fieldsToUse = userFields ? userFields : fields;
+  const fieldsObject = fieldsToUse.reduce((obj: any, field: IFormField) => {
+    if (field.name === 'firstName') {
+      firstName = String(field.value);
+    } else if (field.name === 'lastName') {
+      lastName =  String(field.value)
+    }
+    
+    obj[field.name] = field.value;
     return obj;
-}, {});
-  onSubmit(fieldsObject)
+  }, {});
+
+  // Combine firstName and lastName to create fullName
+  fieldsObject.name = `${firstName} ${lastName}`.trim();
+  onSubmit(fieldsObject);
 };
+
   useEffect(() => {
 
     if (user) {

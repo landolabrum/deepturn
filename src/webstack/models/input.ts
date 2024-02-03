@@ -7,7 +7,7 @@ export type ValueType = any;
 
 export interface IInput extends IFormControl {
   name?: string;
-  size?: IFormControlSize;
+  size?: IFormControlSize | 'sm';
   error?: string | null;
   label?: string;
   type?: string;

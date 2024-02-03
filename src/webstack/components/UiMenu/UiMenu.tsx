@@ -15,7 +15,7 @@ export interface IMenu extends IFormControl {
   traits?: any;
 }
 
-const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearch, traits }) => {
+const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearch, size, traits }) => {
   const [searchValue, setSearchValue] = useState("");
   const typesBypass: any = options;
   const hasOptions = !Boolean(typesBypass?.every((element: any) => element === undefined));
@@ -49,7 +49,7 @@ const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearc
   return (
     <>
       <style jsx>{styles}</style>
-      <div className={`menu ${variant ? `menu__${variant}` : ""}`} style={traits && traits?.height ? { ...traits, overflowY: "auto" } : traits ? traits : {}}>
+      <div className={`menu ${variant ? `menu__${variant}` : ""}${size?` menu-${size}`:''}`} style={traits && traits?.height ? { ...traits, overflowY: "auto" } : traits ? traits : {}}>
         {search && (
           <div className="menu__search">
             <Input type="text" variant={variant} value={searchValue} placeholder="Search" name="search" onChange={handleSearch} />
@@ -70,10 +70,13 @@ const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearc
                       option?.active === false ? "disabled" : ""
                     }${
                       value?.includes(currentValue)? ' active':''
+                    }${
+                      size?` menu__option-${size}`:''
+                    }
                     }`}
                     onClick={() => currentValue && option?.active !== false && handleSelect(currentValue)}
                   >
-                    <UiButton variant='flat' traits={{
+                    <UiButton variant='flat' size={size} traits={{
                       beforeIcon: option?.icon,
                       afterIcon: value?.includes(currentValue) ? {icon:'fa-check'} : ''
                     }}>

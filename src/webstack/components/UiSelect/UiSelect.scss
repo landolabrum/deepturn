@@ -19,6 +19,8 @@ $el_gap: 7px;
   font-weight: inherit;
   &:hover {
     color: inherit;
+  }&-sm{
+    width: max-content;
   }
 
   &.nav-item {

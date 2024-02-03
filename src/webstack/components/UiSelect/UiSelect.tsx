@@ -22,10 +22,12 @@ export interface ISelect  {
   value?: string;
   traits?: ITraits;
   variant?: IFormControlVariant
+  size?: any;
 }
 
 const UiSelect: React.FC<ISelect> = ({
   options,
+  size,
   onSelect,
   openDirection = "down",
   onToggle,
@@ -99,7 +101,7 @@ const UiSelect: React.FC<ISelect> = ({
       <style jsx>{styles}</style>
 
       <div
-        className={`select ${openDirection}`}
+        className={`select ${openDirection} ${size?` select-${size}`:''}`}
         style={traits?.width ? { width: `${traits.width}px` } : {}}
         onClick={handleOpen}
       >
@@ -108,6 +110,7 @@ const UiSelect: React.FC<ISelect> = ({
           data-element='select'
           type="button"
           label={label}
+          size={size}
           variant={hasOptions && variant !== 'disabled' ? variant : "select__disabled"}
           value={typeof value === 'string' ? capitalize(value) : title_ || selectedOption || "Select"}
           traits={{
@@ -119,6 +122,7 @@ const UiSelect: React.FC<ISelect> = ({
           <div
             className={`select__options ${variant ? " " + variant : ""}`}>
             <UiMenu
+            size={size}
               traits={traits}
               search={search}
               setSearch={setSearch}

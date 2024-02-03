@@ -5,9 +5,14 @@
 .globe{
     width: 100%;
     @extend .d-flex;
+    flex-direction: column;
+    gap: var(--s-9);
     overflow: hidden;
+    &__controls{
+        width: 100%;
+    }
     @media(max-width:900px){
-        height: inherit;
+        overflow: visible;
         width: 100%;
     }
 }
