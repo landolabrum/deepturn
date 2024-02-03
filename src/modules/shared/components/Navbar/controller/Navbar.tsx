@@ -14,6 +14,7 @@ import useNavMobile from "../hooks/useNavBreak"; // Ensure this path is correct
 import useScroll from "@webstack/hooks/useScroll";
 
 
+
 const Navbar = () => {
   const [user, current, setRoute] = useRoute();
   const routes = useClearanceRoutes();

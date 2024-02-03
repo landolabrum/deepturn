@@ -62,6 +62,7 @@ const UiGlobe: React.FC<any> = ({ locations, pointSize = 0.5 }: IGlobe) => {
       options={layerOptions}
       />
       <div className='globe' ref={containerRef}>
+        <br/>
         <Globe
           ref={globeRef}
           width={containerRef?.current?.offsetWidth}

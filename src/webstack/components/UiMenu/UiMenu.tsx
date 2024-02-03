@@ -3,8 +3,8 @@ import { IFormControl } from "../FormControl/FormControl";
 import styles from "./UiMenu.scss";
 import Input from "../UiInput/UiInput";
 import UiButton from "../UiButton/UiButton";
-import { IRoute } from "@shared/components/Navbar/data/routes";
-export type IMenuOption = string | (string | IRoute | number)[] | React.ReactElement[];
+import { IRoute, SelectableRoute } from "@shared/components/Navbar/data/routes";
+export type IMenuOption = string | (string | IRoute | number)[] | React.ReactElement[] | SelectableRoute;
 
 export interface IMenu extends IFormControl {
   options?: IMenuOption[];
