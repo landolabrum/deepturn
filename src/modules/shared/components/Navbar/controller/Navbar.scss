@@ -56,8 +56,10 @@
     background-color: var(--gray-90);
     --ui-icon-color: var(--primary);
     &--opaque{
+      --ui-icon-color: var(--dark-opaque);
       background-color: var(--dark-opaque);
       border: solid 1px var(--gray-70-opaque);
+      filter: blur(1px);
     }
     &:hover {
       animation: fade 1s forwards;

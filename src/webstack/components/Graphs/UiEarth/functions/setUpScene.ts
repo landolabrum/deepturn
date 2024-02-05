@@ -13,7 +13,7 @@ const setUpScene = (
     const pos={
         lat: position?.lat || 0,
         lng: position?.lng || 0,
-        altitude:position?.alt || width < 1100?globeRadius * .04: globeRadius * .02
+        altitude:position?.alt || globeRadius * .02
     };
     const containerWidth = containerRef.current.offsetWidth;
     const containerHeight = containerRef.current.offsetHeight;
