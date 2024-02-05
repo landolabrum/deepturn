@@ -202,22 +202,14 @@ export default class MemberService
       email,
       password,
       user_agent,
-      referrer_url
+      referrer_url,
+      metadata
     }: any
   ): Promise<UserContext> {
     if (!email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
-    // if (!password) {
-    //   throw new ApiError("Password is required", 400, "MS.SI.02");
-    // }
-    // console.log('[ SIGN UP REQUREST ]',   {
-    //   name,
-    //   email,
-    //   password,
-    //   user_agent,
-    //   referrer_url
-    // })
+  
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",
       {
@@ -225,7 +217,8 @@ export default class MemberService
         email: email,
         password: password,
         referrer_url: referrer_url,
-        user_agent: user_agent
+        user_agent: user_agent,
+        ...metadata
       },
       );
       // console.log('[ SIGN UP RES ]', res)

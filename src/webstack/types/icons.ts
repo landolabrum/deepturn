@@ -12,6 +12,7 @@ export interface UiIconDefinition {
   path?: string | string[]; // single path or path array
   stroke?: UiIconStrokeOptions; // single path or path array
   glow?: string;
+  color?: string;
   // stroke?: boolean;
 
   // Option 2

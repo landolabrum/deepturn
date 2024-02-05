@@ -1,7 +1,6 @@
 // Relative Path: ./admin.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './Admin.scss';
-import dynamic from 'next/dynamic';
 import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/UiSettingsLayout';
 import AdminCustomers from '../views/AdminCustomers/controller/AdminCustomers';
 import AdminProducts from '../views/AdminProducts/controller/AdminProducts';
@@ -12,18 +11,13 @@ import { useClearance } from '~/src/core/authentication/hooks/useUser';
 import AdminInvoices from '../views/AdminInvoices/controller/AdminInvoices';
 import AdminMesenger from '../views/AdminMesenger/AdminMesenger';
 import AdminMarketing from '../views/AdminMarketing/AdminMarketing';
+import AdminEarth from '../views/AdminEarth/AdminEarth';
 
 
-const UiGlobe = dynamic(
-  () => import('@webstack/components/Graphs/UiGlobe/controller/UiGlobe'),
-  {
-    ssr: false, // Disable server-side rendering for this component
-  }
-);
 
 const Admin = () => {
   const initialViews = {
-    globe: <UiGlobe />,
+    globe: <AdminEarth />,
     customers: <AdminCustomers />,
     products: <AdminProducts />,
     invoice: <AdminInvoices />,

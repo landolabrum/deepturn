@@ -4,6 +4,7 @@ import Icons from '../icons/icons';
 interface SvgOptions {
   width?: number;
   height?: number;
+  color?: string;
 }
 
 export default class IconHelper {
@@ -31,7 +32,7 @@ export default class IconHelper {
 
     let width = icon.width; // 100
     let height = icon.height; // 200
-
+    let color = icon.color || 'currentColor';
     if (options) {
       if (options.width != null || options.height != null) {
         if (options.width) width = options.width;
@@ -40,6 +41,9 @@ export default class IconHelper {
           height = Math.ceil((width / icon.width) * icon.height);
         if (options.width == null)
           width = Math.ceil((height / icon.height) * icon.width);
+      }
+      if(options.color){
+
       }
     }
 
@@ -58,7 +62,7 @@ export default class IconHelper {
       icon.width +
       ' ' +
       icon.height +
-      '" fill="currentColor">' +
+      `" fill="${color}">` +
       '<path d="' +
       icon.path +
       '"/>' +

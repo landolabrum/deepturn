@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Index.scss';
 import ProductRequestSurvey from '../../ecommerce/products/ProductRequestSurvey/controller/ProductRequestSurvey';
+import UiEarth from '@webstack/components/Graphs/UiEarth/controller/EarthRenderer';
+
 
 
 
@@ -15,12 +17,15 @@ const Index = () => {
   //   bevelSize: 2, // Adjust the bevel size as needed
   //   bevelSegments: 2, // Adjust the number of bevel segments as needed
   // };
+
   return (
     <>
       <style jsx>{styles}</style>
       <div className='index'>
       <div className='index__full'>
-      <ProductRequestSurvey />
+      {/* <ProductRequestSurvey /> */}
+
+      <UiEarth/>
       </div>
       </div>
     </>

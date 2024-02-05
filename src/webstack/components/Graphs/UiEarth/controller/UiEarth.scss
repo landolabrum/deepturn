@@ -1,0 +1,20 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.ui-earth{
+    @extend .d-flex;
+    flex-direction: column;
+    padding: var(--padding);
+    width: var(--padding-width);
+    &__header{
+        width: 100%;
+    }
+   &__container{
+    width: 100%;
+    aspect-ratio: 1;
+    @media(min-width: 1100px){
+    }
+   }
+}

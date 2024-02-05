@@ -58,11 +58,20 @@ const AccountModify = ({ user, open = false }: any) => {
   const onSubmit = async (form:any)=>{
     setBusy(true);
     const findField:any= (name:string)=>fields.find(f=>f.name == name)?.value;
+    let address = findField('address');
+    const metadata = Boolean(address?.lat && address?.lng ) && {'address.lat': address.lat, 'address.lng': address.lng};
+    if(address?.lat, address?.lng){
+      delete address?.lat;
+      delete address?.lng;
+    }
     let request:any = {
       name: `${findField('first_name')} ${findField('last_name')}`,
       email: findField('email'),
-      phone: phoneFormat(String(findField('phone')), 'US', true)
+      phone: phoneFormat(String(findField('phone')), 'US', true),
+      ...address,
+      metadata: metadata,
     }
+    console.log('[ request ]',request)
     try{
       const response = await memberService.updateMember(user.id, request);
       if(response.object == 'customer')setNotification({

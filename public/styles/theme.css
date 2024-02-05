@@ -110,7 +110,25 @@
       0px 1px 2px var(--gray-70-opaque),
       0px 5px 10px var(--gray-90-opaque);
   }
-
+.globe-marker{
+  user-select: all;
+  cursor: pointer;
+  pointer-events: all;
+  overflow: visible;
+  width: var(--s-7);
+  aspect-ratio: 1;
+  font-size: 10px;
+  opacity: 0.5;
+  .globe-html{
+    opacity: 0;
+  }
+}
+.globe-marker:hover{
+  opacity: 1;
+  .globe-html{
+    opacity: 1;
+  }
+}
   /* SIZES */
   --s-1: 32px;
   --s-2: 28px;

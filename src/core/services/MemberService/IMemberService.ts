@@ -26,7 +26,8 @@ export default interface IMemberService {
     email,
     password, 
     referrer_url,
-    user_agent
+    user_agent,
+    metadata
   }: any): Promise<any>;
   signOut(): Promise<string>;
   getCurrentUserToken(): string | undefined;

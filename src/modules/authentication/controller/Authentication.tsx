@@ -11,6 +11,7 @@ import UiButton from "@webstack/components/UiButton/UiButton";
 import { useLoader } from "@webstack/components/Loader/Loader";
 import { Line } from "@react-three/drei";
 import Link from "next/link";
+import environment from "~/src/environment";
 
 
 
@@ -70,7 +71,7 @@ const Authentication: React.FC<any> = (props: any) => {
 
         <div className='authentication__view-header'>
           <div className="authentication__logo">
-            <UiIcon icon="deepturn-logo" />
+            <UiIcon icon={`${environment.merchant.name}-logo`} />
           </div>
           <div className='authentication__view-name'>
             {keyStringConverter(view)}

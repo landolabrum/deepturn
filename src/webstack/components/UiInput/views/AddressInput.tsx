@@ -38,8 +38,11 @@ const AutocompleteAddressInput = ({ address, setAddress, traits, inputClasses, l
           city: addressComponents.locality || '',
           state: addressComponents.administrative_area_level_1 || '',
           postal_code: addressComponents.postal_code || '',
-          country: addressComponents.country || ''
+          country: addressComponents.country || '',
+          lat: place.geometry?.location?.lat() || 0,
+          lng: place.geometry?.location?.lng() || 0
         };
+
         setAddress({ target: { name: "address", value: formattedAddress } });
       }
     });
