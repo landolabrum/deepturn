@@ -14,7 +14,8 @@ const nextConfig = {
     });
     return config;
   },
-  output: "standalone",
+  output: "export",
+  // output: "standalone",
   images: {
     remotePatterns: [
       {

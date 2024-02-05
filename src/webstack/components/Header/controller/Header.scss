@@ -77,7 +77,10 @@
     &__show {
       animation: slideDown 1s forwards;
     }
-
+    
+    @media(max-width: 1100px) {
+      animation: slideDown 1s forwards;
+    }
     @media(min-width: 1260px) {
       max-width: calc(1260px - calc(var(--padding) * 2));
       inline-size: var(--padding-width);
@@ -113,13 +116,12 @@
         font-size: var(--s-1);
         --ui-icon-size: var(--s-2);
         gap: var(--s-9);
-        --ui-icon-color: var(--gray-40-opaque);
+        color: var(--gray-40);
+        --ui-icon-color: var(--gray-40);
 
         line-height: 1;
         font-weight: 700;
         text-transform: capitalize;
-        color: inherit;
-
         @media(max-width: 1100px) {
           line-height: 1;
         }

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Index.scss';
 import ProductRequestSurvey from '../../ecommerce/products/ProductRequestSurvey/controller/ProductRequestSurvey';
-import UiEarth from '@webstack/components/Graphs/UiEarth/controller/EarthRenderer';
+import environment from '~/src/environment';
+import keyStringConverter from '@webstack/helpers/keyStringConverter';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 
 
@@ -22,11 +24,15 @@ const Index = () => {
     <>
       <style jsx>{styles}</style>
       <div className='index'>
-      <div className='index__full'>
-      {/* <ProductRequestSurvey /> */}
-
-      <UiEarth/>
-      </div>
+        <div className='index__full'>
+        <div className='index__full--title'>
+          {environment.merchant.name && keyStringConverter(environment.merchant.name)}
+          <UiIcon icon={`${environment.merchant.name}-logo`}/>
+        </div>
+        </div>
+        <div className='index__full'>
+          <ProductRequestSurvey />
+        </div>
       </div>
     </>
   );

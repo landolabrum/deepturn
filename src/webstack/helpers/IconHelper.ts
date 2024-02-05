@@ -43,7 +43,7 @@ export default class IconHelper {
           width = Math.ceil((height / icon.height) * icon.width);
       }
       if(options.color){
-
+        color=options.color
       }
     }
 

@@ -33,7 +33,7 @@ const UiEarthObject = (
 
     useEffect(() => {
         if (!myGlobe) return;
-        setUpScene(myGlobe, containerRef, options);
+        setUpScene(myGlobe, containerRef, options, width);
     }, [earthRef?.current,myGlobe]);
     useEffect(() => {
         if (!myGlobe) return;
@@ -51,7 +51,6 @@ const UiEarthObject = (
             <style jsx>{styles}</style>
             <div className='ui-earth' >
                 <div className='ui-earth__header'>
-                    <h1>Earth</h1>
                     <div className='ui-earth__tools'>
                     </div>
                 </div>

@@ -80,7 +80,9 @@ const Header: React.FC = () => {
           <div className={`header-content ${show ? ' header-content__show' : ""}`}>
             <div className="header-left">
               <BreadCrumbs links={headerState?.breadcrumbs} />
-              <div className="header-title">{width < 900 && <UiIcon icon={`${environment.merchant.name}-logo`} />}{headerState?.title}</div>
+              <div className="header-title">
+                {width < 900 && <UiIcon icon={`deepturn-logo`} />}
+                {headerState?.title}</div>
             </div>
             {headerState?.right && (
               <div className="header-right">{headerState?.right}</div>

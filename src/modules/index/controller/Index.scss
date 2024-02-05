@@ -51,9 +51,15 @@
         /* Adjust the gap as needed */
         &--title {
             width: 100%;
-            text-align: center;
+            @extend .d-flex;
+            justify-content: flex-start;
             text-transform: capitalize;
-            font-size: var(--s-2);
+            color: var(--primary);
+            --ui-icon-color: var(--primary);
+            gap: var(--s-9);
+            font-size: var(--s-1);
+            line-height: 1;
+            --ui-icon-size: var(--s-1);
         }
     }
 
