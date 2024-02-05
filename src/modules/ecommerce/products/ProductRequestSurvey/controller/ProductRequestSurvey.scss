@@ -19,6 +19,9 @@
     @media(min-width:900px) {
         width: 50%;
     }
+    @media(max-width:900px) {
+        margin-bottom: 100px;
+    }
 
     background-color: var(--gray-90);
     gap: var(--padding);
@@ -80,6 +83,7 @@
         text-transform: capitalize;
         font-size: var(--s-4);
         color: var(--gray-50);
+
     }
 
 
@@ -89,6 +93,9 @@
         line-height: 1;
         width: 100%;
         color: var(--gray-50);
+        @media(max-width:900px){
+            font-size: var(--s-5);
+        }
     }
 
     &__instructions {

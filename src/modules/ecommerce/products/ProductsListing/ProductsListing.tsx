@@ -76,7 +76,7 @@ const ProductsListing: NextPage = () => {
   return (<>
   <style jsx>{styles}</style>
     <div className="product-listing">
-      <ProductChapters/>
+      {/* <ProductChapters/> */}
       {/* <div className="product-listing__header">
         <div className="product-listing__filters">
           {['categories', 'types'].map(filterKey => (

@@ -120,7 +120,8 @@ export const useClearanceRoutes = () => {
       });
   };
   useEffect(() => {
-    setAccess(filterRoutes(routes).reverse());
+    const accRoutes = filterRoutes(routes)
+    setAccess(access !== undefined?accRoutes:accRoutes.reverse());
   }, [user, setAccess]);
 
   return access;

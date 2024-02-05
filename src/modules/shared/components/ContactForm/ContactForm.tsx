@@ -132,8 +132,8 @@ const handleFormSubmit = (userFields?: any) => {
   return (<>
     <style jsx>{styles}</style>
     <div className='contact-form'>
+      <div className='contact-form__title'>contact</div>
       <UiForm
-        title='contact'
         fields={fields}
         disabled={disabled}
         onChange={onChange}
