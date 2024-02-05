@@ -65,7 +65,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     const defaultForm = { features: features };
     const clearAllSelected = () => setForm(defaultForm);
     const { openModal, closeModal } = useModal();
-    const { scrollTo, setScrollTo } = useScrollTo({ max: 1100 });
+    // const { scrollTo, setScrollTo } = useScrollTo({ max: 1100 });
     const [form, setForm] = useState<{ features: IMoreInfoField[] }>({ features: features });
     const [contactData, setContactData] = useState(null);
     const [view, setView] = useState<string>('feature');
@@ -91,9 +91,10 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             formFeatures.push(choice);
             setForm({ ...form, features: formFeatures })
             return;
-        } else {
-            setScrollTo('product-request-survey__options')
-        }
+        } 
+        // else {
+        //     setScrollTo('product-request-survey__options')
+        // }
 
         const updatedFeatures = formFeatures.map(feature =>
             feature.name === choice.name ? { ...feature, selected: !feature.selected } : feature
@@ -216,6 +217,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                                 <div key={index}>
                                     <UiButton
                                         variant='primary round mini'
+                                        size='sm'
                                         traits={{
                                             afterIcon: {
                                                 icon: 'fa-xmark',

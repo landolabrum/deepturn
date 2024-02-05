@@ -11,16 +11,21 @@
     border-radius: var(--border-radius);
     width: 100%;
     padding: var(--s-3) var(--s-6) var(--s-1);
-    @media(max-width: 1100px) {
-        padding:var(--s-4);
-        width: var(--padding-width);
-        margin: var(--padding);
+
+    @media(min-width:1100px) {
+        width: 80%;
     }
+
+    @media(min-width:900px) {
+        width: 50%;
+    }
+
     background-color: var(--gray-90);
     gap: var(--padding);
     min-height: 490px;
     color: var(--gray-30);
     height: 100%;
+
     &__success {
         @extend .d-flex;
         flex-direction: column;
@@ -28,12 +33,14 @@
         margin-top: var(--element-height);
         width: 100%;
         flex: 1;
-        gap:var(--element-height);
+        gap: var(--element-height);
+
         &--email {
             font-size: var(--s-4);
             color: var(--primary);
             font-weight: 600;
         }
+
         &--status {
             @extend .d-flex;
             background-color: var(--gray-30-opaque);
@@ -53,10 +60,12 @@
         &--message {
             font-size: var(--s-5)
         }
-        &--action{
+
+        &--action {
             margin-top: auto;
             width: 50%;
-            @media(max-width: 900px){
+
+            @media(max-width: 900px) {
                 width: 100%;
             }
         }
@@ -92,7 +101,22 @@
     &__submit {
         width: 100%;
         margin: var(--element-height) 0 0;
+        @media(max-width:900px) {
+            position: fixed;
+            bottom: 0;
+            background-color: var(--gray-90);
+            backdrop-filter: blur(4px);
+            border-radius: 0 0 0 var(--border-radius);
+            right: 0;
+            padding: var(--padding);
+            border:solid 1px  var(--gray-100);
+            border-color: transparent transparent transparent var(--gray-70);
+
+            width: 80%;
+        }
     }
+
+    position: relative;
 
     &__selected {
         background-color: var(--gray-80);
@@ -108,14 +132,35 @@
         flex-wrap: wrap;
         color: var(--gray-50);
         width: calc(100% - calc(var(--s-9) * 2));
+        
+        @media(max-width:900px) {
+            position: fixed;
+            border:solid 1px  var(--gray-100);
 
+            border-color:  var(--gray-70) transparent transparent var(--gray-70);
+
+            bottom: 60px;
+            background-color: var(--gray-90);
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(4px);
+            right: 0;
+            width: 80%;
+        }
+        
         &--header {
-
             position: absolute;
             text-transform: capitalize;
             left: var(--s-8);
             top: var(--s-9);
-
+            
+            @media(max-width:900px) {
+            top: var(--s-1);
+            color: var(--gray-70);
+            font-size: var(--s-7);
+            left: 0;
+            padding: var(--s-9);
+            width: auto;
+        }
         }
 
         .product-request-survey__tools {
@@ -126,7 +171,10 @@
             width: 100%;
             @extend .d-flex;
             justify-content: flex-end;
-
+            @media(max-width:900px) {
+                color: var(--gray-70);
+                font-size: var(--s-8);
+            }
             &--tool {
                 cursor: pointer;
 

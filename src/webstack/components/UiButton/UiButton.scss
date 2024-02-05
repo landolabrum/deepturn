@@ -63,7 +63,8 @@ button {
     padding: 0;
   }
   &.miniactive, &.mini {
-    padding: 0;
+    padding-right: var(--s-7);
+    // padding: 0;
     // aspect-ratio: 4/5;
   }
 

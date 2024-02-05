@@ -43,9 +43,10 @@ const {width }=useWindow();
     )
     setViewCallback && setViewCallback(view);
   }
-  const containerClass = useClass('settings', undefined, variant);
-  const contentClass = useClass('settings__content', undefined, variant);
-  const viewClass = useClass('settings__view', undefined, variant);
+  const containerClass = useClass({cls:'settings',variant:variant });
+  const contentClass = useClass({cls:'settings__content',variant:variant });
+  const viewClass = useClass({cls:'settings__view',variant:variant });
+
 
 const [hide, setHide]=useState('');
 const handleHide = () =>{

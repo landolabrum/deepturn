@@ -21,11 +21,16 @@ const ModalOverlay: React.FC = () => {
   const { position } = useMouse();
 
   // Always call hooks unconditionally
-  const modalOverlayClass = useClass('modal__overlay', undefined, `${modalContent?.variant || ''}${isDragging ? ' modal__overlay__dragging' : ''}` || undefined);
-  const modalClass = useClass('modal', undefined, `${modalContent?.variant || ''}${isDragging ? ' modal__dragging' : ''}` || undefined);
-  const modalContentClass = useClass('modal__content', undefined, modalContent?.variant || undefined);
-  const modalHeaderClass = useClass('modal__header', undefined, modalContent?.variant || undefined);
-  const modalBodyClass = useClass('modal__body', undefined, modalContent?.variant || undefined);
+  const modalOverlayClass = useClass({
+    cls:'modal__overlay',
+    variant: modalContent?.variant || '',
+    extras:[isDragging ? ' modal__overlay__dragging':'']
+  })
+  const modalClass = useClass({cls:'modal',variant:modalContent?.variant,extras:[isDragging ? ' modal__dragging':'']});
+
+  const modalContentClass = useClass({cls:'modal__content', variant:modalContent?.variant});
+  const modalHeaderClass = useClass({cls:'modal__header', variant:modalContent?.variant});
+  const modalBodyClass = useClass({cls:'modal__body', variant:modalContent?.variant});
 
   let title = modalContent?.title;
 

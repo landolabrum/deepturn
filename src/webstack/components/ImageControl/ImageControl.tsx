@@ -22,7 +22,8 @@ interface IImageControl {
 const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 'image', refreshInterval = 1000, error, loadingText, fixedLoad=false }) => {
   const childRef = useRef<HTMLDivElement | null>(null); // Change to HTMLDivElement
   const [loading, setLoading] = useState<boolean>(true);
-  const clzz: string = useClass('image-control__element', mediaType, variant);
+  // const clzz: string = useClass('image-control__element', mediaType, variant);
+  const clzz: string = useClass({cls:'image-control__element', type:mediaType, variant:variant});
   const { openModal, closeModal, isModalOpen } = useModal();
 
   const handleExpand = () => {
