@@ -42,8 +42,9 @@ const AutocompleteAddressInput = ({ address, setAddress, traits, inputClasses, l
           lat: place.geometry?.location?.lat() || 0,
           lng: place.geometry?.location?.lng() || 0
         };
-
-        setAddress({ target: { name: "address", value: formattedAddress } });
+        const addressValue ={ target: { name: "address", value: formattedAddress } };
+        console.log('[ addressValue ]',addressValue)
+        setAddress(addressValue);
       }
     });
   };

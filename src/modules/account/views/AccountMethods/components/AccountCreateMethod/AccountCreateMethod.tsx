@@ -54,29 +54,10 @@ const AccountCreateMethod = ({ onSuccess, user, shippable }: IAccountCreateMetho
                 }
             }
         } catch (e: any) {
-            alert(JSON.stringify(e))
+            console.error('[ Account Create Method (onsubmit) Error ]',JSON.stringify(e))
         }
     }, [ elements]);
-    // }, [stripe, elements, clientSecret]);
-    // const [isApplePaySupported, setIsApplePaySupported] = useState(false);
 
-    // useEffect(() => {
-    //     // Check if Apple Pay is supported
-    //     if (stripe) {
-    //         stripe.paymentRequest({
-    //             country: 'US',
-    //             currency: 'usd',
-    //             total: {
-    //                 label: 'Demo Total',
-    //                 amount: 199,
-    //             },
-    //             requestPayerName: true,
-    //             requestPayerEmail: true,
-    //         }).canMakePayment().then(result => {
-    //             setIsApplePaySupported(!!result?.applePay);
-    //         });
-    //     }
-    // }, [stripe]);
     const hasPayElem = elements?.getElement('payment') || false;
     useEffect(() => {
         if (elements && !hasPayElem) {

@@ -9,10 +9,12 @@ import ProductBuyNow from '../views/ProductBuyNow/ProductBuyNow';
 import { ICartItem } from '../../cart/model/ICartItem';
 import useCart from '../../cart/hooks/useCart';
 import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
 
-
-const ProductDescription = () => {
+interface IProductDescription{
+  product_id?: string,
+  price_id?: string
+}
+const ProductDescription = ({product_id, price_id}:IProductDescription) => {
   const router = useRouter();
   const product_query_id: string | undefined = router?.query?.id != undefined ? router?.query?.id.toString() : undefined
   const price_query_id: string | undefined = router?.query?.pri != undefined ? router?.query?.pri.toString() : undefined
@@ -26,10 +28,17 @@ const ProductDescription = () => {
   const cart = getCartItems();
   const fetchProduct = useCallback(
     async () => {
-      if ([product_query_id, price_query_id].includes(undefined)) return;
+      if (
+        [product_query_id, price_query_id].includes(undefined) &&
+        [product_id, price_id].includes(undefined)
+      ) return;
       setIsLoading(true); // Start loading
       const shoppingService = getService<IShoppingService>("IShoppingService");
-      const productResponse = await shoppingService.getProduct({ id: product_query_id, pri: price_query_id });
+      let productRequest = { 
+        id: product_id || product_query_id, 
+        pri: price_id ||  price_query_id
+      };
+      const productResponse = await shoppingService.getProduct(productRequest);
       if (productResponse?.id) {
         productResponse.price_object.qty = 0;
         setProduct(productResponse);
@@ -39,12 +48,12 @@ const ProductDescription = () => {
       setIsLoading(false); // End loading in case of no productResponse
       return ''; // Return an empty string if productResponse is not valid
     },
-    [product_query_id, price_query_id], // Dependencies updated
+    [product_query_id, price_query_id, product_id, price_id], // Dependencies updated
   );
 
   useEffect(() => {
     fetchProduct(); // Moved fetching into a useEffect to be run on mount and on changes of product_query_id and price_query_id
-  }, [product_query_id, price_query_id, fetchProduct]); // Dependencies updated
+  }, [product_id, price_id, product_query_id, price_query_id, fetchProduct]); // Dependencies updated
 
   useEffect(() => {
  

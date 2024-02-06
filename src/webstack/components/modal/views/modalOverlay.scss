@@ -29,7 +29,6 @@
 .modal {
     position: fixed; // Use fixed to keep it relative to the viewport
     z-index: 1000;
-    top: 350px; // Center vertically
     left: 50%; // Center horizontally
     transform: translateX(-50%); // Adjust position to truly center the modal
     overflow-y: auto; // Allow scrolling for overflow content

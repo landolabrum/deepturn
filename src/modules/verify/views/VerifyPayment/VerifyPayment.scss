@@ -1,0 +1,41 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.card{
+    width: var(--padding-width);
+    border-radius: var(--border-radius);
+    padding: var(--padding);
+    background-color: var(--gray-100);
+}
+.verify-payment{
+    @extend .d-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var(--padding);
+    &__token-needed{
+        width: 100%;
+        @extend .d-flex;
+        min-height: 350px;
+    }
+    &--header, &--content{
+        @extend .d-flex;
+        justify-content: flex-start;
+    }
+    &--header{
+        text-transform: capitalize;
+        width: 100%;
+        color: var(--gray-40);
+        font-size: var(--s-2);
+    }
+    &--content{
+        flex-direction: column;
+        color: var(--gray-40);
+        gap: var(--padding);
+        &__contact-form{
+            @extend .d-flex, .card;
+            margin-bottom: var(--element-height);
+        }
+    }
+}

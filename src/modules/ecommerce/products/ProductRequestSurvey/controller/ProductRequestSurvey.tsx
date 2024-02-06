@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './ProductRequestSurvey.scss';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import UiButton from '@webstack/components/UiButton/UiButton';
@@ -8,15 +8,13 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import ProductFeatureOther from '../views/ProductFeatureOther/ProductFeatureOther';
-import useScrollTo from '@webstack/components/AdapTable/hooks/useScrollTo';
-import UiDiv from '@webstack/components/UiDiv/UiDiv';
-import dFlex from '@webstack/jsx/dFlex';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import keyStringConverter from "@webstack/helpers/keyStringConverter"
 import environment from "~/src/environment"
 import capitalize from '@webstack/helpers/Capitalize';
 import ContactForm from '@shared/components/ContactForm/ContactForm';
-import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
+import useWindow from '@webstack/hooks/useWindow';
+
 
 export const applianceArray: IMoreInfoField[] = [
     { name: "refrigerator", selected: false, value: 6 },
@@ -61,6 +59,8 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     title = 'appliance',
     subtitle = 'Select applicable appliances that you need power'
 }) => {
+    const selectedRef = useRef<any | undefined>();
+    const optionsRef = useRef<any | undefined>();
     const userAgentInfo = useUserAgent();
     const defaultForm = { features: features };
     const clearAllSelected = () => setForm(defaultForm);
@@ -72,6 +72,13 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     const [message, setMessage] = useState<string | null>(null);
     const memberService = getService<IMemberService>('IMemberService');
     const { features: formFeatures, } = form;
+    const { width } = useWindow();
+    const handleMobileSelected = () => {
+
+        const selectHeight = selectedRef.current.offsetHeight;
+        // set the submit Box-shadow to unset
+        selectedRef.current.style.bottom = width > 900?'' :`calc(120px - ${selectHeight}px)`;
+    }
     const handleFeature = (choice: IMoreInfoField) => {
         const addCustom = async (choice: any) => handleFeature(choice);
         const isOther = !Boolean(features.find(f => f.name === choice.name));
@@ -91,14 +98,13 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             formFeatures.push(choice);
             setForm({ ...form, features: formFeatures })
             return;
-        } 
-        // else {
-        //     setScrollTo('product-request-survey__options')
-        // }
+        }
 
         const updatedFeatures = formFeatures.map(feature =>
             feature.name === choice.name ? { ...feature, selected: !feature.selected } : feature
         );
+        const selectHeight = selectedRef.current.offsetHeight;
+        optionsRef.current.style.paddingBottom = `${selectHeight}px`;
         setForm({ ...form, features: updatedFeatures });
     };
 
@@ -131,9 +137,9 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     };
 
     const gridProps = {
-        xs: 1,
-        sm: 2,
-        lg: 4,
+        xs: 3,
+        sm: 4,
+        lg: 5,
         gap: 10,
     };
 
@@ -142,7 +148,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
         setView('loading'); // Move to loading view while processing the submission
         onSubmit(submittedContactData); // Pass the contact data directly to onSubmit
     };
-    
+
 
     const onSubmit = async (submittedContactData: any) => {
         let contactDataToUse = submittedContactData || contactData;
@@ -151,7 +157,6 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             setView('error');
             return;
         }
-        // console.log('[ contactDataToUse ]',contactDataToUse)
         let request: any = {
             timestamp: new Date().getTime(),
             user_agent: userAgentInfo,
@@ -179,11 +184,23 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             setView('error');
         }
     };
+    const handleBoxShadow = () => {
+        const submitContainer = selectedRef.current.parentNode.lastChild;
+        if (
+            ['unset'].includes(submitContainer.style.boxShadow) || submitContainer.style.boxShadow !== '') {
+            submitContainer.style.boxShadow = '';
+        } else if ([''].includes(submitContainer.style.boxShadow)) {
+            submitContainer.style.boxShadow = 'unset'
+        }
+    }
 
+    useEffect(() => {
+        handleMobileSelected();
+    }, [width, handleBoxShadow]);
     if (form.features.length) return (
         <>
             <style jsx>{styles}</style>
-            <div className='product-request-survey'>
+            <div className='product-request-survey' ref={optionsRef}>
                 {title && <div className='product-request-survey__title'>{capitalize(title)}{`'`}s </div>}
                 {subtitle && view === 'feature' && <div className='product-request-survey__sub-title'>{subtitle}</div>}
                 {view.includes("@") && <div className='product-request-survey__success'>
@@ -196,14 +213,17 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                 {view == 'error' && <h1>an Error occured</h1>}
                 {view == 'loading' && <div><UiLoader height='500px' position='relative' /></div>}
                 {view == 'success' && <div id='feature_message' className='product-request-survey__success'>
-                    <div className='product-request-survey__success--status'>{view}<UiIcon icon='fa-circle-check'/></div>
+                    <div className='product-request-survey__success--status'>{view}<UiIcon icon='fa-circle-check' /></div>
                     <div className='product-request-survey__success--message'>{message || ''}</div>
                 </div>}
                 {view == 'contact' && (
                     <ContactForm onSubmit={onContactSubmit} />
                 )}
                 {view == 'feature' && <>
-                    <div className='product-request-survey__selected'>
+                    <div ref={selectedRef}
+                        onMouseEnter={handleBoxShadow}
+                        onMouseLeave={handleBoxShadow}
+                        className='product-request-survey__selected'>
                         <div className='product-request-survey__selected--header'>
                             {`Selected ${title}s`} | total amps  {calculateTotalValue()}
                         </div>
@@ -212,25 +232,30 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                                 {Boolean(selected?.length) && <div onClick={clearAllSelected}>clear all</div>}
                             </div>
                         </div>
-                        {formFeatures && Boolean(selected?.length) && Object.values(formFeatures).map((feature, index) => {
-                            if (feature?.selected) return (
-                                <div key={index}>
-                                    <UiButton
-                                        variant='primary round mini'
-                                        size='sm'
-                                        traits={{
-                                            afterIcon: {
-                                                icon: 'fa-xmark',
-                                                onClick: () => handleFeature(feature)
-                                            },
-                                        }}
-                                        onClick={() => handleFeature(feature)}
-                                    >
-                                        {feature.name} - {feature?.value}
-                                    </UiButton>
-                                </div>
-                            )
-                        })}
+                        {formFeatures && Boolean(selected?.length) &&
+                            <div className='product-request-survey__selected--content'>
+                                {Object.values(formFeatures).map((feature, index) => {
+                                    if (feature?.selected) return (
+                                        <div key={index}>
+                                            <UiButton
+                                                variant='primary round mini'
+                                                size='sm'
+                                                traits={{
+                                                    afterIcon: {
+                                                        icon: 'fa-xmark',
+                                                        onClick: () => handleFeature(feature)
+                                                    },
+                                                }}
+                                                onClick={() => handleFeature(feature)}
+                                            >
+                                                {feature.name} - {feature?.value}
+                                            </UiButton>
+                                        </div>
+                                    )
+                                })
+                                }
+                            </div>
+                        }
                         {!selected.length && <div className='product-request-survey__instructions'>please Select, {title} to continue.</div>}
                     </div>
                     <div id='product-request-survey__options' />
@@ -239,7 +264,11 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                             return (
                                 <div key={index} className={`product-description__choice ${feature?.selected ? 'product-description__choice--choice' : ''}`} onClick={() => handleFeature(feature)}>
                                     <div className='product-description__choice__name'>
-                                        {feature?.name} {feature?.selected && <UiIcon icon='fa-check' />}
+                                        {feature?.name} {feature?.selected && (
+                                            <div className='product-description__choice__name--icon '>
+                                                {feature?.value}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )

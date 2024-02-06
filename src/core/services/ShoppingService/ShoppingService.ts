@@ -3,8 +3,6 @@ import { getService } from "@webstack/common";
 import environment from "~/src/environment";
 import IShoppingService, { IProduct } from "./IShoppingService"
 import IMemberService from "../MemberService/IMemberService";
-import RevenueRequest from "~/src/models/Shopping/Revenue";
-import { RevenueTotalsResponse } from "~/src/models/Shopping/Revenue";
 
 export default class ShoppingService extends ApiService implements IShoppingService {
 

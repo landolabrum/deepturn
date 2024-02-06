@@ -42,11 +42,10 @@ a {
   @media(max-width: 900px) {
     min-width: unset;
   }
-  &:not(.authentication__sign-in) {
-    @media(max-width: 1100px) {
-      max-width: 500px;
-    }
-  }
+  // &:not(.authentication__sign-in) {
+  //   @media(max-width: 1100px) {
+  //   }
+  // }
 
   &__email-verify {
     font-size: var(--s-5);

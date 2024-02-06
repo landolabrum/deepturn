@@ -95,13 +95,18 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
               })}
             </div>
           </div></>}
-          {clientSecret && <StripePaymentForm clientSecret={clientSecret} onSuccess={getAccountMethods} />}
+          {clientSecret && <StripePaymentForm 
+            clientSecret={clientSecret} 
+            onSuccess={getAccountMethods}
+          />}
       </div>
     </>
   );
   return (
     <>
       <style jsx>{styles}</style>
+      <h1>{clientSecret}</h1>
+
       <UiCollapse label={label} open={open || !loader.active || user?.invoice_settings?.default_payment_method == undefined}>
         <div className='account-methods'>
           {methods.length > 0 && <>
@@ -121,7 +126,9 @@ const AccountMethods: React.FC<any> = ({ open, customerMethods }: IAccountMethod
                 })}
               </div>
             </div></>}
-            {clientSecret && <div><StripePaymentForm clientSecret={clientSecret} onSuccess={getAccountMethods} /></div>}
+            {clientSecret && <div>
+              <StripePaymentForm clientSecret={clientSecret} onSuccess={getAccountMethods} />
+            </div>}
         </div>
       </UiCollapse>
     </>

@@ -6,32 +6,32 @@ import CustomToken from "~/src/models/CustomToken";
 import MemberToken from "~/src/models/MemberToken";
 import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
-import IMemberService from "./IMemberService";
+import IMemberService, { IDecryptJWT, IEncryptJWT } from "./IMemberService";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
 import errorResponse from "../../errors/errorResponse";
 const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
 
-const TIMEOUT=5000;
+const TIMEOUT = 5000;
 function timeoutPromise<T>(promise: Promise<T>, ms: number): Promise<T> {
   let timeoutHandle: NodeJS.Timeout;
   const timeoutPromise = new Promise<null>((resolve, reject) => {
-      timeoutHandle = setTimeout(() => reject(new ApiError(
-        "Server Down",
-        409,
-        "MS.SI.02",
-        "Server is unreachable"
-      )
-      ), ms);
+    timeoutHandle = setTimeout(() => reject(new ApiError(
+      "Server Down",
+      409,
+      "MS.SI.02",
+      "Server is unreachable"
+    )
+    ), ms);
   });
 
   return Promise.race([
-      promise,
-      timeoutPromise
+    promise,
+    timeoutPromise
   ]).then((result) => {
-      clearTimeout(timeoutHandle);
-      return result;
+    clearTimeout(timeoutHandle);
+    return result;
   }) as Promise<T>;
 }
 
@@ -49,43 +49,43 @@ export default class MemberService
 
   public async verifyEmail(token: string): Promise<any> {
     if (!token) {
-        throw new ApiError("No Token Provided", 400, "MS.SI.02");
+      throw new ApiError("No Token Provided", 400, "MS.SI.02");
     }
-    
+
     try {
-        const encodedToken = encodeURIComponent(token);
-        // Wrap the API call with the timeout promise
-        const verifiedMemberResp = await timeoutPromise(
-            this.get<any>(`/usage/auth/verify-email?token=${encodedToken}`),
-            TIMEOUT // 5 seconds timeout
-        );
+      const encodedToken = encodeURIComponent(token);
+      // Wrap the API call with the timeout promise
+      const verifiedMemberResp = await timeoutPromise(
+        this.get<any>(`/usage/auth/verify-email?token=${encodedToken}`),
+        TIMEOUT // 5 seconds timeout
+      );
 
-        // Check if the response is an ApiError
-        if (verifiedMemberResp instanceof ApiError) {
-            throw verifiedMemberResp;
-        }
+      // Check if the response is an ApiError
+      if (verifiedMemberResp instanceof ApiError) {
+        throw verifiedMemberResp;
+      }
 
-        const customer_token = verifiedMemberResp?.customer_token;
-        if (customer_token) {
-            this.saveMemberToken(customer_token);
-            this.saveLegacyCookie(customer_token);
-            this._getCurrentUser(true)!;
-        }
-        
-        // If everything is successful, return the response
-        return verifiedMemberResp;
+      const customer_token = verifiedMemberResp?.customer_token;
+      if (customer_token) {
+        this.saveMemberToken(customer_token);
+        this.saveLegacyCookie(customer_token);
+        this._getCurrentUser(true)!;
+      }
+
+      // If everything is successful, return the response
+      return verifiedMemberResp;
     } catch (error) {
-        // Handle the error here
-        if (error instanceof ApiError) {
-            return errorResponse(error);
-        } else {
-            // Handle other types of errors as needed
-            console.error("An unexpected error occurred:", error);
-            const responseError = new ApiError("Internal Server Error", 500, "MS.SI.01","an Unknown Error Occured");
-            return errorResponse(responseError);
-        }
+      // Handle the error here
+      if (error instanceof ApiError) {
+        return errorResponse(error);
+      } else {
+        // Handle other types of errors as needed
+        console.error("An unexpected error occurred:", error);
+        const responseError = new ApiError("Internal Server Error", 500, "MS.SI.01", "an Unknown Error Occured");
+        return errorResponse(responseError);
+      }
     }
-}
+  }
 
 
   public async toggleDefaultPaymentMethod(paymentMethodId: string): Promise<any> {
@@ -93,14 +93,14 @@ export default class MemberService
     if (!paymentMethodId || !customerId) {
       throw new ApiError("Payment method ID or customer ID not provided", 400, "MS.TDPM.01");
     }
-  
+
     try {
       // Assuming the second type argument is for the request body type
-      const response:any = await this.post<any, { paymentMethodId: string; customerId: string }>(
+      const response: any = await this.post<any, { paymentMethodId: string; customerId: string }>(
         `api/method/toggle-default?mid=${paymentMethodId}&cid=${customerId}`,
         { paymentMethodId, customerId }
       );
-      if(response?.data){
+      if (response?.data) {
         // console.log('[ RESPO DATA ]', response)
         this.updateContext(response.data, undefined);
       }
@@ -142,7 +142,7 @@ export default class MemberService
       const res = await this.get<any>(
         `usage/customer/method/confirm?setup_intent_client_secret=${client_secret}`
       )
-        return res
+      return res
     } else {
       throw new ApiError("No ID Provided", 400, "MS.SI.02");
     }
@@ -176,7 +176,20 @@ export default class MemberService
   }
 
 
-
+  public async encryptJWT({ tokenData, secret, algorithm }: IEncryptJWT) {
+    if (!tokenData || !secret || !algorithm) throw new ApiError("No Encryption Data Provided", 400, "MS.SI.02");
+    const res = await this.post<{}, any>(
+      "api/encrypt-jwt",{ tokenData, secret, algorithm }
+    )
+    return res
+  }
+  public async decryptJWT({ token, secret, algorithm }: IDecryptJWT) {
+    if (!token || !secret || !algorithm) throw new ApiError("No Encryption Data Provided", 400, "MS.SI.02");
+    const res = await this.post<{}, any>(
+      "api/decrypt-jwt",{ token, secret, algorithm }
+    )
+    return res
+  }
 
 
   public updateCurrentUser(user: any): void {
@@ -209,7 +222,7 @@ export default class MemberService
     if (!email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
-  
+
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",
       {
@@ -220,8 +233,8 @@ export default class MemberService
         user_agent: user_agent,
         ...metadata
       },
-      );
-      // console.log('[ SIGN UP RES ]', res)
+    );
+    // console.log('[ SIGN UP RES ]', res)
     return res;
   }
   public async getMethods(customerId?: string): Promise<any> {
@@ -313,12 +326,12 @@ export default class MemberService
     if (!password) {
       throw new ApiError("Password is required", 400, "MS.SI.02");
     }
-  
+
     // Encrypt the login data
     const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
     const encryptedLoginData = encryptString(JSON.stringify({ email, password, code, user_agent }), ENCRYPTION_KEY);
-  
+
     const res = await this.post<{}, any>(
       "usage/auth/sign-in",
       { data: encryptedLoginData },
@@ -415,9 +428,9 @@ export default class MemberService
       // console.error('Invalid JWT: does not contain 3 segments');
       return null;
     }
-  
+
     const encodedPayload = segments[1].replace(/-/g, '+').replace(/_/g, '/');
-  
+
     try {
       const decodedPayload = window.atob(encodedPayload);
       return JSON.parse(decodedPayload) as MemberToken;
@@ -428,7 +441,7 @@ export default class MemberService
       return null;
     }
   }
-  
+
   // private parseMemberToken(jwt: string): MemberToken | null {
   //   const a = jwt.split(".");
   //   if (a.length != 3) {
