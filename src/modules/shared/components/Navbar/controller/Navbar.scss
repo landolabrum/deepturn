@@ -76,13 +76,11 @@
 
       &--account,
       &--login {
-        position: absolute;
         right: var(--element-height);
         @media(max-width:1100px){
           position: inherit;
         }
-        // margin-right: var(--s-9);
-        // margin-left: auto;
+        margin-left: auto;
       }
       &--cart{
         cursor: pointer;

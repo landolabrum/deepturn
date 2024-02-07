@@ -97,10 +97,10 @@ export const routes: IRoute[] = [
 export const useClearanceRoutes = () => {
   const user = useUser();
   const [access, setAccess] = useState<IRoute[] | undefined>(undefined);
-  
+
   const level = user?.metadata.clearance || 0;
-  const accessableRouteFilter = (route: IRoute) => {
-    // console.log('[accessableRouteFilter]', route)
+
+  const accessibleRouteFilter = (route: IRoute) => {
     if (route.clearance === undefined) return true; // Allow routes without clearance requirements
     else if (route.clearance === 0 && level === 0) return true;
     else if (user && route?.clearance && route.clearance <= level) return true;
@@ -110,22 +110,36 @@ export const useClearanceRoutes = () => {
   const filterRoutes = (routeItems: IRoute[]) => {
     return routeItems
       .filter((route) => {
-        const isRouteAccessible = accessableRouteFilter(route); // User's clearance meets or exceeds the route's clearance
+        const isRouteAccessible = accessibleRouteFilter(route); // User's clearance meets or exceeds the route's clearance
         if (isRouteAccessible && route.items) {
           route.items = route.items.filter((item) => {
-            return accessableRouteFilter(item); // User's clearance meets or exceeds the item's clearance
+            return accessibleRouteFilter(item); // User's clearance meets or exceeds the item's clearance
           });
         }
         return isRouteAccessible;
       });
   };
+
   useEffect(() => {
-    const accRoutes = filterRoutes(routes)
-    setAccess(access !== undefined?accRoutes:accRoutes.reverse());
+    const accRoutes = filterRoutes(routes);
+    const sortedRoutes = accRoutes.sort((a, b) => {
+      // Prioritize 'login', 'account', and 'cart' to be at the end
+      const lastLabels = ['login', 'account'];
+      const aIndex = a.label && lastLabels.includes(a.label) ? lastLabels.indexOf(a.label) : a.href === '/cart' ? lastLabels.length : -1;
+      const bIndex = b.label && lastLabels.includes(b.label) ? lastLabels.indexOf(b.label) : b.href === '/cart' ? lastLabels.length : -1;
+
+      if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex; // Both are in lastLabels, sort them within that group
+      if (aIndex !== -1) return 1; // Only a is in lastLabels, it goes after
+      if (bIndex !== -1) return -1; // Only b is in lastLabels, it goes after
+      return 0; // Neither are in lastLabels, keep their original order
+    });
+    setAccess(sortedRoutes.reverse());
   }, [user, setAccess]);
 
   return access;
 };
+
+
 
 
 

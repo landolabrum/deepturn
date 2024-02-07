@@ -74,7 +74,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     const { features: formFeatures, } = form;
     const { width } = useWindow();
     const handleMobileSelected = () => {
-
+        if(!selectedRef?.current)return;
         const selectHeight = selectedRef.current.offsetHeight;
         // set the submit Box-shadow to unset
         selectedRef.current.style.bottom = width > 900?'' :`calc(120px - ${selectHeight}px)`;
