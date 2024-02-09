@@ -113,13 +113,15 @@ const Lights = () => {
   
     const applyAction = async (id_: string) => {
       let response;
+      // Convert string ID to number if your service methods expect numeric IDs
+      const numericId = Number(id_);
       switch (action) {
         case 'toggle':
-          response = await homeService.lightToggle(id_);
+          response = await homeService.lightToggle(numericId);
           break;
         case 'brightness':
           if (data?.bri !== undefined) {
-            response = await homeService.lightBrightness(id_, data.bri);
+            response = await homeService.lightBrightness(numericId, data.bri);
           }
           break;
         case 'color':
