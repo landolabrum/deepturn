@@ -16,4 +16,5 @@ export interface IEarth {
     backgroundColor?: string; // IMAGE BACKGROUND
     showAtmosphere?: boolean;
     showGraticules?: boolean;
+    rotate?:  {speed: number} | boolean;
 }

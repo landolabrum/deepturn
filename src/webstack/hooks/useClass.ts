@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useWindow from "./useWindow";
+import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 
 interface IuseClassWidths {
     width: number | string,
@@ -9,7 +10,7 @@ interface IuseClassWidths {
 interface IuseClass {
     cls: string;
     type?: string;
-    variant?: string;
+    variant?: any;
     extras?: string[] | undefined;
     minWidths?: IuseClassWidths[];
     maxWidths?: IuseClassWidths[];

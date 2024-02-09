@@ -19,19 +19,22 @@ interface ISettingsLayout {
   variant?: 'fullwidth';
   title?: string;
   defaultView?: string
+  showMenu?: boolean;
 }
 const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   views,
   setViewCallback,
   variant,
   title,
-  defaultView
+  defaultView,
+  showMenu = true
 }: ISettingsLayout) => {
 const {width }=useWindow();
   const router = useRouter();
   const queryViewId = router?.query?.vid && router.query.vid;
   const [view, setView] = useState<string | undefined>(defaultView);
   const [actionStyles, setActionStyles] = useState({ width: 350 });
+  const [hide, setHide]=useState('');
   const handleView = (view: string) => {
     router.push({
       pathname: router?.pathname,
@@ -48,7 +51,6 @@ const {width }=useWindow();
   const viewClass = useClass({cls:'settings__view',variant:variant });
 
 
-const [hide, setHide]=useState('');
 const handleHide = () =>{
   if(hide == '')setHide('hide');
   else if(hide == 'hide')setHide('show');
@@ -60,12 +62,13 @@ const handleHide = () =>{
   });
   
   useEffect(() => {
-    if(width < 1100 && hide == 'hide')setHide('show');
+    if(width < 1100 && hide == 'hide' && showMenu)setHide('show');
+    else if(showMenu === false)setHide('hide');
     if (views) {
       const firstView = queryViewId || defaultView || Object.keys(views)[0];
       firstView && setView(String(firstView));
     }
-  }, [queryViewId]);
+  }, [queryViewId, showMenu]);
   if (!Boolean(view)) return <UiLoader />;
   return (
     <>

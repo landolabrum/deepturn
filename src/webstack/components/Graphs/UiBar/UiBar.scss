@@ -8,6 +8,9 @@ $agg: var(--border-radius);
 }
 .bar {
   width: 100%;
+  &__primary{
+    background-color: var(--primary-opaque);
+  }
   .bar__container {
     &:hover {
       .bar__bars-container {

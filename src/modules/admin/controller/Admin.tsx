@@ -22,12 +22,13 @@ const Admin = () => {
     products: <AdminProducts />,
     invoice: <AdminInvoices />,
     documents: <AdminListDocuments />,
-    system: <AdminSystem />,
+    // system: <AdminSystem />,
     messenger: <AdminMesenger />,
     marketing: <AdminMarketing />,
   }
   const level = useClearance();
   const [views, setViews] = useState<any | undefined>();
+  const [current, setCurrentView] = useState<string | undefined>('globe');
   useEffect(() => {
     if(views === undefined)setViews(initialViews);
     if (level >= 10 && views !== undefined) {
@@ -40,9 +41,11 @@ const Admin = () => {
     <>
       <style jsx>{styles}</style>
       <UiSettingsLayout
-      variant='fullwidth'
+        variant={Boolean(current && ['globe'].includes(current)) && 'fullwidth' || undefined}
         defaultView='globe'
+        showMenu={Boolean(current && current !== 'globe')}
         // title='admin'
+        setViewCallback={setCurrentView}
         views={views}
 
       />

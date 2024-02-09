@@ -29,8 +29,8 @@ type ILight = {
 }
 const Lights = () => {
   const [loader, setLoader] = useLoader();
-  const [newName, setNewName] = useState<any | undefined>();
   const [go, setGo] = useState<any | undefined>(false);
+  // const [group, setGroup] = useState<string[] | undefined>();
   const [currentLight, setCurrentLight] = useState<ILight | undefined>();
   const [lights, setLights] = useState<any>();
   const [isAll, setIsAll] = useState<boolean | ILight>(false);
@@ -59,16 +59,6 @@ const Lights = () => {
     setLights(updateLightsWithView)
   }
 
-
-  const handleNewName = (e: any) => {
-    let { name, value } = e;
-    if (e.target) {
-      name = e.target.name;
-      value = e.target.value;
-    }
-    if (name && value) setNewName(e);
-  }
-
   const onLights = lights?.filter((light: ILight) => light.is_on) || [];
   const handleLightAnimation = (color: string) => {
     if (onLights.length === 0) return;
@@ -78,6 +68,7 @@ const Lights = () => {
     setCurrentLight(nextLight);
     multiHomeService('color', { id: nextLight.id_, hex: color });
   };
+  const [group, setGroup] = useState<string[]>([]); // Changed from useState<string[] | undefined>();
 
 
   const initfetchLights = () => {
@@ -103,79 +94,70 @@ const Lights = () => {
       console.log('[ FETCH LIGHTS (ERR) ]', JSON.stringify(e))
     }
   }
-
-  const multiHomeService = async (action: string, data?: any) => {
-    const handleLoader =  (active: boolean, action?: string, name?: string) => {
-      setLoader({ active: active, body: `${action}, ${name} `, animation: true });
+  const addToGroup = (id_: string) => {
+    setGroup(group !== undefined ? [...group, id_] : [id_]);
+  }
+  const removeFromGroup = (id_: string) => {
+    if (group) {
+      setGroup(group.filter((existingId) => existingId !== id_));
     }
-    handleLoader(true, action, data.name);
-    const runAction = async () => {
-      try {
-        let response;
-        switch (action) {
-          case 'all-off':
-            response = await homeService.lightsOff();
-            break;
-          case 'all-on':
-            response = await homeService.lightsOn();
-            console.log('all-on', response)
-            break;
-          case 'toggle':
-            if (data?.id) {
-              response = await homeService.lightToggle(data.id);
-              updateLight(response);
-            }
-            break;
-          case 'brightness':
-            if (data?.id && data?.bri !== undefined) {
-              response = await homeService.lightBrightness(data.id, data.bri);
-              updateLight(response);
-            }
-            break;
-          case 'color':
-            if (data?.id && data?.hex) {
-              const colorResponse = await homeService.lightColor(data.id, data.hex);
-              const calculatedHex = calculateHexFromHueSatBri(colorResponse.hue, colorResponse.sat, colorResponse.bri);
-              updateLight({ ...colorResponse, hex: calculatedHex, isColor: true }, true);
-            }
-            break;
-          case 'all-color':
-            if (data?.hex) {
-              const promises = lights.map((light: ILight) => {
-                if (light.is_on) {  // Assuming you only want to change the color of lights that are on
-                  return homeService.lightColor(light.id_, data.hex);
-                }
-              });
-              const responses = await Promise.all(promises);
-              responses.forEach(resp => {
-                const calculatedHex = calculateHexFromHueSatBri(resp.hue, resp.sat, resp.bri);
-                updateLight({ ...resp, hex: calculatedHex, isColor: true }, true);
-              });
-            }
-            break;
-          default:
-            console.log('[multiHomeService] Action not recognized:', action);
-            return;
-        }
-        if (response) {
-          console.log('[multiHomeService] Success:', JSON.stringify(response));
-        }
-      } catch (e: any) {
-        console.log('[multiHomeService] Error:', JSON.stringify(e));
-      }
-      return;
-    }
-    await runAction();
-    handleLoader(false, action, data.name);
   }
 
-  useEffect(() => { }, [multiHomeService])
+  const multiHomeService = async (action: string, data?: any) => {
+    console.log('[ CHATGPT HELP! ]',{action, data, group});
+    const handleLoader = (active: boolean, action?: string, name?: string) => {
+      setLoader({ active: active, body: `${action}, ${name} `, animation: true });
+    };
+  
+    handleLoader(true, action, data?.name);
+  
+    const applyAction = async (id_: string) => {
+      let response;
+      switch (action) {
+        case 'toggle':
+          response = await homeService.lightToggle(id_);
+          break;
+        case 'brightness':
+          if (data?.bri !== undefined) {
+            response = await homeService.lightBrightness(id_, data.bri);
+          }
+          break;
+        case 'color':
+          if (data?.hex) {
+            response = await homeService.lightColor(id_, data.hex);
+            const calculatedHex = calculateHexFromHueSatBri(response.hue, response.sat, response.bri);
+            response = { ...response, hex: calculatedHex, view: 'color' };
+          }
+          break;
+        // No default action needed as all cases are covered
+      }
+      if (response) {
+        updateLight(response, action === 'color');
+      }
+    };
+  
+    // Perform action on all lights in the group if applicable
+    if (group.length > 0 && ['toggle', 'brightness', 'color'].includes(action)) {
+      for (const id_ of group) {
+        await applyAction(id_);
+      }
+    } else if (data?.id) {
+      // Perform action on a single light
+      await applyAction(data.id);
+    }
+  
+    handleLoader(false, action, data?.name);
+  };
+  
+
+  useEffect(() => { }, [multiHomeService, ])
   useEffect(() => {
     initfetchLights();
   }, [currentLight]);
   return (
     <>
       <style jsx>{styles}</style>
+      {JSON.stringify(group)}
       <div className='lights'>
         <AdaptGrid xs={2} lg={3} gap={15}>
           <UiButton variant={go && 'primary'} onClick={() => setGo(!go)}>start animation</UiButton>
@@ -191,42 +173,53 @@ const Lights = () => {
         />
 
         {lights && !isAll && <AdaptGrid xs={1} sm={2} md={2} lg={3} gap={15}>
-          {Object.entries(lights).map(
-            ([key, light]: any, index: number) =>
-              <div className='lights__light' key={index}>
+          {Object.entries(lights).map(([key, light]: any, index: number) =>
+            <div
+              className={`lights__light ${group?.includes(light.id_) ? 'in-group' : ''}`}
+              key={index}
+              onClick={() => {
+                if (group?.includes(light.id_)) {
+                  console.log(`removeFromGroup(${light.id_})`);
+                  removeFromGroup(light.id_);
+                } else {
+                  console.log(`addToGroup(${light.id_})`);
+                  addToGroup(light.id_);
+                }
+              }}
+            >
 
-                <div className='lights__light-header'>
-                  <div className='lights__light-header--action'>
-                    <UiInput size='sm' value={light.name} disabled={true} label='name' />
-                  </div>
-
-                  <div className='lights__light-header--action' onClick={() => multiHomeService('toggle', { id: light.id_ })}>
-                    <ToggleSwitch name={light?.id_} value={light?.is_on} />
-                  </div>
-                  <div
-                    className='lights__light-header--action'
-                    onClick={() => toggleBarView(light.id_)}
-                  >
-                    <UiIcon icon='fa-palette' />
-                  </div>
+              <div className='lights__light-header'>
+                <div className='lights__light-header--action'>
+                  <UiInput size='sm' value={light.name} disabled={true} label='name' />
                 </div>
 
-                {light?.view !== 'color' ? (
-                  <UiBar
-                    onChange={(value) => {
-                      if (String(value).length == 0 || !value) return;
-                      else multiHomeService('brightness', { id: light.id_, bri: value, name: light.name });
-                    }}
-                    barCount={5}
-                    percentage={light?.bri * 100 / 254}
-                  />
-                ) : (
-                  <ColorPicker
-                    hex={light.hex}
-                    onChange={(hex: string) => multiHomeService('color', { id: light.id_, hex: hex, name: light.name })}
-                  />
-                )}
+                <div className='lights__light-header--action' onClick={() => multiHomeService('toggle', { id: light.id_ })}>
+                  <ToggleSwitch name={light?.id_} value={light?.is_on} />
+                </div>
+                <div
+                  className='lights__light-header--action'
+                  onClick={() => toggleBarView(light.id_)}
+                >
+                  <UiIcon icon='fa-palette' />
+                </div>
               </div>
+
+              {light?.view !== 'color' ? (
+                <UiBar
+                  onChange={(value) => {
+                    if (String(value).length == 0 || !value) return;
+                    else multiHomeService('brightness', { id: light.id_, bri: value, name: light.name });
+                  }}
+                  barCount={5}
+                  percentage={light?.bri * 100 / 254}
+                />
+              ) : (
+                <ColorPicker
+                  hex={light.hex}
+                  onChange={(hex: string) => multiHomeService('color', { id: light.id_, hex: hex, name: light.name })}
+                />
+              )}
+            </div>
           )}
         </AdaptGrid>}
         {typeof isAll == 'object' && (
