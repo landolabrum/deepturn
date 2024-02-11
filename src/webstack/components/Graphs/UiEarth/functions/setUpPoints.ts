@@ -11,19 +11,24 @@ const setUpPoints = (
     const markerSvg = IconHelper.getIconSvg('fa-circle-user', { width: 25, height: 25, color: '#fff000' });
 
     const {pts, points, setPoints} = pointsDefinitions;
-    if (!myGlobe) return;
+    if (!myGlobe) return false;
     if (!pts) setPoints(points);
     if (pts && myGlobe) {
         myGlobe.htmlElementsData(pts)
             .htmlElement((d: any) => {
-                const el = document.createElement('div');
+                const el = document.createElement('a');
+                const el_id = `mrkr-${d.id}`;
                 el.className='globe-marker'
-                el.style.userSelect = 'all';
-                el.setAttribute('data-id',d.id)
-                el.innerHTML = `${markerSvg}<div class='globe-html'>${d.html}</div>`;
+                el.id = el_id;
+                el.onclick=()=>window.location.href = `admin?vid=customers&id=${d.id}`;
+                el.innerHTML = `
+                <div>${markerSvg}</div>
+                <div class='globe-html'>${d.html}</div>`;
                 return el;
             }).htmlAltitude('alt');
+            return true
     }
+    return false
 }
 
 export default setUpPoints;

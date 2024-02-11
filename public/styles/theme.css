@@ -112,18 +112,40 @@
       0px 1px 2px var(--gray-70-opaque),
       0px 5px 10px var(--gray-90-opaque);
   }
-.globe-marker{
-  user-select: all;
-  cursor: pointer;
-  pointer-events: all;
-  width: var(--padding-width);
-  max-width: var(--element-height);
-  font-size: 10px;
-  opacity: 0.5;
-  .globe-html{
-    opacity: 0;
+  .globe-marker{
+    user-select: all;
+    cursor: pointer;
+    pointer-events: all;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+    padding: var(--s-9);
+    background-color: var(--gray-100-opaque);
+    border-radius: var(--border-radius);
+    font-size: 10px;
+    /* Use transition to specify which properties to animate */
+    transition: all .5s;
+  
+    &:hover{
+      font-size: var(--s-7); /* This will now animate smoothly */
+      background-color: var(--gray-100); /* So will this */
+    }
   }
-}
+  .globe-html{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .globe-html--title{
+    font-weight: 900;
+    text-transform: capitalize;
+  }
+/* 
 .globe-marker:hover{
   display: flex;
   flex-direction: column;
@@ -137,10 +159,11 @@
   opacity: 1;
   .globe-html{
     margin: auto;
+    min-width: var(--element-height);
     white-space: nowrap;
     opacity: 1;
   }
-}
+} */
   /* SIZES */
   --s-1: 32px;
   --s-2: 28px;

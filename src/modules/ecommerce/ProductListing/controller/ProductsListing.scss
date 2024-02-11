@@ -1,0 +1,23 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+$space: var(--s-7);
+
+.product-listing {
+    margin: var(--padding) 0;
+    height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: wrap;
+    color: white;
+    @extend .d-flex;
+    justify-content: flex-start;
+    gap: var(--padding);
+    .product-listing__header {
+        width: 100%;
+    }
+}

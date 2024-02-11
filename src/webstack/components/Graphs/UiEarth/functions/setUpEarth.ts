@@ -7,9 +7,11 @@ const setUpEarth = (
     const { globeImageUrl } = options;
     const rotate = options.rotate;
     if (!myGlobe) return;
-
     // Ensure the globe image URL points to a high-resolution image.
-    myGlobe.globeImageUrl(globeImageUrl || 'https://shadedrelief.com/natural3/ne3_data/8192/textures/2_no_clouds_8k.jpg');
+    myGlobe.globeImageUrl(globeImageUrl || 
+        // 'https://shadedrelief.com/natural3/ne3_data/8192/textures/2_no_clouds_8k.jpg'
+        "/assets/globe-textures/no-clouds.jpg"
+        );
 
     // Configure auto-rotation if enabled.
     if (rotate && typeof rotate === 'object') {

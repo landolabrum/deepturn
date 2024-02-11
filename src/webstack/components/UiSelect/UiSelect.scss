@@ -8,7 +8,6 @@ $el_gap: 7px;
   display: block;
   align-items: inherit;
   justify-content: space-between;
-  // justify-content: inherit;
   outline: none;
   border: none;
   width: 100%;
@@ -17,11 +16,14 @@ $el_gap: 7px;
   text-transform: inherit;
   font-size: inherit;
   font-weight: inherit;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
   &:hover {
     color: inherit;
   }&-sm{
     width: max-content;
   }
+
 
   &.nav-item {
     background-color: transparent;
@@ -61,20 +63,22 @@ $el_gap: 7px;
   .select__options {
     left: 0;
     position: absolute;
+    overflow: hidden;
+    top: calc(100% + 3px);
+    .right{
+      left: auto;
+      right: 0;
+    }
     box-shadow: var(--box-shadow);
-
+    border-radius: var(--border-radius);
     z-index: 3;
     &.right {
       left: auto;
       right: 0;
     }
-    // max-height: 500px !important;
-    // overflow: auto;
     min-width: 100%;
     width: max-content;
     &.nav-item__active {
-      
-      // left: auto;
       right: 0;
       @media (max-width: 900px) {
         z-index: 3;
@@ -86,11 +90,9 @@ $el_gap: 7px;
 }
 
 .select.up .select__options {
-  // bottom: calc(100% + 5px);
   bottom: 100%;
 }
 
 .select.down .select__options {
   top: calc(100% + 5px);
-  // top: 100%;
 }

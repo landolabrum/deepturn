@@ -16,7 +16,7 @@
     }
     70%{
         transform: rotate(-5deg);
-        background-color: var(--gary-70);
+        background-color: var(--gray-70);
     }
     100% {
         transform: rotate(0deg);
@@ -438,11 +438,11 @@
     // FORM CONTROL ELEMENTS - ELEM TYPES
     &--select:not(&--nav-item, &--nav-item__active, &--flat) {
        
-        color: var(--gray-80);
+        color: var(--gray-90);
         &:not(.form-control__element--lite){
             color: var(--gray-60);
             --ui-icon-color: var(--gray-60);
-            background-color: var(--gray-80);
+            background-color: var(--gray-90);
         }
 
         &:hover {

@@ -1,0 +1,80 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.product {
+    &-json {
+        height: max-content;
+        color: var(--secondary);
+        font-size: 11px;
+        line-height: 1;
+    }
+
+    cursor: pointer;
+    height: 100%;
+    @extend .d-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    width: var(--padding-width);
+    gap: var(--padding);
+    margin: auto;
+    --ui-icon-color: var(--gray-70-opaque);
+    padding: var(--padding);
+    &:hover {
+        --ui-icon-color: var(--gray-60);
+    }
+
+    &--images {
+        display: flex;
+        flex-direction: column;
+        gap: var(--padding);
+        width: 100%; // Images container fills the product card
+        height: 100%;
+        margin-top: var(--padding);
+        &__image {
+            position: relative; // For Image fill layout to work
+            width: var(--padding-width); // Image container fills its parent
+            margin: auto;
+            aspect-ratio: 1;
+        }
+
+        &__icon {
+            width: 50%;
+            @extend .d-flex;
+            margin: auto;
+            --ui-icon-width: 100%;
+            --ui-icon-height: 100%;
+        }
+    }
+    &-content{
+        width: 100%;
+        &--name {
+            @extend .d-flex;
+            min-height: var(--element-height);
+            font-size: var(--s-4);
+            text-transform: capitalize;
+            align-items: flex-start;
+            color: var(--primary);
+            width: 100%;
+            justify-content: flex-end;
+        }
+    
+        &--price {
+            min-height: var(--element-height);
+            font-family: Game;
+            @extend .d-flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+            width: 100%;
+            color: var(--gray-60);
+            font-style: oblique;
+            font-weight: 300;
+        }
+    }
+
+  
+}

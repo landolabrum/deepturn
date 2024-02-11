@@ -7,6 +7,8 @@ import AdminCustomer from '../views/AdminCustomerDetail/AdminCustomerDetail';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UserContext from '~/src/models/UserContext';
 import capitalize from '@webstack/helpers/Capitalize';
+import { useRouter } from 'next/router';
+import AuthQuery from '~/src/pages/authentication/[function]';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IAdminData {
@@ -15,6 +17,7 @@ interface IAdminData {
 }
 
 const AdminCustomers: React.FC = () => {
+  const router = useRouter();
   const initialData = {
     view: 'list'
   }
@@ -32,8 +35,11 @@ const AdminCustomers: React.FC = () => {
     modify: pgData?.data?.id && <AdminCustomer customerId={pgData.data.id} /> || <>error (admin cust [31])</>,
     add: <AdminCustomerAdd />
   }
-
-  useEffect(() => { }, [handlePgData]);
+  useEffect(() => {
+    if(router.query && Object.keys(router.query).includes('id')){
+      setPgData({view: 'modify', data: {id: String(router.query.id)}})
+    }
+  }, []);
 
   return (
     <>

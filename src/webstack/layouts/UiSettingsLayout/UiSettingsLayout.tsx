@@ -1,6 +1,7 @@
 // Relative Path: ./SettingsView.tsx
 import React, { useEffect,  useState } from 'react';
-import styles from './UiSettingsLayout.scss';
+import containerStyles from './UiSettingsLayout.scss';
+import viewStyles from './UiSettingsView.scss';
 import { default as Div } from "@webstack/components/UiDiv/UiDiv";
 import UiMenu from '../../components/UiMenu/UiMenu';
 import UiSelect from '../../components/UiSelect/UiSelect';
@@ -11,6 +12,7 @@ import useClass from '@webstack/hooks/useClass';
 import useWindow from '@webstack/hooks/useWindow';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import stringNum from '@webstack/helpers/stringNumber';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ISettingsLayout {
@@ -29,6 +31,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   defaultView,
   showMenu = true
 }: ISettingsLayout) => {
+
 const {width }=useWindow();
   const router = useRouter();
   const queryViewId = router?.query?.vid && router.query.vid;
@@ -62,17 +65,19 @@ const handleHide = () =>{
   });
   
   useEffect(() => {
-    if(width < 1100 && hide == 'hide' && showMenu)setHide('show');
+    if(width < 1100 && hide === 'hide' )setHide('show');
     else if(showMenu === false)setHide('hide');
     if (views) {
       const firstView = queryViewId || defaultView || Object.keys(views)[0];
       firstView && setView(String(firstView));
     }
-  }, [queryViewId, showMenu]);
+  }, [queryViewId, showMenu, width]);
   if (!Boolean(view)) return <UiLoader />;
   return (
     <>
-      <style jsx>{styles}</style>
+
+      <style jsx>{containerStyles}</style>
+      <style jsx>{viewStyles}</style>
       <div id="settings-container" className={containerClass}>
         <div className={contentClass}>
         <div className={`settings--icon ${`settings--icon--${hide}`}`}>
@@ -82,7 +87,7 @@ const handleHide = () =>{
                   onClick={handleHide}
                 />
                   </div>
-          <div className={`settings__actions ${hide!==''?`settings__actions--${hide}`:''}`}>
+          <div className={`settings__actions ${variant&& ` settings__actions-${variant} `||''}${hide!==''?`settings__actions--${hide}`:''}`}>
             <Div maxWidth={1100} style={actionStyles}>
               <div className="settings__actions--content">
                 <UiMenu
@@ -111,12 +116,9 @@ const handleHide = () =>{
           <div id='settings-view' className={viewClass}>
           {title && <div className={`settings__view--header${
                   hide==''?' settings__view--header--init':hide=='show'?' settings__view--header--show':' settings__view--header--hide'}`}>
-      
-
                   <div className='settings__view--header--title'>
                     {title} 
                   </div>
-                  {/* <BreadCrumbs defaultLink={{label: title}}/> */}
               </div>}
             <div className='settings__view__content'>
               {view && views[view]}

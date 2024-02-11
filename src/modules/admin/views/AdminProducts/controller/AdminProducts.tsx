@@ -9,7 +9,7 @@ import UiButton from '@webstack/components/UiButton/UiButton';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import AddProduct from '../AddProduct/AddProduct';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
-import ProductImage from '~/src/modules/ecommerce/products/views/ProductImage/ProductImage';
+import ProductImage from '~/src/modules/ecommerce/ProductDescription/views/ProductImage/ProductImage';
 
 // Remember to create a sibling SCSS file with the same name as this component
 

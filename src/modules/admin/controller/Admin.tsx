@@ -12,6 +12,7 @@ import AdminInvoices from '../views/AdminInvoices/controller/AdminInvoices';
 import AdminMesenger from '../views/AdminMesenger/AdminMesenger';
 import AdminMarketing from '../views/AdminMarketing/AdminMarketing';
 import AdminEarth from '../views/AdminEarth/AdminEarth';
+import { useRouter } from 'next/router';
 
 
 
@@ -26,6 +27,7 @@ const Admin = () => {
     messenger: <AdminMesenger />,
     marketing: <AdminMarketing />,
   }
+  const router = useRouter();
   const level = useClearance();
   const [views, setViews] = useState<any | undefined>();
   const [current, setCurrentView] = useState<string | undefined>('globe');
@@ -35,13 +37,14 @@ const Admin = () => {
       views.accounts = <AdminAccounts />;
       setViews(views)
     }
-  }, [views, level]);
+    if(router.query?.vid && Object.keys(initialViews).includes(String(router.query?.vid)))setCurrentView(String(router.query?.vid));
+  }, [views, level, router]);
   if(level < 10 || views === undefined)return <></>;
   return (
     <>
       <style jsx>{styles}</style>
       <UiSettingsLayout
-        variant={Boolean(current && ['globe'].includes(current)) && 'fullwidth' || undefined}
+        variant={Boolean(current && current === 'globe') && 'fullwidth' || undefined}
         defaultView='globe'
         showMenu={Boolean(current && current !== 'globe')}
         // title='admin'

@@ -5,6 +5,7 @@ import UiEarth from '@webstack/components/Graphs/UiEarth/controller/EarthRendere
 import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
@@ -14,12 +15,16 @@ const AdminEarth: React.FC = () => {
     const adminService = getService<IAdminService>('IAdminService');
     const formatCustomerAddresses = (customers: any) => {
         if (!customers) return;
-    
+        
         const custaddrs = customers.filter((customer: any) => customer.metadata['address.lat'])
             .map((customer: any) => {
-                console.log('cus',customer)
+                const addr = customer.address;
                 return {
-                    html: customer.name,
+                    html: `
+                    <div class='globe-html--title'>${customer?.name}</div>${
+                        addr && `<div>${addr?.line1}</div>
+                        <div>${addr?.city}, ${addr?.state}, ${addr?.postal_code}</div>` || ''
+                    }`,
                     id: customer.id,
                     // address: customer.address,
                     lat: Number(customer.metadata['address.lat']),

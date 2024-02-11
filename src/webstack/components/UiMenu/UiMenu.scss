@@ -9,7 +9,7 @@ $el_gap: 7px;
   border-radius: var(--border-radius);
   overflow: hidden;
   z-index: 2;
-  background-color: var(--gray-70-opaque);
+  background-color: var(--gray-90);
 
   backdrop-filter: blur(7px);
   border: solid 1px var(--gray-80);
@@ -73,7 +73,7 @@ $el_gap: 7px;
     }
 
     &:last-child {
-      border-top: solid 1px var(--gray-80);
+      border-top: solid -1px transparent;
     }
 
     z-index: 1;
@@ -92,9 +92,9 @@ $el_gap: 7px;
         border-bottom: solid 1px var(--gray-60);
       }
 
-      &:last-child {
-        border-top: solid 1px var(--gray-60);
-      }
+      // &:last-child {
+        // border-top: solid 1px var(--gray-60);
+      // }/
     }
 
     &.active {

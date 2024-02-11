@@ -120,7 +120,7 @@ const UiSelect: React.FC<ISelect> = ({
         />
         {isMobileNavOpen && variant !== 'disabled' && (
           <div
-            className={`select__options ${variant ? " " + variant : ""}`}>
+            className={`select__options ${openDirection} ${variant ? " " + variant : ""}`}>
             <UiMenu
             size={size}
               traits={traits}

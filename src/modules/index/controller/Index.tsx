@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Index.scss';
-import ProductRequestSurvey from '../../ecommerce/products/ProductRequestSurvey/controller/ProductRequestSurvey';
+import ProductRequestSurvey from '../../ecommerce/ProductDescription/ProductRequestSurvey/controller/ProductRequestSurvey';
 import environment from '~/src/environment';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';

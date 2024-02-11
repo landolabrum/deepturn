@@ -29,8 +29,7 @@ export type ICartItem = {
     name: string;
     created: string;
     images: string[] | string;
-    price_object: PriceObject;
+    price: PriceObject;
     type: string;
-    price: string;
     metadata: Record<string, any>;
 };

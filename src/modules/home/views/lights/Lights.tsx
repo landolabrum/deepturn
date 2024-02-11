@@ -159,7 +159,7 @@ const Lights = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      {JSON.stringify(group)}
+      {/* {JSON.stringify(group)} */}
       <div className='lights'>
         <AdaptGrid xs={2} lg={3} gap={15}>
           <UiButton variant={go && 'primary'} onClick={() => setGo(!go)}>start animation</UiButton>
@@ -168,7 +168,7 @@ const Lights = () => {
           </UiButton>
         </AdaptGrid>
         <UiMediaSlider
-          backgroundColors={['#ff3300', '#00ff00', '#ff0000']}
+          backgroundColors={['#ff3300']}
           atPoints={atPoints}
           duration={10000}
           start={go}
@@ -187,9 +187,7 @@ const Lights = () => {
                   console.log(`addToGroup(${light.id_})`);
                   addToGroup(light.id_);
                 }
-              }}
-            >
-
+              }}>
               <div className='lights__light-header'>
                 <div className='lights__light-header--action'>
                   <UiInput size='sm' value={light.name} disabled={true} label='name' />

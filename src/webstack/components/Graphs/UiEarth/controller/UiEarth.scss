@@ -1,3 +1,5 @@
+// src/webstack/components/Graphs/UiEarth/controller/UiEarth.scss
+
 .d-flex {
     display: flex;
     justify-content: center;
@@ -7,35 +9,37 @@
 .ui-earth {
     @extend .d-flex;
     flex-direction: column;
-    width: 100%;
-
     @media(max-width: 1100px) {
         height: inherit;
     }
-
-    // padding: var(--padding);
-    // width: var(--padding-width);
+    position: relative;
     &__header {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
         width: 100%;
-
     }
 
     &__tools {
         @extend .d-flex;
         padding:var(--padding);
-        
         justify-content: flex-end;
-        opacity: 0.3;
+        opacity: 0.5;
         &:hover{
             opacity: 1;
         }
-        // &--tool {}
     }
 
+    width: inherit;
     &__container {
-        width: 100%;
-        aspect-ratio: 1;
-
+        width: inherit;
         @media(max-width: 1100px) {}
     }
+}
+.globe-marker{
+    min-width: var(--element-height);
+    padding: var(--padding);
+    background-color: #f30;
+    z-index: 1111;
 }
