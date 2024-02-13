@@ -4,7 +4,7 @@ import { Canvas, extend, useThree, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { PerspectiveCamera } from '@react-three/drei';
 import { SVGLoader, } from 'three/examples/jsm/loaders/SVGLoader';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from '@react-three/drei';
 
 // Extend OrbitControls
 extend({ OrbitControls });
@@ -193,7 +193,7 @@ const PolygonsComponent = ({
   }, [svg, svgOptions]);
   return (
     <>
-      <orbitControls enableZoom={true} />
+    <OrbitControls enableZoom={true} />
       <group ref={groupRef} rotation={[rotation?.x || 0, rotation?.y || 0, rotation?.z || 0]}>
         <mesh position={[0, 0, 0]}>
           <boxGeometry args={[size?.x || 1, size?.y || 1, size?.z || 1]} />
