@@ -11,7 +11,7 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 
 
 const Cart = ({ variant, traits }: any) => {
-  const { getCartItems, handleQtyChange } = useCart();
+  const { getCartItems, } = useCart();
   const cart = getCartItems();
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);

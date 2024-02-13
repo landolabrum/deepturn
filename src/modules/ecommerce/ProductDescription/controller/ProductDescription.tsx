@@ -6,7 +6,6 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
 import ProductImage from '../views/ProductImage/ProductImage';
 import ProductBuyNow from '../views/ProductBuyNow/ProductBuyNow';
-import { ICartItem } from '../../cart/model/ICartItem';
 import useCart from '../../cart/hooks/useCart';
 import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
 
