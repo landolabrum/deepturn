@@ -17,9 +17,6 @@ const Cart = ({ variant, traits }: any) => {
   const [loaded, setLoaded] = useState(false);
   let query = String(router.query.ref);
 
-  const setCart = (item: ICartItem) => {
-    handleQtyChange(item);
-  };
 
   useEffect(() => {
     setLoaded(true);
@@ -30,13 +27,14 @@ const Cart = ({ variant, traits }: any) => {
   return (
     <>
       <style jsx>{styles}</style>
+      {JSON.stringify(cart)}
       <div className='cart'>
         <div className='cart__header'>
           <UiButton variant="dark" href='/product'>Keep Shopping</UiButton>
           <div className='cart__header-title'></div>
           {cart && cart.length != 0 && <CheckoutButton isModal cart={cart} />}
         </div>
-        {cart && cart.length != 0 ? <CartList traits={traits} variant={variant} cart={cart} handleQty={setCart} 
+        {cart && cart.length != 0 ? <CartList traits={traits} variant={variant} cart={cart} 
          /> : <EmptyCart />}
       </div>
     </>

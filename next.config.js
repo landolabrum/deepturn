@@ -17,6 +17,7 @@ const nextConfig = {
   output: "export",
   // output: "standalone",
   images: {
+    unoptimized: true, // Disable Next.js Image Optimization API for static export
     remotePatterns: [
       {
         protocol: "https",

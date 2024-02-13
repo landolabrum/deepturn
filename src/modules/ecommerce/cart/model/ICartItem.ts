@@ -1,6 +1,6 @@
 
 
-type PriceObject = {
+export type StripePrice = {
     id: string;
     object: string;
     active: boolean;
@@ -29,7 +29,7 @@ export type ICartItem = {
     name: string;
     created: string;
     images: string[] | string;
-    price: PriceObject;
+    price: StripePrice;
     type: string;
     metadata: Record<string, any>;
 };

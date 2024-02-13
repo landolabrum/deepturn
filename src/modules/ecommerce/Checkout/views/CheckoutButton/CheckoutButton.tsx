@@ -39,7 +39,7 @@ const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", i
             //         "name": "product-2",
             //         "created": "8/15/2023 7:23:08 PM",
             //         "images": "https://picsum.photos/id/237/500/500",
-            //         "price_object": {
+            //         "price": {
             //           "id": "price_1NfYS0IodeKZRLDVKYO4LDQ9",
             //           "object": "price",
             //           "active": true,

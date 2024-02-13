@@ -84,7 +84,6 @@ $actionsBg: var(--gray-90);
     }
 
     &__content {
-        z-index: 2;
         @extend .d-flex;
         justify-content: stretch;
         align-items: flex-start;
@@ -144,9 +143,8 @@ $actionsBg: var(--gray-90);
 
     .settings__actions {
         z-index: 2;
-        height: inherit;
         position: relative;
-        margin-right: var(--padding);
+        margin-left: var(--s-9);
         &--hide {
             margin-right: unset;
             animation: hideActions 1s ease-in-out forwards;
@@ -170,7 +168,7 @@ $actionsBg: var(--gray-90);
 
         &-fullwidth {
             position: absolute;
-            top: calc(var(--element-height) + calc(var(--padding) + var(--s-9)));
+            top: calc(var(--element-height) + var(--s-6));
         }
 
   

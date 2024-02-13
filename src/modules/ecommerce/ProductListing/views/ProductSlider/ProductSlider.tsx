@@ -22,7 +22,6 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
   const itemsRef = useRef<any>(null);
   const router = useRouter();
   const [_products, setProducts]=useState<any>(Array.from({ length: DEFAULT_PRODUCTS_LEN }, (_, i) => i + 1));
-  const { getCartItems, handleQtyChange } = useCart();
   const [isScrolledLeft, setIsScrolledLeft] = useState(true);
   const [isScrolledRight, setIsScrolledRight] = useState(false);
 
@@ -54,12 +53,9 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
     updateScrollButtons(); // Initial check for scroll buttons
   }, [products]);
 
-  const setCart = (item: ICartItem) => {
-    handleQtyChange(item);
-  };
-  const cart = getCartItems();
+
   const handleProduct = (product: any) => {
-    router.push({ pathname: "/product", query: { id: product.id, pri: product.price_object.id } })
+    router.push({ pathname: "/product", query: { id: product.id, pri: product.price.id } })
   }
   const loadProducts = () =>{
     products?.length && setProducts(products);
@@ -97,7 +93,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
                     {product.description}
                   </div>}
                   <div className='product-slider__item--info__action'>
-                    <ProductBuyNow product={product} cart={cart} setCart={setCart} />
+                    <ProductBuyNow product={product}  />
                   </div>
                 </div>
               </div>

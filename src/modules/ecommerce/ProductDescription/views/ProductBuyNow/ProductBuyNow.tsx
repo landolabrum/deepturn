@@ -5,24 +5,29 @@ import { useEffect, useState } from 'react';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import useCart from '../../../cart/hooks/useCart'; // Adjust the path as necessary
-import { ICartItem } from '../../../cart/model/ICartItem';
 
 const ProductBuyNow: React.FC<any> = ({ product, traits }: any) => {
-    const { addCartItem, cart } = useCart(); // Assuming useCart returns { addCartItem, cart }
+    const { addCartItem, getCartItems } = useCart(); // Assuming useCart returns { addCartItem, cart }
+    const cart = getCartItems()
     const [label, setLabel] = useState<string | null>(null);
     const { openModal } = useModal();
-    let cookieProduct: any = cart?.find((item: any) => item.product_id === product.id); // Adjust according to your ICartItem structure
-    const qty = cookieProduct?.qty || 0;
-
+    let cookieProduct: any = cart?.find((item: any) => item.id === product.id); // Adjust according to your ICartItem structure
+    const qty = cookieProduct?.price?.qty || 0;
     const handleCart = (newQty?: number) => {
-        const updatedProduct = { ...product, qty: newQty }; // Ensure this structure matches ICartItem
-        addCartItem(updatedProduct); // Use addCartItem to update the cart
-        openModal({
-            confirm: {
-                title: 'product added to cart',
-                statements: [{ text: 'cart', href: '/cart' }, { text: 'continue shopping' }]
-            }
-        });
+  
+        addCartItem({...product, price:{...product.price,qty:Number(newQty)}}); // Use addCartItem to update the cart
+        if(newQty === 1){
+            console.log('[ HANDLE CART (newQty === 1)]',cart, newQty)
+        }else{
+            console.log('[ HANDLE CART (else)]',cart, newQty)
+
+        }
+        // openModal({
+        //     confirm: {
+        //         title: 'product added to cart',
+        //         statements: [{ text: 'cart', href: '/cart' }, { text: 'continue shopping' }]
+        //     }
+        // });
     };
 
     useEffect(() => {
@@ -34,7 +39,7 @@ const ProductBuyNow: React.FC<any> = ({ product, traits }: any) => {
         } else {
             setLabel('get quote');
         }
-    }, [product]);
+    }, [product, handleCart]);
 
     return (
         <>
@@ -43,11 +48,11 @@ const ProductBuyNow: React.FC<any> = ({ product, traits }: any) => {
             {qty === 0 ? (
                 <UiButton
                     variant='dark'
-                    onClick={() => handleCart(1 + qty)}
+                    onClick={() => handleCart(1 + Number(qty))}
                     traits={traits}
-                >{label || 'add'}</UiButton>
+                >{`${label} ${qty}` || 'add'}</UiButton>
             ) : (
-                <UiPill traits={traits} variant="center dark" amount={qty} setAmount={(newQty) => handleCart(newQty + qty)} />
+                <UiPill traits={traits} variant="center dark" amount={qty} setAmount={(newQty) => handleCart(newQty )} />
             )}
         </>
     );

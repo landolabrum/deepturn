@@ -43,7 +43,7 @@ const ProductDescription = ({product_id, price_id}:IProductDescription) => {
 
         const productResponse = await shoppingService.getProduct(productRequest);
         if (productResponse?.id) {
-          productResponse.price_object.qty = 0;
+          productResponse.price.qty = 0;
           setProduct(productResponse);
           setIsLoading(false); // End loading
           return productResponse?.name;
@@ -109,12 +109,7 @@ const ProductDescription = ({product_id, price_id}:IProductDescription) => {
               {product.description}
             </div>
             <div>
-              <ProductBuyNow
-                product={product}
-                cart={cart}
-                setCart={setCart}
-              // traits={{ width: "100%" }}
-              />
+              <ProductBuyNow product={product}/>
             </div>
           </div>
         </AdaptGrid>

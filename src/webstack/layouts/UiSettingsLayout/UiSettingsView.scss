@@ -90,7 +90,18 @@
         margin-top: var(--padding);
         border-radius: unset;
         background-color: unset;
-
+        .settings__view--header {
+            position: absolute;
+            top: 0;
+            color: var(--gray-30);
+            text-transform: capitalize;
+            @extend .d-flex;
+            margin-left:var(--s-3);
+            &--show{
+                margin-left:calc(var(--element-height) + var(--s-3));
+            }
+            height: var(--element-height);
+            }
         .settings__view__content {
             width: 100%;
             padding: 0;
