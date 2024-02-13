@@ -202,7 +202,9 @@ const PolygonsComponent = ({
           <boxGeometry 
           // args={[size?.x || 1, size?.y || 1, size?.z || 1]} 
           />
-          <meshStandardMaterial color={color || '#FFFFFF'} metalness={metalness || 0} />
+          <meshStandardMaterial color={color || '#FFFFFF'} 
+          // metalness={metalness || 0}
+           />
         </mesh>
       </group>
     </>
@@ -210,7 +212,7 @@ const PolygonsComponent = ({
 };
 
 const Polygons = (props: IPolygonsProps) => {
-  const size = props.size;
+  // const size = props.size;
   // const [cameraPos, setCameraPos] = useState<[number, number, number]>([0, 0, size?.z ? size.z * 12 : 0]);
   return (
     <Canvas>
