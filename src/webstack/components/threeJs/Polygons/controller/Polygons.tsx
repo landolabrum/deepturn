@@ -196,7 +196,7 @@ const PolygonsComponent = ({
       <group ref={groupRef} 
       //  rotation={[animate?.rotate?.x || 0, animate?.rotate?.y || 0, animate?.rotate?.z || 0]}
        >
-        <mesh position={[0, 0, 0]}>
+        <mesh >
           <boxGeometry args={[size?.x || 1, size?.y || 1, size?.z || 1]} />
           <meshStandardMaterial color={color || '#FFFFFF'} metalness={metalness || 0} />
         </mesh>
