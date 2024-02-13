@@ -4,7 +4,6 @@ import ProductRequestSurvey from '../../ecommerce/ProductDescription/ProductRequ
 import environment from '~/src/environment';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import Polygons from '@webstack/components/threeJs/Polygons/controller/Polygons';
 import { TJSCube } from '@webstack/components/threeJs/TJSCube/controller/TJSCube';
 
 
