@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Canvas, extend, useThree, useFrame } from '@react-three/fiber';
+import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { PerspectiveCamera } from '@react-three/drei';
 import { SVGLoader, } from 'three/examples/jsm/loaders/SVGLoader';
 import { OrbitControls } from '@react-three/drei';
 
 // Extend OrbitControls
-extend({ OrbitControls });
 
 interface IPolygonsProps {
   size?: { x: number; y: number; z?: number };
