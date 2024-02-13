@@ -193,7 +193,7 @@ const PolygonsComponent = ({
   return (
     <>
     <OrbitControls enableZoom={true} />
-      <group ref={groupRef} rotation={[rotation?.x || 0, rotation?.y || 0, rotation?.z || 0]}>
+      <group ref={groupRef} rotation={[animate?.rotate?.x || 0, animate?.rotate?.y || 0, animate?.rotate?.z || 0]}>
         <mesh position={[0, 0, 0]}>
           <boxGeometry args={[size?.x || 1, size?.y || 1, size?.z || 1]} />
           <meshStandardMaterial color={color || '#FFFFFF'} metalness={metalness || 0} />
