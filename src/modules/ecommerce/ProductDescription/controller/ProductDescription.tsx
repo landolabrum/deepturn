@@ -21,11 +21,8 @@ const ProductDescription = ({product_id, price_id}:IProductDescription) => {
   const price_query_id: string | undefined = router?.query?.pri != undefined ? router?.query?.pri.toString() : undefined
   const [product, setProduct] = useState<any>(null); // Changed from {} to null
   const [isLoading, setIsLoading] = useState<boolean | string>(true); // Add a loading state
-  const { getCartItems, handleQtyChange } = useCart();
+  const { getCartItems,  } = useCart();
 
-  const setCart = (item: ICartItem) => {
-    handleQtyChange(item);
-  };
   const cart = getCartItems();
   const fetchProduct = useCallback(
     async () => {
@@ -73,9 +70,7 @@ const ProductDescription = ({product_id, price_id}:IProductDescription) => {
   }, [product_id, price_id, product_query_id, price_query_id, fetchProduct]); // Dependencies updated
 
   useEffect(() => {
- 
   }, [product]); // Dependencies updated
-  useEffect(() => { }, [handleQtyChange]);
   if(product == null)return (
     <>
       <style jsx>{styles}</style>
