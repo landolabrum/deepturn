@@ -129,7 +129,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
           </div>
         )}
         <div className={propClasses('form-control__element')}>
-          {renderIcon(traits?.beforeIcon, 'before', size)}
+          {renderIcon(traits?.beforeIcon, 'before', size, variant)}
           {Children.map(children, (child: any) => cloneElement(child))}
           {traits?.badge && (
             <div className="form-control__badge">
@@ -148,7 +148,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
   );
 };
 
-function renderIcon(iconProps: FormIconProps | undefined, position: string, size?: string) {
+function renderIcon(iconProps: FormIconProps | undefined, position: string, size?: string, variant?: IFormControlVariant) {
   if (!iconProps) return null;
   const icon = typeof iconProps === 'string' ? iconProps : iconProps.icon;
   const onClick = typeof iconProps === 'object' ? iconProps.onClick : undefined;
@@ -157,7 +157,7 @@ function renderIcon(iconProps: FormIconProps | undefined, position: string, size
   
   return (<>
     <style jsx>{iStyles}</style>
-    <div className={`${iCls} ${iCls}__${position} ${size ?` ${iCls}-${size}`:""}`}>
+    <div className={`${iCls} ${iCls}__${position} ${variant ?` ${iCls}-${variant}`:""} ${size ?` ${iCls}-${size}`:""}`}>
       <UiIcon
         icon={icon}
         onClick={onClick}

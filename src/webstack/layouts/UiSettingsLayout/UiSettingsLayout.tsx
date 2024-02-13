@@ -81,11 +81,14 @@ const handleHide = () =>{
       <div id="settings-container" className={containerClass}>
         <div className={contentClass}>
         <div className={`settings--icon ${`settings--icon--${hide}`}`}>
-            {/* {hide == 'show'?'hide':'show'} */}
-                <UiIcon 
-                  icon={hide==''?"fa-xmark" : hide=='hide'?'fa-bars':'fa-xmark'}
-                  onClick={handleHide}
-                />
+          {variant==='fullwidth'?(
+            <div className='settings-icon-fullwidth-content'>
+            <UiIcon icon={hide==''?"fa-xmark" : hide=='hide'?'fa-gear':'fa-xmark'}onClick={handleHide}/>
+            </div>
+          ):(
+
+                <UiIcon icon={hide==''?"fa-xmark" : hide=='hide'?'fa-gear':'fa-xmark'}onClick={handleHide}/>
+          )}
                   </div>
           <div className={`settings__actions ${variant&& ` settings__actions-${variant} `||''}${hide!==''?`settings__actions--${hide}`:''}`}>
             <Div maxWidth={1100} style={actionStyles}>

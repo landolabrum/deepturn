@@ -139,7 +139,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     const gridProps = {
         xs: 3,
         sm: 4,
-        lg: 5,
+        lg: 4,
         gap: 10,
     };
 
@@ -216,8 +216,14 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                     <div className='product-request-survey__success--status'>{view}<UiIcon icon='fa-circle-check' /></div>
                     <div className='product-request-survey__success--message'>{message || ''}</div>
                 </div>}
-                {view == 'contact' && (
+                {view == 'contact' && (<>
+                <div className='back-btn'>
+                    <UiButton variant='link' traits={{beforeIcon:"fa-chevron-left"}} onClick={()=>handleView(true)}>Features</UiButton>
+                    </div>
+                <div>
                     <ContactForm onSubmit={onContactSubmit} />
+                    </div>
+                    </>
                 )}
                 {view == 'feature' && <>
                     <div ref={selectedRef}

@@ -353,7 +353,7 @@
         transparent, var(--blue-10), transparent);
 
     &--link {
-        width: 100%;
+        padding-left: var(--s-5);
         &:hover {
             animation: glowTxt 1s infinite;
         }

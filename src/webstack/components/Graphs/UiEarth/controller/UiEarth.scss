@@ -22,6 +22,9 @@
     }
 
     &__tools {
+        position: absolute;
+        top: calc(var(--element-height)*2.5);
+        right: 0;
         @extend .d-flex;
         padding:var(--padding);
         justify-content: flex-end;

@@ -2,7 +2,6 @@ import styles from './Cart.scss';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import EmptyCart from '../views/EmptyCart/EmptyCart';
-import { ICartItem } from '../model/ICartItem';
 import CartList from '../views/CartList/CartList';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import CheckoutButton from '../../Checkout/views/CheckoutButton/CheckoutButton';

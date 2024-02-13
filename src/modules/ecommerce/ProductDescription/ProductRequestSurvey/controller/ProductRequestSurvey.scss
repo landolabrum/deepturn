@@ -3,7 +3,11 @@
     justify-content: center;
     align-items: center;
 }
-
+.back-btn{
+    @extend .d-flex;
+    justify-content: flex-start;
+    width: 100%;
+}
 
 
 .product-request-survey {
@@ -12,15 +16,15 @@
     flex-direction: column;
     justify-content: flex-start;
     border-radius: var(--border-radius);
-    width: 100%;
-    padding: var(--s-3) var(--s-6) var(--s-1);
-
+    padding:  var(--padding) ;
+    margin:  var(--padding) ;
     @media(min-width:1100px) {
-        width: 80%;
+        margin:  0;
+        width: 60%;
     }
 
     @media(min-width:900px) {
-        width: 50%;
+        width: 70%;
     }
 
     @media(max-width:900px) {
@@ -93,14 +97,10 @@
 
 
     &__title {
-        font-size: var(--s-1);
-        line-height: 1;
+        line-height: 1.5;
         width: 100%;
-        color: var(--gray-50);
-
-        @media(max-width:900px) {
-            font-size: var(--s-5);
-        }
+        color: var(--gray-40);
+        font-size: var(--s-1);
     }
 
     &__instructions {
@@ -233,7 +233,7 @@
     &__sub-title {
         width: 100%;
         font-size: var(--s-4);
-        color: var(--primary);
+        color: var(--gray-30-opaque);
         text-transform: capitalize;
         line-height: 1;
     }
@@ -288,6 +288,7 @@
 
         position: relative;
 
+        overflow: hidden;
         &__name {
             @extend .d-flex;
             text-align: center;
@@ -298,42 +299,31 @@
             }
             text-transform: capitalize;
             width: 100%;
-
             &--icon {
-                background-color: var(--green);
+                flex-direction: column;
+                background-color: var(--green-opaque);
+                backdrop-filter: blur(2px);
                 color: var(--white);
                 text-shadow: 1px 1px var(--black);
                 z-index: 3;
-                font-size: var(--s-9);
+                font-size: var(--s-3);
                 --ui-icon-height: var(--s-9);
                 --ui-icon-width: var(--s-9);
                 position: absolute;
 
-                top: -3px;
-                right: -3px;
-                height: var(--s-7);
-                gap: 1px;
+                top: 0;
+                right: 0;
+                height: 100%;
                 box-shadow: 1px 1px var(--gray-100);
-                border-radius: var(--s-1);
-                aspect-ratio: 1;
-                padding: 0 3px 8px 3px;
-                width: var(--s-6);
+                width: var(--element-height);
                 @extend .d-flex;
 
             }
 
             &--icon::after {
                 content: "amps";
-                font-size: 6px;
-                z-index: 1;
-                width: max-content;
-
-                line-height: 1;
-                bottom: 3px;
-                right: 0;
-                position: absolute;
+                font-size: var(--s-9);
                 text-transform: uppercase;
-                border-radius: inherit;
             }
 
         }

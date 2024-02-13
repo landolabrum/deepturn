@@ -22,10 +22,9 @@
   background-color: var(--primary-opaque);
 
   @media(max-width: 1100px) {
-    position: unset;
     flex-direction: row-reverse;
     background-color: transparent;
-    width: auto;
+    width: max-content;
     border-bottom: unset;
     box-shadow: unset;
     align-items: flex-start;
@@ -43,9 +42,8 @@
   color: inherit;
 
   @media(max-width:1100px) {
-    width: 100%;
+    width: max-content;
     padding: 0;
-    background-color: transparent;
     margin: 0;
   }
 

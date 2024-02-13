@@ -1,15 +1,20 @@
 $actionsBg: var(--gray-90);
 
 @keyframes borderAnimation {
-    0%, 100% {
+
+    0%,
+    100% {
         border-color: var(--dark);
     }
+
     25% {
         border-color: var(--dark-opaque);
     }
+
     50% {
         border-color: var(--primary);
     }
+
     75% {
         border-color: var(--primary-opaque);
     }
@@ -27,20 +32,24 @@ $actionsBg: var(--gray-90);
     position: relative;
     padding: var(--padding) 0 0;
     width: 100%;
+
     &--icon {
         z-index: 2;
         @extend .d-flex;
-        --ui-icon-width: 100%;
-        --ui-icon-height: var(--s-5);
+        width: 100%;
+
+
         @media(min-width: 1100px) {
             display: flex;
         }
-        display: none;
+
         position: absolute;
+
         &--hide {
             opacity: .5;
             left: var(--s-5);
         }
+
         top: var(--s-4);
         border-radius: var(--border-radius);
         left: var(--padding);
@@ -50,6 +59,7 @@ $actionsBg: var(--gray-90);
         width: var(--s-2);
         line-height: 1;
         font-size: var(--s-7);
+
         &:hover {
             border: solid 1px var(--gray-70);
         }
@@ -65,21 +75,40 @@ $actionsBg: var(--gray-90);
         position: fixed;
         width: 100%;
         left: 0;
+        top: 0;
         right: 0;
         width: 100vw;
         overflow: hidden;
         padding: 0;
-        .settings--icon{
+
+        .settings--icon {
             @media(min-width: 1100px) {
                 top: 0;
             }
             display: flex;
-            left: var(--s-9);
-            height: var(--element-height);
-            width: var(--element-height);
-            background-color: var(--gray-90);
-            --ui-icon-color: var(--primary);
-            --ui-icon-width: 100%;
+            right: calc(var(--element-height)*1.5);
+            top: var(--padding);
+            left: unset;
+            height: max-content;
+            width: var(--padding-width);
+            justify-content: flex-end;
+            --ui-icon-color: white;
+            @extend .d-flex;
+
+            .settings-icon-fullwidth-content{
+                border-radius: var(--border-radius);
+                border: solid 1px;
+                height: var(--element-height);
+                aspect-ratio: 1;
+                z-index: 999;
+                background-color: var(--gray-100);
+                @extend .d-flex;
+                justify-content: center;
+            }
+            
+            &:hover {
+                border: none;
+            }
         }
     }
 
@@ -111,15 +140,19 @@ $actionsBg: var(--gray-90);
             display: flex;
             width: auto;
         }
+
         10% {
             opacity: 0.3;
         }
+
         65% {
             opacity: 0;
         }
+
         98% {
             display: flex;
         }
+
         100% {
             opacity: 0;
             transform: translateX(-100%);
@@ -134,6 +167,7 @@ $actionsBg: var(--gray-90);
             display: flex;
             width: 100%;
         }
+
         100% {
             opacity: 0;
             transform: translateX(-100%);
@@ -144,15 +178,16 @@ $actionsBg: var(--gray-90);
     .settings__actions {
         z-index: 2;
         position: relative;
-        margin-left: var(--s-9);
         &--hide {
             margin-right: unset;
             animation: hideActions 1s ease-in-out forwards;
+
             @media(max-width: 1100px) {
                 animation: hideActionsSm 1s ease-in-out forwards;
             }
         }
 
+        // animation: hideActions 1s ease-in-out forwards reverse;
         &--show {
             animation: hideActions 1s ease-in-out forwards reverse;
 
@@ -167,11 +202,12 @@ $actionsBg: var(--gray-90);
         }
 
         &-fullwidth {
-            position: absolute;
-            top: calc(var(--element-height) + var(--s-6));
+            position: fixed;
+
+            top: calc(var(--element-height) *2.5);
         }
 
-  
+
 
         &--content {
             border-radius: var(--border-radius);
@@ -210,9 +246,11 @@ $actionsBg: var(--gray-90);
             overflow: visible;
         }
     }
+
     .settings__actions--show.settings__actions-fullwidth {
         border-radius: var(--border-radius);
         margin-left: 0;
+
         @media (min-width: 1100px) {
             margin-left: var(--s-9);
         }

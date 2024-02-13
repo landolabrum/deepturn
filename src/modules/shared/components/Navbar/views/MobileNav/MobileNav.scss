@@ -14,6 +14,7 @@
         margin: auto;
         display: flex;
         flex-direction: column;
+        gap: var(--element-height);
     }
     &--actions{
         @extend .d-flex;
@@ -24,20 +25,27 @@
         display: flex;
         flex-direction: column;
         gap: var(--padding);
-        justify-content: space-around;
-        width: 100%;
-        margin:  var(--element-height) auto;
+        height: max-content;
+        justify-content: space-between;
+        padding: calc(var(--element-height) * 2) var(--padding) var(--element-height);
+        
         &__brand{
             gap: var(--s-9);
+            position: absolute;
+            top: var(--s-2);
+            left: var(--padding);
+            height: var(--element-height);
+            padding: var(--padding);
+            right: auto;
+
             text-transform: capitalize;
             font-size: var(--s-1);
-            width: 100%;
-            margin-bottom: var(--padding);
             @extend .d-flex;
-            color:var(--gray-50);
-            --ui-icon-color:var(--gray-50);
-            // --ui-icon-width:var(--element-height);
-            --ui-icon-size: var(--s-1);
+            color:var(--primary-opaque);
+            --ui-icon-color:var(--primary);
+            --ui-icon-width:var(--element-height);
+            --ui-icon-height:var(--element-height);
+            // --ui-icon-size: var(--s-1);
             // --ui-icon-width: var(--s-1);
             line-height: 1;
             cursor: pointer;
