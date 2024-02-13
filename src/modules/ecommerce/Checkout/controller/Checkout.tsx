@@ -22,11 +22,7 @@ const Checkout: React.FC<ICheckout> = () => {
     const [view, setView] = useState<any>('create-account');
     const [cart, _setCart] = useState<any>([]);
 
-    const { getCartItems, handleQtyChange } = useCart();
-    const router = useRouter();
-    const setCart = (item: ICartItem) => {
-        handleQtyChange(item);
-    };
+    const { getCartItems,  } = useCart();
     const handleView = (view: string)=>{
         if(view.includes('@'))alert('')
     }
