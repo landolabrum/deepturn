@@ -207,11 +207,11 @@ const PolygonsComponent = ({
 
 const Polygons = (props: IPolygonsProps) => {
   const size = props.size;
-  const [cameraPos, setCameraPos] = useState<[number, number, number]>([0, 0, size?.z ? size.z * 12 : 0]);
+  // const [cameraPos, setCameraPos] = useState<[number, number, number]>([0, 0, size?.z ? size.z * 12 : 0]);
   return (
     <Canvas>
       <ambientLight />
-      <PolygonsCamera position={cameraPos} />
+      {/* <PolygonsCamera position={cameraPos} /> */}
       <PolygonsComponent {...props} />
     </Canvas>
   );
