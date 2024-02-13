@@ -50,9 +50,16 @@ const PolygonsComponent = ({
   rotation,
 }: IPolygonsProps) => {
   const { clock, gl, camera, scene } = useThree();
-  const groupRef = useRef<THREE.Group | any | undefined>();
+  const groupRef = useRef<THREE.Group>(null);
 
-  const [cameraPos, setCameraPos] = useState<[number, number, number]>([0, 0, size?.z ? size.z * 12 : 0]);
+  useFrame(() => {
+    if (animate?.rotate && groupRef.current) {
+      const { x = 0, y = 0, z = 0, speed = 1 } = animate.rotate;
+      groupRef.current.rotation.x += x * speed;
+      groupRef.current.rotation.y += y * speed;
+      groupRef.current.rotation.z += z * speed;
+    }
+  });
 
   // Add groupRef.current to the dependency array of this useEffect
   useEffect(() => {
@@ -183,13 +190,12 @@ const PolygonsComponent = ({
         });
       }
     }
-  }, [svg, groupRef.current]);
+  }, [svg, svgOptions]);
   return (
     <>
-      <orbitControls args={[camera, gl.domElement]} />
-
-      <group ref={groupRef}>
-        <mesh position={[0, 0, 0]} rotation={[rotation?.x || 0, rotation?.y || 0, rotation?.z || 0]}>
+      <orbitControls enableZoom={true} />
+      <group ref={groupRef} rotation={[rotation?.x || 0, rotation?.y || 0, rotation?.z || 0]}>
+        <mesh position={[0, 0, 0]}>
           <boxGeometry args={[size?.x || 1, size?.y || 1, size?.z || 1]} />
           <meshStandardMaterial color={color || '#FFFFFF'} metalness={metalness || 0} />
         </mesh>
