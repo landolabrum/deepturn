@@ -28,6 +28,7 @@ const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, t
                                     }} /> */}
                                     {Object.values(item.images).map(i =>
                                         <Image
+                                            key={item.name}
                                             src={i}
                                             alt={item.name}
                                             width={400}
