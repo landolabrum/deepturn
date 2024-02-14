@@ -89,7 +89,7 @@
   --yellow-opaque: #fbff0070;
   --orange: #f90;
   --orange-opaque: #ff911050;
-  --red: #f30;
+  --red: #dd4400;
   --green:#44b432;
   --green-opaque:#44b4329e;
   --green-60: #22c553;
@@ -175,7 +175,7 @@
   --s-8: 12px;
   --s-9: 10px;
   --s-10: 8px;
-  --s-11: 3px;
+  --s-11: 2px;
 
   @media(max-width: 1100px) {
     --border-radius: 5px;
