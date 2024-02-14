@@ -3,19 +3,28 @@ import { IEarth } from "../models/IEarth";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Vector3 } from "three";
 
-
-function debounce(func, wait) {
-    let timeout;
-    return function(...args) {
+function debounce<T extends (...args: any[]) => any>(func: (this: ThisParameterType<T>, ...args: Parameters<T>) => ReturnType<T>, wait: number): (...args: Parameters<T>) => void {
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+    return function (this: ThisParameterType<T>, ...args: Parameters<T>): void {
         const later = () => {
-            clearTimeout(timeout);
+            timeout = null;
             func.apply(this, args);
         };
-        clearTimeout(timeout);
+        if (timeout !== null) {
+            clearTimeout(timeout);
+        }
         timeout = setTimeout(later, wait);
     };
 }
 
+
+const generateTileUrl = (zoomLevel: number, tileX: number, tileY: number, x: number, y: number): string | null => {
+    if (isNaN(zoomLevel) || isNaN(tileX) || isNaN(tileY)) {
+        console.error('Invalid tile calculation:', { zoomLevel, tileX, tileY });
+        return null; // Return null to indicate an invalid URL
+    }
+    return `https://a.tile.openstreetmap.org/${zoomLevel}/${tileX + x}/${tileY + y}.png`;
+};
 const calculateVisibleTiles = (myGlobe: GlobeInstance, controls: OrbitControls | null) => {
     if (!controls) return []; // If controls is null, return an empty array
 
@@ -38,13 +47,7 @@ const calculateVisibleTiles = (myGlobe: GlobeInstance, controls: OrbitControls |
     // Calculate the number of tiles to cover the viewport
     const numTilesX = Math.ceil(window.innerWidth / tileSize);
     const numTilesY = Math.ceil(window.innerHeight / tileSize);
-    const generateTileUrl = (zoomLevel?:any, tileX:any, tileY:any, x, y) => {
-        if (isNaN(zoomLevel) || isNaN(tileX) || isNaN(tileY)) {
-            console.error('Invalid tile calculation:', {zoomLevel, tileX, tileY});
-            return null; // Return null to indicate an invalid URL
-        }
-        return `https://a.tile.openstreetmap.org/${zoomLevel}/${tileX + x}/${tileY + y}.png`;
-    };
+ 
     for (let y = 0; y < numTilesY; y++) {
         for (let x = 0; x < numTilesX; x++) {
             const tileX = Math.floor((lng + 180) / 360 * (1 << zoomLevel));
@@ -75,15 +78,15 @@ const calculateZoomLevel = (controls: OrbitControls) => {
 };
 
 
-const debouncedLoadTiles = debounce((tileUrl:string) => {
+const debouncedLoadTiles = debounce((tileUrl: string) => {
     const image = new Image();
     image.crossOrigin = "Anonymous"; // Enable CORS for cross-origin requests
     image.onload = () => console.log('Loaded tile:', tileUrl);
     image.onerror = (error) => console.error('Error loading tile:', tileUrl, error);
     image.src = tileUrl;
-}, 250); // 250 ms delay
+}, 1000); // 250 ms delay
 
-function loadTiles(tiles:any) {
+function loadTiles(tiles: any) {
     tiles.forEach(debouncedLoadTiles);
 }
 

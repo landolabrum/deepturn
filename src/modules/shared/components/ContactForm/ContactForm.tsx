@@ -69,19 +69,19 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user }) => {
                 break;
         }
     };
-
-    const updatedContact = fields.map((contactField: any) => {
-        if (contactField.name === name) {
-            return {
-                ...contactField,
-                value: value,
-                ...(handleErrors && { error: onChangeErrors() })
-            };
-        }
-        return contactField;
+    let newFields:IFormField[] = [];
+    fields.forEach((field: IFormField) => {
+      if (field.name === name) {
+        newFields.push({
+          ...field,
+          value: value,
+          ...(handleErrors && { error: onChangeErrors() })
+      })
+    }
+    else newFields.push(field);
     });
-    console.log('[ updatedContact ]',updatedContact)
-    setFields(updatedContact);
+
+    setFields(newFields);
 };
 const handleFormSubmit = (userFields?: any) => {
   let firstName = '';
@@ -109,7 +109,7 @@ const handleFormSubmit = (userFields?: any) => {
 };
 
   useEffect(() => {
-    if (selectedUser) {
+    if (selectedUser && fields === initialContactFields) {
       const updatedFields = fields.map((field:IFormField) => {
         switch (field.name) {
           case 'firstName':
