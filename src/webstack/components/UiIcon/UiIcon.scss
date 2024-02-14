@@ -57,14 +57,14 @@ div {
 .ui-icon__badge {
   position: absolute;
   @extend .d-flex;
-  top: 0;
-  right: calc(var(--ui-icon-width, 50%) * -1);
-  background-color: red; // Example background color
+  top: calc(var(--s-9) * -1);
+  right: var(--s-11);
+  background-color: var(--red); // Example background color
   color: white; // Text color
   border-radius: 50%; // Circular badge
-  font-size: calc(var(--ui-icon-width, 50%) * .8); // Smaller font size for the badge
-  min-width: calc(var(--ui-icon-width, 50%) * 1.2); // Minimum width for the badge
-  min-height: calc(var(--ui-icon-width, 50%) * 1.3); // Minimum width for the badge
+  font-size: var(--s-8);
+  line-height: 1;
+  width: auto;
+  aspect-ratio: 1;
   text-align: center; // Center the text inside the badge
-  height: auto;
 }

@@ -1,7 +1,7 @@
 import { IFormControlVariant } from '@webstack/components/AdapTable/models/IVariant';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-type IConfirm ={
+export type IConfirm ={
   title?: string;
   statements?: {text?: string, onClick?:(e:any)=>void, href?: string, variant?: IFormControlVariant}[];
 } | undefined;
@@ -18,6 +18,7 @@ export type IModalContent = {
 } | ReactNode | null;
 
 export interface ModalContextType {
+  confirm?:any;
   isModalOpen: boolean;
   openModal: (content: IModalContent) => void;
   closeModal: () => void;

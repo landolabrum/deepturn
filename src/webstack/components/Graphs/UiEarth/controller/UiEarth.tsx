@@ -8,8 +8,6 @@ import setUpPoints from '../functions/setUpPoints';
 import setUpScene from '../functions/setUpScene';
 import useWindow from '@webstack/hooks/useWindow';
 import UiSelect from '@webstack/components/UiSelect/UiSelect';
-
-
 const UiEarthObject = (
     {
         globeImageUrl,
@@ -33,19 +31,8 @@ const UiEarthObject = (
         { name: "dark", value: "dark.jpg" },
         { name: "day", value: "day.jpg" },
         { name: "night", value: "night.jpg" },
-        // { name: "topology", value: "topology.png" },
-        // { name: "sky", value: "sky.png" },
     ]
-    // const earthImgs: any = [
-    //     { name: "map", value: "no-clouds.jpg" },
-    //     { name: "blue marble", value: "blue-marble.jpg" },
-    //     { name: "dark", value: "dark.jpg" },
-    //     { name: "day", value: "day.jpg" },
-    //     { name: "night", value: "night.jpg" },
-    //     // { name: "topology", value: "topology.png" },
-    //     // { name: "sky", value: "sky.png" },
-    // ]
-  
+
     const [earthImg, setEarthImg] = useState<any | undefined>({
         ...earthImgs[0],
         value: `/assets/globe-textures/${earthImgs[0].value}`
@@ -60,17 +47,20 @@ const UiEarthObject = (
         backgroundImageUrl,
         position,
         globeImageUrl: earthImg?.value,
-        rotate,  // Add this line
+        rotate,
     };
     const pointsDefinitions = { pts, points, setPoints };
     const myGlobe: GlobeInstance = earthRef?.current && Globe()(earthRef.current);
-    const handleEarthImg = (img: any) => {
 
+    // Ensure that controls are properly initialized
+    const controls = myGlobe ? myGlobe.controls() : null;
+
+    const handleEarthImg = (img: any) => {
         setEarthImg({ ...img, value: `/assets/globe-textures/${img.value}` });
-        // setEarthImg({ ...img, value: `//unpkg.com/three-globe/example/img/earth-${img.value}` });
         setUpEarth(
             myGlobe,
-            options
+            controls, // Pass controls instead of null
+            options 
         );
     }
 
@@ -79,14 +69,16 @@ const UiEarthObject = (
         setUpScene(myGlobe, containerRef, options, width);
         setUpEarth(
             myGlobe,
-            options
+            controls, // Pass controls instead of null
+            options 
         );
 
         const pointsSet = setUpPoints(
             myGlobe,
             pointsDefinitions
         );
-    }, [width, myGlobe, setUpPoints, setUpEarth, setUpScene, earthRef.current]);
+    }, [width, myGlobe, setUpPoints, setUpEarth, setUpScene, earthRef.current, controls]); // Include controls in the dependencies array
+
     return (
         <>
             <style jsx>{styles}</style>

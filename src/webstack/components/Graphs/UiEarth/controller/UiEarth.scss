@@ -9,10 +9,9 @@
 .ui-earth {
     @extend .d-flex;
     flex-direction: column;
-    @media(max-width: 1100px) {
-        height: inherit;
-    }
     position: relative;
+    height: inherit;
+
     &__header {
         position: absolute;
         left: 0;
@@ -23,12 +22,16 @@
 
     &__tools {
         position: absolute;
-        top: calc(var(--element-height)*2.5);
-        right: 0;
+        top: var(--s-10);
         @extend .d-flex;
         padding:var(--padding);
         justify-content: flex-end;
         opacity: 0.5;
+        right: var(--s-9);
+        @media(max-width: 1100px) {
+            top: calc(var(--element-height) + var(--s-9));
+        }
+
         &:hover{
             opacity: 1;
         }
@@ -37,7 +40,6 @@
     width: inherit;
     &__container {
         width: inherit;
-        @media(max-width: 1100px) {}
     }
 }
 .globe-marker{

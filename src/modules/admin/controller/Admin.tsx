@@ -44,7 +44,7 @@ const Admin = () => {
     <>
       <style jsx>{styles}</style>
       <UiSettingsLayout
-        variant={Boolean(current && current === 'globe') && 'fullwidth' || undefined}
+        variant={Boolean(current && ['globe',''].includes(current) ) && 'full' || undefined}
         defaultView='globe'
         showMenu={Boolean(current && current !== 'globe')}
         // title='admin'

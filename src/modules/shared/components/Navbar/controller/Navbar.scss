@@ -18,7 +18,7 @@
       min-height: var(--element-height);
       padding: 0;
       margin: 0 auto;
-      inline-size: 1260px;
+      inline-size: calc(1260px + calc(var(--padding) * 2));
     }
   }
 
@@ -86,9 +86,10 @@
         cursor: pointer;
         height: var(--element-height);
         width: var(--element-height);
+        @extend .d-flex;
         padding: 0 var(--padding);
-        --ui-icon-width: var(--s-6);
-        --ui-icon-height: 100%;
+        --ui-icon-width: 100%;
+        --ui-icon-height: var(--s-5);
         --ui-icon-color: var(--gray-50);
         &:hover{
           --ui-icon-color: var(--primary-opaque);

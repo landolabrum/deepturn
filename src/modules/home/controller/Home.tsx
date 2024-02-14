@@ -17,28 +17,29 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
       <style jsx>{styles}</style>
       <div className='home__default'>
         <div className='home__default--title'>
-        {user && user?.name && capitalize(user.name) || ''}, Home Automation.
+          {user && user?.name && capitalize(user.name) || ''}, Home Automation.
         </div>
       </div>
     </>
   }
   const views = {
-    home: <DefaultHome/>,
+    home: <DefaultHome />,
     surveillance: <Surveillance />,
-    lights: <Lights  />
+    lights: <Lights />
   };
-  if(user)return (
+  if (user) return (
     <>
       <style jsx>{styles}</style>
-      <UiSettingsLayout
-        variant="fullwidth"
-        title='home'
-        defaultView='home'
-        views={views}
-      />
-
+      <div className='home'>
+        <UiSettingsLayout
+          variant="full-width"
+          // title='home'
+          defaultView='home'
+          views={views}
+        />
+      </div>
     </>
-  );return <><UiLoader/></>
+  ); return <><UiLoader /></>
 };
 
 export default Home;

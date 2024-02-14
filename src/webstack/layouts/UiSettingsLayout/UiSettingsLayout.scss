@@ -32,92 +32,62 @@ $actionsBg: var(--gray-90);
     position: relative;
     padding: var(--padding) 0 0;
     width: 100%;
+    @media (min-width: 1100px) {
+        margin: var(--padding) 0;
+    }
 
     &--icon {
         z-index: 2;
+        justify-content: center;
         @extend .d-flex;
-        width: 100%;
-
-
+        border-radius: var(--border-radius);
+        width: var(--element-height);
+        height: var(--element-height);
+        color: var(--primary);
+        line-height: 1;
+        background-color: var(--gray-90);
+        --ui-icon-width: 100%;
+        --ui-icon-height: var(--s-5);
+        position: absolute;
+        top: var(--s-7);
+        @media(max-width: 1100px) {
+            left: 0;
+            top: 0;
+        }
+        @media(max-width: 900px) {
+            top: calc(var(--element-height) * -1.2);
+            right: var(--s-9);
+            left: auto;
+        }
         @media(min-width: 1100px) {
             display: flex;
         }
 
-        position: absolute;
 
         &--hide {
             opacity: .5;
-            left: var(--s-5);
+        }
+        &--show {
+            background-color: var(--primary);
+            --ui-icon-color: var(--gray-10);
         }
 
-        top: var(--s-4);
-        border-radius: var(--border-radius);
-        left: var(--padding);
-        color: var(--primary);
-        text-align: center;
-        height: var(--s-2);
-        width: var(--s-2);
-        line-height: 1;
-        font-size: var(--s-7);
 
+        border: solid 1px transparent;
         &:hover {
-            border: solid 1px var(--gray-70);
+            border: solid 1px var(--gray-50);
         }
     }
 
-    @media (min-width: 1100px) {
-        margin: var(--padding) 0;
-        padding: var(--padding);
-        width: var(--padding-width);
-    }
-
-    &__fullwidth {
-        position: fixed;
-        width: 100%;
-        left: 0;
-        top: 0;
-        right: 0;
-        width: 100vw;
-        overflow: hidden;
-        padding: 0;
-
-        .settings--icon {
-            @media(min-width: 1100px) {
-                top: 0;
-            }
-            display: flex;
-            right: calc(var(--element-height)*1.5);
-            top: var(--padding);
-            left: unset;
-            height: max-content;
-            width: var(--padding-width);
-            justify-content: flex-end;
-            --ui-icon-color: white;
-            @extend .d-flex;
-
-            .settings-icon-fullwidth-content{
-                border-radius: var(--border-radius);
-                border: solid 1px;
-                height: var(--element-height);
-                aspect-ratio: 1;
-                z-index: 999;
-                background-color: var(--gray-100);
-                @extend .d-flex;
-                justify-content: center;
-            }
-            
-            &:hover {
-                border: none;
-            }
-        }
-    }
-
+    
     &__content {
         @extend .d-flex;
-        justify-content: stretch;
+        justify-content: space-between;
         align-items: flex-start;
-        width: inherit;
-
+        gap: var(--padding);
+        &:not(.settings__content__full){
+            margin-top: 0;
+        }
         @media (min-width: 1100px) {
             padding: var(--element-height) 0 0;
         }
@@ -128,10 +98,61 @@ $actionsBg: var(--gray-90);
         }
 
         @media(max-width: 1260px) {
-            margin: auto;
-            justify-content: center;
+            // margin: 0 var(--padding);
         }
     }
+    &__full {
+        position: absolute;
+        &:not(&-width){
+            position: fixed;
+        }
+        width: 100%;
+        left: 0;
+        top: 0;
+        right: 0;
+        width: 100vw;
+        overflow: hidden;
+        padding: 0;
+        margin-top: 0;
+        .settings--icon {
+            display: flex;
+            position: fixed;
+            right: calc(var(--element-height)*1.5);
+            top: calc(var(--padding) + 1px);
+            left: unset;
+            width: var(--padding-width);
+            justify-content: flex-end;
+            background-color: transparent;
+            @extend .d-flex;
+            @media(min-width: 1100px) {
+                top: calc(var(--element-height) + var(--padding));
+                right: unset;
+                left: var(--s-9);
+                width: auto;
+            }
+            
+            .settings-icon-full-content{
+                --ui-icon-color: var(--gray-30);
+                border-radius: var(--border-radius);
+                border: solid 1px var(--gray-80);
+                height: var(--element-height);
+                aspect-ratio: 1;
+                z-index: 999;
+                background-color: var(--gray-100);
+                @extend .d-flex;
+                justify-content: center;
+                &:hover {
+                    border: solid 1px var(--primary);
+                }
+            }
+            
+            &:hover {
+                border-color: transparent;
+            }
+        }
+    }
+
+
 
     @keyframes hideActions {
         0% {
@@ -156,55 +177,50 @@ $actionsBg: var(--gray-90);
         100% {
             opacity: 0;
             transform: translateX(-100%);
-            width: 0px;
+            display: none;
         }
     }
-
+    
     @keyframes hideActionsSm {
         0% {
             transform: translateX(0);
             opacity: 1;
             display: flex;
-            width: 100%;
         }
-
+        
         100% {
             opacity: 0;
             transform: translateX(-100%);
-            width: 0px;
+            display: none;
         }
     }
 
     .settings__actions {
-        z-index: 2;
-        position: relative;
-        &--hide {
-            margin-right: unset;
-            animation: hideActions 1s ease-in-out forwards;
 
+        z-index: 2;
+        position: fixed;
+        &--hide {
+            animation: hideActions 1s ease-in-out forwards;
+            margin-left: 0;
+            margin-right: auto;
             @media(max-width: 1100px) {
                 animation: hideActionsSm 1s ease-in-out forwards;
             }
         }
-
         // animation: hideActions 1s ease-in-out forwards reverse;
         &--show {
             animation: hideActions 1s ease-in-out forwards reverse;
-
             @media(max-width: 1100px) {
-                animation: unset;
+                animation: hideActionsSm 1s ease-in-out forwards reverse;
                 transform: translateX(0);
                 opacity: 1;
-                display: flex;
-                width: 100%;
                 border: none;
             }
         }
 
-        &-fullwidth {
+        &-full {
             position: fixed;
-
-            top: calc(var(--element-height) *2.5);
+            top: calc(var(--element-height) * 2.66);
         }
 
 
@@ -214,7 +230,6 @@ $actionsBg: var(--gray-90);
             @extend .d-flex;
             width: 100%;
             animation: borderAnimation 5s infinite alternate;
-
             @media (min-width: 2100px) {
                 margin-left: auto;
                 max-width: 350px;
@@ -223,36 +238,29 @@ $actionsBg: var(--gray-90);
             @media(max-width: 1100px) {
                 border-radius: var(--border-radius) var(--border-radius) 0 0;
                 border-bottom: solid 0px transparent !important;
-                padding: var(--padding) 0;
             }
 
-            @media(max-width: 900px) {
-                padding: var(--padding);
-                width: var(--padding-width);
-                animation: unset;
-            }
         }
 
         @media (min-width: 1100px) {
             min-height: auto;
+            min-width: 350px;
         }
 
         @media (max-width: 1100px) {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
             height: max-content;
+            width: var(--padding-width);
+            margin-left: var(--padding);
+            margin-right: var(--padding);
             overflow: visible;
         }
     }
 
-    .settings__actions--show.settings__actions-fullwidth {
+    .settings__actions--show.settings__actions-full {
         border-radius: var(--border-radius);
-        margin-left: 0;
-
-        @media (min-width: 1100px) {
-            margin-left: var(--s-9);
-        }
+        margin-left: var(--s-9);
     }
 }

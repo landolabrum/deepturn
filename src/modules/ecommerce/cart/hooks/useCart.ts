@@ -39,7 +39,7 @@ const useCart = () => {
             })
 
             // If qty is stored elsewhere on the ICartItem, adjust accordingly.
-            existingItem.price.qty = Number(existingItem.price.qty) + Number(newItem.price.qty );
+            existingItem.price.qty = Number(newItem.price.qty );
         } else {
             
             // New item, add to cart with the initial qty.

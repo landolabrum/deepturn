@@ -1,12 +1,12 @@
 import styles from './CartList.scss';
 import { ICartItem } from '../../model/ICartItem';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
-import ProductImage from '~/src/modules/ecommerce/ProductDescription/views/ProductImage/ProductImage';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import ProductBuyNow from '../../../ProductDescription/views/ProductBuyNow/ProductBuyNow';
 import { ITraits } from '@webstack/components/FormControl/FormControl';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
+import Image from 'next/image';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
@@ -21,11 +21,19 @@ const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, t
                         <div className="cart-list__item" key={key}>
                             <div className={`cart-list__item-content ${variant == 'mini' ? "cart-list__item-content-mini" : ''}`}>
                                 <div className="cart-list__item-image" data-name={item?.name}>
-                                    <ProductImage image={item.images} options={{
+                                    {/* <ProductImage image={item.images} options={{
                                         size: "100px", style: {
                                             borderRadius: "10px"
                                         }
-                                    }} />
+                                    }} /> */}
+                                    {Object.values(item.images).map(i =>
+                                        <Image
+                                            src={i}
+                                            alt={item.name}
+                                            width={400}
+                                            height={400}
+                                        />
+                                    )}
                                 </div>
                                 <div className={`cart-list__item-body`}>
                                     <div className="cart-list__item-name">
@@ -57,16 +65,15 @@ const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, t
             label={
                 <div className='cart-list__collapse-label'>
                     <UiIcon icon='fal-bags-shopping' />
-                <div className='cart-list__collapse-label-items'>
-                    {cart && cart.length <= 2 && cart.map((value: any, index: any) => 
-                        {return <div key={index} className='cart-list__collapse-label-item'>{value?.name}  ( {value?.price?.qty}x )</div>}
-                    )}
-                </div>
+                    <div className='cart-list__collapse-label-items'>
+                        {cart && cart.length <= 2 && cart.map((value: any, index: any) => { return <div key={index} className='cart-list__collapse-label-item'>{value?.name}  ( {value?.price?.qty}x )</div> }
+                        )}
+                    </div>
                 </div>
             }>
             <CartItems fullWidth />
         </UiCollapse>
-                </>
+    </>
     );
     return <CartItems />
 };

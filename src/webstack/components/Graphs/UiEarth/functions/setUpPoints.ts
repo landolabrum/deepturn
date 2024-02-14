@@ -8,7 +8,7 @@ const setUpPoints = (
         points: EarthPoint[];
         setPoints: React.Dispatch<React.SetStateAction<EarthPoint[] | undefined>>;
     }) => {
-    const markerSvg = IconHelper.getIconSvg('fa-circle-user', { width: 25, height: 25, color: '#fff000' });
+    const markerSvg = IconHelper.getIconSvg('fa-circle-user', { width: 17, height: 17, color: '#fff000' });
 
     const {pts, points, setPoints} = pointsDefinitions;
     if (!myGlobe) return false;

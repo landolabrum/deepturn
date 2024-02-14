@@ -102,7 +102,7 @@ const ProductDescription = ({product_id, price_id}:IProductDescription) => {
             <div className="product-description__info-panel_body">
               {product.description}
             </div>
-            <div>
+            <div className='product-description__buy-button'>
               <ProductBuyNow product={product}/>
             </div>
           </div>

@@ -54,15 +54,11 @@ input, textarea {
     min-height: var(--element-height);
     height: 100%;
     min-width: var(--element-height);
-    
+    width: 0;
     @media(max-width: 900px) {}
 
-    &:focus {
-      background-color: var(--gray-70);
-    }
-
-    &:hover {
-      background-color: var(--gray-70-opaque);
+    &:focus,&:hover {
+      background-color: transparent;
     }
   }
 

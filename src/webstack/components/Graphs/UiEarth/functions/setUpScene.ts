@@ -19,7 +19,7 @@ const setUpScene = (
     const containerHeight = containerRef.current.offsetHeight;
 
     myGlobe.width(containerWidth)
-        .height(width < 1100? containerHeight: containerWidth)
+        .height(containerHeight)
         .pointOfView({...pos}, 0)
         .showAtmosphere(showAtmosphere || false)
         .showGraticules(showGraticules || false)

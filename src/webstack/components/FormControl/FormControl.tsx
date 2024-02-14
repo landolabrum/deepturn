@@ -136,7 +136,7 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
               <div className="form-control__badge-content">{traits.badge}</div>
             </div>
           )}
-          {renderIcon(traits?.afterIcon, 'after', size)}
+          {renderIcon(traits?.afterIcon, 'after', size, variant)}
           {error && (
             <div className='form-control__invalid'>
               <UiMarkdown text={error} />

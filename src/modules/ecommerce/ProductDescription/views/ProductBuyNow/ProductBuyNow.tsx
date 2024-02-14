@@ -14,14 +14,14 @@ const ProductBuyNow: React.FC<any> = ({ product, traits }: any) => {
     let cookieProduct: any = cart?.find((item: any) => item.id === product.id); // Adjust according to your ICartItem structure
     const qty = cookieProduct?.price?.qty || 0;
     const handleCart = (newQty?: number) => {
-  
+        console.log('[ HANDLE CART ]',qty, newQty)
         addCartItem({...product, price:{...product.price,qty:Number(newQty)}}); // Use addCartItem to update the cart
-        if(newQty === 1){
-            console.log('[ HANDLE CART (newQty === 1)]',cart, newQty)
-        }else{
-            console.log('[ HANDLE CART (else)]',cart, newQty)
+        // if(newQty === 1){
+        //     console.log('[ HANDLE CART (newQty === 1)]',cart, newQty)
+        // }else{
+        //     console.log('[ HANDLE CART (else)]',cart, newQty)
 
-        }
+        // }
         // openModal({
         //     confirm: {
         //         title: 'product added to cart',

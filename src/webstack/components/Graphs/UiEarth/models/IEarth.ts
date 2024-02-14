@@ -9,6 +9,8 @@ export interface EarthPoint extends IEarthGeoCoord {
 }
 
 export interface IEarth {
+    atmosphereColor?: string;
+    atmosphereAltitude?: number;
     globeImageUrl?: string;
     points?: EarthPoint[];
     position?: IEarthGeoCoord;

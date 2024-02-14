@@ -1,5 +1,4 @@
-// pages/your-page.tsx
-
+// /home/web/servers/Deepturn/src/webstack/components/Graphs/UiEarth/controller/EarthRenderer.tsx
 import dynamic from 'next/dynamic';
 import { IEarth } from '../models/IEarth';
 

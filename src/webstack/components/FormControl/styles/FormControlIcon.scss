@@ -3,19 +3,31 @@
  justify-content: center;
  align-items: center;
 }
-
+.dark{
+  border-radius: calc(var(--border-radius) - var(--s-11));
+  width: calc(var(--element-height) - var(--s-10)) !important;
+  margin: 4px 3px;
+  height: calc(var(--element-height) - var(--s-10));
+  aspect-ratio: unset;
+  background-color: var(--dark-opaque);
+  &:hover{
+    background-color: var(--primary-opaque);
+  }
+}
 .form-control-icon {
     @extend .d-flex;
     --ui-icon-color: inherit;
     position: absolute;
     width: var(--element-height);
-    --ui-icon-width: var(--s-5);
+    aspect-ratio: 1;
+    --ui-icon-size: var(--s-5);
+   
     &-link{
       width: var(--s-5);
     }
     &-sm{
       width: calc(var(--s-9) * 2.33);
-      --ui-icon-width: 8px;
+      --ui-icon-size: 8px;
     }
     &__before{
       left: 0;
