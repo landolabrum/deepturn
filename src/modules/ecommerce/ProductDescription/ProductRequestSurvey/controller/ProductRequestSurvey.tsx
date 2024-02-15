@@ -64,7 +64,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     const userAgentInfo = useUserAgent();
     const defaultForm = { features: features };
     const clearAllSelected = () => setForm(defaultForm);
-    const { openModal, closeModal } = useModal();
+    const { openModal, closeModal, isModalOpen } = useModal();
     // const { scrollTo, setScrollTo } = useScrollTo({ max: 1100 });
     const [form, setForm] = useState<{ features: IMoreInfoField[] }>({ features: features });
     const [contactData, setContactData] = useState(null);
@@ -74,10 +74,10 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     const { features: formFeatures, } = form;
     const { width } = useWindow();
     const handleMobileSelected = () => {
-        if(!selectedRef?.current)return;
+        if (!selectedRef?.current) return;
         const selectHeight = selectedRef.current.offsetHeight;
         // set the submit Box-shadow to unset
-        selectedRef.current.style.bottom = width > 900?'' :`calc(120px - ${selectHeight}px)`;
+        selectedRef.current.style.bottom = width > 900 ? '' : `calc(120px - ${selectHeight}px)`;
     }
     const handleFeature = (choice: IMoreInfoField) => {
         const addCustom = async (choice: any) => handleFeature(choice);
@@ -104,27 +104,12 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             feature.name === choice.name ? { ...feature, selected: !feature.selected } : feature
         );
         const selectHeight = selectedRef.current.offsetHeight;
-        optionsRef.current.style.paddingBottom = `${selectHeight}px`;
+        if (width < 1100) optionsRef.current.style.paddingBottom = `${selectHeight}px`;
+        else delete optionsRef.current.style.paddingBottom;
         setForm({ ...form, features: updatedFeatures });
     };
 
-    const handleView = (back?: boolean) => {
-        if (back != true) {
-            switch (view) {
-                case 'feature':
-                    // if (user) onSubmit; 
-                    return setView('contact');
-                case 'contact': return setView('loading');
-                case 'loading': return setView('response');
-                default: return;
-            }
-        } else {
-            switch (view) {
-                case 'contact': return setView('feature');
-                default: return;
-            }
-        }
-    };
+
     const selected = form.features.filter(f => f.selected);
 
     const calculateTotalValue = (): number => {
@@ -140,7 +125,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
         xs: 3,
         sm: 4,
         lg: 4,
-        gap: 10,
+        gap: width > 900 ? 10 : 6
     };
 
     const onContactSubmit = async (submittedContactData: any) => {
@@ -194,9 +179,30 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
         }
     }
 
+
+    const handleView = (newView?: string) => {
+        if (typeof newView !== 'string') {
+            switch (view) {
+                case 'feature':
+                    openModal({
+                        title: <UiButton variant='link' traits={{ beforeIcon: "fa-chevron-left" }} onClick={() => handleView('feature')}>Features</UiButton>,
+                        children:  <ContactForm onSubmit={onContactSubmit} />
+                    })
+                    return setView('contact');
+                case 'contact':
+                    return setView('loading');
+                case 'loading': return setView('response');
+                default: return;
+            }
+        } else {
+            newView === 'feature' && closeModal();
+            return setView(newView);
+        }
+    };
     useEffect(() => {
         handleMobileSelected();
-    }, [width, handleBoxShadow]);
+    }, [width]);
+
     if (form.features.length) return (
         <>
             <style jsx>{styles}</style>
@@ -216,15 +222,15 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                     <div className='product-request-survey__success--status'>{view}<UiIcon icon='fa-circle-check' /></div>
                     <div className='product-request-survey__success--message'>{message || ''}</div>
                 </div>}
-                {view == 'contact' && (<>
-                <div className='back-btn'>
-                    <UiButton variant='link' traits={{beforeIcon:"fa-chevron-left"}} onClick={()=>handleView(true)}>Features</UiButton>
+                {/* {view == 'contact' && (<>
+                    <div className='back-btn'>
+                        <UiButton variant='link' traits={{ beforeIcon: "fa-chevron-left" }} onClick={() => handleView(true)}>Features</UiButton>
                     </div>
-                <div>
-                    <ContactForm onSubmit={onContactSubmit} />
+                    <div>
+                        <ContactForm onSubmit={onContactSubmit} />
                     </div>
-                    </>
-                )}
+                </>
+                )} */}
                 {view == 'feature' && <>
                     <div ref={selectedRef}
                         onMouseEnter={handleBoxShadow}

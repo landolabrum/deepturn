@@ -50,7 +50,7 @@ const ProductBuyNow: React.FC<any> = ({ product, traits }: any) => {
                     variant='dark'
                     onClick={() => handleCart(1 + Number(qty))}
                     traits={traits}
-                >{`${label} ${qty}` || 'add'}</UiButton>
+                >{`${label}` || 'add'}</UiButton>
             ) : (
                 <UiPill traits={traits} variant="center dark" amount={qty} setAmount={(newQty) => handleCart(newQty )} />
             )}

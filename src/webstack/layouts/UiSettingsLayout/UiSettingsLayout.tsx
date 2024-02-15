@@ -60,7 +60,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     else if (hide == 'hide') setHide('show');
     else if (hide == 'show') setHide('hide');
     else setHide('');
-    const modalContext = { title: MODAL_ID, statements: Object.keys(views).map((key: string) => { return { text: key, onClick: (view: any) => { handleView(view.text) } } }) };
+    const modalContext = { title: keyStringConverter(MODAL_ID), statements: Object.keys(views).map((key: string) => { return { text: key, onClick: (view: any) => { handleView(view.text) } } }) };
     if (variant && ['full-width', 'full'].includes(variant) && hide === 'show' ) {
       if (isModalOpen) closeModal();
       else openModal({ confirm: modalContext });
@@ -68,6 +68,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       openModal({ confirm: modalContext });
     }
   }
+  const isFullVariant = variant && ['full-width', 'full'].includes(variant);
   const optionViews = (dashed: boolean = true) => Object.keys(views).map(v => {
     return keyStringConverter(v, dashed)
   });
@@ -88,7 +89,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       const firstView = queryViewId || defaultView || Object.keys(views)[0];
       firstView && setView(String(firstView));
     }
-  }, [queryViewId, showMenu, width, isModalOpen]);
+  }, [queryViewId, showMenu, width]);
   if (!Boolean(view)) return <UiLoader />;
   return (
     <>
@@ -98,7 +99,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       <div id="settings-container" className={containerClass}>
         <div className={contentClass}>
           <div className={`settings--icon ${`settings--icon--${hide}`}`}>
-            {variant && ['full-width', 'full'].includes(variant) ? (
+            { isFullVariant ? (
               <div className='settings-icon-full-content' onClick={handleHide} >
                 <UiIcon icon={hide == '' ? "fa-xmark" : hide == 'hide' ? 'fa-gear' : 'fa-xmark'} />
               </div>

@@ -28,6 +28,9 @@
     }
 
     @media(max-width:900px) {
+        margin: 0;
+        padding: var(--s-9);
+        width: calc(100% - calc(var(--s-9) * 2));
         // margin-bottom: 100px;
     }
 
@@ -35,7 +38,6 @@
     gap: var(--padding);
     min-height: 490px;
     color: var(--gray-30);
-    height: 100%;
 
     &__success {
         @extend .d-flex;
@@ -134,7 +136,7 @@
         position: relative;
         font-size: var(--s-6);
         border-radius: var(--border-radius);
-        padding: calc(var(--element-height) * 2) var(--s-9) var(--s-7);
+        padding: var(--element-height) var(--s-9) var(--s-7);
         display: flex;
         min-height: 70px;
         gap: var(--s-9);
@@ -144,6 +146,7 @@
         @extend .mobile-selected;
 
         @media(max-width:900px) {
+            padding: calc(var(--element-height) * 2) var(--s-9) var(--s-7);
             background: var(--gray-80-opaque);
             z-index: 2;
             border-color: var(--gray-70) transparent transparent var(--gray-70);
@@ -194,9 +197,11 @@
             height: 100%;
             @extend .d-flex;
             flex-wrap: wrap;
+            @media(max-width: 1100px){
+                background-color: var(--gray-80);
+                border-radius: var(--border-radius);
+            }
             justify-content: flex-start;
-            background-color: var(--gray-80);
-            border-radius: var(--border-radius);
             padding: var(--s-9);
             width: 100%;
             gap: var(--s-9);
@@ -246,7 +251,6 @@
         @media(max-width:900px){
             justify-content: flex-start;
             padding: var(--s-9);
-            width: var(--padding-width);
             align-items: flex-start;
         }
         cursor: pointer;

@@ -9,9 +9,11 @@
     align-items: flex-start;
     flex-direction: column;
 &__title{
-    font-size: var(--s-4);
+    font-size: var(--s-1);
+    color: var(--gray-40);
+    margin: var(--element-height) 0 var(--padding);
+    // font-style: italic;
     text-transform: capitalize;
-    margin-bottom: var(--element-height);    
 }
     &--action {
         --ui-icon-color: var(--gray-20);

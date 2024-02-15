@@ -151,18 +151,7 @@
             text-transform: capitalize;
         }
 
-        .modal-overlay__icon {
-            // @extend .d-flex;
-
-            // --ui-icon-size: var(--s-5);
-            // cursor: pointer;
-            // width: var(--element-height);
-            // height: var(--element-height);
-            // &:hover {
-            //     background-color: var(--gray-60);
-            //     --ui-icon-color: var(--primary);
-            // }
-        }
+      
 
         &__fullscreen {
             position: absolute;
@@ -208,7 +197,9 @@
             @media(max-width: 1100px) {
                 flex-direction: column;
             }
-
+            &-col{
+                flex-direction: column;
+            }
             &-btn {
                 width: 100%;
             }

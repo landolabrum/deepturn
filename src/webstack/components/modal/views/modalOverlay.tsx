@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import styles from "@webstack/components/modal/views/modalOverlay.scss";
-import { IModalContent, ModalContext, ModalContextType } from '../contexts/modalContext';
+import {  ModalContext, ModalContextType } from '../contexts/modalContext';
 import useClass from '@webstack/hooks/useClass';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import useMouse from '@webstack/hooks/interfaces/useMouse/useMouse';
@@ -14,7 +14,7 @@ const ModalOverlay: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
 
-  const { isModalOpen, closeModal, modalContent, replaceModal }: any = context; // Add replaceModal
+  const { isModalOpen, closeModal, modalContent }: any = context; // Add replaceModal
 
   let confirm = modalContent?.confirm;
   let children = confirm && ' ' || modalContent?.children || modalContent;
@@ -35,13 +35,13 @@ const ModalOverlay: React.FC = () => {
   let title = modalContent?.title;
 
 
-  const handleReplaceModal = (newContent: IModalContent) => {
-    replaceModal(newContent);
-  };
+  // const handleReplaceModal = (newContent: IModalContent) => {
+  //   replaceModal(newContent);
+  // };
   const stopDrag = () => {
     isDragging && setIsDragging(false);
   };
-
+const statements = Object(confirm?.statements);
   const mouse = useMouse();
   const mousePos = mouse?.position;
   const startDrag = (e: React.MouseEvent) => {
@@ -110,9 +110,9 @@ const ModalOverlay: React.FC = () => {
 
           <div className={modalBodyClass}>
             {children}
-            {Object(confirm?.statements)?.length &&
-              <div className='modal-overlay__confirm'>
-                {Object.values(confirm?.statements).map((btn: any, key: number) => {
+            {statements?.length &&
+              <div className={`modal-overlay__confirm ${statements.length > 2 ?" modal-overlay__confirm-col":""}`}>
+                {statements.map((btn: any, key: number) => {
                   return (
                     <div key={key} className='modal-overlay__confirm-btn'>
                       <UiButton onClick={() => handleClick(btn)} variant={btn.text === 'yes' ? 'primary' : btn?.variant}>

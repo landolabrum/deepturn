@@ -37,7 +37,6 @@ const Account: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
         {level && <UiSettingsLayout
           defaultView='edit profile'
           title='account'
-          // variant="fullscreen"
           views={views}
         /> || ''}
       </>

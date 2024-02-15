@@ -5,6 +5,7 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
 import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
 import ContactForm from '@shared/components/ContactForm/ContactForm';
+import CartList from '~/src/modules/ecommerce/cart/views/CartList/CartList';
 
 interface IVerifyPayment {
     token?: string;
@@ -13,6 +14,7 @@ interface ICartItem {
     
 }
 const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
+    const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6InBvb0BuYW5pLmNvbSIsIml0ZW1zIjpbeyJwcm9kdWN0X2lkIjoicHJvZF9QNWxJMzVyMkVXVEF4aSIsInByaWNlX2lkIjoicHJpY2VfMU9IWm1KSW9kZUtaUkxEVlVlU2xZNk03In1dfQ.Zju6uFgG1L6xI26i8CQGVub-PnCoqP2Q-93qtnD1Yvo"
     const [tokenData, setTokenData] = useState<any | undefined>();
     const { addCartItem, getCartItems } = useCart();
     const memberService = getService<IMemberService>('IMemberService');
@@ -46,7 +48,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
                 qty: 1
             }
         }
-        console.log('[transformedData]',transformedData)
+        // console.log('[transformedData]',transformedData)
           return transformedData; // Add other necessary properties
     };
 
@@ -59,7 +61,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
             Object.values(productsResponse.data).forEach((product: any) => {
                 const cartItem = transformProductToCartItem(product);
 
-                console.log('[cartItem ]',cartItem)
+                // console.log('[cartItem ]',cartItem)
                 addCartItem(cartItem);
             });
         } catch (error: any) {
@@ -71,12 +73,12 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
         if (token) {
             try {
                 const response = await memberService.decryptJWT({
-                    token: token,
+                    token: mockToken || token,
                     secret: 'secretKey',
                     algorithm: 'HS256'
                 });
                 if (response?.decoded) {
-                    console.log('[ JWT DECODE (SUCCESS) ]', response.decoded);
+                    // console.log('[ JWT DECODE (SUCCESS) ]', response.decoded);
                     setTokenData(response.decoded);
                 }
             } catch (error: any) {
@@ -87,7 +89,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
     };
 
     useEffect(() => {
-        if (token) {
+        if (token ) {
             decryptToken();
         }
     }, [token]);
@@ -116,10 +118,11 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
             <style jsx>{styles}</style>
             <div className='verify-payment'>
                 <div className='verify-payment--header'>
-                    verify payment
+
+                    {/* verify payment */}
                 </div>
                 <div className='verify-payment--content'>
-                    {tokenData.items && JSON.stringify(cart)}
+                    {tokenData.items && <CartList cart={cart} />}
                     <div className='verify-payment--content__contact-form'>
                         <ContactForm
                             user={{
@@ -128,6 +131,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
                                 phone: tokenData.phone,
                             }}
                             onSubmit={() => {/* handle submission */ }}
+                            submitText='payment info'
                         />
                     </div>
                 </div>

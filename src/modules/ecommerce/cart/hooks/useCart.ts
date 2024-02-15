@@ -31,12 +31,12 @@ const useCart = () => {
             //     else existingItem.price.qty += newItem.price.qty
             // }
             // Assuming qty is intended to be part of the price object, ensure we handle it correctly.
-            console.log('[ ADDCART ( 1 ) ]', {
-                NEWITEM: newItem,
-                EXISTING: existingItem,
-                EXISTINDEX: existingIndex,
-                CART: cart
-            })
+            // console.log('[ ADDCART ( 1 ) ]', {
+            //     NEWITEM: newItem,
+            //     EXISTING: existingItem,
+            //     EXISTINDEX: existingIndex,
+            //     CART: cart
+            // })
 
             // If qty is stored elsewhere on the ICartItem, adjust accordingly.
             existingItem.price.qty = Number(newItem.price.qty );
@@ -44,12 +44,12 @@ const useCart = () => {
             
             // New item, add to cart with the initial qty.
             // Here, ensure the newItem comes with a correctly structured price object including qty.
-            console.log('[ ADDCART ( 2 ) ]', {
-                NEWITEM: newItem,
-                EXISTINDEX: existingIndex,
-                CART: cart,
-                CURRENTCART: currentCart
-            })
+            // console.log('[ ADDCART ( 2 ) ]', {
+            //     NEWITEM: newItem,
+            //     EXISTINDEX: existingIndex,
+            //     CART: cart,
+            //     CURRENTCART: currentCart
+            // })
             currentCart.push(newItem);
         }
         updateCartInCookie(currentCart);

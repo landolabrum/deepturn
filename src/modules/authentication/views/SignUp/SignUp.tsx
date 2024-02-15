@@ -132,7 +132,7 @@ const SignUp = ({ setView, hasPassword = true, btnText }: ISignUp) => {
     <>
       <style jsx>{styles}</style>
       
-      {!user && <UiForm fields={fields} onSubmit={handleSubmit} loading={loading} onChange={handleChange} btnText={btnText || 'sign up'} />}
+      {!user && <UiForm fields={fields} onSubmit={handleSubmit} loading={loading} onChange={handleChange} submitText={btnText || 'sign up'} />}
       <div className="authentication__authentication-status">
         {loading?.message}
       </div>

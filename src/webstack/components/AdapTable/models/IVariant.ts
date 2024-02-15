@@ -34,7 +34,6 @@ export type IFormControlVariant =
   | "miniactive"
   | "nav-item"
   | "center nav-item"
-  | "nav-item__active"
   | "null"
   | "undefined"
   | "wordmark"

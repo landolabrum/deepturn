@@ -126,11 +126,11 @@
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
 
-    &:not(&--warning, &--center, &--checkbox, &--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item, &--nav-item__active, &--select, &--invalid, &--input, &--textarea, &--signature) {
+    &:not(&--warning, &--center, &--checkbox, &--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item,  &--select, &--invalid, &--input, &--textarea, &--signature) {
         @extend %element-color;
     }
 
-    &:not(&--nav-item, &--nav-item__active, &--signature, &--checkbox) {
+    &:not(&--nav-item,  &--signature, &--checkbox) {
         @extend .b-rad;
     }
 
@@ -164,13 +164,13 @@
         background-color: var(--gray-70-opaque);
         border: solid 1px var(--gray-70);
 
-        &:not(&--nav-item, &--nav-item__active, &--signature) {
+        &:not(&--nav-item,  &--signature) {
             font-family: 'Game', sans-serif;
             font-style: italic;
         }
 
         &:focus-within {
-            &:not(&--nav-item, &--nav-item__active, &--signature) {
+            &:not(&--nav-item,  &--signature) {
                 border: solid 1px var(--gray-100);
                 --ui-icon-color: var(--gray-100);
                 color: var(--gray-100);
@@ -369,31 +369,22 @@
         width: max-content;
     }
     &--nav-item {
-        padding-right: var(--element-height);
-        --ui-icon-color: var(--gray-50);
+        padding: 0;
+        border: none;
         &:hover {
-            background-color: var(--gray-90);
-            // border-bottom: solid 1px var(--blue);
+            color: inherit;
         }
         @media(max-width: 1100px){
             padding-right: 0;
-            // padding-left: var(--s-1);
             margin: 0 auto;
             &:hover {
-                color: var(--primary);
-                --ui-icon-color: var(--primary);
-                border-bottom: unset;
+                color: inherit;
             }
         }
         
     }
 
-    &--nav-item__active {
-        --ui-icon-color: var(--primary);
-        color: var(--primary);
-        background-color: var(--dark-opaque);
-        // border-bottom: solid 1px var(--secondary) !important;
-    }
+ 
 
     // FORM CONTROL ELEMENTS - INVALID DEFINITIONS
     &--error {
@@ -440,7 +431,7 @@
     }
 
     // FORM CONTROL ELEMENTS - ELEM TYPES
-    &--select:not(&--nav-item, &--nav-item__active, &--flat) {
+    &--select:not(&--nav-item,  &--flat) {
        
         color: var(--gray-90);
         &:not(.form-control__element--lite){

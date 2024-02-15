@@ -31,8 +31,13 @@ const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, t
                                             key={item.name}
                                             src={i}
                                             alt={item.name}
-                                            width={400}
-                                            height={400}
+                                            quality={100}
+                                            fill
+                                            sizes="100%"
+                                            style={{
+                                                objectFit: 'contain',
+                                            }}
+
                                         />
                                     )}
                                 </div>

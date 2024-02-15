@@ -12,6 +12,7 @@ import MobileNav from "../views/MobileNav/MobileNav";
 import environment from "~/src/environment";
 import useNavMobile from "../hooks/useNavBreak"; // Ensure this path is correct
 import useScroll from "@webstack/hooks/useScroll";
+import keyStringConverter from "@webstack/helpers/keyStringConverter";
 
 
 
@@ -49,12 +50,14 @@ const Navbar = () => {
   };
 
   // Handle click events for routes and modals
-  const handleSelect = (_route: IRoute | string) => {
-    let route: IRoute = typeof _route == 'string' ? { href: _route } : _route;
-    if (route?.href) {
-      setRoute(route);
-    } else if (route?.modal && !isModalOpen) {
-      openModal(modals[route.modal]);
+  const handleSelect = (route: IRoute | string) => {
+    let _route: IRoute = typeof route === 'string' ? { href: route } : route;
+
+    if (_route?.href) {
+      setRoute(_route);
+      setToggled(_route.label || null); // Set the route as toggled when selected
+    } else if (_route?.modal && !isModalOpen) {
+      openModal(modals[_route.modal]);
     }
   };
 
@@ -102,22 +105,16 @@ const Navbar = () => {
             />
           </div>
           <div ref={navItemsRef} className={`nav-bar__nav-items`}>
-            {currentRoutes && currentRoutes.map((route, key) => <div
-              key={key}
-              className={
-                `nav__nav-item nav__nav-item--${route.label ? (
-                  route.label.toLowerCase()
-                ) : (
-                  String(route.href).split('/')[1]
-                )}${toggled === route.label ? ' nav__nav-item__active' : ''
-                }`
-              }
-              onDoubleClick={() => route?.href && handleSelect({ href: route.href })}
-            >
+            {currentRoutes && currentRoutes.map((route, key) => (
+              <div
+                key={key}
+                className={`nav__nav-item nav__nav-item--${route.label ? (route.label !== keyStringConverter(String(environment.merchant.name)) ? route.label.toLowerCase() : 'brand') : (String(route.href).split('/')[1])}${toggled === route.label ? ' nav__nav-item__active' : ''}`}
+                onDoubleClick={() => route?.href && handleSelect({ href: route.href })}
+              >
               {route.href !== '/cart' ? !route?.items ? (
                 <UiButton
                   traits={route?.icon ? { afterIcon: { icon: route.icon }, } : undefined}
-                  variant={toggled === route.label || (current === '/' && route.label?.toLowerCase() === environment.merchant.name) ? 'nav-item__active' : 'nav-item'}
+                  variant='nav-item'
                   onClick={() => handleSelect(route)}
                 >
                   {route.label}
@@ -127,7 +124,7 @@ const Navbar = () => {
                   overlay={{ zIndex: 997 }}
                   traits={route?.icon ? { afterIcon: { icon: route.icon } } : undefined}
                   openState={Boolean(toggled && toggled === route.label) ? 'open' : 'closed'}
-                  variant={toggled === route.label ? 'nav-item__active' : 'nav-item'}
+                  variant='nav-item'
                   value={route.label === 'account' ? displayName : route.label}
                   options={route?.items}
                   onSelect={handleSelect}
@@ -140,9 +137,8 @@ const Navbar = () => {
                   icon={route?.icon}
                 />
               )}
-
-            </div>
-            )}
+          </div>
+            ))}
           </div>
         </div>
       </nav>

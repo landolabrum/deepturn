@@ -68,7 +68,6 @@ $space: 14px;
                 }
 
                 .cart-list__item-image {
-                    
                     &::before {
                         line-height: 1.5;
                         content: attr(data-name);
@@ -115,6 +114,7 @@ $space: 14px;
                 @extend .d-flex;
                 width: 100px;
                 height: 100px;
+                position: relative;
                 @media(max-width: 900px) {
                     min-height: 250px;
                     width: 100%;

@@ -90,12 +90,7 @@ button {
       justify-content: flex-start;
     }
   }
-  &.nav-item__active{
-    @media(max-width:1100px){
-      text-indent: 7px;
-      justify-content: flex-start;
-    }
-  }
+
   &:disabled{
     user-select: none;
     cursor:not-allowed !important;

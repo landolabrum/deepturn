@@ -51,9 +51,9 @@
     // existing styles
     border-style: outset;
     border-color: transparent;
-    border-top-color: var(--gray-60);
-    border-width: 2px;
-    width: calc(100%);
+    // border-top-color: var(--gray-40);
+    // border-width: 1px;
+    width: 100%;
     margin-top: var(--padding);
     padding-top: var(--element-height);
     &--mini{

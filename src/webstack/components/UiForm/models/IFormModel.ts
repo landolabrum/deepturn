@@ -43,7 +43,7 @@ export interface IForm {
     loading?: OForm;
     fields?: IFormField[];
     title?: string | React.ReactElement;
-    btnText?: string | React.ReactElement;
+    submitText?: string | React.ReactElement;
     onChange?: (e: any) => void;
     onSubmit?: (e: any) => void;
     onError?: (e: any) => void;

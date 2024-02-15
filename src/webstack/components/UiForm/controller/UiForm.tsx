@@ -10,7 +10,7 @@ import UiCheckBox from '../../UiCheckbox/UiCheckBox';
 import FormControl from '../../FormControl/FormControl';
 import AddFieldForm from '../views/AddFieldForm/AddFieldForm';
 
-const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnText, onChange, loading, disabled, onAddField }: IForm) => {
+const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, submitText, onChange, loading, disabled, onAddField }: IForm) => {
     const textTypes = ['', undefined, 'text', 'password', 'email', 'number', 'tel', null, false, 'expiry', 'textarea'];
     const boolTypes = ['checkbox'];
     const [complete, setComplete] = useState<boolean>(false);
@@ -25,10 +25,10 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
 
     const handleInputChange = (e: any, constraints?: IFormField['constraints']) => {
         // handleComplete();
-        console.log('[handleInputChange]', e)
+        // console.log('[handleInputChange]', e)
         // const isValid = handleConstraints(e, constraints);
         // if (!e || !isValid) return;
-        if (onChange) { onChange(e); return; }
+        if (onChange) return onChange(e);
     };
 
     const handleSubmit = () => {
@@ -86,7 +86,7 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
     useEffect(() => {
         handleComplete()
      }, [fields, disabled, loading]);
-    if (!fields) return <></>;
+    if (!fields) return <div className='error'>No form fields</div>;
     return (<>
         <style jsx>{styles}</style>
         {title && <div className='form__title'>{title}</div>}
@@ -157,7 +157,7 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, btnT
             {onAddField && <AddFieldForm onAddField={onAddField} />}
             <div className={`form__submit ${variant && ` form__submit--${variant}` || ''}`}>
                 <UiButton onClick={handleSubmit} disabled={disabled || !complete} variant={!disabled && complete && 'primary'} type='submit' busy={loading == true} >
-                    {btnText ? btnText : 'Submit'}
+                    {submitText ? submitText : 'Submit'}
                 </UiButton>
             </div>
         </div>

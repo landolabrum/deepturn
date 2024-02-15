@@ -8,7 +8,7 @@ export type IConfirm ={
 
 
 export type IModalContent = {
-  title?: string;
+  title?: string | ReactNode;
   children?: ReactNode | null | string;
   footer?: ReactNode;
   variant?: "popup" | 'fullscreen';

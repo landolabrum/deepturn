@@ -271,7 +271,7 @@ const AdminCustomer: React.FC<any> = ({ customerId }: any) => {
             <>
               <UiForm
                 onAddField={onChange}
-                btnText='Modify'
+                submitText='Modify'
                 fields={customer}
                 onChange={onChange}
                 onSubmit={onSubmit}

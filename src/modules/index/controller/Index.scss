@@ -35,38 +35,69 @@
     min-height: 500px;
     gap: var(--s-9);
     position: relative;
+    @media(max-width: 1100px){
+        width:var(--padding-width);
+        padding: 0 var(--padding);
+        // background-color: #f30;
+    }
     &--title {
         width: 100%;
         text-align: center;
         padding: var(--element-height) 0 0;
         text-transform: capitalize;
         font-size: var(--s-1);
+        color: var(--gray-10);
     }
     .index__full {
-        width: var(--padding-width);
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
         gap: var(--padding);
-        margin: 0 0 var(--padding);
+        margin: var(--padding) 0 0;
         &--five{
             height: 80vw;
             z-index: 1;
             width: 100%;
         }
+        &-ol{
+            @extend .d-flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        &-li{
+            width: 100%;
+            &--title{
+                font-size: var(--s-5);
+            }
+            &--body{
+                padding: var(--padding);
+                font-size: var(--s-7);
+            }
+        }
         /* Adjust the gap as needed */
         &--title {
             width: 100%;
-            @extend .d-flex;
             justify-content: flex-start;
             text-transform: capitalize;
-            color: var(--gray-70);
-            --ui-icon-color: var(--gray-70);
+            color: var(--primary);
+            --ui-icon-color: var(--primary);
             gap: var(--s-9);
-            font-size: 1.8rem;
-            white-space: nowrap;
+            font-size: var(--s-1);
+            white-space: normal; /* Updated to allow text wrapping */
             font-family: Play;
             line-height: 1;
-            --ui-icon-size: 2.3rem;
+            --ui-icon-size: var(--s-1);
+            @extend .d-flex;
+            // justify-content: flex-start;
+            // text-transform: capitalize;
+            // color: var(--gray-20);
+            // --ui-icon-color: var(--gray-20);
+            // gap: var(--s-9);
+            // font-size: var(--s-1);
+            // white-space: nowrap;
+            // font-family: Play;
+            // line-height: 1;
+            // --ui-icon-size: var(--s-1);
         }
         &-padding{
 
@@ -115,7 +146,7 @@
         // border: solid 1px;
         text-transform: capitalize;
         font-size: var(--s-4);
-        color: var(--gray-40);
+        color: var(--gray-50);
       
     }
 
@@ -128,7 +159,7 @@
 
 
     &__sub-title {
-        color: var(--gray-40);
+        color: var(--gray-30);
         font-size: var(--s-4);
     }
 
