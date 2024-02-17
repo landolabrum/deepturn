@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.2",
-    "@react-three/drei": "^9.92.7",
+    "@react-three/drei": "^9.97.6",
     "@react-three/fiber": "^8.15.16",
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.2.0",
@@ -29,6 +29,7 @@
     "next": "^14.1.0",
     "next-i18next": "^11.3.0",
     "next-images": "^1.8.5",
+    "next-transpile-modules": "^10.0.1",
     "react": "^18.2.0",
     "react-cookie": "^5.0.0",
     "react-dom": "^18.2.0",
@@ -39,7 +40,6 @@
     "rxjs": "^7.5.5",
     "slick-carousel": "^1.8.1",
     "styled-jsx": "^5.0.0",
-    "three": "^0.155.0",
     "three-conic-polygon-geometry": "^1.6.1",
     "three-globe": "^2.28.0",
     "topojson-client": "^3.1.0"
@@ -57,7 +57,6 @@
     "@types/react-dom": "^18.0.10",
     "@types/react-slick": "^0.23.10",
     "@types/styled-jsx": "^3.4.4",
-    "@types/three": "^0.160.0",
     "@types/topojson-client": "^3.1.1",
     "eslint": "8.7.0",
     "eslint-config-next": "12.0.8",

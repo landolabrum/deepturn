@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Rule for .scss or .css files
     config.module.rules.push({
       test: /\.s?css$/,
       use: [
@@ -12,12 +13,23 @@ const nextConfig = {
         },
       ],
     });
+
+    // Add this to handle ES modules in node_modules
+    if (!isServer) {
+      config.module.rules.push({
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false, // disable the behavior
+        },
+        include: /node_modules/,
+      });
+    }
+
     return config;
   },
   output: "export",
-  // output: "standalone",
   images: {
-    unoptimized: true, // Disable Next.js Image Optimization API for static export
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -25,16 +37,6 @@ const nextConfig = {
       },
     ],
   },
-  // basePath:  '/nirvana-energy',
-  // assetPrefix: '/nirvana-energy/',
-  // redirects: () => {
-  //   return [
-  //     { source: '/r/:sponsor', destination: '/enroll/:sponsor', permanent: false },
-  //     { source: '/r/:sponsor/:destination', destination: '/enroll/:sponsor/:destination', permanent: false },
-  //   ]
-  // }
 };
 
 module.exports = nextConfig;
-
-

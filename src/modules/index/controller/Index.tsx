@@ -42,19 +42,18 @@ const Index = () => {
   ];
   const svgOptions = {
     bevelEnabled: true,
-    bevelThickness: 1, // Set the bevel thickness to 10px
-    bevelSize: 1, // Adjust the bevel size as needed
-    bevelSegments: 2, // Adjust the number of bevel segments as needed
-    animate: { rotate: { x: 1, y: 1, z: 1 } }
+    bevelThickness: 10, // Set the bevel thickness to 10px
+    bevelSegments: 10, // Adjust the number of bevel segments as needed
+    bevelSize: 2, // Adjust the bevel size as needed
   };
 
   return (
     <>
       <style jsx>{styles}</style>
       <div className='index'>
-        <div className='index__full--title'>
-          {environment.merchant.name && keyStringConverter(environment.merchant.name)}
+        <div className={`index__full--title index__full--title-${environment.merchant.name}`}>
           <UiIcon icon={`${environment.merchant.name}-logo`} />
+          {environment.merchant.name && keyStringConverter(environment.merchant.name)}
         </div>
 
         {environment.merchant.mid === 'nirv1' &&
@@ -67,9 +66,9 @@ const Index = () => {
               <div>Can I add batteries to my existing solar</div>
               <div className='index__full-ol'>
                 <div className='index__full-li'>
-                <div className='index__full-li--title'>
-                  Can I add batteries to my existing solar
-                </div>
+                  <div className='index__full-li--title'>
+                    Can I add batteries to my existing solar
+                  </div>
                 </div>
               </div>
             </div>
@@ -137,25 +136,28 @@ const Index = () => {
           </>}
 
         {environment.merchant.mid === 'mb1' && <>
-          <div className='index__full'>
-
+          {isClient && (
+            <img className="background-video" src="/assets/backgrounds/lava1.jpeg" />
+            // <video loop muted className="background-video" autoPlay>
+            // <source src="/assets/backgrounds/contour_bg.webm" type="video/webm" />
+            // Your browser does not support the video tag.
+            // </video>
+          )}
+          <div className='index__full-max'>
             <TJSCube
               svgOptions={svgOptions}
               svg={<UiIcon icon={`${environment.merchant.name}-logo`} />}
-              size={{ x: 100, y: 100, z: 30 }}
-              metalness={3}
-
-              color="#dd4400"
+              size={{ x: 120, y: 120, z: 0 }}
+              metalness={5}
+              animate={{ rotate: { y: -1, x:0.5, speed: .05 } }}
+              color="#ffbb00"
             />
           </div>
-          {isClient && (
-            <video loop muted className="background-video">
-              <source src="/assets/backgrounds/contour_bg.webm" type="video/webm" />
-              Your browser does not support the video tag.
-            </video>
-          )}
+
         </>
-        } 
+        }
+
+
       </div>
     </>
   );

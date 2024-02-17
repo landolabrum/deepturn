@@ -4,9 +4,6 @@ import { Canvas, useFrame, useThree, extend, PointLightProps } from '@react-thre
 import * as THREE from 'three';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
-import styles from './TJSCube.scss';
-const SHADOW_RESOLUTION = 2048;
-
 // Extend OrbitControls
 extend({ OrbitControls });
 
@@ -52,8 +49,7 @@ const TJSCubeContent = (props: ICube) => {
   const { svg, size, color, animate, svgOptions, metalness, display } = props;
   const previousTimeRef = useRef<number>(0);
   const meshRef = useRef<THREE.Mesh | null>(null);
-  const spotRef = useRef<THREE.PointLight>(null);
-  const ambientLightRef = useRef<any | null>(null);
+
   const controlsRef = useRef<any>(null);
   const { scene, camera } = useThree();
   const [svgContent, setSvgContent] = useState<string | null>(null);
@@ -232,37 +228,6 @@ const TJSCubeContent = (props: ICube) => {
     }
   }, [svgContent, scene, size, rotation]);
 
-  // PointLightProps
-  const defaultPointLight:PointLightProps =     {
-    // [size?.x, size.y, size.z]
-      position:[
-        positioner(size?.x),
-        positioner(size?.y, .5),
-        positioner(size?.z, 1.5),
-      ],
-      castShadow: true,
-      intensity: 1,
-      decay: 0.5,
-    
-  };
-  const defaultLights =     {
-    spotlight: {
-      position:[
-        positioner(size?.x),
-        positioner(size?.y, .5),
-        positioner(size?.z, 1.5),
-      ],
-      castShadow: true,
-      intensity: 1,
-      decay: 0.5,
-      mapSize:{
-        width:SHADOW_RESOLUTION,
-        height:SHADOW_RESOLUTION,
-      }
-    }
-  };
-  const [lights, setLights]=useState<any>({spotlight: null});
-
   useEffect(() => {
     const loadSVG = async () => {
       const loader = new SVGLoader();
@@ -293,13 +258,28 @@ const TJSCubeContent = (props: ICube) => {
     const maxDimension = Math.max(size?.x || 0, size?.y || 0, size?.z || 0) * 2;
     setCameraPos([0, 0, maxDimension]);
   }, [size]);
+  useEffect(() => {
+    // Add lighting
+    const ambientLight = new THREE.AmbientLight(0x404040, 1); // soft white light
+    scene.add(ambientLight);
 
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight.position.set(1, 2, 3);
+    scene.add(directionalLight);
+
+    return () => {
+      // Cleanup
+      scene.remove(ambientLight);
+      scene.remove(directionalLight);
+    };
+  }, [scene]);
   useFrame(() => {
     if (animate?.rotate && meshRef.current) {
-      const { x = 0, y = 0, z = 0, speed = 1 } = animate.rotate;
-      meshRef.current.rotation.x += x * speed;
-      meshRef.current.rotation.y += y * speed;
-      meshRef.current.rotation.z += z * speed;
+      const { x = 0, y = 0, z = 0, speed = .01 } = animate.rotate;
+      let ms:number = Number(speed) / 10;
+      meshRef.current.rotation.x += x * ms;
+      meshRef.current.rotation.y += y * ms;
+      meshRef.current.rotation.z += z * ms;
     }
   });
 
@@ -308,11 +288,10 @@ const TJSCubeContent = (props: ICube) => {
 
   return (
     <>
-      <ambientLight ref={ambientLightRef} />
       <PerspectiveCamera makeDefault position={cameraPos} frames={0.5} />
-      <OrbitControls ref={controlsRef} args={[camera]} />
+      <OrbitControls ref={controlsRef} args={[camera]} /> 
     </>
   );
 };
 
-export const TJSCube = (props: ICube) => <Canvas><TJSCubeContent {...props} /></Canvas>;
+export const TJSCube = (props: ICube) => <Canvas ><TJSCubeContent {...props} /></Canvas>;
