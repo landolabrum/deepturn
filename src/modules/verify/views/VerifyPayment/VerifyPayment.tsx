@@ -89,18 +89,18 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
     };
 
     useEffect(() => {
-        if (token ) {
+        if (token && !tokenData) {
             decryptToken();
         }
     }, [token]);
 
+    const currentCart = getCartItems();
     useEffect(() => {
-        const currentCart = getCartItems();
         setCart(currentCart);
         if (tokenData?.items && isTokenComplete()) {
             getProducts();
         }
-    }, [tokenData?.items]);
+    }, [setTokenData]);
 
 
 
