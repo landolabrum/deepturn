@@ -69,7 +69,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault;
     const formData = fields.reduce((acc: any, field: any) => {
       acc[field.name] = field.value;
       return acc;

@@ -63,6 +63,17 @@ const useRoute = (): ORoute => {
         }
         return false;
       });
+      if(router.asPath === '/authentication/signout'){
+        openModal({
+          confirm:{
+            title:"You've been logged out...",
+            statements:[
+              {text:'go home',href:'/'}
+            ]
+          }
+        }
+        )
+      }
       if (matchingRoute) {
         handleHeader(matchingRoute?.label && capitalizeAll(matchingRoute?.label))
         matchingRoute?.href && !router.asPath.includes(matchingRoute?.href) && router.push(matchingRoute.href, undefined, { shallow: true });

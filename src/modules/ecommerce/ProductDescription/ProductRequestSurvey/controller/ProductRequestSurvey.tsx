@@ -127,6 +127,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     };
 
     const onContactSubmit = async (submittedContactData: any) => {
+    
         setContactData(submittedContactData); // Save the contact data in state
         setView('loading'); // Move to loading view while processing the submission
         onSubmit(submittedContactData); // Pass the contact data directly to onSubmit
@@ -286,9 +287,9 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                     </AdaptGrid>
                     <div className='product-request-survey__submit'>
                         <UiButton
-                            // disabled={selected.length == 0}
+                            disabled={selected.length == 0}
                             onClick={handleView}
-                            variant={Boolean(selected.length) && 'glow'}
+                            variant={Boolean(selected.length) && 'glow' || 'disabled'}
                         >Proceed to Quote</UiButton>
                     </div>
                 </>}

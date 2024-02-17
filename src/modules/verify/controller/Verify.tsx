@@ -38,7 +38,7 @@ const Verify = () => {
     if (newCustomerEmail) {
       setView('sign-in');
     }
-  }, [query, newCustomerEmail]);
+  }, [query, newCustomerEmail, setToken]);
 
   return (
     <>

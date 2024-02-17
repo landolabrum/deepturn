@@ -11,6 +11,7 @@ interface IProps {
 
 const DefaultLayout = (props: IProps) => {
   const mainRef = useRef<HTMLDivElement>(null);
+  
   const router = useRouter();
   const [domLoaded, setDomLoaded]=useState(false);
   useEffect(() => {

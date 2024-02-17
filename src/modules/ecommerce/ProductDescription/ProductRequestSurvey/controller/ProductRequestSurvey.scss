@@ -9,7 +9,50 @@
     width: 100%;
 }
 
+.product-request-survey__success {
+    @extend .d-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: var(--element-height);
+    width: 100%;
+    flex: 1;
+    gap: var(--element-height);
 
+    &--email {
+        font-size: var(--s-4);
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    &--status {
+        @extend .d-flex;
+        background-color: var(--gray-30-opaque);
+        gap: var(--s-9);
+        color: var(--green-60);
+        --ui-icon-color: var(--green-60);
+        text-transform: capitalize;
+        font-size: var(--element-height);
+        --ui-icon-size: var(--s-1);
+        line-height: 1;
+        width: max-content;
+        outline: solid var(--s-9);
+        border-radius: var(--border-radius);
+        padding: var(--s-9) var(--s-6);
+    }
+
+    &--message {
+        font-size: var(--s-5)
+    }
+
+    &--action {
+        margin-top: auto;
+        width: 50%;
+
+        @media(max-width: 900px) {
+            width: 100%;
+        }
+    }
+}
 .product-request-survey {
     position: relative;
     @extend .d-flex;
@@ -41,50 +84,7 @@
     // min-height: 490px;
     color: var(--gray-30);
 
-    &__success {
-        @extend .d-flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        margin-top: var(--element-height);
-        width: 100%;
-        flex: 1;
-        gap: var(--element-height);
 
-        &--email {
-            font-size: var(--s-4);
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        &--status {
-            @extend .d-flex;
-            background-color: var(--gray-30-opaque);
-            gap: var(--s-9);
-            color: var(--green-60);
-            --ui-icon-color: var(--green-60);
-            text-transform: capitalize;
-            font-size: var(--element-height);
-            --ui-icon-size: var(--s-1);
-            line-height: 1;
-            width: max-content;
-            outline: solid var(--s-9);
-            border-radius: var(--border-radius);
-            padding: var(--s-9) var(--s-6);
-        }
-
-        &--message {
-            font-size: var(--s-5)
-        }
-
-        &--action {
-            margin-top: auto;
-            width: 50%;
-
-            @media(max-width: 900px) {
-                width: 100%;
-            }
-        }
-    }
 
     #product-request-survey__options {
         width: 100%;

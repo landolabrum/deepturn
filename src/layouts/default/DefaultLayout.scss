@@ -6,7 +6,7 @@ main {
   @media(min-width: 1260px){
     margin-top: var(--element-height);
     max-width: 1260px;
-    min-height: 100vh;
+    min-height: calc(100vh - 200px);
     inline-size: var(--padding-width);
   }
   padding: 0 0 100px;
