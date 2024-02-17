@@ -136,7 +136,7 @@ const Index = () => {
             </div>
           </>}
 
-        {/* {environment.merchant.mid === 'mb1' && <>
+        {environment.merchant.mid === 'mb1' && <>
           <div className='index__full'>
 
             <TJSCube
@@ -155,7 +155,7 @@ const Index = () => {
             </video>
           )}
         </>
-        } */}
+        } 
 
 
       </div>
