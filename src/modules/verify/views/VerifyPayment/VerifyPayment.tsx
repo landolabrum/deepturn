@@ -73,7 +73,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
         if (token) {
             try {
                 const response = await memberService.decryptJWT({
-                    token: mockToken || token,
+                    token: token,
                     secret: 'secretKey',
                     algorithm: 'HS256'
                 });
