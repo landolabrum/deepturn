@@ -1,131 +1,132 @@
-// Relative Path: ./SettingsView.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import containerStyles from './UiSettingsLayout.scss';
-import viewStyles from './UiSettingsView.scss';
-import { default as Div } from "@webstack/components/UiDiv/UiDiv";
 import UiMenu from '../../components/UiMenu/UiMenu';
-import UiSelect from '../../components/UiSelect/UiSelect';
-import { capitalizeAll } from '@webstack/helpers/Capitalize';
 import UiLoader from '../../components/UiLoader/view/UiLoader';
 import { useRouter } from 'next/router';
 import useClass from '@webstack/hooks/useClass';
 import useWindow from '@webstack/hooks/useWindow';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
+import { IConfirm, useModal } from '@webstack/components/modal/contexts/modalContext';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
-import { IConfirm, useModal } from '@webstack/components/modal/contexts/modalContext';
+interface ISettingsClasses {
+  container: string;
+  content: string;
+  view: string;
+}
+
 const MODAL_ID = 'settings-views';
-// Remember to create a sibling SCSS file with the same name as this component
+
 interface ISettingsLayout {
   views: any;
   setViewCallback?: (e: any) => void;
   variant?: 'full-width' | 'full';
   title?: string;
-  defaultView?: string
+  defaultView?: string;
   showMenu?: boolean;
 }
+
 const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   views,
   setViewCallback,
   variant,
   title,
   defaultView,
-  showMenu = true
+  showMenu = true,
 }: ISettingsLayout) => {
-
-  const { width } = useWindow();
   const router = useRouter();
-  const queryViewId = router?.query?.vid && router.query.vid;
-  const [view, setView] = useState<string | undefined>(defaultView);
-  const [hide, setHide] = useState('');
-  const handleView = (view: string) => {
-    router.push({
-      pathname: router?.pathname,
-      query: {
-        vid: keyStringConverter(view, false) || queryViewId
-      }
-    },
-      undefined, { shallow: false }
-    )
-    handleHide();
-    setViewCallback && setViewCallback(view);
-  }
-  const containerClass = useClass({ cls: 'settings', variant: variant });
-  const contentClass = useClass({ cls: 'settings__content', variant: variant });
-  const viewClass = useClass({ cls: 'settings__view', variant: variant });
-  const { openModal, closeModal, isModalOpen, modalContent } = useModal();
+  const { openModal, closeModal, isModalOpen } = useModal();
 
-  const handleHide = () => {
-    if (hide == '') setHide('hide');
-    else if (hide == 'hide') setHide('show');
-    else if (hide == 'show') setHide('hide');
-    else setHide('');
-    const modalContext = { title: keyStringConverter(MODAL_ID), statements: Object.keys(views).map((key: string) => { return { text: key, onClick: (view: any) => { handleView(view.text) } } }) };
-    if (variant && ['full-width', 'full'].includes(variant) && hide === 'show' ) {
-      if (isModalOpen) closeModal();
-      else openModal({ confirm: modalContext });
-    } else if (!isModalOpen && variant && ['full-width', 'full'].includes(variant)) {
-      openModal({ confirm: modalContext });
+  const [view, setView] = useState<string | undefined>(defaultView);
+  const [hide, setHide] = useState('start');
+  const isFullVariant=variant === 'full-width' || variant === 'full';
+  // Directly apply useClass hook here as useMemo is not required for useClass
+  // if useClass is purely functional without side effects
+  const classes = {
+    container: useClass({ cls: 'settings', variant: variant }),
+    content: useClass({ cls: 'settings__content', variant: variant }),
+    view: useClass({ cls: 'settings__view', variant: variant }),
+    icon: useClass({cls: "settings__icon", variant: variant, standalones:['card']})
+  };
+  const handleView = useCallback((view: string) => {
+    router.push({
+      pathname: router.pathname,
+      query: { vid: keyStringConverter(view, false) },
+    }, undefined, { shallow: false });
+    setViewCallback?.(view);
+  }, [router, setViewCallback]);
+  
+  // useMemo for handling complex calculations or conditional logic is fine
+  const modalContext: IConfirm = useMemo(() => ({
+    title: keyStringConverter(MODAL_ID),
+    statements: Object.keys(views).map((key: string) => ({
+      text: key,
+      onClick: () => handleView(key),
+    })),
+  }), [views, handleView]); // Assuming handleView does not change or is wrapped in useCallback
+
+
+
+
+  const toggleHide = useCallback(() => {
+    setHide(prev => (['hide','start'].includes(prev)? 'show' : 'hide'));
+    if (variant === 'full-width' || variant === 'full') {
+      if (hide === 'show' && isModalOpen) {
+        closeModal();
+      } else if (!isModalOpen) {
+        openModal({ confirm: modalContext });
+      }
     }
-  }
-  const isFullVariant = variant && ['full-width', 'full'].includes(variant);
-  const optionViews = (dashed: boolean = true) => Object.keys(views).map(v => {
-    return keyStringConverter(v, dashed)
-  });
+  }, [isModalOpen, closeModal, openModal, variant]);
 
   useEffect(() => {
-    const CURRENT_OPEN_MODAL = (modalContent as { confirm?: IConfirm })?.confirm?.title;
+    if (!view && defaultView) {
+      setView(defaultView);
+    }
+  }, [defaultView, view, variant]);
 
-    if(CURRENT_OPEN_MODAL)closeModal();
-    if(hide === 'show'){
-      setHide('hide');
+  useEffect(() => {
+    const firstView = router.query.vid || defaultView || Object.keys(views)[0];
+    if (firstView) {
+      setView(firstView.toString());
     }
-    if (width < 1100 && hide === 'hide') {
-      // if (isModalOpen) closeModal();
-      setHide('show');
-    }
-    else if (showMenu === false) setHide('hide');
-    if (views) {
-      const firstView = queryViewId || defaultView || Object.keys(views)[0];
-      firstView && setView(String(firstView));
-    }
-  }, [queryViewId, showMenu, width]);
-  if (!Boolean(view)) return <UiLoader />;
+  }, [router.query.vid, defaultView, views]);
+
+  if (view === undefined) return <UiLoader />;
+
+
   return (
     <>
-
       <style jsx>{containerStyles}</style>
-      <style jsx>{viewStyles}</style>
-      <div id="settings-container" className={containerClass}>
-        <div className={contentClass}>
-          <div className={`settings--icon ${`settings--icon--${hide}`}`}>
-            { isFullVariant ? (
-              <div className='settings-icon-full-content' onClick={handleHide} >
-                <UiIcon icon={hide == '' ? "fa-xmark" : hide == 'hide' ? 'fa-gear' : 'fa-xmark'} />
-              </div>
-            ) : (
-              <UiIcon icon={hide == '' ? "fa-xmark" : hide == 'hide' ? 'fa-gear' : 'fa-xmark'} onClick={handleHide} />
-            )}
+      <div
+        id="settings-container"
+        className={classes.container}>
+        <div className={classes.content}>
+          <div className={classes.icon}>
+            <UiIcon icon={hide === 'hide' ? 'fa-gear' : 'fa-xmark'} onClick={toggleHide} />
           </div>
-          {variant !== 'full-width' && <div className={`settings__actions ${variant && ` settings__actions-${variant} ` || ''}${hide !== '' ? `settings__actions--${hide}` : ''}`}>
-            <div className="settings__actions--content">
-              <UiMenu 
-                options={optionViews(false)}
-                variant="flat"
-                value={view}
-                onSelect={handleView}
-              />
-            </div>
-          </div>}
-
-          <div id='settings-view' className={viewClass}>
-            {title && <div className={`settings__view--header${hide == '' ? ' settings__view--header--init' : hide == 'show' ? ' settings__view--header--show' : ' settings__view--header--hide'}`}>
-              <div className='settings__view--header--title'>
-                {title}
+          {showMenu && !isFullVariant && (
+            <div className={`settings__actions settings__actions--${hide}`}>
+              <div className="settings__actions--content">
+                <UiMenu
+                  options={Object.keys(views).map((v) => keyStringConverter(v, false))}
+                  variant="flat"
+                  value={view}
+                  onSelect={handleView}
+                />
               </div>
-            </div>}
-            <div className='settings__view__content'>
-              {view && views[view]}
+            </div>
+          )}
+          <div id="settings-view" className={classes.view}>
+            {title && (
+              <div className={`settings__view--header settings__view--header--${hide}`}>
+                <div className="settings__view--header--title">
+                  {title}
+                </div>
+              </div>
+            )}
+            <div className="settings__view__content">
+              {views[view]}
             </div>
           </div>
         </div>

@@ -12,14 +12,17 @@ interface IuseClass {
     type?: string;
     variant?: any;
     extras?: string[] | undefined;
+    standalones?: string[] | undefined;
     minWidths?: IuseClassWidths[];
     maxWidths?: IuseClassWidths[];
+    width?: number;
 }
 
 const useClass = (props: IuseClass) => {
-    const { cls, type, variant, extras, minWidths, maxWidths } = props;
+
+    const { cls, type, variant, extras, minWidths, maxWidths, width, standalones } = props;
+    if(Boolean(!width && maxWidths) || Boolean(!width && minWidths))return cls;
     const [classState, setClassState] = useState<string>(cls);
-    const { width: windowWidth } = useWindow();
 
     useEffect(() => {
         let newClass = cls;
@@ -41,13 +44,21 @@ const useClass = (props: IuseClass) => {
                 }
             });
         }
+        if (standalones) {
+            standalones.forEach(extra => {
+                if (extra?.length) {
+                    newClass += ` ${extra}`;
+                }
+            });
+        }
 
         const handleWidths = (widths: IuseClassWidths[], isMinWidth: boolean) => {
+            if(!width)return;
             widths.forEach(w => {
                 const widthCondition = typeof w.width === 'number' ? w.width :
                     (typeof w.width === 'string' && w.width.endsWith('px') ? parseInt(w.width) : 0);
                 
-                if (isMinWidth ? widthCondition > windowWidth : widthCondition < windowWidth) {
+                if (isMinWidth ? widthCondition > width : widthCondition < width) {
                     if (Array.isArray(w.classList)) {
                         w.classList.forEach(c => {
                             newClass += ` ${cls}__${c}`;
@@ -68,7 +79,7 @@ const useClass = (props: IuseClass) => {
         }
 
         setClassState(newClass);
-    }, [cls, type, variant, extras, minWidths, maxWidths, windowWidth]);
+    }, [cls, type, variant, extras, minWidths, maxWidths, width]);
 
     return classState;
 };

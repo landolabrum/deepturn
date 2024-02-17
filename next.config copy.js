@@ -14,8 +14,10 @@ const nextConfig = {
     });
     return config;
   },
-  output: "standalone",
+  output: "export",
+  // output: "standalone",
   images: {
+    unoptimized: true, // Disable Next.js Image Optimization API for static export
     remotePatterns: [
       {
         protocol: "https",
@@ -23,8 +25,8 @@ const nextConfig = {
       },
     ],
   },
-  basePath:  '/nirvana-energy',
-  assetPrefix: '/nirvana-energy/',
+  // basePath:  '/nirvana-energy',
+  // assetPrefix: '/nirvana-energy/',
   // redirects: () => {
   //   return [
   //     { source: '/r/:sponsor', destination: '/enroll/:sponsor', permanent: false },
@@ -34,3 +36,4 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+

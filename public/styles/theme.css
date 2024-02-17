@@ -95,6 +95,7 @@
   --green-60: #22c553;
   --red-60: #ef4444;
   --blue: #4f96ff;
+  --blue-opaque: #4f96ff50;
   --blue-10: #54E3FF;
 
 
@@ -116,6 +117,7 @@
     color: var(--error);
     font-style: italic;
   }
+
   .globe-marker{
     user-select: all;
     cursor: pointer;
@@ -192,8 +194,29 @@
    --breakpoint-xl: 1600px;
    --border-radius: 8px;
    --element-height: 45px;
-}
 
+   --border: solid 1px var(--gray-70);
+   --border-hover: solid 1px var(--gray-50);
+   --border-focus: solid 1px var(--gray-30);
+}
+.card{
+  cursor: pointer;
+  color: var(--gray-50);
+  --ui-icon-color: var(--gray-50);
+  background-color: var(--gray-80-opaque);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  &:hover{
+    color: var(--gray-30);
+    --ui-icon-color: var(--gray-30);
+    background-color: var(--gray-80);
+    border: var(--border-hover);
+  }
+  &:focus, &:focus-within, &:target, &:active{
+    background-color: var(--gray-60);
+    border: var(--border-focus);
+  }
+}
 /* GOOGLE ADDRESS STYLES */
 
 .pac-container {
@@ -359,21 +382,14 @@ ol {
   --border-width: calc(100% - 2px);
   --padding-sm: calc(--padding * 2);
 
-  &::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg,
-        rgba(255, 255, 255, 0.6) 0%,
-        rgba(0, 0, 0, 0.2) 100%);
-    border: 1px solid var(--gray-100);
-    border-radius: 3px;
-    width: var(--s-9);
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+ &::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 5px;
   }
 
   &::-webkit-scrollbar {
-    overflow: hidden;
-    width: var(--s-8);
-    border-radius: 0 7px 7px 0;
-    background-color: inherit;
+    width: 10px;
+    background-color: var(--dark);
   }
 
 

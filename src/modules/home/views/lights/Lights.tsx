@@ -104,7 +104,7 @@ const Lights = () => {
   }
 
   const multiHomeService = async (action: string, data?: any) => {
-    console.log('[ CHATGPT HELP! ]',{action, data, group});
+    console.log('[ CHATGPT HELP! ]',JSON.stringify({action, data, group}));
     const handleLoader = (active: boolean, action?: string, name?: string) => {
       setLoader({ active: active, body: `${action}, ${name} `, animation: true });
     };
@@ -152,10 +152,10 @@ const Lights = () => {
   };
   
 
-  useEffect(() => { }, [multiHomeService, ])
+  // useEffect(() => { }, [multiHomeService, ])
   useEffect(() => {
     initfetchLights();
-  }, [currentLight]);
+  }, []);
   return (
     <>
       <style jsx>{styles}</style>
@@ -169,7 +169,7 @@ const Lights = () => {
         </AdaptGrid>
         <UiMediaSlider
           backgroundColors={['#ff3300']}
-          atPoints={atPoints}
+          atPoints={atPoints} 
           duration={10000}
           start={go}
         />
@@ -179,7 +179,7 @@ const Lights = () => {
             <div
               className={`lights__light ${group?.includes(light.id_) ? 'in-group' : ''}`}
               key={index}
-              onClick={() => {
+              onDoubleClick={() => {
                 if (group?.includes(light.id_)) {
                   console.log(`removeFromGroup(${light.id_})`);
                   removeFromGroup(light.id_);

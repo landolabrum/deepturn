@@ -29,14 +29,16 @@
 
     @media(max-width:900px) {
         margin: 0;
-        padding: var(--s-9);
-        width: calc(100% - calc(var(--s-9) * 2));
+        width: var(--padding-width);
+        padding: var(--padding) var(--padding) var(--s-5);
+        // padding: var(--s-9);
+        // width: calc(100% - calc(var(--s-9) * 2));
         // margin-bottom: 100px;
     }
 
     background-color: var(--gray-90);
     gap: var(--padding);
-    min-height: 490px;
+    // min-height: 490px;
     color: var(--gray-30);
 
     &__success {

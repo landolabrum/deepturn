@@ -24,7 +24,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   
       </Head>
       <style jsx>{styles}</style>
-      <ServiceContainer />
+                <ServiceContainer />
       <OverlayProvider>
         <LoaderProvider>
           <NotificationProvider>

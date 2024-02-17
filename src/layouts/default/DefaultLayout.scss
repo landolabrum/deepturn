@@ -4,12 +4,14 @@ main {
   position: relative;
   margin: 0 auto 0;
   @media(min-width: 1260px){
+    margin-top: var(--element-height);
     max-width: 1260px;
+    min-height: 100vh;
     inline-size: var(--padding-width);
   }
   padding: 0 0 100px;
   @media(max-width: 900px){
     width: 100%;
-    height: 100%;
+    height: max-content;
   }
 }

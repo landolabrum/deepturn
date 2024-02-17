@@ -42,9 +42,11 @@ button {
   font-weight: inherit;
   font-family: inherit;
   text-align: inherit;
+  text-shadow: inherit;
   cursor: inherit;
   // border-radius: inherit;
   padding: 0;
+ 
   &.flat {
     margin: 0;
   }

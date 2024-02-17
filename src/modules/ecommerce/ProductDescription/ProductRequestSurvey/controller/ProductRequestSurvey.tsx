@@ -103,9 +103,6 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
         const updatedFeatures = formFeatures.map(feature =>
             feature.name === choice.name ? { ...feature, selected: !feature.selected } : feature
         );
-        const selectHeight = selectedRef.current.offsetHeight;
-        if (width < 1100) optionsRef.current.style.paddingBottom = `${selectHeight}px`;
-        else delete optionsRef.current.style.paddingBottom;
         setForm({ ...form, features: updatedFeatures });
     };
 
@@ -125,7 +122,8 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
         xs: 3,
         sm: 4,
         lg: 4,
-        gap: width > 900 ? 10 : 6
+        gap: 10
+        // gap: width > 900 ? 10 : 6
     };
 
     const onContactSubmit = async (submittedContactData: any) => {
@@ -288,9 +286,9 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                     </AdaptGrid>
                     <div className='product-request-survey__submit'>
                         <UiButton
-                            disabled={selected.length == 0}
+                            // disabled={selected.length == 0}
                             onClick={handleView}
-                            variant='primary'
+                            variant={Boolean(selected.length) && 'glow'}
                         >Proceed to Quote</UiButton>
                     </div>
                 </>}

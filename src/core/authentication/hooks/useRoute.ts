@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useClearance, useUser } from './useUser';
 import { IRoute, useClearanceRoutes } from '@shared/components/Navbar/data/routes';
 import UserContext from '~/src/models/UserContext';
 import { useHeader } from '@webstack/components/Header/controller/Header';
 import { capitalizeAll } from '@webstack/helpers/Capitalize';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import environment from '~/src/environment';
 
 type ORoute = [
   UserContext | undefined,
@@ -22,7 +21,7 @@ const useRoute = (): ORoute => {
   const router = useRouter();
   const clearanceRoutes = useClearanceRoutes();
 
-  const handleHeader = (title?: string) => {
+  const handleHeader = useCallback((title?: string) => {
     const rtTit = String(router.pathname)?.length && router.pathname.split('/')[1] || false;
     const headerContext = {
       title: rtTit || title,
@@ -34,13 +33,14 @@ const useRoute = (): ORoute => {
       ]
     };
     setHeader(headerContext);
-  };
+  }, [router, setHeader]); 
 
   const explicitRouter = (route: IRoute) => {
     if (route?.href) router.push(route.href, undefined, { shallow: false });
   };
   const level = useClearance();
-  const implicitRouter = () => {
+  const implicitRouter = useCallback(() => {
+
     if (user && !_user) setUser(user);
     if (clearanceRoutes) {
       const matchingRoute = clearanceRoutes.find(clearRoute => {
@@ -77,10 +77,11 @@ const useRoute = (): ORoute => {
       }
       
     }
-  };
+  }, [user, _user, setUser, clearanceRoutes, router, level, handleHeader]); // Add all dependencies used inside implicitRouter
+
   useEffect(() => {
     implicitRouter();
-  }, [clearanceRoutes]);
+  }, [clearanceRoutes, implicitRouter]);
 
   return [_user, router.pathname, explicitRouter];
 };

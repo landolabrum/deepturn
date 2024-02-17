@@ -11,7 +11,6 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 // Remember to create a sibling SCSS file with the same name as this component
 
 const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) => {
-  const user = useUser();
   const DefaultHome = () => {
     return <>
       <style jsx>{styles}</style>
@@ -22,6 +21,7 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
       </div>
     </>
   }
+  const user = useUser();
   const views = {
     home: <DefaultHome />,
     surveillance: <Surveillance />,
@@ -30,14 +30,15 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
   if (user) return (
     <>
       <style jsx>{styles}</style>
-      <div className='home'>
+      {/* <div className='home'> */}
         <UiSettingsLayout
+          // variant="full"
           variant="full-width"
           // title='home'
           defaultView='home'
           views={views}
         />
-      </div>
+      {/* </div> */}
     </>
   ); return <><UiLoader /></>
 };

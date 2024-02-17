@@ -83,7 +83,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }
       <style jsx>{styles}</style>
       <div className='contact-form'>
         <div className='contact-form__title'>Contact</div>
-        {JSON.stringify(addressField)}
+        {/* {JSON.stringify(addressField)} */}
         <UiForm
           fields={fields}
           disabled={disabled}

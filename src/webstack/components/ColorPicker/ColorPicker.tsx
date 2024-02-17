@@ -65,12 +65,12 @@ const ColorPicker = ({ hex, onChange }: IColorPicker) => {
 const handleInput = (e: any)=>{
   const {name, value}=e.target;
   setColor(`#${value}`);
-  value.length == 6 && debouncedOnChange(color);
+  value.length === 7 && debouncedOnChange(color);
 };
 
 useEffect(() => {
   if(hex && hex !== color)setColor(hex);
-}, [hex]);
+}, [hex, handleInput]);
 
   return (
     <>

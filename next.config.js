@@ -1,4 +1,6 @@
 
+
+
 const nextConfig = {
   reactStrictMode: true,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
@@ -14,10 +16,8 @@ const nextConfig = {
     });
     return config;
   },
-  output: "export",
-  // output: "standalone",
+  output: "standalone",
   images: {
-    unoptimized: true, // Disable Next.js Image Optimization API for static export
     remotePatterns: [
       {
         protocol: "https",

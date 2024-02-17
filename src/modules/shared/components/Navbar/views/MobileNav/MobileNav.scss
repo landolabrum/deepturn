@@ -27,17 +27,18 @@
         gap: var(--padding);
         height: max-content;
         justify-content: space-between;
-        padding: calc(var(--element-height) * 2) var(--padding) var(--element-height);
+        // padding: calc(var(--element-height) * 2) var(--padding) var(--element-height);
         
         &__brand{
             gap: var(--s-9);
-            position: absolute;
-            top: var(--s-2);
-            left: var(--padding);
+            // position: absolute;
+            // top: var(--s-2);
+            // left: var(--padding);
             height: var(--element-height);
-            padding: var(--padding);
+            padding:0 var(--padding) var(--s-1);
             right: auto;
-
+            width: 100%;
+            justify-content: flex-start;
             text-transform: capitalize;
             font-size: var(--s-1);
             @extend .d-flex;
@@ -47,7 +48,7 @@
             --ui-icon-height:var(--element-height);
             // --ui-icon-size: var(--s-1);
             // --ui-icon-width: var(--s-1);
-            line-height: 1;
+            // line-height: 1;
             cursor: pointer;
             &:hover{
                 color:var(--primary);

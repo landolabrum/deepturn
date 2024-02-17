@@ -23,14 +23,28 @@
         background-color: var(--error);
     }
 }
-
 @keyframes glow {
     0% {
-        box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.5);
+        color: var(--gray-10);
+        background-color: var(--blue-opaque);
+        border-color: var(--blue);
+        box-shadow: 0 0 3px 1px var(--blue);
+        // border:  var(--gray-80);
     }
-
+    60% {
+        color: var(--white);
+        background-color: var(--blue);
+        border-color: var(--blue-10);
+        box-shadow: 0 0 7px 3px var(--blue);
+    }
     100% {
-        box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0);
+        color: var(--gray-10-opaque);
+        background-color: var(--blue-opaque);
+        border-color: var(--blue);
+        box-shadow: 0 0 3px 1px var(--blue-opaque);
+
+        // background-color: var(--primary);
+        // border: solid 1px var(--white);
     }
 }
 
@@ -126,7 +140,7 @@
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
 
-    &:not(&--warning, &--center, &--checkbox, &--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item,  &--select, &--invalid, &--input, &--textarea, &--signature) {
+    &:not(&--warning, &--center, &--glow, &--checkbox, &--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item,  &--select, &--invalid, &--input, &--textarea, &--signature) {
         @extend %element-color;
     }
 
@@ -138,7 +152,7 @@
     &--before-icon  {
         padding-left:  var(--element-height);
     }
-    &--after-icon:not(&-sm)  {
+    &--after-icon:not(&-sm, &--nav-item)  {
         padding-right:  var(--element-height);
     }
     // ELEMENTS
@@ -354,7 +368,22 @@
         transparent, var(--blue), transparent,
         transparent, var(--blue-10), transparent,
         transparent, var(--blue-10), transparent);
-
+    &--glow{
+        border: solid 1px;
+        overflow: visible;
+        margin: 0 5px;
+        animation: glow 3s infinite ease-out;
+        &:focus, &:focus-within{
+            background-color: var(--gray-80);
+        }
+        &:hover:not( &:focus, &:focus-within){
+            animation: unset;
+            color: var(--white);
+            background-color: var(--blue);
+            border-color: var(--blue-10);
+            box-shadow: 0 0 3px 1px var(--blue-opaque);
+        }
+    }
     &--link {
         padding-left: var(--s-5);
         &:hover {

@@ -108,7 +108,15 @@ const Navbar = () => {
             {currentRoutes && currentRoutes.map((route, key) => (
               <div
                 key={key}
-                className={`nav__nav-item nav__nav-item--${route.label ? (route.label !== keyStringConverter(String(environment.merchant.name)) ? route.label.toLowerCase() : 'brand') : (String(route.href).split('/')[1])}${toggled === route.label ? ' nav__nav-item__active' : ''}`}
+                className={
+                  `nav__nav-item nav__nav-item--${
+                    route.label ? (route.label !== keyStringConverter(String(environment.merchant.name)) ? route.label.toLowerCase() : 'brand') : (
+                      String(route.href).split('/')[1]
+                    )
+                  }${
+                    toggled === route.label ? ' nav__nav-item__active' : ''}${
+                      route.label === 'account' && cartTotal === 0 &&' no-cart' || ''
+                    }`}
                 onDoubleClick={() => route?.href && handleSelect({ href: route.href })}
               >
               {route.href !== '/cart' ? !route?.items ? (
