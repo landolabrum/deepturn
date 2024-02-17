@@ -34,7 +34,7 @@ const ProductBuyNow: React.FC<any> = ({ product, traits }: any) => {
         const price = product?.price;
         if (!product?.metadata?.hide_price) {
             setLabel(
-                `${numberToUsd(product.price?.unit_amount)} ${price?.recurring?.interval ? ' / ' + price?.recurring?.interval : ''}`
+                product.price?.unit_amount && `${numberToUsd(product.price?.unit_amount)} ${price?.recurring?.interval ? ' / ' + price?.recurring?.interval : ''}` || 'label not available'
             );
         } else {
             setLabel('get quote');

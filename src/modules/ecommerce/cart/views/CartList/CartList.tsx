@@ -49,7 +49,7 @@ const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, t
                                         {item?.description}
                                     </div>
                                     <div className="cart-list__item-amount">
-                                        {numberToUsd(item?.price.unit_amount)}
+                                        {item?.price?.unit_amount?numberToUsd(item?.price.unit_amount):'price not available'}
                                     </div>
                                 </div>
                                 <div className="cart-list__item-action">
