@@ -21,7 +21,7 @@ interface IuseClass {
 const useClass = (props: IuseClass) => {
 
     const { cls, type, variant, extras, minWidths, maxWidths, width, standalones } = props;
-    if(Boolean(!width && maxWidths) || Boolean(!width && minWidths))return cls;
+    const widthReady = Boolean(!width && maxWidths) || Boolean(!width && minWidths);
     const [classState, setClassState] = useState<string>(cls);
 
     useEffect(() => {
@@ -79,7 +79,7 @@ const useClass = (props: IuseClass) => {
         }
 
         setClassState(newClass);
-    }, [cls, type, variant, extras, minWidths, maxWidths, width]);
+    }, [props]);
 
     return classState;
 };
