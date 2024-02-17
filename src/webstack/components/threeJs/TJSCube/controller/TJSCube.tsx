@@ -4,6 +4,7 @@ import { Canvas, useFrame, useThree, extend, PointLightProps } from '@react-thre
 import * as THREE from 'three';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
+import useWindow from '@webstack/hooks/useWindow';
 // Extend OrbitControls
 extend({ OrbitControls });
 
@@ -39,15 +40,10 @@ interface ICubeSvgOptions {
   bevelSegments?: number;
 }
 
-const positioner = (plane: number | undefined, offset?: number): number => {
-  let res = plane ? Number(plane.toFixed(0)) : 0;
-  if (offset) res = res * offset;
-  return res;
-};
 
 const TJSCubeContent = (props: ICube) => {
-  const { svg, size, color, animate, svgOptions, metalness, display } = props;
-  const previousTimeRef = useRef<number>(0);
+  const {width} = useWindow();
+  const { svg, size, color, animate, svgOptions, metalness } = props;
   const meshRef = useRef<THREE.Mesh | null>(null);
 
   const controlsRef = useRef<any>(null);
@@ -55,26 +51,8 @@ const TJSCubeContent = (props: ICube) => {
   const [svgContent, setSvgContent] = useState<string | null>(null);
   const [cameraPos, setCameraPos] = useState<[number, number, number]>([0, 0, size?.z ? size.z * 2 : 0]);
 
-
   const [rotation, setRotation] = useState({ x: 0, y: 0, z: 0 });
 
-  // Function to update the rotation based on animation parameters
-  const updateRotation = () => {
-    if (animate?.rotate) {
-      const currentTime = Date.now();
-      let { x = 0, y = 0, z = 0, duration, speed } = animate.rotate;
-      const angle = (currentTime / (speed || 1000)) * (.5 * Math.PI);
-      if(x !== 0 )x = x + angle;
-      if(y !== 0 )y = y + angle;
-      if(z !== 0 )z = y + angle;
-      setRotation({x,y,z});
-
-      if (duration !== 'infinite' && duration && currentTime >= duration) {
-        // Animation duration has passed, stop the animation
-        setRotation({ x: 0, y: 0, z: 0 });
-      }
-    }
-  };
 
   useEffect(() => {
     if (svg && typeof svg === 'string') {
@@ -126,7 +104,7 @@ const TJSCubeContent = (props: ICube) => {
         container.remove();
       }, 0);
     }
-  }, [svg]);
+  }, [svg, width]);
   const defaultColor = new THREE.Color(0xe0e0e0);
   useEffect(() => {
     if (svgContent) {
@@ -226,7 +204,7 @@ const TJSCubeContent = (props: ICube) => {
         // (size.x + size.y ) + (size.z ? size.z : 0) / 23
       ]);
     }
-  }, [svgContent, scene, size, rotation]);
+  }, [svgContent, scene, size, rotation, width]);
 
   useEffect(() => {
     const loadSVG = async () => {
@@ -252,12 +230,12 @@ const TJSCubeContent = (props: ICube) => {
       setSvgContent(svg);
       loadSVG();
     }
-  }, [svg, size, color, metalness, scene]);
+  }, [svg, size, color, metalness, scene, width]);
 
   useEffect(() => {
     const maxDimension = Math.max(size?.x || 0, size?.y || 0, size?.z || 0) * 2;
     setCameraPos([0, 0, maxDimension]);
-  }, [size]);
+  }, [size, ]);
   useEffect(() => {
     // Add lighting
     const ambientLight = new THREE.AmbientLight(0x404040, 1); // soft white light

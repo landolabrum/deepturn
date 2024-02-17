@@ -137,7 +137,7 @@ const Index = () => {
 
         {environment.merchant.mid === 'mb1' && <>
           {isClient && (
-            <img className="background-video" src="/assets/backgrounds/lava1.jpeg" />
+            <div className="background-video" data-img="/assets/backgrounds/lava1.jpeg"/>
             // <video loop muted className="background-video" autoPlay>
             // <source src="/assets/backgrounds/contour_bg.webm" type="video/webm" />
             // Your browser does not support the video tag.
