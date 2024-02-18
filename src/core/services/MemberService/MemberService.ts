@@ -8,7 +8,7 @@ import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
 import IMemberService, { IDecryptJWT, IEncryptJWT } from "./IMemberService";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
-import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
+import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
 import errorResponse from "../../errors/errorResponse";
 const STORAGE_TOKEN_NAME = environment.legacyJwtCookie.name;
