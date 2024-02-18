@@ -1,11 +1,10 @@
 // Relative Path: ./PaymentLink.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './PaymentLink.scss';
-import StripePaymentForm from '~/src/modules/account/views/AccountMethods/components/StripePaymentForm/StripePaymentForm';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useLoader } from '@webstack/components/Loader/Loader';
-import { IMethod } from '~/src/modules/account/model/IMethod';
+import { IMethod } from '~/src/modules/user/model/IMethod';
 import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
 
 // Remember to create a sibling SCSS file with the same name as this component
@@ -49,5 +48,4 @@ const PaymentLink: React.FC = () => {
 
 export default PaymentLink;
 
-//    <StripePaymentForm clientSecret={clientSecret} onSuccess={console.log} />
   
