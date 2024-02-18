@@ -4,7 +4,6 @@ import UiMenu from '../../components/UiMenu/UiMenu';
 import UiLoader from '../../components/UiLoader/view/UiLoader';
 import { useRouter } from 'next/router';
 import useClass from '@webstack/hooks/useClass';
-import useWindow from '@webstack/hooks/useWindow';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { IConfirm, useModal } from '@webstack/components/modal/contexts/modalContext';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
@@ -66,7 +65,35 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   }), [views, handleView]); // Assuming handleView does not change or is wrapped in useCallback
 
 
+  useEffect(() => {
+    const adjustMainElementStyles = () => {
+      const main = document.querySelector('main');
+      if (!main) return;
 
+      // Check if the settings layout should apply full viewport width styles
+      const isFullWidth = variant === 'full-width' || variant === 'full';
+      if (isFullWidth) {
+        main.style.margin = '0px';
+        main.style.width = '100vw';
+      } else {
+        // Reset styles if not full-width or full variant
+        main.style.margin = '';
+        main.style.width = '';
+      }
+    };
+
+    // Adjust main element styles upon component mount
+    adjustMainElementStyles();
+
+    // Optionally, you can reset the main element's styles on component unmount
+    return () => {
+      const main = document.querySelector('main');
+      if (main) {
+        main.style.margin = '';
+        main.style.width = '';
+      }
+    };
+  }, [variant]);
 
   const toggleHide = useCallback(() => {
     setHide(prev => (['hide','start'].includes(prev)? 'show' : 'hide'));

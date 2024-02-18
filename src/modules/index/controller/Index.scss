@@ -5,8 +5,8 @@
 }
 
 .d-pad {
-    padding: var(--padding);
-    width: calc(100% - calc(var(--padding) * 2))
+    padding: var(--s-padding);
+    width: calc(100% - calc(var(--s-padding) * 2))
 }
 
 .index__clouds {
@@ -51,15 +51,15 @@
     position: relative;
 
     @media(max-width: 1100px) {
-        width: var(--padding-width);
-        padding: 0 var(--padding);
+        width: var(--s-padding-width);
+        padding: 0 var(--s-padding);
         // background-color: #f30;
     }
 
     &--title {
         width: 100%;
         text-align: center;
-        padding: var(--element-height) 0 0;
+        padding: var(--s-element) 0 0;
         text-transform: capitalize;
         font-size: var(--s-1);
         color: var(--gray-10);
@@ -75,8 +75,8 @@
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        gap: var(--padding);
-        margin: var(--padding) 0 0;
+        gap: var(--s-padding);
+        margin: var(--s-padding) 0 0;
 
         &--max {
             height: 80vw;
@@ -98,7 +98,7 @@
             }
 
             &--body {
-                padding: var(--padding);
+                padding: var(--s-padding);
                 font-size: var(--s-7);
             }
         }
@@ -150,12 +150,12 @@
             // text-underline-position:
 
             // &::before{
-            //     left: calc(var(--padding) * -1.33);
+            //     left: calc(var(--s-padding) * -1.33);
             //     border-radius: var(--border-radius) 0 0 var(--border-radius);
             //     // border-radius: 20px .5rem
             // }
             // &::after{
-            //     right: calc(var(--padding) * -1.33);
+            //     right: calc(var(--s-padding) * -1.33);
             //     border-radius: 0 var(--border-radius) var(--border-radius) 0;
             //     // border-radius: 50% 20px;
             // }
@@ -166,18 +166,18 @@
             //     top: 0;
             //     content: "";
             //     bottom: 0;
-            //     width: var(--padding);
+            //     width: var(--s-padding);
             // }
-            padding: var(--s-9) var(--padding);
-            // min-height: var(--element-height);
+            padding: var(--s-9) var(--s-padding);
+            // min-height: var(--s-element);
             // background-color: var(--dark);
 
             // background-color: var(--gray-80-opaque);
-            width: calc(var(--padding-width) - var(--padding) * 2);
+            width: calc(var(--s-padding-width) - var(--s-padding) * 2);
             margin: 0;
 
             &--title {
-                width: var(--padding-width);
+                width: var(--s-padding-width);
                 padding: var(--s-9) var(--s-1);
             }
         }

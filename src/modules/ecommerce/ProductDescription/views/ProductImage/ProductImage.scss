@@ -54,7 +54,7 @@ $hite: calc(100% - 20px);
             animation: scale 1s forwards;
         }
         &__table{
-            height: var(--element-height);
+            height: var(--s-element);
             width: auto;
         }
     }
@@ -69,12 +69,12 @@ $hite: calc(100% - 20px);
         --ui-icon-color: var(--gray-10);
         .product-image__content{
 
-            height: var(--padding-width);
+            height: var(--s-padding-width);
             width: auto;
             @media(max-width: 1100px){
-                width: var(--padding-width);
+                width: var(--s-padding-width);
                 height: auto;
-                // padding: var(--padding);
+                // padding: var(--s-padding);
             }   
         }
     }

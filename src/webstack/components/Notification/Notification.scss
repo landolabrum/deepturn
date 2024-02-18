@@ -49,7 +49,7 @@ $containerPad: 5px;
     animation: dropOut 1s forwards ease-in;
   }
   .notification__content{
-    padding: $containerPad var(--padding) var(--padding);
+    padding: $containerPad var(--s-padding) var(--s-padding);
     width: 100%;
     position: relative;
     .notification__list{

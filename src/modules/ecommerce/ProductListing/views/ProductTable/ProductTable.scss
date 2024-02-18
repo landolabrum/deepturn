@@ -24,7 +24,7 @@
         width: calc(100% - 20px);
         @extend .d-flex;
         gap: 10px;
-        // gap: var(--element-height);
+        // gap: var(--s-element);
         flex-direction: column;
         min-height: 100px;
         cursor: pointer;

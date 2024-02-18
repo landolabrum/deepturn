@@ -68,7 +68,7 @@ $elPad: 14px;
     min-height: var(--s-4);
 
     label {
-      text-indent: calc(var(--padding) + 2px);
+      text-indent: calc(var(--s-padding) + 2px);
       text-transform: capitalize;
       font-style: italic;
       color: var(--gray-50);

@@ -33,14 +33,14 @@ gap: var(--s-9);
         @media(max-width: 900px){
             justify-content: space-between;
             flex-direction: column;
-            padding: var(--padding);
-            width: var(--padding-width);
+            padding: var(--s-padding);
+            width: var(--s-padding-width);
             gap: var(--s-5);
         }
         & > &-action{
             margin: auto var(--s-9) var(--s-9) 0;
             @media(max-width: 900px){
-                margin: 0 var(--padding) 0 var(--padding);
+                margin: 0 var(--s-padding) 0 var(--s-padding);
                 width: 100%;
             }
         }
@@ -48,15 +48,15 @@ gap: var(--s-9);
             @extend .d-flex;
             flex-direction: column;
             align-items: flex-start;
-            width: var(--padding-width);
+            width: var(--s-padding-width);
             line-height: 1;
             border-radius: var(--border-radius);
             @media(max-width: 900px){
                 border: solid 1px var(--gray-70);
                 background-color: var(--gray-80);
-                padding: var(--padding) var(--padding) var(--s-4);
+                padding: var(--s-padding) var(--s-padding) var(--s-4);
             }
-            padding: var(--padding);
+            padding: var(--s-padding);
             font-family: Game;
             font-style: oblique;
             font-size: var(--s-5);

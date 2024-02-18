@@ -5,7 +5,7 @@
 }
 
 .calendar-date-modal {
-    margin: var(--element-height) 2px;
+    margin: var(--s-element) 2px;
     width: auto;
 
     @extend .d-flex;
@@ -25,7 +25,7 @@
 
         &--header {
             @extend .d-flex;
-            min-height: var(--element-height);
+            min-height: var(--s-element);
             justify-content: space-between;
             background-color: var(--gray-70);
             padding: 0 var(--s-8);
@@ -93,7 +93,7 @@
     @media(max-width: 900px) {
         justify-content: flex-end;
         // gap: var(--s-4);
-        // padding: 5px 5px var(--padding);
+        // padding: 5px 5px var(--s-padding);
         &__has-event{
             z-index: 1;
             &::before {

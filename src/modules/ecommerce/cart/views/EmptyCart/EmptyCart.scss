@@ -14,7 +14,7 @@ $brdr: 14px;
 h1{
     color: var(--gray-40);
     text-transform: capitalize;
-    margin-top: var(--element-height);
+    margin-top: var(--s-element);
 }
 .cart__empty-cart {
     @extend .d-flex-col;

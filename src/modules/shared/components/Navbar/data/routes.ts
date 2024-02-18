@@ -69,12 +69,12 @@ export const routes: IRoute[] = [
     ],
   },
   {
-    label: "account",
+    label: "profile",
     icon: 'fal-circle-user',
     clearance: 1,
     items: [
       { href: "/admin", label: "admin", clearance: 10},
-      { href: "/account", label: "account" , clearance: 1},
+      { href: "/profile", label: "profile" , clearance: 1},
       { href: "/authentication/signout", label: "logout", clearance: 1 },
     ],
   },
@@ -123,8 +123,8 @@ export const useClearanceRoutes = () => {
   useEffect(() => {
     const accRoutes = filterRoutes(routes);
     const sortedRoutes = accRoutes.sort((a, b) => {
-      // Prioritize 'login', 'account', and 'cart' to be at the end
-      const lastLabels = ['login', 'account'];
+      // Prioritize 'login', 'profile', and 'cart' to be at the end
+      const lastLabels = ['login', 'profile'];
       const aIndex = a.label && lastLabels.includes(a.label) ? lastLabels.indexOf(a.label) : a.href === '/cart' ? lastLabels.length : -1;
       const bIndex = b.label && lastLabels.includes(b.label) ? lastLabels.indexOf(b.label) : b.href === '/cart' ? lastLabels.length : -1;
 

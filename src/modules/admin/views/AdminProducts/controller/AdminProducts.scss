@@ -9,13 +9,13 @@
     gap: var(--s-9);
     width: 100%;
     @media(max-with: 1100px){
-        width: var(--padding-width);
+        width: var(--s-padding-width);
         overflow: hidden;
     }
     &__header{
         @extend .d-flex;
-        min-height: var(--element-height);
-        padding: var(--padding) 0;
+        min-height: var(--s-element);
+        padding: var(--s-padding) 0;
         justify-content: space-between;
         width: auto;
         &--actions{

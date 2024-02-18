@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './AdminCustomers.scss';
 import AdminCustomerAdd from '../views/AdminCustomerAdd/AdminCustomerAdd';
 import AdminCustomerList from '../views/AdminCustomerList/AdminCustomerList';
-import AdminCustomer from '../views/AdminCustomerDetail/AdminCustomerDetail';
+import AdminCustomerDetails from '../views/AdminCustomerDetail/controller/AdminCustomerDetail';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UserContext from '~/src/models/UserContext';
 import capitalize from '@webstack/helpers/Capitalize';
@@ -32,7 +32,7 @@ const AdminCustomers: React.FC = () => {
         { view: 'modify', data: { id: customer.id, name: customer.name } }
       )
     }} />,
-    modify: pgData?.data?.id && <AdminCustomer customerId={pgData.data.id} /> || <>error (admin cust [31])</>,
+    modify: pgData?.data?.id && <AdminCustomerDetails customerId={pgData.data.id} /> || <>error (admin cust [31])</>,
     add: <AdminCustomerAdd />
   }
   useEffect(() => {

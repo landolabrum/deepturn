@@ -37,7 +37,7 @@ $space: 14px;
 
         @media(max-width: 900px) {
             &:first-child{
-                margin-top: var(--element-height);
+                margin-top: var(--s-element);
             }
         }
         

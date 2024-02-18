@@ -24,12 +24,12 @@
         position: absolute;
         top: var(--s-10);
         @extend .d-flex;
-        padding:var(--padding);
+        padding:var(--s-padding);
         justify-content: flex-end;
         opacity: 0.5;
         right: var(--s-9);
         @media(max-width: 1100px) {
-            top: calc(var(--element-height) + var(--s-9));
+            top: calc(var(--s-element) + var(--s-9));
         }
 
         &:hover{
@@ -43,8 +43,8 @@
     }
 }
 .globe-marker{
-    min-width: var(--element-height);
-    padding: var(--padding);
+    min-width: var(--s-element);
+    padding: var(--s-padding);
     background-color: #f30;
     z-index: 1111;
 }

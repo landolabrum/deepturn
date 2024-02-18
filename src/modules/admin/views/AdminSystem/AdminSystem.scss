@@ -65,7 +65,7 @@
         &--item {
             width: inherit;
             border-radius: var(--border-radius);
-            margin: 0 var(--padding);
+            margin: 0 var(--s-padding);
             background-color: var(--gray-100);
             overflow: hidden;
             &--title {
@@ -77,7 +77,7 @@
                 color: var(--gray-60);
                 --ui-icon-color: var(--gray-60);
                 padding: 0 var(--s-9);
-                height: var(--element-height);
+                height: var(--s-element);
                 font-size: var(--s-6);
                 --ui-icon-width: var(--s-1);
             }

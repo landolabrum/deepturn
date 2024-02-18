@@ -165,7 +165,7 @@
   opacity: 1;
   .globe-html{
     margin: auto;
-    min-width: var(--element-height);
+    min-width: var(--s-element);
     white-space: nowrap;
     opacity: 1;
   }
@@ -193,7 +193,7 @@
    --breakpoint-lg: 1400px;
    --breakpoint-xl: 1600px;
    --border-radius: 8px;
-   --element-height: 45px;
+   --s-element: 45px;
 
    --border: solid 1px var(--gray-70);
    --border-hover: solid 1px var(--gray-50);
@@ -238,7 +238,7 @@
     padding: 0 var(--s-9);
     cursor: pointer;
     line-height: normal;
-    height: var(--element-height);
+    height: var(--s-element);
     font-size: var(--s-6);
 
     .pac-icon {
@@ -377,10 +377,10 @@ h6 {
 div,
 ol {
 
-  --padding: 20px;
-  --padding-width: calc(100% - calc(var(--padding) * 2));
-  --border-width: calc(100% - 2px);
-  --padding-sm: calc(--padding * 2);
+  --s-padding: 20px;
+  --s-padding-width: calc(100% - calc(var(--s-padding) * 2));
+  --s-border-width: calc(100% - 2px);
+  --s-padding-sm: calc(--s-padding * 2);
 
  &::-webkit-scrollbar-thumb {
     background-color: var(--primary);
@@ -394,7 +394,7 @@ ol {
 
 
   @media(max-width: 1100px) {
-    --padding: 10px;
+    --s-padding: 10px;
   }
 }
 
@@ -537,7 +537,7 @@ nav {
     --nav-box-shadow-lg: unset;
 
     --nav-item-justify-content: flex-start;
-    --nav-item-height: var(--element-height);
+    --nav-item-height: var(--s-element);
 
   }
 }
@@ -566,7 +566,7 @@ nav {
 .input-date-range,
 button {
 
-  --height: var(--element-height);
+  --height: var(--s-element);
   --font-size: 18px;
 
   --color: var(--gray-20);

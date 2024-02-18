@@ -21,7 +21,7 @@
   z-index: 2;
   animation: fadeIn 3s ease-in-out;
   &__content {
-    padding: var(--padding);
+    padding: var(--s-padding);
     @extend .d-flex;
     flex-direction: column;
     // border: solid 1px #f00;
@@ -38,10 +38,10 @@
       @extend .d-flex;
       flex-direction: column;
       height: 100%;
-      min-height: var(--element-height);
+      min-height: var(--s-element);
       width: 100%;
       color: var(--gray-30);
-      margin-top: var(--padding);
+      margin-top: var(--s-padding);
       text-transform: capitalize;
     }
   }

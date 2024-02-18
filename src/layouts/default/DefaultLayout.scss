@@ -1,17 +1,17 @@
 main {
-  width: var(--padding-width);
+  width: var(--s-padding-width);
   overflow-y: visible;
   position: relative;
-  margin: 0 auto 0;
+  margin: var(--s-element) var(--s-padding) 100px;
   @media(min-width: 1260px){
-    margin-top: var(--element-height);
+    margin: 0 auto;
+    padding: var(--s-1) 0;
+
     max-width: 1260px;
     min-height: calc(100vh - 200px);
-    inline-size: var(--padding-width);
+    inline-size: var(--s-padding-width);
   }
-  padding: 0 0 100px;
   @media(max-width: 900px){
-    width: 100%;
     height: max-content;
   }
 }

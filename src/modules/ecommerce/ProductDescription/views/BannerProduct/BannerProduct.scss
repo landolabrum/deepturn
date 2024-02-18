@@ -8,8 +8,8 @@ $space: var(--s-7);
 }
 
 .products-listing__banner {
-    width: var(--padding-width);
-    padding: var(--padding);
+    width: var(--s-padding-width);
+    padding: var(--s-padding);
     background-color: var(--gray-30);
     gap: var(--s-7);
     border-radius: var(--border-radius);
@@ -23,7 +23,7 @@ $space: var(--s-7);
     &--body {
         @extend .d-flex;
         align-items: flex-start;
-        gap: var(--element-height);
+        gap: var(--s-element);
         width: 100%;
         color: var(--gray-60);
     }

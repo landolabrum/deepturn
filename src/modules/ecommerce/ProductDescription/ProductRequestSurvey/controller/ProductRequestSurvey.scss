@@ -10,13 +10,22 @@
 }
 
 .product-request-survey__success {
+    color: var(--green-60);
+    --ui-icon-color: var(--green-60);
+}
+.product-request-survey__invalid {
+    color: var(--orange);
+    --ui-icon-color: var(--orange);
+
+}
+.product-request-survey__success, .product-request-survey__invalid {
     @extend .d-flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-top: var(--element-height);
+    margin: var(--s-element) 0;
     width: 100%;
     flex: 1;
-    gap: var(--element-height);
+    gap: var(--s-element);
 
     &--email {
         font-size: var(--s-4);
@@ -28,10 +37,9 @@
         @extend .d-flex;
         background-color: var(--gray-30-opaque);
         gap: var(--s-9);
-        color: var(--green-60);
-        --ui-icon-color: var(--green-60);
+
         text-transform: capitalize;
-        font-size: var(--element-height);
+        font-size: var(--s-element);
         --ui-icon-size: var(--s-1);
         line-height: 1;
         width: max-content;
@@ -59,8 +67,8 @@
     flex-direction: column;
     justify-content: flex-start;
     border-radius: var(--border-radius);
-    padding:  var(--padding) ;
-    margin:  var(--padding) ;
+    padding:  var(--s-padding) ;
+    margin:  var(--s-padding) ;
     @media(min-width:1100px) {
         margin:  0;
         width: 60%;
@@ -72,15 +80,15 @@
 
     @media(max-width:900px) {
         margin: 0;
-        width: var(--padding-width);
-        padding: var(--padding) var(--padding) var(--s-5);
+        width: var(--s-padding-width);
+        padding: var(--s-padding) var(--s-padding) var(--s-5);
         // padding: var(--s-9);
         // width: calc(100% - calc(var(--s-9) * 2));
         // margin-bottom: 100px;
     }
 
     background-color: var(--gray-90);
-    gap: var(--padding);
+    gap: var(--s-padding);
     // min-height: 490px;
     color: var(--gray-30);
 
@@ -116,7 +124,7 @@
 
     &__submit {
         width: 100%;
-        margin: var(--element-height) 0 0;
+        margin: var(--s-element) 0 0;
         
         @extend .mobile-selected;
         
@@ -138,7 +146,7 @@
         position: relative;
         font-size: var(--s-6);
         border-radius: var(--border-radius);
-        padding: var(--element-height) var(--s-9) var(--s-7);
+        padding: var(--s-element) var(--s-9) var(--s-7);
         display: flex;
         min-height: 70px;
         gap: var(--s-9);
@@ -148,7 +156,7 @@
         @extend .mobile-selected;
 
         @media(max-width:900px) {
-            padding: calc(var(--element-height) * 2) var(--s-9) var(--s-7);
+            padding: calc(var(--s-element) * 2) var(--s-9) var(--s-7);
             background: var(--gray-80-opaque);
             z-index: 2;
             border-color: var(--gray-70) transparent transparent var(--gray-70);
@@ -165,7 +173,7 @@
             top: var(--s-9);
 
             @media(max-width:900px) {
-                top: var(--padding);
+                top: var(--s-padding);
                 color: var(--gray-70);
                 font-size: var(--s-7);
                 left: 0;
@@ -248,7 +256,7 @@
 
     .product-description__choice {
         color: var(--gray-40);
-        min-height: var(--element-height);
+        min-height: var(--s-element);
         width: auto;
         @media(max-width:900px){
             justify-content: flex-start;
@@ -321,7 +329,7 @@
                 right: 0;
                 height: 100%;
                 box-shadow: 1px 1px var(--gray-100);
-                width: var(--element-height);
+                width: var(--s-element);
                 @extend .d-flex;
 
             }

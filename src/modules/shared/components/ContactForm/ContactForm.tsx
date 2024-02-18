@@ -5,6 +5,7 @@ import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import UserContext from '~/src/models/UserContext';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
+import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 
 interface IContactFormProps {
   submitText?: string;
@@ -23,7 +24,6 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }
 
   const loggedInUser = useUser();
   const [fields, setFields] = useState(initialContactFields);
-  const [addressField, setAddressField] = useState(findField(initialContactFields,'address'));
   const [disabled, setDisabled] = useState<boolean>(true);
   const selectedUser: UserContext | undefined = user || loggedInUser;
 
@@ -55,29 +55,43 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if(name === 'address'){
-      setAddressField({...addressField, value: value});
-      return;
-    }
-    const updatedFields = fields.map((field: any) => {
-      if (field.name === name) {
-        return { ...field, value: value };
-      }
-      return field;
+    setFields(prevFields => {
+      return prevFields.map((field: any) => {
+        if (field.name === name) {
+          return { ...field, value: value };
+        }
+        return field;
+      });
     });
-    setFields(updatedFields);
   };
+
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault;
     const formData = fields.reduce((acc: any, field: any) => {
-      acc[field.name] = field.value;
+      const fieldName = field.name;
+      if (['firstName', 'lastName'].includes(fieldName)) {
+        acc[fieldName] = field.value;
+      } else  {
+        acc[fieldName] = field.value;
+      }
       return acc;
     }, {});
-
+    formData.name = `${formData.firstName} ${formData.lastName}`; // Combining firstName and lastName
+    delete formData.firstName; // Remove firstName
+    delete formData.lastName; // Remove lastName
     onSubmit(formData);
   };
+  
+  
+  const handleDisabled = () => {
+    const allFieldsHaveValue = fields.every((field: IFormField) => field.value !== undefined && field.value !== '');
+    setDisabled(!allFieldsHaveValue);
 
+  }
+  useEffect(() => {
+    handleDisabled()
+  }, [onChange]);
   return (
     <>
       <style jsx>{styles}</style>

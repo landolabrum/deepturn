@@ -19,7 +19,7 @@
 .ui-div, .div{
     height: max-content;
     @extend .d-flex-col_j-fs_a-fs;
-    gap: var(--padding);
+    gap: var(--s-padding);
     font-size: var(--s-5);
     width: 100%;
     &__card{
@@ -27,7 +27,7 @@
         outline: solid 1px var(--gray-80);
         border: solid 1px var(--gray-60);
         border-radius: var(--border-radius);
-        min-height: var(--element-height);
+        min-height: var(--s-element);
         border-radius: var(--border-radius);
     }
     &__mc{
@@ -41,8 +41,8 @@
         var(--gray-60-opaque)
         var(--gray-20-opaque);
         border-width: 2px;
-        padding: var(--padding);
-        width: calc(calc(100% - 4px) -  calc(var(--padding) * 2));
+        padding: var(--s-padding);
+        width: calc(calc(100% - 4px) -  calc(var(--s-padding) * 2));
     }
     &__lite{
         color:var(--gray-70);

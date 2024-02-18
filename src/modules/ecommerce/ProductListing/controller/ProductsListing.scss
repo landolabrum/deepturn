@@ -8,7 +8,7 @@
 $space: var(--s-7);
 
 .product-listing {
-    margin: var(--padding) 0;
+    // margin: var(--s-padding) 0;
     height: 100%;
     max-width: 100%;
     overflow: hidden;
@@ -16,7 +16,7 @@ $space: var(--s-7);
     color: white;
     @extend .d-flex;
     justify-content: flex-start;
-    gap: var(--padding);
+    gap: var(--s-padding);
     .product-listing__header {
         width: 100%;
     }

@@ -7,8 +7,8 @@
 .product-description{
     justify-content: flex-start;
     color: var(--gray-30);
-    width: var(--padding-width);
-    padding: var(--padding);
+    width: var(--s-padding-width);
+    padding: var(--s-padding);
     border-radius: var(--border-radius);
     height: 100%;
     background-color: var(--gray-100);
@@ -26,7 +26,7 @@
     }
     .product__img-default{
         .img-placeholder{
-            padding: var(--element-height) 10px;
+            padding: var(--s-element) 10px;
             height: auto;
             width: 100%;
             @extend .d-flex;
@@ -45,15 +45,15 @@
         height: 100%;
         flex-direction: column;
         justify-content: space-between;
-        gap: var(--padding);
+        gap: var(--s-padding);
         align-items: flex-start;
         flex: 1;
-        width: var(--padding-width);
-        padding: var(--padding);
+        width: var(--s-padding-width);
+        padding: var(--s-padding);
         .product-description__info-panel_header{
             display: flex;
             border-bottom: solid 1px var(--gray-60);
-            min-height: var(--element-height);
+            min-height: var(--s-element);
             flex-direction: column;
             width: 100%;
 

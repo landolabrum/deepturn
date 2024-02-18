@@ -156,7 +156,7 @@ const UiForm = ({ variant, fields, onSubmit, onError: onLocalErrors, title, subm
             )) : (<UiLoader position='relative' />)}
             {onAddField && <AddFieldForm onAddField={onAddField} />}
             <div className={`form__submit ${variant && ` form__submit--${variant}` || ''}`}>
-                <UiButton onClick={handleSubmit} disabled={disabled || !complete} variant={!disabled && complete && 'primary'} type='submit' busy={loading == true} >
+                <UiButton onClick={handleSubmit} disabled={disabled || !complete} variant={!disabled && complete && 'glow'} type='submit' busy={loading == true} >
                     {submitText ? submitText : 'Submit'}
                 </UiButton>
             </div>

@@ -8,10 +8,10 @@
     justify-content: flex-start;
     width: 100%;
     color:var(--primary);
-    gap: var(--padding);
+    gap: var(--s-padding);
     &__chapter{
         cursor: pointer;
-        height: calc(var(--element-height) * 4);
+        height: calc(var(--s-element) * 4);
         $color:var(--gray-40);
         width: 100%;
         max-width: 122px;

@@ -29,7 +29,7 @@ $defaultPadding: 15px;
     display: flex;
     width: 100%;
     align-items: center;
-    height: var(--element-height);
+    height: var(--s-element);
     gap: calc($defaultPadding / 2);
     text-transform: capitalize;
     

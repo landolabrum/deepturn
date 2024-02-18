@@ -9,7 +9,7 @@
     @extend .d-flex;
     justify-content: flex-start;
     flex-direction: column;
-    gap: var(--padding);
+    gap: var(--s-padding);
     &__header{
         @extend .d-flex;
         justify-content: space-between;
@@ -25,9 +25,9 @@
         
     }
     &__content{
-        padding: var(--padding);
+        padding: var(--s-padding);
         background-color: var(--gray-70-opaque);
-        width: var(--padding-width);
+        width: var(--s-padding-width);
         border-radius: var(--border-radius);
     }
 }

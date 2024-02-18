@@ -14,7 +14,7 @@
   &--success{
     width:100%;
     @extend .d-flex-col;
-    gap: var(--padding);
+    gap: var(--s-padding);
     &--header{
       color:var(--gray-30);
       --ui-icon-color:var(--gray-30);
@@ -23,10 +23,10 @@
       @extend .d-flex;
       justify-content: flex-start;
       align-items: flex-start;
-      gap: var(--padding);
-      padding: var(--padding) var(--padding) var(--element-height);
-      width: calc(var(--padding-width) - 2px);
-      margin: var(--s-9) 0 var(--element-height);
+      gap: var(--s-padding);
+      padding: var(--s-padding) var(--s-padding) var(--s-element);
+      width: calc(var(--s-padding-width) - 2px);
+      margin: var(--s-9) 0 var(--s-element);
       border-radius: var(--border-radius);
       border: solid 1px var(--gray-60);
       background-color: var(--gray-80);
@@ -42,7 +42,7 @@ $brk: 25px;
   justify-content: space-between;
   align-content: center;
   width:100%;
-  margin-bottom: var(--element-height);
+  margin-bottom: var(--s-element);
     .sign-in__forgot-password-link{
       color: var(--blue);
       cursor: pointer;

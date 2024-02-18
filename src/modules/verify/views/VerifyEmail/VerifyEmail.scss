@@ -9,21 +9,21 @@
     flex-direction: column;
     align-items: flex-end;
     border-radius:var(--border-radius);
-    margin: var(--element-height) 0;
+    margin: var(--s-element) 0;
     color: var(--gray-70);
     background-color: var(--gray-80);
     min-height: 500px;
     
     @media(max-width: 1100px) {
-        margin: var(--element-height) var(--padding);
-        width: var(--padding-width);
+        margin: var(--s-element) var(--s-padding);
+        width: var(--s-padding-width);
         align-items: center;
     }
 
     &__content {
         @extend .d-flex;
-        margin: var(--padding);
-        width: var(--padding-width);
+        margin: var(--s-padding);
+        width: var(--s-padding-width);
         flex-direction: column;
         height: 100%;
         &--loader{

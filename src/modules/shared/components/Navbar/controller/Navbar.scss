@@ -6,7 +6,7 @@
 .navbar__container {
   z-index: 1000;
   @extend .d-flex;
-  min-height: var(--element-height);
+  min-height: var(--s-element);
   background-color: var(--black);
   width: 100%;
   // border-bottom: solid 1px var(--primary-opaque);
@@ -16,14 +16,14 @@
     width: 100%;
 
     @media (min-width: 1100px) {
-      min-height: var(--element-height);
+      min-height: var(--s-element);
       padding: 0;
       margin: 0 auto;
       inline-size: 1260px;
-      // inline-size: calc(1260px + calc(var(--padding) * 2));
+      // inline-size: calc(1260px + calc(var(--s-padding) * 2));
     }
     @media (max-width: 1260px) {
-      padding: 0 var(--padding);
+      padding: 0 var(--s-padding);
     }
   }
 
@@ -49,8 +49,8 @@
 
   .navbar__trigger {
     cursor: pointer;
-    width: var(--element-height);
-    height: var(--element-height);
+    width: var(--s-element);
+    height: var(--s-element);
     --ui-icon-height: var(--s-5);
     --ui-icon-width: var(--s-5);
     border: solid 1px var(--gray-70-opaque);
@@ -84,12 +84,12 @@
     .nav__nav-item {
       color:$defaultColor;
       --ui-icon-color: $defaultColor;
-      height: var(--element-height);
+      height: var(--s-element);
       padding: 0 var(--s-9);
       &--brand{
         padding: 0;
       }
-      &--account,
+      &--profile,
       &--login {
   
         @media(max-width:1100px) {
@@ -104,8 +104,8 @@
 
       &--cart {
         cursor: pointer;
-        height: var(--element-height);
-        width: var(--element-height);
+        height: var(--s-element);
+        width: var(--s-element);
         @extend .d-flex;
         padding: 0;
         --ui-icon-width: 100%;
@@ -138,8 +138,8 @@
     .navbar__trigger {
       display: flex;
       position: fixed;
-      top: var(--padding);
-      right: var(--padding);
+      top: var(--s-padding);
+      right: var(--s-padding);
 
       @media(min-width:1100px) {
         // display: none;

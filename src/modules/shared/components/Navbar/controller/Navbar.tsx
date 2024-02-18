@@ -115,7 +115,7 @@ const Navbar = () => {
                     )
                   }${
                     toggled === route.label ? ' nav__nav-item__active' : ''}${
-                      route.label === 'account' && cartTotal === 0 &&' no-cart' || ''
+                      route.label === 'profile' && cartTotal === 0 &&' no-cart' || ''
                     }`}
                 onDoubleClick={() => route?.href && handleSelect({ href: route.href })}
               >
@@ -133,7 +133,7 @@ const Navbar = () => {
                   traits={route?.icon ? { afterIcon: { icon: route.icon } } : undefined}
                   openState={Boolean(toggled && toggled === route.label) ? 'open' : 'closed'}
                   variant='nav-item'
-                  value={route.label === 'account' ? displayName : route.label}
+                  value={route.label === 'profile' ? displayName : route.label}
                   options={route?.items}
                   onSelect={handleSelect}
                   onToggle={() => route.label && handleToggle(route.label)}

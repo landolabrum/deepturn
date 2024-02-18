@@ -17,11 +17,11 @@ a {
 }
 
 .authentication__status {
-  margin: var(--element-height) auto;
+  margin: var(--s-element) auto;
 
   &--success {
     @extend .d-flex-col;
-    gap: var(--padding);
+    gap: var(--s-padding);
     width: inherit;
     text-align: center;
     color: var(--dark);
@@ -38,7 +38,7 @@ a {
   height: max-content;
   overflow: hidden;
   @extend .d-flex-col;
-  gap: var(--padding);
+  gap: var(--s-padding);
   @media(max-width: 900px) {
     min-width: unset;
   }
@@ -54,7 +54,7 @@ a {
   }
 
   .authentication__view-header {
-    height: var(--element-height);
+    height: var(--s-element);
     text-transform: capitalize;
     @extend .d-flex;
     justify-content: flex-start;
@@ -80,7 +80,7 @@ a {
     @extend .d-flex-col;
     white-space: nowrap;
     text-align: center;
-    gap: var(--padding);
+    gap: var(--s-padding);
     color: var(--gray-60);
     position: relative;
     z-index: 1;
@@ -98,7 +98,7 @@ a {
     .authentication__view-label {
       padding: 0 var(--s-8);
       z-index: 2;
-      margin: var(--padding) 0 0;
+      margin: var(--s-padding) 0 0;
       background-color: inherit;
       width: 100%;
 

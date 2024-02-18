@@ -89,7 +89,8 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
     };
 
     useEffect(() => {
-        if (token && !tokenData) {
+console.log(tokenData)
+        if (token && tokenData === undefined) {
             decryptToken();
         }
     }, [token]);
@@ -130,7 +131,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
                                 name: tokenData.name,
                                 phone: tokenData.phone,
                             }}
-                            onSubmit={() => {/* handle submission */ }}
+                            onSubmit={(form) => {console.log("[ ON SUBMIT ]", form)}}
                             submitText='payment info'
                         />
                     </div>

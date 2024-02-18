@@ -40,7 +40,7 @@
         /* Start hidden below the container */
         width: calc(100% - calc(var(--s-9) * 2));
         left: 0;
-        height: var(--element-height);
+        height: var(--s-element);
         opacity: 0;
         transition: bottom .5s ease, opacity .5s ease;
         &__control{

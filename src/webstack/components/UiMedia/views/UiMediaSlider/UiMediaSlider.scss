@@ -12,7 +12,7 @@
   .media-slider {
     width: 100%;
     background-color: #f0f0f0; /* Customize the slider background color */
-    height: var(--element-height); /* Customize the slider height */
+    height: var(--s-element); /* Customize the slider height */
     border-radius: 10px; /* Customize the slider border-radius */
   }
   
@@ -26,7 +26,7 @@
     position: relative;
     width: 100%;
     max-width: 100%; /* Match the slider's max-width */
-    margin-top: var(--padding); /* Adjust the margin as needed */
+    margin-top: var(--s-padding); /* Adjust the margin as needed */
     height: var(--s-6); /* Customize the point height */
   }
   

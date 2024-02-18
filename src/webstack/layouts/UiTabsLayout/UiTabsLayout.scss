@@ -40,7 +40,7 @@
                 @extend .d-flex;
                 text-transform: capitalize;
                 width: 100%;
-                height: var(--element-height);
+                height: var(--s-element);
 
                 &:hover {
                     z-index: 2;
@@ -48,21 +48,21 @@
                     @extend .active;
                 }
                 &--icon {
-                    width: var(--element-height);
+                    width: var(--s-element);
                     position: absolute;
-                    --ui-icon-width: var(--element-height);
-                    --ui-icon-height: var(--element-height);
+                    --ui-icon-width: var(--s-element);
+                    --ui-icon-height: var(--s-element);
                     right: unset;
                     left: unset;
                 }
 
                 &--icon:first-child {
-                    right: calc(var(--element-height) * -1);
+                    right: calc(var(--s-element) * -1);
                 }
 
                 &--icon:last-child {
                     transform: rotate(180deg);
-                    left: calc(var(--element-height) * -1);
+                    left: calc(var(--s-element) * -1);
                 }
                 &__active {
                     position: relative;
@@ -82,13 +82,13 @@
         width: 400px;
 
         @media(max-width:900px) {
-            padding: var(--padding);
-            width: var(--padding-width);
+            padding: var(--s-padding);
+            width: var(--s-padding-width);
         }
     }
 
     .tabs__view {
-        padding: var(--padding);
+        padding: var(--s-padding);
         width: auto;
         @extend .d-flex;
         flex-direction: column;

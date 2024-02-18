@@ -9,8 +9,8 @@ $item-height: 500px;
 .product-slider--container {
   position: relative;
   height: max-content;
-  padding: var(--padding);
-  width: var(--padding-width);
+  padding: var(--s-padding);
+  width: var(--s-padding-width);
   border: solid 1px var(--gray-60);
   background-color: var(--gray-100);
   @media(min-width: 1100px) {
@@ -22,7 +22,7 @@ $item-height: 500px;
     height: $item-height;
     &:before, &:after{
       position: absolute;
-      width: var(--element-height);
+      width: var(--s-element);
       content:'';
       top: 0;
       height: 100%;
@@ -50,8 +50,8 @@ $item-height: 500px;
     @extend .d-flex;
     z-index: 1000;
     transform: translateY(calc($item-height * .5));
-    width: var(--element-height);
-    height: calc(var(--element-height) + calc(var(--padding)* 2));
+    width: var(--s-element);
+    height: calc(var(--s-element) + calc(var(--s-padding)* 2));
     --ui-icon-width: var(--s-1);
     --ui-icon-height: var(--s-1);
     --ui-icon-color: var(--gray-70-opaque);
@@ -132,8 +132,8 @@ $item-height: 500px;
 
       &--image,
       &--info {
-        height: var(--padding-width);
-        width: var(--padding-width);
+        height: var(--s-padding-width);
+        width: var(--s-padding-width);
       }
 
       &--image {
@@ -142,13 +142,13 @@ $item-height: 500px;
       }
 
       &--info {
-        padding: var(--padding);
+        padding: var(--s-padding);
         border-radius: var(--border-radius);
         @extend .d-flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        gap: var(--padding);
+        gap: var(--s-padding);
 
         &__name {
           text-transform: capitalize;
@@ -172,7 +172,7 @@ $item-height: 500px;
           width: 100%;
           @extend .d-flex;
           margin: auto auto 0;
-          min-height: var(--element-height);
+          min-height: var(--s-element);
         }
       }
 
@@ -209,11 +209,11 @@ $item-height: 500px;
           border-radius: unset;
 
           &__name {
-            padding: 0 var(--padding);
+            padding: 0 var(--s-padding);
           }
 
           &__description {
-            padding: 0 var(--padding);
+            padding: 0 var(--s-padding);
             -webkit-line-clamp: 3;
             /* Approximate number of lines based on max-height and line-height */
           }
@@ -221,7 +221,7 @@ $item-height: 500px;
           &__action {
             margin-bottom: var(--s-9);
             width: auto;
-            padding: 0 var(--padding);
+            padding: 0 var(--s-padding);
           }
         }
       }
@@ -241,7 +241,7 @@ $item-height: 500px;
           height: max-content;
           border-radius: unset;
           background-color: transparent;
-          padding: 0 var(--padding) 0;
+          padding: 0 var(--s-padding) 0;
 
           &__description {
             -webkit-line-clamp: 2;
@@ -251,7 +251,7 @@ $item-height: 500px;
           &__action {
             justify-content: flex-end;
             width: 100%;
-            margin-bottom: var(--padding);
+            margin-bottom: var(--s-padding);
           }
         }
       }

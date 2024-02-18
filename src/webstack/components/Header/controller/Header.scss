@@ -30,7 +30,7 @@
     align-items: flex-start;
   }
 
-  // margin-bottom: var(--padding);
+  // margin-bottom: var(--s-padding);
 
 }
 
@@ -80,12 +80,12 @@
       animation: slideDown 1s forwards;
     }
     @media(min-width: 1260px) {
-      max-width: calc(1260px - calc(var(--padding) * 2));
-      inline-size: var(--padding-width);
+      max-width: calc(1260px - calc(var(--s-padding) * 2));
+      inline-size: var(--s-padding-width);
     }
 
     @media(max-width:1260px) {
-      padding: 0 var(--padding);
+      padding: 0 var(--s-padding);
       flex-direction: column;
     }
 

@@ -55,9 +55,9 @@ input, textarea {
   &.center {
     text-align: center;
     text-indent: 0;
-    min-height: var(--element-height);
+    min-height: var(--s-element);
     height: 100%;
-    min-width: var(--element-height);
+    min-width: var(--s-element);
     width: 0;
     @media(max-width: 900px) {}
 
@@ -113,10 +113,10 @@ input::placeholder {
   justify-content: flex-start;
   width: 100%;
   color: var(--orange);
-  height: var(--element-height);
+  height: var(--s-element);
   line-height: 1;
   display: none;
-  text-indent: var(--padding);
+  text-indent: var(--s-padding);
   &.input__message-show{
     display: flex;
   }

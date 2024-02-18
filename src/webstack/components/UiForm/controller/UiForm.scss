@@ -7,7 +7,7 @@
 .d-flex-col {
   @extend .d-flex;
   flex-direction: column;
-  gap: var(--padding);
+  gap: var(--s-padding);
 }
 
 .form {
@@ -29,13 +29,13 @@
     background-color: var(--gray-90);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    padding: var(--padding);
-    width: var(--padding-width);
+    padding: var(--s-padding);
+    width: var(--s-padding-width);
   }
   &__title{
     text-transform: capitalize;
     font-size: var(--s-2);
-    height: var(--element-height);
+    height: var(--s-element);
     @extend .d-flex;
     line-height: 1;
     justify-content: flex-start;
@@ -54,8 +54,8 @@
     // border-top-color: var(--gray-40);
     // border-width: 1px;
     width: 100%;
-    margin-top: var(--padding);
-    padding-top: var(--element-height);
+    margin-top: var(--s-padding);
+    padding-top: var(--s-element);
     &--mini{
       margin-top: 0;
       padding-top: var(--s-9);
@@ -65,7 +65,7 @@
 }
 input{
   @extend .d-flex;
-  width: var(--element-height);
+  width: var(--s-element);
   height: 100%;
   text-align: center;
   border: none;

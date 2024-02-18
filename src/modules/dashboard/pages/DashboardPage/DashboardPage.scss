@@ -20,8 +20,8 @@ $grid-gutter: 20px;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   
-  --ui-icon-width: var(--element-height);
-  --ui-icon-height: var(--element-height);
+  --ui-icon-width: var(--s-element);
+  --ui-icon-height: var(--s-element);
   font-size: var(--s-4);
   text-transform: capitalize;
 }
@@ -43,18 +43,18 @@ $grid-gutter: 20px;
 }
 
 .dashboard {
-  margin: var(--element-height) 0;
+  margin: var(--s-element) 0;
   width: auto;
   @media(max-width: 1100px){
     margin: auto;
-    width: var(--padding-width);
+    width: var(--s-padding-width);
   }
   .dashboard__dashboard-item {
     @extend .d-flex, .dashboard-item-look;
     flex-direction: column;
     width: 100%;
     aspect-ratio: 7/5;
-    gap: var(--padding);
+    gap: var(--s-padding);
     &:hover {
       @extend .dashboard-item-look--hover;
     }

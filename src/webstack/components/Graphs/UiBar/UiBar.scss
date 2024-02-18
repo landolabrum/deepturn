@@ -25,14 +25,14 @@ $agg: var(--border-radius);
     .bar__header {
       @extend .d-flex;
       overflow: hidden;
-      min-height: var(--element-height);
+      min-height: var(--s-element);
       white-space: nowrap;
       position: relative;
       line-height: 1;
     }
     .bars__icon {
       @extend .d-flex;
-      height: var(--element-height);
+      height: var(--s-element);
       padding-top: 20px;
       --ui-icon-color: var(--gray-60);
       padding: 30px 0 20px;
@@ -81,7 +81,7 @@ $agg: var(--border-radius);
     overflow: hidden;
     border-radius: $agg;
     transform: rotate(180deg);
-    height: var(--element-height);
+    height: var(--s-element);
     background-color: var(--gray-70-opaque);
     .bar__bars-bar {
       &-partial{

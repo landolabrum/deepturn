@@ -4,16 +4,16 @@
  align-items: center;
 }
 .card{
-    width: var(--padding-width);
+    width: var(--s-padding-width);
     border-radius: var(--border-radius);
-    padding: var(--padding);
+    padding: var(--s-padding);
     background-color: var(--gray-90);
 }
 .verify-payment{
     @extend .d-flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: var(--padding);
+    gap: var(--s-padding);
     width: 100%;
     &__item{
         width: 100%;
@@ -25,7 +25,7 @@
         font-size: var(--s-3);
         height: 100%;
         min-height: 400px;
-        width: inherit;
+        width: auto;
     }
     &--header, &--content{
         @extend .d-flex;
@@ -40,11 +40,11 @@
     &--content{
         flex-direction: column;
         color: var(--gray-40);
-        gap: var(--padding);
+        gap: var(--s-padding);
         width: 100%;
         &__contact-form{
             @extend .d-flex, .card;
-            margin-bottom: var(--element-height);
+            margin-bottom: var(--s-element);
         }
     }
 }

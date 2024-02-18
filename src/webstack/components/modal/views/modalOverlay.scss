@@ -29,6 +29,7 @@
 .modal {
     position: fixed; // Use fixed to keep it relative to the viewport
     z-index: 1000;
+    top: 200px;
     left: 50%; // Center horizontally
     transform: translateX(-50%); // Adjust position to truly center the modal
     overflow-y: auto; // Allow scrolling for overflow content
@@ -43,7 +44,7 @@
     @media(max-width: 900px) {
         margin: 0 auto;
         top: 70px;
-        width: var(--padding-width);
+        width: var(--s-padding-width);
     }
 
     &__dragging {
@@ -63,7 +64,7 @@
 
     &__content {
         overflow: hidden;
-        padding: 0 var(--padding);
+        padding: 0 var(--s-padding);
         height: auto;
         margin: auto;
         backdrop-filter: blur(5px);
@@ -92,7 +93,7 @@
 
         @media(max-width:900px) {
             justify-content: flex-start;
-            width: var(--padding-width);
+            width: var(--s-padding-width);
             min-width: unset;
         }
 
@@ -142,7 +143,7 @@
             cursor: default;
         }
 
-        min-height: var(--element-height);
+        min-height: var(--s-element);
         --ui-icon-color: var(--gray-40);
         color: var(--gray-40);
 
@@ -159,9 +160,9 @@
             left: 0;
             right: 0;
             z-index: 2;
-            padding-right: var(--padding);
+            padding-right: var(--s-padding);
             margin: 0;
-            min-height: var(--element-height);
+            min-height: var(--s-element);
             border-radius: unset;
             border: unset;
 
@@ -176,8 +177,10 @@
         overflow-y: auto;
         margin-bottom: var(--s-5);
         overflow-x: hidden;
-        padding-top: var(--element-height);
-
+        padding-top: var(--s-element);
+        @media(min-width: 1100px){
+            min-width: 500px;
+        }
         &__fullscreen {
             z-index: 1;
             margin-bottom: 0;
@@ -192,7 +195,7 @@
             // background-color: var(--gray-70-opaque);
             border-radius: var(--border-radius);
             overflow: hidden;
-            margin-top: var(--padding);
+            margin-top: var(--s-padding);
 
             @media(max-width: 1100px) {
                 flex-direction: column;

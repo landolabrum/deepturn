@@ -104,7 +104,7 @@
 // FORM CONTROL ELEMENT
 
 .form-control__element {
-    padding: 0 var(--padding);
+    padding: 0 var(--s-padding);
     color: var(--gray-50);
     font-size: var(--font-size);
     --ui-icon-width: var(--font-size);
@@ -115,7 +115,7 @@
     font-weight: 300;
     @extend .d-flex;
     line-height: 1;
-    height: calc(var(--element-height) - 2px);
+    height: calc(var(--s-element) - 2px);
     white-space: nowrap;
     width: auto;
     // SIZES
@@ -150,10 +150,10 @@
 
     // HANDLE ICONS
     &--before-icon  {
-        padding-left:  var(--element-height);
+        padding-left:  var(--s-element);
     }
     &--after-icon:not(&-sm, &--nav-item)  {
-        padding-right:  var(--element-height);
+        padding-right:  var(--s-element);
     }
     // ELEMENTS
     &--button {
@@ -168,7 +168,7 @@
     &--checkbox{
         width: max-content;
         padding:  0;
-        height: var(--element-height);
+        height: var(--s-element);
     }
 
     &--input,
@@ -211,7 +211,7 @@
         height: max-content;
         max-width: inherit;
         padding-top: 4px;
-        min-height: var(--element-height);
+        min-height: var(--s-element);
     }
 
     &-disabled, &--disabled {
@@ -221,7 +221,7 @@
         }
     }
     &--flat.form-control__element--after-icon{
-        padding: 0 var(--padding);
+        padding: 0 var(--s-padding);
     }
     &--input-color{
         padding: 0 !important;
@@ -297,7 +297,7 @@
         inherit, var(--gray-30), transparent,
     );
     &--center{
-        padding: 0 var(--element-height);
+        padding: 0 var(--s-element);
     }
     &--fit-text{
         white-space: unset;
@@ -332,7 +332,7 @@
             content: '';
             bottom: 0;
             border-top: solid 1px var(--gray-70);
-            width: calc(100% - var(--padding));
+            width: calc(100% - var(--s-padding));
         }
             &:hover{
                 &::before {

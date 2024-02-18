@@ -14,7 +14,7 @@ $actionsBg: var(--gray-90);
     left: 0;
     position: relative;
     width: 100%;
-    margin-top: calc(var(--element-height) + var(--s-9));
+    margin-top: calc(var(--s-element) + var(--s-9));
     &__full{
         padding: 0;
         margin-top: 0;
@@ -49,7 +49,7 @@ $actionsBg: var(--gray-90);
     position: relative;
 
     @media (min-width: 1100px) {
-        // padding: var(--element-height) 0 0;
+        // padding: var(--s-element) 0 0;
     }
 
     @media (max-width: 1100px) {
@@ -58,22 +58,22 @@ $actionsBg: var(--gray-90);
     }
 
     @media(max-width: 1260px) {
-        margin: 0 var(--padding);
+        margin: 0 var(--s-padding);
     }
     &__full {
         gap: unset;
         margin: 0;
         @media (max-width: 1100px) {
-            // padding-top: var(--element-height);
+            // padding-top: var(--s-element);
         }
     }
     &__full-width {
         flex-direction: column;
     }
     //     gap: unset;
-    //     margin: var(--padding);
+    //     margin: var(--s-padding);
     //     @media (max-width: 1100px) {
-    //         padding-top: var(--element-height);
+    //         padding-top: var(--s-element);
     //     }
     // }
 }
@@ -112,7 +112,7 @@ $actionsBg: var(--gray-90);
 
     z-index: 2;
     // position: absolute;
-    top: calc(calc(var(--element-height) * 2) + var(--padding));
+    top: calc(calc(var(--s-element) * 2) + var(--s-padding));
     opacity: 0;
     transform: translateX(-100%);
     @extend .d-flex;
@@ -160,9 +160,9 @@ $actionsBg: var(--gray-90);
 
     @media (max-width: 1100px) {
         height: max-content;
-        width: var(--padding-width);
-        margin-left: var(--padding);
-        margin-right: var(--padding);
+        width: var(--s-padding-width);
+        margin-left: var(--s-padding);
+        margin-right: var(--s-padding);
         overflow: visible;
     }
 }
@@ -172,10 +172,10 @@ $actionsBg: var(--gray-90);
 .settings__icon {
     z-index: 2;
     @extend .d-flex;
-    width: var(--element-height);
+    width: var(--s-element);
     --ui-icon-width: var(--s-5);
     --ui-icon-height: var(--s-5);
-    height: var(--element-height);
+    height: var(--s-element);
     // background-color: var(--gray-80-opaque);
     // border-radius: var(--border-radius);
     // border: var(--border);
@@ -196,17 +196,17 @@ $actionsBg: var(--gray-90);
     &:hover {
     }
     &__full, &__full-width {
-        left: var(--padding);
+        left: var(--s-padding);
     }
     &__full{
         position: absolute;
-        top: calc(var(--element-height) * 2);
+        top: calc(var(--s-element) * 2);
         @media(min-width: 900px) {
-            top: calc(var(--element-height) + var(--padding));
+            top: calc(var(--s-element) + var(--s-padding));
         }
     }
     &__full-width {
-        margin-left: var(--padding);
+        margin-left: var(--s-padding);
         @media(max-width: 900px) {
         }
     }
@@ -235,7 +235,7 @@ $actionsBg: var(--gray-90);
     z-index: 1;
     color: var(--gray-40);
     height: 100%;
-    width: var(--padding-width);
+    width: var(--s-padding-width);
     position: relative;
     overflow-x: hidden;
 
@@ -253,9 +253,9 @@ $actionsBg: var(--gray-90);
         align-items: flex-start;
         position: unset;
         border-width: 1px;
-        gap: var(--padding);
+        gap: var(--s-padding);
         background-color: var(--gray-100);
-        padding: var(--padding);
+        padding: var(--s-padding);
     }
 
 
@@ -270,7 +270,7 @@ $actionsBg: var(--gray-90);
     }
 
     @media (max-width: 900px) {
-        width: calc(var(--padding-width) - 2px);
+        width: calc(var(--s-padding-width) - 2px);
 
     }
 
@@ -282,7 +282,7 @@ $actionsBg: var(--gray-90);
         text-transform: capitalize;
 
         &--title {
-            margin-left: var(--s-9);
+            // margin-left: var(--s-9);
             font-size: var(--s-1);
         }
     }
@@ -292,9 +292,9 @@ $actionsBg: var(--gray-90);
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        padding: var(--s-1) var(--padding) var(--s-5);
+        padding: var(--s-1) var(--s-padding) var(--s-5);
         // background-color: var(--gray-90);
-        width: var(--padding-width);
+        width: var(--s-padding-width);
         @media(max-width: 1100px){
             width: 100%;
             padding: 0;
@@ -316,9 +316,9 @@ $actionsBg: var(--gray-90);
             @extend .d-flex;
             margin-left:var(--s-3);
             &--show{
-                margin-left:calc(var(--element-height) + var(--s-3));
+                margin-left:calc(var(--s-element) + var(--s-3));
             }
-            height: var(--element-height);
+            height: var(--s-element);
             }
         .settings__view__content {
             width: 100%;

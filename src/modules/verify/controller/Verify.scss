@@ -25,13 +25,18 @@
 }
 
 .verify{
+    margin-top: var(--s-padding);
+    @media(max-width:900px){
+        margin-top: 0;
+        padding: var(--s-padding);
+    }
     color:var(--white);
     &--header{
         color: var(--gray-40);
-        width: var(--padding-width);
-        max-width: var(--padding-width);
+        width: var(--s-padding-width);
+        max-width: var(--s-padding-width);
         overflow: hidden;
-        padding: var(--padding) 0;
+        padding: var(--s-padding) 0;
         flex-wrap: wrap;
         text-overflow: ellipsis;
         &--title{
@@ -44,11 +49,11 @@
         min-height: 50vh;
         color: var(--gray-40);
         line-height: 1;
-        padding: var(--padding);
+        padding: var(--s-padding);
         @extend .d-flex;
         flex-direction: column;
         justify-content: flex-start;
-        gap: var(--padding);
+        gap: var(--s-padding);
         align-items: flex-start;
         border-radius: var(--border-radius);
         border: solid 1px var(--gray-60);

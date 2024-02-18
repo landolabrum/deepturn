@@ -14,7 +14,7 @@
         margin: auto;
         display: flex;
         flex-direction: column;
-        gap: var(--element-height);
+        gap: var(--s-element);
     }
     &--actions{
         @extend .d-flex;
@@ -24,18 +24,18 @@
         border-radius: var(--border-radius);
         display: flex;
         flex-direction: column;
-        gap: var(--padding);
+        gap: var(--s-padding);
         height: max-content;
         justify-content: space-between;
-        // padding: calc(var(--element-height) * 2) var(--padding) var(--element-height);
+        // padding: calc(var(--s-element) * 2) var(--s-padding) var(--s-element);
         
         &__brand{
             gap: var(--s-9);
             // position: absolute;
             // top: var(--s-2);
-            // left: var(--padding);
-            height: var(--element-height);
-            padding:0 var(--padding) var(--s-1);
+            // left: var(--s-padding);
+            height: var(--s-element);
+            padding:0 var(--s-padding) var(--s-1);
             right: auto;
             width: 100%;
             justify-content: flex-start;
@@ -44,8 +44,8 @@
             @extend .d-flex;
             color:var(--primary-opaque);
             --ui-icon-color:var(--primary);
-            --ui-icon-width:var(--element-height);
-            --ui-icon-height:var(--element-height);
+            --ui-icon-width:var(--s-element);
+            --ui-icon-height:var(--s-element);
             // --ui-icon-size: var(--s-1);
             // --ui-icon-width: var(--s-1);
             // line-height: 1;

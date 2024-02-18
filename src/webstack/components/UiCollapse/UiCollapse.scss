@@ -1,5 +1,5 @@
 // Variables
-$button_height: calc(var(--element-height) - 2px);
+$button_height: calc(var(--s-element) - 2px);
 $actColorClose: var(--gray-30);
 
 // Mixins
@@ -69,12 +69,12 @@ $wid: calc(100%);
 @keyframes openBody {
     0% {
         transform: translateY(-100%);
-        height: var(--element-height);
+        height: var(--s-element);
     }
 
     100% {
         transform: translateY(0);
-        margin-top: calc(var(--element-height) - 2px);
+        margin-top: calc(var(--s-element) - 2px);
         height: max-content;
     }
 }
@@ -86,7 +86,7 @@ $wid: calc(100%);
     }
 
     100% {
-        transform: translateY(calc(-100% + var(--element-height)));
+        transform: translateY(calc(-100% + var(--s-element)));
         height: 0;
     }
 }
@@ -165,7 +165,7 @@ $wid: calc(100%);
     }
     &__document{
         .collapse__body {
-            $btm: var(--element-height);
+            $btm: var(--s-element);
             $nbtm: calc($btm * -1);
             box-shadow: inset 0 $nbtm $btm $nbtm var(--gray-100), inset 0 8px 8px -8px var(--gray-90);
             width: 100%;
@@ -207,23 +207,23 @@ $wid: calc(100%);
             padding: 0 !important;
             background-color: var(--gray-80);
             &__open, &__opened {
-                padding-top: var(--element-height);
+                padding-top: var(--s-element);
             }
         }
     }
 }
 
 .collapse__body {
-    width: calc(100% - var(--padding));
-    height: var(--element-height);
-    padding: var(--padding) 0;
+    width: calc(100% - var(--s-padding));
+    height: var(--s-element);
+    padding: var(--s-padding) 0;
     &__open {
 
         animation: openBody 1s forwards;
     }
     &__opened {
         transform: translateY(0);
-        margin-top: calc(var(--element-height) - 2px);
+        margin-top: calc(var(--s-element) - 2px);
         height: max-content;
     }
     &__close {

@@ -32,7 +32,7 @@ $el_gap: 7px;
   }
 
   .menu__no-results {
-    height: var(--element-height);
+    height: var(--s-element);
     line-height: 1;
     display: flex;
     align-items: center;
@@ -79,7 +79,7 @@ $el_gap: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: calc(var(--element-height) + 0px);
+    height: calc(var(--s-element) + 0px);
     --ui-icon-width: 16px;
     line-height: 1;
     cursor: pointer;
