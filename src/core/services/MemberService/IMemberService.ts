@@ -1,7 +1,7 @@
 import UserContext from "~/src/models/UserContext";
 import { EventEmitter } from "@webstack/helpers/EventEmitter";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
-import { IPaymentMethod } from "~/src/modules/account/model/IMethod";
+import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
 export interface IEncryptJWT{
   tokenData: object,
   secret: string,
