@@ -10,7 +10,7 @@ import { useUser } from '~/src/core/authentication/hooks/useUser';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import Authentication from '~/src/pages/authentication';
-import AccountModify from '~/src/modules/account/views/AccountModify/AccountModify';
+import UserModify from '~/src/modules/user/views/UserModify/UserModify';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
     cart: any;
@@ -46,7 +46,7 @@ const Checkout: React.FC<ICheckout> = () => {
                 <UiCollapse label={keyStringConverter(view)} open={true}>
                     <>
                         {view == 'create-account' && <Authentication view={'sign-up'}/>}
-                        {view == 'create-method' && <AccountModify user={user} open={user?.address == undefined} />}
+                        {view == 'create-method' && <UserModify user={user} open={user?.address == undefined} />}
                     </>
                 </UiCollapse>
                 {/* <div className='checkout__body'> */}
