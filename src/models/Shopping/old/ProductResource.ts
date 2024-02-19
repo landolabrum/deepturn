@@ -1,4 +1,4 @@
-import Resource from "../resources/Resource";
+import Resource from "../../resources/Resource";
 
 export default interface ProductResource extends Resource {
   bundleProducts: any;

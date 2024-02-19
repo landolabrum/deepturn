@@ -5,24 +5,24 @@
 }
 
 .verify-email {
-    @extend .d-flex;
-    flex-direction: column;
-    align-items: flex-end;
+
     border-radius:var(--border-radius);
     margin: var(--s-element) 0;
-    color: var(--gray-70);
-    background-color: var(--gray-80);
-    min-height: 500px;
+    color: var(--primary);
+    background-color: var(--gray-90);
+    height: 100%;
     
     @media(max-width: 1100px) {
         margin: var(--s-element) var(--s-padding);
         width: var(--s-padding-width);
         align-items: center;
     }
-
+    
     &__content {
         @extend .d-flex;
-        margin: var(--s-padding);
+        justify-content: space-between;
+        gap: var(--s-element);
+        padding: var(--s-padding);
         width: var(--s-padding-width);
         flex-direction: column;
         height: 100%;
@@ -33,7 +33,9 @@
                 height: 100%;
             }
         }
-        // &--success{
+        &--success{
+            height: 100%;
+        }
         //     align-items: flex-start;
         //     .verify-email__content--loader{
         //         justify-content: flex-start;

@@ -8,19 +8,21 @@ import ProductImage from '../views/ProductImage/ProductImage';
 import ProductBuyNow from '../views/ProductBuyNow/ProductBuyNow';
 import useCart from '../../cart/hooks/useCart';
 import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
+import UiButton from '@webstack/components/UiButton/UiButton';
+import Image from 'next/image';
 
-interface IProductDescription{
+interface IProductDescription {
   product_id?: string,
   price_id?: string
 }
-const ProductDescription = ({product_id, price_id}:IProductDescription) => {
+const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
   const router = useRouter();
   const productNonExist = 'product does not exist';
   const product_query_id: string | undefined = router?.query?.id != undefined ? router?.query?.id.toString() : undefined
   const price_query_id: string | undefined = router?.query?.pri != undefined ? router?.query?.pri.toString() : undefined
   const [product, setProduct] = useState<any>(null); // Changed from {} to null
   const [isLoading, setIsLoading] = useState<boolean | string>(true); // Add a loading state
-  const { getCartItems,  } = useCart();
+  const { getCartItems, } = useCart();
 
   const cart = getCartItems();
   const fetchProduct = useCallback(
@@ -31,27 +33,28 @@ const ProductDescription = ({product_id, price_id}:IProductDescription) => {
       ) return;
       setIsLoading(true); // Start loading
       const shoppingService = getService<IShoppingService>("IShoppingService");
-      let productRequest = { 
-        id: product_id || product_query_id, 
-        pri: price_id ||  price_query_id
+      let productRequest = {
+        id: product_id || product_query_id,
+        pri: price_id || price_query_id
       };
-      try{
+      try {
 
         const productResponse = await shoppingService.getProduct(productRequest);
         if (productResponse?.id) {
           productResponse.price.qty = 0;
+          console.log('[ PRODUCT ]', Object.keys(productResponse))
           setProduct(productResponse);
           setIsLoading(false); // End loading
           return productResponse?.name;
         }
-      }catch(e:any){
+      } catch (e: any) {
         const errors = e?.detail;
-        if(typeof errors == 'object'){
-          Array(errors).forEach((err:any)=>{
+        if (typeof errors == 'object') {
+          Array(errors).forEach((err: any) => {
             const errorData = err?.detail[0];
-            if(errorData){
+            if (errorData) {
               const isFieldRequired = errorData.msg === 'field required';
-              if(isFieldRequired)setIsLoading(productNonExist);
+              if (isFieldRequired) setIsLoading(productNonExist);
               // const isProductId = errorData?.loc.includes('query');
               // const isPriId = errorData?.loc.includes('pri');
               // console.log('[ productDescription ( ERROR ) ]', )
@@ -70,12 +73,12 @@ const ProductDescription = ({product_id, price_id}:IProductDescription) => {
 
   useEffect(() => {
   }, [product]); // Dependencies updated
-  if(product == null)return (
+  if (product == null) return (
     <>
       <style jsx>{styles}</style>
       <div className="product-description">
         <div className="product-description--loader">
-          <UiLoader text={isLoading} dots={!Boolean(isLoading === productNonExist)}/>
+          <UiLoader text={isLoading} dots={!Boolean(isLoading === productNonExist)} />
         </div>
       </div>
     </>
@@ -86,24 +89,39 @@ const ProductDescription = ({product_id, price_id}:IProductDescription) => {
     <>
       <style jsx>{styles}</style>
       <div className="product-description">
+        <div className="product-description__header">
+          <div>
+            <UiButton traits={{ beforeIcon: "fa-chevron-left" }} variant='link' href='/product'>back to shop</UiButton>
+          </div>
+        </div>
         <AdaptGrid
           sm={1}
           md={2}
-          gapX={16}
-          variant='card'
+          gap={15}
+        // variant='card'
         >
-          <div className={`product__img-default `} >
-            <ProductImage options={{ view: 'description' }} image={product.images} />
+          <div className="product-description__img-default" >
+            {/* Style your image container to maintain aspect ratio if needed */}
+            <Image
+              src={product.images[0]}
+              alt={product.name}
+              width={500}
+              height={500}
+              // fill // Use fill to make the image fill the container
+              // style={{ objectFit: 'cover' }} // Adjust object-fit as needed
+              unoptimized={true}
+            />
+            {/* <ProductImage options={{ view: 'description' }} image={product.images} /> */}
           </div>
           <div className="product-description__info-panel">
             <div className="product-description__info-panel_header">
-              <div className="product-description__info-panel_title">{product.name}</div>
+              <h1 className="product-description__info-panel_title">{product.name}</h1>
             </div>
             <div className="product-description__info-panel_body">
               {product.description}
             </div>
             <div className='product-description__buy-button'>
-              <ProductBuyNow product={product}/>
+              <ProductBuyNow product={product} btnText='select'/>
             </div>
           </div>
         </AdaptGrid>

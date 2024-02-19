@@ -69,7 +69,7 @@ const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearc
                     className={`menu__option ${
                       option?.active === false ? "disabled" : ""
                     }${
-                      value?.includes(currentValue)? ' active':''
+                      value === currentValue ? ' active':''
                     }${
                       size?` menu__option-${size}`:''
                     }
@@ -78,7 +78,7 @@ const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearc
                   >
                     <UiButton variant='flat' size={size} traits={{
                       beforeIcon: option?.icon,
-                      afterIcon: value?.includes(currentValue) ? {icon:'fa-check'} : ''
+                      afterIcon: value === currentValue ? {icon:'fa-check'} : ''
                     }}>
                       {label}
                     </UiButton>

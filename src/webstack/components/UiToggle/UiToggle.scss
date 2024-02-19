@@ -31,7 +31,7 @@
     width: 16px;
     left: 2px;
     bottom: 2px;
-    background-color: white;
+    background-color: var(--white);
     transition: 0.4s;
     border-radius: 50%;
   }
@@ -40,7 +40,9 @@
   }
   input:checked + .slider.slider--disabled {
     cursor: not-allowed;
-    background-color: var(--primary-opaque);
+    background-color: var(--gray-40);
+    filter: blur(1px);
+
     &:before {
       background-color: var(--gray-50);
     }

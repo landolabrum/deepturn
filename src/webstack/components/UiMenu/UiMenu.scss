@@ -51,7 +51,7 @@ $el_gap: 7px;
     width: 100%;
     overflow: hidden;
     color: var(--gray-50);
-
+    min-width: 200px;
     .menu__option {
       &:hover {
         background-color: var(--gray-70);

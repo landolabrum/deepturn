@@ -7,17 +7,19 @@ import { ITraits } from '@webstack/components/FormControl/FormControl';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import Image from 'next/image';
+import { Key } from 'react';
+import { IProduct } from '~/src/models/Shopping/IProduct';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
-const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, traits }: { cart: ICartItem[], handleQty: (item: any) => void; collapse?: boolean, variant: string, traits: ITraits }) => {
+const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, traits }: { cart: any, handleQty: (item: any) => void; collapse?: boolean, variant: string, traits: ITraits }) => {
     if (!cart) return <>error code: cl1 NO CART</>;
     const CartItems = ({ fullWidth }: { fullWidth?: boolean }) => {
         return <>
             <style jsx>{styles}</style>
             <div className='cart-list'>
                 <AdaptGrid xs={1}>
-                    {cart && cart.map((item, key) => (
+                    {cart && cart.map((item: IProduct | undefined, key: Key | null | undefined) => (
                         <div className="cart-list__item" key={key}>
                             <div className={`cart-list__item-content ${variant == 'mini' ? "cart-list__item-content-mini" : ''}`}>
                                 <div className="cart-list__item-image" data-name={item?.name}>
@@ -26,7 +28,7 @@ const CartList: React.FC<any> = ({ cart, handleQty, collapse = false, variant, t
                                             borderRadius: "10px"
                                         }
                                     }} /> */}
-                                    {Object.values(item.images).map(i =>
+                                    {item && Object.values(item.images).map(i =>
                                         <Image
                                             key={item.name}
                                             src={i}

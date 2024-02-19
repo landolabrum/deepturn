@@ -17,10 +17,9 @@
   flex-wrap: wrap;
   gap: var(--s-8);
   &--mini{
-    border: solid 1px var(--gray-80);
-    border-radius: var(--border-radius);
-    padding: 9px 7px;
-    gap: 4px;
+    padding: var(--s-8) var(--s-padding);
+    width: var(--s-padding-width);
+    gap: var(--s-10);
     &__submit {
       border-top: unset !important;
     }

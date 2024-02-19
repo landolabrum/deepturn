@@ -76,15 +76,15 @@ const UserMethods: React.FC<any> = ({ open, customerMethods }: IUserMethods) => 
   if (open) return (
     <>
       <style jsx>{styles}</style>
-      <div className='account-methods'>
+      <div className='user-methods'>
         {methods.length > 0 && <>
-          <div className='account-methods__existing'>
-            <div className='account-methods__existing--title'>
+          <div className='user-methods__existing'>
+            <div className='user-methods__existing--title'>
             current methods
             </div>
-            <div className='account-methods__list'>
+            <div className='user-methods__list'>
               {Object.entries(methods).map(([key, method]) => {
-                return <div className='account-methods__list-item' key={key} >
+                return <div className='user-methods__list-item' key={key} >
                   <UserCurrentMethod
                     default_payment_method={user?.invoice_settings?.default_payment_method}
                     method={method}
@@ -105,16 +105,16 @@ const UserMethods: React.FC<any> = ({ open, customerMethods }: IUserMethods) => 
   return (
     <>
       <style jsx>{styles}</style>
-      <h1>{clientSecret}</h1>
-
       <UiCollapse label={label} open={open || !loader.active || user?.invoice_settings?.default_payment_method == undefined}>
-        <div className='account-methods'>
+        <div className='user-methods'>
           {methods.length > 0 && <>
-            <div className='account-methods__existing'>
-              current methods
-              <div className='account-methods__list'>
+            <div className='user-methods__existing'>
+              <div className='user-methods__existing--title'>
+                current methods
+              </div>
+              <div className='user-methods__list'>
                 {Object.entries(methods).map(([key, method]) => {
-                  return <div className='account-methods__list-item' key={key} >
+                  return <div className='user-methods__list-item' key={key} >
                     
                     <UserCurrentMethod
                       default_source={user?.invoice_settings?.default_payment_method}

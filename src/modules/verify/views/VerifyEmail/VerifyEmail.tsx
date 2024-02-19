@@ -79,7 +79,10 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
         let customer = state.customer;
         customer.metadata.password = newPassword;
         const updateMember = await memberService.updateMember(customer.id, customer);
-        if (updateMember) onSuccess(updateMember.email);
+        if (updateMember){
+            handleSignInModal();
+            onSuccess(updateMember.email);
+        }
     }
     const handleSignInModal = () =>{
        openModal(<SignIn email={state.customer.email} />)
@@ -106,7 +109,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
                     }
 
                     {state.status === 'verification_success' && state.customer.email && <div className='verify-email__content__sign-in'>
-                        <UiButton href='/account'>Go to Account</UiButton>
+                        <UiButton href='/profile'>Go to Account</UiButton>
                     </div>}
                 </div>
             </div>

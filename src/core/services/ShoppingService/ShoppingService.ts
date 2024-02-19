@@ -1,7 +1,7 @@
 import ApiService, { ApiError } from "../ApiService";
 import { getService } from "@webstack/common";
 import environment from "~/src/environment";
-import IShoppingService, { IProduct } from "./IShoppingService"
+import IShoppingService, { IGetProduct } from "./IShoppingService"
 import IMemberService from "../MemberService/IMemberService";
 
 export default class ShoppingService extends ApiService implements IShoppingService {
@@ -28,7 +28,7 @@ export default class ShoppingService extends ApiService implements IShoppingServ
   //     );
   //   }
   // }
-  public async getProduct({ id, pri }: IProduct): Promise<any> {
+  public async getProduct({ id, pri }: IGetProduct): Promise<any> {
     if (pri) {
       return this.get<any>(
         `/api/product?id=${id}&pri=${pri}`,

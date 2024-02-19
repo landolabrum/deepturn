@@ -57,7 +57,7 @@ button {
     text-decoration: none;
   }
   &.link, &.lowercase{
-    text-transform: lowercase;
+    text-transform: none;
     width: max-content;
   }
   &.link,

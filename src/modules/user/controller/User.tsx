@@ -14,6 +14,7 @@ interface Props { }
 const User: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
   const user = useUser();
   const level = useClearance();
+  const [current, setCurrent]=useState('profile');
   const vs: any = {
     "profile": <UserProfile user={user} open />,
     "edit profile": <UserModify user={user} open />,
@@ -38,6 +39,8 @@ const User: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
         {level && <UiSettingsLayout
           defaultView='profile'
           title='account'
+          showMenu={current === 'profile'}
+          setViewCallback={(v)=> setCurrent(v)}
           views={views}
         /> || ''}
       </>

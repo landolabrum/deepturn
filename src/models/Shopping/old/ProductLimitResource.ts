@@ -1,5 +1,5 @@
 
-import Resource from "../resources/Resource";
+import Resource from "../../resources/Resource";
 
 export default interface ProductLimitResource extends Resource {
   productID: String;

@@ -3,7 +3,10 @@
  justify-content: center;
  align-items: center;
 }
-.form__add-field {
+.add-field-form{
+    width: 100%;
+}
+.add-field {
     @extend .d-flex;
     align-items: flex-start;
 }

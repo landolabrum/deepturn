@@ -274,7 +274,9 @@ body {
   font-family: 'Play', sans-serif;
   margin: 0;
   background: var(--body);
-
+  color: var(--gray-40);
+  font-size: var(--s-5);
+  font-weight: 300;
   #__next {
     height: 100vh;
     overflow-y: visible;
@@ -319,31 +321,33 @@ h3,
 h4,
 h5,
 h6 {
+  line-height: 1;
   font-weight: 400;
+  margin: 0;
 }
 
 h1 {
-  font-size: 32px;
+  font-size: var(--s-1);
 }
 
 h2 {
-  font-size: 28px;
+  font-size: var(--s-2);
 }
 
 h3 {
-  font-size: 24px;
+  font-size: var(--s-3);
 }
 
 h4 {
-  font-size: 20px;
+  font-size: var(--s-4);
 }
 
 h5 {
-  font-size: 18px;
+  font-size: var(--s-5);
 }
 
 h6 {
-  font-size: 16px;
+  font-size: var(--s-6);
   font-weight: 700;
 }
 

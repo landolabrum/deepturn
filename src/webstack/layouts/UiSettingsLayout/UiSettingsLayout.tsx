@@ -118,6 +118,10 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       setView(firstView.toString());
     }
   }, [router.query.vid, defaultView, views]);
+  useEffect(() => {
+    if(showMenu)setHide('show');
+    if(showMenu === false)setHide('hide');
+  }, [showMenu]);
 
   if (view === undefined) return <UiLoader />;
 
@@ -132,7 +136,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
           <div className={classes.icon}>
             <UiIcon icon={hide === 'hide' ? 'fa-gear' : 'fa-xmark'} onClick={toggleHide} />
           </div>
-          {showMenu && !isFullVariant && (
+          {!isFullVariant && (
             <div className={`settings__actions settings__actions--${hide}`}>
               <div className="settings__actions--content">
                 <UiMenu

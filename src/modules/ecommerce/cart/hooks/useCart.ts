@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import CookieHelper from "@webstack/helpers/CookieHelper";
-import { ICartItem, StripePrice } from "../model/ICartItem";
+import { IProduct } from "~/src/models/Shopping/IProduct";
 
 const useCart = () => {
-    const [cart, setCart] = useState<ICartItem[] | null>([]);
+    const [cart, setCart] = useState<IProduct[] | null>([]);
 
     const getCartItems = () => {
         let cartItems: string | undefined | object = CookieHelper.getCookie('cart');
         if (typeof cartItems === "string") cartItems = JSON.parse(cartItems)?.items;
-        return cartItems ? (cartItems as ICartItem[]) : [];
+        return cartItems ? (cartItems as IProduct[]) : [];
     };
 
-    const updateCartInCookie = (updatedCart: ICartItem[]) => {
+    const updateCartInCookie = (updatedCart: IProduct[]) => {
         if (updatedCart.length === 0) {
             CookieHelper.deleteCookie("cart");
         } else {
@@ -19,7 +19,7 @@ const useCart = () => {
         }
         setCart(updatedCart);
     };
-    const addCartItem = (newItem: ICartItem) => {
+    const addCartItem = (newItem: IProduct) => {
         const currentCart = getCartItems();
         const existingIndex = currentCart.findIndex(item => item.price.id === newItem.price.id);
         

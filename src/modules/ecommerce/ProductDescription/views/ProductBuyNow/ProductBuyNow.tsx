@@ -1,62 +1,72 @@
+import React, { useEffect, useState } from 'react';
 import styles from './ProductBuyNow.scss';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UiPill from '@webstack/components/UiPill/UiPill';
-import { useEffect, useState } from 'react';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import useCart from '../../../cart/hooks/useCart'; // Adjust the path as necessary
+import { ITraits } from '@webstack/components/FormControl/FormControl';
+import { IProduct } from '~/src/models/Shopping/IProduct';
 
-const ProductBuyNow: React.FC<any> = ({ product, traits }: any) => {
-    const { addCartItem, getCartItems } = useCart(); // Assuming useCart returns { addCartItem, cart }
-    const cart = getCartItems()
-    const [label, setLabel] = useState<string | null>(null);
-    const { openModal } = useModal();
-    let cookieProduct: any = cart?.find((item: any) => item.id === product.id); // Adjust according to your ICartItem structure
-    const qty = cookieProduct?.price?.qty || 0;
-    const handleCart = (newQty?: number) => {
-        console.log('[ HANDLE CART ]',qty, newQty)
-        addCartItem({...product, price:{...product.price,qty:Number(newQty)}}); // Use addCartItem to update the cart
-        // if(newQty === 1){
-        //     console.log('[ HANDLE CART (newQty === 1)]',cart, newQty)
-        // }else{
-        //     console.log('[ HANDLE CART (else)]',cart, newQty)
+export interface IProductBuyNow {
+    product?: IProduct;
+    traits?: ITraits;
+    btnText?: string;
+}
 
-        // }
-        // openModal({
-        //     confirm: {
-        //         title: 'product added to cart',
-        //         statements: [{ text: 'cart', href: '/cart' }, { text: 'continue shopping' }]
-        //     }
-        // });
-    };
+const ProductBuyNow: React.FC<IProductBuyNow> = ({ product, traits, btnText = 'Add' }) => {
+    // Hooks are called unconditionally at the top level
+    const { addCartItem, getCartItems } = useCart();
+    const [label, setLabel] = useState<string>('add');
+    const { openModal } = useModal(); // Assuming this is used elsewhere in the component
 
     useEffect(() => {
-        const price = product?.price;
-        if (!product?.metadata?.hide_price) {
+        if (!product) return; // Move condition inside useEffect for early return
+        // The rest of your useEffect logic
+        if (!btnText && !product?.metadata?.hide_price) {
             setLabel(
-                product.price?.unit_amount && `${numberToUsd(product.price?.unit_amount)} ${price?.recurring?.interval ? ' / ' + price?.recurring?.interval : ''}` || 'label not available'
+                product.price?.unit_amount
+                ? `${numberToUsd(product.price?.unit_amount)}${product.price?.recurring?.interval ? ' / ' + product.price?.recurring?.interval : ''}`
+                : 'Label not available'
             );
         } else {
-            setLabel('get quote');
+            setLabel(btnText);
         }
-    }, [product, handleCart]);
+    }, [product, btnText]);
+
+    if (!product) {
+        return <>No Product</>;
+    }
+
+    const cart = getCartItems();
+    let cookieProduct: any = cart.find((item: any) => item.id === product.id);
+    const qty = cookieProduct?.price?.qty || 0;
+
+    const handleCart = (newQty?: number) => {
+        addCartItem({...product, price: {...product.price, qty: Number(newQty)}}); 
+    };
 
     return (
         <>
             <style jsx>{styles}</style>
-          
             {qty === 0 ? (
                 <UiButton
-                    variant='dark'
                     onClick={() => handleCart(1 + Number(qty))}
                     traits={traits}
-                >{`${label}` || 'add'}</UiButton>
+                    variant='primary'
+                >
+                    {label}
+                </UiButton>
             ) : (
-                <UiPill traits={traits} variant="center dark" amount={qty} setAmount={(newQty) => handleCart(newQty )} />
+                <UiPill
+                    traits={traits}
+                    variant="center dark"
+                    amount={qty}
+                    setAmount={(newQty) => handleCart(newQty)}
+                />
             )}
         </>
     );
 };
 
 export default ProductBuyNow;
-

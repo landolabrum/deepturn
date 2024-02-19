@@ -10,38 +10,44 @@
         transform: rotate(0deg);
         background-color: var(--gray-70);
     }
-    30%{
+
+    30% {
         transform: rotate(10deg);
         background-color: var(--error);
     }
-    70%{
+
+    70% {
         transform: rotate(-5deg);
         background-color: var(--gray-70);
     }
+
     100% {
         transform: rotate(0deg);
         background-color: var(--error);
     }
 }
+
 @keyframes glow {
     0% {
-        color: var(--gray-10);
-        background-color: var(--blue-opaque);
-        border-color: var(--blue);
-        box-shadow: 0 0 3px 1px var(--blue);
+        color: var(--gray-10-opaque);
+        background-color: var(--primary-opaque);
+        border-color: var(--primary);
+        box-shadow: 0 0 3px 1px var(--primary);
         // border:  var(--gray-80);
     }
+
     60% {
         color: var(--white);
-        background-color: var(--blue);
-        border-color: var(--blue-10);
-        box-shadow: 0 0 7px 3px var(--blue);
+        background-color: var(--primary-opaque);
+        border-color: var(--primary-opaque);
+        box-shadow: 0 0 7px 3px var(--primary);
     }
+
     100% {
         color: var(--gray-10-opaque);
-        background-color: var(--blue-opaque);
-        border-color: var(--blue);
-        box-shadow: 0 0 3px 1px var(--blue-opaque);
+        background-color: var(--primary);
+        border-color: var(--primary);
+        box-shadow: 0 0 3px 1px var(--primary-opaque);
 
         // background-color: var(--primary);
         // border: solid 1px var(--white);
@@ -65,6 +71,7 @@
 
     &:focus-within {
         color: var(--gray-40);
+
         .form-control__icon {
             --ui-icon-color: var(--gray-40);
         }
@@ -80,6 +87,7 @@
 
     &-disabled {
         filter: brightness(.7) blur(2px);
+
         &:hover {
             color: var(--gray-60);
             --ui-icon-color: var(--gray-60);
@@ -89,21 +97,22 @@
     }
 }
 
+
+
 .b-rad {
-    &:not(.form-control__element--input) {
-        outline: solid 1px unset;
-        border: solid 1px unset;
-    }
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    outline: solid 1px transparent;
     border-radius: var(--border-radius);
 }
-
-
 
 // FORM CONTROL ELEMENT
 // FORM CONTROL ELEMENT
 // FORM CONTROL ELEMENT
 
 .form-control__element {
+
     padding: 0 var(--s-padding);
     color: var(--gray-50);
     font-size: var(--font-size);
@@ -118,73 +127,103 @@
     height: calc(var(--s-element) - 2px);
     white-space: nowrap;
     width: auto;
+
     // SIZES
-    &-xs,&-sm,&-md,&-lg,&-xl,&-xxl{
+    &-xs,
+    &-sm,
+    &-md,
+    &-lg,
+    &-xl,
+    &-xxl {
         height: auto;
         width: max-content !important;
         line-height: 1.5;
     }
-    &-xs{font-size: var(--s-9);}
-    &-sm{font-size: var(--s-7); 
+
+    &-xs {
+        font-size: var(--s-9);
+    }
+
+    &-sm {
+        font-size: var(--s-7);
         padding: 0 var(--s-9);
     }
-    &--input.form-control__element--sm{
+
+    &--input.form-control__element--sm {
         font-size: var(--s-8);
         height: var(--s-4);
         padding: 0 var(--s-9);
     }
-    &-md{font-size: var(--s-6);}
-    &-lg{font-size: var(--s-4);}
-    &-xl{font-size: var(--s-3);}
-    &-xxl{font-size: var(--s-2);}
+
+    &-md {
+        font-size: var(--s-6);
+    }
+
+    &-lg {
+        font-size: var(--s-4);
+    }
+
+    &-xl {
+        font-size: var(--s-3);
+    }
+
+    &-xxl {
+        font-size: var(--s-2);
+    }
+
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
 
-    &:not(&--warning, &--center, &--glow, &--checkbox, &--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item,  &--select, &--invalid, &--input, &--textarea, &--signature) {
+    &:not(&--warning, &--center, &--glow, &--checkbox, &--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item, &--select, &--invalid, &--input, &--textarea, &--signature) {
         @extend %element-color;
     }
 
-    &:not(&--nav-item,  &--signature, &--checkbox) {
+    &:not(&--nav-item, &--signature, &--checkbox) {
         @extend .b-rad;
     }
 
     // HANDLE ICONS
-    &--before-icon  {
-        padding-left:  var(--s-element);
+    &--before-icon {
+        padding-left: var(--s-element);
     }
-    &--after-icon:not(&-sm, &--nav-item)  {
-        padding-right:  var(--s-element);
+
+    &--after-icon:not(&-sm, &--nav-item, &--link) {
+        padding-right: var(--s-element);
     }
+
     // ELEMENTS
     &--button {
         color: inherit;
-        border: solid 1px transparent;
+        border-style: solid;
+        border-width: 1px;
+        border-color: unset;
         filter: brightness(.8);
-        &:hover, &:focus{
+        &:hover,
+        &:focus {
             filter: brightness(1);
         }
-        // box-shadow: var(--box-shadow);
     }
-    &--checkbox{
+
+    &--checkbox {
         width: max-content;
-        padding:  0;
+        padding: 0;
         height: var(--s-element);
     }
 
     &--input,
     &--textarea {
-      
+
         --ui-icon-color: var(--gray-50);
         background-color: var(--gray-70-opaque);
         border: solid 1px var(--gray-70);
 
-        &:not(&--nav-item,  &--signature) {
+        &:not(&--nav-item, &--signature) {
             font-family: 'Game', sans-serif;
             font-style: italic;
         }
 
         &:focus-within {
-            &:not(&--nav-item,  &--signature) {
+            &:not(&--nav-item, &--signature) {
                 border: solid 1px var(--gray-100);
                 --ui-icon-color: var(--gray-100);
                 color: var(--gray-100);
@@ -214,16 +253,19 @@
         min-height: var(--s-element);
     }
 
-    &-disabled, &--disabled {
+    &-disabled,
+    &--disabled {
         &:hover {
             user-select: none;
             cursor: not-allowed;
         }
     }
-    &--flat.form-control__element--after-icon{
+
+    &--flat.form-control__element--after-icon {
         padding: 0 var(--s-padding);
     }
-    &--input-color{
+
+    &--input-color {
         padding: 0 !important;
         height: 100%;
         background-color: transparent !important;
@@ -258,20 +300,25 @@
         }
     }
 
-    &--primary {
-        background-color: var(--gray-60);
-        color: var(--gray-40);
-        --ui-icon-color: var(--gray-40);
+    @include variant('primary',
+        var(--primary-opaque), var(--gray-30), var(--primary-opaque),
+        var(--primary-opaque), var(--primary), var(--primary),
+        var(--primary), var(--white), transparent,
+    );
+    // &--primary {
+    //     background-color: var(--primary-opaque);
+    //     color: var(--gray-10);
+    //     --ui-icon-color: var(--gray-10);
 
-        &:hover {
-            background-color: var(--primary);
-        }
+    //     &:hover {
+    //         background-color: var(--primary);
+    //     }
 
-        &:focus-within {
-            background-color: var(--primary);
-            filter: brightness(.8);
-        }
-    }
+    //     &:focus-within {
+    //         background-color: var(--primary);
+    //         filter: brightness(.8);
+    //     }
+    // }
 
 
 
@@ -287,7 +334,7 @@
     }
 
     @include variant('warning',
-         var(--gray-80),var(--warning), var(--warning-hover),
+        var(--gray-80), var(--warning), var(--warning-hover),
         var(--warning-hover), var(--gray-40), var(--warning-focus),
         var(--warning-focus), var(--gray-10), transparent,
     );
@@ -296,18 +343,22 @@
         inherit, var(--gray-50), transparent,
         inherit, var(--gray-30), transparent,
     );
-    &--center{
+
+    &--center {
         padding: 0 var(--s-element);
     }
-    &--fit-text{
+
+    &--fit-text {
         white-space: unset;
         justify-content: flex-start;
         height: auto;
     }
+
     &--signature {
         @extend .d-flex;
         position: relative;
         overflow: visible;
+
         &:hover {
             border-color: transparent;
         }
@@ -334,24 +385,28 @@
             border-top: solid 1px var(--gray-70);
             width: calc(100% - var(--s-padding));
         }
-            &:hover{
-                &::before {
-                    color: var(--gray-50);
-                }
-                &::after {
-                    border-top-color: var(--gray-50);
-                }
+
+        &:hover {
+            &::before {
+                color: var(--gray-50);
             }
+
+            &::after {
+                border-top-color: var(--gray-50);
+            }
+        }
+
         &:focus-within:not(&:hover) {
             &::before {
                 color: var(--gray-30);
             }
+
             &::after {
                 border-top-color: var(--gray-30);
             }
         }
     }
-    
+
     @include variant('lite',
         var(--gray-40), var(--gray-70), var(--gray-10),
         var(--gray-30), var(--gray-70), var(--secondary),
@@ -368,15 +423,19 @@
         transparent, var(--blue), transparent,
         transparent, var(--blue-10), transparent,
         transparent, var(--blue-10), transparent);
-    &--glow{
+
+    &--glow {
         border: solid 1px;
         overflow: visible;
         margin: 0 5px;
         animation: glow 3s infinite ease-out;
-        &:focus, &:focus-within{
+
+        &:focus,
+        &:focus-within {
             background-color: var(--gray-80);
         }
-        &:hover:not( &:focus, &:focus-within){
+
+        &:hover:not(&:focus, &:focus-within) {
             animation: unset;
             color: var(--white);
             background-color: var(--blue);
@@ -384,36 +443,51 @@
             box-shadow: 0 0 3px 1px var(--blue-opaque);
         }
     }
+
     &--link {
-        padding-left: var(--s-5);
+        padding: 0;
+        width: max-content;
+
+        &.form-control__element--after-icon {
+            padding-right: var(--s-5);
+        }
+
+        &.form-control__element--before-icon {
+            padding-left: var(--s-5);
+        }
+
         &:hover {
             animation: glowTxt 1s infinite;
         }
     }
-    &--bump{
+
+    &--bump {
         animation: bump .3s;
     }
-    &--pill{
+
+    &--pill {
         border: solid 1px var(--gray-70);
         width: max-content;
     }
+
     &--nav-item {
         padding: 0;
         border: none;
+
         &:hover {
             color: inherit;
         }
-        @media(max-width: 1100px){
+
+        @media(max-width: 1100px) {
             padding-right: 0;
             margin: 0 auto;
+
             &:hover {
                 color: inherit;
             }
         }
-        
-    }
 
- 
+    }
 
     // FORM CONTROL ELEMENTS - INVALID DEFINITIONS
     &--error {
@@ -427,6 +501,7 @@
 
         &.form-control__element--signature {
             border: solid 1px transparent !important;
+
             .form-control__invalid {
                 color: var(--error) !important;
             }
@@ -446,12 +521,14 @@
         }
     }
 
-    &--select.form-control__element--flat{
+    &--select.form-control__element--flat {
         background-color: var(--gray-70-opaque);
         color: var(--gray-70-opaque);
         --ui-icon-color: var(--gray-70-opaque);
         border: solid 1px transparent;
-        &:hover, &:focus-within{
+
+        &:hover,
+        &:focus-within {
             background-color: var(--gray-70);
             color: var(--gray-30);
             --ui-icon-color: var(--gray-70);
@@ -460,10 +537,11 @@
     }
 
     // FORM CONTROL ELEMENTS - ELEM TYPES
-    &--select:not(&--nav-item,  &--flat) {
-       
+    &--select:not(&--nav-item, &--flat) {
+
         color: var(--gray-90);
-        &:not(.form-control__element--lite){
+
+        &:not(.form-control__element--lite) {
             color: var(--gray-60);
             --ui-icon-color: var(--gray-60);
             background-color: var(--gray-90);

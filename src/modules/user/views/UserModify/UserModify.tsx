@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import styles from './UserModify.scss';
+// import styles from './UserModify.scss';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useNotification } from '@webstack/components/Notification/Notification';

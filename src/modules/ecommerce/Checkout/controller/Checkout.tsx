@@ -11,6 +11,9 @@ import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import Authentication from '~/src/pages/authentication';
 import UserModify from '~/src/modules/user/views/UserModify/UserModify';
+import UserCreateMethod from '~/src/modules/user/views/UserMethods/components/UserCreateMethod/UserCreateMethod';
+import UserStripePaymentForm from '~/src/modules/user/views/UserMethods/components/UserStripePaymentForm/UserStripePaymentForm';
+import UserMethods from '~/src/modules/user/views/UserMethods/controller/UserMethods';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
     cart: any;
@@ -22,9 +25,9 @@ const Checkout: React.FC<ICheckout> = () => {
     const [view, setView] = useState<any>('create-account');
     const [cart, _setCart] = useState<any>([]);
 
-    const { getCartItems,  } = useCart();
-    const handleView = (view: string)=>{
-        if(view.includes('@'))alert('')
+    const { getCartItems, } = useCart();
+    const handleView = (view: string) => {
+        if (view.includes('@')) alert('')
     }
 
     useEffect(() => {
@@ -43,12 +46,10 @@ const Checkout: React.FC<ICheckout> = () => {
             </div>
             <div className='checkout__body'>
                 {view == 'create-account' && !user && <i>* Create an account to proceed to checkout</i>}
-                <UiCollapse label={keyStringConverter(view)} open={true}>
-                    <>
-                        {view == 'create-account' && <Authentication view={'sign-up'}/>}
-                        {view == 'create-method' && <UserModify user={user} open={user?.address == undefined} />}
-                    </>
-                </UiCollapse>
+                {view == 'create-account' && <UiCollapse label={keyStringConverter(view)} open={true}>
+                    <Authentication view={'sign-up'} />
+                </UiCollapse>}
+                {view === 'create-method' && <UserMethods />}
                 {/* <div className='checkout__body'> */}
                 {/* user?.methods */}
                 {/* <ProfileForm user={user} open={user?.address == undefined}/> */}

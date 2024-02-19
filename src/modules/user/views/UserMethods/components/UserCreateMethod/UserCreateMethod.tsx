@@ -30,7 +30,7 @@ const UserCreateMethod = ({ onSuccess, user, shippable }: IAccountCreateMethod) 
     const onSubmit = useCallback(async (event: any) => {
         event.preventDefault();
         let confirmParams: any = {
-            return_url: `${environment.site.url}/account?vid=billing+info`,
+            return_url: `${environment.site.url}/profile?vid=billing+info`,
         };
         if (shippable && user?.address != undefined) {
             confirmParams.shipping = {

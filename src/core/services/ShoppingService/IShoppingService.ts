@@ -1,7 +1,7 @@
-import { OrderHistoryDetailsResponse, OrderHistoryResponse } from "~/src/models/Shopping/MemberOrderHistory";
-import RevenueRequest, { RevenueTotalsResponse } from "~/src/models/Shopping/Revenue";
+// import { OrderHistoryDetailsResponse, OrderHistoryResponse } from "~/src/models/Shopping/MemberOrderHistory";
+// import RevenueRequest, { RevenueTotalsResponse } from "~/src/models/Shopping/Revenue";
 
-export interface IProduct {
+export interface IGetProduct {
   id?: string
   pri?: string
 }
@@ -11,6 +11,6 @@ export type IProducts = {
 }
 export default interface IShoppingService {
   getProducts(request?: any): Promise<any>;
-  getProduct({ id, pri }: IProduct): Promise<any>;
+  getProduct({ id, pri }: IGetProduct): Promise<any>;
 }
 

@@ -7,13 +7,23 @@
 .product-description{
     justify-content: flex-start;
     color: var(--gray-30);
-    width: var(--s-padding-width);
+    // width: var(--s-padding-width);
     padding: var(--s-padding);
     border-radius: var(--border-radius);
     height: 100%;
-    background-color: var(--gray-100);
+    background-color: var(--gray-90);
     flex-direction: column;
     @extend .d-flex;
+    min-height: 500px;
+    @media(max-width: 900px){
+        gap: var(--s-padding);
+        min-height: unset;
+    }
+    &__header {
+        @extend .d-flex;
+        width: 100%;
+        justify-content: flex-start;
+    }
     &--loader {
         @extend .d-flex;
         flex-direction: column;
@@ -21,10 +31,8 @@
         min-height: 400px;
         width: inherit;
     }
-    @media(max-width: 1100px){
-        margin: auto;
-    }
-    .product__img-default{
+
+    &__img-default{
         .img-placeholder{
             padding: var(--s-element) 10px;
             height: auto;
@@ -32,8 +40,9 @@
             @extend .d-flex;
         }
         --ui-icon-height: 66%;
-        width: 100%;
         --ui-icon-width: 66%;
+        height: auto;
+        width: 100%;
         border-radius: var(--border-radius);
         overflow: hidden;
         @extend .d-flex;
@@ -42,22 +51,24 @@
     }
     .product-description__info-panel{
         display: flex;
-        height: 100%;
+        height: auto;
         flex-direction: column;
         justify-content: space-between;
         gap: var(--s-padding);
         align-items: flex-start;
         flex: 1;
-        width: var(--s-padding-width);
-        padding: var(--s-padding);
+        @media(max-width: 900px){
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            min-height: var(--s-element);
+        }
         .product-description__info-panel_header{
             display: flex;
-            border-bottom: solid 1px var(--gray-60);
-            min-height: var(--s-element);
             flex-direction: column;
             width: 100%;
-
             .product-description__info-panel_title{
+                text-transform: capitalize;
                 font-size:var(--s-3);
             }
         }
@@ -68,6 +79,9 @@
             color: var(--gray-50);
         }
     }
-    // &__buy-button{
-    // }
+    &__buy-button{
+        @extend .d-flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
 }
