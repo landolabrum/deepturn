@@ -336,6 +336,7 @@ h2 {
 
 h3 {
   font-size: var(--s-3);
+  color: var(--color, var(--gray-50));
 }
 
 h4 {
