@@ -12,6 +12,17 @@ export interface IDecryptJWT{
   secret: string,
   algorithm:'HS256'
 }
+export interface IEncryptMetadataJWT{
+  encryptionData:object;
+  customer_id:string;
+  metadata_key_name:string;
+}
+export interface OEncryptMetadataJWT{
+  status: string;
+  metadata_key_name:string;
+}
+
+
 
 export default interface IMemberService {
   // METHODS
@@ -45,5 +56,9 @@ export default interface IMemberService {
   updateMember(id: string, memberData: any): Promise<any>;
   toggleDefaultPaymentMethod(paymentMethodId: string): Promise<any>;
   encryptJWT({tokenData, secret, algorithm}:IEncryptJWT): Promise<any>;
+  
+  encryptMetadataJWT({encryptionData, customer_id, metadata_key_name}:IEncryptMetadataJWT): Promise<OEncryptMetadataJWT>;
+  decryptMetadataJWT(metadata_key_name:string, customer_id:string): Promise<object>;
+
   decryptJWT({token, secret, algorithm}:IDecryptJWT): Promise<any>;
 }

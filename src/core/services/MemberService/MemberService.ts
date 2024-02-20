@@ -6,7 +6,7 @@ import CustomToken from "~/src/models/CustomToken";
 import MemberToken from "~/src/models/MemberToken";
 import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
-import IMemberService, { IDecryptJWT, IEncryptJWT } from "./IMemberService";
+import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT } from "./IMemberService";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
@@ -175,6 +175,28 @@ export default class MemberService
     }
   }
 
+
+  public async encryptMetadataJWT(props:IEncryptMetadataJWT) {
+    const {encryptionData, customer_id: customer_id, metadata_key_name} = props;
+    if (!encryptionData || !customer_id || !metadata_key_name) {
+      console.error('[ ERROR ]',{
+        location: "MemberService.encryptMetadataJWT",
+        ...props
+      })
+      throw new ApiError("No Encryption Data Provided", 400, "MS.SI.02");
+    }
+    const res = await this.post<{}, any>(
+      "api/customer/encrypt-metadata", {encryptionData: encryptionData, customer_id, metadata_key_name} 
+    )
+    return res
+  }
+  public async decryptMetadataJWT(metadata_key_name:string, customer_id: string) {
+    if (!metadata_key_name || !customer_id) throw new ApiError("No [ metadata_key_name ] Provided", 400, "MS.SI.02");
+    const res = await this.get<any>(
+      `api/customer/encrypt-metadata?key=${metadata_key_name}&customer_id=${customer_id}`,
+    )
+    return res
+  }
 
   public async encryptJWT({ tokenData, secret, algorithm }: IEncryptJWT) {
     if (!tokenData || !secret || !algorithm) throw new ApiError("No Encryption Data Provided", 400, "MS.SI.02");

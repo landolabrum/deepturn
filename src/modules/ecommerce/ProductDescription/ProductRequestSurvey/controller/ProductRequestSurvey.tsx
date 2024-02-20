@@ -196,13 +196,14 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             handleView('invalid');
             return;
         }
+        // TODO CONVERT TO JWT
         let request: any = {
             timestamp: new Date().getTime(),
             user_agent: userAgentInfo,
             src: 'prod-feature',
             features: form.features.reduce((acc: any, feature: any) => {
                 if (feature.selected) {
-                    acc[createMerchantKey('configure', feature.name)] = feature.value;
+                    acc[createMerchantKey('.prod_req.configure', feature.name)] = feature.value;
                 }
                 return acc;
             }, {}),

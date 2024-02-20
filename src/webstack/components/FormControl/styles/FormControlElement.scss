@@ -123,10 +123,12 @@
         padding: 0 ;
     }
 
-    &--input.form-control__element-sm {
-        font-size: var(--s-8);
-        height: var(--s-4);
-        padding: 0 var(--s-9);
+    &--input {
+        &-sm{
+            font-size: var(--s-8);
+            height: var(--s-4);
+            padding: 0 var(--s-9);
+        }
     }
 
     &-md {
@@ -206,7 +208,7 @@
             }
         }
 
-        &:not(.form-control__element--signature, .form-control__element--dark, .form-control__element--disabled) {
+        &:not(&--signature, &--dark, &--disabled) {
             &:hover:not(&:focus-within) {
                 background-color: var(--gray-60);
                 border-color: var(--gray-60);
@@ -236,10 +238,16 @@
         }
     }
 
-    &--flat.form-control__element--after-icon {
-        padding: 0 var(--s-2);
-        &.form-control__element-sm{
-            padding: 0 var(--s-10);
+    &-sm:not(&--after-icon),
+    &-sm:not(&--before-icon) {
+        padding: 0 var(--s-9)
+    }
+    &--flat{
+        &--after-icon{
+            padding: 0 var(--s-2);
+            &-sm{
+                padding: 0 var(--s-10);
+            }
         }
     }
 
@@ -432,11 +440,11 @@
         padding: 0;
         width: max-content;
 
-        &.form-control__element--after-icon {
+        &--after-icon {
             padding-right: var(--s-5);
         }
 
-        &.form-control__element--before-icon {
+        &--before-icon {
             padding-left: var(--s-5);
         }
 
@@ -478,11 +486,11 @@
         color: var(--invalid-border) !important;
         --ui-icon-color: var(--invalid-border) !important;
 
-        &:not(.form-control__element--signature) {
+        &:not(&--signature) {
             border: solid 1px var(--invalid-border) !important;
         }
 
-        &.form-control__element--signature {
+        &--signature {
             border: solid 1px transparent !important;
 
             .form-control__invalid {
@@ -504,29 +512,32 @@
         }
     }
 
-    &--select.form-control__element--flat {
-        background-color: var(--gray-70-opaque);
-        color: var(--gray-70-opaque);
-        --ui-icon-color: var(--gray-70-opaque);
-        border: solid 1px transparent;
-
-        &:hover,
-        &:focus-within {
-            background-color: var(--gray-70);
-            color: var(--gray-30);
-            --ui-icon-color: var(--gray-70);
-            border: solid 1px var(--gray-90);
+    &--select {
+        &--flat{
+            background-color: var(--gray-70-opaque);
+            color: var(--gray-70-opaque);
+            --ui-icon-color: var(--gray-70-opaque);
+            border: solid 1px transparent;
+            
+            &:hover,
+            &:focus-within {
+                background-color: var(--gray-70);
+                color: var(--gray-30);
+                --ui-icon-color: var(--gray-70);
+                border: solid 1px var(--gray-90);
+            }
         }
     }
 
     // FORM CONTROL ELEMENTS - ELEM TYPES
     &--select:not(&--nav-item, &--flat) {
         color: var(--gray-90);
-        &:not(.form-control__element--lite) {
+    }
+    &--select:not(&--nav-item, &--flat, &--lite) {
             color: var(--gray-60);
             --ui-icon-color: var(--gray-60);
             background-color: var(--gray-90);
-        }
+
 
         &:hover {
             color: var(--gray-40);

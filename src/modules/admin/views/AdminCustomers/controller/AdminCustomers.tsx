@@ -32,7 +32,7 @@ const AdminCustomers: React.FC = () => {
         { view: 'modify', data: { id: customer.id, name: customer.name } }
       )
     }} />,
-    modify: pgData?.data?.id && <AdminCustomerDetails customerId={pgData.data.id} /> || <>error (admin cust [31])</>,
+    modify: pgData?.data?.id && <AdminCustomerDetails customer_id={pgData.data.id} /> || <>error (admin cust [31])</>,
     add: <AdminCustomerAdd />
   }
   useEffect(() => {
