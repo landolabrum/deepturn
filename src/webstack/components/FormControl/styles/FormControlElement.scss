@@ -27,32 +27,6 @@
     }
 }
 
-@keyframes glow {
-    0% {
-        color: var(--gray-10-opaque);
-        background-color: var(--primary-opaque);
-        border-color: var(--primary);
-        box-shadow: 0 0 3px 1px var(--primary);
-        // border:  var(--gray-80);
-    }
-
-    60% {
-        color: var(--white);
-        background-color: var(--primary-opaque);
-        border-color: var(--primary-opaque);
-        box-shadow: 0 0 7px 3px var(--primary);
-    }
-
-    100% {
-        color: var(--gray-10-opaque);
-        background-color: var(--primary);
-        border-color: var(--primary);
-        box-shadow: 0 0 3px 1px var(--primary-opaque);
-
-        // background-color: var(--primary);
-        // border: solid 1px var(--white);
-    }
-}
 
 @keyframes glowTxt {
     0% {
@@ -146,10 +120,10 @@
 
     &-sm {
         font-size: var(--s-7);
-        padding: 0 var(--s-9);
+        padding: 0 ;
     }
 
-    &--input.form-control__element--sm {
+    &--input.form-control__element-sm {
         font-size: var(--s-8);
         height: var(--s-4);
         padding: 0 var(--s-9);
@@ -183,7 +157,7 @@
     }
 
     // HANDLE ICONS
-    &--before-icon {
+    &--before-icon:not(&-sm, &--nav-item, &--link) {
         padding-left: var(--s-element);
     }
 
@@ -198,6 +172,7 @@
         border-width: 1px;
         border-color: unset;
         filter: brightness(.8);
+
         &:hover,
         &:focus {
             filter: brightness(1);
@@ -262,7 +237,10 @@
     }
 
     &--flat.form-control__element--after-icon {
-        padding: 0 var(--s-padding);
+        padding: 0 var(--s-2);
+        &.form-control__element-sm{
+            padding: 0 var(--s-10);
+        }
     }
 
     &--input-color {
@@ -300,28 +278,12 @@
         }
     }
 
+
     @include variant('primary',
         var(--primary-opaque), var(--gray-30), var(--primary-opaque),
         var(--primary-opaque), var(--primary), var(--primary),
         var(--primary), var(--white), transparent,
     );
-    // &--primary {
-    //     background-color: var(--primary-opaque);
-    //     color: var(--gray-10);
-    //     --ui-icon-color: var(--gray-10);
-
-    //     &:hover {
-    //         background-color: var(--primary);
-    //     }
-
-    //     &:focus-within {
-    //         background-color: var(--primary);
-    //         filter: brightness(.8);
-    //     }
-    // }
-
-
-
 
     &--secondary {
         background-color: var(--secondary-opaque);
@@ -424,6 +386,29 @@
         transparent, var(--blue-10), transparent,
         transparent, var(--blue-10), transparent);
 
+    @keyframes glow {
+        0% {
+            color: var(--gray-10-opaque);
+            background-color: var(--primary-opaque);
+            border-color: var(--primary);
+            box-shadow: 0 0 3px 1px var(--primary);
+        }
+
+        60% {
+            color: var(--white);
+            background-color: var(--primary-opaque);
+            border-color: var(--primary-opaque);
+            box-shadow: 0 0 7px 3px var(--primary);
+        }
+
+        100% {
+            color: var(--gray-10-opaque);
+            background-color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 3px 1px var(--primary-opaque);
+        }
+    }
+
     &--glow {
         border: solid 1px;
         overflow: visible;
@@ -437,10 +422,9 @@
 
         &:hover:not(&:focus, &:focus-within) {
             animation: unset;
-            color: var(--white);
-            background-color: var(--blue);
-            border-color: var(--blue-10);
-            box-shadow: 0 0 3px 1px var(--blue-opaque);
+            background-color: var(--gray-70);
+            color: var(--primary-lite);
+            box-shadow: 0 0 3px 1px var(--primary-opaque);
         }
     }
 
@@ -473,7 +457,6 @@
     &--nav-item {
         padding: 0;
         border: none;
-
         &:hover {
             color: inherit;
         }
@@ -538,9 +521,7 @@
 
     // FORM CONTROL ELEMENTS - ELEM TYPES
     &--select:not(&--nav-item, &--flat) {
-
         color: var(--gray-90);
-
         &:not(.form-control__element--lite) {
             color: var(--gray-60);
             --ui-icon-color: var(--gray-60);

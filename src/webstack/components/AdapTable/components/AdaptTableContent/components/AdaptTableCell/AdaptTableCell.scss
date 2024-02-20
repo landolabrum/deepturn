@@ -30,12 +30,15 @@ $cell-height: 100%;
 }
 .adapt-table-cell__member-initials {
   background-color: var(--gray-60);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  font-style: italic;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 31px;
-  width: 31px;
   border-radius: 50%;
+  aspect-ratio: 1;
+  padding: var(--s-10);
   @media (max-width: 900px) {
     display: none;
   }

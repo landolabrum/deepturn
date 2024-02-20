@@ -33,7 +33,7 @@ button {
   border: none;
   height: inherit;
   line-height: inherit;
-  width: 100%;
+  width: inherit;
   overflow: inherit;
   gap: inherit;
   text-transform: inherit;
@@ -43,6 +43,8 @@ button {
   font-family: inherit;
   text-align: inherit;
   text-shadow: inherit;
+  padding-block: 0;
+  padding-inline: 0;
   cursor: inherit;
   // border-radius: inherit;
   padding: 0;

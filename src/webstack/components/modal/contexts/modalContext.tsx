@@ -1,5 +1,5 @@
 import { IFormControlVariant } from '@webstack/components/AdapTable/models/IVariant';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 export type IConfirm ={
   title?: string;
@@ -61,7 +61,7 @@ export const ModalProvider: React.FC<Props> = ({ children }) => {
 
 export const useModal = () => {
   const context = useContext<ModalContextType | undefined>(ModalContext);
-
+  const [open, setOpen]=useState(context?.isModalOpen);
   const defaultContext: ModalContextType = {
     isModalOpen: false,
     openModal: (content: IModalContent) => {
@@ -75,6 +75,9 @@ export const useModal = () => {
     },
     modalContent: null,
   };
-
+  
+  useEffect(() => {
+    // console.log('[ context ]', context)
+  }, [context?.isModalOpen]);
   return context ?? defaultContext;
 };

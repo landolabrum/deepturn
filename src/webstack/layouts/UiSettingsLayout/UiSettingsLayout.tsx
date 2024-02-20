@@ -61,6 +61,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     statements: Object.keys(views).map((key: string) => ({
       text: key,
       onClick: () => handleView(key),
+
     })),
   }), [views, handleView]); // Assuming handleView does not change or is wrapped in useCallback
 
@@ -104,13 +105,17 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
         openModal({ confirm: modalContext });
       }
     }
+    // if(isModalOpen === false)setHide('show');
+
+    console.log('[ isModalOpen ]',isModalOpen, hide)
   }, [isModalOpen, closeModal, openModal, variant]);
 
   useEffect(() => {
     if (!view && defaultView) {
       setView(defaultView);
     }
-  }, [defaultView, view, variant]);
+  }, [defaultView, view]);
+  // }, [defaultView, view, variant]);
 
   useEffect(() => {
     const firstView = router.query.vid || defaultView || Object.keys(views)[0];
@@ -121,6 +126,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   useEffect(() => {
     if(showMenu)setHide('show');
     if(showMenu === false)setHide('hide');
+
   }, [showMenu]);
 
   if (view === undefined) return <UiLoader />;
@@ -133,9 +139,12 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
         id="settings-container"
         className={classes.container}>
         <div className={classes.content}>
-          <div className={classes.icon}>
-            <UiIcon icon={hide === 'hide' ? 'fa-gear' : 'fa-xmark'} onClick={toggleHide} />
+
+          {Boolean(hide !== 'show' || isFullVariant) && 
+          <div id='settings-trigger' className={classes.icon}>
+            <UiIcon icon={hide === 'hide' ? 'fa-ellipsis' : 'fa-ellipsis'} onClick={toggleHide} />
           </div>
+          }
           {!isFullVariant && (
             <div className={`settings__actions settings__actions--${hide}`}>
               <div className="settings__actions--content">
@@ -144,6 +153,8 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
                   variant="flat"
                   value={view}
                   onSelect={handleView}
+                  onClose={toggleHide}
+
                 />
               </div>
             </div>

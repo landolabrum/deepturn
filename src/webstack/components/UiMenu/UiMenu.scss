@@ -1,19 +1,55 @@
 $defSize: 10px;
 $el_spacing: 12px;
 $el_gap: 7px;
-
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.menu-container{
+  @extend .d-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background-color: transparent;
+  position: relative;
+}
 .menu {
   color: var(--gray-10);
+  border: solid 1px var(--gray-80);
   --ui-icon-color: var(--gray-90);
   min-width: calc(100% - calc($el_gap * 2));
+  width: 100%;
   border-radius: var(--border-radius);
   overflow: hidden;
   z-index: 2;
   background-color: var(--gray-90);
 
   backdrop-filter: blur(7px);
-  border: solid 1px var(--gray-80);
+  position: relative;
+  &__close{
+    top: calc(var(--s-2) * -1);
+    right: 0;
+    position: absolute;
+    margin-bottom: var(--s-9);
+    color: var(--gray-60);
+    --ui-icon-color: var(--gray-60);
+    border-radius: var(--border-radius);
+    border: solid 1px transparent;
+    &:hover{
+      color: var(--primary);
+      --ui-icon-color: var(--primary);
+      border: solid 1px var(--primary);
+    }
+    &:focus, &:focus-within{
+      background-color: var(--primary-opaque);
 
+    }
+    // transparent, var(--gray-50), transparent,
+    // transparent, var(--primary), var(--primary),
+    // var(--primary), var(--white), transparent,
+    --ui-icon-color: var(--gray-50);
+    @extend .d-flex;
+  }
   &__lite {
     .menu__option {
       
@@ -50,9 +86,10 @@ $el_gap: 7px;
   &.menu__flat {
     width: 100%;
     overflow: hidden;
-    color: var(--gray-50);
     min-width: 200px;
+    color: var(--gray-60);
     .menu__option {
+
       &:hover {
         background-color: var(--gray-70);
       }

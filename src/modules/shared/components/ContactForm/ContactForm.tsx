@@ -4,8 +4,8 @@ import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import UserContext from '~/src/models/UserContext';
-import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
+import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 
 interface IContactFormProps {
   submitText?: string;
@@ -23,46 +23,22 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }
   ];
 
   const loggedInUser = useUser();
-  const [fields, setFields] = useState(initialContactFields);
+  const [fields, setFields] = useState<IFormField[]>(initialContactFields);
+  const [initialFields, setInitialFields]=useState<IFormField[] | undefined>();
   const [disabled, setDisabled] = useState<boolean>(true);
   const selectedUser: UserContext | undefined = user || loggedInUser;
 
-  useEffect(() => {
-    if (selectedUser) {
-      let updatedFields = [...initialContactFields];
-      if (selectedUser.name) {
-        const [firstName, lastName] = selectedUser.name.split(' ');
-        updatedFields = updatedFields.map(field => {
-          if (field.name === 'firstName') return { ...field, value: firstName };
-          if (field.name === 'lastName') return { ...field, value: lastName };
-          return field;
-        });
-      }
-      if (selectedUser.email) {
-        updatedFields = updatedFields.map(field => field.name === 'email' ? { ...field, value: selectedUser.email } : field);
-      }
-      if (selectedUser.phone) {
-        updatedFields = updatedFields.map(field => field.name === 'phone' ? { ...field, value: phoneFormat(selectedUser.phone, 'US', true) } : field);
-      }
-      if (selectedUser.address) {
-        updatedFields = updatedFields.map(field => field.name === 'address' ? { ...field, value: selectedUser.address } : field);
-      }
-
-      setFields(updatedFields);
-      setDisabled(false);
-    }
-  }, [selectedUser]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFields(prevFields => {
-      return prevFields.map((field: any) => {
-        if (field.name === name) {
-          return { ...field, value: value };
-        }
-        return field;
-      });
+    const newFields = fields.map((field: any) => {
+      if (field.name === name) {
+        return { ...field, value: value };
+      }
+      return field;
     });
+    setFields(newFields);
+    handleDisabled(newFields)
   };
 
 
@@ -72,7 +48,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }
       const fieldName = field.name;
       if (['firstName', 'lastName'].includes(fieldName)) {
         acc[fieldName] = field.value;
-      } else  {
+      } else {
         acc[fieldName] = field.value;
       }
       return acc;
@@ -82,22 +58,63 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }
     delete formData.lastName; // Remove lastName
     onSubmit(formData);
   };
-  
-  
-  const handleDisabled = () => {
-    const allFieldsHaveValue = fields.every((field: IFormField) => field.value !== undefined && field.value !== '');
-    setDisabled(!allFieldsHaveValue);
 
+
+  const handleDisabled = (updatedFields: IFormField[]) => {
+    const isComplete = updatedFields.map((field: IFormField) => {
+      const initialValue = initialFields && findField(initialFields, field.name)?.value;
+      const isInitialValue = field?.value === initialValue;
+      const isEmptyValue = !['', undefined, null, {}].includes(field.value);
+      return Boolean(isInitialValue && isEmptyValue);
+    });
+    const shouldDisable = isComplete.filter(f => f === false)?.length === 0;
+    if(shouldDisable !== disabled)setDisabled(shouldDisable);
+  };
+
+
+  const init = async () => {
+    const handleUser = async () => {
+      if (selectedUser) {
+        let updatedFields = [...initialContactFields];
+        if (selectedUser.name) {
+          const [firstName, lastName] = selectedUser.name.split(' ');
+          updatedFields = updatedFields.map(field => {
+            if (field.name === 'firstName') return { ...field, value: firstName };
+            if (field.name === 'lastName') return { ...field, value: lastName };
+            return field;
+          });
+        }
+        if (selectedUser.email) {
+          updatedFields = updatedFields.map(field => field.name === 'email' ? { ...field, value: selectedUser.email } : field);
+        }
+        if (selectedUser.phone) {
+          updatedFields = updatedFields.map(field => field.name === 'phone' ? { ...field, value: phoneFormat(selectedUser.phone, 'US', true) } : field);
+        }
+        if (selectedUser.address) {
+          updatedFields = updatedFields.map(field => field.name === 'address' ? { ...field, value: selectedUser.address } : field);
+        }
+
+        setFields(updatedFields);
+        if(!initialFields)setInitialFields(updatedFields);
+        return updatedFields;
+        // setDisabled(false);
+        console.log('[ disabled ]', disabled)
+      }
+    };
+    handleUser().then((updatedFields: any) => {
+      handleDisabled(updatedFields);
+    })
   }
   useEffect(() => {
-    handleDisabled()
-  }, [onChange]);
+    init()
+  }, [selectedUser]);
+
+
   return (
     <>
       <style jsx>{styles}</style>
       <div className='contact-form'>
         <div className='contact-form__title'>Contact</div>
-        {/* {JSON.stringify(addressField)} */}
         <UiForm
           fields={fields}
           disabled={disabled}

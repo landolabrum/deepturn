@@ -173,13 +173,10 @@ $actionsBg: var(--gray-90);
     z-index: 2;
     @extend .d-flex;
     width: var(--s-element);
-    --ui-icon-width: var(--s-5);
-    --ui-icon-height: var(--s-5);
     height: var(--s-element);
-    // background-color: var(--gray-80-opaque);
-    // border-radius: var(--border-radius);
-    // border: var(--border);
-
+    --ui-icon-width: 100%;
+    --ui-icon-height: var(--s-5);
+    aspect-ratio: 1;
     @media(max-width: 1100px) {
     }
     @media(max-width: 900px) {
@@ -189,12 +186,13 @@ $actionsBg: var(--gray-90);
     }
 
 
-    &--hide {
+    &__hide {
     }
-    &--show {
+    &__show {
+        display: none;
     }
-    &:hover {
-    }
+    // &:hover {
+    // }
     &__full, &__full-width {
         left: var(--s-padding);
     }

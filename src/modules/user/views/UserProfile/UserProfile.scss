@@ -1,4 +1,33 @@
+
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
 .user-profile{
-  &__title{}
-  &__body{}
+  width: 100%;
+  @extend .d-flex;
+  flex-direction: column;
+  gap:var(--s-padding);
+  &__header{
+    @extend .d-flex;
+    justify-content: flex-end;
+    width: inherit;
+  }
+  &__body{
+    width: inherit;
+  }
+  &__card{
+    @extend .d-flex;
+    align-items: flex-start;
+    gap:var(--s-padding);
+    flex-direction: column;
+    width: var(--s-padding-width);
+    padding: var(--s-padding);
+    background-color: var(--gray-90);
+    border-radius: var(--border-radius);
+  }
+  h3{
+    margin-bottom: var(--s-9);
+  }
 }

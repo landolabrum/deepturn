@@ -39,7 +39,6 @@ export const InvalidCell = () => {
 
 const AdaptTableCell: NextComponentType<NextPageContext, {}, Props> = ({ cell, data }: Props) => {
   const [valid, setValid] = useState(false);
-  const [hover, setHover] = useState("");
   const [mut, setMut] = useState<any>();
   const [copied, setCopied] = useState<boolean>(false);
   function handleCopy(copyText: string) {
@@ -92,7 +91,10 @@ const AdaptTableCell: NextComponentType<NextPageContext, {}, Props> = ({ cell, d
     return (
       <>
         <style jsx>{styles}</style>
-        <span className="adapt-table-cell__member-initials">{firstLast[0]?.charAt(0) + firstLast[1]?.charAt(0)}</span>
+        <div className="adapt-table-cell__member-initials">
+          <div>
+            {firstLast[0]?.charAt(0)}{firstLast[1]?.charAt(0)}</div>
+          </div>
       </>
     );
   };
