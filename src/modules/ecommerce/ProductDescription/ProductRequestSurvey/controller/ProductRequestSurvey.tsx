@@ -62,7 +62,6 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     id,
     subtitle = 'Select applicable appliances that you need power'
 }) => {
-    if(!id)return <>No ID FOR PRODUCT REQUEST</>;
     const user = useUser()
     const selectedRef = useRef<any | undefined>();
     const optionsRef = useRef<any | undefined>();
@@ -241,7 +240,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     useEffect(() => {
         handleMobileSelected();
     }, [width]);
-
+    if(!id)return <>No ID FOR PRODUCT REQUEST</>;
     if (form.prod_req.length) return (
         <>
             <style jsx>{styles}</style>
