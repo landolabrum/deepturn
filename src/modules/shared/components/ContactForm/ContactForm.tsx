@@ -6,6 +6,7 @@ import { useUser } from '~/src/core/authentication/hooks/useUser';
 import UserContext from '~/src/models/UserContext';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
+import { mockDateTime } from '@webstack/helpers/MockData';
 
 interface IContactFormProps {
   submitText?: string;
@@ -15,10 +16,10 @@ interface IContactFormProps {
 
 const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }) => {
   const initialContactFields = [
-    { name: 'firstName', label: 'First Name', type: 'text', placeholder: 'First Name', required: true },
-    { name: 'lastName', label: 'Last Name', type: 'text', placeholder: 'Last Name', required: true },
-    { name: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com', required: true },
-    { name: 'phone', label: 'Phone', type: 'tel', placeholder: '1 (555) 555-5555', required: true },
+    { name: 'firstName', label: 'First Name', type: 'text', placeholder: 'First Name', required: true, value:mockDateTime(true)},
+    { name: 'lastName', label: 'Last Name', type: 'text', placeholder: 'Last Name', required: true, value:mockDateTime()},
+    { name: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com', required: true, value:'larzrandana@gmail.com'},
+    { name: 'phone', label: 'Phone', type: 'tel', placeholder: '1 (555) 555-5555', required: true, value:'4344343433'},
     { name: 'address', label: 'Address', type: 'text', placeholder: 'Your Address', required: true },
   ];
 
@@ -26,20 +27,38 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }
   const [fields, setFields] = useState<IFormField[]>(initialContactFields);
   const [initialFields, setInitialFields]=useState<IFormField[] | undefined>();
   const [disabled, setDisabled] = useState<boolean>(true);
-  const selectedUser: UserContext | undefined = user || loggedInUser;
+  const [selectedUser, setUser]=useState<UserContext | undefined>()
+  // const selectedUser:  = user || loggedInUser;
 
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('[ onChange (1)]', fields);
     const { name, value } = e.target;
-    const newFields = fields.map((field: any) => {
-      if (field.name === name) {
-        return { ...field, value: value };
+    let fieldsRef = fields.map((field:IFormField,i)=>{
+      if(field.name === name){
+        console.log('[ fieldNAme ]', i)
+
+        field.value = value;
       }
       return field;
-    });
-    setFields(newFields);
-    handleDisabled(newFields)
+    })
+    // const fieldsRef = fields.reduce((acc: IFormField[], field: IFormField) => {
+    //   // Check if the current field is the one being updated
+    //   if (field.name === name) {
+    //     // If so, update its value and add it to the accumulator
+    //     acc.push({ ...field, value: value });
+    //   } else {
+    //     // Otherwise, add the field unchanged to the accumulator
+    //     acc.push(field);
+    //   }
+    //   return acc;
+    // }, []); // Initialize the accumulator as an empty array
+  
+    console.log('[ onChange (2)]', fieldsRef);
+    setFields(fieldsRef); // Update the state with the modified fields
+    handleDisabled(fieldsRef); // Update the disabled state based on the new fields
   };
+  
 
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -60,7 +79,12 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }
   };
 
 
-  const handleDisabled = (updatedFields: IFormField[]) => {
+  const handleDisabled = async (updatedFields: IFormField[]) => {
+    // console.log('[ updateFields ]',updatedFields)
+    if (!Array.isArray(updatedFields)) {
+      console.error('updatedFields is not an array', updatedFields);
+      return; // Exit the function or handle this case as appropriate
+    }
     const isComplete = updatedFields.map((field: IFormField) => {
       const initialValue = initialFields && findField(initialFields, field.name)?.value;
       const isInitialValue = field?.value === initialValue;
@@ -69,45 +93,41 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }
     });
     const shouldDisable = isComplete.filter(f => f === false)?.length === 0;
     if(shouldDisable !== disabled)setDisabled(shouldDisable);
+    return;
   };
 
 
-  const init = async () => {
-    const handleUser = async () => {
-      if (selectedUser) {
-        let updatedFields = [...initialContactFields];
-        if (selectedUser.name) {
-          const [firstName, lastName] = selectedUser.name.split(' ');
-          updatedFields = updatedFields.map(field => {
-            if (field.name === 'firstName') return { ...field, value: firstName };
-            if (field.name === 'lastName') return { ...field, value: lastName };
-            return field;
-          });
-        }
-        if (selectedUser.email) {
-          updatedFields = updatedFields.map(field => field.name === 'email' ? { ...field, value: selectedUser.email } : field);
-        }
-        if (selectedUser.phone) {
-          updatedFields = updatedFields.map(field => field.name === 'phone' ? { ...field, value: phoneFormat(selectedUser.phone, 'US', true) } : field);
-        }
-        if (selectedUser.address) {
-          updatedFields = updatedFields.map(field => field.name === 'address' ? { ...field, value: selectedUser.address } : field);
-        }
-
-        setFields(updatedFields);
-        if(!initialFields)setInitialFields(updatedFields);
-        return updatedFields;
-        // setDisabled(false);
-        console.log('[ disabled ]', disabled)
+const handleUser = async () => {
+  // Check if a user has been selected and update fields accordingly
+  const userToUse = selectedUser || user || loggedInUser;
+  if (userToUse) {
+    const updatedFields = fields.map((field) => {
+      switch (field.name) {
+        case 'firstName':
+          return { ...field, value: userToUse.name ? userToUse.name.split(' ')[0] : field.value };
+        case 'lastName':
+          return { ...field, value: userToUse.name ? userToUse.name.split(' ')[1] : field.value };
+        case 'email':
+          return { ...field, value: userToUse.email || field.value };
+        case 'phone':
+          return { ...field, value: userToUse.phone ? phoneFormat(userToUse.phone, 'US', true) : field.value };
+        case 'address':
+          return { ...field, value: userToUse.address || field.value };
+        default:
+          return field;
       }
-    };
-    handleUser().then((updatedFields: any) => {
-      handleDisabled(updatedFields);
-    })
+    });
+
+    setFields(updatedFields);
+    if (!initialFields) setInitialFields(updatedFields);
+  }
+};
+  const init = async () => {
+    handleUser().then((updatedFields: any) => handleDisabled(updatedFields))
   }
   useEffect(() => {
     init()
-  }, [selectedUser]);
+  }, []);
 
 
   return (

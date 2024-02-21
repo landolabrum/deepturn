@@ -19,7 +19,7 @@ import { findField, updateField } from '@webstack/components/UiForm/functions/fo
 import { useClearance } from '~/src/core/authentication/hooks/useUser';
 import AdminProductRequest from '../views/AdminProductRequest';
 
-const AdminCustomerDetails: React.FC<any> = ({  customer_id }: any) => {
+const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
   const router = useRouter();
   const [customer, setCustomer] = useState<IFormField[] | undefined>();
   const { openModal, closeModal } = useModal();
@@ -70,7 +70,6 @@ const AdminCustomerDetails: React.FC<any> = ({  customer_id }: any) => {
     }
 
     const formatted = (parentData?: any, parent?: string) => {
-
       return Object.entries(parentData || data)
         .filter(([key]) => !modifiedKeys.includes(key) && !removeKeys.includes(key) && !key.includes(merchantId))
         .map(([key, value]) => ({
@@ -93,7 +92,7 @@ const AdminCustomerDetails: React.FC<any> = ({  customer_id }: any) => {
         await adminService.deleteCustomer(customer_id);
         router.reload();
       } catch (e) {
-        alert(JSON.stringify(e))
+        console.error("[ ADMIN DELETE CUSTOMER (ER) ]", JSON.stringify(e))
       }
     }
     deleteService().then(() => {
@@ -184,35 +183,33 @@ const AdminCustomerDetails: React.FC<any> = ({  customer_id }: any) => {
             email: response?.email
           })
           const hasProductRequest = () => {
-            let productRequestTotal = 0;
-            let productRequestTimeStamp: any = '';
-            const requestItems = Object.entries(response?.metadata || {}).reduce((acc: any, [key, value]) => {
-              const keyParts = keyStringConverter(key).split('.');
-              console.log('keyParts va ', value)
-              if (keyParts[0] === merchantId && value) {
-                // Assuming the key format is always 'merchantId.form.item'
-                const [, form, item] = keyParts;
-                if (item !== 'timestamp') {
-                  productRequestTotal += Number(value);
-                  acc.push({ form, item, value });
-                } else if (value) productRequestTimeStamp = value;
+            let formName = '';
+            Object.entries(response?.metadata || {}).map(([key, value]: any) => {
+              const keyParts = key.split('.');
+              if (keyParts[0] === 'prod_req' && keyParts[1] === merchantId) {
+                formName = keyParts[2];
+                setProductRequest(value);
               }
-              return acc;
-            }, []);
-            if (Boolean(requestItems?.length))setNotification(
-              { active: true, persistance: 5000, list: [{ label: `${response?.name}, has a new product request.` }] }
-            );
-            setProductRequest({ items: [...requestItems], total: productRequestTotal, timestamp: productRequestTimeStamp });
-          }
+            });
+            // test against the default formName = ''
+            if (formName.length) {
+              setNotification({
+                active: true,
+                persistance: 5000,
+                list: [{ label: `${response?.name}, has a new ${formName} request.` }]
+              });
+            }
+          };
+
           hasProductRequest();
           const transformedData = modifyCustomerData(response);
           setCustomer(transformedData);
         } else {
-          alert("Couldn't get customer");
+          console.error("Couldn't get customer");
         }
       } catch (error) {
         console.error(error);
-        alert("Error fetching customer data");
+        // alert("Error fetching customer data");
       } finally {
       }
     }
@@ -229,7 +226,7 @@ const AdminCustomerDetails: React.FC<any> = ({  customer_id }: any) => {
     return (
       <>
         <style jsx>{styles}</style>
-        <div className='admin-customer'>{customer_id}
+        <div className='admin-customer'>
           {productRequest && <AdminProductRequest customer_id={customer_id} productRequest={productRequest} />}
           {/* Render ProductRequest */}
           <div className='admin-customer__header'>
@@ -249,7 +246,8 @@ const AdminCustomerDetails: React.FC<any> = ({  customer_id }: any) => {
                     }}>
                     {addressString}
 
-                  </UiButton></div> || ''
+                  </UiButton>
+                </div> || ''
               }
               {String(info?.phone).length > 4 &&
                 <div>

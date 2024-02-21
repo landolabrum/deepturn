@@ -47,7 +47,7 @@ export const routes: IRoute[] = [
   
 
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
-  { label: "configure", href: "/configure", icon: "fa-gear", active: true },
+  // { label: "configure", href: "/configure", icon: "fa-gear", active: true },
   { label: "products", href: "/product", icon: "fa-tags", active: true },
   // {
   //   label: "Social",

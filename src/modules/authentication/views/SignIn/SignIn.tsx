@@ -9,12 +9,8 @@ import IMemberService from "~/src/core/services/MemberService/IMemberService";
 import useUserAgent from "~/src/core/authentication/hooks/useUserAgent";
 import styles from "./SignIn.scss";
 import { useNotification } from "@webstack/components/Notification/Notification";
-import { useLoader } from "@webstack/components/Loader/Loader";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
-import environment from "~/src/environment";
 import { useRouter } from "next/router";
-import { promises } from "dns";
 
 const DEFAULT_RESPONSE = { response: "", message: "" };
 const defaultCodeValue = "------";

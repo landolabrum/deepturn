@@ -73,17 +73,17 @@ button {
   }
 
   .busy-spinner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: inherit;
-    height: inherit;
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    // width: inherit;
+    // height: inherit;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: var(--input-border-radius);
     // background-color: #00000045;
-    --ui-icon-color: var(--blue);
+    --ui-icon-color: var(--white);
   }
   &.icon, &.disabled-icon{
     padding: 0 7px;

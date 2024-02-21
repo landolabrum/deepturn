@@ -73,7 +73,7 @@ const Index = () => {
               </div>
             </div>
             <div className='index__full'>
-              <ProductRequestSurvey />
+              <ProductRequestSurvey id='configure' />
             </div>
 
             <div className='index__full'>

@@ -14,6 +14,7 @@ import environment from "~/src/environment"
 import capitalize from '@webstack/helpers/Capitalize';
 import ContactForm from '@shared/components/ContactForm/ContactForm';
 import useWindow from '@webstack/hooks/useWindow';
+import { useUser } from '~/src/core/authentication/hooks/useUser';
 
 
 export const applianceArray: IMoreInfoField[] = [
@@ -49,67 +50,70 @@ export type IMoreInfoField = {
 }
 
 interface IProductMoreInfoForm {
+    id: string;
     title?: string;
     subtitle?: string;
-    features?: IMoreInfoField[];
+    prod_req?: IMoreInfoField[];
 }
 
 const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
-    features = applianceArray,
+    prod_req = applianceArray,
     title = 'appliance',
+    id,
     subtitle = 'Select applicable appliances that you need power'
 }) => {
+    if(!id)return <>No ID FOR PRODUCT REQUEST</>;
+    const user = useUser()
     const selectedRef = useRef<any | undefined>();
     const optionsRef = useRef<any | undefined>();
     const userAgentInfo = useUserAgent();
-    const defaultForm = { features: features };
+    const defaultForm = { prod_req: prod_req };
     const clearAllSelected = () => setForm(defaultForm);
     const { openModal, closeModal, replaceModal } = useModal();
     // const { scrollTo, setScrollTo } = useScrollTo({ max: 1100 });
-    const [form, setForm] = useState<{ features: IMoreInfoField[] }>({ features: features });
-    const [contactData, setContactData] = useState(null);
+    const [form, setForm] = useState<{ prod_req: IMoreInfoField[] }>({ prod_req: prod_req });
+    const [customerData, setContactData] = useState(null);
     const [message, setMessage] = useState<string | null>(null);
     const [isSuccess, setIsSuccess]=useState(false);
     const memberService = getService<IMemberService>('IMemberService');
-    const { features: formFeatures, } = form;
+    const { prod_req: productRequestObject, } = form;
     const { width } = useWindow();
-    const ProductFeatureSuccess = () => <>
+    const ProductRequestSuccess = () => <>
         <style jsx>{styles}</style>
-        <div id='feature_message' className='product-request-survey__success'>
+        <div  className='product-request-survey__success'>
             <div className='product-request-survey__success--status'>Success<UiIcon icon='fa-circle-check' /></div>
             <div className='product-request-survey__success--message'>{message || ''}</div>
         </div>
     </>;
-    const ProductFeatureInvalid = () => <>
+    const ProductRequestInvalid = () => <>
         <style jsx>{styles}</style>
-        <div id='feature_message' className='product-request-survey__invalid'>
+        <div className='product-request-survey__invalid'>
             <div className='product-request-survey__invalid--status'>Invalid<UiIcon icon='fa-exclamation-triangle' /></div>
             <div className='product-request-survey__invalid--message'>{message || ''}</div>
-            <UiButton onClick={() => handleView('contact')}>return to contact form</UiButton>
+            <UiButton onClick={() => handleView('customer')}>return to customer form</UiButton>
 
         </div>
     </>;
 
     const handleView = (newView: string) => {
-        // Directly handle 'contact' case to open a modal, avoiding unnecessary context initialization for this case
-        if (newView === 'contact') {
+        // Directly handle 'customer' case to open a modal, avoiding unnecessary context initialization for this case
+        if (newView === 'customer') {
             openModal({
-                title: <UiButton variant='link' traits={{ beforeIcon: "fa-chevron-left" }} onClick={() => handleView('feature')}>Features</UiButton>,
-                children: <ContactForm onSubmit={onContactSubmit} />
+                title: <UiButton variant='link' traits={{ beforeIcon: "fa-chevron-left" }} onClick={() => handleView('product')}>Features</UiButton>,
+                children: <ContactForm user={user} onSubmit={onContactSubmit} />
             });
             return; // Early return to avoid further execution
         }
 
         let context = {};
-
         // Handle cases where newView is 'loading', 'success', 'invalid', 'error', or contains "@"
         if (newView === 'loading') {
             context = { children: <UiLoader height='500px' position='relative' /> };
         } else if (newView === 'success') {
             setIsSuccess(true);
-            context = { children: <ProductFeatureSuccess /> };
+            context = { children: <ProductRequestSuccess /> };
         } else if (newView === 'invalid') {
-            context = { children: <ProductFeatureInvalid /> };
+            context = { children: <ProductRequestInvalid /> };
         } else if (newView === 'error') {
             context = { children: <h1>An Error Occurred</h1> };
         } else if (newView.includes("@")) {
@@ -118,7 +122,6 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                 children: (
                     <>
                         <style jsx>{styles}</style>
-
                         <div className='product-request-survey__success'>
                         <div className='product-request-survey__success--status'>Success<UiIcon icon='fa-circle-check' /></div>
                             <div>A verification email to
@@ -132,19 +135,19 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             };
         }
 
-        // Utilize replaceModal for all other cases except 'contact'
+        // Utilize replaceModal for all other cases except 'customer'
         replaceModal(context);
     };
 
     const handleMobileSelected = () => {
-        if (!selectedRef?.current) return;
+        if (!selectedRef?.current || width > 1100) return;
         const selectHeight = selectedRef.current.offsetHeight;
         // set the submit Box-shadow to unset
         selectedRef.current.style.bottom = width > 900 ? '' : `calc(120px - ${selectHeight}px)`;
     }
     const handleFeature = (choice: IMoreInfoField) => {
         const addCustom = async (choice: any) => handleFeature(choice);
-        const isOther = !Boolean(features.find(f => f.name === choice.name));
+        const isOther = !Boolean(prod_req.find(f => f.name === choice.name));
         if (choice.name === 'other') {
             return openModal(
                 <ProductFeatureOther
@@ -158,22 +161,19 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
         }
 
         if (isOther) {
-            formFeatures.push(choice);
-            setForm({ ...form, features: formFeatures })
+            productRequestObject.push(choice);
+            setForm({ ...form, prod_req: productRequestObject })
             return;
         }
 
-        const updatedFeatures = formFeatures.map(feature =>
-            feature.name === choice.name ? { ...feature, selected: !feature.selected } : feature
+        const updatedFeatures = productRequestObject.map(item =>
+            item.name === choice.name ? { ...item, selected: !item.selected } : item
         );
-        setForm({ ...form, features: updatedFeatures });
+        setForm({ ...form, prod_req: updatedFeatures });
     };
-
-
-    const selected = form.features.filter(f => f.selected);
-
+    const selected = form.prod_req.filter(f => f.selected);
     const calculateTotalValue = (): number => {
-        return formFeatures.reduce((acc, curr) => {
+        return productRequestObject.reduce((acc, curr) => {
             if (curr.selected) {
                 return acc + curr.value;
             }
@@ -183,34 +183,38 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
 
 
     const onContactSubmit = async (submittedContactData: any) => {
-        setContactData(submittedContactData); // Save the contact data in state
+        setContactData(submittedContactData); // Save the customer data in state
         handleView('loading'); // Move to loading view while processing the submission
-        onSubmit(submittedContactData); // Pass the contact data directly to onSubmit
+        onSubmit(submittedContactData); // Pass the customer data directly to onSubmit
     };
 
 
     const onSubmit = async (submittedContactData: any) => {
-        let contactDataToUse = submittedContactData || contactData;
-        if (!contactDataToUse) {
-            console.error("No contact data available.");
+        let customerDataToUse = submittedContactData || customerData;
+        if (!customerDataToUse) {
+            console.error("No customer data available.");
             handleView('invalid');
             return;
         }
         // TODO CONVERT TO JWT
         let request: any = {
-            timestamp: new Date().getTime(),
+            customer: customerDataToUse,
             user_agent: userAgentInfo,
-            src: 'prod-feature',
-            features: form.features.reduce((acc: any, feature: any) => {
-                if (feature.selected) {
-                    acc[createMerchantKey('.prod_req.configure', feature.name)] = feature.value;
-                }
-                return acc;
-            }, {}),
-            contact: contactDataToUse,
-            url: window?.location?.origin
+            origin: window?.location?.origin,
+            prod_req: {
+                id: id,
+                merchant_id: environment.merchant.mid,
+                data:form.prod_req.reduce((acc: any, item: any) => {
+                    if (item.selected) {
+                        acc[keyStringConverter(item.name, true)] = item.value;
+                    }
+                    return acc;
+                }, {}),
+                created: new Date().getTime()
+            }
         };
-
+        console.log('[ REQUEST ]', request)
+       
         try {
             const response = await memberService.prospectRequest(request);
             if (response?.email) {
@@ -238,12 +242,12 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
         handleMobileSelected();
     }, [width]);
 
-    if (form.features.length) return (
+    if (form.prod_req.length) return (
         <>
             <style jsx>{styles}</style>
             <div className='product-request-survey' ref={optionsRef}>
                 {title && <div className='product-request-survey__title'>{capitalize(title)}{`'`}s </div>}
-                {isSuccess && <ProductFeatureSuccess/>}
+                {isSuccess && <ProductRequestSuccess/>}
                 {!isSuccess && <>
                     <div ref={selectedRef}
                     onMouseEnter={handleBoxShadow}
@@ -257,10 +261,10 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                             {Boolean(selected?.length) && <div onClick={clearAllSelected}>clear all</div>}
                         </div>
                     </div>
-                    {formFeatures && Boolean(selected?.length) &&
+                    {productRequestObject && Boolean(selected?.length) &&
                         <div className='product-request-survey__selected--content'>
-                            {Object.values(formFeatures).map((feature, index) => {
-                                if (feature?.selected) return (
+                            {Object.values(productRequestObject).map((item, index) => {
+                                if (item?.selected) return (
                                     <div key={index}>
                                         <UiButton
                                             variant='primary round mini'
@@ -268,12 +272,12 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                                             traits={{
                                                 afterIcon: {
                                                     icon: 'fa-xmark',
-                                                    onClick: () => handleFeature(feature)
+                                                    onClick: () => handleFeature(item)
                                                 },
                                             }}
-                                            onClick={() => handleFeature(feature)}
+                                            onClick={() => handleFeature(item)}
                                         >
-                                            {feature.name} - {feature?.value}
+                                            {item.name} - {item?.value}
                                         </UiButton>
                                     </div>
                                 )
@@ -289,13 +293,13 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                     sm={4}
                     lg={4}
                     gap={10} >
-                    {formFeatures !== null && formFeatures.map((feature, index) => {
+                    {productRequestObject !== null && productRequestObject.map((item, index) => {
                         return (
-                            <div key={index} className={`product-description__choice ${feature?.selected ? 'product-description__choice--choice' : ''}`} onClick={() => handleFeature(feature)}>
+                            <div key={index} className={`product-description__choice ${item?.selected ? 'product-description__choice--choice' : ''}`} onClick={() => handleFeature(item)}>
                                 <div className='product-description__choice__name'>
-                                    {feature?.name} {feature?.selected && (
+                                    {item?.name} {item?.selected && (
                                         <div className='product-description__choice__name--icon '>
-                                            {feature?.value}
+                                            {item?.value}
                                         </div>
                                     )}
                                 </div>
@@ -306,7 +310,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                 <div className='product-request-survey__submit'>
                     <UiButton
                         disabled={selected.length == 0}
-                        onClick={() => handleView('contact')}
+                        onClick={() => handleView('customer')}
                         variant={Boolean(selected.length) && 'glow' || 'disabled'}
                     >Proceed to Quote</UiButton>
                 </div>

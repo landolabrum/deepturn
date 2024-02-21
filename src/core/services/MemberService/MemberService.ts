@@ -147,12 +147,12 @@ export default class MemberService
       throw new ApiError("No ID Provided", 400, "MS.SI.02");
     }
   }
-  public async prospectRequest(quote: any, test: boolean = false) {
-    if (quote) {
+  public async prospectRequest(request: any) {
+    if (request) {
 
       const res = await this.post<{}, any>(
         "usage/prospect/create/",
-        quote
+        request
       )
       return res
     } else {
