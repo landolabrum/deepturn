@@ -63,18 +63,16 @@ const Index = () => {
                 {/* 6 Important Questions */}
                 6 Key Questions to Enhance Your Solar System with Batteries
               </div>
-              <div>Can I add batteries to my existing solar</div>
-              <div className='index__full-ol'>
+              <div>Can I add batteries to my existing solar</div><br/><br/>
+              {/* <div className='index__full-ol'>
                 <div className='index__full-li'>
                   <div className='index__full-li--title'>
                     Can I add batteries to my existing solar
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
-            <div className='index__full'>
               <ProductRequestSurvey id='configure' startButton='Configure your Solar Grid Box'/>
-            </div>
 
             <div className='index__full'>
               <div className='index--title'>

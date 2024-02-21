@@ -40,6 +40,7 @@
 
         text-transform: capitalize;
         font-size: var(--s-element);
+      
         --ui-icon-size: var(--s-1);
         line-height: 1;
         width: max-content;
@@ -70,6 +71,10 @@
     padding:  var(--s-padding) ;
     margin:  var(--s-padding);
     transition: all .5s;
+        background-color: var(--gray-90);
+    gap: var(--s-padding);
+    // min-height: 490px;
+    color: var(--gray-30);
     &__btn-view{
         background-color: var(--primary-opaque);
         border-radius: var(--border-radius);
@@ -86,6 +91,9 @@
             margin: auto;
             text-align: center;
             font-size: var(--s-element);
+            @media(max-width:900px){
+                font-size: var(--s-2);
+            }
         }
    
         &:hover{
@@ -111,10 +119,7 @@
         // margin-bottom: 100px;
     }
 
-    background-color: var(--gray-90);
-    gap: var(--s-padding);
-    // min-height: 490px;
-    color: var(--gray-30);
+
 
 
 
@@ -197,6 +202,7 @@
             top: var(--s-9);
 
             @media(max-width:900px) {
+
                 top: var(--s-padding);
                 color: var(--gray-70);
                 font-size: var(--s-7);
@@ -385,6 +391,7 @@
         border-width: 1px;
         position: fixed;
         width: 80vw;
+        bottom: 0;
         z-index: 4;
         padding: var(--s-9);
         background-color: var(--gray-90);

@@ -53,8 +53,8 @@
 
     @media(max-width: 900px) {
         margin: 0 auto;
-        top: 70px;
-        width: var(--s-padding-width);
+        top: var(--s-9);
+        width: calc(100% - calc(var(--s-9) * 2));
     }
 
     &__dragging {
