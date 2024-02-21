@@ -78,7 +78,7 @@ const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
           value: handleFormatValue(key, value),
           type: handleFormatType(key, handleFormatValue(key, value)),
           variant: 'default',
-          disabled: disabledKeys.includes(key) || undefined,
+          readonly: disabledKeys.includes(key) || undefined,
           placeholder: '',
         }));
     };

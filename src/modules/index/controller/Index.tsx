@@ -73,7 +73,7 @@ const Index = () => {
               </div>
             </div>
             <div className='index__full'>
-              <ProductRequestSurvey id='configure' />
+              <ProductRequestSurvey id='configure' startButton='Configure your Solar Grid Box'/>
             </div>
 
             <div className='index__full'>

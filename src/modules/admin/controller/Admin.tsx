@@ -23,7 +23,7 @@ const Admin = () => {
     products: <AdminProducts />,
     invoice: <AdminInvoices />,
     documents: <AdminListDocuments />,
-    // system: <AdminSystem />,
+    system: <AdminSystem />,
     messenger: <AdminMesenger />,
     marketing: <AdminMarketing />,
   }

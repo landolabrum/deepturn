@@ -16,10 +16,18 @@ interface IContactFormProps {
 
 const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }) => {
   const initialContactFields = [
-    { name: 'firstName', label: 'First Name', type: 'text', placeholder: 'First Name', required: true, value:mockDateTime(true)},
-    { name: 'lastName', label: 'Last Name', type: 'text', placeholder: 'Last Name', required: true, value:mockDateTime()},
-    { name: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com', required: true, value:'larzrandana@gmail.com'},
-    { name: 'phone', label: 'Phone', type: 'tel', placeholder: '1 (555) 555-5555', required: true, value:'4344343433'},
+    { name: 'firstName', label: 'First Name', type: 'text', placeholder: 'First Name', required: true, 
+    // value:mockDateTime(true)
+  },
+    { name: 'lastName', label: 'Last Name', type: 'text', placeholder: 'Last Name', required: true
+    // , value:mockDateTime()
+  },
+    { name: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com', required: true
+    // , value:'larzrandana@gmail.com'
+  },
+    { name: 'phone', label: 'Phone', type: 'tel', placeholder: '1 (555) 555-5555', required: true, 
+    // value:'4344343433'
+  },
     { name: 'address', label: 'Address', type: 'text', placeholder: 'Your Address', required: true },
   ];
 
@@ -32,29 +40,11 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }
 
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('[ onChange (1)]', fields);
     const { name, value } = e.target;
     let fieldsRef = fields.map((field:IFormField,i)=>{
-      if(field.name === name){
-        console.log('[ fieldNAme ]', i)
-
-        field.value = value;
-      }
+      if(field.name === name)field.value = value;
       return field;
     })
-    // const fieldsRef = fields.reduce((acc: IFormField[], field: IFormField) => {
-    //   // Check if the current field is the one being updated
-    //   if (field.name === name) {
-    //     // If so, update its value and add it to the accumulator
-    //     acc.push({ ...field, value: value });
-    //   } else {
-    //     // Otherwise, add the field unchanged to the accumulator
-    //     acc.push(field);
-    //   }
-    //   return acc;
-    // }, []); // Initialize the accumulator as an empty array
-  
-    console.log('[ onChange (2)]', fieldsRef);
     setFields(fieldsRef); // Update the state with the modified fields
     handleDisabled(fieldsRef); // Update the disabled state based on the new fields
   };
@@ -104,9 +94,9 @@ const handleUser = async () => {
     const updatedFields = fields.map((field) => {
       switch (field.name) {
         case 'firstName':
-          return { ...field, value: userToUse.name ? userToUse.name.split(' ')[0] : field.value };
+          return { ...field, value: userToUse.name ? userToUse.name.split(' ')[0] : field.value, width: "50%" };
         case 'lastName':
-          return { ...field, value: userToUse.name ? userToUse.name.split(' ')[1] : field.value };
+          return { ...field, value: userToUse.name ? userToUse.name.split(' ')[1] : field.value, width: "50%" };
         case 'email':
           return { ...field, value: userToUse.email || field.value };
         case 'phone':

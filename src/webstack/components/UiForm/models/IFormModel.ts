@@ -26,6 +26,7 @@ export type IFormField = {
     variant?: IFormControlVariant;
     required?: boolean;
     disabled?: boolean;
+    readonly?: boolean;
     constraints?: {
         min?: IFormMinMax | number;
         max?: IFormMinMax | number;
@@ -36,6 +37,7 @@ export type IFormField = {
 }
 
 export interface IForm {
+    readOnly?:boolean;
     onAddField?: (e:any)=>void;
     traits?: ITraits;
     variant?: IFormControlVariant;

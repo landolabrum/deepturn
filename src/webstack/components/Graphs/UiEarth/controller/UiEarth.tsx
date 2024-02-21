@@ -8,6 +8,8 @@ import setUpPoints from '../functions/setUpPoints';
 import setUpScene from '../functions/setUpScene';
 import useWindow from '@webstack/hooks/useWindow';
 import UiSelect from '@webstack/components/UiSelect/UiSelect';
+import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import AdminCustomerDetails from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerDetail/controller/AdminCustomerDetail';
 const UiEarthObject = (
     {
         globeImageUrl,
@@ -63,21 +65,31 @@ const UiEarthObject = (
             options 
         );
     }
+    const {openModal, closeModal}=useModal();
+    // Define handlePoint function
+    const handlePoint = (id: string) => {
+        console.log(`Marker ID: ${id}`);
+        openModal({
+            variant:'popup',
+            title:'ji',
+            children:<AdminCustomerDetails customer_id={id}/>
+        });
+        // You can add more logic here if needed
+    };
 
     useEffect(() => {
         if (!myGlobe) return;
         setUpScene(myGlobe, containerRef, options, width);
-        setUpEarth(
-            myGlobe,
-            controls, // Pass controls instead of null
-            options 
-        );
+        setUpEarth(myGlobe, controls, options);
 
-        const pointsSet = setUpPoints(
+        // Now pass handlePoint as an argument to setUpPoints
+        setUpPoints(
             myGlobe,
-            pointsDefinitions
+            pointsDefinitions,
+            handlePoint // Pass the function here
         );
-    }, [width, myGlobe, setUpPoints, setUpEarth, setUpScene, earthRef.current, controls]); // Include controls in the dependencies array
+    }, [width, myGlobe, setUpPoints, setUpEarth, setUpScene, earthRef.current, controls, ]); // Include handlePoint in the dependencies array
+
 
     return (
         <>

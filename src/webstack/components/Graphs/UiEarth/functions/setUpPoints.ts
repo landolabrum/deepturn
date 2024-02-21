@@ -1,13 +1,16 @@
 import { EarthPoint } from "../models/IEarth";
 import { Dispatch, SetStateAction } from 'react';
 import IconHelper from '@webstack/helpers/IconHelper';
+// Modification in setUpPoints function to accept a callback for handling clicks
 const setUpPoints = (
     myGlobe: any,
     pointsDefinitions: {
         pts: EarthPoint[] | undefined;
         points: EarthPoint[];
-        setPoints: React.Dispatch<React.SetStateAction<EarthPoint[] | undefined>>;
-    }) => {
+        setPoints: Dispatch<SetStateAction<EarthPoint[] | undefined>>;
+    },
+    onMarkerClick: (id: string) => void // Add this parameter to accept the callback function
+) => {
     const markerSvg = IconHelper.getIconSvg('fa-circle-user', { width: 17, height: 17, color: '#fff000' });
 
     const {pts, points, setPoints} = pointsDefinitions;
@@ -18,17 +21,16 @@ const setUpPoints = (
             .htmlElement((d: any) => {
                 const el = document.createElement('a');
                 const el_id = `mrkr-${d.id}`;
-                el.className='globe-marker'
+                el.className = 'globe-marker';
                 el.id = el_id;
-                el.onclick=()=>window.location.href = `admin?vid=customers&id=${d.id}`;
-                el.innerHTML = `
-                <div>${markerSvg}</div>
-                <div class='globe-html'>${d.html}</div>`;
+                // Replace direct navigation with the callback invocation
+                el.onclick = () => onMarkerClick(d.id);
+                el.innerHTML = `<div>${markerSvg}</div><div class='globe-html'>${d.html}</div>`;
                 return el;
             }).htmlAltitude('alt');
-            return true
+            return true;
     }
-    return false
-}
+    return false;
+};
 
 export default setUpPoints;

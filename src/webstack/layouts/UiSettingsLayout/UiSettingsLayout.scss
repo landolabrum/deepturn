@@ -160,11 +160,15 @@ $actionsBg: var(--gray-90);
 .settings__icon {
     z-index: 2;
     @extend .d-flex;
-    width: var(--s-element);
-    height: var(--s-element);
+    // width: var(--s-element);
+    background-color: var(--black);
+    // height: var(--s-element);
+    padding: var(--s-9);
     --ui-icon-width: 100%;
-    --ui-icon-height: var(--s-5);
-    aspect-ratio: 1;
+    --ui-icon-height: 100%;
+    // aspect-ratio: 1;
+    --ui-icon-color:var(--white);
+
     position: absolute;
     @media(max-width: 1100px) {
     }
@@ -175,8 +179,8 @@ $actionsBg: var(--gray-90);
     }
 
 
-    &__hide {
-    }
+    // &__hide {
+    // }
     &__show {
         display: none;
     }
@@ -184,16 +188,15 @@ $actionsBg: var(--gray-90);
     // }
     &__full, &__full-width {
         left: var(--s-padding);
+        position: fixed;
+        top: calc(var(--s-element) + var(--s-padding));
     }
     &__full{
-        position: absolute;
         top: calc(var(--s-element) * 2);
         @media(min-width: 900px) {
-            top: calc(var(--s-element) + var(--s-padding));
         }
     }
     &__full-width {
-        margin-left: var(--s-padding);
         @media(max-width: 900px) {
         }
     }

@@ -39,9 +39,7 @@ export const applianceArray: IMoreInfoField[] = [
     { name: "stove top", selected: false, value: 15 },
     { name: "other", selected: false, value: 10 },
 ];
-const createMerchantKey = (parent: string, key: string) => {
-    return `${environment.merchant.mid}.${parent}.${keyStringConverter(key, true)}`
-}
+
 
 export type IMoreInfoField = {
     name: string;
@@ -52,13 +50,15 @@ export type IMoreInfoField = {
 interface IProductMoreInfoForm {
     id: string;
     title?: string;
+    startButton?: string;
     subtitle?: string;
     prod_req?: IMoreInfoField[];
 }
 
 const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     prod_req = applianceArray,
-    title = 'appliance',
+    startButton,
+    title = '',
     id,
     subtitle = 'Select applicable appliances that you need power'
 }) => {
@@ -71,15 +71,18 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     const { openModal, closeModal, replaceModal } = useModal();
     // const { scrollTo, setScrollTo } = useScrollTo({ max: 1100 });
     const [form, setForm] = useState<{ prod_req: IMoreInfoField[] }>({ prod_req: prod_req });
-    const [customerData, setContactData] = useState(null);
+    const [contactData, setContactData] = useState(null);
     const [message, setMessage] = useState<string | null>(null);
-    const [isSuccess, setIsSuccess]=useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
     const memberService = getService<IMemberService>('IMemberService');
     const { prod_req: productRequestObject, } = form;
+    const [isBtnView, setIsBtnView] = useState<boolean>(false);
+    const [view, setView]=useState('');
+
     const { width } = useWindow();
     const ProductRequestSuccess = () => <>
         <style jsx>{styles}</style>
-        <div  className='product-request-survey__success'>
+        <div className='product-request-survey__success'>
             <div className='product-request-survey__success--status'>Success<UiIcon icon='fa-circle-check' /></div>
             <div className='product-request-survey__success--message'>{message || ''}</div>
         </div>
@@ -89,18 +92,15 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
         <div className='product-request-survey__invalid'>
             <div className='product-request-survey__invalid--status'>Invalid<UiIcon icon='fa-exclamation-triangle' /></div>
             <div className='product-request-survey__invalid--message'>{message || ''}</div>
-            <UiButton onClick={() => handleView('customer')}>return to customer form</UiButton>
+            <UiButton onClick={() => handleView('contact')}>return to contact form</UiButton>
 
         </div>
     </>;
-
     const handleView = (newView: string) => {
-        // Directly handle 'customer' case to open a modal, avoiding unnecessary context initialization for this case
-        if (newView === 'customer') {
-            openModal({
-                title: <UiButton variant='link' traits={{ beforeIcon: "fa-chevron-left" }} onClick={() => handleView('product')}>Features</UiButton>,
-                children: <ContactForm user={user} onSubmit={onContactSubmit} />
-            });
+        setView(newView);
+        // Directly handle 'contact' case to open a modal, avoiding unnecessary context initialization for this case
+        if (newView === 'contact') {
+            openModal(<ContactForm user={user} onSubmit={onContactSubmit} />);
             return; // Early return to avoid further execution
         }
 
@@ -122,7 +122,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                     <>
                         <style jsx>{styles}</style>
                         <div className='product-request-survey__success'>
-                        <div className='product-request-survey__success--status'>Success<UiIcon icon='fa-circle-check' /></div>
+                            <div className='product-request-survey__success--status'>Success<UiIcon icon='fa-circle-check' /></div>
                             <div>A verification email to
                                 <span className='product-request-survey__success--email'> {newView}, </span>
                                 has been sent.
@@ -134,7 +134,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             };
         }
 
-        // Utilize replaceModal for all other cases except 'customer'
+        // Utilize replaceModal for all other cases except 'contact'
         replaceModal(context);
     };
 
@@ -182,28 +182,28 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
 
 
     const onContactSubmit = async (submittedContactData: any) => {
-        setContactData(submittedContactData); // Save the customer data in state
+        setContactData(submittedContactData); // Save the contact data in state
         handleView('loading'); // Move to loading view while processing the submission
-        onSubmit(submittedContactData); // Pass the customer data directly to onSubmit
+        onSubmit(submittedContactData); // Pass the contact data directly to onSubmit
     };
 
 
     const onSubmit = async (submittedContactData: any) => {
-        let customerDataToUse = submittedContactData || customerData;
-        if (!customerDataToUse) {
-            console.error("No customer data available.");
+        let contactDataToUse = submittedContactData || contactData;
+        if (!contactDataToUse) {
+            console.error("No contact data available.");
             handleView('invalid');
             return;
         }
         // TODO CONVERT TO JWT
         let request: any = {
-            customer: customerDataToUse,
+            customer: contactDataToUse,
             user_agent: userAgentInfo,
             origin: window?.location?.origin,
             prod_req: {
                 id: id,
                 merchant_id: environment.merchant.mid,
-                data:form.prod_req.reduce((acc: any, item: any) => {
+                data: form.prod_req.reduce((acc: any, item: any) => {
                     if (item.selected) {
                         acc[keyStringConverter(item.name, true)] = item.value;
                     }
@@ -212,8 +212,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                 created: new Date().getTime()
             }
         };
-        console.log('[ REQUEST ]', request)
-       
+
         try {
             const response = await memberService.prospectRequest(request);
             if (response?.email) {
@@ -227,6 +226,10 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
             handleView('error');
         }
     };
+    const handleBtnView = () =>{
+        setIsBtnView(false);
+         setView(`Appliances to Power`);
+    }
     const handleBoxShadow = () => {
         const submitContainer = selectedRef.current.parentNode.lastChild;
         if (
@@ -239,80 +242,89 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
 
     useEffect(() => {
         handleMobileSelected();
-    }, [width]);
-    if(!id)return <>No ID FOR PRODUCT REQUEST</>;
+        if (startButton && !isBtnView) setIsBtnView(true);
+    }, [width, setView]);
+    if (!id) return <>No ID FOR PRODUCT REQUEST</>;
     if (form.prod_req.length) return (
         <>
             <style jsx>{styles}</style>
             <div className='product-request-survey' ref={optionsRef}>
                 {title && <div className='product-request-survey__title'>{capitalize(title)}{`'`}s </div>}
-                {isSuccess && <ProductRequestSuccess/>}
-                {!isSuccess && <>
+                {view !== '' && <div className='product-request-survey__title'>{capitalize(view)}</div>}
+                {isSuccess && <ProductRequestSuccess />}
+                {isBtnView &&
+                    <div className="product-request-survey__btn-view" onClick={handleBtnView}>
+                        <div className="product-request-survey__btn-view-text">
+                            {startButton}
+                        </div>
+                    </div>
+                }
+                {!isSuccess && !isBtnView && <>
                     <div ref={selectedRef}
-                    onMouseEnter={handleBoxShadow}
-                    onMouseLeave={handleBoxShadow}
-                    className='product-request-survey__selected'>
-                    <div className='product-request-survey__selected--header'>
-                        {`Selected ${title}s`} | total amps  {calculateTotalValue()}
-                    </div>
-                    <div className='product-request-survey__tools' >
-                        <div className='product-request-survey__tools--tool'>
-                            {Boolean(selected?.length) && <div onClick={clearAllSelected}>clear all</div>}
+                        onMouseEnter={handleBoxShadow}
+                        onMouseLeave={handleBoxShadow}
+                        className='product-request-survey__selected'>
+                        <div className='product-request-survey__selected--header'>
+                            {`Selected ${title}s`} | total amps  {calculateTotalValue()}
                         </div>
-                    </div>
-                    {productRequestObject && Boolean(selected?.length) &&
-                        <div className='product-request-survey__selected--content'>
-                            {Object.values(productRequestObject).map((item, index) => {
-                                if (item?.selected) return (
-                                    <div key={index}>
-                                        <UiButton
-                                            variant='primary round mini'
-                                            size='sm'
-                                            traits={{
-                                                afterIcon: {
-                                                    icon: 'fa-xmark',
-                                                    onClick: () => handleFeature(item)
-                                                },
-                                            }}
-                                            onClick={() => handleFeature(item)}
-                                        >
-                                            {item.name} - {item?.value}
-                                        </UiButton>
-                                    </div>
-                                )
-                            })
-                            }
-                        </div>
-                    }
-                    {!selected.length && <div className='product-request-survey__instructions'>please Select, {title} to continue.</div>}
-                </div>
-                <div id='product-request-survey__options' />
-                <AdaptGrid
-                    xs={3}
-                    sm={4}
-                    lg={4}
-                    gap={10} >
-                    {productRequestObject !== null && productRequestObject.map((item, index) => {
-                        return (
-                            <div key={index} className={`product-description__choice ${item?.selected ? 'product-description__choice--choice' : ''}`} onClick={() => handleFeature(item)}>
-                                <div className='product-description__choice__name'>
-                                    {item?.name} {item?.selected && (
-                                        <div className='product-description__choice__name--icon '>
-                                            {item?.value}
-                                        </div>
-                                    )}
-                                </div>
+                        <div className='product-request-survey__tools' >
+                            <div className='product-request-survey__tools--tool'>
+                                {Boolean(selected?.length) && <div onClick={clearAllSelected}>clear all</div>}
                             </div>
-                        )
-                    })}
-                </AdaptGrid>
-                <div className='product-request-survey__submit'>
-                    <UiButton
-                        disabled={selected.length == 0}
-                        onClick={() => handleView('customer')}
-                        variant={Boolean(selected.length) && 'glow' || 'disabled'}
-                    >Proceed to Quote</UiButton>
-                </div>
+                        </div>
+                        {productRequestObject && Boolean(selected?.length) &&
+                            <div className='product-request-survey__selected--content'>
+                                {Object.values(productRequestObject).map((item, index) => {
+                                    if (item?.selected) return (
+                                        <div key={index}>
+                                            <UiButton
+                                                variant='primary round mini'
+                                                size='sm'
+                                                traits={{
+                                                    afterIcon: {
+                                                        icon: 'fa-xmark',
+                                                        onClick: () => handleFeature(item)
+                                                    },
+                                                }}
+                                                onClick={() => handleFeature(item)}
+                                            >
+                                                {item.name} - {item?.value}
+                                            </UiButton>
+                                        </div>
+                                    )
+                                })
+                                }
+                            </div>
+                        }
+                        {!selected.length && <div className='product-request-survey__instructions'>please Select, {title} to continue.</div>}
+                    </div>
+                    <div id='product-request-survey__options' />
+                    <AdaptGrid
+                        xs={3}
+                        sm={4}
+                        lg={4}
+                        gap={10} >
+                        {productRequestObject !== null && productRequestObject.map((item, index) => {
+                            return (
+                                <div key={index} className={`product-description__choice ${item?.selected ? 'product-description__choice--choice' : ''}`} onClick={() => handleFeature(item)}>
+                                    <div className='product-description__choice__name'>
+                                        {item?.name} {item?.selected && (
+                                            <div className='product-description__choice__name--icon '>
+                                                {item?.value}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </AdaptGrid>
+                    <div className='product-request-survey__submit'>
+                        <UiButton
+                            disabled={selected.length == 0}
+                            onClick={() => handleView('contact')}
+                            variant={Boolean(selected.length) && 'glow' || 'disabled'}
+                        >Proceed to Quote</UiButton>
+                    </div>
                 </>}
             </div>
         </>

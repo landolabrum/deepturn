@@ -73,9 +73,13 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
       // Special handling for USABLE elements
       const hasDataElem:any = Object.values(formElement.children)
       .find((e:any) => e.getAttribute('data-element') && ['button', 'input', 'select', 'textarea'].includes(e.getAttribute('data-element')));
-      if(hasDataElem)formElement.classList.add(
-        `form-control__element--${hasDataElem.getAttribute('data-element')}${type && type=='color'?'-color':''}`
-      );
+      if(hasDataElem){
+        const dataElemStr = hasDataElem.getAttribute('data-element')
+        ref.current.classList.add(`form-control--${dataElemStr}`)
+        formElement.classList.add(
+          `form-control__element--${dataElemStr}${type && type=='color'?'-color':''}`
+        );
+    }
     }
 
     // Overlay management
@@ -110,6 +114,13 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
       if(type != 'color' )return'';
       return className=='form-control'?' form-control--maxY':` ${className}-input-color`;
     }
+    // const elementClassArray = ref?.current?.firstChild.classList;
+    // if(elementClassArray){
+    //   elementClassArray.forEach((cl:string) => {
+    //     console.log(cl)
+    //   });
+    // }
+    // console.log()
     if (!variant) return `${className}${createIconClass()}${createSizeClass()}${isColor()}`;
     return `${createVariantClass()}${createIconClass()}${createSizeClass()}${isColor()}`
   };

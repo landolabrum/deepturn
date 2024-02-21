@@ -76,8 +76,8 @@ export const useModal = () => {
     modalContent: null,
   };
   
-  useEffect(() => {
-    // console.log('[ context ]', context)
-  }, [context?.isModalOpen]);
+  // useEffect(() => {
+  //   // console.log('[ context ]', context)
+  // }, [context?.isModalOpen]);
   return context ?? defaultContext;
 };

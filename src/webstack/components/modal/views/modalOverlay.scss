@@ -41,6 +41,16 @@
     outline: solid 1px var(--gray-50);
     border-radius: var(--border-radius);
 
+    &__popup {
+        top: calc(var(--s-element) + var(--s-9));
+        left: 0;
+        bottom: calc(var(--s-element) + var(--s-9));
+        margin: auto;
+        right: 0;
+        width: var(--s-padding-width);
+        transform: unset;
+    }
+
     @media(max-width: 900px) {
         margin: 0 auto;
         top: 70px;
@@ -77,6 +87,8 @@
         position: relative;
         @extend .d-flex;
         flex-direction: column;
+
+     
         &:hover {
             transition: all 1s;
         }
@@ -102,6 +114,7 @@
             width: 100vw;
             padding: 0;
             margin: 0;
+
             &:hover {
                 background-color: #ffffff00;
             }
@@ -116,35 +129,49 @@
         justify-content: space-between;
         // padding: var(--s-9) var(--s-padding);
         width: 100%;
+
         @media(max-width: 1100px) {
             right: 0;
         }
 
-        &:not(&__no-drag) {
-            &:hover {
-                cursor: url('/icons/fa-hand.svg'), auto;
-                background-color: var(--gray-80);
+        // &:not(&__no-drag) {
+        //     &:hover {
+        //         cursor: url('/icons/fa-hand.svg'), auto;
+        //         background-color: var(--gray-80);
 
-            }
+        //     }
 
-            :focus,
-            &:focus-within,
-            &:visited,
-            &:active {
-                cursor: url('/icons/fa-hand-back-fist.svg'), auto;
-            }
-        }
+        //     :focus,
+        //     &:focus-within,
+        //     &:visited,
+        //     &:active {
+        //         cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+        //     }
+        // }
 
-        &__dragging {
-            cursor: url('/icons/fa-hand-back-fist.svg'), auto;
-        }
+        // &__dragging {
+        //     cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+        // }
 
-        &__no-drag {
-            cursor: default;
+        // &__no-drag {
+        //     cursor: default;
+        // }
+        cursor: default;
+
+        &:hover,
+        &:focus,
+        &:focus-within,
+        &:visited,
+        &:active {
+            cursor: pointer;
+            // cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+            --ui-icon-color: var(--primary);
+
         }
 
         min-height: var(--s-element);
         --ui-icon-color: var(--gray-40);
+
         color: var(--gray-40);
 
         .modal-overlay__title {
@@ -152,7 +179,7 @@
             text-transform: capitalize;
         }
 
-      
+
 
         &__fullscreen {
             position: absolute;
@@ -177,15 +204,21 @@
         overflow-y: auto;
         overflow-x: hidden;
         width: 100%;
+        overflow-x: hidden;
         // @media(min-width: 1100px){
         // }
         &__fullscreen {
             z-index: 1;
             margin-bottom: 0;
             padding: 0;
-            width: 100%;
         }
-
+        &__popup{
+            background-color: var(--gray-100-opaque);
+            border-radius: var(--border-radius);
+            margin:0 var(--padding);
+            width: calc(100% - calc(var(--padding) * 4)); 
+            padding: var(--s-padding) var(--s-padding) 90px;
+        }
         .modal-overlay__confirm {
             @extend .d-flex;
             gap: var(--s-9);
@@ -198,9 +231,11 @@
             @media(max-width: 1100px) {
                 flex-direction: column;
             }
-            &-col{
+
+            &-col {
                 flex-direction: column;
             }
+
             &-btn {
                 width: 100%;
             }

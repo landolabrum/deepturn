@@ -26,7 +26,7 @@
     }
     &__title {
         height: 100%;
-        color: var(--blue-10);
+        color: var(--primary);
         font-size: var(--s-3);
         text-transform: capitalize;
     }
@@ -38,7 +38,7 @@
         height: 90px;
         --ui-icon-width: 90px;
         --ui-icon-height: 90px;
-        --ui-icon-color: var(--blue-10);
+        --ui-icon-color: var(--primary-opaque);
     }
     
     &__center {

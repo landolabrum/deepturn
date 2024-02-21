@@ -200,18 +200,19 @@
         }
 
         &:focus-within {
-            &:not(&--nav-item, &--signature) {
-                border: solid 1px var(--gray-100);
-                --ui-icon-color: var(--gray-100);
-                color: var(--gray-100);
-                background-color: var(--gray-50);
+            &:not(.form-control__element--nav-item, .form-control__element--signature) {
+                border: solid 1px var(--gray-10);
+                --ui-icon-color: var(--gray-10);
+                color: var(--gray-10);
+                background-color: var(--gray-70);
             }
         }
 
         &:not(&--signature, &--dark, &--disabled) {
             &:hover:not(&:focus-within) {
+                border-radius:0 0  var(--border-radius) var(--border-radius);
+
                 background-color: var(--gray-60);
-                border-color: var(--gray-60);
                 font-weight: 500;
                 color: var(--gray-100);
                 --ui-icon-color: var(--gray-100);
@@ -252,9 +253,9 @@
     }
 
     &--input-color {
-        padding: 0 !important;
+        padding: 0;
         height: 100%;
-        background-color: transparent !important;
+        background-color: transparent;
     }
 
 

@@ -142,7 +142,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
 
           {Boolean(hide !== 'show' || isFullVariant) && 
           <div id='settings-trigger' className={classes.icon}>
-            <UiIcon icon={hide === 'hide' ? 'fa-ellipsis' : 'fa-ellipsis'} onClick={toggleHide} />
+            <UiIcon glow icon={hide === 'hide' ? 'fa-ellipsis' : 'fa-ellipsis'} onClick={toggleHide} />
           </div>
           }
           {!isFullVariant && (

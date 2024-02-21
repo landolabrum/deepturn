@@ -41,8 +41,7 @@ $elPad: 14px;
 }
 
 .form-control {
-  width: 100%;
-  max-width: 100%;
+  width: var(--s-border-width);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -50,17 +49,37 @@ $elPad: 14px;
   height: max-content;
   justify-content: space-around;
 
-&__badge{
-  @extend .d-flex;
-  top:0;
-  right:0;
-  position: absolute;
+  &--input, &--textara{
+  &:hover:not( &:focus-within) {
+      border-radius: var(--border-radius);
+      background-color: var(--gray-80);
+      border: solid 1px var(--gray-50);
+    }
+  }
+  &:hover:not( &:focus-within) {
+
+    .form-control__header {
+      label {
+        color: var(--gray-40);
+      }
+
+    }
+
+  }
+
+  border: solid 1px transparent;
+
+  &__badge {
+    @extend .d-flex;
+    top: 0;
+    right: 0;
+    position: absolute;
     background-color: #f30;
     width: var(--s-5);
     height: var(--s-5);
     font-size: var(--s-7);
     color: var(--white);
-}
+  }
 
   .form-control__header {
     @extend .d-flex;
@@ -68,14 +87,12 @@ $elPad: 14px;
     min-height: var(--s-4);
 
     label {
-      text-indent: calc(var(--s-padding) + 2px);
-      text-transform: capitalize;
-      font-style: italic;
-      color: var(--gray-50);
+      text-indent: var(--s-10);
+      text-transform: uppercase;
+      color: var(--gray-50-opaque);
       line-height: 2;
-      font-size: 14px;
       font-weight: bold;
-      font-size: var(--s-7);
+      font-size: var(--s-8);
       letter-spacing: 3px;
 
       @media(max-width: 900px) {
@@ -83,21 +100,26 @@ $elPad: 14px;
       }
     }
   }
-  &-sm{
+
+  &-sm {
     .form-control__header {
       min-height: unset;
-      label{
+
+      label {
         text-indent: var(--s-9);
         font-size: var(--s-9);
       }
+    }
   }
-  }
+
   &.form-control--inherit {
     @extend .inherit;
   }
-  &--maxY{
+
+  &--maxY {
     height: 100%;
   }
+
   &.form-control--invalid {
     label {
       color: var(--orange);
@@ -109,12 +131,14 @@ $elPad: 14px;
     gap: var(--s-4);
     background-color: var(--gray-90);
     height: max-content;
+
     &:hover {
       background-color: var(--gray-90);
     }
   }
 
-  &--link, &--checkbox {
+  &--link,
+  &--checkbox {
     width: auto;
   }
 
@@ -125,4 +149,5 @@ $elPad: 14px;
       }
     }
   }
+
 }

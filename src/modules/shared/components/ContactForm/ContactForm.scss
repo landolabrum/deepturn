@@ -11,8 +11,7 @@
 &__title{
     font-size: var(--s-1);
     color: var(--gray-40);
-    margin: var(--s-element) 0 var(--s-padding);
-    // font-style: italic;
+    margin: var(--s-padding) 0;
     text-transform: capitalize;
 }
     &--action {

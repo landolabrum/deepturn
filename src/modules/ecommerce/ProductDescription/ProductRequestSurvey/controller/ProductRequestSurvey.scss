@@ -68,7 +68,31 @@
     justify-content: flex-start;
     border-radius: var(--border-radius);
     padding:  var(--s-padding) ;
-    margin:  var(--s-padding) ;
+    margin:  var(--s-padding);
+    transition: all .5s;
+    &__btn-view{
+        background-color: var(--primary-opaque);
+        border-radius: var(--border-radius);
+        @extend .d-flex;
+        transition: all .5s;
+        height: 300px;
+        width: 100%;
+        color: var(--primary-opaque);
+        cursor: pointer;
+        &-text{
+            width: 50%;
+            max-width: 300px;
+            text-transform: uppercase;
+            margin: auto;
+            text-align: center;
+            font-size: var(--s-element);
+        }
+   
+        &:hover{
+            color: var(--white);
+            background-color: var(--primary);
+        }
+    }
     @media(min-width:1100px) {
         margin:  0;
         width: 60%;
@@ -197,7 +221,7 @@
             }
         }
         @media (max-width:900px) {
-            
+            bottom: calc(var(--s-element) * -1);
             &:hover {
                 animation: slideUp 1s forwards;
             }

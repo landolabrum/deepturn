@@ -11,7 +11,7 @@
     flex-direction: column;
     position: relative;
     height: inherit;
-
+    
     &__header {
         position: absolute;
         left: 0;
@@ -19,7 +19,7 @@
         z-index: 1;
         width: 100%;
     }
-
+    
     &__tools {
         position: absolute;
         top: var(--s-10);
