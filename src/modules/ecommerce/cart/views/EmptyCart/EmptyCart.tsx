@@ -6,6 +6,7 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 // Remember to create a sibling SCSS file with the same name as this component
 
 const EmptyCart: React.FC = () => {
+// FUNCTIONS MATH
     return (
         <>
             <style jsx>{styles}</style>

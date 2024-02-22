@@ -20,14 +20,13 @@ h1{
     @extend .d-flex-col;
     z-index: -1;
     position: fixed;
-    top: 0;
     left: 0;
     width: 100vw;
-    
+    bottom: 0;
     .cart__emtpy-cart-canvas {
         z-index: -1;
         @extend .d-flex;
-        --ui-icon-color: var(--gray-90);
+        --ui-icon-color: var(--primary-opaque);
         filter: blur(1px);
         transform: skew(20px, 20px);
         --ui-icon-height: 90%;

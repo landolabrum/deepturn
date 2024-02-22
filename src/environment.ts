@@ -14,6 +14,7 @@ export const isEnvironmentProduction = () => {
 };
 
 environment = isEnvironmentProduction()? prodEnvironment: devEnvironment;
+// console.log('[ environment ]', environment)
 // if (typeof window == "object") {
 //   switch (window.location.host?.toLowerCase()) {
 //     case "localhost:3000":

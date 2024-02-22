@@ -21,6 +21,9 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
     const shoppingService = getService<IShoppingService>('IShoppingService');
     const [cart, setCart]=useState<ICartItem | undefined>();
     const isTokenComplete = () => {
+        console.log("[ ITEM ]", {
+            tokenData
+        })
         if (!tokenData || !tokenData.items) {
             setTokenData({ error: "Token is invalid" });
             return false;
@@ -36,6 +39,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
         if (!isValid) {
             setTokenData({ error: "Token is invalid" });
         }
+
         return isValid;
     };
 
@@ -78,7 +82,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
                     algorithm: 'HS256'
                 });
                 if (response?.decoded) {
-                    // console.log('[ JWT DECODE (SUCCESS) ]', response.decoded);
+                    console.log('[ JWT DECODE (SUCCESS) ]', response.decoded);
                     setTokenData(response.decoded);
                 }
             } catch (error: any) {
@@ -89,7 +93,8 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
     };
 
     useEffect(() => {
-console.log(tokenData)
+        console.log("[ USE EFFECT ]",tokenData, token)
+
         if (token && tokenData === undefined) {
             decryptToken();
         }
