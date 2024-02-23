@@ -1,4 +1,4 @@
-import UserContext from "~/src/models/UserContext";
+import UserContext, { UserAddress } from "~/src/models/UserContext";
 import { EventEmitter } from "@webstack/helpers/EventEmitter";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
@@ -21,7 +21,13 @@ export interface OEncryptMetadataJWT{
   status: string;
   metadata_key_name:string;
 }
-
+export interface PaymentIntentBillingDetails {
+  id?: string;
+  name: string;
+  email: string;
+  address?: UserAddress;
+  phone: string;
+}
 
 
 export default interface IMemberService {
@@ -30,10 +36,12 @@ export default interface IMemberService {
   getSetupIntent(client_secret: string): any;
   prospectRequest(quote: any, test?:boolean): any | undefined;
   updateCurrentUser(user: UserContext): void;
+  
   getMethods(customerId?: string): Promise<any>;
   deleteMethod(id: string): Promise<any>;
   processTransaction(cart:ICartItem[]): Promise<any>;
-  createPaymentIntent(method?: IPaymentMethod): Promise<any>;
+  createPaymentIntent(user: PaymentIntentBillingDetails, method?: IPaymentMethod ): Promise<any>;
+  
   userChanged: EventEmitter<UserContext | undefined>;
   verifyEmail(token: string):Promise<any>;
   signIn({ email,

@@ -49,22 +49,20 @@ $elPad: 14px;
   height: max-content;
   justify-content: space-around;
 
-  &--input, &--textara{
+  // &--input, &--textara{
+  // &:hover:not( &:focus-within) {
+  //     // border-radius: var(--border-radius);
+  //     // background-color: var(--gray-80);
+  //     // border: solid 1px var(--gray-50);
+  //   }
+  // }
   &:hover:not( &:focus-within) {
-      border-radius: var(--border-radius);
-      background-color: var(--gray-80);
-      border: solid 1px var(--gray-50);
-    }
-  }
-  &:hover:not( &:focus-within) {
-
-    .form-control__header {
       label {
-        color: var(--gray-40);
+        color: var(--gray-50);
       }
-
-    }
-
+  }
+  &:focus-within{
+    label{color: var(--gray-20) !important}
   }
 
   border: solid 1px transparent;

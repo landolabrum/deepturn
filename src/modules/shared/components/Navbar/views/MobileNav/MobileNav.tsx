@@ -19,7 +19,7 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }) => {
                 {onBack && <div className='navbar__mobile--actions'>
                     <div>
                         <UiButton
-                            variant='flat'
+                            variant='inherit'
                             traits={{ beforeIcon: 'fa-chevron-left' }}
                             onClick={onBack}>back</UiButton>
                     </div>
@@ -46,12 +46,14 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }) => {
                                 className='navbar__mobile--content__nav-item' 
                                 onClick={() => handleClick(route)}
                             >
+                                <div>
                                 <UiButton
                                     traits={{beforeIcon:route?.icon}}
-                                    variant='nav-item'
+                                    variant='inherit'
                                 >
                                     {route.label}{route?.href =='/cart' ?'cart':''}
                                 </UiButton>
+                            </div>
                             </div>
                         )}
                     )}

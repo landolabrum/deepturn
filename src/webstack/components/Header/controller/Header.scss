@@ -121,14 +121,14 @@
         font-weight: 700;
         text-transform: capitalize;
         @media(max-width: 1100px) {
-          --ui-icon-size: unset;
           --ui-icon-width: var(--s-1);
           --ui-icon-height: var(--s-1);
 
-          font-size: var(--s-5);
+          font-size: var(--s-1);
+          line-height: 1;
+          height: 100%;
           align-items: flex-end;
           gap: 4px;
-          line-height: 1;
         }
       }
     }

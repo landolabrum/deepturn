@@ -1,7 +1,7 @@
 // Relative Path: ./AccountMethod.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './UserMethods.scss';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
+import IMemberService, { PaymentIntentBillingDetails } from '~/src/core/services/MemberService/IMemberService';
 import { getService } from '@webstack/common';
 import { IMethod } from '../../../model/IMethod';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
@@ -10,6 +10,8 @@ import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import UserStripePaymentForm from '../components/UserStripePaymentForm/UserStripePaymentForm';
+import usePaymentIntentSecret from '~/src/core/services/MemberService/hooks/usePaymentIntentSecret';
+
 
 
 interface IUserMethods {
@@ -20,10 +22,12 @@ const UserMethods: React.FC<any> = ({ open, customerMethods }: IUserMethods) => 
   const [loader, setLoader]=useLoader();
   const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
-  const [clientSecret, setClientSecret] = useState(undefined);
-
-  const memberService = getService<IMemberService>("IMemberService");
+  const [billingDetails, setBillingDetails]=useState<PaymentIntentBillingDetails>();
   const user = useUser();
+  
+  const memberService = getService<IMemberService>("IMemberService");
+  
+  const clientSecret = usePaymentIntentSecret(billingDetails);
 
   const handleDelete = async (id: string) => {
     getAccountMethods();
@@ -50,19 +54,12 @@ const UserMethods: React.FC<any> = ({ open, customerMethods }: IUserMethods) => 
       }
     }
   }
-  const fetchClientSecret = async () => {
-    if(clientSecret)return;
-    const response = await memberService.createPaymentIntent();
-    if (response?.client_secret) {
-      setClientSecret(response.client_secret);
-    } else {
-      console.error("Client secret not found in the response", response);
-    }
-  };
+
   useEffect(() => {
     setLoader({active: true});
 
-    fetchClientSecret();
+    if(user)setBillingDetails(user);
+    
     handleLabel();
     if (!customerMethods) {
       getAccountMethods();

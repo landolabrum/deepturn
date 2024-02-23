@@ -7,8 +7,9 @@
 .navbar__mobile {
     display: none;
     min-width: 600px;
-    margin:  0;
+    margin: 0;
     width: 100%;
+    --ui-icon-color: var(--gray-40);
     @media(max-width: 1260px) {
         min-width: unset;
         margin: auto;
@@ -16,10 +17,12 @@
         flex-direction: column;
         gap: var(--s-element);
     }
-    &--actions{
+
+    &--actions {
         @extend .d-flex;
         justify-content: flex-start;
     }
+
     &--content {
         border-radius: var(--border-radius);
         display: flex;
@@ -27,11 +30,23 @@
         gap: var(--s-padding);
         height: max-content;
         justify-content: space-between;
+
         // padding: calc(var(--s-element) * 2) var(--s-padding) var(--s-element);
-        
-        &__brand{
+        @media(max-width: 1100px) {
+            margin: 20px 0;
+            padding: var(--s-5) 0 var(--s-padding);
+        }
+
+        &__brand {
+            order: 1;
             gap: var(--s-9);
-            // position: absolute;
+
+            @media(max-width: 1100px) {
+                position: absolute;
+                top: var(--s-padding);
+                left: 0;
+            }
+
             // top: var(--s-2);
             // left: var(--s-padding);
             height: var(--s-element);
@@ -42,27 +57,41 @@
             text-transform: capitalize;
             font-size: var(--s-1);
             @extend .d-flex;
-            color:var(--primary-opaque);
-            --ui-icon-color:var(--primary);
+            color:var(--gray-50-opaque);
+            --ui-icon-color:var(--gray-50-opaque);
             --ui-icon-width:var(--s-element);
             --ui-icon-height:var(--s-element);
             // --ui-icon-size: var(--s-1);
             // --ui-icon-width: var(--s-1);
             // line-height: 1;
             cursor: pointer;
-            &:hover{
-                color:var(--primary);
-                --ui-icon-color:var(--primary);
+
+            &:hover {
+                color: var(--primary);
+                --ui-icon-color: var(--primary);
             }
-       
+
 
         }
-        &__nav-item{
+
+        &__nav-item {
+            order: 2;
             @extend .d-flex;
-            border: solid 1px var(--gray-70);
             border-radius: var(--border-radius);
-            &:hover{
-                background-color: var(--gray-90);
+            --ui-icon-color: var(--gray-50);
+            background-color: var(--gray-70-opaque);
+            color: var(--gray-40);
+            --ui-icon-color: var(--white);
+            min-width: 600px;
+            @media(max-width:900px){
+                min-width: inherit;
+                // border
+            }
+            &:hover {
+                --ui-icon-color: var(--white);
+                color: var(--white);
+                background-color: var(--gray-70);
+
             }
         }
     }

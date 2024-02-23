@@ -45,7 +45,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     container: useClass({ cls: 'settings', variant: variant }),
     content: useClass({ cls: 'settings__content', variant: variant }),
     view: useClass({ cls: 'settings__view', variant: variant }),
-    icon: useClass({cls: "settings__icon", variant: variant, standalones:['card']})
+    icon: useClass({cls: "settings__trigger", variant: variant, standalones:['card']})
   };
   const handleView = useCallback((view: string) => {
     router.push({
@@ -75,7 +75,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       const isFullWidth = variant === 'full-width' || variant === 'full';
       if (isFullWidth) {
         main.style.margin = '0px';
-        main.style.width = '100vw';
+        main.style.width = '100%';
       } else {
         // Reset styles if not full-width or full variant
         main.style.margin = '';

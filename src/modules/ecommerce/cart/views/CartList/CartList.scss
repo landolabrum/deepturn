@@ -116,7 +116,7 @@ $space: 14px;
                 height: 100px;
                 position: relative;
                 @media(max-width: 900px) {
-                    min-height: 250px;
+                    // min-height: 250px;
                     width: 100%;
                     display: flex;
                     order: 2;
@@ -127,7 +127,6 @@ $space: 14px;
                 @extend .d-flex;
                 align-items: flex-end;
                 height: 100%;
-                width: 137px;
                 @media(max-width: 900px) {
                     order: 3;
                 }

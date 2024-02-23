@@ -137,7 +137,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
                                 phone: tokenData.phone,
                             }}
                             onSubmit={(form) => {console.log("[ ON SUBMIT ]", form)}}
-                            submitText='payment info'
+                            submit={{text:'payment info'}}
                         />
                     </div>
                 </div>

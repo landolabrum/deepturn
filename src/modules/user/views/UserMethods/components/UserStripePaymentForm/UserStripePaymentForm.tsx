@@ -21,7 +21,7 @@ const UserStripePaymentForm = ({ clientSecret, onSuccess }:IStripePaymentForm) =
           colorText: '#e0e0e0',
         },
       };
-    if(user?.id && clientSecret)return (
+    if(clientSecret)return (
       <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
         <UserCreateMethod
           user={user}

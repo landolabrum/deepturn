@@ -86,8 +86,6 @@
 // FORM CONTROL ELEMENT
 
 .form-control__element {
-
-    padding: 0 var(--s-padding);
     color: var(--gray-50);
     font-size: var(--font-size);
     --ui-icon-width: var(--font-size);
@@ -150,21 +148,36 @@
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
 
-    &:not(&--warning, &--center, &--glow, &--checkbox, &--primary, &--dark, &--lite, &--flat, &--secondary, &--link, &--nav-item, &--select, &--invalid, &--input, &--textarea, &--signature) {
+    &:not(&--warning, &--center, &--glow, &--checkbox, &--primary,&--inherit, &--dark, &--lite, &--flat, &--secondary, &--link,  &--select, &--invalid, &--input, &--textarea, &--signature) {
         @extend %element-color;
     }
 
-    &:not(&--nav-item, &--signature, &--checkbox) {
+    &:not( &--signature, &--checkbox) {
         @extend .b-rad;
     }
 
     // HANDLE ICONS
-    &--before-icon:not(&-sm, &--nav-item, &--link) {
-        padding-left: var(--s-element);
+    &:not(&--before-icon, &--after-icon){
+        padding: 0 var(--s-9);
+    }
+    // &--before-icon:not(&-sm,  &--link) {
+    //     padding-left: var(--s-element);
+    // }
+
+    // &--after-icon:not(&-sm,  &--link) {
+    //     padding-right: var(--s-element);
+    // }
+    // HANDLE ICONS
+    &--before-icon {
+        &.form-control__element--link{
+            gap: var(--s-9);
+        }
     }
 
-    &--after-icon:not(&-sm, &--nav-item, &--link) {
-        padding-right: var(--s-element);
+    &--after-icon--link {
+        &.form-control__element--link{
+            gap: var(--s-9);
+        }
     }
 
     // ELEMENTS
@@ -191,17 +204,18 @@
     &--textarea {
 
         --ui-icon-color: var(--gray-50);
-        background-color: var(--gray-70-opaque);
-        border: solid 1px var(--gray-70);
+        background-color: var(--gray-60-opaque);
+        border: solid 1px var(--gray-50-opaque) !important;
+        box-shadow: inset 1px 1px 3px 2px var(--gray-80-opaque);
 
-        &:not(&--nav-item, &--signature) {
+        &:not( &--signature) {
             font-family: 'Game', sans-serif;
             font-style: italic;
         }
 
         &:focus-within {
             &:not(.form-control__element--nav-item, .form-control__element--signature) {
-                border: solid 1px var(--gray-10);
+                border: solid 1px var(--gray-10) !important;
                 --ui-icon-color: var(--gray-10);
                 color: var(--gray-10);
                 background-color: var(--gray-70);
@@ -210,7 +224,7 @@
 
         &:not(&--signature, &--dark, &--disabled) {
             &:hover:not(&:focus-within) {
-                border-radius:0 0  var(--border-radius) var(--border-radius);
+                // border-radius:0 0  var(--border-radius) var(--border-radius);
 
                 background-color: var(--gray-60);
                 font-weight: 500;
@@ -316,7 +330,8 @@
     );
 
     &--center {
-        padding: 0 var(--s-element);
+        min-width: 150px;
+        justify-content: space-between;
     }
 
     &--fit-text {
@@ -397,17 +412,18 @@
 
         @keyframes glow {
             0%, 100% {
-                color: #888; /* Adjusted for demonstration, replace with var(--gray-10-opaque) or any color */
+                color: var(--gray-20); /* Adjusted for demonstration, replace with var(--gray-10-opaque) or any color */
+                --ui-icon-color: var(--gray-20); /* Adjusted for demonstration, replace with var(--gray-10-opaque) or any color */
                 background-color: var(--primary-opaque); /* Semi-transparent, adjust as needed */
-                border-color: var(--primary); /* Example hex, replace with var(--primary) or any color */
-                box-shadow: 0 0 2px 0 var(--primary); /* Soft glow, adjust color and opacity */
+                border-color: var(--primary-opaque); /* Example hex, replace with var(--primary) or any color */
+                box-shadow: 0 0 4px 0 var(--primary); /* Soft glow, adjust color and opacity */
             }
         
             50% {
-                color: var(--white); /* Brighter color for the pulse peak */
+                --ui-icon-color: var(--white); /* Brighter color for the pulse peak */
                 background-color: var(--primary); /* More visible than start/end */
-                border-color: var(--primary-lite); /* Keep consistent or adjust for effect */
-                box-shadow: 0 0 5px 3px var(--primary-lite);
+                border-color: var(--primary); /* Keep consistent or adjust for effect */
+                box-shadow: 0 0 2px 3px var(--primary-lite);
             }
         }
         
@@ -451,19 +467,19 @@
     &--link {
         padding: 0;
         width: max-content;
-        
+        gap: var(--s-10);
         &:hover {
             animation: glowTxt 1s infinite;
         }
     }
 
-    &--link.form-control__element--after-icon {
-        padding-right: var(--s-5);
-    }
+    // &--link.form-control__element--after-icon {
+    //     padding-right: var(--s-5);
+    // }
 
-    &--link.form-control__element--before-icon {
-        padding-left: var(--s-5) !important;
-    }
+    // &--link.form-control__element--before-icon {
+    //     padding-left: var(--s-5) !important;
+    // }
 
     &--bump {
         animation: bump .3s;
@@ -472,24 +488,6 @@
     &--pill {
         border: solid 1px var(--gray-70);
         width: max-content;
-    }
-
-    &--nav-item {
-        padding: 0;
-        border: none;
-        &:hover {
-            color: inherit;
-        }
-
-        @media(max-width: 1100px) {
-            padding-right: 0;
-            margin: 0 auto;
-
-            &:hover {
-                color: inherit;
-            }
-        }
-
     }
 
     // FORM CONTROL ELEMENTS - INVALID DEFINITIONS
@@ -542,10 +540,10 @@
     }
 
     // FORM CONTROL ELEMENTS - ELEM TYPES
-    &--select:not(&--nav-item, &--flat) {
+    &--select:not( &--flat) {
         color: var(--gray-90);
     }
-    &--select:not(&--nav-item, &--flat, &--lite) {
+    &--select:not( &--flat, &--lite) {
             color: var(--gray-60);
             --ui-icon-color: var(--gray-60);
             background-color: var(--gray-90);

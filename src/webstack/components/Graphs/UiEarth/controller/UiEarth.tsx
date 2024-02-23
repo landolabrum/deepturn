@@ -71,7 +71,7 @@ const UiEarthObject = (
         console.log(`Marker ID: ${id}`);
         openModal({
             variant:'popup',
-            title:'ji',
+            // title:'ji',
             children:<AdminCustomerDetails customer_id={id}/>
         });
         // You can add more logic here if needed

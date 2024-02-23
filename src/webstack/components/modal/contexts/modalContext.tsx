@@ -1,5 +1,5 @@
 import { IFormControlVariant } from '@webstack/components/AdapTable/models/IVariant';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, ReactNode, useContext,  useState } from 'react';
 
 export type IConfirm ={
   title?: string;

@@ -10,6 +10,8 @@ import useCart from '../../cart/hooks/useCart';
 import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import Image from 'next/image';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import environment from '~/src/environment';
 
 interface IProductDescription {
   product_id?: string,
@@ -42,7 +44,7 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
         const productResponse = await shoppingService.getProduct(productRequest);
         if (productResponse?.id) {
           productResponse.price.qty = 0;
-          console.log('[ PRODUCT ]', Object.keys(productResponse))
+          // console.log('[ PRODUCT ]', Object.keys(productResponse))
           setProduct(productResponse);
           setIsLoading(false); // End loading
           return productResponse?.name;
@@ -101,16 +103,19 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
         // variant='card'
         >
           <div className="product-description__img-default" >
-            {/* Style your image container to maintain aspect ratio if needed */}
-            <Image
-              src={product.images[0]}
-              alt={product.name}
-              width={500}
-              height={500}
-              // fill // Use fill to make the image fill the container
-              // style={{ objectFit: 'cover' }} // Adjust object-fit as needed
-              unoptimized={true}
-            />
+
+{product.images[0]?(
+     <Image
+     src={product.images[0]}
+     alt={product.name}
+     width={500}
+     height={500}
+     // fill // Use fill to make the image fill the container
+     // style={{ objectFit: 'cover' }} // Adjust object-fit as needed
+     unoptimized={true}
+   />
+):(<UiIcon  icon={`${environment.merchant.name}-logo`}/>)}
+         
             {/* <ProductImage options={{ view: 'description' }} image={product.images} /> */}
           </div>
           <div className="product-description__info-panel">
@@ -120,9 +125,19 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
             <div className="product-description__info-panel_body">
               {product.description}
             </div>
+            <div className='product-description__footer'>
+              {cart?.length >= 1 && (
+                <div className='product-description__go-to-cart'>
+                  <UiButton traits={{afterIcon:'fal-bag-shopping'}} variant='link' href='/cart'>go to cart</UiButton>
+                  </div>
+              )}
             <div className='product-description__buy-button'>
-              <ProductBuyNow product={product} btnText='select'/>
+              <ProductBuyNow 
+                product={product}
+                btnText='select'
+                />
             </div>
+          </div>
           </div>
         </AdaptGrid>
 

@@ -8,12 +8,13 @@
     justify-content: flex-start;
     color: var(--gray-30);
     // width: var(--s-padding-width);
-    padding: var(--s-padding);
+    padding: var(--s-10) var(--s-padding) var(--s-padding);
     border-radius: var(--border-radius);
     height: 100%;
     background-color: var(--gray-90);
     flex-direction: column;
     @extend .d-flex;
+    gap: var(--s-padding);
     min-height: 500px;
     @media(max-width: 900px){
         gap: var(--s-padding);
@@ -22,6 +23,7 @@
     &__header {
         @extend .d-flex;
         width: 100%;
+        min-height: var(--s-element);
         justify-content: flex-start;
     }
     &--loader {
@@ -39,10 +41,10 @@
             width: 100%;
             @extend .d-flex;
         }
-        --ui-icon-height: 66%;
-        --ui-icon-width: 66%;
-        height: auto;
-        width: 100%;
+        --ui-icon-height: 100%;
+        --ui-icon-width: 100%;
+        padding: 0 var(--s-element);
+        // max-height: 400px;
         border-radius: var(--border-radius);
         overflow: hidden;
         @extend .d-flex;
@@ -58,9 +60,6 @@
         align-items: flex-start;
         flex: 1;
         @media(max-width: 900px){
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
             min-height: var(--s-element);
         }
         .product-description__info-panel_header{
@@ -68,8 +67,13 @@
             flex-direction: column;
             width: 100%;
             .product-description__info-panel_title{
-                text-transform: capitalize;
-                font-size:var(--s-3);
+                text-transform: uppercase;
+                font-optical-sizing: auto;
+                color: var(--primary);
+                font-style: normal;
+                letter-spacing: 2px;
+                font-size:var(--s-1);
+                border: solid 1p #090;
             }
         }
         .product-description__info-panel_body{
@@ -79,9 +83,19 @@
             color: var(--gray-50);
         }
     }
-    &__buy-button{
+    &__footer{
         @extend .d-flex;
-        justify-content: flex-end;
+        flex-direction: column;
+        align-items: flex-end;
         width: 100%;
     }
+    &__go-to-cart{
+        
+    }
+    &__buy-button{
+            width: 100%;
+            @media(max-width: 1100px){
+
+            }
+        }
 }

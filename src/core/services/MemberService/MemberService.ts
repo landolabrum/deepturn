@@ -6,7 +6,7 @@ import CustomToken from "~/src/models/CustomToken";
 import MemberToken from "~/src/models/MemberToken";
 import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
-import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT } from "./IMemberService";
+import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, PaymentIntentBillingDetails } from "./IMemberService";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
@@ -111,27 +111,24 @@ export default class MemberService
     }
   }
 
-  public async createPaymentIntent(method?: IPaymentMethod): Promise<any> {
-    let id = this._getCurrentUser(false)?.id;
+  public async createPaymentIntent(user: PaymentIntentBillingDetails, method?: IPaymentMethod): Promise<any> {
     const memberMethod = async () => {
-      // Convert method object to string
-      // const methodString = JSON.stringify(method);
-      // const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
-      // const encryptedMethod = encryptString(methodString, ENCRYPTION_KEY); // Replace 'YOUR_SECRET_KEY' with your actual secret key
       try {
-        return await this.get<any>(
-          `usage/customer/method/create?id=${id}`// send encrypted data as payload
+        const response: any = await this.post<any, {  }>(
+          `usage/customer/method/create`,
+          { customer: user }
         );
+       return response;
       } catch (e: any) {
         return e;
       }
     }
-    if (id) {
-      return await memberMethod();
-    }
-    if (!id) {
-      throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
-    }
+    // if (id) {
+    //   return await memberMethod();
+    // }
+    // if (!id) {
+    //   throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
+    // }
     if (!method) {
       throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
     }

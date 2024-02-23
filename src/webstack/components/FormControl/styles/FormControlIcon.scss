@@ -21,7 +21,7 @@
 
   @extend .d-flex;
   --ui-icon-color: inherit;
-  position: absolute;
+  // position: absolute;
   width: var(--s-1);
   aspect-ratio: 1;
   --ui-icon-size: var(--s-5);
@@ -39,6 +39,9 @@
   }
   &-link {
     width: var(--s-5);
+    @media(max-width:1100px) {
+      position: relative;
+    }
   }
 
   &-sm {
@@ -49,11 +52,11 @@
     --ui-icon-height: var(--s-6);
    }
 
-  &__before {
-    left: 0;
-  }
+  // &__before {
+  //   left: 0;
+  // }
 
-  &__after {
-    right: 0;
-  }
+  // &__after {
+  //   right: 0;
+  // }
 }

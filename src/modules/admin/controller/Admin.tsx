@@ -38,7 +38,7 @@ const Admin = () => {
       setViews(views)
     }
     if(router.query?.vid && Object.keys(initialViews).includes(String(router.query?.vid)))setCurrentView(String(router.query?.vid));
-  }, [views, level, router]);
+  }, [ level, router]);
   if(level < 10 || views === undefined)return <></>;
   return (
     <>

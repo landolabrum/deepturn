@@ -13,7 +13,13 @@ $actionsBg: var(--gray-90);
     height: 100%;
     left: 0;
     position: relative;
-    width: 100%;
+    // width: calc(100% - 10px);
+    right: auto;
+    margin: auto;
+    width: 1005;
+    @media (max-width: 1100px) {
+        width: auto;
+    }
     margin-top: calc(var(--s-element) + var(--s-9));
     &__full{
         padding: 0;
@@ -24,14 +30,12 @@ $actionsBg: var(--gray-90);
         border-radius: var(--border-radius);
     }
     &__full, &__full-width {
+        width: 100vw;
         min-height: 100vh;
         &:not(&-width){
             top: 0;
         }
-        width: 100%;
         left: 0;
-        right: 0;
-        width: 100vw;
         // overflow-y: auto;
         // overflow: hidden;
     }
@@ -157,15 +161,14 @@ $actionsBg: var(--gray-90);
 
 
 // ICON CLASS
-.settings__icon {
+.settings__trigger {
     z-index: 2;
     @extend .d-flex;
-    // width: var(--s-element);
-    background-color: var(--black);
-    // height: var(--s-element);
-    padding: var(--s-9);
-    --ui-icon-width: 100%;
-    --ui-icon-height: 100%;
+    width: var(--s-element);
+    background-color: var(--gray-80-opaque);
+    height: var(--s-element);
+    --ui-icon-width: var(--s-5);
+
     // aspect-ratio: 1;
     --ui-icon-color:var(--white);
 
@@ -189,10 +192,15 @@ $actionsBg: var(--gray-90);
     &__full, &__full-width {
         left: var(--s-padding);
         position: fixed;
-        top: calc(var(--s-element) + var(--s-padding));
+        top: calc(calc(var(--s-padding) * 1) + var(--s-element));
+        @media(max-width: 1100px){
+            left: unset;
+            top: var(--s-padding);
+            right: calc(calc(var(--s-padding) * 2) + var(--s-element));
+        }
     }
     &__full{
-        top: calc(var(--s-element) * 2);
+        // top: calc(var(--s-element) * 2);
         @media(min-width: 900px) {
         }
     }

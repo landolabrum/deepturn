@@ -32,8 +32,6 @@ export type IFormControlVariant =
   | "mini"
   | "checkbox"
   | "miniactive"
-  | "nav-item"
-  | "center nav-item"
   | "null"
   | "undefined"
   | "wordmark"

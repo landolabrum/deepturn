@@ -122,7 +122,7 @@ const Navbar = () => {
               {route.href !== '/cart' ? !route?.items ? (
                 <UiButton
                   traits={route?.icon ? { afterIcon: { icon: route.icon }, } : undefined}
-                  variant='nav-item'
+                  variant='flat'
                   onClick={() => handleSelect(route)}
                 >
                   {route.label}
@@ -132,7 +132,7 @@ const Navbar = () => {
                   overlay={{ zIndex: 997 }}
                   traits={route?.icon ? { afterIcon: { icon: route.icon } } : undefined}
                   openState={Boolean(toggled && toggled === route.label) ? 'open' : 'closed'}
-                  variant='nav-item'
+                  variant='flat'
                   value={route.label === 'profile' ? displayName : route.label}
                   options={route?.items}
                   onSelect={handleSelect}

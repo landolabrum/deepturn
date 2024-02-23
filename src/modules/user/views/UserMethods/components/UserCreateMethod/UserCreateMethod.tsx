@@ -24,7 +24,8 @@ const UserCreateMethod = ({ onSuccess, user, shippable }: IAccountCreateMethod) 
             defaultCollapsed: false,
             radios: false,
             spacedAccordionItems: true
-        }
+        },
+  
     };
 
     const onSubmit = useCallback(async (event: any) => {

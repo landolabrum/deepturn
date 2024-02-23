@@ -73,7 +73,7 @@ const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", i
                 router.push(`/transaction?token=${encryptedResponse}`)
             }
         }
-        if (isModal) openModal(<Checkout cart={cart}/>);
+        if (isModal) openModal({children: <Checkout cart={cart}/>, variant:'popup'});
         // if (isModal && user?.default_source == null) openModal(<AccountCreateMethod loading={status} open onSubmit={handleCreateMethod} />);
         if (!isModal && !isModalOpen) router.push("/checkout");
     };

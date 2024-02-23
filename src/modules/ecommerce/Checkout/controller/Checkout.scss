@@ -8,6 +8,7 @@
 .checkout {
     @extend .d-flex;
     height: 100%;
+    width: 100%;
     flex-direction: column;
     .checkout__title{
         line-height: 2;

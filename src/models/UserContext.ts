@@ -5,15 +5,15 @@ export default interface UserContext {
     default_payment_method: string | null;
   }
   id: string;
-  name?: string;
+  name: string;
+  email: string;
+  phone: string;
   first_name?: string;
   last_name?: string;
-  email?: string;
   iat: number;
   exp: number;
   fresh: number;
   exp_status: 'expired' | 'authed' | 'expiring';
-  phone?: string;
   memberStatus: string;
   memberType: string;
   metadata?: any;
@@ -21,6 +21,7 @@ export default interface UserContext {
   address?: UserAddress;
   referrer_url?: string;
 }
+
 export interface UserAddress{
   line1?: string;
   line2?: string;

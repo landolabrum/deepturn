@@ -9,12 +9,15 @@ import { findField } from '@webstack/components/UiForm/functions/formFieldFuncti
 import { mockDateTime } from '@webstack/helpers/MockData';
 
 interface IContactFormProps {
-  submitText?: string;
+  submit?: {
+    text?:string;
+  }
   onSubmit: (contactData: any) => void;
   user?: any;
+  payment?: any
 }
 
-const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submitText }) => {
+const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, }) => {
   const initialContactFields = [
     { name: 'firstName', label: 'First Name', type: 'text', placeholder: 'First Name', required: true, 
     // value:mockDateTime(true)
@@ -130,7 +133,7 @@ const handleUser = async () => {
           disabled={disabled}
           onChange={onChange}
           onSubmit={handleFormSubmit}
-          submitText={submitText}
+          submitText={submit?.text}
         />
       </div>
     </>
