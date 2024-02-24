@@ -111,24 +111,24 @@ export default class MemberService
     }
   }
 
-  public async createPaymentIntent(user: PaymentIntentBillingDetails, method?: IPaymentMethod): Promise<any> {
+  public async createPaymentIntent(customer: PaymentIntentBillingDetails, method?: IPaymentMethod): Promise<any> {
     const memberMethod = async () => {
       try {
         const response: any = await this.post<any, {  }>(
           `usage/customer/method/create`,
-          { customer: user }
+          customer
         );
        return response;
       } catch (e: any) {
         return e;
       }
     }
-    // if (id) {
-    //   return await memberMethod();
-    // }
-    // if (!id) {
-    //   throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
-    // }
+    if (customer && !method) {
+      return await memberMethod();
+    }
+    else if (!customer && method) {
+      throw new ApiError("UNHANDLED (!user && method)", 400, "MS.SI.02");
+    }
     if (!method) {
       throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
     }

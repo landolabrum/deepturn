@@ -65,17 +65,25 @@ $el_gap: 7px;
     position: absolute;
     overflow: hidden;
     top: calc(100% + 3px);
-    .right{
+    .left{
       left: auto;
       right: 0;
+    }
+    &.left {
+      left: auto;
+      right: 0;
+    }
+    .right{
+      left: 0;
+      right: auto;
+    }
+    &.right {
+      left: 0;
+      right: auto;
     }
     box-shadow: var(--box-shadow);
     border-radius: var(--border-radius);
     z-index: 3;
-    &.right {
-      left: auto;
-      right: 0;
-    }
     min-width: 100%;
     width: max-content;
     // &.nav-item__active {

@@ -89,13 +89,14 @@
         align-items: flex-end;
         width: 100%;
     }
-    &__go-to-cart{
+    // &__go-to-cart{
         
-    }
+    // }
     &__buy-button{
-            width: 100%;
+        @extend .d-flex;
+        justify-content: flex-end;
             @media(max-width: 1100px){
-
+                width: 100%;
             }
         }
 }

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Lights.scss';
 import { getService } from '@webstack/common';
-import IHomeService from '~/src/core/services/HomeService/IHomeService';
+import IHomeService, { ILight } from '~/src/core/services/HomeService/IHomeService';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import UiBar from '@webstack/components/Graphs/UiBar/UiBar';
@@ -11,33 +11,24 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import UiInput from '@webstack/components/UiInput/UiInput';
 import UiMediaSlider from '@webstack/components/UiMedia/views/UiMediaSlider/UiMediaSlider';
 import UiButton from '@webstack/components/UiButton/UiButton';
-import { calculateHexFromHueSatBri } from './LightHelpers';
+import { calculateHexFromHueSatBri } from '../functions/LightHelpers';
 import { reverseString } from '@webstack/helpers/Strings/reverseString';
 import ColorPicker from '@webstack/components/ColorPicker/ColorPicker';
-import keyStringConverter from '@webstack/helpers/keyStringConverter';
 
-// Remember to create a sibling SCSS file with the same name as this component
-type ILight = {
-  id_: string;
-  name: string;
-  is_on: boolean;
-  view?: string;
-  bri: number;
-  hue: number;
-  sat: number;
-  hex: string;
+interface ILightDisplay extends ILight{
+    view?: string;
 }
-const Lights = () => {
+const LightsList = () => {
   const [loader, setLoader] = useLoader();
   const [go, setGo] = useState<any | undefined>(false);
   // const [group, setGroup] = useState<string[] | undefined>();
-  const [currentLight, setCurrentLight] = useState<ILight | undefined>();
-  const [lights, setLights] = useState<any>();
-  const [isAll, setIsAll] = useState<boolean | ILight>(false);
+  const [currentLight, setCurrentLight] = useState<ILightDisplay | undefined>();
+  const [hueData, setHueData] = useState<any>();
+  const [isAll, setIsAll] = useState<boolean | ILightDisplay>(false);
   const homeService = getService<IHomeService>('IHomeService');
-
-  const updateLight = (changedLight: ILight, isColor?: boolean) => {
-    setLights(() => lights.map((light: ILight) => {
+  const [view, setView]=useState('lights');
+  const updateLight = (changedLight: ILightDisplay, isColor?: boolean) => {
+    setHueData(() => hueData.map((light: ILightDisplay) => {
       if (light.id_ == changedLight.id_) {
         if (isColor) changedLight.view = 'color'
         light = changedLight;
@@ -47,7 +38,7 @@ const Lights = () => {
   };
 
   const toggleBarView = (id: string) => {
-    const updateLightsWithView = lights.map((light: ILight) => {
+    const updateLightsWithView = hueData.map((light: ILightDisplay) => {
       if (light?.id_ == id) {
         if (light?.view == undefined) {
           light.view = 'color'
@@ -56,13 +47,13 @@ const Lights = () => {
       }
       return light
     });
-    setLights(updateLightsWithView)
+    setHueData(updateLightsWithView)
   }
 
-  const onLights = lights?.filter((light: ILight) => light.is_on) || [];
+  const onLights = hueData?.filter((light: ILightDisplay) => light.is_on) || [];
   const handleLightAnimation = (color: string) => {
     if (onLights.length === 0) return;
-    const currentLightIndex = currentLight ? onLights.findIndex((light: ILight) => light.id_ === currentLight.id_) : -1;
+    const currentLightIndex = currentLight ? onLights.findIndex((light: ILightDisplay) => light.id_ === currentLight.id_) : -1;
     const nextLightIndex = (currentLightIndex + 1) % onLights.length;
     const nextLight = onLights[nextLightIndex];
     setCurrentLight(nextLight);
@@ -71,11 +62,7 @@ const Lights = () => {
   const [group, setGroup] = useState<string[]>([]); // Changed from useState<string[] | undefined>();
 
 
-  const initfetchLights = () => {
-    if (lights !== undefined) return;
-    fetchLights().then(() => setLoader({ active: false }));
-  }
-  const atPoints = onLights && onLights.map((light: ILight, index: number) => {
+  const atPoints = onLights && onLights.map((light: ILightDisplay, index: number) => {
     const newHex = light?.hex ? `#${reverseString(light.hex.substring(1, light.hex.length))}` : '#ff3300'
     return {
       time: (index + 1) * 1000,
@@ -84,16 +71,16 @@ const Lights = () => {
       onPoint: handleLightAnimation
     };
   });
-  const fetchLights = async () => {
-    setLoader({ active: true, body: 'loading lights', animation: true });
-    try {
-      let response = await homeService.lights();
-      setLights(response);
-
-    } catch (e: any) {
-      console.log('[ FETCH LIGHTS (ERR) ]', JSON.stringify(e))
-    }
+  const hueList = async (hue_object?:string) => {
+    setLoader({ active: true, body: `loading ${hue_object}`, animation: true });
+        try {
+          const response = await homeService.hue_list(hue_object);
+          setHueData(response);
+        }catch (e: any) {
+            console.log('[ FETCH LIGHTS (ERR) ]', JSON.stringify(e))
+        }
   }
+
   const addToGroup = (id_: string) => {
     setGroup(group !== undefined ? [...group, id_] : [id_]);
   }
@@ -104,7 +91,7 @@ const Lights = () => {
   }
 
   const multiHomeService = async (action: string, data?: any) => {
-    console.log('[ CHATGPT HELP! ]',JSON.stringify({action, data, group}));
+    // console.log('[ CHATGPT HELP! ]',JSON.stringify({action, data, group}));
     const handleLoader = (active: boolean, action?: string, name?: string) => {
       setLoader({ active: active, body: `${action}, ${name} `, animation: true });
     };
@@ -117,11 +104,11 @@ const Lights = () => {
       const numericId = Number(id_);
       switch (action) {
         case 'toggle':
-          response = await homeService.lightToggle(numericId);
+          response = await homeService.hue_toggle(numericId, view === 'groups' && 'group'|| undefined);
           break;
         case 'brightness':
           if (data?.bri !== undefined) {
-            response = await homeService.lightBrightness(numericId, data.bri);
+            response = await homeService.hue_brightness(numericId, data.bri);
           }
           break;
         case 'color':
@@ -152,16 +139,23 @@ const Lights = () => {
   };
   
 
-  // useEffect(() => { }, [multiHomeService, ])
+  const getHueList = (hue_object?:string) => {
+    
+    hueList(hue_object).then(() => {
+      setLoader({ active: false });
+      hue_object && setView(hue_object);
+    });
+  }
+  const oppoView = view === 'lights'?'groups':'lights';
   useEffect(() => {
-    initfetchLights();
-  }, []);
+    hueData == undefined && getHueList();
+  }, [view]);
   return (
     <>
       <style jsx>{styles}</style>
-      {/* {JSON.stringify(group)} */}
       <div className='lights'>
         <AdaptGrid xs={2} lg={3} gap={15}>
+          <UiButton variant={go && 'primary'} onClick={() => getHueList(oppoView)}>{oppoView}</UiButton>
           <UiButton variant={go && 'primary'} onClick={() => setGo(!go)}>start animation</UiButton>
           <UiButton variant={go && 'primary'} onClick={() => isAll == false ? setIsAll({ ...onLights[0], id_: 'all-lights' }) : false}>
             Set All
@@ -174,8 +168,8 @@ const Lights = () => {
           start={go}
         />
 
-        {lights && !isAll && <AdaptGrid xs={1} sm={2} md={2} lg={3} gap={15}>
-          {Object.entries(lights).map(([key, light]: any, index: number) =>
+        {hueData && !isAll && <AdaptGrid xs={1} sm={2} md={2} lg={3} gap={15}>
+          {Object.entries(hueData).map(([key, light]: any, index: number) =>
             <div
               className={`lights__light ${group?.includes(light.id_) ? 'in-group' : ''}`}
               key={index}
@@ -238,4 +232,4 @@ const Lights = () => {
   );
 };
 
-export default Lights;
+export default LightsList;

@@ -1,6 +1,6 @@
 import ApiService from "../ApiService";
 import environment from "~/src/environment";
-import IHomeService from "./IHomeService"
+import IHomeService, { IGroup, IHomePostLight, IHomePostLightRename, ILight } from "./IHomeService"
 import { getService } from "@webstack/common";
 import IMemberService from "../MemberService/IMemberService";
 
@@ -15,11 +15,20 @@ export default class HomeService extends ApiService implements IHomeService {
     super(environment.serviceEndpoints.home);
     this.memberService = getService<IMemberService>('IMemberService');
   }
-
-  public async lights(
+  public async light(
+    { id, name }: IHomePostLight
+  ): Promise<ILight> {
+    return this.post<any, any>(
+      "/hue/light",
+      { id, name }
+    );
+  }
+  public async hue_list(
+    hue_object='lights'
     ): Promise<any> {
       return await this.get<any>(
-        "/api/home/hue/lights",
+        // `/api/home/hue/lights`,
+        `/api/home/hue/list?object=${hue_object}`,
       );
     }
     public async lightsOn(
@@ -41,7 +50,7 @@ export default class HomeService extends ApiService implements IHomeService {
         `/cam-${cameraId}`,
       );
     }
-    public async lightBrightness(
+    public async hue_brightness(
       id: number, brightness: number
     ): Promise<any> {
       return this.post<any, any>(
@@ -49,19 +58,48 @@ export default class HomeService extends ApiService implements IHomeService {
         
       );
     }
-    public async light(
-      request: any
-    ): Promise<any> {
-      return this.post<any, any>(
-        "/hue/light",
-        request
+
+
+    public async listGroups(): Promise<any> {
+      return await this.get<any>(
+        "/api/home/hue/groups",
       );
     }
-    public async lightToggle(
-      id: any
+    public async hue_rename({ id, name, new_name }: IHomePostLightRename): Promise<any> {
+      const requestData = { id, name, new_name };
+      return await this.post<any, any>(
+        "/api/home/hue/light/rename",
+        requestData
+      );
+    }
+  
+    public async createGroup(newGroup: IGroup): Promise<IGroup> {
+      return await this.post<any, any>(
+        "/api/home/hue/groups",
+        newGroup
+      );
+    }
+  
+    public async modifyGroup(request: any): Promise<any> {
+      const { group_id, ...data } = request;
+      return await this.put<any, any>(
+        `/api/home/hue/groups/${group_id}`,
+        data
+      );
+    }
+  
+    public async deleteGroup(group_id: string): Promise<any> {
+      return await this.delete<any>(
+        `/api/home/hue/groups/${group_id}`,
+      );
+    }
+
+    public async hue_toggle(
+      id: any,
+      hue_object?: string
     ): Promise<any> {
       return this.get<any>(
-        `/api/home/hue/light_toggle?id=${id}`,
+        `/api/home/hue/toggle?id=${id}${hue_object && `&object=${hue_object}`||''}`,
       );
     }
     public async lightColor(

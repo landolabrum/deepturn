@@ -15,6 +15,7 @@
         &--title{
             font-size: var(--s-1);
             color: var(--gray-50);
+            text-transform: capitalize;
         }
         &--actions{
             gap: var(--s-9);

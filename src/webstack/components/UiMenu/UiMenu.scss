@@ -53,7 +53,6 @@ $el_gap: 7px;
   }
   &__lite {
     .menu__option {
-      
       background-color: var(--gray-30);
       color: var(--gray-100);
       &:hover {
@@ -105,6 +104,8 @@ $el_gap: 7px;
   }
 
   .menu__option {
+    color: var(--gray-50);
+    --ui-icon-color: var(--gray-50);
     &:not(:last-child) {
       border-bottom: solid 1px var(--gray-80);
     }
@@ -125,6 +126,8 @@ $el_gap: 7px;
     width: inherit;
 
     &:hover {
+      color: var(--gray-30);
+      --ui-icon-color: var(--gray-30);
       &:not(:last-child) {
         border-bottom: solid 1px var(--gray-60);
       }

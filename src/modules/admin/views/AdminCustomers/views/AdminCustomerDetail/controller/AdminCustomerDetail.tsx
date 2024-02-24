@@ -19,7 +19,7 @@ import { findField, updateField } from '@webstack/components/UiForm/functions/fo
 import { useClearance } from '~/src/core/authentication/hooks/useUser';
 import AdminProductRequest from '../views/AdminProductRequest';
 
-const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
+const AdminCustomerDetails: React.FC<any> = () => {
   const router = useRouter();
   const [customer, setCustomer] = useState<IFormField[] | undefined>();
   const { openModal, closeModal } = useModal();
@@ -31,7 +31,7 @@ const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
     email: ''
   });
   const [productRequest, setProductRequest] = useState<any>();
-
+  const customer_id = router?.query?.cid && String(router?.query?.cid);
   const level = useClearance();
   const [notification, setNotification] = useNotification();
   const merchantId = String(environment.merchant.mid);
@@ -41,27 +41,27 @@ const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
   const adminService = getService<IAdminService>('IAdminService');
 
   function modifyCustomerData(data: any, round2?: string): any {
-
     const removeKeys = ['id', 'methods', 'files', 'default_source', 'shipping', 'object', 'currency', 'invoice_settings', 'next_invoice_sequence', 'preferred_locales', 'test_clock', 'invoice_prefix'];
     const modifiedKeys = ['metadata'];
     const disabledKeys = ['created', 'server_url', 'referrer_url', 'email_verified', 'delinquent', 'livemode', 'balance'];
+
     // SET FILES
     if (data?.files) {
       setFiles(data.files);
     }
     // SET FILES
     const handleFormatValue = (key: string, value: any) => {
+      // if (key == 'default_source') console.log('default:', value)
       let val = value;
 
-      if (key == 'methods') {
-        value?.data?.length && setMethods(value.data);
-      }
-      if (key == 'phone') val = phoneFormat(value)
-      // if (key == 'default_source') console.log('default:', value)
+      if (key == 'methods')value?.data?.length && setMethods(value.data);
+      if (key == 'phone') val = phoneFormat(value);
       if (key == 'created') val = dateFormat(value, { time: true, isTimestamp: true, returnType: "object" });
+      
       else if (value == null) val = '';
       return val;
     }
+
     const handleFormatType = (key: string, value: any) => {
       let t = typeof value == 'boolean' ? 'checkbox' : 'text';
       if (key == 'password') t = 'password';
@@ -85,7 +85,10 @@ const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
     return [...formatted(), ...formatted(data.metadata, 'metadata')];
   }
 
+
+
   const confirmDelete = () => {
+    if(!customer_id)return;
     setLoader({ active: true, body: `Deleting ${info?.name}` });
     const deleteService = async () => {
       try {
@@ -122,7 +125,7 @@ const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
 
   }
   const onSubmit = async () => {
-    if (!customer) return;
+    if ( !customer || !customer_id ) return;
     if (level < 10) {
       setNotification({ active: true, persistance: 3000, list: [{ name: "you do nott have authority to modify" }] })
     }
@@ -172,7 +175,7 @@ const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
 
 
   const getCustomer = async () => {
-    if (customer_id) {
+    if (customer_id && !customer) {
       try {
         const response = await adminService.getCustomer(customer_id);
         if (response) {
@@ -182,13 +185,19 @@ const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
             address: response?.address || {},
             email: response?.email
           })
-          const hasProductRequest = () => {
+
+
+          const handleCustomerMetadata = () => {
             let formName = '';
             Object.entries(response?.metadata || {}).map(([key, value]: any) => {
               const keyParts = key.split('.');
               if (keyParts[0] === 'prod_req' && keyParts[1] === merchantId) {
                 formName = keyParts[2];
                 setProductRequest(value);
+              }else if(key === 'user'){
+                console.log('[ else if (USER key ) ]', {key, value})
+              }else{
+                console.log('[ else ]', {key, value})
               }
             });
             // test against the default formName = ''
@@ -201,7 +210,7 @@ const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
             }
           };
 
-          hasProductRequest();
+          handleCustomerMetadata();
           const transformedData = modifyCustomerData(response);
           setCustomer(transformedData);
         } else {
@@ -212,6 +221,8 @@ const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
         // alert("Error fetching customer data");
       } finally {
       }
+    }else{
+      setNotification({active: true, list:[{label:JSON.stringify({customer, customer_id})}]})
     }
   };
 
@@ -219,15 +230,15 @@ const AdminCustomerDetails: React.FC<any> = ({ customer_id }: any) => {
   const addressString = Object.values(info.address).join(' ');
 
   useEffect(() => {
-    !customer && getCustomer();
-  }, [customer_id, setProductRequest]);
+    getCustomer();
+  }, [setProductRequest, customer_id]);
 
-  if (customer_id) {
+  if (customer) {
     return (
       <>
         <style jsx>{styles}</style>
         <div className='admin-customer'>
-          {productRequest && <AdminProductRequest customer_id={customer_id} productRequest={productRequest} />}
+          {productRequest && customer_id && <AdminProductRequest customer_id={customer_id} productRequest={productRequest} />}
           {/* Render ProductRequest */}
           <div className='admin-customer__header'>
             <div className='admin-customer__header--title'>Contact Info</div>

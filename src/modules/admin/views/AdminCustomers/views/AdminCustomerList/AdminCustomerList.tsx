@@ -4,10 +4,9 @@ import styles from './AdminCustomerList.scss';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
-import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 import environment from '~/src/environment';
+import UserContext from '~/src/models/UserContext';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICustomer {
@@ -68,13 +67,13 @@ interface IShipping {
   tracking_number: string | null;
 }
 
-const AdminCustomerList: React.FC<any> = ({onRowClick}:any) => {
-  const [customers, setCustomers]=useState<ICustomer | null>(null);
+const AdminCustomerList: React.FC<any> = ({ onSelect}:{onSelect:(props: string)=>void}) => {
+  const [customers, setCustomers]=useState<ICustomer | undefined>();
   const [hasMore, setHasMore]=useState(false);
   const adminService = getService<IAdminService>('IAdminService');
 
   const hideColumns = ['extras','id'];
-
+ 
   const getCustomerList = async () => {
     let customerList = await adminService.listCustomers();
     if (customerList?.object === 'list') {
@@ -123,9 +122,8 @@ const AdminCustomerList: React.FC<any> = ({onRowClick}:any) => {
   
   
   useEffect(() => {
-     getCustomerList();
-    //  console.log(hasMore)
-  }, []);
+     if(!customers)getCustomerList();
+  }, [setCustomers]);
   return (
     <>
       <style jsx>{styles}</style>
@@ -143,7 +141,7 @@ const AdminCustomerList: React.FC<any> = ({onRowClick}:any) => {
         }}
         loading={!Object(customers)?.length}
         data={customers}
-        onRowClick={onRowClick}
+        onRowClick={onSelect}
         />
         </div>
       </div>

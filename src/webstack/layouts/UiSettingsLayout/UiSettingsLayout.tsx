@@ -7,6 +7,7 @@ import useClass from '@webstack/hooks/useClass';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { IConfirm, useModal } from '@webstack/components/modal/contexts/modalContext';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import environment from '~/src/environment';
 
 interface ISettingsClasses {
   container: string;
@@ -168,6 +169,9 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
               </div>
             )}
             <div className="settings__view__content">
+            <div className="settings__view__content-background">
+              <UiIcon icon={`${environment.merchant.name}-logo`}/>
+            </div>
               {views[view]}
             </div>
           </div>

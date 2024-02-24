@@ -40,13 +40,13 @@
     border: solid 1px var(--gray-80);
     outline: solid 1px var(--gray-70-opaque);
     border-radius: var(--border-radius);
-
+    @media(max-width: 900px) {
+        margin: 0 auto;
+        top: var(--s-9);
+        width: calc(100% - calc(var(--s-9) * 2));
+    }
     &__popup {
         top: calc(var(--s-element) + var(--s-9));
-        @media(max-width:1100px){
-            top: var(--s-padding);
-            // bottom: var(--s-padding);
-        }
         left: 0;
         // bottom: calc(var(--s-element) + var(--s-9));
         margin: auto;
@@ -54,13 +54,10 @@
         right: 0;
         width: var(--s-padding-width);
         transform: unset;
+        @media(max-width:1100px){top: var(--s-padding);}
     }
 
-    @media(max-width: 900px) {
-        margin: 0 auto;
-        top: var(--s-9);
-        width: calc(100% - calc(var(--s-9) * 2));
-    }
+
 
     &__dragging {
         cursor: url('/icons/fa-hand-back-fist.svg'), auto;

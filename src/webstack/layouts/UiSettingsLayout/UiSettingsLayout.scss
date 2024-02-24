@@ -291,6 +291,21 @@ $actionsBg: var(--gray-90);
         justify-content: flex-start;
         align-items: flex-start;
         width: 100%;
+        min-height: 50vh;
+        position: relative;
+        &-background{
+            @extend .d-flex;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            --ui-icon-size: var(--s-padding-width);
+            --ui-icon-color: var(--gray-90-opaque);
+            width: 100%;
+            max-width: 500px;
+        }
+        // @media(min-width: 1100px){
+        // }
     }
 
     &__full, &__full-width {

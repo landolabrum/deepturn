@@ -83,7 +83,6 @@
 
 // FORM CONTROL ELEMENT
 // FORM CONTROL ELEMENT
-// FORM CONTROL ELEMENT
 
 .form-control__element {
     color: var(--gray-50);
@@ -160,13 +159,7 @@
     &:not(&--before-icon, &--after-icon){
         padding: 0 var(--s-9);
     }
-    // &--before-icon:not(&-sm,  &--link) {
-    //     padding-left: var(--s-element);
-    // }
-
-    // &--after-icon:not(&-sm,  &--link) {
-    //     padding-right: var(--s-element);
-    // }
+  
     // HANDLE ICONS
     &--before-icon {
         &.form-control__element--link{
@@ -179,6 +172,14 @@
             gap: var(--s-9);
         }
     }
+    &--after-icon:not(&--flat, &--center){
+        padding-left: var(--s-9);
+    }
+    &--before-icon:not(&--flat, &--center){
+        padding-right: var(--s-9);
+    }
+ 
+
 
     // ELEMENTS
     &--button {
@@ -187,13 +188,17 @@
         border-width: 1px;
         border-color: unset;
         filter: brightness(.8);
-
         &:hover,
         &:focus {
             filter: brightness(1);
         }
     }
-
+    &--button.form-control__element--flat {
+        width: inherit;
+        &:first-child{
+            padding: 0;
+        }
+    }
     &--checkbox {
         width: max-content;
         padding: 0;
@@ -331,6 +336,7 @@
 
     &--center {
         min-width: 150px;
+        padding: 0;
         justify-content: space-between;
     }
 
@@ -446,24 +452,6 @@
             box-shadow: 0 0 8px 2px var(--primary); /* Soft glow, adjust as needed */
         }
 
-    // &--glow {
-    //     border: solid 1px;
-    //     overflow: visible;
-    //     margin: 0 5px;
-    //     animation: glow 3s infinite ease-out;
-    //     &:focus,
-    //     &:focus-within {
-    //         background-color: var(--gray-80);
-    //     }
-
-    //     &:hover:not(&:focus, &:focus-within) {
-    //         animation: unset;
-    //         background-color: var(--gray-70);
-    //         color: var(--primary-lite);
-    //         box-shadow: 0 0 3px 1px var(--primary-opaque);
-    //     }
-    // }
-
     &--link {
         padding: 0;
         width: max-content;
@@ -472,15 +460,6 @@
             animation: glowTxt 1s infinite;
         }
     }
-
-    // &--link.form-control__element--after-icon {
-    //     padding-right: var(--s-5);
-    // }
-
-    // &--link.form-control__element--before-icon {
-    //     padding-left: var(--s-5) !important;
-    // }
-
     &--bump {
         animation: bump .3s;
     }

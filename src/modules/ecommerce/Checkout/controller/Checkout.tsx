@@ -31,15 +31,12 @@ const Checkout: React.FC<ICheckout> = () => {
         const isComplete = undefinedFields?.length === 0;
         isComplete && set_billing_details(fields)
     }
-    const views:any = {
-        'billing-details': <ContactForm onSubmit={handleContactForm} />,
-        'card-details': clientSecret && <UserStripePaymentForm clientSecret={clientSecret} onSuccess={console.log} /> || <UiLoader />
-    }
     useEffect(() => {
         if(!cartA)_setCart(getCartItems());
         if (user) set_billing_details(user);
         else setView('billing-details');
-        if (billing_details) setView('create-method');
+        if (billing_details && clientSecret) setView('card-details');
+        console.log('[ SECRET ]', clientSecret)
     }, []);
 
     return <>
@@ -55,23 +52,12 @@ const Checkout: React.FC<ICheckout> = () => {
                 Step {view === 'billing-details'?'1':'2'} of 2
             </div>
             <div className='checkout__body'>
-                {views[view]}
-
-                {/* {view == 'card-details' && <UiCollapse label={keyStringConverter(view)} open={true}>
-                    <Authentication view={'sign-up'} />
-                </UiCollapse>} */}
-                {/* {view === 'create-method' && <UserMethods />} */}
-                {/* <div className='checkout__body'> */}
-                {/* user?.methods */}
-                {/* <ProfileForm user={user} open={user?.address == undefined}/> */}
-                {/* <AccountMethods /> */}
-                {/* <CartList cart={cart} collapse={false} handleQty={setCart} /> */}
+                {view === 'billing-details' && <ContactForm onSubmit={handleContactForm} />}
+                {view == 'card-details' ? clientSecret && <UserStripePaymentForm clientSecret={clientSecret} onSuccess={console.log} /> || <UiLoader />:''}
             </div>
         </div>
-    </>;
+    </>; 
 
 };
 
 export default Checkout;
-
-// const C = { "id": "cus_OKcPMUAbaz17z7", "object": "customer", "address": { "city": "Holladay", "country": "US", "line1": "2743 Juniper Way", "line2": null, "postal_code": "84117", "state": "UT" }, "balance": 0, "created": 1690337407, "currency": null, "default_source": null, "delinquent": false, "description": null, "discount": null, "email": "lando@deepturn.com", "invoice_prefix": "FD6FCAD0", "invoice_settings": { "custom_fields": null, "default_payment_method": null, "footer": null, "rendering_options": null }, "livemode": false, "metadata": { "admin": "true", "clearance": "10", "password": null, "username": "lando" }, "name": "Landon Labrum", "next_invoice_sequence": 2, "phone": "+14356719245", "preferred_locales": [], "shipping": null, "tax_exempt": "none", "test_clock": null, "methods": { "object": "list", "data": [{ "id": "pm_1NoFf7IodeKZRLDVUfQQV1OP", "object": "payment_method", "billing_details": { "address": { "city": null, "country": null, "line1": null, "line2": null, "postal_code": null, "state": null }, "email": null, "name": null, "phone": null }, "card": { "brand": "visa", "checks": { "address_line1_check": null, "address_postal_code_check": null, "cvc_check": "pass" }, "country": "US", "exp_month": 4, "exp_year": 2024, "fingerprint": "EAKIZ5pVRt2vtnLd", "funding": "credit", "generated_from": null, "last4": "4242", "networks": { "available": ["visa"], "preferred": null }, "three_d_secure_usage": { "supported": true }, "wallet": null }, "created": 1694221717, "customer": "cus_OKcPMUAbaz17z7", "livemode": false, "metadata": {}, "type": "card" }], "has_more": false, "url": "/v1/payment_methods" }, "exp": 1694251119 }

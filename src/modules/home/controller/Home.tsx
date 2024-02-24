@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import styles from './Home.scss';
 import Surveillance from '../views/surveillance/controller/Surveillance';
 import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/UiSettingsLayout';
-import Lights from '../views/lights/Lights';
+import Lights from '../views/hue/controller/Lights';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import capitalize from '@webstack/helpers/Capitalize';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
@@ -33,7 +33,7 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
       {/* <div className='home'> */}
         <UiSettingsLayout
           // variant="full"
-          variant="full-width"
+          // variant="full-width"
           // title='home'
           defaultView='home'
           views={views}

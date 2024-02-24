@@ -98,7 +98,7 @@ const UiEarthObject = (
                 <div className='ui-earth__header'>
                     <div className='ui-earth__tools'>
                         <div className='ui-earth__tools-tool'>
-                            <UiSelect openDirection='right' value={earthImg?.name} options={earthImgs} onSelect={handleEarthImg} />
+                            <UiSelect openDirection='left' value={earthImg?.name} options={earthImgs} onSelect={handleEarthImg} />
                         </div>
                     </div>
                 </div>

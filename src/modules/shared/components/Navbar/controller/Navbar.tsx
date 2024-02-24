@@ -124,11 +124,12 @@ const Navbar = () => {
                   traits={route?.icon ? { afterIcon: { icon: route.icon }, } : undefined}
                   variant='flat'
                   onClick={() => handleSelect(route)}
-                >
+                  >
                   {route.label}
                 </UiButton>
               ) : (
                 <UiSelect
+                  openDirection={route?.label === 'profile' && 'left' || undefined}
                   overlay={{ zIndex: 997 }}
                   traits={route?.icon ? { afterIcon: { icon: route.icon } } : undefined}
                   openState={Boolean(toggled && toggled === route.label) ? 'open' : 'closed'}

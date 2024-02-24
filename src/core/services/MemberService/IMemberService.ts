@@ -40,7 +40,7 @@ export default interface IMemberService {
   getMethods(customerId?: string): Promise<any>;
   deleteMethod(id: string): Promise<any>;
   processTransaction(cart:ICartItem[]): Promise<any>;
-  createPaymentIntent(user: PaymentIntentBillingDetails, method?: IPaymentMethod ): Promise<any>;
+  createPaymentIntent(customer: PaymentIntentBillingDetails, method?: IPaymentMethod ): Promise<any>;
   
   userChanged: EventEmitter<UserContext | undefined>;
   verifyEmail(token: string):Promise<any>;
