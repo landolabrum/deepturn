@@ -241,7 +241,12 @@ export default class CustomerService
         ...metadata
       },
     );
-    // console.log('[ SIGN UP RES ]', res)
+    if(res?.status === "existing"){
+      const memberJwt = await res.data;
+      this.saveMemberToken(memberJwt);
+      this.saveLegacyCookie(memberJwt);
+      return this._getCurrentUser(true)!;
+    }
     return res;
   }
   public async getMethods(customerId?: string): Promise<any> {
