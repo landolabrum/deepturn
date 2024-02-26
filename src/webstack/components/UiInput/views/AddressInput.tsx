@@ -29,9 +29,12 @@ const AutocompleteAddressInput = ({ address, setAddress, traits, inputClasses, l
       if (place && place.address_components) {
         const addressComponents = place.address_components.reduce((acc: any, component: any) => {
           const type = component.types[0];
-          acc[type] = component.long_name || component.short_name;
+          acc[type] =  component.short_name;
+          // acc[type] = component.long_name || component.short_name;
           return acc;
         }, {});
+        console.log('[ ADDRESS ]',place)
+
         const formattedAddress = {
           line1: `${addressComponents.street_number || ''} ${addressComponents.route || ''}`,
           line2: addressComponents.sublocality || '',

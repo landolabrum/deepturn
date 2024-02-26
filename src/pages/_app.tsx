@@ -1,6 +1,6 @@
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import DefaultLayout from "../layouts/default/DefaultLayout";
+import MainLayout from "../layouts/default/DefaultLayout";
 import ServiceContainer from "@webstack/components/ServiceContainer/ServiceContainer";
 import styles from "~/src/layouts/default/DefaultLayout.scss"
 import { OverlayProvider } from "@webstack/components/Overlay/Overlay";
@@ -32,11 +32,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
               <HeaderProvider>
                 <ModalOverlay />
 
-                <DefaultLayout>
+                <MainLayout>
 
                   <Component {...pageProps} />
 
-                </DefaultLayout>
+                </MainLayout>
               </HeaderProvider>
             </ModalProvider>
           </NotificationProvider>

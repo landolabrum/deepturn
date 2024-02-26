@@ -5,13 +5,10 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import CheckoutButton from '../views/CheckoutButton/CheckoutButton';
 import useCart from '../../cart/hooks/useCart';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
-import UserMethods from '~/src/modules/user/views/UserMethods/controller/UserMethods';
-import ContactForm from '@shared/components/ContactForm/ContactForm';
 import UserStripePaymentForm from '~/src/modules/user/views/UserMethods/components/UserStripePaymentForm/UserStripePaymentForm';
 import usePaymentIntentSecret from '~/src/core/services/MemberService/hooks/usePaymentIntentSecret';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
-import { PaymentIntentBillingDetails } from '~/src/core/services/MemberService/IMemberService';
-import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
+import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
     cart: any;
@@ -20,24 +17,28 @@ interface ICheckout {
 }
 const Checkout: React.FC<ICheckout> = () => {
     const user = useUser();
-    const [view, setView] = useState<any>('card-details');
-    const [cartA, _setCart] = useState<any>();
+    const [view, setView] = useState<any>('sign-up');
+    const [cart, setCart] = useState<any>();
     const [billing_details, set_billing_details] = useState<any>();
     const clientSecret = usePaymentIntentSecret(billing_details);
     const { getCartItems, } = useCart();
    
-    const handleContactForm = (fields: PaymentIntentBillingDetails) => {
-        const undefinedFields = Object.entries(fields).filter(([name, value]:any)=>(value === undefined) );
-        const isComplete = undefinedFields?.length === 0;
-        isComplete && set_billing_details(fields)
+    const handleSignUp = (res: any) => {
+        if(res.id)set_billing_details(res);
+        else{
+            console.log('[ CHECKOUT (HANDLE SIGNUP)[ERROR] ]',res);
+        }
+    }
+    const handleSuccess = (res: any) => {
+        console.log('[ CHECKOUT (HANDLE SUCCESS) ]',res);
     }
     useEffect(() => {
-        if(!cartA)_setCart(getCartItems());
-        if (user) set_billing_details(user);
-        else setView('billing-details');
-        if (billing_details && clientSecret) setView('card-details');
+        if(!cart)setCart(getCartItems());
+        if (user && !billing_details)set_billing_details(user);
+        if(billing_details && clientSecret)setView('card-details');
+        // else setView('sign-up');
         console.log('[ SECRET ]', clientSecret)
-    }, []);
+    }, [billing_details, clientSecret]); 
 
     return <>
         <style jsx>{styles}</style>
@@ -46,18 +47,28 @@ const Checkout: React.FC<ICheckout> = () => {
                 Secure Checkout <UiIcon icon="fa-lock" />
             </div>
             <div className='checkout__button'>
-                {user && cartA && <CheckoutButton cart={cartA} collect />}
+                {user && cart && <CheckoutButton cart={cart} collect />}
             </div>
             <div className='checkout__button'>
-                Step {view === 'billing-details'?'1':'2'} of 2
+                Step {view === 'sign-up'?'1':'2'} of 2
             </div>
             <div className='checkout__body'>
-                {view === 'billing-details' && <ContactForm onSubmit={handleContactForm} />}
-                {view == 'card-details' ? clientSecret && <UserStripePaymentForm clientSecret={clientSecret} onSuccess={console.log} /> || <UiLoader />:''}
-            </div>
+                {view === 'sign-up' && <SignUp hasPassword={false} btnText='continue' onSuccess={handleSignUp}/>}
+
+                {view == 'card-details' ? clientSecret && (
+                    <UserStripePaymentForm 
+                        clientSecret={clientSecret}
+                        onSuccess={handleSuccess}
+                        success_url='/checkout' />
+                ) || <UiLoader />:''}
+                {/* secret: {JSON.stringify(clientSecret)} <br/>
+                secret: {JSON.stringify(billing_details)} <br/> */}
+            </div> 
         </div>
     </>; 
 
 };
 
 export default Checkout;
+
+// http://localhost:3000/cart?setup_intent=seti_1OntBxIodeKZRLDVNCwE6594&setup_intent_client_secret=seti_1OntBxIodeKZRLDVNCwE6594_secret_Pd9UzAdFzez7NJVX6TsZ2sEKUwQ3WT2&redirect_status=succeeded

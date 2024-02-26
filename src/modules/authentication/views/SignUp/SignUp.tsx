@@ -10,7 +10,8 @@ import useReferrer from "@webstack/hooks/useReferrer";
 
 
 export interface ISignUp {
-  setView: (e: any) => void;
+  setView?: (e: any) => void;
+  onSuccess?: (e: any) => void;
   hasPassword?: boolean;
   btnText?: string;
 }
@@ -23,7 +24,7 @@ const pwFields = [
   { name: "password", label: "password", type: 'password', placeholder: 'password', required: true },
   { name: "confirm_password", label: "confirm password", type: 'password', placeholder: 'confirm password', required: true }
 ]
-const SignUp = ({ setView, hasPassword = true, btnText }: ISignUp) => {
+const SignUp = ({ setView, hasPassword = true, btnText, onSuccess }: ISignUp) => {
   const [loading, setLoading] = useState<any>(false);
   const user = useUser();
   const memberService = getService<IMemberService>("IMemberService");
@@ -104,7 +105,8 @@ const SignUp = ({ setView, hasPassword = true, btnText }: ISignUp) => {
       try {
         const response = await memberService.signUp(request);
         if(response?.status === 'created'){
-          setView && setView(response.email);
+          setView && setView(response.data.email);
+          onSuccess && onSuccess(response.data);
         }
       } catch(e:any) {
         if (e?.detail?.fields) {
@@ -119,6 +121,7 @@ const SignUp = ({ setView, hasPassword = true, btnText }: ISignUp) => {
     } else {
       console.error('[ SIGN UP ERRORS LOCAL ]', errors);
     }
+    setLoading(false);
   };
   
   

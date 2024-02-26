@@ -4,6 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 interface IStripePaymentForm {
     clientSecret: string;
+    success_url?: string;
     onSuccess:(e:any)=>void;
 }
 const stripeKey:string = String(process.env.NEXT_PUBLIC_STRIPE_API_KEY?.trim())
@@ -11,7 +12,7 @@ const stripeKey:string = String(process.env.NEXT_PUBLIC_STRIPE_API_KEY?.trim())
 const stripePromise = loadStripe(stripeKey);
 
 
-const UserStripePaymentForm = ({ clientSecret, onSuccess }:IStripePaymentForm) => {
+const UserStripePaymentForm = ({ clientSecret, onSuccess, success_url }:IStripePaymentForm) => {
     const user = useUser();
     const appearance = {
         theme: 'night' as 'stripe',
@@ -23,12 +24,13 @@ const UserStripePaymentForm = ({ clientSecret, onSuccess }:IStripePaymentForm) =
       };
     if(clientSecret)return (
       <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
-        <UserCreateMethod
+        <UserCreateMethod 
           user={user}
-          onSuccess={onSuccess}
+          onSuccess={onSuccess} 
+          success_url={success_url} 
         />
       </Elements>
     );
     return <>... load</>
   };
-export default UserStripePaymentForm;  
+export default UserStripePaymentForm;

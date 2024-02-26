@@ -6,7 +6,7 @@ interface IProps {
   children: ReactElement;
 }
 
-const DefaultLayout = (props: IProps) => {
+const MainLayout = (props: IProps) => {
   return (
     <>
       <style jsx>{styles}</style>
@@ -18,4 +18,4 @@ const DefaultLayout = (props: IProps) => {
   );
 }
 
-export default DefaultLayout;
+export default MainLayout;

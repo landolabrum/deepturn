@@ -17,10 +17,10 @@ $actionsBg: var(--gray-90);
     right: auto;
     margin: auto;
     width: 1005;
+    margin-top: calc(var(--s-element) + var(--s-padding));
     @media (max-width: 1100px) {
         width: auto;
     }
-    margin-top: calc(var(--s-element) + var(--s-9));
     &__full{
         padding: 0;
         margin-top: 0;
@@ -168,10 +168,10 @@ $actionsBg: var(--gray-90);
     background-color: var(--gray-80-opaque);
     height: var(--s-element);
     --ui-icon-width: var(--s-5);
-
+    top: calc(calc(var(--s-element) + var(--s-9) ) * -1);
     // aspect-ratio: 1;
     --ui-icon-color:var(--white);
-
+    overflow: hidden;
     position: absolute;
     @media(max-width: 1100px) {
     }

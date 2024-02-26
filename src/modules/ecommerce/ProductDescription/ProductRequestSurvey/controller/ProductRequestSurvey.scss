@@ -26,7 +26,7 @@
     width: 100%;
     flex: 1;
     gap: var(--s-element);
-
+    
     &--email {
         font-size: var(--s-4);
         color: var(--primary);
@@ -69,29 +69,40 @@
     justify-content: flex-start;
     border-radius: var(--border-radius);
     padding:  var(--s-padding) ;
-    margin:  var(--s-padding);
     transition: all .5s;
         background-color: var(--gray-90);
     gap: var(--s-padding);
     // min-height: 490px;
     color: var(--gray-30);
     &__btn-view{
-        background-color: var(--primary-opaque);
         border-radius: var(--border-radius);
         @extend .d-flex;
         transition: all .5s;
         height: 300px;
         width: 100%;
         color: var(--primary-opaque);
+        background-color: var(--primary-opaque);
+        border: solid 1px var(--primary);
+        @keyframes glow {
+            50% {
+                color: var(--white); /* Brighter color for the pulse peak */
+                --ui-icon-color: var(--white); /* Brighter color for the pulse peak */
+                background-color: var(--primary); /* More visible than start/end */
+                border-color: var(--primary); /* Keep consistent or adjust for effect */
+                box-shadow: 0 0 2px 3px var(--primary-lite);
+            }
+        }
+        animation: glow 5s infinite ease-in-out;
+
+ 
         cursor: pointer;
         &-text{
-            width: 50%;
-            max-width: 300px;
+            width: 66%;
             text-transform: uppercase;
-            margin: auto;
             text-align: center;
             font-size: var(--s-element);
             @media(max-width:900px){
+                width: 50%;
                 font-size: var(--s-2);
             }
         }
@@ -103,16 +114,12 @@
     }
     @media(min-width:1100px) {
         margin:  0;
-        width: 60%;
     }
 
-    @media(min-width:900px) {
-        width: 70%;
-    }
 
+    width: var(--s-padding-width);
     @media(max-width:900px) {
         margin: 0;
-        width: var(--s-padding-width);
         padding: var(--s-padding) var(--s-padding) var(--s-5);
         // padding: var(--s-9);
         // width: calc(100% - calc(var(--s-9) * 2));

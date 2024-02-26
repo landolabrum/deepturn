@@ -42,21 +42,18 @@ useEffect(() => {}, []);
   return (
     < >
     <style jsx>{styles}</style>
-    <div className='index__full'>
-    <div className='index__full--title'>
-        {/* 6 Important Questions */}
-        6 Key Questions to Enhance Your Solar System with Batteries
-      </div>
-      <div>Can I add batteries to my existing solar</div><br/><br/>
-      {/* <div className='index__full-ol'>
-        <div className='index__full-li'>
-          <div className='index__full-li--title'>
-            Can I add batteries to my existing solar
-          </div>
+    <div className='index__full '>
+        <div className='index__full index__full-ol'>
+            <h2>6 Key Questions to Enhance Your Solar System with Batteries</h2>
+            <div><UiIcon icon="fa-cube"/>Can I add batteries to my exisiting solar system?</div>
+            <div><UiIcon icon="fa-cube"/>What determines that the battery will back up what I need?</div>
+            <div><UiIcon icon="fa-cube"/>Will this battery keep me backed up if the grid stays down?</div>
+            <div><UiIcon icon="fa-cube"/>What does this battery setup have that others dont?</div>
+            <div><UiIcon icon="fa-cube"/>Is there a limit to how much the batteries can power in my home at the same time?</div>
+            <div><UiIcon icon="fa-cube"/>Can I change what I want backed up in the future</div>
         </div>
-      </div> */}
-    </div>
       <ProductRequestSurvey id='configure' startButton='Configure your Solar Grid Box'/>
+    </div>
 
     <div className='index__full'>
       <div className='index--title'>

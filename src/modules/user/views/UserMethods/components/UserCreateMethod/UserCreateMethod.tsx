@@ -12,10 +12,11 @@ interface IAccountCreateMethod {
     collapse?: boolean;
     className?: string;
     shippable?: boolean;
+    success_url?: string;
 }
 
 
-const UserCreateMethod = ({ onSuccess, user, shippable }: IAccountCreateMethod) => {
+const UserCreateMethod = ({ onSuccess, user, shippable, success_url="/profile?vid=billing+info" }: IAccountCreateMethod) => {
     const stripe = useStripe();
     const elements: any = useElements();
     const options = {
@@ -31,9 +32,9 @@ const UserCreateMethod = ({ onSuccess, user, shippable }: IAccountCreateMethod) 
     const onSubmit = useCallback(async (event: any) => {
         event.preventDefault();
         let confirmParams: any = {
-            return_url: `${environment.site.url}/profile?vid=billing+info`,
+            return_url: `${environment.site.url}${success_url}`,
         };
-        if (shippable && user?.address != undefined) {
+        if (shippable && user?.address?.line1) {
             confirmParams.shipping = {
                 name: user?.name || 'no-name',
                 address: user.address,
@@ -81,7 +82,7 @@ const UserCreateMethod = ({ onSuccess, user, shippable }: IAccountCreateMethod) 
                 </div>
             </form>
         </>
-    );
+    ); 
 };
 
 export default UserCreateMethod;
