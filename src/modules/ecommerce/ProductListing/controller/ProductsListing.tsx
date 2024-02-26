@@ -5,7 +5,7 @@ import { getService } from "@webstack/common";
 import ProductSlider from "../views/ProductSlider/ProductSlider";
 import { dateFormat, numberToUsd } from "@webstack/helpers/userExperienceFormats";
 import { useUser } from '~/src/core/authentication/hooks/useUser';
-import IShoppingService from "~/src/core/services/ShoppingService/IShoppingService";
+import IProductService from "~/src/core/services/ProductService/IProductService";
 import ProductChapters from "../views/ProductChapters/ProductChapters";
 import { useLoader } from "@webstack/components/Loader/Loader";
 import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
@@ -38,7 +38,7 @@ const ProductsListing: NextPage = () => {
   // const [products, setProducts] = useState<any[]>(mockProducts);
   const [products, setProducts] = useState<any[]>();
   const [hasMore, setHasMore] = useState<boolean>(false);
-  const shoppingService = getService<IShoppingService>("IShoppingService");
+  const ProductService = getService<IProductService>("IProductService");
   const getSelectedCategories = (filter: any) => {
     const selectedEntries = Object.entries(filter).filter(([, value]: any) => value.selected);
     if (selectedEntries.length === 0) return "all";
@@ -58,7 +58,7 @@ const ProductsListing: NextPage = () => {
     const fetchProducts = async () => {
       !loader.active && setLoader({ active: true, body: 'loding products', animation: true });
       try {
-        const memberResponse = await shoppingService.getProducts();
+        const memberResponse = await ProductService.getProducts();
         const fetchedProducts: any = memberResponse?.data;
         if (fetchedProducts) {
           // const formatted = fetchedProducts

@@ -21,7 +21,14 @@ export interface OEncryptMetadataJWT{
   status: string;
   metadata_key_name:string;
 }
-export interface PaymentIntentBillingDetails {
+export interface SetupIntentSecretRequest {
+  id?: string;
+  name: string;
+  email: string;
+  address?: UserAddress;
+  phone: string;
+}
+export interface PaymentIntentSecretRequest {
   id?: string;
   name: string;
   email: string;
@@ -30,18 +37,17 @@ export interface PaymentIntentBillingDetails {
 }
 
 
-export default interface IMemberService {
+export default interface ICustomerService {
   // METHODS
   getCurrentUser(): UserContext | undefined;
   getSetupIntent(client_secret: string): any;
-  prospectRequest(quote: any, test?:boolean): any | undefined;
   updateCurrentUser(user: UserContext): void;
   
   getMethods(customerId?: string): Promise<any>;
   deleteMethod(id: string): Promise<any>;
   processTransaction(cart:ICartItem[]): Promise<any>;
-  createPaymentIntent(customer: PaymentIntentBillingDetails, method?: IPaymentMethod ): Promise<any>;
-  
+  createSetupIntent(customer: SetupIntentSecretRequest, method?: IPaymentMethod ): Promise<any>;
+
   userChanged: EventEmitter<UserContext | undefined>;
   verifyEmail(token: string):Promise<any>;
   signIn({ email,

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './VerifyPayment.scss';
 import { getService } from '@webstack/common';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
-import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
+import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
+import IProductService from '~/src/core/services/ProductService/IProductService';
 import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
 import ContactForm from '@shared/components/ContactForm/ContactForm';
 import CartList from '~/src/modules/ecommerce/cart/views/CartList/CartList';
@@ -17,8 +17,8 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
     const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6InBvb0BuYW5pLmNvbSIsIml0ZW1zIjpbeyJwcm9kdWN0X2lkIjoicHJvZF9QNWxJMzVyMkVXVEF4aSIsInByaWNlX2lkIjoicHJpY2VfMU9IWm1KSW9kZUtaUkxEVlVlU2xZNk03In1dfQ.Zju6uFgG1L6xI26i8CQGVub-PnCoqP2Q-93qtnD1Yvo"
     const [tokenData, setTokenData] = useState<any | undefined>();
     const { addCartItem, getCartItems } = useCart();
-    const memberService = getService<IMemberService>('IMemberService');
-    const shoppingService = getService<IShoppingService>('IShoppingService');
+    const CustomerService = getService<ICustomerService>('ICustomerService');
+    const ProductService = getService<IProductService>('IProductService');
     const [cart, setCart]=useState<ICartItem | undefined>();
     const isTokenComplete = () => {
         console.log("[ ITEM ]", {
@@ -58,7 +58,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
 
     const getProducts = async () => {
         try {
-            const productsResponse = await shoppingService.getProducts({
+            const productsResponse = await ProductService.getProducts({
                 price_ids: tokenData.items.map((i: any) => i.price_id)
             });
             // Loop through productsResponse and add items to cart
@@ -76,7 +76,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
     const decryptToken = async () => {
         if (token) {
             try {
-                const response = await memberService.decryptJWT({
+                const response = await CustomerService.decryptJWT({
                     token: token,
                     secret: 'secretKey',
                     algorithm: 'HS256'

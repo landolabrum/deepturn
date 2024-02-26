@@ -6,7 +6,7 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import useUserAgent from '@webstack/hooks/getUserAgentInfo';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
+import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
 import ProductFeatureOther from '../views/ProductFeatureOther/ProductFeatureOther';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import keyStringConverter from "@webstack/helpers/keyStringConverter"
@@ -15,6 +15,7 @@ import capitalize from '@webstack/helpers/Capitalize';
 import ContactForm from '@shared/components/ContactForm/ContactForm';
 import useWindow from '@webstack/hooks/useWindow';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
+import IProspectService from '~/src/core/services/ProspectService/IProspectService';
 
 
 export const applianceArray: IMoreInfoField[] = [
@@ -74,7 +75,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     const [contactData, setContactData] = useState(null);
     const [message, setMessage] = useState<string | null>(null);
     const [isSuccess, setIsSuccess] = useState(false);
-    const memberService = getService<IMemberService>('IMemberService');
+    const prospectService = getService<IProspectService>('IProspectService');
     const { prod_req: productRequestObject, } = form;
     const [isBtnView, setIsBtnView] = useState<boolean>(false);
     const [view, setView]=useState('');
@@ -214,7 +215,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
         };
 
         try {
-            const response = await memberService.prospectRequest(request);
+            const response = await prospectService.prospectRequest(request);
             if (response?.email) {
                 handleView(response.email);
             } else if (response?.status) {

@@ -2,17 +2,17 @@ import { getService } from "@webstack/common";
 import { useEffect, useState } from "react";
 import { Subscription } from "rxjs";
 import UserContext from "~/src/models/UserContext";
-import IMemberService from "../../services/MemberService/IMemberService";
+import ICustomerService from "../../services/CustomerService/ICustomerService";
 
 export const useUser = () => {
-  const memberService = getService<IMemberService>('IMemberService');
-  const [userContext, setUserContext] = useState<UserContext | undefined>(memberService.getCurrentUser());
+  const CustomerService = getService<ICustomerService>('ICustomerService');
+  const [userContext, setUserContext] = useState<UserContext | undefined>(CustomerService.getCurrentUser());
   useEffect(() => {
 
     const subscriptions: Subscription[] = [];
-    subscriptions.push(memberService.userChanged.subscribe((uc: UserContext | undefined) => { setUserContext(uc); }));
+    subscriptions.push(CustomerService.userChanged.subscribe((uc: UserContext | undefined) => { setUserContext(uc); }));
     return () => { subscriptions.forEach((s) => s.unsubscribe()); };
-  }, [memberService.userChanged]);
+  }, [CustomerService.userChanged]);
   return userContext;
 }
 export const useClearance  = () => {

@@ -1,7 +1,6 @@
-import { useUser } from "~/src/core/authentication/hooks/useUser";
-import UserCreateMethod from "../UserCreateMethod/UserCreateMethod";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import GuestCheckoutForm from "../views/GuestCheckoutForm";
 interface IStripePaymentForm {
     clientSecret: string;
     success_url?: string;
@@ -12,8 +11,9 @@ const stripeKey:string = String(process.env.NEXT_PUBLIC_STRIPE_API_KEY?.trim())
 const stripePromise = loadStripe(stripeKey);
 
 
-const UserStripePaymentForm = ({ clientSecret, onSuccess, success_url }:IStripePaymentForm) => {
-    const user = useUser();
+const GuestCheckout = ({ clientSecret, onSuccess, success_url }:IStripePaymentForm) => {
+
+
     const appearance = {
         theme: 'night' as 'stripe',
         variables: {
@@ -24,13 +24,14 @@ const UserStripePaymentForm = ({ clientSecret, onSuccess, success_url }:IStripeP
       };
     if(clientSecret)return (
       <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
-        <UserCreateMethod 
-          user={user}
-          onSuccess={onSuccess} 
-          success_url={success_url} 
+        <GuestCheckoutForm 
+          clientSecret={clientSecret}
+          onSuccess={onSuccess}
+          success_url="/success"
         />
+
       </Elements>
     );
     return <>... load</>
   };
-export default UserStripePaymentForm;
+export default GuestCheckout;

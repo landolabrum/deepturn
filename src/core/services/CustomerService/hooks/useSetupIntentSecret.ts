@@ -1,13 +1,13 @@
 import { getService } from '@webstack/common';
 import { useEffect, useState } from 'react';
-import IMemberService, { PaymentIntentBillingDetails } from '../IMemberService';
+import ICustomerService, { SetupIntentSecretRequest } from '../ICustomerService';
 
-const usePaymentIntentSecret = (user?: PaymentIntentBillingDetails) => {
-    const memberService = getService<IMemberService>("IMemberService");
+const useSetupIntentSecret = (user?: SetupIntentSecretRequest) => {
+    const CustomerService = getService<ICustomerService>("ICustomerService");
     const [clientSecret, setClientSecret] = useState();
     const fetchClientSecret = async () => {
         if(clientSecret || !user)return;
-        const response = await memberService.createPaymentIntent( user);
+        const response = await CustomerService.createSetupIntent( user);
         if (response?.client_secret) {
             setClientSecret(response.client_secret);
         } else {
@@ -20,4 +20,4 @@ const usePaymentIntentSecret = (user?: PaymentIntentBillingDetails) => {
   return clientSecret;
 };
 
-export default usePaymentIntentSecret;
+export default useSetupIntentSecret;

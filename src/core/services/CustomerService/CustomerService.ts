@@ -6,7 +6,7 @@ import CustomToken from "~/src/models/CustomToken";
 import MemberToken from "~/src/models/MemberToken";
 import UserContext from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
-import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, PaymentIntentBillingDetails } from "./IMemberService";
+import ICustomerService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, SetupIntentSecretRequest } from "./ICustomerService";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
@@ -36,9 +36,9 @@ function timeoutPromise<T>(promise: Promise<T>, ms: number): Promise<T> {
 }
 
 
-export default class MemberService
+export default class CustomerService
   extends ApiService
-  implements IMemberService {
+  implements ICustomerService {
   constructor() {
     super(environment.serviceEndpoints.membership);
   }
@@ -106,16 +106,16 @@ export default class MemberService
       }
       return response;
     } catch (error: any) {
-      // console.error("[MemberService]: ", error);
+      // console.error("[CustomerService]: ", error);
       throw new ApiError("Error toggling default payment method", 500, "MS.TDPM.02");
     }
   }
 
-  public async createPaymentIntent(customer: PaymentIntentBillingDetails, method?: IPaymentMethod): Promise<any> {
+  public async createSetupIntent(customer: SetupIntentSecretRequest, method?: IPaymentMethod): Promise<any> {
     const memberMethod = async () => {
       try {
         const response: any = await this.post<any, {  }>(
-          `usage/customer/method/create`,
+          `api/setup-intent/create`,
           customer
         );
        return response;
@@ -144,24 +144,12 @@ export default class MemberService
       throw new ApiError("No ID Provided", 400, "MS.SI.02");
     }
   }
-  public async prospectRequest(request: any) {
-    if (request) {
 
-      const res = await this.post<{}, any>(
-        "usage/prospect/create/",
-        request
-      )
-      return res
-    } else {
-      throw new ApiError("No Customer ID Provided", 400, "MS.SI.02");
-    }
-  }
   public async processTransaction(cart: ICartItem[]) {
     var context: any = { line_items: cart };
     let id: string | undefined = this._getCurrentUser(false)?.id;
     if (id) {
       context['customer'] = id;
-      // console.log("[ CONTEXT ]", context)
       const res = await this.post<{}, any>(
         "usage/checkout/process",
         context
@@ -177,7 +165,7 @@ export default class MemberService
     const {encryptionData, customer_id: customer_id, metadata_key_name} = props;
     if (!encryptionData || !customer_id || !metadata_key_name) {
       console.error('[ ERROR ]',{
-        location: "MemberService.encryptMetadataJWT",
+        location: "CustomerService.encryptMetadataJWT",
         ...props
       })
       throw new ApiError("No Encryption Data Provided", 400, "MS.SI.02");
@@ -454,7 +442,7 @@ export default class MemberService
       const decodedPayload = window.atob(encodedPayload);
       return JSON.parse(decodedPayload) as MemberToken;
     } catch (error) {
-      console.error('Error decoding JWT payload', error, '[MemberService.ts]');
+      console.error('Error decoding JWT payload', error, '[CustomerService.ts]');
       // For production, consider removing the alert and handling the error more gracefully
       alert('Error decoding JWT payload: ' + JSON.stringify(error));
       return null;
@@ -471,7 +459,7 @@ export default class MemberService
   //     return JSON.parse(window.atob(encodedBody)) as MemberToken;;
   //   } catch (error) {
   //     let e: any = error;
-  //     if (typeof error == 'object') e.loc = '[ MemberService.ts ]';
+  //     if (typeof error == 'object') e.loc = '[ CustomerService.ts ]';
   //     alert(JSON.stringify(error))
   //   }
   //   return null;

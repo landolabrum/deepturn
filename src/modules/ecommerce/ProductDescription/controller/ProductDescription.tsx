@@ -7,7 +7,7 @@ import { getService } from '@webstack/common';
 import ProductImage from '../views/ProductImage/ProductImage';
 import ProductBuyNow from '../views/ProductBuyNow/ProductBuyNow';
 import useCart from '../../cart/hooks/useCart';
-import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
+import IProductService from '~/src/core/services/ProductService/IProductService';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import Image from 'next/image';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
@@ -34,14 +34,14 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
         [product_id, price_id].includes(undefined)
       ) return;
       setIsLoading(true); // Start loading
-      const shoppingService = getService<IShoppingService>("IShoppingService");
+      const ProductService = getService<IProductService>("IProductService");
       let productRequest = {
         id: product_id || product_query_id,
         pri: price_id || price_query_id
       };
       try {
 
-        const productResponse = await shoppingService.getProduct(productRequest);
+        const productResponse = await ProductService.getProduct(productRequest);
         if (productResponse?.id) {
           productResponse.price.qty = 0;
           // console.log('[ PRODUCT ]', Object.keys(productResponse))

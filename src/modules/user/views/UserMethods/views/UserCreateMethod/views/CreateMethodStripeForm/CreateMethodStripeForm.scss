@@ -1,0 +1,34 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.account-create-method {
+    width: 100%;
+    &__content{
+        @extend .d-flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--s-element);
+        border-radius: var(--border-radius);
+        background-color: var(--gray-80);
+        padding: calc(var(--s-element) * 1.5) var(--s-5) var(--s-5);
+        position: relative;
+        border: solid 1px var(--gray-60);
+    #payment-element{
+        &::before{
+            position: absolute;
+            top: var(--s-9);
+            font-size: var(--s-3);
+            text-transform: capitalize;
+            color: var(--gray-50);
+            content:'add method'
+        }
+    }
+    &__submit{
+        margin: 0;
+        width: 100%;
+    }
+    }
+}

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminProducts.scss';
 import { getService } from '@webstack/common';
-import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
+import IProductService from '~/src/core/services/ProductService/IProductService';
 import { dateFormat } from '@webstack/helpers/userExperienceFormats';
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 import UiButton from '@webstack/components/UiButton/UiButton';
@@ -37,10 +37,10 @@ const AdminProducts: React.FC = () => {
     }
   }
 
-const shoppingService = getService<IShoppingService>('IShoppingService');
+const ProductService = getService<IProductService>('IProductService');
 async function getProducts(){
   try{
-    const productsResponse = await shoppingService.getProducts();
+    const productsResponse = await ProductService.getProducts();
     setHasMore(productsResponse.has_more);
     const formattedProducts = productsResponse?.data.map((field: any)=>{
       let context = {

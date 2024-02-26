@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 // import styles from './UserModify.scss';
 import { getService } from '@webstack/common';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
+import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
 import { useNotification } from '@webstack/components/Notification/Notification';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
@@ -10,7 +10,7 @@ import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import UiMarkdown from '@webstack/components/UiMarkDown/UiMarkDown';
 
 const UserModify = ({ user, open = false }: any) => {
-  const memberService = getService<IMemberService>('IMemberService');
+  const CustomerService = getService<ICustomerService>('ICustomerService');
   const [notifiication, setNotification]=useNotification();
   const [busy, setBusy]=useState(false);
   const initialFields: IFormField[] = [
@@ -73,7 +73,7 @@ const UserModify = ({ user, open = false }: any) => {
     }
     console.log('[ request ]',request)
     try{
-      const response = await memberService.updateMember(user.id, request);
+      const response = await CustomerService.updateMember(user.id, request);
       if(response.object == 'customer')setNotification({
         active: true,
         list:[

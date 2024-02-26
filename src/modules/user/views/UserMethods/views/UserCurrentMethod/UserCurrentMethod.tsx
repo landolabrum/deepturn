@@ -5,7 +5,7 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 import { getService } from '@webstack/common';
 import { useNotification } from '@webstack/components/Notification/Notification';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
+import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
 import { IMethod } from '~/src/modules/user/model/IMethod';
 
 // Remember to create a sibling SCSS file with the same name as this component
@@ -16,7 +16,7 @@ interface UserCurrentMethod {
     default_payment_method?: string | null;
 }
 const UserCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response, default_payment_method }: UserCurrentMethod) => {
-    const memberService = getService<IMemberService>("IMemberService");
+    const CustomerService = getService<ICustomerService>("ICustomerService");
 
     const mm = String(method.card.exp_month).length == 1 ? `0${method.card.exp_month}` : method.card.exp_month;
     const [clicked, setClicked] = useState<number>(0);
@@ -30,7 +30,7 @@ const UserCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response, d
                 { label: 'deleting payment method' }
             ]
         });
-        const runDelete = await memberService.deleteMethod(mid);
+        const runDelete = await CustomerService.deleteMethod(mid);
         const label = runDelete.message ? runDelete.message : `*${runDelete.message}`
         setNotification({
             active: true,
@@ -46,7 +46,7 @@ const UserCurrentMethod: React.FC<any> = ({ method, onDeleteSuccess, response, d
     const handleSetDefault = async (mid: string) => {
         setClicked(4);
         try {
-            const newDefaultResp = await memberService.toggleDefaultPaymentMethod(mid);
+            const newDefaultResp = await CustomerService.toggleDefaultPaymentMethod(mid);
             const isRemoved = () => newDefaultResp.message.includes('removed');
             handleClick(isRemoved()?8:7);
         } catch (e: any) {

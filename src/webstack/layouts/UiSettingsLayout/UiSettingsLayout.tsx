@@ -97,7 +97,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     };
   }, [variant]);
 
-  const toggleHide =() => {
+  const toggleHide = useCallback(() => {
     setHide(prev => (['hide','start'].includes(prev)? 'show' : 'hide'));
     if (variant === 'full-width' || variant === 'full') {
       if (hide === 'show' && isModalOpen) {
@@ -109,28 +109,28 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     // if(isModalOpen === false)setHide('show');
     console.log('[ useCallback (toggleHide) ]')
     // console.log('[ isModalOpen ]',isModalOpen, hide)
-  }
+  }, [isModalOpen, closeModal, openModal, variant]);
   
-  // useEffect(() => {
-  //   if (!view && defaultView) {
-  //     setView(defaultView);
-  //   }
-  //   console.log('[ useEffect (view) ]')
-  // }, [defaultView, view]);
+  useEffect(() => {
+    if (!view && defaultView) {
+      setView(defaultView);
+    }
+    console.log('[ useEffect (view) ]')
+  }, [defaultView, view]);
   // }, [defaultView, view, variant]);
   
-  // useEffect(() => {
-  //   const firstView = router.query.vid || defaultView || Object.keys(views)[0];
-  //   if (firstView) {
-  //     setView(firstView.toString());
-  //   }
-  //   console.log('[ useEffect (view) ]')
-  // }, [router.query.vid, defaultView, views]);
+  useEffect(() => {
+    const firstView = router.query.vid || defaultView || Object.keys(views)[0];
+    if (firstView) {
+      setView(firstView.toString());
+    }
+    console.log('[ useEffect (view) ]')
+  }, [router.query.vid, defaultView, views]);
 
-  // useEffect(() => {
-  //   if(showMenu)setHide('show');
-  //   if(showMenu === false)setHide('hide');
-  // }, [showMenu]);
+  useEffect(() => {
+    if(showMenu)setHide('show');
+    if(showMenu === false)setHide('hide');
+  }, [showMenu]);
 
   if (view === undefined) return <UiLoader />;
 

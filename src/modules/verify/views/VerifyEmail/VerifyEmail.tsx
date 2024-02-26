@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './VerifyEmail.scss';
 import { getService } from '@webstack/common';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
+import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
@@ -27,7 +27,7 @@ interface IVerifyEmailState {
 }
 const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
     const [state, setState] = useState<IVerifyEmailState>({ status: 'verifying_email' });
-    const memberService = getService<IMemberService>("IMemberService");
+    const CustomerService = getService<ICustomerService>("ICustomerService");
     const {openModal}=useModal();
 
     const handleVerify = async () => {
@@ -35,7 +35,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
             setState({ status: 'no_token_present' });
             return;
         }
-        const verifiedResponse = await memberService.verifyEmail(String(token));
+        const verifiedResponse = await CustomerService.verifyEmail(String(token));
         if (verifiedResponse) setState(verifiedResponse);
     }
 
@@ -78,7 +78,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
         const newPassword = state?.fields?.find((f: IFormField) => f.name == 'password')?.value;
         let customer = state.customer;
         customer.metadata.password = newPassword;
-        const updateMember = await memberService.updateMember(customer.id, customer);
+        const updateMember = await CustomerService.updateMember(customer.id, customer);
         if (updateMember){
             handleSignInModal();
             onSuccess(updateMember.email);

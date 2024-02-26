@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './UserDocs.scss';
 import UserContext from '~/src/models/UserContext';
 import { getService } from '@webstack/common';
-import IShoppingService from '~/src/core/services/ShoppingService/IShoppingService';
+import IProductService from '~/src/core/services/ProductService/IProductService';
 import environment from '~/src/environment';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import capitalize, { capitalizeAll } from '@webstack/helpers/Capitalize';
@@ -27,7 +27,7 @@ const UserDocs = ({ user, previewPdf }: IDocuments) => {
 
   const docRef = useRef<any | null>(null);
   const [docs, setDocs] = useState([]);
-  const shoppingService = getService<IShoppingService>('IShoppingService');
+  const ProductService = getService<IProductService>('IProductService');
   const [loader, setLoader] = useLoader();
   const [fullName, setFullName] = useState<string>('');
   const pdfContainerRef = useRef<HTMLDivElement | null>(null);
@@ -121,7 +121,7 @@ const UserDocs = ({ user, previewPdf }: IDocuments) => {
   const getDocuments = async () => {
     setLoader({ active: true, body: 'getting your documents' })
     try {
-      const entireProducts = await shoppingService.getProducts();
+      const entireProducts = await ProductService.getProducts();
       const userRequirements = user?.metadata?.requirements;
       const newDocs = entireProducts?.data.filter((prod: any) =>
         // IS MERCHANT

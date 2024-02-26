@@ -3,19 +3,19 @@ import React, { useEffect, useState } from 'react';
 import styles from './Transaction.scss';
 import { useRouter } from 'next/router';
 import { getService } from '@webstack/common';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
+import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const Transaction: React.FC = () => {
   const router = useRouter();
-  const memberService = getService<IMemberService>('IMemberService');
+  const CustomerService = getService<ICustomerService>('ICustomerService');
   const [transaction, setTransaction] = useState<any>(null);
   const loadPaymentIntent=async ()=>{
     const query:any = router?.query;
     if(!query)return;
     if(query?.setup_intent_client_secret){
-      const setup_intent = await memberService.getSetupIntent(query.setup_intent_client_secret);
+      const setup_intent = await CustomerService.getSetupIntent(query.setup_intent_client_secret);
       if(setup_intent)setTransaction(setup_intent);
     }
   }

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
-import styles from "./UserCreateMethod.scss";
+import styles from "./CreateMethodStripeForm.scss";
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UserContext from '~/src/models/UserContext';
 import environment from '~/src/environment';
@@ -16,7 +16,7 @@ interface IAccountCreateMethod {
 }
 
 
-const UserCreateMethod = ({ onSuccess, user, shippable, success_url="/profile?vid=billing+info" }: IAccountCreateMethod) => {
+const CreateMethodStripeForm = ({ onSuccess, user, shippable, success_url="/checkout" }: IAccountCreateMethod) => {
     const stripe = useStripe();
     const elements: any = useElements();
     const options = {
@@ -26,7 +26,7 @@ const UserCreateMethod = ({ onSuccess, user, shippable, success_url="/profile?vi
             radios: false,
             spacedAccordionItems: true
         },
-  
+        // ADD BILLING DETAILS
     };
 
     const onSubmit = useCallback(async (event: any) => {
@@ -85,4 +85,4 @@ const UserCreateMethod = ({ onSuccess, user, shippable, success_url="/profile?vi
     ); 
 };
 
-export default UserCreateMethod;
+export default CreateMethodStripeForm;
