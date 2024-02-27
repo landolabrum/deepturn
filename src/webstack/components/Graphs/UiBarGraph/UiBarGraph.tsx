@@ -20,7 +20,6 @@ const UiBarGraph = ({ data, title, height }: IUiBarGraph) => {
             return acc;
         }
     }, -Infinity);
-    useEffect(() => { }, [data, max]);
     return <>
         <style jsx>{styles}</style>
         <div className="bar-graph" 
