@@ -13,11 +13,13 @@ import AdminMesenger from '../views/AdminMesenger/AdminMesenger';
 import AdminMarketing from '../views/AdminMarketing/AdminMarketing';
 import AdminEarth from '../views/AdminEarth/AdminEarth';
 import { useRouter } from 'next/router';
+import AdminDashboard from '../views/AdminDashboard/controller/AdminDashboard';
 
 
 
 const Admin = () => {
   const initialViews = {
+    dashboard: <AdminDashboard />,
     globe: <AdminEarth />,
     customers: <AdminCustomers />,
     products: <AdminProducts />,
@@ -30,7 +32,7 @@ const Admin = () => {
   const router = useRouter();
   const level = useClearance();
   const [views, setViews] = useState<any | undefined>();
-  const [current, setCurrentView] = useState<string | undefined>('globe');
+  const [current, setCurrentView] = useState<string | undefined>('dashboard');
   useEffect(() => {
     if(views === undefined)setViews(initialViews);
     if (level >= 10 && views !== undefined) {
@@ -45,9 +47,8 @@ const Admin = () => {
       <style jsx>{styles}</style>
       <UiSettingsLayout
         variant={Boolean(current && ['globe',''].includes(current) ) && 'full' || undefined}
-        defaultView='globe'
         showMenu={Boolean(current && current !== 'globe')}
-        // title='admin'
+        title={current}
         setViewCallback={setCurrentView}
         views={views}
 

@@ -54,14 +54,14 @@ const Checkout: React.FC<ICheckout> = () => {
                 Secure Checkout <UiIcon icon="fa-lock" /> {view}
             </div>
             <div className='checkout__button'>
-                {user && cart && <CheckoutButton cart={cart} collect />}
+                {user?.methods?.length && cart && <CheckoutButton cart={cart} collect />}
             </div>
             <div className='checkout__button'>
                 Step {view === 'sign-up'?'1':'2'} of 2
             </div>
             <div className='checkout__body'>
                 {view === 'sign-up' && <SignUp hasPassword={false} btnText='continue' onSuccess={handleSignUp}/>}
-                {view === 'user-methods' && <UserMethods {...user}/>}
+                {view === 'user-methods' && <UserMethods selected='pm_1OoGorIodeKZRLDVPuXlifqP' onSelect={console.log}  {...user}/>}
                 {view == 'card-details' ?  (
                     <UserCreateMethod
                         user={billing_details}

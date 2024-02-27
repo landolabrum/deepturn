@@ -1,7 +1,7 @@
 // Relative Path: ./AccountMethod.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './UserMethods.scss';
-import ICustomerService, { SetupIntentSecretRequest } from '~/src/core/services/CustomerService/ICustomerService';
+import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
 import { getService } from '@webstack/common';
 import { IMethod } from '../../../model/IMethod';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
@@ -11,6 +11,7 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import UserCreateMethod from '../views/UserCreateMethod/controller/UserCreateMethod';
 import UserContext from '~/src/models/UserContext';
+import UserSelectMethod from '../views/UserSelectMethod/UserSelectMethod';
 
 
 
@@ -18,16 +19,18 @@ interface IUserMethods {
   open?: boolean | 'opened';
   customerMethods?: any;
   user?: UserContext;
+  selected?: string;
+  onSelect?: (id: string) => void;
 }
-const UserMethods: React.FC<any> = ({ user, open, customerMethods }: IUserMethods) => {
-  const [loader, setLoader]=useLoader();
+const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onSelect }: IUserMethods) => {
+  const [loader, setLoader] = useLoader();
   const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
   const [selectedUser, setUser] = useState<UserContext | undefined>();
 
-  
+
   const CustomerService = getService<ICustomerService>("ICustomerService");
-  
+
 
   const handleDelete = async (id: string) => {
     getAccountMethods();
@@ -36,11 +39,11 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods }: IUserMethod
   //   getAccountMethods();
   // }
 
-  const getAccountMethods = async () => {
+  const getAccountMethods = async (e?:any) => {
     const methodsResponse = await CustomerService.getMethods();
-    // console.log(methodsResponse)
     if (methodsResponse) {
       setMethods(methodsResponse?.data);
+      setUser(signed_in_user);
     }
   }
   const handleLabel = () => {
@@ -56,10 +59,10 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods }: IUserMethod
   }
   const signed_in_user = useUser();
   useEffect(() => {
-    if(!user)setUser(signed_in_user);
-    setLoader({active: true});
+    if (!user) setUser(signed_in_user);
+    setLoader({ active: true });
 
-    
+
     handleLabel();
     if (!customerMethods) {
       getAccountMethods();
@@ -67,65 +70,70 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods }: IUserMethod
       setMethods(customerMethods);
     }
     setLoader({ active: false });
-  }, [user, selectedUser]);
+  }, [setUser]);
 
 
-  if (open) return (
-    <>
-      <style jsx>{styles}</style>
-      <div className='user-methods'>
-        {methods.length > 0 && <>
-          <div className='user-methods__existing'>
-            <div className='user-methods__existing--title'>
-            current methods
-            </div>
-            <div className='user-methods__list'>
-              {Object.entries(methods).map(([key, method]) => {
-                return <div className='user-methods__list-item' key={key} >
-                  <UserCurrentMethod
-                    default_payment_method={selectedUser?.invoice_settings?.default_payment_method}
-                    method={method}
-                    onDeleteSuccess={handleDelete}
-                    response={loader?.active}
-                  />
-                </div>
-              })}
-            </div>
-          </div></>}
-         <UserCreateMethod 
-            success_url='/profile?vid=billing+info'
-            onSuccess={getAccountMethods}
-          />
-      </div>
-    </>
-  );
+  // if (open) return (
+  //   <>
+  //     <style jsx>{styles}</style>
+  //     <div className='user-methods'>
+  //       {methods.length > 0 && <>
+  //         <div className='user-methods__existing'>
+  //           <div className='user-methods__existing--title'>
+  //             current methods
+  //           </div>
+  //           <div className='user-methods__list'>
+  //             {Object.entries(methods).map(([key, method]) => {
+  //               return <div className='user-methods__list-item' key={key} >
+  //                 <UserCurrentMethod
+  //                   default_payment_method={selectedUser?.invoice_settings?.default_payment_method}
+  //                   method={method}
+  //                   onDeleteSuccess={handleDelete}
+  //                   response={loader?.active}
+  //                   selected={selected}
+  //                   onSelect={onSelect}
+  //                 />
+  //                 {selected &&
+  //                   <div className='user-methods__select'>
+  //                     <UiIcon icon={"fa-check"} />
+  //                   </div>
+  //                 }
+  //               </div>
+  //             })}
+  //           </div>
+  //         </div></>}
+  //       <UserCreateMethod
+  //         success_url='/profile?vid=billing+info'
+  //         onSuccess={getAccountMethods}
+  //       />
+  //     </div>
+  //   </>
+  // );
   return (
     <>
       <style jsx>{styles}</style>
       <UiCollapse label={label} open={open || !loader.active || selectedUser?.invoice_settings?.default_payment_method == undefined}>
         <div className='user-methods'>
-          {methods.length > 0 && <>
+          {methods.length > 0 &&
             <div className='user-methods__existing'>
               <div className='user-methods__existing--title'>
                 current methods
               </div>
               <div className='user-methods__list'>
-                {Object.entries(methods).map(([key, method]) => {
-                  return <div className='user-methods__list-item' key={key} >
-                    
-                    <UserCurrentMethod
-                      default_source={selectedUser?.invoice_settings?.default_payment_method}
-                      method={method}
+             {selected &&  <UserCurrentMethod
+                      user={selectedUser}
+                      methods={methods}
                       onDeleteSuccess={handleDelete}
                       response={loader.active}
                     />
-                  </div>
-                })}
+              }
+              {/* {selected && <UserSelectMethod user={selectedUser} methods={methods}/>} */}
               </div>
-            </div></>}
-           <div>
-              <UserCreateMethod {...user}  onSuccess={getAccountMethods} />
             </div>
+           }
+          <div>
+            <UserCreateMethod user={selectedUser} onSuccess={getAccountMethods} />
+          </div>
         </div>
       </UiCollapse>
     </>

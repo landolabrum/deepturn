@@ -96,7 +96,7 @@ export default class HomeService extends ApiService implements IHomeService {
 
     public async hue_toggle(
       id: any,
-      hue_object?: string
+      hue_object: string = 'light'
     ): Promise<any> {
       return this.get<any>(
         `/api/home/hue/toggle?id=${id}${hue_object && `&object=${hue_object}`||''}`,

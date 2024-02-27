@@ -59,7 +59,9 @@ $borderColor: var(--gray-40);
 }
 
 
-.account-current-method {
+.current-method--container {
+    width: 100%;
+    .current-method {
     cursor: pointer;
     background-color: var(--primary-opaque);
     color: var(--gray-90);
@@ -72,6 +74,9 @@ $borderColor: var(--gray-40);
     border-radius: var(--border-radius);
     border: solid 1px var(--gray-60);
     overflow: hidden;
+    &__select{
+        
+    }
     &__content {
         --ui-icon-color: var(--gray-40);
         color: var(--gray-40);
@@ -91,29 +96,41 @@ $borderColor: var(--gray-40);
         z-index: 2;
         justify-content: space-between;
         animation-play-state: paused;
-        &.account-current-method__content-show {
+        &.current-method__content-show {
             animation: show 1s forwards;
             animation-play-state: running;
+            // width: $min;
+            // &:hover {
+            //     width: $min !important;
+            // }
         }
 
-        &.account-current-method__content-hide {
+        &.current-method__content-hide {
             animation: hide 1s forwards;
             animation-play-state: running;
         }
-        &.account-current-method__content__hoverable{
-            &:hover {
-                animation: tease 1s forwards;
+        &:hover {
+            &.current-method__content-show {
+                animation: show 1s forwards;
                 animation-play-state: running;
-                color: var(--gray-10);
-                --ui-icon-color: var(--gray-10);
+                width: $min;
+                &:hover {
+                    width: $min !important;
+                }
             }
+            // animation: tease 1s forwards;
+            // animation-play-state: running;
+            // color: var(--gray-10);
+            // --ui-icon-color: var(--gray-10);
         }
+        // &.current-method__content__hoverable{
+        // }
 
         &:active {
             background-color: $colorActive;
         }
 
-        .account-current-method__info {
+        .current-method__info {
             @extend .d-flex;
             justify-content: flex-start;
             flex-direction: row;
@@ -123,7 +140,7 @@ $borderColor: var(--gray-40);
                 --ui-icon-size: var(--s-5);
             }
             letter-spacing: 2px;
-            .account-current-method__default{
+            .current-method__default{
                 position: relative;
                 &::after{
                     top: 0;
@@ -145,13 +162,13 @@ $borderColor: var(--gray-40);
             }
         }
 
-        .account-current-method__exp {
+        .current-method__exp {
             @extend .d-flex;
             justify-content: flex-end;
             flex-direction: row;
         }
     }
-    .account-current-method__behind{
+    .current-method__behind{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -168,7 +185,7 @@ $borderColor: var(--gray-40);
             width: $delW;
             aspect-ratio: 1/1;
         }
-        .account-current-method__set-default {  
+        .current-method__set-default {  
             position: relative; 
             overflow: visible; 
             --ui-icon-color: var(--primary-opaque);
@@ -190,21 +207,22 @@ $borderColor: var(--gray-40);
                 }
             }
         }
-        .account-current-method__delete {    
+        .current-method__delete {    
             &:hover {
                 background-color: var(--red);
             }
         }
     }
 }
-.account-current-method__response{
+}
+.current-method__response{
     @extend .d-flex;
     justify-content: flex-start;
     padding: 0 10px;
     height: var(--s-element);
     color: var(--primary);
     background-color: var(--gray-60);
-    &.account-current-method__response-error{
+    &.current-method__response-error{
         color: var(--orange);
     }
 }

@@ -38,6 +38,7 @@ export const applianceArray: IMoreInfoField[] = [
     { name: "iron", selected: false, value: 10 },
     { name: "fan", selected: false, value: 3 },
     { name: "stove top", selected: false, value: 15 },
+    { name: "air fryer", selected: false, value: 15 },
     { name: "other", selected: false, value: 10 },
 ];
 

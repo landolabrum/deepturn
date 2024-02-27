@@ -25,6 +25,7 @@ const UserCreateMethod = ({ onSuccess, user, success_url }: IStripePaymentForm) 
       colorText: '#e0e0e0',
     },
   };
+  useEffect(()=>{},[clientSecret, user])
   if (clientSecret) return (
     <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
       <CreateMethodStripeForm

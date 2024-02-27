@@ -222,7 +222,7 @@ const AdminCustomerDetails: React.FC<any> = () => {
       } finally {
       }
     }else{
-      setNotification({active: true, list:[{label:JSON.stringify({customer, customer_id})}]})
+      setNotification({active: true, list:[{label:`Customer: ${findField(customer, 'name')}`}]})
     }
   };
 

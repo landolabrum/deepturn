@@ -37,11 +37,17 @@
             width: 100%;
             flex-direction: column;
             gap: var(--s-7);
-            .user-methods__list-item {
+            .user-method {
+                @extend .d-flex;
                 width: 100%;
                 min-height: var(--s-element);
+                &__select{
+                    width: var(--s-1);
+                    @extend .d-flex;
+                    justify-content: flex-end;
+                    --ui-icon-color: var(--green)
+                }
             }
         }
     }
-    
 }
