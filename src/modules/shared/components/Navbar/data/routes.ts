@@ -93,7 +93,7 @@ export const routes: IRoute[] = [
     clearance: 0,
   },
   { label: "", href: "/cart", icon: "fal-bag-shopping" },
-  { label: "", href: "/checkout", active: false },
+  { label: "", href: "/checkout", hide: true},
 ];
 export const useClearanceRoutes = () => {
   const user = useUser();

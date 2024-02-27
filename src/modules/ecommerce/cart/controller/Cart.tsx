@@ -26,7 +26,7 @@ const Cart = ({ variant, traits }: any) => {
   return (
     <>
       <style jsx>{styles}</style>
-      {JSON.stringify(cart)}
+      {/* {JSON.stringify(cart)} */}
       <div className='cart'>
         <div className='cart__header'>
           <UiButton variant="dark" href='/product'>Keep Shopping</UiButton>

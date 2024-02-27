@@ -11,7 +11,7 @@ interface IMobileNav {
     handleClick: (e: any) => void,
     onBack?: (e: any) => void,
 };
-const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }) => {
+const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }):React.ReactElement => {
     return (
         <>
             <style jsx>{styles}</style>
@@ -27,19 +27,19 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }) => {
                 <div className='navbar__mobile--content'>
                     {routes && routes.reverse().map((route: IRoute, key: number) => 
                        {
-                        if(route?.hide)return;
-                        if(route?.href == '/')return <div 
-                            key={key}
-                            className='navbar__mobile--content__brand'
-                            onClick={() => handleClick(route)}
-                        >
-                            <div>
-                                <UiIcon icon={route?.icon} width={100} height={100}/> 
-                            </div>
-                            <div>
-                                {route.label}
-                            </div>
-                        </div>;
+                        if(route?.hide)return<></>;
+                        // if(route?.href == '/')return <div 
+                        //     key={key}
+                        //     className='navbar__mobile--content__brand'
+                        //     onClick={() => handleClick(route)}
+                        // >
+                        //     <div>
+                        //         <UiIcon icon={route?.icon} width={100} height={100}/> 
+                        //     </div>
+                        //     <div>
+                        //         {route.label}
+                        //     </div>
+                        // </div>;
                         return (
                             <div 
                                 key={key} 

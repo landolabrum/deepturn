@@ -12,17 +12,20 @@
     --ui-icon-color: var(--gray-40);
     @media(max-width: 1260px) {
         min-width: unset;
-        margin: auto;
+        margin: var(--s-padding) auto ;
         display: flex;
         flex-direction: column;
-        gap: var(--s-element);
+        gap: var(--s-padding);
     }
 
     &--actions {
         @extend .d-flex;
         justify-content: flex-start;
+        position: absolute;
+        top:var(--s-padding);
+        left: var(--s-9);
     }
-
+    
     &--content {
         border-radius: var(--border-radius);
         display: flex;
@@ -32,44 +35,32 @@
         justify-content: space-between;
 
         // padding: calc(var(--s-element) * 2) var(--s-padding) var(--s-element);
-        @media(max-width: 1100px) {
-            margin: 20px 0;
-            padding: var(--s-5) 0 var(--s-padding);
-        }
 
         &__brand {
-            order: 1;
-            gap: var(--s-9);
+            // order: 1;
+            // gap: var(--s-10);
 
-            @media(max-width: 1100px) {
-                position: absolute;
-                top: var(--s-padding);
-                left: 0;
-            }
+            // @media(max-width: 1100px) {
+            //     position: absolute;
+            //     top: var(--s-padding);
+            //     left: var(--s-padding);
+            // }
 
-            // top: var(--s-2);
-            // left: var(--s-padding);
-            height: var(--s-element);
-            padding:0 var(--s-padding) var(--s-1);
-            right: auto;
-            width: 100%;
-            justify-content: flex-start;
-            text-transform: capitalize;
-            font-size: var(--s-1);
-            @extend .d-flex;
-            color:var(--gray-50-opaque);
-            --ui-icon-color:var(--gray-50-opaque);
-            --ui-icon-width:var(--s-element);
-            --ui-icon-height:var(--s-element);
+            // text-transform: capitalize;
+            // font-size: var(--s-2);
+            // @extend .d-flex;
+            // color:var(--gray-50-opaque);
+            // --ui-icon-color:var(--gray-50-opaque);
             // --ui-icon-size: var(--s-1);
-            // --ui-icon-width: var(--s-1);
+            // // --ui-icon-width: var(--s-1);
             // line-height: 1;
-            cursor: pointer;
+            // height: var(--s-element);
+            // cursor: pointer;
 
-            &:hover {
-                color: var(--primary);
-                --ui-icon-color: var(--primary);
-            }
+            // &:hover {
+            //     color: var(--primary);
+            //     --ui-icon-color: var(--primary);
+            // }
 
 
         }

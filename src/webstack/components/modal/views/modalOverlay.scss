@@ -92,26 +92,26 @@
         &__popup{
             margin: 0;
             @media(max-width: 1100px){
-
+                
                 padding: 0 var(--s-9) var(--s-element);
             }
         }
-     
+        
         &:hover {
             transition: all 1s;
         }
-
+        
         &::-webkit-scrollbar-thumb {
             background-color: var(--blue);
             border-radius: 5px;
         }
-
+        
         &::-webkit-scrollbar {
             width: 10px;
             aspect-ratio: 1/1;
             background-color: #00000033;
         }
-
+        
         @media(max-width:900px) {
             justify-content: flex-start;
             width: var(--s-padding-width);
@@ -133,7 +133,9 @@
     &__header {
         @extend .d-flex;
         justify-content: space-between;
-        width: 100%;
+            margin: auto;
+            width: var(--s-padding-width);
+            padding: 0 var(--s-padding);
 
         @media(max-width: 1100px) {
             right: 0;
@@ -208,7 +210,10 @@
         word-wrap: break-word;
         overflow-y: auto;
         overflow-x: hidden;
-        width: 100%;
+        // width: 100%;
+
+        padding:var(--s-padding);
+        width:var(--s-padding-width);
         overflow-x: hidden;
         // @media(min-width: 1100px){
         // }

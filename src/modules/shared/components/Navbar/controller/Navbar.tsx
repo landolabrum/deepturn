@@ -13,6 +13,7 @@ import environment from "~/src/environment";
 import useNavMobile from "../hooks/useNavBreak"; // Ensure this path is correct
 import useScroll from "@webstack/hooks/useScroll";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
+import { Router } from "next/router";
 
 
 
@@ -63,7 +64,13 @@ const Navbar = () => {
 
   // Toggle mobile navigation or modal
   const handleTrigger = () => {
-    if (currentRoutes !== undefined) openModal(<MobileNav routes={currentRoutes} handleClick={handleMobileClick} />);
+    if (currentRoutes !== undefined) openModal({
+      title:<>
+        <h1 onClick={()=>{
+          handleMobileClick({href:'/'})
+          }}><UiIcon icon={`${environment.merchant.name}-logo`}/>{environment.merchant.name && keyStringConverter(environment.merchant.name)}</h1>
+        </>,
+        children:<MobileNav routes={currentRoutes} handleClick={handleMobileClick} />});
     if (isModalOpen) closeModal();
     // else closeModal();
   };

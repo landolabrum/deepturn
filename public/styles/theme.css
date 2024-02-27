@@ -327,7 +327,13 @@ h6 {
 }
 
 h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-9);
   font-size: var(--s-1);
+  --ui-icon-size: var(--s-1);
+  color: inherit;
 }
 
 h2 {
