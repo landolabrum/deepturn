@@ -71,7 +71,7 @@
       text-indent: var(--s-9);
       @extend .d-flex;
       justify-content: flex-start;
-      width: inherit;
+      width: 100%;
       height: var(--s-element);
     }
     &:hover{

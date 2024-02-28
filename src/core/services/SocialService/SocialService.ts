@@ -1,7 +1,7 @@
 import ApiService from "../ApiService";
 import { getService } from "@webstack/common";
 import environment from "~/src/environment";
-import ICustomerService from "../CustomerService/ICustomerService";
+import IMemberService from "../MemberService/IMemberService";
 import ISocialService from "./ISocialService";
 
 export default class SocialService extends ApiService implements ISocialService {

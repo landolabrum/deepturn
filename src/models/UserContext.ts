@@ -19,7 +19,30 @@ export default interface UserContext {
   metadata?: any;
   methods?: any;
   address?: UserAddress;
-  referrer_url?: string;
+  origin?: string;
+}
+export interface ProspectContext{
+  memberId: string;
+  default_source?: string;
+  invoice_settings?:{
+    default_payment_method: string | null;
+  }
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  first_name?: string;
+  last_name?: string;
+  iat: number;
+  exp: number;
+  fresh: number;
+  exp_status: 'expired' | 'authed' | 'expiring';
+  memberStatus: string;
+  memberType: string;
+  metadata?: any;
+  methods?: any;
+  address?: UserAddress;
+  origin?: string;
 }
 
 export interface UserAddress{

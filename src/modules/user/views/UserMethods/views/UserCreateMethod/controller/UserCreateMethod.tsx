@@ -2,7 +2,7 @@ import { useUser } from "~/src/core/authentication/hooks/useUser";
 import CreateMethodStripeForm from "../views/CreateMethodStripeForm/CreateMethodStripeForm";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import useSetupIntentSecret from "~/src/core/services/CustomerService/hooks/useSetupIntentSecret";
+import useSetupIntentSecret from "~/src/core/services/MemberService/hooks/useSetupIntentSecret";
 import UserContext from "~/src/models/UserContext";
 import { useEffect, useState } from "react";
 interface IStripePaymentForm {

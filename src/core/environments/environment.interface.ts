@@ -21,7 +21,8 @@ export interface IEnvironment {
     // <COUNTRY><MERCHANT NAME>
   },
   legacyJwtCookie: {
-    name: string;
+    authToken: string;
+    prospectToken: string;
     domain?: string;
   };
 

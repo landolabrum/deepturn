@@ -55,15 +55,15 @@ const ProductList = ({ products }:IProductList) => {
     const [prods, setProducts]=useState(initialProducts)
     const router = useRouter();
     const handleRoute = (id: string, price_id: string)=>id && price_id && router.push(`/product?id=${id}&pri=${price_id}`);
-    
+
     useEffect(() => {
         if(products )setProducts(products);
     }, [setProducts, products]);
     return (
       <>
         <style jsx>{styles}</style>
-        <AdaptGrid xs={1} md={3} gap={10} variant="card">
-          {prods && prods.map((product: any, index: number) => (
+        <AdaptGrid xs={1} md={3} gap={15} variant="card">
+          {prods && prods.filter((prod: any,a:number)=>prod?.metadata?.mid === environment.merchant.mid).map((product: any, index: number) => (
             <div 
                 key={index}
                 className='product'

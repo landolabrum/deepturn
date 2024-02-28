@@ -19,4 +19,5 @@ export interface IEarth {
     showAtmosphere?: boolean;
     showGraticules?: boolean;
     rotate?:  {speed: number} | boolean;
+    onPointClick?: (e:any)=>void;
 }

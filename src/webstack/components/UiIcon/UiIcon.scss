@@ -23,7 +23,7 @@ div {
   }
 }
 
-@keyframes shadowAnimation {
+@keyframes glow {
   0% {
     filter: drop-shadow(0 0 5px var(--primary-lite));
   }
@@ -48,38 +48,27 @@ div {
   animation: spin .7s forwards infinite ease-in-out;
 }
 
-@keyframes glow {
-  0% {
-    color: var(--gray-50); /* Adjusted for demonstration, replace with var(--gray-10-opaque) or any color */
-    --ui-icon-color: var(--gray-50); /* Adjusted for demonstration, replace with var(--gray-10-opaque) or any color */
-    background-color: var(--gray-80-opaque); /* Semi-transparent, adjust as needed */
-    // border-color: var(--gray-70); /* Example hex, replace with var(--primary) or any color */
-    // box-shadow: 0 0 var(--s-5) var(--s-9) var(--primary-opaque); /* Soft glow, adjust color and opacity */
-  }
-  
-  50% {
-    --ui-icon-color: var(--gray-30); /* Brighter color for the pulse peak */
-    background-color: var(--gray-80); /* More visible than start/end */
-    // border-color: var(--primary-lite); /* Keep consistent or adjust for effect */
-    // box-shadow: 0 0 var(--s-9) var(--s-11) var(--primary-lite);
-    
-    
-  }
-   100% {
-    --ui-icon-color: var(--gray-20); /* Brighter color for the pulse peak */
-    background-color: var(--primary-opaque); /* More visible than start/end */
-    // border-color: var(--primary-opaque); /* Keep consistent or adjust for effect */
-    // box-shadow: 0 0 var(--s-9) var(--s-11) var(--primary-opaque);
-  }
-}
+// @keyframes glow {
+//   0% {
+//     color: var(--gray-50);
+//     --ui-icon-color: #e0e0e0;
+//   }
+//   // 50% {
+//   //   color: var(--gray-40-opaque);
+//   //   --ui-icon-color: var(--gray-40-opaque);
+//   // }
+//   100% {
+//      color: var(--gray-40);
+//      --ui-icon-color: #e0e0e050;
+//   }
+// }
 .iconGlow {
-  animation: glow 3s infinite ease-in-out;
+  animation: glow 1.5s infinite ease-in-out alternate;
   width: inherit;
   height: inherit;
   @extend .d-flex;
   &:hover{
-    mix-blend-mode: color-dodge;
-    animation: shadowAnimation 1.5s ease-in-out infinite alternate;
+    animation: glow 1.5s ease-in-out infinite alternate;
   }
 }
 

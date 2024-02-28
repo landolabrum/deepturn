@@ -1,7 +1,7 @@
 // Relative Path: ./AccountMethod.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './UserMethods.scss';
-import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
+import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { getService } from '@webstack/common';
 import { IMethod } from '../../../model/IMethod';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
@@ -20,7 +20,7 @@ interface IUserMethods {
   customerMethods?: any;
   user?: UserContext;
   selected?: string;
-  onSelect?: (id: string) => void;
+  onSelect?: (id?: string) => void;
 }
 const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onSelect }: IUserMethods) => {
   const [loader, setLoader] = useLoader();
@@ -28,9 +28,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
   const [methods, setMethods] = useState<IMethod[]>([]);
   const [selectedUser, setUser] = useState<UserContext | undefined>();
 
-
-  const CustomerService = getService<ICustomerService>("ICustomerService");
-
+  const MemberService = getService<IMemberService>("IMemberService");
 
   const handleDelete = async (id: string) => {
     getAccountMethods();
@@ -40,11 +38,12 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
   // }
 
   const getAccountMethods = async (e?:any) => {
-    const methodsResponse = await CustomerService.getMethods();
-    if (methodsResponse) {
-      setMethods(methodsResponse?.data);
-      setUser(signed_in_user);
-    }
+    if(!selectedUser)return;
+    const methodsResponse = await MemberService.getMethods(selectedUser.id);
+      if(methodsResponse?.data){
+        setMethods(methodsResponse?.data);
+      }
+      // setUser(signed_in_user);
   }
   const handleLabel = () => {
     if (selectedUser && methods.length && !open) {
@@ -60,6 +59,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
   const signed_in_user = useUser();
   useEffect(() => {
     if (!user) setUser(signed_in_user);
+    else if (user) setUser(user);
     setLoader({ active: true });
 
 
@@ -70,49 +70,10 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
       setMethods(customerMethods);
     }
     setLoader({ active: false });
-  }, [setUser]);
-
-
-  // if (open) return (
-  //   <>
-  //     <style jsx>{styles}</style>
-  //     <div className='user-methods'>
-  //       {methods.length > 0 && <>
-  //         <div className='user-methods__existing'>
-  //           <div className='user-methods__existing--title'>
-  //             current methods
-  //           </div>
-  //           <div className='user-methods__list'>
-  //             {Object.entries(methods).map(([key, method]) => {
-  //               return <div className='user-methods__list-item' key={key} >
-  //                 <UserCurrentMethod
-  //                   default_payment_method={selectedUser?.invoice_settings?.default_payment_method}
-  //                   method={method}
-  //                   onDeleteSuccess={handleDelete}
-  //                   response={loader?.active}
-  //                   selected={selected}
-  //                   onSelect={onSelect}
-  //                 />
-  //                 {selected &&
-  //                   <div className='user-methods__select'>
-  //                     <UiIcon icon={"fa-check"} />
-  //                   </div>
-  //                 }
-  //               </div>
-  //             })}
-  //           </div>
-  //         </div></>}
-  //       <UserCreateMethod
-  //         success_url='/profile?vid=billing+info'
-  //         onSuccess={getAccountMethods}
-  //       />
-  //     </div>
-  //   </>
-  // );
-  return (
+  }, [setUser, selectedUser]);
+  if(selectedUser)return (
     <>
       <style jsx>{styles}</style>
-      <UiCollapse label={label} open={open || !loader.active || selectedUser?.invoice_settings?.default_payment_method == undefined}>
         <div className='user-methods'>
           {methods.length > 0 &&
             <div className='user-methods__existing'>
@@ -120,24 +81,26 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
                 current methods
               </div>
               <div className='user-methods__list'>
-             {selected &&  <UserCurrentMethod
+              <UserCurrentMethod
                       user={selectedUser}
                       methods={methods}
                       onDeleteSuccess={handleDelete}
                       response={loader.active}
+                      selected={selected}
+                      onSelect={onSelect}
                     />
-              }
+      
               {/* {selected && <UserSelectMethod user={selectedUser} methods={methods}/>} */}
               </div>
             </div>
            }
-          <div>
+              <UiCollapse label={label} open={open || methods.length < 1 || !loader.active || selectedUser?.invoice_settings?.default_payment_method == undefined}>
             <UserCreateMethod user={selectedUser} onSuccess={getAccountMethods} />
-          </div>
-        </div>
       </UiCollapse>
+        </div>
     </>
   );
+  return <>..load user</>
 };
 
 export default UserMethods;

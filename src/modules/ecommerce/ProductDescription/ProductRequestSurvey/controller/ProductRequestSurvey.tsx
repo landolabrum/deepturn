@@ -6,7 +6,7 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import useUserAgent from '@webstack/hooks/getUserAgentInfo';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
-import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
+import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import ProductFeatureOther from '../views/ProductFeatureOther/ProductFeatureOther';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import keyStringConverter from "@webstack/helpers/keyStringConverter"

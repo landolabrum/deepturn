@@ -45,6 +45,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   const classes = {
     container: useClass({ cls: 'settings', variant: variant }),
     content: useClass({ cls: 'settings__content', variant: variant }),
+    header: useClass({ cls: 'settings__view--header', variant: variant }),
     view: useClass({ cls: 'settings__view', variant: variant }),
     icon: useClass({cls: "settings__trigger", variant: variant, standalones:['card']})
   };
@@ -84,10 +85,8 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       }
     };
 
-    // Adjust main element styles upon component mount
     adjustMainElementStyles();
 
-    // Optionally, you can reset the main element's styles on component unmount
     return () => {
       const main = document.querySelector('main');
       if (main) {
@@ -95,7 +94,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
         main.style.width = '';
       }
     };
-  }, [variant]);
+  }, [variant, isFullVariant]);
 
   const toggleHide = useCallback(() => {
     setHide(prev => (['hide','start'].includes(prev)? 'show' : 'hide'));
@@ -106,25 +105,19 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
         openModal({ confirm: modalContext });
       }
     }
-    // if(isModalOpen === false)setHide('show');
-    console.log('[ useCallback (toggleHide) ]')
-    // console.log('[ isModalOpen ]',isModalOpen, hide)
   }, [isModalOpen, closeModal, openModal, variant]);
   
   useEffect(() => {
     if (!view && defaultView) {
       setView(defaultView);
     }
-    console.log('[ useEffect (view) ]')
   }, [defaultView, view]);
-  // }, [defaultView, view, variant]);
   
   useEffect(() => {
     const firstView = router.query.vid || defaultView || Object.keys(views)[0];
     if (firstView) {
       setView(firstView.toString());
     }
-    console.log('[ useEffect (view) ]')
   }, [router.query.vid, defaultView, views]);
 
   useEffect(() => {
@@ -142,7 +135,13 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
         id="settings-container"
         className={classes.container}>
         <div className={classes.content}>
-
+        {title && (
+              <div className={classes.header}>
+                <div className="settings__view--header--title">
+                  {title}
+                </div>
+              </div>
+            )}
           {Boolean(hide !== 'show' || isFullVariant) && 
           <div id='settings-trigger' className={classes.icon}>
             <UiIcon glow icon={hide === 'hide' ? 'fa-ellipsis' : 'fa-ellipsis'} onClick={toggleHide} />
@@ -163,13 +162,13 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
             </div>
           )}
           <div id="settings-view" className={classes.view}>
-            {title && (
+            {/* {title && (
               <div className={`settings__view--header settings__view--header--${hide}`}>
                 <div className="settings__view--header--title">
                   {title}
                 </div>
               </div>
-            )}
+            )} */}
             <div className="settings__view__content">
             <div className="settings__view__content-background">
               <UiIcon icon={`${environment.merchant.name}-logo`}/>

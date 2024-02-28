@@ -1,0 +1,9 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.guest-checkout{
+    @extend .d-flex;
+    width: 100%;
+}

@@ -10,9 +10,9 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
 import { useRouter } from 'next/router';
 import UserMethods from '~/src/modules/user/views/UserMethods/controller/UserMethods';
-import UserCreateMethod from '~/src/modules/user/views/UserMethods/views/UserCreateMethod/controller/UserCreateMethod';
-import { getService } from '@webstack/common';
-import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
+import { useProspect } from '~/src/core/authentication/hooks/useProspect';
+import CartList from '../../cart/views/CartList/CartList';
+// import UserCreateMethod from '~/src/modules/user/views/UserMethods/views/UserCreateMethod/controller/UserCreateMethod';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
     cart: any;
@@ -24,18 +24,18 @@ const Checkout: React.FC<ICheckout> = () => {
     const user = useUser();
     const [view, setView] = useState<any>('sign-up');
     const [cart, setCart] = useState<any>();
+    const [methodId, setMethodId]=useState()
     const [billing_details, set_billing_details] = useState<any>();
     const { getCartItems, } = useCart();
-   const customerService = getService<ICustomerService>("ICustomerService");
+    const prospect = useProspect();
+//    const MemberService = getService<IMemberService>("IMemberService");
     const handleSignUp = (res: any) => {
-        console.log('[ CHECKOUT (HANDLE SIGNUP)[ 1 ] ]',res);
-        if(res.id){
-            customerService.updateCurrentUser(res);
-            set_billing_details(res);
-        }
-        else{
-            console.log('[ CHECKOUT (HANDLE SIGNUP)[ERROR] ]',res);
-        }
+        // if(res.id){
+        //     setView('card-details');
+        // }
+        // else{
+        //     console.log('[ CHECKOUT (HANDLE SIGNUP)[ERROR] ]',res);
+        // }
     }
     const handleSuccess = (res: any) => {
         console.log('[ CHECKOUT (HANDLE SUCCESS) ]',res);
@@ -43,34 +43,56 @@ const Checkout: React.FC<ICheckout> = () => {
     const qry = router?.query || {setup_intent: undefined};
     useEffect(() => {
         if(!cart)setCart(getCartItems());
-        if (user && !billing_details)setView('user-methods');
-        if(!user && billing_details && !qry?.setup_intent)setView('card-details');
-    }, [billing_details,  user]); 
-
+        if(prospect){
+            setView('collect');
+            set_billing_details(prospect);
+        }
+        // if (user && !billing_details)setView('user-methods');
+        // if(!user && billing_details && !qry?.setup_intent)setView('card-details');
+    }, [billing_details, user, prospect, set_billing_details, ]); 
+    function convertCartToLineItems(cart:any) {
+        return cart.map((item:any) => ({
+            price: item.price.id,
+            quantity: item.price.qty
+        }));
+    }
     return <>
         <style jsx>{styles}</style>
+        {JSON.stringify(billing_details)}<hr/>
+        {methodId}
         <div className='checkout' id="main-checkout">
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" /> {view}
             </div>
             <div className='checkout__button'>
-                {user?.methods?.length && cart && <CheckoutButton cart={cart} collect />}
+                {methodId && <CheckoutButton cart={cart} collect />}
             </div>
-            <div className='checkout__button'>
+            {/* <div className='checkout__button'> 
                 Step {view === 'sign-up'?'1':'2'} of 2
-            </div>
+            </div>  */}
             <div className='checkout__body'>
+              
                 {view === 'sign-up' && <SignUp hasPassword={false} btnText='continue' onSuccess={handleSignUp}/>}
+                {view === 'collect' && <>
+                <CartList cart={cart}/>
+                {user || prospect && <UserMethods user={billing_details} selected={methodId} onSelect={setMethodId}/>}
+                {/* <Collect user={user || prospect} onSuccess={console.log}/> */}
+                </>}
+
+
+
+
+                {/* {view === 'sign-up' && <SignUp hasPassword={false} btnText='continue' onSuccess={handleSignUp}/>}
                 {view === 'user-methods' && <UserMethods selected='pm_1OoGorIodeKZRLDVPuXlifqP' onSelect={console.log}  {...user}/>}
-                {view == 'card-details' ?  (
-                    <UserCreateMethod
-                        user={billing_details}
-                        onSuccess={handleSuccess}
-                     />
+                {view == 'card-details' ?  ("a"
+                    // <UserCreateMethod
+                    //     user={billing_details}
+                    //     onSuccess={handleSuccess}
+                    //  />
                 ) || <UiLoader />:''}
           
-                {/* secret: {JSON.stringify(clientSecret)} <br/>
-                 <br/> */}
+                {/* secret: {JSON.stringify(clientSecret)} <br/> 
+                 <br/> */} 
             </div> 
         </div>
     </>; 

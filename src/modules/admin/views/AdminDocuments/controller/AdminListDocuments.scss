@@ -12,9 +12,10 @@ width: 100%;
 overflow: hidden;
 flex-wrap: wrap;
 gap: var(--s-9);
+margin: var(--s-padding) 0;
 &__list{
     width: 100%;
-    margin: 0;
+    // margin:  0;
     @extend .d-flex;
     flex-direction: column;
     align-items: flex-start;

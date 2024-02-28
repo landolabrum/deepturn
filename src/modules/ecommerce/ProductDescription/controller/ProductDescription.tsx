@@ -4,7 +4,6 @@ import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { useRouter } from 'next/router';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
-import ProductImage from '../views/ProductImage/ProductImage';
 import ProductBuyNow from '../views/ProductBuyNow/ProductBuyNow';
 import useCart from '../../cart/hooks/useCart';
 import IProductService from '~/src/core/services/ProductService/IProductService';
@@ -104,18 +103,18 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
         >
           <div className="product-description__img-default" >
 
-{product.images[0]?(
-     <Image
-     src={product.images[0]}
-     alt={product.name}
-     width={500}
-     height={500}
-     // fill // Use fill to make the image fill the container
-     // style={{ objectFit: 'cover' }} // Adjust object-fit as needed
-     unoptimized={true}
-   />
-):(<UiIcon  icon={`${environment.merchant.name}-logo`}/>)}
-         
+            {product.images[0] ? (
+              <Image
+                src={product.images[0]}
+                alt={product.name}
+                width={500}
+                height={500}
+                // fill // Use fill to make the image fill the container
+                // style={{ objectFit: 'cover' }} // Adjust object-fit as needed
+                unoptimized={true}
+              />
+            ) : (<UiIcon icon={`${environment.merchant.name}-logo`} />)}
+
             {/* <ProductImage options={{ view: 'description' }} image={product.images} /> */}
           </div>
           <div className="product-description__info-panel">
@@ -128,16 +127,16 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
             <div className='product-description__footer'>
               {cart?.length >= 1 && (
                 <div className='product-description__go-to-cart'>
-                  <UiButton traits={{afterIcon:'fal-bag-shopping'}} variant='link' href='/cart'>go to cart</UiButton>
-                  </div>
+                  <UiButton traits={{ afterIcon: 'fal-bag-shopping' }} variant='link' href='/cart'>go to cart</UiButton>
+                </div>
               )}
-            <div className='product-description__buy-button'>
-              <ProductBuyNow 
-                product={product}
-                btnText='select'
+              <div className='product-description__buy-button'>
+                <ProductBuyNow
+                  product={product}
+                  btnText='select'
                 />
+              </div>
             </div>
-          </div>
           </div>
         </AdaptGrid>
 

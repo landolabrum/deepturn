@@ -2,15 +2,15 @@ import ApiService, { ApiError } from "../ApiService";
 import { getService } from "@webstack/common";
 import environment from "~/src/environment";
 import IProductService, { IGetProduct } from "./IProductService"
-import ICustomerService from "../CustomerService/ICustomerService";
+import IMemberService from "../MemberService/IMemberService";
 
 export default class ProductService extends ApiService implements IProductService {
 
-  private CustomerService: ICustomerService;
+  private MemberService: IMemberService;
 
   constructor() {
     super(environment.serviceEndpoints.social);
-    this.CustomerService = getService<ICustomerService>('ICustomerService');
+    this.MemberService = getService<IMemberService>('IMemberService');
   }
   public async getProducts( request: any): Promise<any> {
       return await this.post<any, any>(`/api/products`, request);

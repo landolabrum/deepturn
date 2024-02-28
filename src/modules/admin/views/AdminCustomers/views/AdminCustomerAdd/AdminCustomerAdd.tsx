@@ -105,7 +105,7 @@ const AdminCustomerAdd: React.FC = () => {
       address: findField(customer, 'address').value,
       metadata: {
         clearance: findField(customer, 'clearance').value,
-        referrer_url: URL,
+        origin: URL,
         email_verified: false
       }
     }

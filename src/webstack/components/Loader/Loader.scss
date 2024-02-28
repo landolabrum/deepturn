@@ -1,10 +1,12 @@
 @keyframes fadeIn {
   0% {
-    opacity: 0;
+    // background: var(--gray-100);
+    backdrop-filter: blur(0);
   }
   
   100% {
-    opacity: 1;
+    background: var(--gray-100-opaque);
+    backdrop-filter: blur(4px);
   }
 }
 
@@ -19,7 +21,9 @@
   @extend .d-flex;
 
   z-index: 2;
-  animation: fadeIn 3s ease-in-out;
+  backdrop-filter: blur(0);
+  background: transparent;
+  animation: fadeIn .5s ease-in-out forwards;
   &__content {
     padding: var(--s-padding);
     @extend .d-flex;
@@ -48,7 +52,6 @@
   &--fixed{
     position: fixed;
     background: var(--gray-100-opaque);
-    backdrop-filter: blur(4px);
     top: 0;
     bottom: 0;
     left: 0;

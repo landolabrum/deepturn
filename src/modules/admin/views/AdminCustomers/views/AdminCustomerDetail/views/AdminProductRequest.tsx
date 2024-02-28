@@ -5,7 +5,7 @@ import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { dateFormat } from '@webstack/helpers/userExperienceFormats';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { getService } from '@webstack/common';
-import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
+import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import environment from '~/src/environment';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
@@ -24,7 +24,7 @@ interface ProductRequestProps {
 
 const AdminProductRequest: React.FC<ProductRequestProps> = ({ productRequest, customer_id: customerId }) => {
   const [tableData, setTableData] = useState<any>()
-  const CustomerService = getService<ICustomerService>("ICustomerService");
+  const MemberService = getService<IMemberService>("IMemberService");
   const user = useUser();
   const complete = Boolean(productRequest?.completed);
   const encryptData = async () => {
@@ -42,7 +42,7 @@ const AdminProductRequest: React.FC<ProductRequestProps> = ({ productRequest, cu
       metadata_key_name: `prod_req.${environment.merchant.mid}.configure`,
     }
     try {
-      const response = await CustomerService.encryptMetadataJWT({
+      const response = await MemberService.encryptMetadataJWT({
         encryptionData: {
           ...productRequest,
           completed: new Date().getTime(),

@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { getService } from '@webstack/common';
-import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
+import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useLoader } from '@webstack/components/Loader/Loader';
 
 
 export default function AuthQuery() {
   const router = useRouter();
-  const CustomerService = getService<ICustomerService>('ICustomerService');
+  const MemberService = getService<IMemberService>('IMemberService');
   const [, setLoader] = useLoader();
 
   useEffect(() => {
     const logoutUser = async () => {
       setLoader({ active: true, body: 'Logging out...' });
-      await CustomerService.signOut();
+      await MemberService.signOut();
       setLoader({ active: true, body: 'Successfully logged out!' });
       setTimeout(() => {
         setLoader({ active: false });
@@ -24,7 +24,7 @@ export default function AuthQuery() {
     if (router.query.function === 'signout') {
       logoutUser();
     }
-  }, [router, CustomerService, setLoader]);
+  }, [router, MemberService, setLoader]);
 
   return <></>;
 }

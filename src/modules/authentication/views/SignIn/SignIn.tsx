@@ -5,7 +5,7 @@ import TwoFactorAuth from "./components/TwoFactorAuth/TwoFactorAuth";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import { useClearance, useUser } from "~/src/core/authentication/hooks/useUser";
 import { getService } from "@webstack/common";
-import ICustomerService from "~/src/core/services/CustomerService/ICustomerService";
+import IMemberService from "~/src/core/services/MemberService/IMemberService";
 import useUserAgent from "~/src/core/authentication/hooks/useUserAgent";
 import styles from "./SignIn.scss";
 import { useNotification } from "@webstack/components/Notification/Notification";
@@ -46,7 +46,7 @@ const SignIn = ({ email }: { email: string | undefined }) => {
   const [signInResponse, setSignInResponse] = useState<any>(DEFAULT_RESPONSE);
   const userResponse = useUser();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const CustomerService = getService<ICustomerService>("ICustomerService");
+  const MemberService = getService<IMemberService>("IMemberService");
   const user_agent = useUserAgent();
   const [credentials, setCredentials] = useState<any>(defaultCredentials);
 
@@ -60,7 +60,7 @@ const SignIn = ({ email }: { email: string | undefined }) => {
     if (credentials.email && credentials.password) {
       const validTFA = /^\d{6}$/.test(credentials.code);
       try {
-        const resp = await CustomerService.signIn({
+        const resp = await MemberService.signIn({
           email: credentials.email,
           password: credentials.password.replace(/\s+/g, ''),
           ...(validTFA && { code: credentials.code }),

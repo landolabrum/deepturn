@@ -2,18 +2,18 @@ import ApiService from "../ApiService";
 import environment from "~/src/environment";
 import IHomeService, { IGroup, IHomePostLight, IHomePostLightRename, ILight } from "./IHomeService"
 import { getService } from "@webstack/common";
-import ICustomerService from "../CustomerService/ICustomerService";
+import IMemberService from "../MemberService/IMemberService";
 
 
 
 
 export default class HomeService extends ApiService implements IHomeService {
 
-  private CustomerService: ICustomerService;
+  private MemberService: IMemberService;
 
   constructor() {
     super(environment.serviceEndpoints.home);
-    this.CustomerService = getService<ICustomerService>('ICustomerService');
+    this.MemberService = getService<IMemberService>('IMemberService');
   }
   public async light(
     { id, name }: IHomePostLight
@@ -128,7 +128,7 @@ export default class HomeService extends ApiService implements IHomeService {
     }
     protected appendHeaders(headers: { [key: string]: string }) {
       super.appendHeaders(headers);
-      const token = this.CustomerService.getCurrentUserToken();
+      const token = this.MemberService.getCurrentUserToken();
       if (token) {
         headers["Authorization"] = `Bearer ${token}`;
       }

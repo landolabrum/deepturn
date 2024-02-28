@@ -1,0 +1,12 @@
+.d-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
+form{
+    @extend .d-flex;
+    flex-direction: column;
+    gap:var(--s-padding);
+    width: var(--s-padding-width);
+    
+}

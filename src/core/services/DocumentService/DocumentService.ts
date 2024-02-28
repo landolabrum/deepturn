@@ -1,19 +1,19 @@
 import ApiService, { ApiError } from "../ApiService";
 import { getService } from "@webstack/common";
 import environment from "~/src/environment";
-import ICustomerService from "../CustomerService/ICustomerService";
+import IMemberService from "../MemberService/IMemberService";
 import IDocumentService, { IDocumentPurpose } from "./IDocumentService";
 
 export default class DocumentService extends ApiService implements IDocumentService {
 
-  private CustomerService: ICustomerService;
+  private MemberService: IMemberService;
 
   constructor() {
     super(environment.serviceEndpoints.social);
-    this.CustomerService = getService<ICustomerService>('ICustomerService');
+    this.MemberService = getService<IMemberService>('IMemberService');
   }
   public async uploadDocument(formData: FormData, purpose:IDocumentPurpose='pci_document'): Promise<any> {
-    let customerId = this.CustomerService.getCurrentUser()?.id;
+    let customerId = this.MemberService.getCurrentUser()?.id;
     // console.log('[ CYu ]', customerId)
     try {
       const encodedPurpose = encodeURIComponent(purpose);

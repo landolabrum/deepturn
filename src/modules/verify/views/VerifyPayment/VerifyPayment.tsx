@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './VerifyPayment.scss';
 import { getService } from '@webstack/common';
-import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
+import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import IProductService from '~/src/core/services/ProductService/IProductService';
 import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
 import ContactForm from '@shared/components/ContactForm/ContactForm';
@@ -17,7 +17,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
     const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6InBvb0BuYW5pLmNvbSIsIml0ZW1zIjpbeyJwcm9kdWN0X2lkIjoicHJvZF9QNWxJMzVyMkVXVEF4aSIsInByaWNlX2lkIjoicHJpY2VfMU9IWm1KSW9kZUtaUkxEVlVlU2xZNk03In1dfQ.Zju6uFgG1L6xI26i8CQGVub-PnCoqP2Q-93qtnD1Yvo"
     const [tokenData, setTokenData] = useState<any | undefined>();
     const { addCartItem, getCartItems } = useCart();
-    const CustomerService = getService<ICustomerService>('ICustomerService');
+    const MemberService = getService<IMemberService>('IMemberService');
     const ProductService = getService<IProductService>('IProductService');
     const [cart, setCart]=useState<ICartItem | undefined>();
     const isTokenComplete = () => {
@@ -76,7 +76,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
     const decryptToken = async () => {
         if (token) {
             try {
-                const response = await CustomerService.decryptJWT({
+                const response = await MemberService.decryptJWT({
                     token: token,
                     secret: 'secretKey',
                     algorithm: 'HS256'

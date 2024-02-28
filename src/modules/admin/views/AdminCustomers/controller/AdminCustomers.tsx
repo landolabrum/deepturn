@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 const AdminCustomers: React.FC = () => {
   const router = useRouter();
   const [view, setView] = useState<string>('list');
-
+  const qry = router?.query;
   const updateViewUrl = (newView:string, customer?: UserContext)=>{
     const baseUrl = '/admin?vid=customers';
     if(newView === 'modify' && customer?.id){
@@ -19,7 +19,11 @@ const AdminCustomers: React.FC = () => {
     }else router.push(baseUrl);
     newView !== view && setView(newView);
   };
+
   
+  useEffect(() => {
+    if(qry.cid)setView('modify');
+  }, [qry]);
   return (
     <>
       <style jsx>{styles}</style>

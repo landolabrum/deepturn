@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import Checkout from '~/src/pages/checkout';
 import { ITraits } from '@webstack/components/FormControl/FormControl';
 import { getService } from '@webstack/common';
-import ICustomerService from '~/src/core/services/CustomerService/ICustomerService';
+import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { encryptString } from '@webstack/helpers/Encryption';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 
@@ -19,14 +19,15 @@ interface ICheckoutButton {
     traits?: ITraits;
     collect?: boolean;
     setup?: boolean;
+    methodId?: string;
 }
-const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false, traits, collect, setup }) => {
+const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false, traits, collect, setup, methodId }) => {
     const router = useRouter();
     const { isModalOpen, openModal, closeModal } = useModal();
-    const CustomerService = getService<ICustomerService>('ICustomerService');
+    const MemberService = getService<IMemberService>('IMemberService');
     const handleCheckout = async () => {
         if (collect) {
-            const checkoutResponse = await CustomerService.processTransaction(cart);
+            const checkoutResponse = await MemberService.processTransaction(cart);
             // SUCCESS
             // {
             //     "total": 126207,

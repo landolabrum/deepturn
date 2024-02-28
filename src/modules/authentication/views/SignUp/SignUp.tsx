@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./SignUp.scss";
 import { useUser } from "~/src/core/authentication/hooks/useUser";
 import { getService } from "@webstack/common";
-import ICustomerService from "~/src/core/services/CustomerService/ICustomerService";
+import IMemberService from "~/src/core/services/MemberService/IMemberService";
 import useUserAgent from "~/src/core/authentication/hooks/useUserAgent";
 import UiForm from "@webstack/components/UiForm/controller/UiForm";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
@@ -14,6 +14,7 @@ export interface ISignUp {
   onSuccess?: (e: any) => void;
   hasPassword?: boolean;
   btnText?: string;
+  login?:boolean
 }
 const form = [
   { name: "first_name", label: "first name", placeholder: 'first name', required: true },
@@ -27,7 +28,7 @@ const pwFields = [
 const SignUp = ({ setView, hasPassword = true, btnText, onSuccess }: ISignUp) => {
   const [loading, setLoading] = useState<any>(false);
   const user = useUser();
-  const CustomerService = getService<ICustomerService>("ICustomerService");
+  const MemberService = getService<IMemberService>("IMemberService");
   const user_agent = useUserAgent();
   const [fields, setFields] = useState<any>(form);
 
@@ -100,10 +101,10 @@ const SignUp = ({ setView, hasPassword = true, btnText, onSuccess }: ISignUp) =>
       }, {});
       request.name = `${request.first_name} ${request.last_name}`;
       request.user_agent = user_agent;
-      request.referrer_url = URL;
+      request.origin = URL;
   
       try {
-        const response = await CustomerService.signUp(request);
+        const response = await MemberService.signUp(request);
         if(response?.status === 'created'){
           setView && setView(response.data.email);
           onSuccess && onSuccess(response.data);

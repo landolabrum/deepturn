@@ -5,13 +5,18 @@ const prodEnvironment: IEnvironment = {
   isProduction: true,
   site:{
     url: 'https://deepturn.com'
+    // url: 'https://nirvanaenergy.net'
+
   },
   merchant:{
-    name:"deepturn",
     mid: "mb1",
+    name:"deepturn",
+    // mid: "nirv1",
+    // name:"nirvana-energy"
   },
   legacyJwtCookie: {
-    name: "auth-token",
+    authToken: "auth-token",
+    prospectToken: "prospect-token",
   },
   serviceEndpoints: {
     membership: `${serverUrl}`,
@@ -28,4 +33,4 @@ const prodEnvironment: IEnvironment = {
   },
 };
 
-export default prodEnvironment; 
+export default prodEnvironment;

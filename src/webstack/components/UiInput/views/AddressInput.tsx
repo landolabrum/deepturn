@@ -33,7 +33,7 @@ const AutocompleteAddressInput = ({ address, setAddress, traits, inputClasses, l
           // acc[type] = component.long_name || component.short_name;
           return acc;
         }, {});
-        console.log('[ ADDRESS ]',place)
+        // console.log('[ ADDRESS ]',place)
 
         const formattedAddress = {
           line1: `${addressComponents.street_number || ''} ${addressComponents.route || ''}`,

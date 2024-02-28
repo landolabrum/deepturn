@@ -13,7 +13,8 @@ const devEnvironment: IEnvironment = {
     name:"nirvana-energy"
   },
   legacyJwtCookie: {
-    name: "auth-token",
+    authToken: "auth-token",
+    prospectToken: "prospect-token",
   },
   serviceEndpoints: {
     membership: `${serverUrl}`,

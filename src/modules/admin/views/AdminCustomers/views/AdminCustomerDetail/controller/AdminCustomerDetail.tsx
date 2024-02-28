@@ -19,7 +19,7 @@ import { findField, updateField } from '@webstack/components/UiForm/functions/fo
 import { useClearance } from '~/src/core/authentication/hooks/useUser';
 import AdminProductRequest from '../views/AdminProductRequest';
 
-const AdminCustomerDetails: React.FC<any> = () => {
+const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
   const router = useRouter();
   const [customer, setCustomer] = useState<IFormField[] | undefined>();
   const { openModal, closeModal } = useModal();
@@ -31,7 +31,7 @@ const AdminCustomerDetails: React.FC<any> = () => {
     email: ''
   });
   const [productRequest, setProductRequest] = useState<any>();
-  const customer_id = router?.query?.cid && String(router?.query?.cid);
+  const customer_id = router?.query?.cid && String(router?.query?.cid) || id;
   const level = useClearance();
   const [notification, setNotification] = useNotification();
   const merchantId = String(environment.merchant.mid);
@@ -41,9 +41,9 @@ const AdminCustomerDetails: React.FC<any> = () => {
   const adminService = getService<IAdminService>('IAdminService');
 
   function modifyCustomerData(data: any, round2?: string): any {
-    const removeKeys = ['id', 'methods', 'files', 'default_source', 'shipping', 'object', 'currency', 'invoice_settings', 'next_invoice_sequence', 'preferred_locales', 'test_clock', 'invoice_prefix'];
+    const removeKeys = ['id', 'methods', 'user', 'files', 'default_source', 'shipping', 'object', 'currency', 'invoice_settings', 'next_invoice_sequence', 'preferred_locales', 'test_clock', 'invoice_prefix'];
     const modifiedKeys = ['metadata'];
-    const disabledKeys = ['created', 'server_url', 'referrer_url', 'email_verified', 'delinquent', 'livemode', 'balance'];
+    const disabledKeys = ['created', 'server_url', 'origin', 'email_verified', 'delinquent', 'livemode', 'balance'];
 
     // SET FILES
     if (data?.files) {
@@ -56,7 +56,8 @@ const AdminCustomerDetails: React.FC<any> = () => {
 
       if (key == 'methods')value?.data?.length && setMethods(value.data);
       if (key == 'phone') val = phoneFormat(value);
-      if (key == 'created') val = dateFormat(value, { time: true, isTimestamp: true, returnType: "object" });
+      if (key == 'created') val = `${dateFormat(value, { isTimestamp: true })}`;
+      // if (key == 'created') val = dateFormat(value, { time: true, isTimestamp: true, returnType: "object" });
       
       else if (value == null) val = '';
       return val;
@@ -79,10 +80,11 @@ const AdminCustomerDetails: React.FC<any> = () => {
           type: handleFormatType(key, handleFormatValue(key, value)),
           variant: 'default',
           readonly: disabledKeys.includes(key) || undefined,
+          width: disabledKeys.includes(key) && '50%' || undefined,
           placeholder: '',
         }));
     };
-    return [...formatted(), ...formatted(data.metadata, 'metadata')];
+    return [...formatted(), ...formatted(data.metadata, 'metadata'), ...formatted(data.metadata?.user, 'user')];
   }
 
 
@@ -100,7 +102,14 @@ const AdminCustomerDetails: React.FC<any> = () => {
     }
     deleteService().then(() => {
       setLoader({ active: false });
-      router.push('/admin?vid=customers')
+      setNotification({
+        active: true,
+        persistance: 3000,
+        list: [
+          { label: 'success', message: `Deleted: ${info.name}` }
+        ]
+      });
+      router.push('/admin?vid=customers', undefined,{shallow: false})
     })
 
   }
@@ -159,13 +168,22 @@ const AdminCustomerDetails: React.FC<any> = () => {
       if (errorResponse.detail?.detail) {
         const errorDetail = errorResponse.detail?.detail;
         if (errorDetail) {
+          let errors:any = []
           for (let index = 0; index < Object.values(errorDetail).length; index++) {
             const error: any = Object.values(errorDetail)[index];
+            errors += {label: error.loc, message: error.msg};
             if (error.loc.includes('address')) {
               const newFields = updateField(customer, 'address', { error: error.msg });
               setCustomer(newFields);
               break; // Break the loop when 'address' is found
             }
+          }
+          if(errors.length){
+            setNotification({
+              active: true,
+              persistance: 3000,
+              list: errors
+            });
           }
         }
       }
@@ -191,15 +209,11 @@ const AdminCustomerDetails: React.FC<any> = () => {
             let formName = '';
             Object.entries(response?.metadata || {}).map(([key, value]: any) => {
               const keyParts = key.split('.');
-              if (keyParts[0] === 'prod_req' && keyParts[1] === merchantId) {
+              const isMerchant = keyParts[1] === merchantId;
+              if (keyParts[0] === 'prod_req' && isMerchant || merchantId === 'mb1') {
                 formName = keyParts[2];
                 setProductRequest(value);
-              }else if(key === 'user'){
-                console.log('[ else if (USER key ) ]', {key, value})
-              }else{
-                console.log('[ else ]', {key, value})
-              }
-            });
+            }});
             // test against the default formName = ''
             if (formName.length) {
               setNotification({
@@ -260,7 +274,7 @@ const AdminCustomerDetails: React.FC<any> = () => {
                   </UiButton>
                 </div> || ''
               }
-              {String(info?.phone).length > 4 &&
+              {String(info?.phone)?.length > 4 &&
                 <div>
                   <UiButton traits={{ beforeIcon: 'fa-circle-phone-flip' }} >{phoneFormat(info?.phone)}</UiButton>
                 </div>
@@ -289,7 +303,7 @@ const AdminCustomerDetails: React.FC<any> = () => {
             </UiCollapse>
             <UiCollapse
               open={Boolean(files?.length)}
-              label={`files ( ${files?.length && Number(files.length) || 0} )`}
+              label={`files ( ${files?.length && Number(files?.length) || 0} )`}
             >
               <div className='admin-customer__files'>
                 {files && <AdminListDocuments docs={files} /> || <div>no files</div>}

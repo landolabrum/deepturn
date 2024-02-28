@@ -8,11 +8,8 @@ import setUpPoints from '../functions/setUpPoints';
 import setUpScene from '../functions/setUpScene';
 import useWindow from '@webstack/hooks/useWindow';
 import UiSelect from '@webstack/components/UiSelect/UiSelect';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import AdminCustomerDetails from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerDetail/controller/AdminCustomerDetail';
 const UiEarthObject = (
     {
-        globeImageUrl,
         points = [{
             name: "Holladay", lat: 40.65654718559953, lng: -111.81447097331733,
             alt: 0,
@@ -22,7 +19,8 @@ const UiEarthObject = (
         showAtmosphere,
         backgroundImageUrl,
         showGraticules,
-        rotate
+        rotate,
+        onPointClick
     }: IEarth
 ) => {
     const earthRef = useRef<any | undefined>();
@@ -30,9 +28,9 @@ const UiEarthObject = (
     const earthImgs: any = [
         { name: "map", value: "no-clouds.jpg" },
         { name: "lrg", value: "earth-large.jpg" },
-        { name: "dark", value: "dark.jpg" },
-        { name: "day", value: "day.jpg" },
-        { name: "night", value: "night.jpg" },
+        // { name: "dark", value: "dark.jpg" },
+        // { name: "day", value: "day.jpg" },
+        // { name: "night", value: "night.jpg" },
     ]
 
     const [earthImg, setEarthImg] = useState<any | undefined>({
@@ -65,15 +63,15 @@ const UiEarthObject = (
             options 
         );
     }
-    const {openModal, closeModal}=useModal();
     // Define handlePoint function
     const handlePoint = (id: string) => {
-        console.log(`Marker ID: ${id}`);
-        openModal({
-            variant:'popup',
-            // title:'ji',
-            children:<AdminCustomerDetails customer_id={id}/>
-        });
+        onPointClick && onPointClick(id)
+        // console.log(`Marker ID: ${id}`);
+        // openModal({
+        //     variant:'popup',
+        //     // title:'ji',
+        //     children:<AdminCustomerDetails customer_id={id}/>
+        // });
         // You can add more logic here if needed
     };
 

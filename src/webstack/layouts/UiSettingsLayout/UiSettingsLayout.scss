@@ -275,13 +275,25 @@ $actionsBg: var(--gray-90);
 
 
     &--header {
-        color: var(--gray-60);
-        width: 100%;
-        text-transform: capitalize;
-
+        display: none;
+        &__full{
+            color: var(--gray-60);
+            width: var(--s-padding-width);
+            padding: var(--s-padding);
+            text-transform: capitalize;
+            position: absolute;
+            top: var(--s-padding);
+            line-height: 1;
+            @extend .d-flex;
+            right: calc( calc(var(--s-element) + var(--s-padding)) * 2);
+            width: max-content;
+            padding: 0 var(--s-padding);
+            height: var(--s-element);
+            z-index: 3;
+        }
         &--title {
-            // margin-left: var(--s-9);
             font-size: var(--s-1);
+            color: var(--gray-40);
         }
     }
 

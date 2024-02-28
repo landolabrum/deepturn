@@ -74,13 +74,13 @@ $borderColor: var(--gray-40);
     border-radius: var(--border-radius);
     border: solid 1px var(--gray-60);
     overflow: hidden;
-    &__select{
-        
-    }
     &__content {
+        &.selected{
+            background-color: var(--primary) !important;
+        }
+        background-color: var(--gray-90);
         --ui-icon-color: var(--gray-40);
         color: var(--gray-40);
-        background-color: var(--gray-90);
         border-right: solid 5px var(--gray-50);
         height: var(--s-element);
         border-radius: var(--border-radius) 0 0 var(--border-radius);

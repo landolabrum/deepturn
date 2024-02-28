@@ -4,16 +4,18 @@ import styles from './AdminEarth.scss';
 import UiEarth from '@webstack/components/Graphs/UiEarth/controller/EarthRenderer';
 import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
+import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import AdminCustomerDetails from '../AdminCustomers/views/AdminCustomerDetail/controller/AdminCustomerDetail';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const AdminEarth: React.FC = () => {
+    const {openModal}=useModal();
     const [custLocations, setCustomers] = useState<any>();
     const [hasMore, setHasMore] = useState(false);
     const adminService = getService<IAdminService>('IAdminService');
     const formatCustomerAddresses = (customers: any) => {
         if (!customers) return;
-        
         const custaddrs = customers.filter((customer: any) => customer.metadata['address.lat'])
             .map((customer: any) => {
                 const addr = customer.address;
@@ -33,6 +35,7 @@ const AdminEarth: React.FC = () => {
         setCustomers(custaddrs);
     }
     const getMembers = async () => {
+        if(custLocations)return;
         try {
             const response = await adminService.listCustomers();
             formatCustomerAddresses(response.data);
@@ -41,16 +44,21 @@ const AdminEarth: React.FC = () => {
             console.log('[ ADMIN EARTH GETMEMBERS ERROR ]', e)
         }
     }
-
+    const onPointClick = (id?: string)=>{
+        console.log('[ onPointClick ]', id)
+           openModal({
+            variant:'popup',
+            // title:'ji',
+            children:<AdminCustomerDetails id={id}/>
+        });
+    }
     useEffect(() => {
-        // if(!custLocations){
         getMembers();
-        // }
     }, [setCustomers]);
     return (
         <>
             <style jsx>{styles}</style>
-            {custLocations && <UiEarth points={custLocations} rotate={false} />}
+            {custLocations && <UiEarth points={custLocations} rotate={false} onPointClick={onPointClick}/>}
         </>
     );
 };

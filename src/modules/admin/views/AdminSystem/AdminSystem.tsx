@@ -65,7 +65,7 @@ const AdminSystem: React.FC = () => {
   useEffect(() => {
     if (!systemData) getData()
   }, [setSystemData]);
-  if (systemData) return (
+  if (Object(systemData)?.length) return (
     <>
       <style jsx>{styles}</style>
       <div className='admin-system'>
@@ -119,29 +119,41 @@ const AdminSystem: React.FC = () => {
               </div>
             </div>
           </div>
-            <div className='admin-system__overview--item'>
+          <div className='admin-system__overview--item'>
             <div className='admin-system__overview--item--title'>
               <UiIcon icon='fa-microchip' /> Storage
             </div>
             <div className='admin-system__overview--item--content'>
               <div className='d-flex' style={{ flexDirection: 'column' }}>
-              <UiBar
-                    header={systemData?.storage_info?.drive}
-                    percentage={systemData?.storage_info?.percent_used}
-                    barCount={4}
-                    status={systemData?.storage_info?.percent_used >= 90 && 'high' || undefined}
-                  />
+                <UiBar
+                  header={systemData?.storage_info?.drive}
+                  percentage={systemData?.storage_info?.percent_used}
+                  barCount={4}
+                  status={systemData?.storage_info?.percent_used >= 90 && 'high' || undefined}
+                />
                 {/* <div>{bytesToGigabytes(systemData?.storage_info?.available)}</div> */}
                 {/* <div>{bytesToGigabytes(systemData?.storage_info?.total)}</div> */}
               </div>
             </div>
-        </div>
+          </div>
         </div>
 
       </div>
     </>
   );
-  return <>..load</>
+  return <>
+    <style jsx>{styles}</style>
+    <div className='admin-system'>
+      <div className='admin-system__header'>
+        <div className='admin-system__title--container'>
+          <div className='admin-system__title'>
+            admin system
+          </div>
+          <h2>System data unavailable</h2>
+        </div>
+      </div>
+    </div>
+  </>
 };
 
 export default AdminSystem;

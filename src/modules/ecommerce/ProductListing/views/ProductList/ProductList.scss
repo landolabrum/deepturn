@@ -20,7 +20,7 @@
     justify-content: space-between;
     overflow: hidden;
     width: var(--s-padding-width);
-    gap: var(--s-padding);
+    gap: var(--s-element);
     margin: auto;
     --ui-icon-color: var(--gray-70-opaque);
     padding: var(--s-padding);
@@ -34,12 +34,16 @@
         gap: var(--s-padding);
         width: 100%; // Images container fills the product card
         height: 100%;
-        margin-top: var(--s-padding);
+        margin-top: var(--s-element);
         &__image {
             position: relative; // For Image fill layout to work
-            width: var(--s-padding-width); // Image container fills its parent
             margin: auto;
             aspect-ratio: 1;
+            height: 100%;
+            @media(max-width: 900px){
+                width: var(--s-padding-width); // Image container fills its parent
+                padding:0 var(--s-padding);
+            }
         }
 
         &__icon {
@@ -51,10 +55,14 @@
         }
     }
     &-content{
-        width: 100%;
+        @extend .d-flex;
+        flex-direction: column;
+        width: var(--s-padding-width);
+        padding: var(--s-padding);
+        line-height: 1;
+        gap: var(--s-9);
         &--name {
             @extend .d-flex;
-            min-height: var(--s-element);
             font-size: var(--s-4);
             text-transform: capitalize;
             align-items: flex-start;
@@ -64,7 +72,6 @@
         }
     
         &--price {
-            min-height: var(--s-element);
             font-family: Game;
             @extend .d-flex;
             align-items: flex-start;

@@ -35,8 +35,8 @@ const ProductsListing: NextPage = () => {
   const [loader, setLoader] = useLoader();
   const user = useUser();
   const [filters, setFilters] = useState<Filter>({ categories: {}, types: {} });
-  // const [products, setProducts] = useState<any[]>(mockProducts);
-  const [products, setProducts] = useState<any[]>();
+  const [products, setProducts] = useState<any[]>(mockProducts);
+  // const [products, setProducts] = useState<any[]>();
   const [hasMore, setHasMore] = useState<boolean>(false);
   const ProductService = getService<IProductService>("IProductService");
   const getSelectedCategories = (filter: any) => {
@@ -82,7 +82,7 @@ const ProductsListing: NextPage = () => {
       finally { setLoader({ active: false }); }
     };
 
-    if (!products) fetchProducts();
+     fetchProducts();
   }, [setProducts]);
 
   return (<>

@@ -20,7 +20,7 @@ const CreateMethodStripeForm = ({ onSuccess, user, shippable, success_url="/chec
     const stripe = useStripe();
     const elements: any = useElements();
     const options = {
-        layout: {
+        layout: { 
             type: 'tabs',
             defaultCollapsed: false,
             radios: false,
@@ -32,6 +32,7 @@ const CreateMethodStripeForm = ({ onSuccess, user, shippable, success_url="/chec
     const onSubmit = useCallback(async (event: any) => {
         event.preventDefault();
         let confirmParams: any = {
+            // return_url: undefined,
             return_url: `${environment.site.url}${success_url}`,
         };
         if (shippable && user?.address?.line1) {
@@ -43,7 +44,8 @@ const CreateMethodStripeForm = ({ onSuccess, user, shippable, success_url="/chec
         try {
             const result: any = await stripe?.confirmSetup({
                 elements,
-                confirmParams: confirmParams
+                confirmParams: confirmParams,
+                redirect:'if_required',
             });
 
             console.log('[ RESULT ]', result)

@@ -15,6 +15,7 @@ type ILoader = {
   body?: any;
   children?: any;
   animation?: true;
+  persistence?: number; // New property for persistence
 };
 
 const LoaderContext =
@@ -52,9 +53,20 @@ const Loader: React.FC = () => {
     bevelSize: 2, // Adjust the bevel size as needed
     bevelSegments: 2, // Adjust the number of bevel segments as needed
   };
+
   useEffect(() => {
-    if (context?.active != LoaderState?.active) setLoaderState(context);
-  }, [context]);
+    // if (context?.active !== LoaderState?.active) {
+      setLoaderState(context);
+      // Check if persistence is set and active is true
+      if (context?.active && context.persistence) {
+        // Set a timeout to automatically set active to false after the persistence duration
+        const timer = setTimeout(() => {
+          setContext({ ...context, active: false }); // Update context to set active to false
+        }, context.persistence);
+        return () => clearTimeout(timer); // Clear the timeout if the component unmounts or updates
+      }
+    // }
+  }, [context, setContext, LoaderState?.active]);
 
   if (LoaderState?.active) {
     return (

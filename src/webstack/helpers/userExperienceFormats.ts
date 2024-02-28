@@ -131,30 +131,31 @@ export function getYearsArray(length: number, asStrings = true): (string | numbe
   const currentYear = new Date().getFullYear();
   return Array.from({ length: length }, (_, i) => asStrings ? (currentYear + i).toString() : currentYear + i);
 }
+
 export function dateFormat(
-  suppliedDate: dateProps,
-  options: OptionsProps = {
+  suppliedDate:any,
+  options:any = {
     time: false,
     returnType: "string",
     format: "MM-DD-YYYY",
     server: false,
     isTimestamp: false
   }
-): string | string[] | React.ReactElement {
-  if (options.isTimestamp === true && typeof (suppliedDate) === 'number') {
+) {
+  if (options.isTimestamp === true && typeof suppliedDate === 'number') {
+    // Check if the timestamp is in seconds (Unix timestamp), then convert to milliseconds
+    if (suppliedDate.toString().length === 10) {
+      suppliedDate *= 1000;
+    }
     const date = new Date(suppliedDate);
     const formattedDate = date.getFullYear() + "-" +
-    String(date.getMonth() + 1).padStart(2, '0') + "-" +
-    String(date.getDate()).padStart(2, '0') + " " +
-    String(date.getHours()).padStart(2, '0') + ":" +
-    String(date.getMinutes()).padStart(2, '0') + ":" +
-    String(date.getSeconds()).padStart(2, '0');
-
+      String(date.getMonth() + 1).padStart(2, '0') + "-" +
+      String(date.getDate()).padStart(2, '0') + " " +
+      String(date.getHours()).padStart(2, '0') + ":" +
+      String(date.getMinutes()).padStart(2, '0') + ":" +
+      String(date.getSeconds()).padStart(2, '0');
+  
     return formattedDate;
-    // const dateObj = new Date(suppliedDate * 1000); // Convert seconds to milliseconds
-    // const date = dateObj.toLocaleDateString();
-    // const time = dateObj.toLocaleTimeString();
-    // return `${date} ${time}`;
   }
   else if (options.server) {
     const date = new Date(suppliedDate);
@@ -163,16 +164,16 @@ export function dateFormat(
       .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
   } else {
     if (typeof suppliedDate === "string") suppliedDate = new Date(suppliedDate);
-    const mDY: Intl.DateTimeFormatOptions = {
+    const mDY = {
       month: "short",
       day: "numeric",
       year: "numeric",
     };
-    const mY: Intl.DateTimeFormatOptions = {
+    const mY = {
       month: "short",
       year: "numeric",
     };
-    const timeOptions: Intl.DateTimeFormatOptions = {
+    const timeOptions = {
       hour: "numeric",
       minute: "numeric",
       hour12: true,
@@ -186,13 +187,14 @@ export function dateFormat(
         if (options.returnType === "object") return [dateString, timeString];
         return `${dateString} ${timeString}`;
       }
-      if (dateString.length < 8) return InvalidCell();
+      if (dateString.length < 8) return "InvalidCell()";
       return dateString;
     } catch (e) {
-      return NaCell();
+      return "NaCell()";
     }
   }
 }
+
 export function colorPercentage(percentage: number, colorReverse?: boolean, background?: { start: string, end: string }) {
   // Extract color components from the background start and end if provided
   const startRed = background ? parseInt(background.start.substring(0, 2), 16) : parseInt(colorReverse ? "ff" : "33", 16);

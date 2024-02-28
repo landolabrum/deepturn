@@ -14,24 +14,17 @@
     
     &__header {
         position: absolute;
-        left: 0;
-        top: 0;
+        top: calc(var(--s-element) + var(--s-padding));
         z-index: 1;
-        width: 100%;
+        width: var(--s-padding-width);
     }
     
     &__tools {
-        position: absolute;
-        top: var(--s-10);
         @extend .d-flex;
-        padding:var(--s-padding);
         justify-content: flex-end;
         opacity: 0.5;
-        right: var(--s-9);
-        @media(max-width: 1100px) {
-            top: calc(var(--s-element) + var(--s-9));
-        }
-
+        margin-top:var(--s-padding);
+        margin-right: -1px;
         &:hover{
             opacity: 1;
         }
