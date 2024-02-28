@@ -6,7 +6,7 @@ import useSetupIntentSecret from "~/src/core/services/MemberService/hooks/useSet
 import UserContext from "~/src/models/UserContext";
 import { useEffect, useState } from "react";
 interface IStripePaymentForm {
-  onSuccess: (e: any) => void;
+  onSuccess?: (e: any) => void;
   user?: UserContext;
   success_url?: string;
 }

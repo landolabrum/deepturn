@@ -4,7 +4,7 @@ import UiButton from '@webstack/components/UiButton/UiButton';
 import UiPill from '@webstack/components/UiPill/UiPill';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import useCart from '../../../cart/hooks/useCart'; // Adjust the path as necessary
+import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
 import { ITraits } from '@webstack/components/FormControl/FormControl';
 import { IProduct } from '~/src/models/Shopping/IProduct';
 

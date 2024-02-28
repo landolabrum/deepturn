@@ -52,6 +52,7 @@ const CreateMethodStripeForm = ({ onSuccess, user, shippable, success_url="/chec
             if (result.error) {
                 console.log('[ Create Method ]( ERROR )', result.error.message);
             } else {
+                const method_exists = result?.error?.setup_intent?.status ==="succeeded";
                 const paymentIntent: any = result.paymentIntent;
                 if (paymentIntent && paymentIntent.status === 'succeeded') {
                     onSuccess && onSuccess(paymentIntent);
@@ -68,7 +69,7 @@ const CreateMethodStripeForm = ({ onSuccess, user, shippable, success_url="/chec
             const paymentElement = elements.create('payment', options);
             paymentElement.mount('#payment-element');
         }
-    }, [stripe, elements]);
+    }, [stripe, elements, ]);
 
     return (
         <>

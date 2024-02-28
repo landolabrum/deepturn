@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from "./ProductSlider.scss";
-import ProductBuyNow from '../../../ProductDescription/views/ProductBuyNow/ProductBuyNow';
-import ProductImage from '../../../ProductDescription/views/ProductImage/ProductImage';
+import ProductBuyNow from '../../../controller/ProductDescription/views/ProductBuyNow/ProductBuyNow';
+import ProductImage from '../../../controller/ProductDescription/views/ProductImage/ProductImage';
 import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
 import { ICartItem } from '~/src/modules/ecommerce/cart/model/ICartItem';
 import { useRouter } from 'next/router';

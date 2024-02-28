@@ -46,7 +46,7 @@ export default interface IMemberService {
   
   getMethods(customerId?: string): Promise<any>;
   deleteMethod(id: string): Promise<any>;
-  processTransaction(cart:ICartItem[], customer_id?:string, method_id:string): Promise<any>;
+  processTransaction(cart:ICartItem[], customer_id?:string, method_id?:string): Promise<any>;
   createSetupIntent(customer: SetupIntentSecretRequest, method?: IPaymentMethod ): Promise<any>;
 
   userChanged: EventEmitter<UserContext | undefined>;

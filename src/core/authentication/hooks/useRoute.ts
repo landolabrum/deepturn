@@ -45,6 +45,7 @@ const useRoute = (): ORoute => {
       const matchingRoute = clearanceRoutes.find(clearRoute => {
         const routePathWithoutQuery = clearRoute?.href;
         if (routePathWithoutQuery === router.pathname) {
+
           return true;
         }
         else if (

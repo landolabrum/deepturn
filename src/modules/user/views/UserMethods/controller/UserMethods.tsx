@@ -5,7 +5,7 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { getService } from '@webstack/common';
 import { IMethod } from '../../../model/IMethod';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
-import UserCurrentMethod from '../views/UserCurrentMethod/UserCurrentMethod';
+import UserCurrentMethods from '../views/UserCurrentMethods/UserCurrentMethods';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { useLoader } from '@webstack/components/Loader/Loader';
@@ -20,9 +20,10 @@ interface IUserMethods {
   customerMethods?: any;
   user?: UserContext;
   selected?: string;
-  onSelect?: (id?: string) => void;
+  onSelect?: (method?: IMethod) => void;
+  onSuccess?: (e:any)=>void;
 }
-const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onSelect }: IUserMethods) => {
+const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onSelect, onSuccess }: IUserMethods) => {
   const [loader, setLoader] = useLoader();
   const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
@@ -33,9 +34,10 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
   const handleDelete = async (id: string) => {
     getAccountMethods();
   }
-  // const handleCreated = () => {
-  //   getAccountMethods();
-  // }
+  const handleCreated = (e:any) => {
+    getAccountMethods();
+    onSuccess && onSuccess(e)
+  }
 
   const getAccountMethods = async (e?:any) => {
     if(!selectedUser)return;
@@ -81,7 +83,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
                 current methods
               </div>
               <div className='user-methods__list'>
-              <UserCurrentMethod
+              <UserCurrentMethods
                       user={selectedUser}
                       methods={methods}
                       onDeleteSuccess={handleDelete}
@@ -95,7 +97,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
             </div>
            }
               <UiCollapse label={label} open={open || methods.length < 1 || !loader.active || selectedUser?.invoice_settings?.default_payment_method == undefined}>
-            <UserCreateMethod user={selectedUser} onSuccess={getAccountMethods} />
+            <UserCreateMethod user={selectedUser} onSuccess={handleCreated} />
       </UiCollapse>
         </div>
     </>

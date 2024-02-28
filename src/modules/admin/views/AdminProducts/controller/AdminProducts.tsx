@@ -9,7 +9,8 @@ import UiButton from '@webstack/components/UiButton/UiButton';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import AddProduct from '../AddProduct/AddProduct';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
-import ProductImage from '~/src/modules/ecommerce/ProductDescription/views/ProductImage/ProductImage';
+import Image from 'next/image';
+// import ProductImage from '~/src/modules/ecommerce/ProductDescription/views/ProductImage/ProductImage';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
@@ -36,7 +37,10 @@ const AdminProducts: React.FC = () => {
         break;
     }
   }
-
+const ProductsImage = () =>{
+  return <div>
+  </div>
+}
 const ProductService = getService<IProductService>('IProductService');
 async function getProducts(){
   try{
@@ -46,7 +50,8 @@ async function getProducts(){
       let context = {
         id: <AdaptTableCell cell='id' data={field.id}/>,
         name: field.name,
-        image: <ProductImage options={{view: 'table'}} image={field.images[0]}/>,
+        image:    <Image src={field.images[0]} width={100} alt={field.name}/>,
+        // image: <ProductImage options={{view: 'table'}} image={field.images[0]}/>,
         type: field.type,
         default_price: <AdaptTableCell cell='id' data={field.default_price}/>,
         updated: dateFormat(field.updated, {isTimestamp: true}),

@@ -24,11 +24,14 @@ const Checkout: React.FC<ICheckout> = () => {
     const user = useUser();
     const [view, setView] = useState<any>('sign-up');
     const [cart, setCart] = useState<any>();
-    const [methodId, setMethodId]=useState()
+    const [method, setMethod]=useState()
     const [billing_details, set_billing_details] = useState<any>();
     const { getCartItems, } = useCart();
     const prospect = useProspect();
 //    const MemberService = getService<IMemberService>("IMemberService");
+const onCreateProspectMethodSuccess = (e?:any)=>{
+    console.log("[ FINALLY ]", e)
+};
     const handleSignUp = (res: any) => {
         // if(res.id){
         //     setView('card-details');
@@ -59,13 +62,21 @@ const Checkout: React.FC<ICheckout> = () => {
     return <>
         <style jsx>{styles}</style>
         {JSON.stringify(billing_details)}<hr/>
-        {methodId}
+        {JSON.stringify(method)}<hr/>
+        {/* <UserCurrentMethod
+                      user={selectedUser}
+                      methods={methods}
+                      onDeleteSuccess={handleDelete}
+                      response={loader.active}
+                      selected={selected}
+                      onSelect={onSelect}
+                    /> */}
         <div className='checkout' id="main-checkout">
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" /> {view}
             </div>
             <div className='checkout__button'>
-                {methodId && <CheckoutButton cart={cart} collect />}
+                {method && <CheckoutButton cart={cart} collect />}
             </div>
             {/* <div className='checkout__button'> 
                 Step {view === 'sign-up'?'1':'2'} of 2
@@ -75,7 +86,7 @@ const Checkout: React.FC<ICheckout> = () => {
                 {view === 'sign-up' && <SignUp hasPassword={false} btnText='continue' onSuccess={handleSignUp}/>}
                 {view === 'collect' && <>
                 <CartList cart={cart}/>
-                {user || prospect && <UserMethods user={billing_details} selected={methodId} onSelect={setMethodId}/>}
+                {user || prospect && <UserMethods user={billing_details} selected={method} onSuccess={onCreateProspectMethodSuccess} onSelect={setMethod}/>}
                 {/* <Collect user={user || prospect} onSuccess={console.log}/> */}
                 </>}
 

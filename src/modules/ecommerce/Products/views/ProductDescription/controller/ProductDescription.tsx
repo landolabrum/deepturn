@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
 import ProductBuyNow from '../views/ProductBuyNow/ProductBuyNow';
-import useCart from '../../cart/hooks/useCart';
+import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
 import IProductService from '~/src/core/services/ProductService/IProductService';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import Image from 'next/image';

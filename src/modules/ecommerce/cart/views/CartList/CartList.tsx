@@ -2,7 +2,7 @@ import styles from './CartList.scss';
 import { ICartItem } from '../../model/ICartItem';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
-import ProductBuyNow from '../../../ProductDescription/views/ProductBuyNow/ProductBuyNow';
+import ProductBuyNow from '../../../Products/views/ProductDescription/views/ProductBuyNow/ProductBuyNow';
 import { ITraits } from '@webstack/components/FormControl/FormControl';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
