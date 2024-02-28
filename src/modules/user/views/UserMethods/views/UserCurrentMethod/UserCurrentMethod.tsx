@@ -10,7 +10,7 @@ import { useNotification } from '@webstack/components/Notification/Notification'
 // Remember to create a sibling SCSS file with the same name as this component
 interface IUserCurrentMethod    {
     method:IMethod,
-    selected:IMethod,
+    selected?:IMethod | false,
     default_payment_method?: string | null | undefined,
     onDeleteSuccess: (e: any) => void;
     methodsClass:any,
