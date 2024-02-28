@@ -73,13 +73,14 @@ const UserCurrentMethod: React.FC<IUserCurrentMethod>= (
         }
     };
     useEffect(() => {
-    }, [method]);
-  return (
+        console.log('[ methodsClass ]',methodsClass)
+    }, [method,methodsClass]);
+  if(typeof methodsClass === 'object')return (
     <>
       <style jsx>{styles}</style>
       <div className={`current-method`}>
                     <div
-                        className={`${methodsClass[method.id]?.content?.join(' ').trim()} ${selected && selected?.id === method.id ?' selected':''}`}
+                        className={`${methodsClass  && methodsClass[method.id]?.content?.join(' ').trim()} ${selected && selected?.id === method.id ?' selected':''}`}
                         onClick={() => handleClick(method)}
                     >
                         <div className='current-method__info'>
@@ -108,6 +109,7 @@ const UserCurrentMethod: React.FC<IUserCurrentMethod>= (
                 </div>
     </>
   );
+  return<>Loading cards</>
 };
 
 export default UserCurrentMethod;

@@ -19,15 +19,15 @@ interface ICheckoutButton {
     traits?: ITraits;
     collect?: boolean;
     setup?: boolean;
-    methodId?: string;
+    method_id?: string;
 }
-const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false, traits, collect, setup, methodId }) => {
+const CheckoutButton: React.FC<ICheckoutButton> = ({ cart, label = "Checkout", isModal = false, traits, collect, setup, method_id }) => {
     const router = useRouter();
     const { isModalOpen, openModal, closeModal } = useModal();
     const MemberService = getService<IMemberService>('IMemberService');
     const handleCheckout = async () => {
         if (collect) {
-            const checkoutResponse = await MemberService.processTransaction(cart);
+            const checkoutResponse = await MemberService.processTransaction(cart, method_id);
             // SUCCESS
             // {
             //     "total": 126207,

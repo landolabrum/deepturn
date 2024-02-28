@@ -1,0 +1,212 @@
+
+$pad: 18px;
+$delW: 50px;
+$min: calc(100% - calc(calc($pad * 5) + $delW));
+$max: calc(100% - calc($pad * 2));
+
+
+$colorHover: var(--gray-50);
+$colorActive: var(--primary);
+$contentBackground: var(--gray-60);
+$contentBackgroundHover: var(--gray-70-opaque);
+$background: var(--gray-20-opaque);
+$outlineColor: var(--gray-70);
+$borderColor: var(--gray-40);
+
+
+@keyframes tease {
+    0% {
+        width: $max;
+    }
+    40%{
+        width: calc($max - var(--s-3));
+    }
+    50%{
+        width: calc($max - var(--s-4));
+    }
+    70%{
+        width: calc($max - var(--s-3));
+    }
+    100% {
+        width: calc($max - var(--s-3));
+    }
+}
+
+
+@keyframes show {
+    0% {
+        width: $max;
+    }
+
+    100% {
+        width: $min;
+    }
+}
+
+@keyframes hide {
+    0% {
+        width: $min;
+    }
+
+    100% {
+        width: $max;
+    }
+}
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.current-method {
+    cursor: pointer;
+    background-color: var(--primary-opaque);
+    color: var(--gray-90);
+    position: relative;
+    @extend .d-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    --ui-icon-color: var(--gray-20);
+    width: 100%;
+    border-radius: var(--border-radius);
+    border: solid 1px var(--gray-60);
+    overflow: hidden;
+    &__content {
+        &.selected{
+            background-color: var(--primary) !important;
+        }
+        background-color: var(--gray-90);
+        --ui-icon-color: var(--gray-40);
+        color: var(--gray-40);
+        border-right: solid 5px var(--gray-50);
+        height: var(--s-element);
+        border-radius: var(--border-radius) 0 0 var(--border-radius);
+        @extend .d-flex;
+        width: calc( 100% - calc($pad * 2));
+        padding: 0 $pad;
+        line-height: 1;
+        font-size: var(--s-5);
+        @media(max-width: 900px){
+            font-size: var(--s-6);
+        }
+        flex-direction: row;
+        z-index: 2;
+        justify-content: space-between;
+        animation-play-state: paused;
+        &.current-method__content-show {
+            animation: show 1s forwards;
+            animation-play-state: running;
+            // width: $min;
+            // &:hover {
+            //     width: $min !important;
+            // }
+        }
+
+        &.current-method__content-hide {
+            animation: hide 1s forwards;
+            animation-play-state: running;
+        }
+        &:hover {
+            &.current-method__content-show {
+                animation: show 1s forwards;
+                animation-play-state: running;
+                width: $min;
+                &:hover {
+                    width: $min !important;
+                }
+            }
+            // animation: tease 1s forwards;
+            // animation-play-state: running;
+            // color: var(--gray-10);
+            // --ui-icon-color: var(--gray-10);
+        }
+        // &.current-method__content__hoverable{
+        // }
+
+        &:active {
+            background-color: $colorActive;
+        }
+
+        .current-method__info {
+            @extend .d-flex;
+            justify-content: flex-start;
+            flex-direction: row;
+            gap: $pad;
+            --ui-icon-size: var(--s-2);
+            @media(max-width: 900px){
+                --ui-icon-size: var(--s-5);
+            }
+            letter-spacing: 2px;
+            .current-method__default{
+                position: relative;
+                &::after{
+                    top: 0;
+                    transform: translateY(-50%);
+                    padding: 4px 7px;
+                    line-height: 1;
+                    font-weight: 900;
+                    color: var(--gray-20);
+
+                    background-color: var(--primary-opaque);
+                    font-style: italic;
+                    left: 0;
+                    position: absolute;
+                    font-size: var(--s-8);
+                    border-radius: var(--s-9);
+                    border: solid 2px var(--gray-20);
+                    content: 'DEFAULT';
+                }
+            }
+        }
+
+        .current-method__exp {
+            @extend .d-flex;
+            justify-content: flex-end;
+            flex-direction: row;
+        }
+    }
+    .current-method__behind{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        height: var(--s-element);
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+        & > div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: $delW;
+            aspect-ratio: 1/1;
+        }
+        .current-method__set-default {  
+            position: relative; 
+            overflow: visible; 
+            --ui-icon-color: var(--primary-opaque);
+            &:hover {
+                background-color: var(--white);
+                z-index: 999;
+                &::after{
+                    left: 0;
+                    @extend .d-flex;
+                    text-align: center;
+                    background-color: var(--gray-30-opaque);
+                    color: var(--gray-90);
+                    content:attr(data-default);
+                    font-size: var(--s-8);
+                    aspect-ratio: 1/1;
+                    width: var(--s-element);
+                    padding: 2px;
+                    position: absolute;  
+                }
+            }
+        }
+        .current-method__delete {    
+            &:hover {
+                background-color: var(--red);
+            }
+        }
+    }
+}

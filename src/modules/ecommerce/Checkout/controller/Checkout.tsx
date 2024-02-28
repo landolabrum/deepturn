@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import UserMethods from '~/src/modules/user/views/UserMethods/controller/UserMethods';
 import { useProspect } from '~/src/core/authentication/hooks/useProspect';
 import CartList from '../../cart/views/CartList/CartList';
+import { IMethod } from '~/src/modules/user/model/IMethod';
 // import UserCreateMethod from '~/src/modules/user/views/UserMethods/views/UserCreateMethod/controller/UserCreateMethod';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
@@ -24,7 +25,7 @@ const Checkout: React.FC<ICheckout> = () => {
     const user = useUser();
     const [view, setView] = useState<any>('sign-up');
     const [cart, setCart] = useState<any>();
-    const [method, setMethod]=useState()
+    const [method, setMethod]=useState<IMethod | undefined>()
     const [billing_details, set_billing_details] = useState<any>();
     const { getCartItems, } = useCart();
     const prospect = useProspect();
@@ -76,7 +77,7 @@ const onCreateProspectMethodSuccess = (e?:any)=>{
                 Secure Checkout <UiIcon icon="fa-lock" /> {view}
             </div>
             <div className='checkout__button'>
-                {method && <CheckoutButton cart={cart} collect />}
+                {method?.id && <CheckoutButton cart={cart} collect method_id={method.id} />}
             </div>
             {/* <div className='checkout__button'> 
                 Step {view === 'sign-up'?'1':'2'} of 2
@@ -86,7 +87,7 @@ const onCreateProspectMethodSuccess = (e?:any)=>{
                 {view === 'sign-up' && <SignUp hasPassword={false} btnText='continue' onSuccess={handleSignUp}/>}
                 {view === 'collect' && <>
                 <CartList cart={cart}/>
-                {user || prospect && <UserMethods user={billing_details} selected={method} onSuccess={onCreateProspectMethodSuccess} onSelect={setMethod}/>}
+                {billing_details && <UserMethods user={billing_details} selected={method} onSuccess={onCreateProspectMethodSuccess} onSelect={setMethod}/>}
                 {/* <Collect user={user || prospect} onSuccess={console.log}/> */}
                 </>}
 

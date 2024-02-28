@@ -153,9 +153,10 @@ export default class MemberService
     let id: string | undefined = this._getCurrentUser(false)?.id || customer_id;
     var request: any = {
       line_items: cart,
-      customer: id
+      customer_id: id,
+      method_id:method_id
     };
-    if (request.customer) {
+    if (request.customer_id) {
       const res = await this.post<{}, any>(
         "usage/checkout/process",
         request
@@ -383,6 +384,7 @@ export default class MemberService
       { data: encryptedLoginData },
     );
     const memberJwt = await res;
+    this.deleteProspectToken();
     this.saveMemberToken(memberJwt);
     this.saveLegacyAuthCookie(memberJwt);
     return this._getCurrentUser(true)!;
