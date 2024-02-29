@@ -136,7 +136,7 @@ const SignUp = ({ setView, hasPassword = true, btnText, onSuccess }: ISignUp) =>
       setFields([...fields, ...pwFields]);
     }
     
-  }, [hasPassword]);
+  }, []);
   return (
     <>
       <style jsx>{styles}</style>

@@ -45,7 +45,7 @@ const UiCollapse: React.FC<ICollapse> = ({ id, open, children, variant, label = 
     }, [open]);
     return (
         <>
-            <style jsx>{styles}</style>
+            <style jsx>{styles}</style>{JSON.stringify(open)}
             <div
                 id={id}
                 style={_style}

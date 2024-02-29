@@ -6,7 +6,7 @@ import CustomToken from "~/src/models/CustomToken";
 import MemberToken from "~/src/models/MemberToken";
 import UserContext, { ProspectContext } from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
-import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, SetupIntentSecretRequest } from "./IMemberService";
+import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, ISessionData, SetupIntentSecretRequest } from "./IMemberService";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
@@ -148,24 +148,35 @@ export default class MemberService
       throw new ApiError("No ID Provided", 400, "MS.SI.02");
     }
   }
+public async processTransaction(sessionData: ISessionData) {
+    const { cart_items, customer_id, method_id } = sessionData;
 
-  public async processTransaction(cart: ICartItem[], customer_id: string, method_id?:string) {
-    let id: string | undefined = this._getCurrentUser(false)?.id || customer_id;
-    var request: any = {
-      line_items: cart,
-      customer_id: id,
-      method_id:method_id
+    if (!cart_items || !customer_id || !method_id) {
+        const missingFields = [];
+        if (!cart_items) missingFields.push("cart_items");
+        if (!customer_id) missingFields.push("customer_id");
+        if (!method_id) missingFields.push("method_id");
+        
+        throw new ApiError(`Missing required field(s): ${missingFields.join(', ')}`, 400, "MS.SI.01");
+    }
+
+    let session = {
+        cart_items,
+        customer_id: customer_id || this._getCurrentUser(false)?.id,
+        method_id
     };
-    if (request.customer_id) {
+
+    console.log("[ SESSION ]", session);
+
+    // Uncomment the code below to perform the transaction
+    // const res = await this.post<{}, any>("usage/checkout/process", session);
+    // return res;
       const res = await this.post<{}, any>(
         "usage/checkout/process",
-        request
+        session
       )
       return res
-    } else {
-      throw new ApiError("No Customer ID Provided", 400, "MS.SI.02");
-    }
-  }
+}
 
 
   public async encryptMetadataJWT(props: IEncryptMetadataJWT) {

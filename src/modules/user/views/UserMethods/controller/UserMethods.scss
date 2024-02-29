@@ -19,35 +19,48 @@
     width: 100%;
     .user-methods__existing {
         @extend .d-flex;
+        align-items: flex-start;
         box-sizing: border-box; /* Include padding and border in the width calculation */
         flex-direction: column;
         gap: var(--s-padding);
         padding: var(--s-padding);
-        background-color: var(--gray-80);
         border-radius: var(--border-radius);
         border: solid 1px var(--gray-70);
+        background-color: var(--gray-80);
+        height: 100%;
+        transition: all 3s ease-out;
         &--title{
             width: 100%;
             font-size: var(--s-3);
             text-transform: capitalize;
             color: var(--gray-50);
         }
+        &__selected{
+            transition: all 3s ease-out;
+            justify-content: space-between;
+            // min-height: 250px;
+        }
+        .existing__select{
+            color: var(--orange);
+            text-indent: var(--s-padding);
+        }
+        .existing__selected{
+            // min-height: 100px;
+            color: var(--white);
+        }
+        .existing__select,
+        .existing__selected{
+            width: 100%;
+            font-size: var(--s-3);
+            font-family: Game;
+            border-radius: var(--border-radius);
+        }
         .user-methods__list {
             @extend .d-flex;
             width: 100%;
             flex-direction: column;
             gap: var(--s-7);
-            .user-method {
-                @extend .d-flex;
-                width: 100%;
-                min-height: var(--s-element);
-                &__select{
-                    width: var(--s-1);
-                    @extend .d-flex;
-                    justify-content: flex-end;
-                    --ui-icon-color: var(--green)
-                }
-            }
+         
         }
     }
 }

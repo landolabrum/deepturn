@@ -33,7 +33,7 @@
     .cart__header {
         gap:var(--s-9);
         @extend .d-flex;
-        width: 100%;
+        width: var(--s-border-width);
         align-items: flex-start;
         justify-content: space-around;
         .cart__header-title {

@@ -35,10 +35,17 @@ export interface PaymentIntentSecretRequest {
   address?: UserAddress;
   phone: string;
 }
-
+export type ISessionCartItem = any;
+export interface ISessionData{
+  cart_items:ISessionCartItem[],
+  customer_id?:string,
+  method_id?:string
+}
 
 export default interface IMemberService {
-  // METHODS
+  // IMemberService
+  processTransaction(sessionData:ISessionData): Promise<any>;
+
   getCurrentUser(): UserContext | undefined;
   getCurrentProspect(): UserContext | undefined;
   getSetupIntent(client_secret: string): any;
@@ -46,7 +53,6 @@ export default interface IMemberService {
   
   getMethods(customerId?: string): Promise<any>;
   deleteMethod(id: string): Promise<any>;
-  processTransaction(cart:ICartItem[], customer_id?:string, method_id?:string): Promise<any>;
   createSetupIntent(customer: SetupIntentSecretRequest, method?: IPaymentMethod ): Promise<any>;
 
   userChanged: EventEmitter<UserContext | undefined>;

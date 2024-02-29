@@ -12,8 +12,10 @@
     flex-direction: column;
     .checkout__title{
         line-height: 2;
-        font-size: var(--s-4);
-        gap:7px;
+        font-size: var(--s-1);
+        --ui-icon-width: var(--s-2);
+        --ui-icon-height: var(--s-2);
+        gap:var(--s-9);
         @extend .d-flex;
         color: var(--gray-30);
         --ui-icon-color: var(--gray-30);
@@ -41,8 +43,3 @@
     padding: 50px 0;
     width: 100%;
 } 
-.checkout__button{
-    width: 100%;
-    margin: 10px 0 auto;
-    padding-bottom: var(--s-7);
-}

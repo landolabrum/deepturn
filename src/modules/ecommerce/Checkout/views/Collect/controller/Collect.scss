@@ -3,7 +3,14 @@
  justify-content: center;
  align-items: center;
 }
-.guest-checkout{
+.collect{
     @extend .d-flex;
+    flex-direction: column;
     width: 100%;
+    &__checkout-button{
+        width: 100%;
+        margin: 10px 0 auto;
+        // height: var(--s-element);
+        padding-bottom: var(--s-7);
+    }
 }

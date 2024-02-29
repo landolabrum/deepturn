@@ -72,7 +72,7 @@ $borderColor: var(--gray-40);
     overflow: hidden;
     &__content {
         &.selected{
-            background-color: var(--primary) !important;
+            background-color: var(--primary);
         }
         background-color: var(--gray-90);
         --ui-icon-color: var(--gray-40);

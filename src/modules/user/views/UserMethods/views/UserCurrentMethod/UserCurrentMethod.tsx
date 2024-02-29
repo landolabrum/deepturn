@@ -8,15 +8,15 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useNotification } from '@webstack/components/Notification/Notification';
 
 // Remember to create a sibling SCSS file with the same name as this component
-interface IUserCurrentMethod    {
-    method:IMethod,
-    selected?:IMethod | false,
+interface IUserCurrentMethod {
+    method: IMethod,
+    selected?: IMethod | false,
     default_payment_method?: string | null | undefined,
     onDeleteSuccess: (e: any) => void;
-    methodsClass:any,
-    handleClick:any
+    methodsClass: any,
+    handleClick: any
 }
-const UserCurrentMethod: React.FC<IUserCurrentMethod>= (
+const UserCurrentMethod: React.FC<IUserCurrentMethod> = (
     {
         method,
         selected,
@@ -25,7 +25,7 @@ const UserCurrentMethod: React.FC<IUserCurrentMethod>= (
         methodsClass,
         handleClick
     }
-    :IUserCurrentMethod) => {
+        : IUserCurrentMethod) => {
     const MemberService = getService<IMemberService>("IMemberService");
     const [notification, setNotification] = useNotification();
 
@@ -73,43 +73,43 @@ const UserCurrentMethod: React.FC<IUserCurrentMethod>= (
         }
     };
     useEffect(() => {
-        console.log('[ methodsClass ]',methodsClass)
-    }, [method,methodsClass]);
-  if(typeof methodsClass === 'object')return (
-    <>
-      <style jsx>{styles}</style>
-      <div className={`current-method`}>
-                    <div
-                        className={`${methodsClass  && methodsClass[method.id]?.content?.join(' ').trim()} ${selected && selected?.id === method.id ?' selected':''}`}
-                        onClick={() => handleClick(method)}
-                    >
-                        <div className='current-method__info'>
-                            <UiIcon icon={method.card.brand} />
-                            {`**** **** **** ${method.card.last4}`}
-                            {method.id == default_payment_method && <span className='current-method__default' />}
-                        </div>
-                        <div className='current-method__exp'>
-                            {mm(method)} / {method.card.exp_year}
-                        </div>
+        console.log('[ methodsClass ]', methodsClass)
+    }, [method, methodsClass]);
+    if (typeof methodsClass === 'object') return (
+        <>
+            <style jsx>{styles}</style>
+            <div className={`current-method`}>
+                <div
+                    className={`${methodsClass && methodsClass[method.id]?.content?.join(' ').trim()} ${selected && selected?.id === method.id ? ' selected' : ''}`}
+                    onClick={() => handleClick(method)}
+                >
+                    <div className='current-method__info'>
+                        <UiIcon icon={method.card.brand} />
+                        {`**** **** **** ${method.card.last4}`}
+                        {method.id == default_payment_method && <span className='current-method__default' />}
                     </div>
-                    <div className='current-method__behind'>
-                        <div
-                            data-default={`${method.id == default_payment_method ? 'remove' : 'set'} default`}
-                            className={`current-method__set-default`}
-                            onClick={() => handleActionClick(method.id, 'default')}
-                        >
-                            <UiIcon icon={methodsClass[method.id]?.icons.default} />
-                        </div>
-                        <div className={`current-method__delete`} onClick={() => handleActionClick(method.id, 'delete')}>
-                            <UiIcon icon={methodsClass[method.id]?.icons.delete} />
-                            {/* <UiIcon icon={'fa-trash-can'} /> */}
-                            {/* <UiIcon icon={clicked == 3 ? 'spinner' : 'fa-trash-can'} /> */}
-                        </div>
+                    <div className='current-method__exp'>
+                        {mm(method)} / {method.card.exp_year}
                     </div>
                 </div>
-    </>
-  );
-  return<>Loading cards</>
+                <div className='current-method__behind'>
+                    <div
+                        data-default={`${method.id == default_payment_method ? 'remove' : 'set'} default`}
+                        className={`current-method__set-default`}
+                        onClick={() => handleActionClick(method.id, 'default')}
+                    >
+                        <UiIcon icon={methodsClass[method.id]?.icons.default} />
+                    </div>
+                    <div className={`current-method__delete`} onClick={() => handleActionClick(method.id, 'delete')}>
+                        <UiIcon icon={methodsClass[method.id]?.icons.delete} />
+                        {/* <UiIcon icon={'fa-trash-can'} /> */}
+                        {/* <UiIcon icon={clicked == 3 ? 'spinner' : 'fa-trash-can'} /> */}
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+    return <>Loading cards</>
 };
 
 export default UserCurrentMethod;

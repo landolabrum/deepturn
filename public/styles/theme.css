@@ -97,6 +97,7 @@
   --blue: #4f96ff;
   --blue-opaque: #4f96ff50;
   --blue-10: #54E3FF;
+  --blue-10-opaque: #54E3FF50;
 
 
   --box-shadow: 2px 2px 10px var(--gray-100);
@@ -624,14 +625,17 @@ a:-webkit-any-link {
   position: fixed;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 15px;
   background-color: #00000070;
   color: #0f9;
   border-radius: 5px;
   bottom: 0;
+  max-width: calc(100vw - 30px);
   left: 0;
   z-index: 999;
+  overflow-wrap: break-word;
 }
+
 
 /* ELEMENTS */
 .embossed-theme {
