@@ -21,7 +21,7 @@ const UiViewLayout: React.FC<IViewLayout> = (props:IViewLayout) => {
     
     useEffect(() => {
         handleViews();
-    }, [views]);
+    }, [handleViews]);
     
 
     const _views = views && current && Object.entries(views);

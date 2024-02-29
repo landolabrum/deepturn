@@ -128,7 +128,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
                     {/* verify payment */}
                 </div>
                 <div className='verify-payment--content'>
-                    {tokenData.items && <CartList cart={cart} />}
+                    {tokenData.items && <CartList />}
                     <div className='verify-payment--content__contact-form'>
                         <ContactForm
                             user={{
