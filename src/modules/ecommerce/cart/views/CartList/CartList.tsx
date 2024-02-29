@@ -1,12 +1,12 @@
 import styles from './CartList.scss';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IProduct } from '~/src/models/Shopping/IProduct';
 import CartListItem from '../CartListItem/CartListItem';
 import useCart from '../../hooks/useCart';
 
 
-const CartList = () => {
+const CartList: React.FC<React.ReactElement> = () => {
     const [_cart, setCart] = useState<IProduct[]>();
     const { getCartItems } = useCart();
     const currentCart = getCartItems();
@@ -26,7 +26,7 @@ const CartList = () => {
             </AdaptGrid>
         </div>
     </>;
-    if (!_cart) return <>error code: cl1 NO CART</>;
+    return <>error code: cl1 NO CART</>;
 };
 
 export default CartList;
