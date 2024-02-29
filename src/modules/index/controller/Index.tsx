@@ -5,8 +5,9 @@ import environment from '~/src/environment';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { useLoader } from '@webstack/components/Loader/Loader';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useProspect } from '~/src/core/authentication/hooks/useProspect';
+import UiViewLayout from '@webstack/layouts/UiViewLayout/UiViewLayout';
 // import useCampaign from '@webstack/hooks/useCampaign';
 // import { useEffect } from 'react';
 
@@ -14,16 +15,19 @@ import { useProspect } from '~/src/core/authentication/hooks/useProspect';
 
 const Index = () => {
   const merchant: any = environment?.merchant;
-  const prospect = useProspect();
+  // const prospect = useProspect();
+  const [view, setView] = useState()
   // const campaign = useCampaign();
-  useEffect(() => {console.log('[ prospect ]', prospect)}, [prospect]);
+  useEffect(() => {
+    // console.log('[ prospect ]', prospect)
+    if (!view && merchant?.mid) setView(merchant.mid);
+  }, []);
 
   if (!environment) return <></>;
   return (
     <>
       <style jsx>{styles}</style>
       {/* {JSON.stringify(campaign)} */}
-      {prospect && JSON.stringify(prospect)} 
       <div className='index'>
         {merchant?.name && (
           <h1 className={`index__full--title main index__full--title-${merchant.name}`}>
@@ -32,8 +36,13 @@ const Index = () => {
           </h1>
         )
         }
-        {merchant?.mid === 'nirv1' && <NirvanaEnergy/>}
-        {merchant?.mid === 'mb1' && <Deepturn />}
+        <UiViewLayout
+          view={view}
+          views={{
+            'nirv1': <NirvanaEnergy />,
+            'mb1':<Deepturn/>
+          }}
+        />
       </div>
     </>
   );
