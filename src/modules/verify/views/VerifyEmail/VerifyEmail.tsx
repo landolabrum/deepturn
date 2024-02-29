@@ -7,7 +7,7 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
-import SignIn from '~/src/modules/authentication/views/SignIn/SignIn';
+import SignIn from '~/src/modules/authentication/views/SignIn/controller/SignIn';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 
