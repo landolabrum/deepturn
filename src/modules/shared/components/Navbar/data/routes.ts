@@ -40,6 +40,10 @@ export const routes: IRoute[] = [
     hide: true,
   },
   {
+    href:"/transaction",
+    hide: true,
+  },
+  {
     label: keyStringConverter(merchantName),
     icon: `${merchantName}-logo`,
     href:"/",

@@ -168,9 +168,6 @@ public async processTransaction(sessionData: ISessionData) {
 
     console.log("[ SESSION ]", session);
 
-    // Uncomment the code below to perform the transaction
-    // const res = await this.post<{}, any>("usage/checkout/process", session);
-    // return res;
       const res = await this.post<{}, any>(
         "usage/checkout/process",
         session
