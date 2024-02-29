@@ -1,0 +1,32 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ui-view-layout {
+    @extend .d-flex;
+    flex-direction: column;
+    width: 100%;
+
+    &__header,
+    &__actions {
+        @extend .d-flex;
+    }
+    
+    &__view,
+    &__actions {
+        width: 100%;
+    }
+    &__header{
+        width: var(--s-padding-width);
+        justify-content: flex-start;
+        padding: var(--s-padding);
+        &-title{
+            font-size: var(--s-1);
+            --ui-icon-color: var(--gray-30);
+            color: var(--gray-30);
+            text-transform: capitalize;
+        }
+    }
+}

@@ -56,13 +56,16 @@ $elPad: 14px;
   //     // border: solid 1px var(--gray-50);
   //   }
   // }
-  &:hover:not( &:focus-within) {
-      label {
-        color: var(--gray-50);
-      }
+  &:hover:not(&:focus-within) {
+    label {
+      color: var(--gray-50);
+    }
   }
-  &:focus-within{
-    label{color: var(--gray-20) !important}
+
+  &:focus-within {
+    label {
+      color: var(--gray-20) !important
+    }
   }
 
   border: solid 1px transparent;
@@ -77,6 +80,28 @@ $elPad: 14px;
     height: var(--s-5);
     font-size: var(--s-7);
     color: var(--white);
+  }
+
+  @keyframes glow {
+    0%, 100%  {
+      color: var(--primary-lite);
+      background: var(--primary-opaque);
+      box-shadow: 0 0 1px 1px var(--primary);
+    }
+    33% {
+      background-color: var(--primary);
+      color: var(--gray-20);
+      box-shadow: 0 0 4px 2px var(--primary-opaque);
+    }
+  }
+  $mtrx: 4px;
+  &--glow {
+    animation: glow 1.2s infinite ease-in;
+    height: calc(var(--s-element) - 2px);
+    overflow: hidden !important;
+    border-radius: var(--border-radius);
+    width: calc(100% - 6px);
+    margin: auto;
   }
 
   .form-control__header {

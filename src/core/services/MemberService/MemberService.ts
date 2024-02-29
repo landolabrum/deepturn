@@ -206,6 +206,7 @@ export default class MemberService
   }
 
   public updateCurrentUser(user: any): void {
+    console.log('[ updateCurrentUser ]',user)
     const newUserData = user.newUserData;
     if (newUserData) {
       // Update your _userContext and _userToken here
@@ -256,12 +257,12 @@ export default class MemberService
       return this._getCurrentProspect(true)!;
     }
     // EXISTING
-    if (res?.status === "existing") {
-      const memberJwt = await res.data;
-      this.saveMemberToken(memberJwt);
-      this.saveLegacyAuthCookie(memberJwt);
-      return this._getCurrentUser(true)!;
-    }
+    // if (res?.status === "existing") {
+    //   const memberJwt = await res.data;
+    //   this.saveMemberToken(memberJwt);
+    //   this.saveLegacyAuthCookie(memberJwt);
+    //   return this._getCurrentUser(true)!;
+    // }
     return res;
   }
   public async getMethods(customerId?: string): Promise<any> {
@@ -271,7 +272,7 @@ export default class MemberService
         `/api/method/customer/?id=${customerId}`,
       );
       if (OGetMethods) {
-        console.log(OGetMethods, customerId)
+        console.log('[getMethods ]',OGetMethods, customerId)
         // this.saveMemberToken(OGetMethods.customer);
         // this.saveLegacyAuthCookie(OGetMethods.customer);
         // this._getCurrentUser(true)!;
@@ -514,9 +515,14 @@ export default class MemberService
       localStorage?.setItem(MEMBER_TOKEN_NAME, memberJwt);
     }
   }
-  private saveProspectToken(memberJwt: string) {
+  private saveProspectToken(prospectJwt: string) {
     if (this.isBrowser) {
-      localStorage?.setItem(PROSPECT_TOKEN_NAME, memberJwt);
+      // Check if a member token exists and delete it before saving the prospect token
+      const existingMemberToken = localStorage?.getItem(MEMBER_TOKEN_NAME);
+      if (existingMemberToken) {
+        this.deleteMemberToken(); // Ensure member token is deleted if it exists
+      }
+      localStorage?.setItem(PROSPECT_TOKEN_NAME, prospectJwt);
     }
   }
   private get isBrowser(): boolean {
@@ -541,7 +547,8 @@ export default class MemberService
     const jwtCookie = environment.legacyJwtCookie;
     props.path = "/";
     if (jwtCookie.domain) props.domain = jwtCookie.domain;
-    CookieHelper.setCookie(jwtCookie.authToken, "", props);
+    CookieHelper.deleteCookie(jwtCookie.authToken)
+    // CookieHelper.setCookie(jwtCookie.authToken, "poo", props);
   }
   private deleteLegacyProspectCookie() {
     const props: { [key: string]: string } = {};

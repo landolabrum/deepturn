@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Verify.scss';
 import { useRouter } from 'next/router';
 import VerifyEmail from '../views/VerifyEmail/VerifyEmail';
-import SignIn from '../../authentication/views/SignIn/SignIn';
+import SignInView from '../../authentication/views/SignIn/views/SignInView/SignInView';
 import VerifyAccount from '../views/VerifyAccount/VerifyAccount';
 import VerifyPayment from '../views/VerifyPayment/VerifyPayment';
 
@@ -26,7 +26,7 @@ const Verify = () => {
   const [token, setToken] = useState<string | undefined>();
 
   const views: any = {
-    'sign-in': <SignIn email={newCustomerEmail} />,
+    'sign-in': <SignInView email={newCustomerEmail} />,
     email: <VerifyEmail token={token} onSuccess={(v: string) => setNewCustomerEmail(v)} />,
     account: <VerifyAccount />,
     payment: <VerifyPayment token={token} />

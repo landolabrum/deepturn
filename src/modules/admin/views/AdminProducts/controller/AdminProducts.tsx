@@ -7,22 +7,32 @@ import { dateFormat } from '@webstack/helpers/userExperienceFormats';
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import AddProduct from '../AddProduct/AddProduct';
+import AddProduct from '../views/AddProduct/AddProduct';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import Image from 'next/image';
+import environment from '~/src/environment';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { IProduct } from '~/src/models/Shopping/IProduct';
+import AdminProduct from '../views/AdminProduct/AdminProduct';
 // import ProductImage from '~/src/modules/ecommerce/ProductDescription/views/ProductImage/ProductImage';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const AdminProducts: React.FC = () => {
   const {openModal, closeModal}=useModal();
-  const [products, setProducts]=useState();
+  const [products, setProducts]=useState<IProduct[] | undefined>();
+  const [selectedProduct, setProduct]=useState<IProduct | undefined>();
   const [hasMore, setHasMore ]=useState();
 
   const [view, setView]=useState<string>('list');
+  const handleSelectProduct = (product:IProduct)=>{
+    setProduct(product);
+    setView('product')
+  } 
   const views:any = {
-    list: <AdapTable options={{tableTitle:'admin products'}} data={products}/>,
+    list: <AdapTable options={{tableTitle:'admin products'}} data={products} onRowClick={handleSelectProduct}/>,
     add:<AddProduct/>,
+    product: <AdminProduct setView={()=>setView('list')} product={selectedProduct}/>
 
   }
   const handleView = ()=>{
@@ -37,10 +47,7 @@ const AdminProducts: React.FC = () => {
         break;
     }
   }
-const ProductsImage = () =>{
-  return <div>
-  </div>
-}
+
 const ProductService = getService<IProductService>('IProductService');
 async function getProducts(){
   try{
@@ -50,7 +57,7 @@ async function getProducts(){
       let context = {
         id: <AdaptTableCell cell='id' data={field.id}/>,
         name: field.name,
-        image:    <Image src={field.images[0]} width={100} alt={field.name}/>,
+        image: field.images?.length >= 1?<Image src={field.images[0]} width={100} height={100} alt={field.name}/>:<UiIcon width={100} height={100} icon={`${environment.merchant.name}-logo`}/>,
         // image: <ProductImage options={{view: 'table'}} image={field.images[0]}/>,
         type: field.type,
         default_price: <AdaptTableCell cell='id' data={field.default_price}/>,

@@ -15,7 +15,6 @@
   justify-content: flex-start;
   width: 100%;
   flex-wrap: wrap;
-  gap: var(--s-8);
   &--mini{
     padding: var(--s-8) var(--s-padding);
     width: var(--s-padding-width);
@@ -95,7 +94,7 @@
     // border-width: 1px;
     width: 100%;
     margin-top: var(--s-padding);
-    padding-top: var(--s-element);
+    padding-top: var(--s-padding);
     &--mini{
       margin-top: 0;
       padding-top: var(--s-9);

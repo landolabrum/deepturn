@@ -1,0 +1,11 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.sign-in{
+    @extend .d-flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--s-padding);
+}

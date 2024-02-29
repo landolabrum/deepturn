@@ -105,9 +105,14 @@ const SignUp = ({ setView, hasPassword = true, btnText, onSuccess }: ISignUp) =>
   
       try {
         const response = await MemberService.signUp(request);
+        console.log('[ HANDLE SUBMIT ]',response?.status)
         if(response?.status === 'created'){
           setView && setView(response.data.email);
           onSuccess && onSuccess(response.data);
+        }
+        else if(response?.status === 'existing'){
+          setView && setView('existing');
+          // onSuccess && onSuccess(response.data);
         }
       } catch(e:any) {
         if (e?.detail?.fields) {

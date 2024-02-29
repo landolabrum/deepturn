@@ -13,6 +13,9 @@ import UserMethods from '~/src/modules/user/views/UserMethods/controller/UserMet
 import { useProspect } from '~/src/core/authentication/hooks/useProspect';
 import CartList from '../../cart/views/CartList/CartList';
 import { IMethod } from '~/src/modules/user/model/IMethod';
+import SignIn from '~/src/modules/authentication/views/SignIn/controller/SignIn';
+import { IView } from '@webstack/layouts/UiViewLayout/UiViewLayout';
+import UserContext from '~/src/models/UserContext';
 // import UserCreateMethod from '~/src/modules/user/views/UserMethods/views/UserCreateMethod/controller/UserCreateMethod';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICheckout {
@@ -20,19 +23,21 @@ interface ICheckout {
     label?: string;
     isModal?: boolean;
 }
+
 const Checkout: React.FC<ICheckout> = () => {
     const router = useRouter();
     const user = useUser();
+    // const [view, setView] = useState<any>('existing');
     const [view, setView] = useState<any>('sign-up');
     const [cart, setCart] = useState<any>();
     const [method, setMethod]=useState<IMethod | undefined>()
-    const [billing_details, set_billing_details] = useState<any>();
+    const [selectedUser, setUser] = useState<UserContext | undefined>();
     const { getCartItems, } = useCart();
     const prospect = useProspect();
 //    const MemberService = getService<IMemberService>("IMemberService");
-const onCreateProspectMethodSuccess = (e?:any)=>{
-    console.log("[ FINALLY ]", e)
-};
+    const onCreateProspectMethodSuccess = (e?:any)=>{
+        console.log("[ FINALLY ]", e)
+    };
     const handleSignUp = (res: any) => {
         // if(res.id){
         //     setView('card-details');
@@ -45,15 +50,37 @@ const onCreateProspectMethodSuccess = (e?:any)=>{
         console.log('[ CHECKOUT (HANDLE SUCCESS) ]',res);
     }
     const qry = router?.query || {setup_intent: undefined};
+    const views:IView = {
+        'sign-up':(
+            <SignUp 
+                hasPassword={false}
+                btnText='continue'
+                setView={setView} 
+                onSuccess={handleSignUp}
+        />),
+        'existing': (
+            <SignIn email={selectedUser?.email}/>
+        ),
+        'collect':(
+                <>
+                <CartList cart={cart}/>
+                {selectedUser && <UserMethods user={selectedUser} selected={method} onSuccess={onCreateProspectMethodSuccess} onSelect={setMethod}/>}
+                {/* <Collect user={user || prospect} onSuccess={console.log}/> */}
+                </>
+        )
+    }
     useEffect(() => {
         if(!cart)setCart(getCartItems());
         if(prospect){
             setView('collect');
-            set_billing_details(prospect);
+            setUser(prospect);
+        }else if(user){
+            setView('collect');
+            setUser(user);
         }
         // if (user && !billing_details)setView('user-methods');
         // if(!user && billing_details && !qry?.setup_intent)setView('card-details');
-    }, [billing_details, user, prospect, set_billing_details, ]); 
+    }, [selectedUser, user, prospect, setUser, ]); 
     function convertCartToLineItems(cart:any) {
         return cart.map((item:any) => ({
             price: item.price.id,
@@ -62,16 +89,9 @@ const onCreateProspectMethodSuccess = (e?:any)=>{
     }
     return <>
         <style jsx>{styles}</style>
-        {JSON.stringify(billing_details)}<hr/>
+        {JSON.stringify(selectedUser)}<hr/>
         {JSON.stringify(method)}<hr/>
-        {/* <UserCurrentMethod
-                      user={selectedUser}
-                      methods={methods}
-                      onDeleteSuccess={handleDelete}
-                      response={loader.active}
-                      selected={selected}
-                      onSelect={onSelect}
-                    /> */}
+
         <div className='checkout' id="main-checkout">
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" /> {view}
@@ -83,13 +103,23 @@ const onCreateProspectMethodSuccess = (e?:any)=>{
                 Step {view === 'sign-up'?'1':'2'} of 2
             </div>  */}
             <div className='checkout__body'>
-              
-                {view === 'sign-up' && <SignUp hasPassword={false} btnText='continue' onSuccess={handleSignUp}/>}
-                {view === 'collect' && <>
-                <CartList cart={cart}/>
-                {billing_details && <UserMethods user={billing_details} selected={method} onSuccess={onCreateProspectMethodSuccess} onSelect={setMethod}/>}
-                {/* <Collect user={user || prospect} onSuccess={console.log}/> */}
-                </>}
+                {views[view]}
+            </div> 
+        </div>
+    </>; 
+
+};
+
+export default Checkout;
+
+
+// http://localhost:3000/checkout?setup_intent=seti_1Onu6KIodeKZRLDVzd8NYO6z&setup_intent_client_secret=seti_1Onu6KIodeKZRLDVzd8NYO6z_secret_PdARUacGWwRvCG3ogBUyk4y7Qm9dobR&redirect_status=succeeded
+
+
+
+       {/* {view === 'existing' && <SignIn />} */}
+          
+
 
 
 
@@ -105,13 +135,3 @@ const onCreateProspectMethodSuccess = (e?:any)=>{
           
                 {/* secret: {JSON.stringify(clientSecret)} <br/> 
                  <br/> */} 
-            </div> 
-        </div>
-    </>; 
-
-};
-
-export default Checkout;
-
-
-// http://localhost:3000/checkout?setup_intent=seti_1Onu6KIodeKZRLDVzd8NYO6z&setup_intent_client_secret=seti_1Onu6KIodeKZRLDVzd8NYO6z_secret_PdARUacGWwRvCG3ogBUyk4y7Qm9dobR&redirect_status=succeeded
