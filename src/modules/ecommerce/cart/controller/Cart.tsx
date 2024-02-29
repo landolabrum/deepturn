@@ -33,8 +33,7 @@ const Cart = ({ variant, traits }: any) => {
           <div className='cart__header-title'></div>
           {cart && cart.length != 0 && <CheckoutButton cart_items={cart} />}
         </div>
-        {cart && cart.length != 0 ? <CartList traits={traits} variant={variant} cart={cart} 
-         /> : <EmptyCart />}
+        {cart && cart.length != 0 ? <CartList /> : <EmptyCart />}
       </div>
     </>
   );
