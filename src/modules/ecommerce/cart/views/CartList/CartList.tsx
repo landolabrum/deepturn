@@ -6,7 +6,7 @@ import CartListItem from '../CartListItem/CartListItem';
 import useCart from '../../hooks/useCart';
 
 
-const CartList: React.FC<any> = ({ handleQty, collapse = false, variant, traits }: { cart: any, handleQty: (item: any) => void; collapse?: boolean, variant: string, traits: any }) => {
+const CartList: React.FC<any> = () => {
     const [_cart, setCart] = useState<IProduct[]>();
     const { getCartItems } = useCart();
     const currentCart = getCartItems();
