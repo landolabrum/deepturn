@@ -81,7 +81,6 @@ const Checkout: React.FC<ICheckout> = () => {
     if (view) return <>
         <style jsx>{styles}</style>
         {/* {JSON.stringify(selectedUser)}<hr /> */}
-        view:{view}
         <div className='checkout' id="main-checkout">
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" />

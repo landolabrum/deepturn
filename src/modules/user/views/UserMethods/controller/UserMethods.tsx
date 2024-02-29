@@ -84,7 +84,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
   }, [setUser, selectedUser, open]);
   if (selectedUser) return (
     <>
-      <style jsx>{styles}</style> UserMethods open:{open}
+      <style jsx>{styles}</style>
       <div className='user-methods'>
         {methods.length > 0 &&
           <div

@@ -57,7 +57,7 @@ const UserCurrentMethods: React.FC<any> = ({ methods, onDeleteSuccess, response,
     }
     const handleClick = (selectedMethod: IMethod) => {
         const id = selectedMethod?.id
-        console.log({...selectedMethod})
+        // console.log({...selectedMethod})
         if (id && onSelect) {
             onSelect(!selected && selectedMethod );
         } else if(id){

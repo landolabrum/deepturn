@@ -20,6 +20,7 @@ import AdminDashboard from '../views/AdminDashboard/controller/AdminDashboard';
 const Admin = () => {
   const initialViews = {
     dashboard: <AdminDashboard />,
+    sales: <AdminDashboard />,
     // globe: <AdminEarth />,
     customers: <AdminCustomers />,
     products: <AdminProducts />,

@@ -7,11 +7,11 @@ import MemberToken from "~/src/models/MemberToken";
 import UserContext, { ProspectContext } from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
 import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, ISessionData, SetupIntentSecretRequest } from "./IMemberService";
-import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
 import errorResponse from "../../errors/errorResponse";
 const MEMBER_TOKEN_NAME = environment.legacyJwtCookie.authToken;
+const TRANSACTION_TOKEN_NAME = environment.legacyJwtCookie.transactionToken;
 const PROSPECT_TOKEN_NAME = environment.legacyJwtCookie.prospectToken;
 
 const TIMEOUT = 5000;
@@ -166,12 +166,14 @@ public async processTransaction(sessionData: ISessionData) {
         method_id
     };
 
-    console.log("[ SESSION ]", session);
 
       const res = await this.post<{}, any>(
         "usage/checkout/process",
         session
       )
+      this.saveTransactionToken(res);
+      this.saveLegacyTransactionCookie(res);
+      
       return res
 }
 
@@ -214,7 +216,6 @@ public async processTransaction(sessionData: ISessionData) {
   }
 
   public updateCurrentUser(user: any): void {
-    console.log('[ updateCurrentUser ]',user)
     const newUserData = user.newUserData;
     if (newUserData) {
       // Update your _userContext and _userToken here
@@ -352,6 +353,22 @@ public async processTransaction(sessionData: ISessionData) {
         props["max-age"] = diff.toString();
         if (jwtCookie.domain) props.domain = jwtCookie.domain;
         CookieHelper.setCookie(jwtCookie.authToken, customJwt, props);
+      }
+    }
+  }
+  private saveLegacyTransactionCookie(transactionToken: string) {
+    if (environment.legacyJwtCookie?.transactionToken) {
+      const a = transactionToken.split(".");
+      if (a.length === 3) {
+        const encodedBody = a[1];
+        const customToken = JSON.parse(window.atob(encodedBody)) as CustomToken;
+        const now = Math.floor(new Date().getTime() / 1000);
+        const expires = parseInt(customToken.exp as any);
+        const diff = expires - now;
+        const props: { [key: string]: string } = {};
+        props.path = "/";
+        props["max-age"] = diff.toString();
+        CookieHelper.setCookie(TRANSACTION_TOKEN_NAME, transactionToken, props);
       }
     }
   }
@@ -518,6 +535,11 @@ public async processTransaction(sessionData: ISessionData) {
     return this._prospectContext;
   }
 
+  private saveTransactionToken(tranactionToken: string) {
+    if (this.isBrowser) {
+      localStorage?.setItem(TRANSACTION_TOKEN_NAME, tranactionToken);
+    }
+  }
   private saveMemberToken(memberJwt: string) {
     if (this.isBrowser) {
       localStorage?.setItem(MEMBER_TOKEN_NAME, memberJwt);

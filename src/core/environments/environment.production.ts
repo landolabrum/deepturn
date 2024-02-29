@@ -17,6 +17,7 @@ const prodEnvironment: IEnvironment = {
   legacyJwtCookie: {
     authToken: "auth-token",
     prospectToken: "prospect-token",
+    transactionToken: "transaction-token",
   },
   serviceEndpoints: {
     membership: `${serverUrl}`,
