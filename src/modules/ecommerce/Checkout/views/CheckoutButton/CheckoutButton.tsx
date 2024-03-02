@@ -78,7 +78,7 @@ const CheckoutButton: React.FC<ICheckoutButton> = (props) => {
         {/* SESSION: {JSON.stringify(sessionData)}<hr/>
         {cart} */}
         <div className='checkout-button'>
-            <UiButton variant="primary" traits={traits} onClick={handleCheckout} >{`${label} ${calculateCartTotal(cartItems)}`}</UiButton>
+            <UiButton variant="glow" traits={traits} onClick={handleCheckout} >{`${label} ${calculateCartTotal(cartItems)}`}</UiButton>
         </div>
     </>
 };

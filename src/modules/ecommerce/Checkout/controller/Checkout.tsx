@@ -86,7 +86,7 @@ const Checkout = ():React.JSX.Element => {
             <div className='checkout__button'>
                 Step {view === 'sign-up'?'1':'2'} of 2
             </div>
-            <CartList variant='mini'/>
+            <CartList adjustable={false} variant='mini'/>
             <div className='checkout__body'>
                 {views[view]}
             </div>

@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { IProduct } from '~/src/models/Shopping/IProduct';
 import CartListItem from '../CartListItem/CartListItem';
 import useCart from '../../hooks/useCart';
-import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
-import Image from 'next/image';
+// import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
+// import Image from 'next/image';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import environment from '~/src/environment';
-import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
+// import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 
 interface ICartTableItem {
     name?: string;
@@ -16,7 +16,7 @@ interface ICartTableItem {
     price?: string;
     image?: React.ReactElement;
 }
-const CartList = ({ variant }: { variant?: 'mini' }) => {
+const CartList = ({ variant, adjustable }: { variant?: 'mini', adjustable?:boolean }) => {
     const [cart, setCart] = useState<IProduct[] | ICartTableItem[]>();
     const { getCartItems } = useCart();
     const currentCart = getCartItems();
@@ -24,7 +24,7 @@ const CartList = ({ variant }: { variant?: 'mini' }) => {
         return <>
             <style jsx>{styles}</style>
             <div className='cart-list__brand-icon'>
-                <UiIcon width="100px" height="100px" icon={`${environment.merchant.name}-logo`} />
+                <UiIcon width="100px" height="120px" icon={`${environment.merchant.name}-logo`} />
             </div>
         </>
     };
@@ -33,11 +33,14 @@ const CartList = ({ variant }: { variant?: 'mini' }) => {
     }, []);
     if (cart) return <>
         <style jsx>{styles}</style>
-        <div className='cart-list'>
+        <div 
+            className={`cart-list ${
+                variant&&` cart-list__${variant}`||''}
+                `}>
             <AdaptGrid xs={1} gapY={20}>
                 {cart.map((item: any, key: number) => (
                     <span key={key}>
-                        <CartListItem item={item} />
+                        <CartListItem variant={variant} item={item} adjustable={adjustable} />
                     </span>
                 ))
                 }
