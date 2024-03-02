@@ -51,7 +51,7 @@ const CheckoutButton: React.FC<ICheckoutButton> = (props) => {
                 setError(error);
             }
         }
-        if (isModal) openModal({ children: <Checkout cart={sessionData} />, variant: 'popup' });
+        // if (isModal) openModal({ children: <Checkout cart={sessionData} />, variant: 'popup' });
         // if (isModal && user?.default_source == null) openModal(<AccountCreateMethod loading={status} open onSubmit={handleCreateMethod} />);
         if (!isModal && !isModalOpen) router.push("/checkout");
     };
