@@ -12,12 +12,12 @@
     }
 
     30% {
-        transform: rotate(10deg);
+        transform: rotate(5deg);
         background-color: var(--error);
     }
 
     70% {
-        transform: rotate(-5deg);
+        transform: rotate(-2deg);
         background-color: var(--gray-70);
     }
 
@@ -463,7 +463,6 @@
         position: relative;
         color: var(--invalid-border) !important;
         --ui-icon-color: var(--invalid-border) !important;
-
         &:not(&--signature) {
             border: solid 1px var(--invalid-border) !important;
         }
@@ -473,6 +472,7 @@
 
             .form-control__invalid {
                 color: var(--error) !important;
+
             }
         }
 
@@ -480,7 +480,7 @@
             position: absolute;
             font-family: Play;
             font-style: italic;
-
+            animation: bump .4s ease-in;
             right: var(--s-2);
             font-size: var(--s-3);
             font-weight: bold;

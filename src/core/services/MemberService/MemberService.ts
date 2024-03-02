@@ -393,6 +393,7 @@ public async processTransaction(sessionData: ISessionData) {
   }
 
   public async signIn({ email, password, code, user_agent }: any): Promise<UserContext> {
+    console.log('[ signIn ]',{ email, password, code, user_agent })
     if (!email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }

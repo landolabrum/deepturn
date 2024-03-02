@@ -22,6 +22,8 @@ const useRoute = (): ORoute => {
   const clearanceRoutes = useClearanceRoutes();
   const level = useClearance();
   const handleHeader = useCallback((title?: string) => {
+    console.log('[ handleHeader ]', title)
+
     const rtTit = String(router.pathname)?.length && router.pathname.split('/')[1] || false;
     const headerContext = {
       title: rtTit || title,
@@ -34,7 +36,7 @@ const useRoute = (): ORoute => {
     };
     setHeader(headerContext);
   }, [setHeader]);
-  const renderTriggers = [user, _user, setUser, clearanceRoutes, level, handleHeader];
+  const renderTriggers = [user, _user, setUser, clearanceRoutes, level];
 
   const explicitRouter = (route: IRoute) => {
     if (route?.href) router.push(route.href, undefined, { shallow: false });

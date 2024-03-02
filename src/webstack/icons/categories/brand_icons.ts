@@ -11,7 +11,7 @@ export const brandIcons = {
   nirvana_logo: {
     html: `
     <svg version="1.1" id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-       viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+       viewBox="0 0 100 100"  xml:space="preserve">
     <path fill="currentColor" d="M73.6,53.4H29.8c-1.6,0-3.2,0.3-4.7,1c-3.2,1.6-5.2,4.2-5.8,7.7c-0.1,0.8-0.1,1.4-0.1,2.2v19.7
       c-0.2,0-0.4,0-0.6,0c-2.1,0-4.1,0-6.2,0c-1.7,0-3.3-1.2-3.4-3.3V34c0-0.5,0.1-0.8,0.6-1c6.9-4.9,13.8-9.9,20.7-14.8
       c3.5-2.6,7-5.1,10.5-7.6c0.2-0.1,0.3-0.2,0.5-0.4c0.2,0.1,0.3,0.2,0.4,0.3c9.2,6.7,18.4,13.2,27.6,19.9c1.2,1,2.6,1.8,3.8,2.8

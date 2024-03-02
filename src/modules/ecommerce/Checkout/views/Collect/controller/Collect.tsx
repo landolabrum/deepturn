@@ -6,7 +6,7 @@ import { ISessionCartItem } from "~/src/core/services/MemberService/IMemberServi
 import UserMethods from "~/src/modules/user/views/UserMethods/controller/UserMethods";
 import { IMethod } from "~/src/modules/user/model/IMethod";
 interface ICollect {
-  user?: UserContext;
+  user?: any;
   cart_items: ISessionCartItem[];
 }
 
@@ -18,7 +18,7 @@ const Collect = ({ user, cart_items }: ICollect) => {
   const onCreateProspectMethodSuccess = (e?: any) => {
     console.log("[ FINALLY ]", e)
   };
-  return (<>
+  if(user && user.id)return (<>
     <style jsx>{styles}</style>
     <div className='collect'>
       <div className='collect__checkout-button'>
@@ -43,6 +43,7 @@ const Collect = ({ user, cart_items }: ICollect) => {
     </div>
   </>
   );
+  return <>Collect | NO USER ID</>
 
 };
 export default Collect;

@@ -57,7 +57,7 @@ const Notification: React.FC = () => {
   const handleClose = () => {
     setShow(false);
     setTimeout(() => {
-      setContext({ active: false })
+      setContext({ active: false });
     }, 2000);
   }
 
@@ -72,17 +72,21 @@ const Notification: React.FC = () => {
     }
   }, [context]);
   const list = notification?.list;
-  useEffect(() => {
-    // handle Dismissable
+  const handleNotifictaion = () =>{
     if (context?.dismissable == undefined) context.dismissable = true;
     if (context?.persistance) {
       setTimeout(() => {
-        setShow(false);
+        handleClose();
       }, context.persistance);
     }
     setNotification(context);
+  }
+  useEffect(() => {
+    // handle Dismissable
+    console.log('[ NOTIFICIATION ]', notification)
+    handleNotifictaion();
     handleBodyScroll();
-  }, [context, handleBodyScroll]);
+  }, [handleNotifictaion, handleBodyScroll]);
 
   if (notification?.active) {
     return (

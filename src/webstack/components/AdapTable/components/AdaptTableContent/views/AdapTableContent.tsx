@@ -104,13 +104,13 @@ const viewportHeight = useDocument()?.viewport.height;
   };
  
 
-  const setRowRef = (row:any, index:number) => {
-    if (rowRefs.current.length <= index) {
-      // Expand the array if necessary
-      rowRefs.current = [...rowRefs.current, ...new Array(index + 1 - rowRefs.current.length)];
-    }
-    rowRefs.current[index] = row;
-  };
+  // const setRowRef = (row:any, index:number) => {
+  //   if (rowRefs.current.length <= index) {
+  //     // Expand the array if necessary
+  //     rowRefs.current = [...rowRefs.current, ...new Array(index + 1 - rowRefs.current.length)];
+  //   }
+  //   rowRefs.current[index] = row;
+  // };
   useEffect(() => {
     status && setView(status);
   }, [status]);
@@ -136,14 +136,13 @@ const viewportHeight = useDocument()?.viewport.height;
     <>
       <style jsx>{tableStyles}</style>
       <style jsx>{contentStyles}</style>
-
       <div className={`table-container ${variant ? "table-container-" + variant : ""}`}>
         <table
           ref={tableRef}
           className={
             `${variant ? "table-" + variant : ""} ${view === "show" && "table-show"} ${hideHeader && 'hide-header' || ''}`
           }
-        >
+        >{!options?.hide?.includes('header') &&
           <thead className={hideHeader && 'hide-header' || ''}>
             <tr >
               {index !== 0 && <th className="index">#</th>}
@@ -172,7 +171,7 @@ const viewportHeight = useDocument()?.viewport.height;
                   );
                 })}
             </tr>
-          </thead>
+          </thead>}
           <tbody>
             {data &&
               data[0] &&

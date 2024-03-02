@@ -4,7 +4,7 @@ import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { useEffect, useRef } from "react";
 import environment from "~/src/environment";
 
-interface Props {
+interface IUiLoader {
   text?: string | boolean;
   dots?: boolean;
   height?: number | string;
@@ -13,14 +13,14 @@ interface Props {
   fontSize?: number | string;
 }
 
-const UiLoader: NextComponentType<NextPageContext, {}, Props> = ({
+const UiLoader: NextComponentType<NextPageContext, {}, IUiLoader> = ({
   text: propText,
   dots = true,
   height,
   position,
   width,
   fontSize,
-}: Props) => {
+}: IUiLoader) => {
   const text = !propText && typeof propText != 'string' ? "Loading" : propText;
   const ref = useRef<HTMLDivElement>(null);
 

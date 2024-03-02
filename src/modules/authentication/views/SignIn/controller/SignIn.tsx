@@ -10,23 +10,28 @@ import { capitalizeAll } from '@webstack/helpers/Capitalize';
 
 // Remember to create a sibling SCSS file with the same name as this component
 export interface ISignIn{
+    onSuccess?: (e:any)=>void;
     email?: string;
+    title?: string;
+    view?: 'sign-in' | 'reset-password'
 }
-const SignIn: React.FC<ISignIn> = ({ email }: ISignIn) => {
-  const [view, setView] = useState<string | undefined>('reset-password');
+const SignIn: React.FC<ISignIn> = ({ email, view, title, onSuccess }: ISignIn) => {
+  const [current, setView] = useState<string | undefined>(view || 'sign-in');
     const views = {
-        'sign-in':<SignInView email={email}/>,
+        'sign-in':<SignInView onSuccess={onSuccess} email={email}/>,
         'reset-password':<ResetPassword email={email}/>
     }
-    const oppo = view === 'sign-in'?'reset-password':'sign-in';
+    const oppo = current === 'sign-in'?'reset-password':'sign-in';
     
-    useEffect(() => {}, [view, setView]);
+    useEffect(() => {}, [current, setView]);
   return (
     <>
       <style jsx>{styles}</style>
       <div className='sign-in'>
         <UiViewLayout 
-          view={view}
+          showTitle={true}
+          title={title}
+          view={current}
           showActions={false}
           views={views}
         />

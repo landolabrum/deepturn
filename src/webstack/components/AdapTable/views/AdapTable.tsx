@@ -9,7 +9,7 @@ import { dateFormat } from "@webstack/helpers/userExperienceFormats";
 const DEFAULT_LIMIT = 10;
 
 export type TableOptions = {
-  hide?: "footer" | "header" | ["footer", "header"] | ["header", "footer"] | "entries";
+  hide?: "footer" | "header" | [ 'th', 'header'] | ["footer", "header"] | ["header", "footer"] | "entries" | 'th' ;
   index?: number;
   cellHeight?: number;
   tableTitle?: string | React.ReactElement;

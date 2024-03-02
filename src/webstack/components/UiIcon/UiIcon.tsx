@@ -57,7 +57,7 @@ export class UiIcon extends React.Component<Props, State> {
     if (this.currentColor !== props.color) {
       this.currentColor = props.color;
       const styles: { [key: string]: string } = {};
-      if (props.color) { styles.color = props.color; }
+      if (this.currentColor !== props.color && props.color) { styles.color = props.color; };
       if (props.width || props.size) {
         const width = props.width ?? props.size;
         styles.width = (typeof width == 'number') ? `${width}px` : (width as string);

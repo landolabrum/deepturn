@@ -1,7 +1,7 @@
 export default interface UserContext {
   memberId: string;
   default_source?: string;
-  invoice_settings?:{
+  invoice_settings?: {
     default_payment_method: string | null;
   }
   id: string;
@@ -21,10 +21,10 @@ export default interface UserContext {
   address?: UserAddress;
   origin?: string;
 }
-export interface ProspectContext{
+export interface ProspectContext {
   memberId: string;
   default_source?: string;
-  invoice_settings?:{
+  invoice_settings?: {
     default_payment_method: string | null;
   }
   id: string;
@@ -45,7 +45,7 @@ export interface ProspectContext{
   origin?: string;
 }
 
-export interface UserAddress{
+export interface UserAddress {
   line1?: string;
   line2?: string;
   city?: string;
@@ -55,6 +55,6 @@ export interface UserAddress{
   country?: string;
 }
 
-export interface UserProps{
+export interface UserProps {
   user?: UserContext
 }

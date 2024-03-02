@@ -82,7 +82,7 @@ const Authentication: React.FC<any> = (props: any) => {
           <Link onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} style={hover?{color:'var(--primary'}:undefined} href={`mailto://${view}`}>{' '+view+', '}</Link> click the link in the email to continue.
         </div>}
         {view == 'sign-in' && <SignInView email={newCustomerEmail} />}
-        {view == 'sign-up' && <SignUp setView={setView} />}
+        {view == 'sign-up' && <SignUp onSuccess={(response:any)=>setView(response.status)} />}
         {/* {view == 'verify' && router.query.token && <VerifyEmail token={router.query.token} onSuccess={setNewCustomerEmail} />} */}
         <div className="authentication__view-action">
           <div className="authentication__view-label">

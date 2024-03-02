@@ -23,14 +23,14 @@ const authResponseMessages: any = {
   default: "Sorry, an unexpected error occurred. Our team has been notified and we'll work to resolve it as soon as possible.",
 };
 
-const SignInView: React.FC<ISignIn> = ({ email }: ISignIn) => {
+const SignInView: React.FC<ISignIn> = ({ email, onSuccess }: ISignIn) => {
   const defaultCredentials = {
     email: "",
     password: "",
     code: defaultCodeValue,
   }
-  const [_, setNotif] = useNotification();
-  const { closeModal, } = useModal();
+  const [notification, setNotification] = useNotification();
+  const { closeModal, isModalOpen} = useModal();
 
   const [signInResponse, setSignInResponse] = useState<any>(DEFAULT_RESPONSE);
   const userResponse = useUser();
@@ -55,17 +55,23 @@ const SignInView: React.FC<ISignIn> = ({ email }: ISignIn) => {
           ...(validTFA && { code: credentials.code }),
           user_agent,
         });
-        if (resp?.email) {
+        if(onSuccess){
+          console.log('[ SIGN IN VIEW onSuccess ]', resp);
+          onSuccess(resp);
+        }
+        if (resp?.email && isModalOpen) {
           closeModal();
         }
         else setSignInResponse('error');
       } catch (e: any) {
         if (e.detail != undefined) {
-          e.detail?.fields && setNotif({
+          console.log('[ SIGN IN VIEW onError ]', e);
+          
+          e.detail?.fields && setNotification({
             active: true,
-            list: e.detail.fields,
-            persistance: 3000
-          })
+            list: e.detail.fields
+            // persistance: 3000
+          });
           setSignInResponse(e.detail)
         } else {
           setSignInResponse('*server down')
@@ -78,7 +84,7 @@ const SignInView: React.FC<ISignIn> = ({ email }: ISignIn) => {
   useEffect(() => {
     if (email) setCredentials({ ...credentials, email: email });
     setIsSubmitting(false);
-  }, [userResponse, setCredentials, Boolean(credentials == defaultCredentials), email]);
+  }, [userResponse, setCredentials, Boolean(credentials == defaultCredentials)]);
   return (
     <>
       <style jsx>{styles}</style>

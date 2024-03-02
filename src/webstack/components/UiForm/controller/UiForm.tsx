@@ -9,7 +9,6 @@ import ToggleSwitch from '../../UiToggle/UiToggle';
 import UiCheckBox from '../../UiCheckbox/UiCheckBox';
 import FormControl from '../../FormControl/FormControl';
 import AddFieldForm from '../views/AddFieldForm/AddFieldForm';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import AutocompleteAddressInput from '@webstack/components/UiInput/views/AddressInput';
 
 const UiForm = ({
@@ -21,7 +20,7 @@ const UiForm = ({
     onChange, loading,
     disabled,
     onAddField,
-}: IForm) => {
+}: IForm):React.JSX.Element => {
     const textTypes = ['', undefined, 'text', 'password', 'email', 'number', 'tel', null, false, 'expiry', 'textarea'];
     const boolTypes = ['checkbox'];
     const [complete, setComplete] = useState<boolean>(false);

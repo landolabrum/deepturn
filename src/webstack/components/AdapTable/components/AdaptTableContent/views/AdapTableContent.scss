@@ -30,7 +30,9 @@ $colorBlue: var(--blue);
     opacity: 1;
   }
 }
-
+.hide{
+  display: none;
+}
 .table-container {
   display: flex;
   border-radius: $bRad;
@@ -40,11 +42,11 @@ $colorBlue: var(--blue);
   display: flex;
   justify-content: center;
   text-align: left;
-
   &.table-container-mini {
     @media (max-width: $break) {
       min-height: 300px;
-
+      width: 100%;
+      
       &::-webkit-scrollbar-thumb {
         background-color: $colorBlue;
         border-radius: 5px;

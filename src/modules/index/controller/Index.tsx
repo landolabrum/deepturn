@@ -8,6 +8,7 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 import { useEffect, useState } from 'react';
 import { useProspect } from '~/src/core/authentication/hooks/useProspect';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/UiViewLayout';
+import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 // import useCampaign from '@webstack/hooks/useCampaign';
 // import { useEffect } from 'react';
 
@@ -23,8 +24,8 @@ const Index = () => {
     if (!view && merchant?.mid) setView(merchant.mid);
   }, []);
 
-  if (!environment) return <></>;
-  return (
+
+  if(view)return (
     <>
       <style jsx>{styles}</style>
       {/* {JSON.stringify(campaign)} */}
@@ -46,6 +47,14 @@ const Index = () => {
       </div>
     </>
   );
+  return     <>
+  <style jsx>{styles}</style>
+  <div className='index'>
+    <div>
+    <UiLoader height="100%"/>
+    </div>
+  </div>
+  </>;
 };
 
 export default Index;
