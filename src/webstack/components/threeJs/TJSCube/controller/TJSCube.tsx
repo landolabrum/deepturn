@@ -34,7 +34,8 @@ interface ICubeSvgOptions {
 
 const TJSCubeContent = (props: ICube) => {
   const { svg, size, color = '#FFFFFF', animate, svgOptions } = props;
-  const meshRef = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<any>(null);
+  // const meshRef = useRef<THREE.Mesh>(null);
   const { scene } = useThree();
   const [cameraPos, setCameraPos] = useState<[number, number, number]>([0, 0, 100]); // Default camera position
 
@@ -70,7 +71,7 @@ const TJSCubeContent = (props: ICube) => {
         root.unmount();
       }
 
-      if (svgUrl) {
+      if (svgUrl && meshRef.current) {
         const loader = new SVGLoader();
         loader.load(svgUrl, (data) => {
           const paths = data.paths;
