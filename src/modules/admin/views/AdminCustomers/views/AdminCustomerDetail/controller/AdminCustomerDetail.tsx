@@ -167,7 +167,7 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
     } catch (errorResponse: any) {
       if (errorResponse.detail?.detail) {
         const errorDetail = errorResponse.detail?.detail;
-        if (errorDetail) {
+        if (errorDetail?.length) {
           let errors:any = []
           for (let index = 0; index < Object.values(errorDetail).length; index++) {
             const error: any = Object.values(errorDetail)[index];
@@ -178,7 +178,7 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
               break; // Break the loop when 'address' is found
             }
           }
-          if(errors.length){
+          if(errors?.length){
             setNotification({
               active: true,
               persistance: 3000,
@@ -202,20 +202,21 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
             phone: response?.phone,
             address: response?.address || {},
             email: response?.email
-          })
+          });
 
 
           const handleCustomerMetadata = () => {
-            let formName = '';
+            let formName: string | undefined;
             Object.entries(response?.metadata || {}).map(([key, value]: any) => {
               const keyParts = key.split('.');
               const isMerchant = keyParts[1] === merchantId;
-              if (keyParts[0] === 'prod_req' && isMerchant || merchantId === 'mb1') {
+              if (keyParts[0] === 'prod_req' && Boolean(isMerchant || merchantId === 'mb1')) {
                 formName = keyParts[2];
+                console.log("[ formName ]", keyParts)
                 setProductRequest(value);
             }});
             // test against the default formName = ''
-            if (formName.length) {
+            if (formName && formName?.length) {
               setNotification({
                 active: true,
                 persistance: 5000,
@@ -231,8 +232,7 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
           console.error("Couldn't get customer");
         }
       } catch (error) {
-        console.error(error);
-        // alert("Error fetching customer data");
+        console.error('[ ADMIN CUSTOMER DETAULS ]',error);
       } finally {
       }
     }else{

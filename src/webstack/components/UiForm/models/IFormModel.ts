@@ -37,7 +37,6 @@ export type IFormField = {
 }
 
 export interface IForm {
-    readOnly?:boolean;
     onAddField?: (e:any)=>void;
     traits?: ITraits;
     variant?: IFormControlVariant;

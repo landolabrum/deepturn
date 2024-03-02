@@ -1,6 +1,6 @@
 // Relative Path: ./Products.tsx
 import React from 'react';
-import styles from './Products.scss';
+// import styles from './Products.scss';
 import ProductsListing from '../views/ProductListing/controller/ProductsListing';
 import { useRouter } from 'next/router';
 import ProductDescription from '../views/ProductDescription/controller/ProductDescription';

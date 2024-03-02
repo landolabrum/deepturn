@@ -1,2 +1,2 @@
-import Transaction from "~/src/modules/ecommerce/transaction/Transaction";
+import Transaction from "~/src/modules/ecommerce/transaction/controller/Transaction";
 export default Transaction;

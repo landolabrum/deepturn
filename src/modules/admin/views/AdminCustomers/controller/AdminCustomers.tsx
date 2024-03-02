@@ -15,6 +15,7 @@ const AdminCustomers: React.FC = () => {
   const updateViewUrl = (newView:string, customer?: UserContext)=>{
     const baseUrl = '/admin?vid=customers';
     if(newView === 'modify' && customer?.id){
+      setView('modify');
       router.replace(`${baseUrl}&cid=${customer.id}`);
     }else router.push(baseUrl);
     newView !== view && setView(newView);
@@ -22,11 +23,11 @@ const AdminCustomers: React.FC = () => {
 
   
   useEffect(() => {
-    if(qry.cid)setView('modify');
-  }, [qry]);
+    // if(qry.cid)setView('modify');
+  }, [qry,setView]);
   return (
     <>
-      <style jsx>{styles}</style>
+      <style jsx>{styles}</style>{view}
       <div className='admin-customer'>
         <div className='admin-customer__header'>
           <div className='admin-customer__header--title'>customer {view}</div>

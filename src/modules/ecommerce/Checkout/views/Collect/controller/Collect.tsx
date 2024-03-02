@@ -5,7 +5,6 @@ import CheckoutButton from "../../CheckoutButton/CheckoutButton";
 import { ISessionCartItem } from "~/src/core/services/MemberService/IMemberService";
 import UserMethods from "~/src/modules/user/views/UserMethods/controller/UserMethods";
 import { IMethod } from "~/src/modules/user/model/IMethod";
-import CartList from "~/src/modules/ecommerce/cart/views/CartList/CartList";
 interface ICollect {
   user?: UserContext;
   cart_items: ISessionCartItem[];
@@ -41,7 +40,6 @@ const Collect = ({ user, cart_items }: ICollect) => {
         onSelect={setMethod}
       />
       }
-      <CartList />
     </div>
   </>
   );

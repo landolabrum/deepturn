@@ -12,6 +12,7 @@ import { IView } from '@webstack/layouts/UiViewLayout/UiViewLayout';
 import UserContext from '~/src/models/UserContext';
 import Collect from '../views/Collect/controller/Collect';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
+import CartList from '../../cart/views/CartList/CartList';
 interface ICheckout {
     cart: any;
     label?: string;
@@ -19,7 +20,6 @@ interface ICheckout {
 }
 
 const Checkout: React.FC<ICheckout> = () => {
-    const router = useRouter();
     const user = useUser();
     const [view, setView] = useState<any>();
     const [cart, setCart] = useState<any>();
@@ -34,10 +34,6 @@ const Checkout: React.FC<ICheckout> = () => {
             console.log('[ CHECKOUT (HANDLE SIGNUP)[ERROR] ]', res);
         }
     }
-    const handleSuccess = (res: any) => {
-        console.log('[ CHECKOUT (HANDLE SUCCESS) ]', res);
-    }
-    const qry = router?.query || { setup_intent: undefined };
     const views: IView = {
         'sign-up': (
             <SignUp
@@ -57,7 +53,6 @@ const Checkout: React.FC<ICheckout> = () => {
         )
     }
     const handleUser = () => {
-
         if (user) {
             setView('collect');
             setUser(user);
@@ -72,21 +67,15 @@ const Checkout: React.FC<ICheckout> = () => {
     useEffect(() => {
         if (!cart) setCart(getCartItems());
         handleUser();
-        // console.log("[ CHECKOUT ]",
-        //     { selectedUser, user, prospect, setUser, setView, cart })
-        // if (user && !billing_details)setView('user-methods');
-        // if(!user && billing_details && !qry?.setup_intent)setView('card-details');
     }, [handleUser, handleSignUp]);
 
     if (view) return <>
         <style jsx>{styles}</style>
-        {/* {JSON.stringify(selectedUser)}<hr /> */}
         <div className='checkout' id="main-checkout">
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" />
-                {/* {view} */}
             </div>
-
+            <CartList/>
             {/* <div className='checkout__button'> 
                 Step {view === 'sign-up'?'1':'2'} of 2
             </div>  */}
@@ -99,27 +88,3 @@ const Checkout: React.FC<ICheckout> = () => {
 };
 
 export default Checkout;
-
-
-// http://localhost:3000/checkout?setup_intent=seti_1Onu6KIodeKZRLDVzd8NYO6z&setup_intent_client_secret=seti_1Onu6KIodeKZRLDVzd8NYO6z_secret_PdARUacGWwRvCG3ogBUyk4y7Qm9dobR&redirect_status=succeeded
-
-
-
-{/* {view === 'existing' && <SignIn />} */ }
-
-
-
-
-
-
-{/* {view === 'sign-up' && <SignUp hasPassword={false} btnText='continue' onSuccess={handleSignUp}/>}
-                {view === 'user-methods' && <UserMethods selected='pm_1OoGorIodeKZRLDVPuXlifqP' onSelect={console.log}  {...user}/>}
-                {view == 'card-details' ?  ("a"
-                    // <UserCreateMethod
-                    //     user={billing_details}
-                    //     onSuccess={handleSuccess}
-                    //  />
-                ) || <UiLoader />:''}
-          
-                {/* secret: {JSON.stringify(clientSecret)} <br/> 
-                 <br/> */} 

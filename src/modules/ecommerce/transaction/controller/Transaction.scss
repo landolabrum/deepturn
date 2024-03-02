@@ -1,0 +1,32 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.transaction {
+    @extend .d-flex;
+    flex-direction: column;
+
+    .transaction__header {
+        width: 100%;
+
+        .transaction__title {
+            @extend .d-flex;
+            justify-content: flex-start;
+            font-size: 32px;
+            color: var(--primary);
+            padding: var(--s-padding) 0;
+        }
+
+    }
+    &__content {
+    .transaction--list {
+        width: 100%;
+        background-color: var(--gray-70);
+
+        .transaction__item {}
+    }
+    }
+}
