@@ -6,7 +6,7 @@ interface UiDevProps {
 
 const UiDev: FC<UiDevProps> = ({ data }) => {
   
-  const DevMap = ({parent,items}:{parent?: string, items:any}) =>
+  const DevMap = ({parent,items}:{parent?: string, items:any}):any =>
     Object.entries(items).map(
       ([key,value], index) => {
       if(typeof value === 'string' || typeof value === 'number' )return (<>
