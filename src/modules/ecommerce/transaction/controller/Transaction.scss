@@ -21,6 +21,14 @@
         }
 
     }
+    &__error{
+        @extend .d-flex;
+        flex-direction: column;
+        gap: var(--s-padding);
+        padding:var(--s-padding);
+        color: var(--orange);
+    }
+    
     &__content {
     .transaction--list {
         width: 100%;

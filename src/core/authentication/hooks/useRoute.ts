@@ -22,7 +22,7 @@ const useRoute = (): ORoute => {
   const clearanceRoutes = useClearanceRoutes();
   const level = useClearance();
   const handleHeader = useCallback((title?: string) => {
-    console.log('[ handleHeader ]', title)
+    // console.log('[ handleHeader ]', title)
 
     const rtTit = String(router.pathname)?.length && router.pathname.split('/')[1] || false;
     const headerContext = {

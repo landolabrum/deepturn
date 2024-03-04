@@ -5,14 +5,15 @@ import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import CookieHelper from '@webstack/helpers/CookieHelper';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import UiButton from '@webstack/components/UiButton/UiButton';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const Transaction: React.FC = () => {
   const MemberService = getService<IMemberService>('IMemberService');
-  const [line_item, setTransaction] = useState<any>();
+  const [transaction, setTransaction] = useState<any>();
   const loadTransaction = () => {
-    if (line_item) return;
+    if (transaction) return;
     const hasTransaction = CookieHelper.getCookie('transaction-token');
     const decryptToken = async (token: string) => {
       if (token) {
@@ -39,7 +40,7 @@ const Transaction: React.FC = () => {
 
 
   useEffect(() => {
-    loadTransaction()
+    loadTransaction();
   }, []);
   return (
     <>
@@ -47,14 +48,14 @@ const Transaction: React.FC = () => {
       <div className='transaction'>
         <div className='transaction__header'>
           <div className='transaction__title'>
-            {line_item?.total && "Success"}
+            {transaction?.total && "Success"}
           </div>
         </div>
         <div className='transaction__content'>
-          {line_item?.cart_items && <>
+          {transaction?.cart_items && <>
         <div className='transaction--list'>
           <AdaptGrid xs={1}>
-            {Array(line_item?.cart_items).map(
+            {Array(transaction?.cart_items).map(
               ([field, value]: any) => {
                 return <div className='transaction__item' key={field.name}>
                     {field.name}
@@ -64,6 +65,10 @@ const Transaction: React.FC = () => {
               </div>
           </>
           }
+          {transaction?.error.includes("Your card was declined.") && <div className='card                             transaction__error declined'>
+              <h1>Your card was declined</h1>
+              <UiButton href="/cart">return to cart</UiButton>
+            </div>}
         </div>
       </div>
       {/* {JSON.stringify(transaction)} */}

@@ -10,7 +10,7 @@ interface IColorPicker {
 }
 
 const ColorPicker = ({ hex, onChange }: IColorPicker) => {
-  const [color, setColor] = useState('#fff');
+  const [color, setColor] = useState<string | undefined>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -64,13 +64,16 @@ const ColorPicker = ({ hex, onChange }: IColorPicker) => {
   };
 const handleInput = (e: any)=>{
   const {name, value}=e.target;
+  console.log('[ handleInput ]',{name,value})
   setColor(`#${value}`);
-  value.length === 7 && debouncedOnChange(color);
+  value.length === 6 && debouncedOnChange(value);
 };
 
 useEffect(() => {
-  if(hex && hex !== color)setColor(hex);
-}, [hex, handleInput]);
+  if(!color){
+    setColor(hex?hex:"#fff");
+  }
+}, [hex, setColor, handleInput]);
 
   return (
     <>
@@ -84,7 +87,7 @@ useEffect(() => {
         <div className='color-picker__info'>
           #
         <UiInput 
-          value={color.replaceAll('#','')}
+          value={color?.replaceAll('#','')}
           name='hex'
           onChange={handleInput}
           size='sm'

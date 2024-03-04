@@ -22,7 +22,7 @@ const Collect = ({ user, cart_items }: ICollect) => {
     <style jsx>{styles}</style>
     <div className='collect'>
       <div className='collect__checkout-button'>
-       <div className="dev"> {JSON.stringify(cart_items)}</div>
+       {/* <div className="dev"> {JSON.stringify(cart_items)}</div> */}
         {method && user && cart_items && (
           <CheckoutButton
             customer_id={user.id}

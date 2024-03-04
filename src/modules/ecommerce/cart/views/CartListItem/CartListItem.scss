@@ -9,42 +9,13 @@
     border: solid 1px var(--gray-70);
     background-color: var(--gray-90);
     padding: var(--s-padding);
-    &-mini{
-        width: calc(100% - calc(var(--s-10) * 2));
-        padding: var(--s-11) var(--s-10);
-    }
     &:hover {
         background-color: var(--gray-80);
     }
     @media(max-width: 900px) {
         padding: var(--s-3) var(--s-4);
-
     }
-    &-image {
-        @extend .d-flex;
-        --ui-icon-color: var(--gray-40);
-        --ui-icon-height: 100%;
-        overflow: hidden;
-        @extend .d-flex;
-        width: 100px;
-        height: 100px;
-        position: relative;
-        --ui-icon-width: 75px;
-        --ui-icon-height: 75px;
-        max-height: 100px;
 
-        @media(max-width: 900px) {
-            --ui-icon-width: 200px;
-            --ui-icon-height: 200px;
-            max-height: unset;
-            min-height: 250px;
-            height: 100%;
-            width: 250px;
-            margin: 0;
-            display: flex;
-            order: 2;
-        }
-    }
 
 
 
@@ -52,18 +23,45 @@
 
     &__content {
         @extend .d-flex;
-        gap: var(--s-9);
         height: 100%;
         margin: auto;
         justify-content: flex-start;
+        gap: var(--s-padding);
         @media(max-width: 900px) {
-            gap: 0;
+            gap: var(--s-9);
+            // gap: 0;
             width: var(--s-border-width);
             flex-direction: column;
+            flex-wrap: wrap;
+        }
+        .cart-list-item-image {
+            @extend .d-flex;
+            --ui-icon-color: var(--gray-40);
+            --ui-icon-height: 100%;
+            overflow: hidden;
+            @extend .d-flex;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            --ui-icon-width: 75px;
+            --ui-icon-height: 75px;
+            max-height: 100px;
+    
+            @media(max-width: 900px) {
+                --ui-icon-width: 100%;
+                --ui-icon-height: 100%;
+                max-height: unset;
+                min-height: 100px;
+                // height: 100%;
+                width: 100px;
+                margin: 0;
+                display: flex;
+                // order: 2;
+            }
         }
 
-
         .cart-list-item-body {
+            // background-color: #ff330050;
             @extend .d-flex;
             flex-direction: column;
             height: 100%;
@@ -72,8 +70,9 @@
             gap: var(--s-9);
             align-items: stretch;
             width: 100%;
-            align-items: flex-end;
+            // align-items: flex-end;
             @media(max-width: 900px) {
+                flex:1;
             }
 
             .cart-list-item-name {
@@ -95,28 +94,28 @@
 
         }
 
-        &.cart-list-item__content-mini {
-            .cart-list-item-name{
-                font-size: var(--s-5) !important;
-            }
-            .cart-list-item-name,
-            .cart-list-item-description {
+        // &.cart-list-item__content-mini {
+        //     .cart-list-item-name{
+        //         font-size: var(--s-5) !important;
+        //     }
+        //     .cart-list-item-name,
+        //     .cart-list-item-description {
                 
-                @media(max-width:900px) {
-                }
-            }
+        //         @media(max-width:900px) {
+        //         }
+        //     }
             
-            .cart-list-item-body {
-                font-size: var(--s-7);
-            }
+        //     .cart-list-item-body {
+        //         font-size: var(--s-7);
+        //     }
 
-            .cart-list-item-image {
-                // width: var(--s-element);
-                // height: var(--s-element);
-                // --ui-icon-height: var(--s-element);
-                // --ui-icon-width: var(--s-element);
-            }
-        }
+        //     .cart-list-item-image {
+        //         // width: var(--s-element);
+        //         // height: var(--s-element);
+        //         // --ui-icon-height: var(--s-element);
+        //         // --ui-icon-width: var(--s-element);
+        //     }
+        // }
 
 
         .cart-list-item-action {
@@ -126,6 +125,7 @@
 
             @media(max-width: 900px) {
                 order: 3;
+                flex:1;
             }
 
             @media(max-width: 900px) {

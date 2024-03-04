@@ -113,7 +113,10 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
                 // style={{ objectFit: 'cover' }} // Adjust object-fit as needed
                 unoptimized={true}
               />
-            ) : (<UiIcon icon={`${environment.merchant.name}-logo`} />)}
+            ) : (<div className='img-placeholder'>
+            <UiIcon icon={`${environment.merchant.name}-logo`} />
+            </div>
+            )}
 
             {/* <ProductImage options={{ view: 'description' }} image={product.images} /> */}
           </div>

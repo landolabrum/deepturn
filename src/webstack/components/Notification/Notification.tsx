@@ -83,10 +83,9 @@ const Notification: React.FC = () => {
   }
   useEffect(() => {
     // handle Dismissable
-    console.log('[ NOTIFICIATION ]', notification)
     handleNotifictaion();
     handleBodyScroll();
-  }, [handleNotifictaion, handleBodyScroll]);
+  }, [handleNotifictaion]);
 
   if (notification?.active) {
     return (

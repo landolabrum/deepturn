@@ -1,17 +1,13 @@
-// import { faI, IconDefinition } from "@fortawesome/pro-solid-svg-icons";
 import IconHelper from "@webstack/helpers/IconHelper";
-import { IconDefinition, UiIconDefinition } from "@webstack/types/icons";
+import { UiIconDefinition } from "@webstack/types/icons";
 import React, { MouseEventHandler } from "react";
 import styles from "./UiIcon.scss";
 
-
 interface Props {
-  src?: string | undefined;
   glow?: boolean | string;
   icon?: string | undefined;
   spin?: boolean | undefined;
   onClick?: MouseEventHandler<HTMLDivElement> | undefined;
-  faIcon?: IconDefinition | undefined;
   color?: string | undefined;
   width?: number | string | undefined;
   height?: number | string | undefined;
@@ -25,320 +21,108 @@ interface State {
 }
 
 export class UiIcon extends React.Component<Props, State> {
-
   private currentIcon: string | undefined;
-  private currentSrc: string | undefined;
-  private currentFaIcon: IconDefinition | undefined;
   private currentColor: string | undefined;
-
-  private _innerHtml = '';
-  public renderedIconHTML: string | null = null;
 
   constructor(props: Props) {
     super(props);
-    this.state = { innerHtml: '', iconStyles: {} }
+    this.state = { innerHtml: '', iconStyles: {} };
   }
 
   componentDidMount() {
-    this.updateIcon(this.props.icon, this.props.src, this.props.faIcon);
+    this.updateIcon(this.props.icon);
   }
 
-  componentDidUpdate() {
-    this.updateIcon(this.props.icon, this.props.src, this.props.faIcon);
-  }
-
-  private async updateIcon(
-    iconId: string | undefined,
-    src: string | undefined,
-    faIcon: IconDefinition | undefined,
-  ) {
-    const props = this.props;
-
-    if (this.currentColor !== props.color) {
-      this.currentColor = props.color;
-      const styles: { [key: string]: string } = {};
-      if (this.currentColor !== props.color && props.color) { styles.color = props.color; };
-      if (props.width || props.size) {
-        const width = props.width ?? props.size;
-        styles.width = (typeof width == 'number') ? `${width}px` : (width as string);
-      }
-      if (props.height || props.size) {
-        const height = props.height ?? props.size;
-        styles.height = (typeof height == 'number') ? `${height}px` : (height as string);
-      }
-      this.setState({ iconStyles: styles });
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.icon !== prevProps.icon || this.props.color !== prevProps.color) {
+      this.updateIcon(this.props.icon);
     }
+  }
 
-    if (iconId) {
-      if (this.currentIcon === iconId) return;
+  private async updateIcon(iconId: string | undefined) {
+    if (iconId && this.currentIcon !== iconId) {
       this.currentIcon = iconId;
-      if (await this.updateIconId(iconId)) return; // success
-      this.clearIcon();
-      return;
+      const icon = IconHelper.getIcon(iconId);
+      if (!icon) {
+        this.clearIcon();
+        return;
+      }
+      if (icon.path || icon.html) {
+        this.buildIconContent(icon);
+      }
     }
 
-    if (props.src) {
-      if (this.currentSrc === src) return;
-      this.currentSrc = src;
-      if (await this.loadSvgFromFile(src)) return; // success
-      this.clearIcon();
-      return;
-    }
-
-    if (faIcon) {
-      if (this.currentFaIcon === faIcon) return;
-      this.currentFaIcon = faIcon;
-      this.buildFromFaIcon(faIcon);
-      return; // success
-    }
-
-    this.clearIcon();
+    this.updateStyles();
   }
 
+  private updateStyles() {
+    const { color, width, height, size } = this.props;
+    const styles: { [key: string]: string } = {};
 
-  private async updateIconId(iconId: string): Promise<boolean> {
-
-    if (iconId == null) {
-      return false;
+    if (this.currentColor !== color && color) {
+      this.currentColor = color;
+      styles.color = color;
     }
 
-    // const icon = this.uiService.findIcon(iconId);
-    const icon = IconHelper.getIcon(iconId);
-    if (!icon) {
-      return false;
+    const dimensionWidth = width ?? size;
+    const dimensionHeight = height ?? size;
+
+    if (dimensionWidth) {
+      styles.width = typeof dimensionWidth === 'number' ? `${dimensionWidth}px` : dimensionWidth;
     }
 
-    if (icon.src) {
-      return await this.loadSvgFromFile(icon.src);
+    if (dimensionHeight) {
+      styles.height = typeof dimensionHeight === 'number' ? `${dimensionHeight}px` : dimensionHeight;
     }
 
-    if (icon.path) {
-      this.buildSvgFromPath(icon);
-      return true;
-    }
+    this.setState({ iconStyles: styles });
+  }
 
+  private buildIconContent(icon: UiIconDefinition) {
+    let html = '';
     if (icon.html) {
-      this.buildSvgFromHtml(icon);
-      return true;
+      html = icon.html;
+    } else if (icon.path) {
+      const isStroke = icon.stroke != null;
+      html = `<svg class="jsx-${styles.__hash}" xmlns="http://www.w3.org/2000/svg" width="${icon.width}" height="${icon.height}" viewBox="0 0 ${icon.width} ${icon.height}" ${isStroke ? 'fill="none" stroke="currentColor"' : 'fill="currentColor"'}>${this.getSvgPathElement(icon)}</svg>`;
     }
 
-    return false;
-  }
-
-  private updateHtml(html: string) {
-    if (this._innerHtml == html) { return; }
     this.setState({ innerHtml: html });
   }
 
   private clearIcon() {
-    // this.renderedIconHTML = this.sanitizer.bypassSecurityTrustHtml('');
-    this.updateHtml('');
-  }
-
-  private buildSvgFromHtml(icon: UiIconDefinition) {
-    if (!icon.html) {
-      throw new Error('Missing Icon HTML');
-    }
-    // this.renderedIconHTML = this.sanitizer.bypassSecurityTrustHtml(icon.html);
-    this.updateHtml(icon.html);
-  }
-
-  private async loadSvgFromFile(src: string | undefined): Promise<boolean> {
-    // TODO: Cache loaded files
-
-    if (!src) return false;
-    const response = await fetch(src);
-    if (response.ok) {
-      const html = await response.text();
-      // TODO: Sanitize content. Verify this is an SVG.
-      if (html.includes('<svg')) {
-        // this.renderedIconHTML = this.sanitizer.bypassSecurityTrustHtml(html);
-        this.updateHtml(html);
-      } else {
-        // this.renderedIconHTML = this.sanitizer.bypassSecurityTrustHtml('');
-        this.updateHtml('');
-      }
-
-      return true;
-    }
-    return false;
-  }
-
-  private buildFromFaIcon(icon: IconDefinition) {
-    const [width, height, ligatures, unicode, pathData] = icon.icon;
-
-    if (!pathData) {
-      throw new Error('Missing Icon Path');
-    }
-    if (!width) {
-      throw new Error('Missing Icon Width');
-    }
-    if (!height) {
-      throw new Error('Missing Icon Height');
-    }
-
-    if (typeof pathData !== 'string') {
-      throw new TypeError(
-        'Expected a single string path. Array of paths not implemented.',
-      );
-    }
-
-    const html =
-      '<svg class="jsx-' + styles.__hash + '" xmlns="http://www.w3.org/2000/svg" width="' +
-      width +
-      '" height="' +
-      height +
-      '" viewBox="0 0 ' +
-      width +
-      ' ' +
-      height +
-      '" fill="currentColor"' +
-      '>' +
-      this.getSvgPathElementFromString(pathData) +
-      '</svg>';
-
-    // this.renderedIconHTML = this.sanitizer.bypassSecurityTrustHtml(html);
-
-    this.updateHtml(html);
-  }
-
-
-  private buildSvgFromPath(icon: UiIconDefinition) {
-    if (!icon.path) {
-      throw new Error('Missing Icon Path');
-    }
-    if (!icon.width) {
-      throw new Error('Missing Icon Width');
-    }
-    if (!icon.height) {
-      throw new Error('Missing Icon Height');
-    }
-
-    if (typeof icon.path !== 'string') {
-      throw new TypeError(
-        'Expected a single string path. Array of paths not implemented.',
-      );
-    }
-
-    const isStroke = icon.stroke != null;
-
-    const html =
-      '<svg class="jsx-' + styles.__hash + '" xmlns="http://www.w3.org/2000/svg" width="' +
-      icon.width +
-      '" height="' +
-      icon.height +
-      '" viewBox="0 0 ' +
-      icon.width +
-      ' ' +
-      icon.height +
-      '" ' +
-      (isStroke ? 'fill="none" stroke="currentColor"' : 'fill="currentColor"') +
-      '>' +
-      this.getSvgPathElement(icon) +
-      '</svg>';
-
-    // this.renderedIconHTML = this.sanitizer.bypassSecurityTrustHtml(html);
-
-    this.updateHtml(html);
+    this.setState({ innerHtml: '' });
   }
 
   private getSvgPathElement(icon: UiIconDefinition) {
-    const props: { [key: string]: string | number } = {};
-    if (Array.isArray(icon.path)) {
-      throw new TypeError('Expecting a single path');
-    }
+    const pathProps = icon.stroke ? {
+      'stroke-linecap': icon.stroke.lineCap,
+      'stroke-linejoin': icon.stroke.lineJoin,
+      'stroke-width': icon.stroke.width,
+      d: icon.path
+    } : { d: icon.path };
 
-    if (icon.stroke != null) {
-      if (icon.stroke.lineCap) {
-        props['stroke-linecap'] = icon.stroke.lineCap;
-      }
-      if (icon.stroke.lineJoin) {
-        props['stroke-linejoin'] = icon.stroke.lineJoin;
-      }
-      props['stroke-width'] = icon.stroke.width;
-    }
-
-    props.d = icon.path ?? '';
-
-    const list: string[] = [];
-    for (const key in props) {
-      list.push(key + '="' + props[key] + '"');
-    }
-
-    return `<path ${list.join(' ')}/>`;
-  }
-
-  private getSvgPathElementFromString(pathString: string) {
-    const props: { [key: string]: string | number } = {};
-    if (Array.isArray(pathString)) {
-      throw new TypeError('Expecting a single path');
-    }
-
-    props.d = pathString ?? '';
-
-    const list: string[] = [];
-    for (const key in props) {
-      list.push(key + '="' + props[key] + '"');
-    }
-    return `<path ${list.join(' ')}/>`;
-  }
-
-  private getDataTestId() {
-    if (this.props.icon) {
-      return `${this.props.icon}-icon`;
-    } else if (this.props.faIcon) {
-      return `${this.props.faIcon.prefix}-${this.props.faIcon.iconName}`
-    }
-  }
-
-
-  buttonClicked(event: React.MouseEvent<HTMLDivElement>) {
-    if (this.props.onClick) {
-      this.props.onClick(event);
-    }
+    const pathAttributes = Object.entries(pathProps).map(([key, value]) => `${key}="${value}"`).join(' ');
+    return `<path ${pathAttributes}/>`;
   }
 
   render() {
-    let classes = 'ui-icon'; // Base class name
+    const { glow, spin, badge, onClick } = this.props;
+    const { innerHtml, iconStyles } = this.state;
 
-    // Check if the 'glow' property is set
-    if (this.props.glow === true) {
-      classes += ' iconGlow';  // Add class for the default glow effect
-    } else if (typeof this.props.glow === 'string') {
-      // Add custom glow handling here
-    }
+    let classes = 'ui-icon';
+    if (glow) classes += typeof glow === 'boolean' ? ' iconGlow' : ` ${glow}`;
+    if (spin) classes += ' spinner';
 
-    // Add spin class if spin prop is true
-    if (this.props.spin) {
-      classes += ' spinner'; // Assuming 'spin' is a CSS class that handles the spinning animation
-    }
+    const combinedStyles = { ...iconStyles, ...(glow ? { textShadow: `0 0 5px ${iconStyles.color || 'currentColor'}` } : {}) };
+    const badgeElement = badge && (<><style jsx>{styles}</style><div className="ui-icon__badge">{badge}</div></>);
 
-    // Merge iconStyles with glow styles, if any
-    const combinedStyles = {
-      ...this.state.iconStyles,
-      ...(this.props.glow ? { textShadow: `0 0 5px ${this.state.iconStyles.color || 'currentColor'}` } : {})
-    };
-
-    const badgeElement = this.props.badge ? (
-      <>
-        <style jsx>{styles}</style>
-        <div className="ui-icon__badge">{this.props.badge}</div>
-      </>
-    ) : null;
-  
     return (
       <>
         <style jsx>{styles}</style>
-        <div 
-          className={classes}
-          onClick={e => this.buttonClicked(e)}
-          style={combinedStyles}
-          data-testid={this.getDataTestId()}
-        >
-          <div 
-          dangerouslySetInnerHTML={{ __html: this.state?.innerHtml }}
-           />
-          {badgeElement&& badgeElement||null} {/* Add the badge element here */}
+        <div className={classes} onClick={onClick} style={combinedStyles} data-testid={this.props.icon ? `${this.props.icon}-icon` : undefined}>
+          <div dangerouslySetInnerHTML={{ __html: innerHtml }} />
+          {badgeElement}
         </div>
       </>
     );

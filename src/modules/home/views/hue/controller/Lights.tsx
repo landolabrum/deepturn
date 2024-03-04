@@ -113,6 +113,7 @@ const LightsList = () => {
           break;
         case 'color':
           if (data?.hex) {
+            console.log("[ data.hex ] ",data.hex)
             response = await homeService.lightColor(id_, data.hex);
             const calculatedHex = calculateHexFromHueSatBri(response.hue, response.sat, response.bri);
             response = { ...response, hex: calculatedHex, view: 'color' };
@@ -149,7 +150,7 @@ const LightsList = () => {
   const oppoView = view === 'lights'?'groups':'lights';
   useEffect(() => {
     hueData == undefined && getHueList();
-  }, [view]);
+  }, []);
   return (
     <>
       <style jsx>{styles}</style>

@@ -29,14 +29,13 @@ const Deepturn: React.FC = () => {
             // </video>
           )}
             <TJSCube
-            // texture="/assets/backgrounds/lava1.jpeg"
               svgOptions={svgOptions}
             //   svg={<UiIcon icon={`fmc-logo`} />}
               svg={<UiIcon icon={`deepturn-logo`} />}
               size={{ x: 120, y: 120, z: 0 }}
-              // metalness={10}
+              metalness={5}
               animate={{ rotate: { y: -1, x:0.5, speed: .05 } }}
-              color="#e0e0e0"
+              color="#dd4400"
             />
           </div>
 

@@ -281,7 +281,6 @@ public async processTransaction(sessionData: ISessionData) {
         `/api/method/customer/?id=${customerId}`,
       );
       if (OGetMethods) {
-        console.log('[getMethods ]',OGetMethods, customerId)
         // this.saveMemberToken(OGetMethods.customer);
         // this.saveLegacyAuthCookie(OGetMethods.customer);
         // this._getCurrentUser(true)!;
@@ -393,7 +392,6 @@ public async processTransaction(sessionData: ISessionData) {
   }
 
   public async signIn({ email, password, code, user_agent }: any): Promise<UserContext> {
-    console.log('[ signIn ]',{ email, password, code, user_agent })
     if (!email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
@@ -444,6 +442,7 @@ public async processTransaction(sessionData: ISessionData) {
     }
     this._prospectContext = context;
     // HERE
+    console.log('[ tokl ]', token)
     this._prospectToken = token;
     this.prospectChanged.emit(context);
   }
@@ -567,7 +566,7 @@ public async processTransaction(sessionData: ISessionData) {
     return "Success";
   }
   async signOutProspect(): Promise<string> {
-    if (!this.getCurrentUserToken) return "No User";
+    if (!this.getCurrentProspectToken) return "No User";
     this.updateProspectContext(undefined, undefined);
     this.deleteProspectToken();
     this.deleteLegacyProspectCookie();
@@ -626,7 +625,7 @@ public async processTransaction(sessionData: ISessionData) {
 
   private deleteProspectToken() {
     if (this.isBrowser) {
-      localStorage?.removeItem(MEMBER_TOKEN_NAME);
+      localStorage?.removeItem(PROSPECT_TOKEN_NAME);
     }
   }
   private deleteMemberToken() {

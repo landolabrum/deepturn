@@ -54,7 +54,7 @@ const Checkout = ():React.JSX.Element => {
     }
     const handleUser = () => {
         if(selectedUser)return;
-        console.log('[ USER ]', {user, prospect})
+        // console.log('[ USER ]', {user, prospect})
         if (user) {
             setView('collect');
             setUser(user);
@@ -73,7 +73,7 @@ const Checkout = ():React.JSX.Element => {
     useEffect(() => {
         handleUser();
         handleCart();
-    }, []);
+    }, [handleUser, user]);
 
     if (view) return <>{view}
         <style jsx>{styles}</style>

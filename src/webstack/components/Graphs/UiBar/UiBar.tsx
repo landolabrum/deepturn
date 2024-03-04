@@ -39,7 +39,7 @@ const UiBar = ({
 
 
 const handleMouseDrag = (e: React.MouseEvent) => {
-  console.log('[ e ]',e )
+  // console.log('[ e ]',e )
   if (!containerRef.current) return;
   const bounds = containerRef.current.getBoundingClientRect();
   const newPercentage = 100 - ((e.clientY - bounds.top) / bounds.height) * 100;
@@ -92,7 +92,7 @@ const handleMouseDrag = (e: React.MouseEvent) => {
 
   useEffect(() => { 
     setLocalPercentage(percentage)
-}, [percentage]);
+}, []);
   return (
     <>
       <style jsx>{styles}</style>
