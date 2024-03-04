@@ -148,12 +148,13 @@ export function dateFormat(
       suppliedDate *= 1000;
     }
     const date = new Date(suppliedDate);
-    const formattedDate = date.getFullYear() + "-" +
-      String(date.getMonth() + 1).padStart(2, '0') + "-" +
-      String(date.getDate()).padStart(2, '0') + " " +
-      String(date.getHours()).padStart(2, '0') + ":" +
-      String(date.getMinutes()).padStart(2, '0') + ":" +
-      String(date.getSeconds()).padStart(2, '0');
+    const formattedDate = `${date.toLocaleDateString()} @ ${date.toLocaleTimeString()}`
+    // String(date.getDate()).padStart(2, '0') + "/" +
+    // String(date.getMonth() + 1).padStart(2, '0') + "/" +
+    // date.getFullYear() + " @ " +
+    //   String(date.getHours()).padStart(2, '0') + ":" +
+    //   String(date.getMinutes()).padStart(2, '0') + ":" +
+    //   String(date.getSeconds()).padStart(2, '0');
   
     return formattedDate;
   }

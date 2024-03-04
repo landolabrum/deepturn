@@ -8,33 +8,97 @@
 .transaction {
     @extend .d-flex;
     flex-direction: column;
-
-    .transaction__header {
+    width: 100%;
+    &__header {
         width: 100%;
-
+        @extend .d-flex;
+        min-height: var(--s-element);
+        
         .transaction__title {
             @extend .d-flex;
-            justify-content: flex-start;
-            font-size: 32px;
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: var(--s-1);
             color: var(--primary);
             padding: var(--s-padding) 0;
         }
-
+        
     }
-    &__error{
+    
+    
+    &__error {
         @extend .d-flex;
         flex-direction: column;
         gap: var(--s-padding);
-        padding:var(--s-padding);
+        padding: var(--s-padding);
         color: var(--orange);
     }
     
     &__content {
-    .transaction--list {
-        width: 100%;
-        background-color: var(--gray-70);
-
-        .transaction__item {}
+        @extend .d-flex;
+        flex-direction: column;
+        gap:var(--s-element);
+        padding: var(--s-padding);
+        width: var(--s-padding-width);
+        &-title{
+            width: 100%;
+        }
     }
+
+    &--list {
+        min-height: var(--s-element);
+        background-color: var(--gray-80);
+        border-radius: var(--border-radius);
+        gap: var(--s-12);
+        width: 100%;
+        .transaction__item {
+            width: var(--s-padding-width);
+            padding:0 var(--s-padding);
+            @extend .d-flex;
+            justify-content: flex-start;
+            gap: var(--s-padding);
+            height: var(--s-element);
+
+            &-name {
+                color: var(--gray-10);
+            }
+
+            &-description {
+                font-family: Game;
+                color: var(--gray-30);
+            }
+
+            &-amount {
+                font-family: Game;
+                margin-left: auto;
+                color: var(--gray-10);
+            }
+        }
+
+    }
+    &--date{
+        white-space: nowrap;
+    }
+    &--pi{
+        font-size: var(--s-4);
+        color: var(--primary-lite);
+    }
+    &--pi, &--email,&--date{
+        @extend .d-flex;
+        justify-content: space-between;
+        min-height: var(--s-element);
+    }
+
+    &--total {
+        text-transform: capitalize;
+        font-size: var(--s-4);
+        @extend .d-flex;
+        font-weight: bold;
+        justify-content: space-between;
+        color: var(--gray-10);
+        width: var(--s-padding-width);
+        padding:0 var(--s-padding) var(--s-padding);
+        border-top: solid 1px var(--gray-60);
+        height: var(--s-element);
     }
 }

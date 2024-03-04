@@ -120,7 +120,7 @@ const handleNotifictaion = (notificationContext: InotificationContext) =>{
       try {
         const response = await MemberService.signUp(request);
         
-        if (response?.email !== undefined) {
+        if (response?.email !== undefined ) {
           onSuccess && onSuccess(response);
         }
         else if (response?.status === 'existing' && onSuccess) {

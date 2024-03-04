@@ -55,14 +55,10 @@ const Checkout = ():React.JSX.Element => {
     const handleUser = () => {
         if(selectedUser)return;
         // console.log('[ USER ]', {user, prospect})
-        if (user) {
+        if (user || prospect) {
             setView('collect');
-            setUser(user);
-        } else if (prospect) {
-            setView('collect');
-            setUser(prospect);
-
-        } else {
+            setUser(user || prospect);
+        }else {
             setView('sign-up');
         }
     }

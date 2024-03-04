@@ -68,9 +68,38 @@ const CreateMethodStripeForm = ({ onSuccess, user, shippable, success_url="/chec
                 })
                 console.error('[ Create Method ]( ERROR )', err);
             } else {
-                const paymentIntent: any = result.paymentIntent;
-                if (paymentIntent && paymentIntent.status === 'succeeded') {
-                    onSuccess && onSuccess(paymentIntent);
+                // {
+                //     "setupIntent": {
+                //         "id": "seti_1OqThkIodeKZRLDV6yGcTKBE",
+                //         "object": "setup_intent",
+                //         "automatic_payment_methods": {
+                //             "allow_redirects": "always",
+                //             "enabled": true
+                //         },
+                //         "cancellation_reason": null,
+                //         "client_secret": "seti_1OqThkIodeKZRLDV6yGcTKBE_secret_PfpMJe6iNJZfTobms9Ea7T1mcKeCR8r",
+                //         "created": 1709528688,
+                //         "description": null,
+                //         "last_setup_error": null,
+                //         "livemode": true,
+                //         "next_action": null,
+                //         "payment_method": "pm_1OqTt4IodeKZRLDVb4k4TMrV",
+                //         "payment_method_configuration_details": {
+                //             "id": "pmc_1LqQAcIodeKZRLDVcPlgynCI",
+                //             "parent": null
+                //         },
+                //         "payment_method_types": [
+                //             "card",
+                //             "bancontact",
+                //             "ideal"
+                //         ],
+                //         "status": "succeeded",
+                //         "usage": "off_session"
+                //     }
+                // }
+                const setupIntent: any = result.setupIntent;
+                if (setupIntent && setupIntent.status === 'succeeded') {
+                    onSuccess && onSuccess(setupIntent);
                 }
             }
         } catch (e: any) {

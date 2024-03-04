@@ -51,13 +51,13 @@ export interface IPrice {
     products?: IProduct[];
   }
 const ProductList = ({ products }:IProductList) => {
-    const initialProducts:any = Array.from({length: 5}, (e:any)=>{return {name:'loading...', images:[]}});
-    const [prods, setProducts]=useState(initialProducts)
+    const initialProducts:any = Array.from({length: 5}, (e:any)=>{return {metadata:{mid: environment.merchant.mid}, name:'loading...', images:[]}});
+    const [prods, setProducts]=useState(initialProducts);
     const router = useRouter();
     const handleRoute = (id: string, price_id: string)=>id && price_id && router.push(`/product?id=${id}&pri=${price_id}`);
 
     useEffect(() => {
-        if(products )setProducts(products);
+        if(products)setProducts(products);
     }, [setProducts, products]);
     return (
       <>
