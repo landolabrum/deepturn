@@ -41,11 +41,16 @@ export interface ISessionData{
   customer_id?:string,
   method_id?:string
 }
-
+export interface IResetPassword{
+  email:string,user_agent:object
+};
+export interface OResetPassword{
+  status: string;
+}
 export default interface IMemberService {
   // IMemberService
   processTransaction(sessionData:ISessionData): Promise<any>;
-
+  resetPassword({email,user_agent}:IResetPassword): Promise<OResetPassword>;
   getCurrentUser(): UserContext | undefined;
   getCurrentProspect(): UserContext | undefined;
   getSetupIntent(client_secret: string): any;

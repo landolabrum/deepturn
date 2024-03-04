@@ -6,7 +6,7 @@ import CustomToken from "~/src/models/CustomToken";
 import MemberToken from "~/src/models/MemberToken";
 import UserContext, { ProspectContext } from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
-import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, ISessionData, SetupIntentSecretRequest } from "./IMemberService";
+import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, IResetPassword, ISessionData, OResetPassword, SetupIntentSecretRequest } from "./IMemberService";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
 import errorResponse from "../../errors/errorResponse";
@@ -413,7 +413,25 @@ public async processTransaction(sessionData: ISessionData) {
     this.saveMemberToken(memberJwt);
     this.saveLegacyAuthCookie(memberJwt);
     return this._getCurrentUser(true)!;
-  }
+  };
+  public async resetPassword({ email, user_agent }: IResetPassword): Promise<OResetPassword> {
+    if (!email) {
+      throw new ApiError("Email is required", 400, "MS.SI.01");
+    }
+
+    // Encrypt the login data
+    const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
+
+    const encryptedResetPasswordData = encryptString(JSON.stringify({ email, user_agent }), ENCRYPTION_KEY);
+
+    const res = await this.post<{}, any>(
+      "usage/auth/reset-password",
+      { data: encryptedResetPasswordData },
+    );
+    const status = await res;
+
+    return status;
+  };
 
   private updateUserContext(
     context: UserContext | undefined,
