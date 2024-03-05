@@ -616,9 +616,13 @@ button {
 }
 
 a:-webkit-any-link {
-  color: inherit;
+  color: var(--blue);
   cursor: pointer;
   text-decoration: none;
+  &:hover{
+    text-shadow: 0 0 var(--s-9) var(--blue-10);
+    color: var(--blue);
+  }
 }
 
 .dev {
