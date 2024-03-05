@@ -71,13 +71,11 @@ const Checkout = ():React.JSX.Element => {
         handleCart();
     }, [handleUser, user]);
 
-    if (view) return <>{view}
+    if (view) return <>
         <style jsx>{styles}</style>
         <div className='checkout' id="main-checkout">
- 
-
             <div className='checkout__title'>
-                Secure Checkout <UiIcon icon="fa-lock" />
+                Secure Checkout <UiIcon icon="fa-lock" />564
             </div>
             <div className='checkout__button'>
                 Step {view === 'sign-up'?'1':'2'} of 2

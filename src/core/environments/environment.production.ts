@@ -3,14 +3,10 @@ const serverUrl ="https://tiktok.soy"
 const prodEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: true,
-  site:{
-    url: 'https://deepturn.com'
-    // url: 'https://nirvanaenergy.net'
-
-  },
   merchant:{
     mid: "mb1",
     name:"deepturn",
+    url: 'https://deepturn.com'
     // mid: "nirv1",
     // name:"nirvana-energy"
   },

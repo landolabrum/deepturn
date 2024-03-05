@@ -10,24 +10,26 @@ import { useRouter } from 'next/router';
 
 const AdminCustomers: React.FC = () => {
   const router = useRouter();
-  const [view, setView] = useState<string>('list');
-  const qry = router?.query;
-  const updateViewUrl = (newView:string, customer?: UserContext)=>{
-    const baseUrl = '/admin?vid=customers';
-    if(newView === 'modify' && customer?.id){
-      setView('modify');
-      router.replace(`${baseUrl}&cid=${customer.id}`);
-    }else router.push(baseUrl);
-    newView !== view && setView(newView);
+  const [view, setView] = useState<string>();
+  const cid = router?.query?.cid;
+  
+  const updateViewUrl = (newView?:string, customer?: UserContext)=>{
+    const baseUrl = '/admin?vid=customers';    
+    if(!newView && !view)setView(cid?'modify':'list');
+    else if(newView){
+      setView(newView);
+      if(newView === 'list' && router.asPath !== baseUrl)router.replace(baseUrl);
+      else if(newView === 'modify' && router.asPath === baseUrl && customer)router.push(`${baseUrl}&cid=${customer.id}`);
+    }
   };
 
   
   useEffect(() => {
-    // if(qry.cid)setView('modify');
-  }, [qry,setView]);
+    updateViewUrl();
+  }, [updateViewUrl]);
   return (
     <>
-      <style jsx>{styles}</style>{view}
+      <style jsx>{styles}</style>
       <div className='admin-customer'>
         <div className='admin-customer__header'>
           <div className='admin-customer__header--title'>customer {view}</div>
@@ -43,7 +45,7 @@ const AdminCustomers: React.FC = () => {
           </div>
         </div>
         {view === 'list' && <AdminCustomerList onSelect={(customer:UserContext)=>updateViewUrl('modify',customer)} /> }
-        {view === 'modify' && <AdminCustomerDetails />}
+        {view === 'modify' && <AdminCustomerDetails id={cid}/>}
         {view === 'add' && <AdminCustomerAdd /> }
       </div>
     </>

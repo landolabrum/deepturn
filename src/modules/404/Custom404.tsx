@@ -15,7 +15,6 @@ const Custom404: React.FC = () => {
   
   useEffect(() => {
     if(router.query && typeof router.query.loc == 'string')setLoc(router.query.loc);
-    // if(router && environment)setLoc(`${environment.site.url}${router.asPath}`);
   }, []);
   return (
     <>

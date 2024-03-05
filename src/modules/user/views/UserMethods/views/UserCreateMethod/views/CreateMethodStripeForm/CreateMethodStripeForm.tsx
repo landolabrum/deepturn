@@ -39,7 +39,7 @@ const CreateMethodStripeForm = ({ onSuccess, user, shippable, success_url="/chec
         setLoader({active:true});
         let confirmParams: any = {
             // return_url: undefined,
-            return_url: `${environment.site.url}${success_url}`,
+            return_url: `${environment.merchant.url}${success_url}`,
         };
         if (shippable && user?.address?.line1) {
             confirmParams.shipping = {

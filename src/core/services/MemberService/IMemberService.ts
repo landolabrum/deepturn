@@ -73,7 +73,7 @@ export default interface IMemberService {
     name,
     email,
     password, 
-    origin,
+    merchant,
     user_agent,
     metadata
   }: any): Promise<any>;

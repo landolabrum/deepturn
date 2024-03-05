@@ -238,7 +238,7 @@ public async processTransaction(sessionData: ISessionData) {
       email,
       password,
       user_agent,
-      origin,
+      merchant,
       metadata
     }: any
   ): Promise<UserContext> {
@@ -249,11 +249,11 @@ public async processTransaction(sessionData: ISessionData) {
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",
       {
-        name: name,
-        email: email,
-        password: password,
-        origin: origin,
-        user_agent: user_agent,
+        name,
+        email,
+        password,
+        merchant,
+        user_agent,
         ...metadata
       },
     );

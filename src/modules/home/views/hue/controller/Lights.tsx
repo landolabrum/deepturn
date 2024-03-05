@@ -169,7 +169,7 @@ const LightsList = () => {
           start={go}
         />
 
-        {hueData && !isAll && <AdaptGrid xs={1} sm={2} md={2} lg={3} gap={15}>
+        {hueData && !isAll && <AdaptGrid xs={1} sm={3} gap={15}>
           {Object.entries(hueData).map(([key, light]: any, index: number) =>
             <div
               className={`lights__light ${group?.includes(light.id_) ? 'in-group' : ''}`}

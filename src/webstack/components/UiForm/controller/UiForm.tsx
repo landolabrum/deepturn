@@ -105,7 +105,15 @@ const UiForm = ({
                 fields.map((field, index) => field.name && field?.readonly && (
                     <div key={index} className='form-field__readonly' style={field?.width ? { width: `calc(${field.width} - 8px)` } : {}}>
                         <div className='form-field__readonly--label'>{field?.label}</div>
-                        <div className='form-field__readonly--value'>{`${field?.value}`}</div>
+                        <div className='form-field__readonly--value'>{
+                            typeof field.value !== 'object' && `${field?.value}` || 
+                            field.value && <div className='object-list'>{Object.entries(field.value).map(([chK,chV]:any)=>{
+                                return <span className='object-item' key={chK}>
+                                    <span className='object-item--key'>{chK}:</span>
+                                    <span className='object-item--value'>{JSON.stringify(chV).replaceAll('"','')}</span>
+                                </span>
+                            })}</div>
+                        }</div>
                     </div>
                 ))}
 

@@ -43,7 +43,7 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
   function modifyCustomerData(data: any, round2?: string): any {
     const removeKeys = ['id', 'methods', 'user', 'files', 'default_source', 'shipping', 'object', 'currency', 'invoice_settings', 'next_invoice_sequence', 'preferred_locales', 'test_clock', 'invoice_prefix'];
     const modifiedKeys = ['metadata'];
-    const disabledKeys = ['created', 'server_url', 'origin', 'email_verified', 'delinquent', 'livemode', 'balance'];
+    const readOnlyKeys = ['created', 'server_url', 'merchant', 'email_verified', 'delinquent', 'livemode', 'balance','user_agent'];
 
     // SET FILES
     if (data?.files) {
@@ -79,8 +79,8 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
           value: handleFormatValue(key, value),
           type: handleFormatType(key, handleFormatValue(key, value)),
           variant: 'default',
-          readonly: disabledKeys.includes(key) || undefined,
-          width: disabledKeys.includes(key) && '50%' || undefined,
+          readonly: readOnlyKeys.includes(key) || undefined,
+          width: readOnlyKeys.includes(key) && '50%' || undefined,
           placeholder: '',
         }));
     };

@@ -4,8 +4,9 @@
  align-items: center;
 }
 .lights {
-    width: var(--s-padding-width);
-    padding: var(--s-padding);
+    // width: var(--s-padding-width);
+    // padding: var(--s-padding);
+    width: 100%;
     height: max-content;
     &__light {
         @extend .d-flex;

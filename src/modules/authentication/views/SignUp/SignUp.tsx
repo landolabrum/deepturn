@@ -9,6 +9,7 @@ import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import useReferrer from "@webstack/hooks/useReferrer";
 import { findField } from "@webstack/components/UiForm/functions/formFieldFunctions";
 import { useNotification } from "@webstack/components/Notification/Notification";
+import environment from "~/src/environment";
 
 
 export interface ISignUp {
@@ -94,14 +95,13 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
     const { name, value } = e.target;
     changeField(name, 'value', value);
   };
-  type InotificationContext = {data: string, email: string, status: "existing"}
+  type InotificationContext = {data: string, email: string, status: "existing" | "created" | "success"}
 const handleNotifictaion = (notificationContext: InotificationContext) =>{
-  if(notificationContext.status === 'existing'){
+  const status = notificationContext.status;
     setNotification({
       active: true,
       persistance: 3000,
-      list:[{name:"email exists, sign in to continue"}]});
-  }
+      list:[{name:`email ${status}, sign in to continue`}]});
   // const active = notification?.active;
   console.log('[ NOTIFICIATION ]', {notification, notificationContent: notificationContext})
 }
@@ -115,18 +115,17 @@ const handleNotifictaion = (notificationContext: InotificationContext) =>{
       }, {});
       request.name = `${request.first_name} ${request.last_name}`;
       request.user_agent = user_agent;
-      request.origin = URL;
-
+      request.merchant = environment.merchant;
+      let context;
       try {
         const response = await MemberService.signUp(request);
-        
         if (response?.email !== undefined ) {
+          context = response;
           onSuccess && onSuccess(response);
         }
         else if (response?.status === 'existing' && onSuccess) {
-          const existingContext = {...response, email: findField(fields,'email')?.value};
-          onSuccess(existingContext);
-          handleNotifictaion(existingContext);
+          context = {...response, email: findField(fields,'email')?.value};
+          onSuccess(context);
         }else {
           console.error('[ SIGN UP RESPONSE UNHANDLED ]', response);
           // Display a general user-friendly error message
@@ -140,6 +139,9 @@ const handleNotifictaion = (notificationContext: InotificationContext) =>{
           console.error('[ SIGN UP RESPONSE ERRORS ]', e);
           // Display a general user-friendly error message
         }
+      }finally{
+        console.log('[ handleSubmit (signUp) ]',context)
+        handleNotifictaion(context);
       }
     } else {
       console.error('[ SIGN UP ERRORS LOCAL ]', errors);
