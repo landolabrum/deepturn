@@ -100,14 +100,14 @@ export const routes: IRoute[] = [
   { label: "", href: "/checkout", hide: true},
 ];
 export const useClearanceRoutes = () => {
-  const user = useUser();
-  const level = user?.metadata.clearance || 0;
+  const authedUser = useUser();
+  const level = authedUser?.metadata?.user?.clearance || 0;
 
   const access = useMemo(() => {
     const filterRoutes = (routeItems: IRoute[]) => {
       return routeItems.filter((route) => {
         // Hide 'login' route if user exists
-        if (route.label === 'login' && route.clearance === 0 && user) {
+        if (route.label === 'login' && route.clearance === 0 && authedUser) {
           return false;
         }
         const accessible = route.clearance === undefined || (route.clearance <= level);
@@ -132,7 +132,7 @@ export const useClearanceRoutes = () => {
     });
 
     return sortedAndFilteredRoutes.reverse();
-  }, [user, level]); // Update dependency array to include 'user'
+  }, [authedUser, level]); // Update dependency array to include 'user'
 
   return access;
 };

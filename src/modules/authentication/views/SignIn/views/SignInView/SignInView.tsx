@@ -70,7 +70,7 @@ const SignInView: React.FC<ISignIn> = ({ email, onSuccess }: ISignIn) => {
           e.detail?.fields && setNotification({
             active: true,
             list: e.detail.fields
-            // persistance: 3000
+            // persistence: 3000
           });
           setSignInResponse(e.detail)
         } else {

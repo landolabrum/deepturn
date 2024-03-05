@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { useProspect } from '~/src/core/authentication/hooks/useProspect';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/UiViewLayout';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
+import { useUser } from '~/src/core/authentication/hooks/useUser';
 // import useCampaign from '@webstack/hooks/useCampaign';
 // import { useEffect } from 'react';
 
@@ -17,6 +18,7 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 const Index = () => {
   const merchant: any = environment?.merchant;
   // const prospect = useProspect();
+  const user = useUser()
   const [view, setView] = useState()
   // const campaign = useCampaign();
   useEffect(() => {

@@ -16,6 +16,6 @@ export const useUser = () => {
   return userContext;
 }
 export const useClearance  = () => {
-  const user = useUser(); // This is valid now because it's inside a custom hook
-  return user?.metadata?.clearance || 0;
+  const authedUser = useUser(); // This is valid now because it's inside a custom hook
+  return authedUser?.metadata?.user?.clearance || 0;
 };

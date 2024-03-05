@@ -45,7 +45,7 @@ const UserCurrentMethod: React.FC<IUserCurrentMethod> = (
         const label = runDelete.message ? runDelete.message : `*${runDelete.message}`
         setNotification({
             active: true,
-            persistance: 3000,
+            persistence: 3000,
             list: [
                 { label: 'payment method' },
                 { label: label }

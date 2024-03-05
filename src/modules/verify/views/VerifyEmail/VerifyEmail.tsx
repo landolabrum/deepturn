@@ -109,7 +109,8 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
                     }
 
                     {state.status === 'verification_success' && state.customer.email && <div className='verify-email__content__sign-in'>
-                        <UiButton href='/profile'>Go to Account</UiButton>
+                    <UiButton onClick={handleSignInModal}>Login</UiButton>
+
                     </div>}
                 </div>
             </div>

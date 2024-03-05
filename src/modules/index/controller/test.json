@@ -1,0 +1,77 @@
+{
+    "id": "cus_PgGaa3yDrUEZDU",
+    "object": "customer",
+    "address": null,
+    "balance": 0,
+    "created": 1709629944,
+    "currency": null,
+    "default_source": null,
+    "delinquent": false,
+    "description": null,
+    "discount": null,
+    "email": "lando@deepturn.com",
+    "invoice_prefix": "A7B8621E",
+    "invoice_settings": {
+        "custom_fields": null,
+        "default_payment_method": null,
+        "footer": null,
+        "rendering_options": null
+    },
+    "livemode": true,
+    "metadata": {
+        "email_verified": "true",
+        "merchant": {
+            "url": "http://localhost:3000",
+            "name": "nirvana-energy",
+            "mid": "nirv1"
+        },
+        "user": {
+            "clearance": 1,
+            "password_token": null,
+            "email_verified": false,
+            "type": "customer",
+            "user_agent": {
+                "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+                "userAgentData": {
+                    "brands": [
+                        {
+                            "brand": "Not A(Brand",
+                            "version": "99"
+                        },
+                        {
+                            "brand": "Google Chrome",
+                            "version": "121"
+                        },
+                        {
+                            "brand": "Chromium",
+                            "version": "121"
+                        }
+                    ],
+                    "mobile": false,
+                    "platform": "macOS"
+                }
+            },
+            "merchant": {
+                "url": "http://localhost:3000",
+                "name": "nirvana-energy",
+                "mid": "nirv1"
+            },
+            "server_url": "localhost:8000"
+        }
+    },
+    "name": "landon labrum",
+    "next_invoice_sequence": 1,
+    "phone": null,
+    "preferred_locales": [],
+    "shipping": null,
+    "tax_exempt": "none",
+    "test_clock": null,
+    "methods": {
+        "object": "list",
+        "data": [],
+        "has_more": false,
+        "url": "/v1/payment_methods"
+    },
+    "exp": 1709634305,
+    "iat": 1709634005
+}

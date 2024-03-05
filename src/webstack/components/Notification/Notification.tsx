@@ -1,12 +1,8 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import styles from "./Notification.scss";
 import { UiIcon } from "../UiIcon/UiIcon";
+import UiMarkdown from "../UiMarkDown/UiMarkDown";
+
 const NO_SCROLL = "no-scroll";
 
 interface INotificationListItem {
@@ -20,7 +16,7 @@ interface INotificationListItem {
 export type INotification = {
   list?: INotificationListItem[];
   active: boolean;
-  persistance?: number;
+  persistence?: number;
   dismissable?: boolean;
   transparent?: boolean;
   onClick?: any;
@@ -29,17 +25,15 @@ export type INotification = {
   children?: any;
 };
 
-const INotificationContext = createContext<
-  [INotification, (Notification: INotification) => any]
->([{ active: false }, () => { }]);
+const INotificationContext = createContext<[INotification, (Notification: INotification) => any]>([{ active: false }, () => {}]);
 
 export const useNotification = () => useContext(INotificationContext);
+
 type INotificationProvider = {
   children: React.ReactNode;
 };
-export const NotificationProvider: React.FC<INotificationProvider> = ({
-  children,
-}) => {
+
+export const NotificationProvider: React.FC<INotificationProvider> = ({ children }) => {
   const notificationState = useState<INotification>({ active: false });
 
   return (
@@ -54,12 +48,19 @@ const Notification: React.FC = () => {
   const [context, setContext] = useContext<[INotification, (Notification: INotification) => any]>(INotificationContext);
   const [notification, setNotification] = useState<INotification | null>(null);
   const [show, setShow] = useState<boolean>(true);
+
   const handleClose = () => {
     setShow(false);
-    setTimeout(() => {
-      setContext({ active: false });
-    }, 2000);
-  }
+    if (context?.persistence) {
+      setTimeout(() => {
+        setContext({ ...context, active: false });
+      }, 20000); // 20 seconds
+    } else {
+      setTimeout(() => {
+        setContext({ active: false });
+      }, 2000); // Default 2 seconds
+    }
+  };
 
   const handleBodyScroll = useCallback(() => {
     const body = document.getElementById("app-body");
@@ -71,21 +72,23 @@ const Notification: React.FC = () => {
       }
     }
   }, [context]);
+
   const list = notification?.list;
-  const handleNotifictaion = () =>{
-    if (context?.dismissable == undefined) context.dismissable = true;
-    if (context?.persistance) {
+
+  const handleNotification = () => {
+    if (context?.dismissable === undefined) context.dismissable = true;
+    if (context?.persistence) {
       setTimeout(() => {
         handleClose();
-      }, context.persistance);
+      }, context.persistence);
     }
     setNotification(context);
-  }
+  };
+
   useEffect(() => {
-    // handle Dismissable
-    handleNotifictaion();
+    handleNotification();
     handleBodyScroll();
-  }, [handleNotifictaion]);
+  }, [handleNotification]);
 
   if (notification?.active) {
     return (
@@ -93,9 +96,7 @@ const Notification: React.FC = () => {
         <style jsx>{styles}</style>
         <div
           id="app-notification"
-          style={
-            notification?.zIndex ? { zIndex: `${notification?.zIndex}` } : {}
-          }
+          style={notification?.zIndex ? { zIndex: `${notification?.zIndex}` } : {}}
           onClick={context?.onClick}
           className={`notification ${!show ? ' notification-hide' : ""}`}
         >
@@ -110,10 +111,11 @@ const Notification: React.FC = () => {
                 return <span key={field}>
                   <a className={`notification__list-item`} href={value.href} onClick={value.onClick}>
                   <div className='notification__list-item__label' >
-                    {value.label || value?.name}
+                    
+                    <UiMarkdown text={value.label || value?.name}/>
                   </div>
                   <div>
-                    {value.message}
+                    <UiMarkdown text={value.message}/>
                   </div>
                 </a>
                 </span>

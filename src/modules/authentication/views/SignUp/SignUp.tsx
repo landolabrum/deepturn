@@ -100,7 +100,7 @@ const handleNotifictaion = (notificationContext: InotificationContext) =>{
   const status = notificationContext.status;
     setNotification({
       active: true,
-      persistance: 3000,
+      persistence: 3000,
       list:[{name:`email ${status}, sign in to continue`}]});
   // const active = notification?.active;
   console.log('[ NOTIFICIATION ]', {notification, notificationContent: notificationContext})

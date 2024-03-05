@@ -104,7 +104,7 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
       setLoader({ active: false });
       setNotification({
         active: true,
-        persistance: 3000,
+        persistence: 3000,
         list: [
           { label: 'success', message: `Deleted: ${info.name}` }
         ]
@@ -136,7 +136,7 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
   const onSubmit = async () => {
     if ( !customer || !customer_id ) return;
     if (level < 10) {
-      setNotification({ active: true, persistance: 3000, list: [{ name: "you do nott have authority to modify" }] })
+      setNotification({ active: true, persistence: 3000, list: [{ name: "you do nott have authority to modify" }] })
     }
     let request: any = {
       name: findField(customer, 'name').value,
@@ -158,7 +158,7 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
       setCustomer(modifyCustomerData(updatedCustomer));
       setNotification({
         active: true,
-        persistance: 3000,
+        persistence: 3000,
         list: [
           { label: 'success', message: `Updated Customer: ${request.name}` }
         ]
@@ -181,7 +181,7 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
           if(errors?.length){
             setNotification({
               active: true,
-              persistance: 3000,
+              persistence: 3000,
               list: errors
             });
           }
@@ -219,7 +219,7 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
             if (formName && formName?.length) {
               setNotification({
                 active: true,
-                persistance: 5000,
+                persistence: 5000,
                 list: [{ label: `${response?.name}, has a new ${formName} request.` }]
               });
             }
