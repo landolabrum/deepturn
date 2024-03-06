@@ -19,8 +19,8 @@
         --ui-icon-height: var(--s-2);
         gap:var(--s-9);
         @extend .d-flex;
-        color: var(--gray-30);
-        --ui-icon-color: var(--gray-30);
+        color: var(--gray-50);
+        --ui-icon-color: var(--gray-50);
     }
     &__cart-list{
         width: 100%;
@@ -32,7 +32,7 @@
 
 .checkout__body {
     @extend .d-flex;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     gap:var(--s-padding);
     height: 100%;

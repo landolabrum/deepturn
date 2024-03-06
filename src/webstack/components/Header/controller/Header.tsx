@@ -26,8 +26,6 @@ export const useHeader = () => useContext(HeaderContext);
 
 export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
-  
-  useEffect(() => {console.log('[ useHeader ]', {headerState})}, [setHeaderState, headerState]);
   return (
     <>
       <style jsx>{styles}</style>
@@ -57,7 +55,6 @@ const Header: React.FC = () => {
 
     const handleHeaderState = () =>{
       const selectedContext = context !== null?context:{title:keyStringConverter(`${environment?.merchant?.name}`,false)}
-      console.log('[ handleHeaderState ]',{context})
       setHeaderState(selectedContext);
       setRoute(router.asPath);
     }

@@ -16,7 +16,7 @@ $actionsBg: var(--gray-90);
     // width: calc(100% - 10px);
     right: auto;
     margin: auto;
-    margin-top: var(--s-element);
+    margin-top:  calc(var(--s-1) * 2);
     @media (max-width: 1100px) {
         width: auto;
     }
@@ -102,11 +102,13 @@ $actionsBg: var(--gray-90);
     }
 
     z-index: 2;
-    // position: absolute;
-    top: calc(calc(var(--s-element) * 2) + var(--s-padding));
+    top: calc(var(--s-element) * 2);
     opacity: 0;
     transform: translateX(-100%);
     @extend .d-flex;
+    @media(max-width: 1100px){
+        position: absolute;
+    }
     &--start {
         display: none;
     }
@@ -167,7 +169,7 @@ $actionsBg: var(--gray-90);
     background-color: var(--gray-80-opaque);
     height: var(--s-element);
     --ui-icon-width: var(--s-5);
-    top: calc(calc(var(--s-element) + var(--s-9) ) * -1);
+    top: calc(var(--s-2) * -2);
     // aspect-ratio: 1;
     --ui-icon-color:var(--white);
     overflow: hidden;

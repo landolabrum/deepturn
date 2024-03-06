@@ -54,7 +54,7 @@
 
   /* Darkened grayscale spectrum to reflect more natural, subdued tones */
    /* COLORS */
-   /* --black: #111111;
+   --black: #111111;
    --gray-10: #f8f8f8;
    --gray-10-opaque: #f8f8f850;
    --gray-20: #f5f5f5;
@@ -74,62 +74,63 @@
    --gray-90: #262626;
    --gray-90-opaque: #26262650;
    --gray-100: #171717;
-   --gray-100-opaque: #17171750; */
+   --gray-100-opaque: #17171750;
  /* INVERTED  */
- --black: #f8f8f8; /* Previously the lightest gray, now assigned to black for contrast */
- --gray-10: #171717; /* Previously the darkest gray, now the lightest */
- --gray-10-opaque: rgba(23, 23, 23, 0.5); /* Adjusted opacity for inverted gray-10 */
- --gray-20: #262626; /* Inverted */
- --gray-20-opaque: rgba(38, 38, 38, 0.5); /* Adjusted opacity for inverted gray-20 */
- --gray-30: #404040; /* Inverted */
- --gray-30-opaque: rgba(64, 64, 64, 0.5); /* Adjusted opacity for inverted gray-30 */
- --gray-40: #525252; /* Inverted */
- --gray-40-opaque: rgba(82, 82, 82, 0.5); /* Adjusted opacity for inverted gray-40 */
- --gray-50: #737373; /* Inverted */
- --gray-50-opaque: rgba(115, 115, 115, 0.5); /* Adjusted opacity for inverted gray-50 */
- --gray-60: #a3a3a3; /* Inverted */
- --gray-60-opaque: rgba(163, 163, 163, 0.5); /* Adjusted opacity for inverted gray-60 */
- --gray-70: #d4d4d4; /* Inverted */
- --gray-70-opaque: rgba(212, 212, 212, 0.5); /* Adjusted opacity for inverted gray-70 */
- --gray-80: #e0e0e0; /* Inverted */
- --gray-80-opaque: rgba(224, 224, 224, 0.5); /* Adjusted opacity for inverted gray-80 */
- --gray-90: #f5f5f5; /* Inverted */
- --gray-90-opaque: rgba(245, 245, 245, 0.5); /* Adjusted opacity for inverted gray-90 */
- --gray-100: #f8f8f8; /* Inverted */
- --gray-100-opaque: rgba(248, 248, 248, 0.5); 
+ /* --black: #f8f8f8; 
+ --gray-10: #171717;
+ --gray-10-opaque: rgba(23, 23, 23, 0.5);
+ --gray-20: #262626;
+ --gray-20-opaque: rgba(38, 38, 38, 0.5);
+ --gray-30: #404040; 
+ --gray-30-opaque: rgba(64, 64, 64, 0.5);
+ --gray-40: #525252;
+ --gray-40-opaque: rgba(82, 82, 82, 0.5);
+ --gray-50: #737373;
+ --gray-50-opaque: rgba(115, 115, 115, 0.5);
+ --gray-60: #a3a3a3; 
+ --gray-60-opaque: rgba(163, 163, 163, 0.5); 
+ --gray-70: #d4d4d4;
+ --gray-70-opaque: rgba(212, 212, 212, 0.5); 
+ --gray-80: #e0e0e0; 
+ --gray-80-opaque: rgba(224, 224, 224, 0.5); 
+ --gray-90: #f5f5f5; 
+ --gray-90-opaque: rgba(245, 245, 245, 0.5); 
+ --gray-100: #f8f8f8; 
+ --gray-100-opaque: rgba(248, 248, 248, 0.5);  */
 
+ --white: #FFFFFF;
+ --white-opaque: rgba(255, 255, 255, 0.5);
+ --yellow: #fbff00; 
+ --yellow-opaque: rgba(251, 255, 0, 0.7);
+ --orange: #ff9900;
+ --orange-opaque: rgba(255, 153, 0, 0.5);
+ --red: #dd4400; 
+ --green: #44b432; 
+ --green-opaque: rgba(68, 180, 50, 0.62); 
+ --green-60: #22c553; 
+ --red-60: #ef4444; 
+ --blue: #4f96ff;
+ --blue-opaque: rgba(79, 150, 255, 0.5); 
+ --blue-10: #54E3FF; 
+ --blue-10-opaque: rgba(84, 227, 255, 0.5); 
 /*   
-  --white: #FFFFFF;
-  --white-opaque: rgba(255, 255, 255, 0.5);
-  --yellow: #fbff00; /* Bright, vibrant yellow
-  --yellow-opaque: rgba(251, 255, 0, 0.7);
-  --orange: #ff9900;
-  --orange-opaque: rgba(255, 153, 0, 0.5);
-  --red: #dd4400; 
-  --green: #44b432; 
-  --green-opaque: rgba(68, 180, 50, 0.62); 
-  --green-60: #22c553; 
-  --red-60: #ef4444; 
-  --blue: #4f96ff;
-  --blue-opaque: rgba(79, 150, 255, 0.5); 
-  --blue-10: #54E3FF; 
-  --blue-10-opaque: rgba(84, 227, 255, 0.5); 
    */
    /* MORE PASTEL */
-   --yellow: #f4f4c1; /* Softened to a pastel yellow */
-   --yellow-opaque: rgba(244, 244, 193, 0.7); /* Pastel yellow with 70% opacity */
-   --orange: #f9bea6; /* Muted to a pastel orange */
-   --orange-opaque: rgba(249, 190, 166, 0.5); /* Pastel orange with 50% opacity */
-   --red: #e89a8a; /* Softened to a pastel red */
-   --green: #a0d9af; /* Muted to a pastel green */
-   --green-opaque: rgba(160, 217, 175, 0.62); /* Pastel green with 62% opacity */
-   --green-60: #8cc69b; /* A softer, pastel green */
-   --red-60: #f2a4a4; /* Softened to a pastel red */
-   --blue: #a3c1e2; /* Muted to a pastel sky blue */
-   --blue-opaque: rgba(163, 193, 226, 0.5); /* Pastel sky blue with 50% opacity */
-   --blue-10: #b3d4f2; /* Softened to a pastel light blue */
-   --blue-10-opaque: rgba(179, 212, 242, 0.5); /* Pastel light blue with 50% o
-  /* Box shadow presets */
+   /* --yellow: #f4f4c1;
+   --yellow-opaque: rgba(244, 244, 193, 0.7);
+   --orange: #f9bea6;
+   --orange-opaque: rgba(249, 190, 166, 0.5);
+   --red: #e89a8a; 
+   --green: #a0d9af;
+   --green-opaque: rgba(160, 217, 175, 0.62);
+   --green-60: #8cc69b;
+   --red-60: #f2a4a4;
+   --blue: #a3c1e2; 
+   --blue-opaque: rgba(163, 193, 226, 0.5);
+   --blue-10: #b3d4f2; 
+   --blue-10-opaque: rgba(179, 212, 242, 0.5);  */
+  
+   /* Box shadow presets */
   --box-shadow: 2px 2px 10px rgba(23, 23, 23, 0.5);
   --box-shadow-inset: inset 2px 2px 10px rgba(23, 23, 23, 0.5);
   --box-shadow-sm: 2px 2px 5px rgba(23, 23, 23, 0.5);

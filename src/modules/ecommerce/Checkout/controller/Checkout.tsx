@@ -75,7 +75,7 @@ const Checkout = ():React.JSX.Element => {
         <style jsx>{styles}</style>
         <div className='checkout' id="main-checkout">
             <div className='checkout__title'>
-                Secure Checkout <UiIcon icon="fa-lock" />564
+                Secure Checkout <UiIcon icon="fa-lock" />
             </div>
             <div className='checkout__button'>
                 Step {view === 'sign-up'?'1':'2'} of 2

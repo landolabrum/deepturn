@@ -23,11 +23,10 @@ const useRoute = (): ORoute => {
   const level = useClearance();
   const routeTitle = String(router.pathname)?.length && router.pathname.split('/')[1] || false;
 
-  const handleHeader = useCallback((title?: string) => {
-    const selectedTitle = routeTitle || title;
-    console.log('[ handleHeader ]', {title, routeTitle, selectedTitle,})
+  const handleHeader = (title?: string) => {
+    // console.log('[ handleHeader ]',{header, title})
     const headerContext = {
-      title: selectedTitle,
+      title: title,
       crumbs: [
         { label: router.pathname.split('/')[1], href: router.pathname },
         ...Object.keys(router?.query).map((k, v) => {
@@ -36,16 +35,17 @@ const useRoute = (): ORoute => {
       ]
     };
     setHeader(headerContext);
-  }, [routeTitle,]);
+  };
   const renderTriggers = [user, _user, setUser, clearanceRoutes, level];
 
   const explicitRouter = (route: IRoute) => {
     if (route?.href) router.push(route.href, undefined, { shallow: false });
   };
   const implicitRouter = useCallback(() => {
+    let headerContext;
     if (user && !_user) setUser(user);
     if (clearanceRoutes) {
-      const isInRoutesList = clearanceRoutes.find(clearRoute => {
+      const matchingRoute = clearanceRoutes.find(clearRoute => {
         const routePathWithoutQuery = clearRoute?.href;
         if (routePathWithoutQuery === router.pathname) {
           return true;
@@ -65,32 +65,40 @@ const useRoute = (): ORoute => {
         }
         return false;
       });
-      if (isInRoutesList) {
-        const hrefIsString:boolean = typeof isInRoutesList?.href === 'string';
-        const hrefIsNotCurrent = isInRoutesList?.href && !router.asPath.includes(isInRoutesList?.href) || 'current-route';
-        const canNavigate = Boolean( typeof hrefIsString === 'boolean' && typeof hrefIsNotCurrent === 'boolean');
-        // console.log('[ IS N ]',{hrefIsString, hrefIsNotCurrent,  canNavigate})
-        return canNavigate && router.push(String(isInRoutesList.href), undefined, { shallow: true }) || {error:typeof hrefIsString === 'string'?hrefIsString:hrefIsNotCurrent};
+      if (matchingRoute) {
+        const hrefIsString:boolean = typeof matchingRoute?.href === 'string';
+        const matchingHref = matchingRoute?.href;
+        const matchingItems = matchingRoute?.items;
+        if(!matchingHref && matchingItems?.length){
+          // console.log('[matchingRoute?.href]',{matchingHref, matchingItems});
+          const matchingItem = matchingItems.filter(r=>r?.href === router.pathname)[0];
+          if(matchingItem)headerContext = {title: matchingItem.label};
+        }
+        const notCurrent = matchingRoute?.href && !router.asPath.includes(matchingRoute?.href) || 'current-route';
+        const canNavigate = Boolean( typeof hrefIsString === 'boolean' && typeof notCurrent === 'boolean');
+        headerContext = {title: matchingRoute.label};
+        if(canNavigate){
+          router.push(String(matchingRoute.href), undefined, { shallow: true });
+        }
       } else if (router.asPath !== '/authentication/signout') {
         let currentPath: string = router.asPath;
         if (currentPath.includes('/404?')) {
-          return router.push(currentPath);
+          router.push('/');
         } else {
-          return router.push(`/404?loc=${currentPath}`);
+          router.push(`/404?loc=${currentPath}`);
         }
       }
-
     }
-  }, [...renderTriggers]);
+    return headerContext;
+  }, [...renderTriggers]); 
   useEffect(() => {
-    const implicitResp: any = implicitRouter();
-     if (implicitResp?.error && header) {
-      console.log('[ implicitResp ( implicitResp?.error && header ) ]', { implicitResp:JSON.stringify(implicitResp), header:JSON.stringify(header) }); 
-    } else {
-      console.log('[ implicitResp ( else ) ]', { implicitResp:JSON.stringify(implicitResp), header:JSON.stringify(header) });
-      handleHeader(); // Set header context when no error
+    const headerContext: any = implicitRouter();
+    if(headerContext){
+      handleHeader(headerContext.title)
     }
-  }, [clearanceRoutes, implicitRouter, header, routeTitle]); // Added routeTitle to dependencies array
+    // console.log("headerContext", headerContext)
+    // handleHeader(); // Set header context when no error
+  }, [clearanceRoutes, implicitRouter, routeTitle, ]); // Added routeTitle to dependencies array
   
 
   return [_user, router.pathname, explicitRouter];
