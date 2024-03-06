@@ -7,6 +7,7 @@ import useWindow from "@webstack/hooks/useWindow";
 import environment from "~/src/environment";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { debounce } from "lodash";
+import keyStringConverter from "@webstack/helpers/keyStringConverter";
 
 
 export type HeaderProps = {
@@ -25,12 +26,13 @@ export const useHeader = () => useContext(HeaderContext);
 
 export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [headerState, setHeaderState] = useState<HeaderProps | null>(null);
-  const [hover, setHover] = useState<string>('');
+  
+  useEffect(() => {console.log('[ useHeader ]', {headerState})}, [setHeaderState, headerState]);
   return (
     <>
       <style jsx>{styles}</style>
       <HeaderContext.Provider value={[headerState, setHeaderState]}>
-        <div id="header-container" className={`header__container${hover}`}>
+        <div id="header-container" className={`header__container`}>
           <Navbar />
           <Header />
         </div>
@@ -53,21 +55,19 @@ const Header: React.FC = () => {
     [setShow]
   );
 
-
+    const handleHeaderState = () =>{
+      const selectedContext = context !== null?context:{title:keyStringConverter(`${environment?.merchant?.name}`,false)}
+      console.log('[ handleHeaderState ]',{context})
+      setHeaderState(selectedContext);
+      setRoute(router.asPath);
+    }
   useEffect(() => {
-    setHeaderState(context);
-    setRoute(router.asPath);
-  }, [context]);
-
-  useEffect(() => {
-
+    handleHeaderState();
     if (router.asPath !== route) {
       setContext(null);
       setRoute(router.asPath);
     }
-  }, [setContext]);
-
-
+  }, []);
   return (
     <>
       <style jsx>{styles}</style>

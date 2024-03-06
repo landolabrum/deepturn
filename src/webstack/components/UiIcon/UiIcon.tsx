@@ -94,7 +94,7 @@ export class UiIcon extends React.Component<Props, State> {
     this.setState({ innerHtml: '' });
   }
 
-  private getSvgPathElement(icon: UiIconDefinition) {
+  public getSvgPathElement(icon: UiIconDefinition) {
     const pathProps = icon.stroke ? {
       'stroke-linecap': icon.stroke.lineCap,
       'stroke-linejoin': icon.stroke.lineJoin,

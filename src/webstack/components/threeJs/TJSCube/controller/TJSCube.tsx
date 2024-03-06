@@ -1,38 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react';
-import styles from "./TJSCube.scss";
-import { createRoot } from 'react-dom/client';
-import { Canvas, useFrame, useThree, extend, PointLightProps } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import styles from "./TJSCube.scss";
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
-import useWindow from '@webstack/hooks/useWindow';
-// Extend OrbitControls
-extend({ OrbitControls });
+import IconHelper from "@webstack/helpers/IconHelper"; // Ensure this helper can provide SVG markup
 
-interface ICube {
-  display?:{
-    fps?:number;
-    resolution?: number // ;
-  }
-  size?: { x: number; y: number; z?: number };
-  metalness?: number; // Define the shiny prop
-  color?: string;
 
-  svg?: any; // Accept string or React element
-//   svg?: string | React.ReactElement; // Accept string or React element
-  svgOptions?: ICubeSvgOptions;
 
-  animate?: {
-    rotate?: {
-      x?: number;
-      y?: number;
-      z?: number;
-      duration?: 'infinite' | number;
-      speed?: number;
-    };
-  };
-}
-interface ICubeSvgOptions {
+
+interface ITJSCubeBevel {
   curveSegments?: number;
   bevelEnabled?: boolean;
   bevelThickness?: number;
@@ -41,205 +18,123 @@ interface ICubeSvgOptions {
   bevelSegments?: number;
 }
 
+interface ITJSCubeIcon {
+  icon: string;
+  color?: string;
+  bevel?: ITJSCubeBevel;
+  size?: { x: number, y: number, z: number };
+  animate?: { rotate: { y?: number, x?: number, z?: number, speed?: number } };
+  metalness?: number;
+  texture?: string;
+  opacity?: number;
+  roughness?: number;
+  bumpMap?: string; // New property for bump map texture URL
+  bumpScale?: number; // Optional: scale of the bumpiness
+}
+interface ITJSCubeContent {
+  icon?: string | ITJSCubeIcon; // icon can be a string or an object
+}
 
-const TJSCubeContent = (props: ICube) => {
-  const {width} = useWindow();
-  const { svg, size, color, animate, svgOptions, metalness } = props;
+const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
   const meshRef = useRef<THREE.Mesh | null>(null);
-
-  const controlsRef = useRef<any>(null);
+  const controlsRef = useRef<any | null>(null);
   const { scene, camera } = useThree();
-  const [svgContent, setSvgContent] = useState<string | null>(null);
-  const [cameraPos, setCameraPos] = useState<[number, number, number]>([0, 0, size?.z ? size.z * 2 : 0]);
-
-  const [rotation, setRotation] = useState({ x: 0, y: 0, z: 0 });
-
+  const size = typeof icon === 'object' && icon?.size ?  icon.size: { x: 100, y: 100, z: 100 };
+  const maxDimension = Math.max(size?.x || 0, size?.y || 0, size?.z || 0) * 1.5;
+  const [cameraPos, setCameraPos] = useState<[number, number, number]>([0, 0, typeof icon === 'object' && maxDimension || 100]); // Adjusted for visibility
 
   useEffect(() => {
-    if (svg && typeof svg === 'string') {
-      // Load the SVG
-      const loader = new SVGLoader();
-      loader.load(
-        svg,
-        (svgData) => {
-          const paths = svgData.paths;
+    let iconDetails: ITJSCubeIcon | null = null;
 
-          // Create shapes and geometry from the loaded SVG paths
-          const shapes = paths.flatMap((path: any) => path.toShapes(true));
-          const geometry = new THREE.ExtrudeGeometry(shapes, {
-            depth: size?.z || 2,
-          });
-
-          // Apply geometry to the mesh
-          if (meshRef.current) {
-            meshRef.current.geometry = geometry;
-          }
-        },
-        undefined,
-        (error) => {
-          console.error('Error loading SVG:', error);
-        }
-      );
-      setSvgContent(svg);
-    } else if (React.isValidElement(svg)) {
-      // SVG is a React element, render and then convert to 3D
-      const container = document.createElement('div');
-      document.body.appendChild(container);
-      const root = createRoot(container);
-      root.render(svg);
-
-      setTimeout(() => {
-        const svgElement = container.querySelector('svg');
-
-        if (svgElement) {
-          const serializedSvg = new XMLSerializer()
-          .serializeToString(svgElement).replaceAll(`fill="currentColor"`,'');
-
-          const svgBlob = new Blob([serializedSvg], { type: 'image/svg+xml' });
-          const url = URL.createObjectURL(svgBlob);
-          setSvgContent(url);
-        } else {
-          console.error('SVG content is not properly rendered.');
-        }
-        root.unmount();
-        container.remove();
-      }, 0);
+    // Determine if icon is a string or an object and extract details accordingly
+    if (typeof icon === 'string') {
+      iconDetails = { icon, size: size }; // Default size if only string is provided
+    } else if (typeof icon === 'object' && icon !== null) {
+      iconDetails = icon;
     }
-  }, [svg, width]);
-  const defaultColor = new THREE.Color(0xe0e0e0);
-  useEffect(() => {
-    if (svgContent) {
-      // Load and render SVG
-      const loader = new SVGLoader();
-      loader.load(
-        svgContent,
-        (svgData) => {
-          const paths = svgData.paths;
-  
-          // Create shapes and geometry from the loaded SVG paths
-          const shapes = paths.flatMap((path: any) => path.toShapes(true));
-          const geometry = new THREE.ExtrudeGeometry(shapes, {
-            depth: size?.z || 2,
-            ...svgOptions, // Apply TSJSvgOptions here
-          });
-  
-          // Calculate the bounding box of the geometry to set the pivot point
-          const boundingBox = new THREE.Box3().setFromObject(new THREE.Mesh(geometry));
-          const center = new THREE.Vector3();
-          boundingBox.getCenter(center);
-  
-          // Move the geometry to center it around the origin (pivot point)
-          geometry.translate(-center.x, -center.y, -center.z);
-        //   geometry.rotateZ(110);
-          // Apply geometry to the mesh
-          const material = new THREE.MeshStandardMaterial({ 
-            color: color || defaultColor,
-            metalness: metalness ? metalness : 0, // Set the metalness based on the shiny prop
 
-           });
-          const mesh = new THREE.Mesh(geometry, material);
-  
-          // Cleanup: Remove the previous mesh
-          if (meshRef.current) {
-            scene.remove(meshRef.current);
-          }
-  
-          // Set the new mesh and position
-          meshRef.current = mesh;
-  
-          // Set initial rotation if necessary
-          if (rotation.x === 0) {
-            mesh.rotation.x = -Math.PI;
-          } else if (meshRef.current && animate?.rotate) {
-            const { x, y, z } = rotation;
-            mesh.rotation.set(x, y, z);
-          }
-  
-          // Add the new mesh to the scene
-          scene.add(mesh);
-        },
-        undefined,
-        (error) => {
-          console.error('Error loading SVG:', error);
-        }
-      );
-    } else if (size && size.x && size.y && size.z) {
-      // Render default cube if no SVG is provided
-      const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-      const material = new THREE.MeshStandardMaterial({
-         color: color || '#FFFFFF' ,
-         metalness: metalness ? metalness : 0, // Set the metalness based on the shiny prop
-        });
-  
-      // Create a group to hold the cube and apply the rotation to the group
-      const group:any = new THREE.Group();
-      const cube = new THREE.Mesh(geometry, material);
-  
-      // Cleanup: Remove the previous group
-      if (meshRef.current) {
-        scene.remove(meshRef.current);
-      }
-  
-      // Set the new group and position
-      meshRef.current = group;
-  
-      // Set initial rotation if necessary
-      if (rotation.x === 0) {
-        group.rotation.x = -Math.PI;
-      } else if (meshRef.current && animate?.rotate) {
-        const { x, y, z } = rotation;
-        group.rotation.set(x, y, z);
-      }
-  
-      group.add(cube);
-  
-      // Add the new group to the scene
-      scene.add(group);
-    }
-    if (size) {
-      setCameraPos([
-        size.x * .5,
-        0,
-        // MAX
-        Math.max(size?.x || 0,size?.y || 0,size?.z || 0) * (1+Math.PI * 0.1)
-        // (size.x + size.y ) + (size.z ? size.z : 0) / 23
-      ]);
-    }
-  }, [svgContent, scene, size, rotation, width]);
+    if (iconDetails && iconDetails.icon) {
+      const iconObj = IconHelper.getIcon(iconDetails.icon); // Assuming getIcon handles both cases
+      if (iconObj && iconObj.html) {
+        let svgMarkup = iconObj.html.replace(/currentColor/g, '#000000');
 
-  useEffect(() => {
-    const loadSVG = async () => {
-      const loader = new SVGLoader();
-      loader.load(svg, (data) => {
-        const paths = data.paths;
-        const shapes = paths.flatMap((path) => path.toShapes(true));
-        const geometry = new THREE.ExtrudeGeometry(shapes, {
-          depth: size?.z || 2,
-          bevelEnabled: false,
+        const loader = new SVGLoader();
+        const parsedData = loader.parse(svgMarkup);
+        const shapes = parsedData.paths.flatMap(path => path.toShapes(true));
+        const extrudeSettings = {
+          depth:  iconDetails?.size?.z || 0,
+          bevelEnabled: iconDetails.bevel?.bevelEnabled ?? false,
+          bevelThickness: iconDetails.bevel?.bevelThickness ?? 2,
+          bevelSize: iconDetails.bevel?.bevelSize ?? 1,
+          bevelOffset: iconDetails.bevel?.bevelOffset ?? 0,
+          bevelSegments: iconDetails.bevel?.bevelSegments ?? 1,
+        };
+        
+        const geometry = new THREE.ExtrudeGeometry(shapes, extrudeSettings);
+
+        geometry.computeBoundingBox();
+        const boundingBox = geometry.boundingBox;
+        const center = new THREE.Vector3();
+        boundingBox && boundingBox.getCenter(center).negate();
+        geometry.translate(center.x, center.y, center.z);
+
+        // Handle texture if provided
+        const isTransparent = iconDetails.opacity !== undefined && iconDetails.opacity < 1;
+
+        const material = new THREE.MeshStandardMaterial({
+          color: iconDetails.color || '#FFFFFF',
+          metalness: iconDetails.metalness || 0,
+          roughness: iconDetails.roughness || 1,
+          opacity: iconDetails.opacity || 1,
+          transparent: iconDetails.opacity !== undefined && iconDetails.opacity < 1,
         });
 
-        geometry.center(); // This automatically centers the geometry
-        const material = new THREE.MeshStandardMaterial({ color: color || '#FFFFFF', metalness: metalness || 0 });
+        if (iconDetails.texture) {
+          const textureLoader = new THREE.TextureLoader();
+          textureLoader.load(iconDetails.texture, (tex) => {
+              material.map = tex;
+              material.needsUpdate = true;
+          }, undefined, console.error);
+      }
+
+        if (iconDetails.bumpMap) {
+          const textureLoader = new THREE.TextureLoader();
+          const bumpMap = textureLoader.load(iconDetails.bumpMap, (tex) => {
+            material.bumpMap = tex;
+            material.bumpScale = iconDetails?.bumpScale || 1; // Use provided bump scale or default to 1
+            material.needsUpdate = true; // Ensure material updates with the bump map
+          }, undefined, (err) => {
+            console.error("Error loading bump map:", err);
+          });
+        }
+    
+        if (iconDetails.texture) {
+          const textureLoader = new THREE.TextureLoader();
+          textureLoader.load(iconDetails.texture, (tex) => {
+              tex.wrapS = THREE.RepeatWrapping;
+              tex.wrapT = THREE.RepeatWrapping;
+              tex.repeat.set(0.01, 0.01); // Adjust based on the desired texture size
+              material.map = tex;
+              material.needsUpdate = true; // Ensure material updates with the texture
+          }, undefined, (err) => {
+              console.error("Error loading texture:", err);
+          });
+        }
+    
         const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-
-        meshRef.current = mesh;
-      }, undefined, (error) => console.error(error));
-    };
-
-    if (typeof svg === 'string') {
-      setSvgContent(svg);
-      loadSVG();
+        mesh.rotation.x = Math.PI; // Adjust for correct orientation
+      scene.add(mesh);
+      meshRef.current = mesh;
+      }
     }
-  }, [svg, size, color, metalness, scene, width]);
-
-  useEffect(() => {
-    const maxDimension = Math.max(size?.x || 0, size?.y || 0, size?.z || 0) * 2;
-    setCameraPos([0, 0, maxDimension]);
-  }, [size, ]);
+  }, [icon, scene]);
+  // useEffect(() => {
+  //   const maxDimension = Math.max(size?.x || 0, size?.y || 0, size?.z || 0) * 1.5;
+  //   setCameraPos([0, 0, maxDimension]);
+  // }, [size, ]);
   useEffect(() => {
     // Add lighting
-    const ambientLight = new THREE.AmbientLight(0x404040, 1); // soft white light
+    const ambientLight = new THREE.AmbientLight(0x404040, 3); // soft white light
     scene.add(ambientLight);
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
@@ -252,25 +147,22 @@ const TJSCubeContent = (props: ICube) => {
       scene.remove(directionalLight);
     };
   }, [scene]);
+
   useFrame(() => {
-    if (animate?.rotate && meshRef.current) {
-      const { x = 0, y = 0, z = 0, speed = .01 } = animate.rotate;
-      let ms:number = Number(speed) / 10;
-      meshRef.current.rotation.x += x * ms;
-      meshRef.current.rotation.y += y * ms;
-      meshRef.current.rotation.z += z * ms;
+    if (typeof icon !== 'string' && icon?.animate?.rotate && meshRef.current) {
+      const { x = 0, y = 0, z = 0, speed = 0.01 } = icon?.animate.rotate;
+      meshRef.current.rotation.x += x * speed;
+      meshRef.current.rotation.y += y * speed;
+      meshRef.current.rotation.z += z * speed;
     }
   });
 
-  
-  
-
-  return (
-    <>
-      <PerspectiveCamera makeDefault position={cameraPos} frames={0.5} />
+  return <>
+        <PerspectiveCamera makeDefault position={cameraPos} frames={0.5} />
       <OrbitControls ref={controlsRef} args={[camera]} /> 
-    </>
-  );
+  </>; // Since this component is for Three.js scene manipulation, it doesn't render DOM elements directly
 };
 
-export const TJSCube = (props: ICube) => <><style jsx>{styles}</style><div className='tjscube'><Canvas ><TJSCubeContent {...props} /></Canvas></div></>;
+export const TJSCube = (props:any) => (<>
+  <style jsx>{styles}</style><div className='tjscube'><Canvas><TJSCubeContent {...props} /></Canvas></div>
+</>)

@@ -21,12 +21,13 @@ const useRoute = (): ORoute => {
   const router = useRouter();
   const clearanceRoutes = useClearanceRoutes();
   const level = useClearance();
-  const handleHeader = useCallback((title?: string) => {
-    // console.log('[ handleHeader ]', title)
+  const routeTitle = String(router.pathname)?.length && router.pathname.split('/')[1] || false;
 
-    const rtTit = String(router.pathname)?.length && router.pathname.split('/')[1] || false;
+  const handleHeader = useCallback((title?: string) => {
+    const selectedTitle = routeTitle || title;
+    console.log('[ handleHeader ]', {title, routeTitle, selectedTitle,})
     const headerContext = {
-      title: rtTit || title,
+      title: selectedTitle,
       crumbs: [
         { label: router.pathname.split('/')[1], href: router.pathname },
         ...Object.keys(router?.query).map((k, v) => {
@@ -35,7 +36,7 @@ const useRoute = (): ORoute => {
       ]
     };
     setHeader(headerContext);
-  }, [setHeader]);
+  }, [routeTitle,]);
   const renderTriggers = [user, _user, setUser, clearanceRoutes, level];
 
   const explicitRouter = (route: IRoute) => {
@@ -44,10 +45,9 @@ const useRoute = (): ORoute => {
   const implicitRouter = useCallback(() => {
     if (user && !_user) setUser(user);
     if (clearanceRoutes) {
-      const matchingRoute = clearanceRoutes.find(clearRoute => {
+      const isInRoutesList = clearanceRoutes.find(clearRoute => {
         const routePathWithoutQuery = clearRoute?.href;
         if (routePathWithoutQuery === router.pathname) {
-
           return true;
         }
         else if (
@@ -65,35 +65,33 @@ const useRoute = (): ORoute => {
         }
         return false;
       });
-      // if (router.asPath === '/authentication/signout') {
-      //   openModal({
-      //     confirm: {
-      //       title: "You've been logged out...",
-      //       statements: [
-      //         { text: 'go home', href: '/' }
-      //       ]
-      //     }
-      //   }
-      //   )
-      // }
-      if (matchingRoute) {
-        handleHeader(matchingRoute?.label && capitalizeAll(matchingRoute?.label));
-        matchingRoute?.href && !router.asPath.includes(matchingRoute?.href) && router.push(matchingRoute.href, undefined, { shallow: true });
+      if (isInRoutesList) {
+        const hrefIsString:boolean = typeof isInRoutesList?.href === 'string';
+        const hrefIsNotCurrent = isInRoutesList?.href && !router.asPath.includes(isInRoutesList?.href) || 'current-route';
+        const canNavigate = Boolean( typeof hrefIsString === 'boolean' && typeof hrefIsNotCurrent === 'boolean');
+        // console.log('[ IS N ]',{hrefIsString, hrefIsNotCurrent,  canNavigate})
+        return canNavigate && router.push(String(isInRoutesList.href), undefined, { shallow: true }) || {error:typeof hrefIsString === 'string'?hrefIsString:hrefIsNotCurrent};
       } else if (router.asPath !== '/authentication/signout') {
         let currentPath: string = router.asPath;
         if (currentPath.includes('/404?')) {
-          router.push(currentPath);
+          return router.push(currentPath);
         } else {
           return router.push(`/404?loc=${currentPath}`);
         }
       }
 
     }
-  }, [...renderTriggers]); // Add all dependencies used inside implicitRouter
-
+  }, [...renderTriggers]);
   useEffect(() => {
-    implicitRouter();
-  }, [clearanceRoutes, implicitRouter]);
+    const implicitResp: any = implicitRouter();
+     if (implicitResp?.error && header) {
+      console.log('[ implicitResp ( implicitResp?.error && header ) ]', { implicitResp:JSON.stringify(implicitResp), header:JSON.stringify(header) }); 
+    } else {
+      console.log('[ implicitResp ( else ) ]', { implicitResp:JSON.stringify(implicitResp), header:JSON.stringify(header) });
+      handleHeader(); // Set header context when no error
+    }
+  }, [clearanceRoutes, implicitRouter, header, routeTitle]); // Added routeTitle to dependencies array
+  
 
   return [_user, router.pathname, explicitRouter];
 };

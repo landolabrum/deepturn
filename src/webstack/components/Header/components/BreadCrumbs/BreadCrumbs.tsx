@@ -34,12 +34,12 @@ export default function BreadCrumbs({ defaultLink, links }: BreadCrumbsProps) {
       <div className="crumb" onClick={() => defaultLink?.href&& handleClick(defaultLink.href) || handleClick( "/")}>
         {defaultLink?.label || keyStringConverter(String(environment.merchant.name))} <UiIcon icon="fa-chevron-right" />
       </div>
-      {links && width > 900 && links.map((link, key) => {
+      {links && width > 1100 && links.map((link, key) => {
         return <div key={key} onClick={() => key + 1 !== links.length && handleClick(link.href ? link.href : "/" + link.label)} className={`crumb ${key === linkLen ? "active" : ""}`}>
           {capitalize(link.label)} {key !== linkLen && <UiIcon icon="fa-chevron-right" />}
         </div>
       })}
-      {width < 900 && <div className="crumb active" onClick={router.back}>back</div>}
+      {width < 1100 && <div className="crumb active" onClick={router.back}>back</div>}
     </div>
   </>
 }

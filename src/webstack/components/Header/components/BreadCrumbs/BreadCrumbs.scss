@@ -1,28 +1,47 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
 .breadcrumbs {
-  display: flex;
-  align-items: center;
-  height: var(--s-element);
+  @extend .d-flex;
+  justify-content: flex-start;
+  line-height: 1;
+  width: var(--s-padding-width);
+  font-family: Game;
+  padding: var(--s-padding);
+  @media(max-width: 1100px){
+    --ui-icon-color: var(--primary);
+    color: var(--gray-60);
+  }
   
   .crumb {
-    display: flex;
+    @extend .d-flex;
+    min-width: var(--s-1);
     align-items: center;
     white-space: nowrap;
-    --ui-icon-width: 26px;
-    --ui-icon-height: 14px;
-    --ui-icon-color: inherit;
-    color: inherit;
+    --ui-icon-height:var(--s-9);
+    --ui-icon-width:var(--s-3);
+    font-size: var(--s-7);
+    
     text-transform: capitalize;
-    font-weight: 300;
     cursor: pointer;
     @media(max-height: 500px){
       height: var(--s-1);
       align-items: flex-end;
-     }
+    }
     &:last-child{
       cursor: default;
     }
     &.active {
       color: white;
+      @media(max-width: 1100px){
+        --ui-icon-color: var(--gray-50);
+        color: var(--gray-50);
+       }
+    }
+    &:hover{
+      color:var(--primary-lite)
     }
   }
 }
