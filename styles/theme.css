@@ -169,6 +169,7 @@
   --s-padding: 20px;
   --s-padding-width: calc(100% - calc(var(--s-padding) * 2));
   --s-border-width: calc(100% - 2px);
+  --s-border-padding-width: calc(var(--s-padding-width) - 2px);
   --s-padding-sm: calc(--s-padding * 2);
   --s-element-width: calc(100% - calc(var(var(--s-element))));
 
@@ -374,7 +375,9 @@ body {
 .no-scroll::-webkit-scrollbar {
   display: none;
 }
-
+.p-fix{position: fixed;}
+.p-abs{position: absolute;}
+.z-n-1{z-index: -1;}
 /* FLEX CLASS DEFINITIONS */
 .d-flex {
   display: flex;
