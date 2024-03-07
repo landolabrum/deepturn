@@ -9,10 +9,9 @@
   line-height: 1;
   width: var(--s-padding-width);
   font-family: Game;
-  padding: var(--s-padding);
   @media(max-width: 1100px){
-    --ui-icon-color: var(--primary);
-    color: var(--gray-60);
+    --ui-icon-color: var(--gray-10);
+    color: var(--gray-30);
   }
   
   .crumb {
@@ -20,14 +19,11 @@
     min-width: var(--s-1);
     align-items: center;
     white-space: nowrap;
-    --ui-icon-height:var(--s-9);
+    --ui-icon-height:var(--s-7);
     --ui-icon-width:var(--s-3);
-    font-size: var(--s-7);
-    
     text-transform: capitalize;
     cursor: pointer;
     @media(max-height: 500px){
-      height: var(--s-1);
       align-items: flex-end;
     }
     &:last-child{
@@ -37,7 +33,7 @@
       color: white;
       @media(max-width: 1100px){
         --ui-icon-color: var(--gray-50);
-        color: var(--gray-50);
+        color: var(--gray-10);
        }
     }
     &:hover{

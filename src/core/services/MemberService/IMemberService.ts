@@ -68,7 +68,7 @@ export default interface IMemberService {
     password,
     code,
     user_agent
-  }: any): Promise<UserContext>;
+  }: any): Promise<any>;
   signUp({
     name,
     email,

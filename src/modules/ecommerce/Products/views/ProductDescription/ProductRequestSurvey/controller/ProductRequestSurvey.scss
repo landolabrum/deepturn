@@ -68,18 +68,20 @@
     flex-direction: column;
     justify-content: flex-start;
     border-radius: var(--border-radius);
-    padding:  var(--s-padding) ;
+    padding:  var(--s-padding);
+    width: var(--s-padding-width);
+    
     transition: all .5s;
-        background-color: var(--gray-90);
+    background-color: var(--gray-90);
     gap: var(--s-padding);
     // min-height: 490px;
     color: var(--gray-30);
     &__btn-view{
+        width: var(--s-border-width);
         border-radius: var(--border-radius);
         @extend .d-flex;
         transition: all .5s;
         height: 300px;
-        width: 100%;
         color: var(--primary-opaque);
         background-color: var(--primary-opaque);
         border: solid 1px var(--primary);

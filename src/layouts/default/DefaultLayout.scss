@@ -1,8 +1,8 @@
 main {
-  width: var(--s-padding-width);
+  // width: var(--s-padding-width);
   overflow-y: visible;
   position: relative;
-  margin: var(--s-padding) var(--s-padding) 100px;
+  margin: var(--s-element) auto 100px;
   height: calc(100% - calc(var(--s-padding) * 2));
   @media(min-width: 1260px){
     margin: 0 auto;

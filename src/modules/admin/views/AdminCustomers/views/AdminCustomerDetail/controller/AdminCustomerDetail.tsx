@@ -114,7 +114,13 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
 
   }
   const handleDelete = () => {
-    openModal({ confirm: { title: `Delete ${info?.name}`, statements: [{ text: 'yes', onClick: confirmDelete }, { text: 'no', onClick: closeModal }] } })
+    openModal({ confirm: {
+      title: `Delete ${info?.name}`,
+      statements: [
+        { text: 'yes', onClick: confirmDelete },
+        { text: 'no', onClick: closeModal }
+      ]
+    }})
   }
 
   const onChange = (e: { target: { name: string, value: any } }) => {

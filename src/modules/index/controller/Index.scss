@@ -14,7 +14,7 @@
     width: 100vw;
 
 }
-.d-flex-col{
+.d-flex-column{
     @extend .d-flex;
     flex-direction: column;
 }
@@ -22,14 +22,13 @@
 .index {
     width: 100%;
     color: var(--gray-20);
-    @extend .d-flex-col;
+    @extend .d-flex-column;
     justify-content: flex-start;
     padding: 0;
     height: inherit;
     gap: var(--s-9);
     position: relative;
     @media(max-width: 1100px) {
-        width: var(--s-padding-width);
         padding: var(--s-padding);
         margin: auto;
     }

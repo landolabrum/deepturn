@@ -1,0 +1,15 @@
+h2{
+    color:var(--body);
+    background-color: var(--primary);
+    justify-content: flex-start;
+    width: var(--s-padding-width);
+    padding: 0 var(--s-padding);
+    height: var(--s-element);
+    border-radius: var(--border-radius);
+    white-space: nowrap;
+}
+
+h4{
+    line-height: 1.5;
+    color:var(--gray-40);
+}

@@ -5,13 +5,10 @@ import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import SignUp from "../views/SignUp/SignUp";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { useRouter } from "next/router";
-// import VerifyEmail from "../views/VerifyEmail/VerifyEmail";
-import { useNotification } from "@webstack/components/Notification/Notification";
 import UiButton from "@webstack/components/UiButton/UiButton";
-import { useLoader } from "@webstack/components/Loader/Loader";
-import { Line } from "@react-three/drei";
 import Link from "next/link";
 import environment from "~/src/environment";
+import { useModal } from "@webstack/components/modal/contexts/modalContext";
 
 
 
@@ -21,6 +18,8 @@ const Authentication: React.FC<any> = (props: any) => {
   const [hover, setHover] = useState<boolean>(false);
   const router = useRouter();
   const query = router.query;
+  const { openModal, closeModal } = useModal();
+
   const handleView = () => {
     switch (view) {
       case "sign-in":
@@ -46,8 +45,19 @@ const Authentication: React.FC<any> = (props: any) => {
     setView('sign-in');
     setNewCustomerEmail(response.email)
   }
+  const handleSignIn = (response:any)=>{
+    if(response?.id){
+      openModal({ confirm: {
+        title: `Welcome, ${response?.name}`,
+        statements: [
+          { text: 'go to account', onClick: ()=>router.push('/profile') },
+          { text: 'close', onClick: closeModal }
+        ]
+      }})
+    }
+    console.log('[ handleSignIn ]: ', response)
+  }
 
-  const [notification, setNotification] = useNotification();
   useEffect(() => {
     //  if(router.pathname.includes('authentication')){setNotification({
     //    active: true,
@@ -66,15 +76,12 @@ const Authentication: React.FC<any> = (props: any) => {
     }
 
     if (newCustomerEmail != undefined) setView("sign-in");
-  }, [handleSignup])
+  }, [handleSignup, handleSignIn])
 
   return (
     <>
       <style jsx>{styles}</style>
       <div className={`authentication ${view == 'sign-in' ? ' authentication__sign-in' : ''}`}>
-
-        {/* <span style={{color: "#fff" }} >{view}</span> */}
-
         <div className='authentication__view-header'>
           <div className="authentication__logo">
             <UiIcon icon={`${environment.merchant.name}-logo`} />
@@ -87,9 +94,8 @@ const Authentication: React.FC<any> = (props: any) => {
           An email has been sent to
           <Link onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} style={hover?{color:'var(--primary'}:undefined} href={`mailto://${view}`}>{' '+view+', '}</Link> click the link in the email to continue.
         </div>}
-        {view == 'sign-in' && <SignInView email={newCustomerEmail} />}
+        {view == 'sign-in' && <SignInView email={newCustomerEmail} onSuccess={handleSignIn}/>}
         {view == 'sign-up' && <SignUp onSuccess={handleSignup} />}
-        {/* {view == 'verify' && router.query.token && <VerifyEmail token={router.query.token} onSuccess={setNewCustomerEmail} />} */}
         <div className="authentication__view-action">
           <div className="authentication__view-label">
             {view == 'sign-in' && "no account?"}

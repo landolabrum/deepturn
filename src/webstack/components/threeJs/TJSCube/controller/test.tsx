@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls } from '@react-three/drei';
@@ -42,17 +42,6 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
       material.needsUpdate = true;
     });
   };
- 
-  useEffect(() => {
-    const lightExists = scene.children.some(child => child instanceof THREE.AmbientLight);
-    if (!lightExists) {
-      const ambientLight = new THREE.AmbientLight(0xFFFFFF);
-      scene.add(ambientLight);
-      return () => {
-        scene.remove(ambientLight);
-      };
-    }
-  }, [scene, icon]);
 
   useEffect(() => {
     const materialOptions: THREE.MeshStandardMaterialParameters = {
@@ -93,16 +82,29 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
       mesh.rotation.x = -Math.PI;
       scene.add(mesh);
       meshRef.current = mesh;
-      const maxDimension = Math.max(size?.x || 0, size?.y || 0, size?.z || 0);
-      camera.position.set(0,0,maxDimension);
     } else {
       const material = meshRef.current.material as THREE.MeshStandardMaterial;
-      if (icon.texture) applyTexture(material, icon.texture);
       Object.assign(material, materialOptions);
+      if (icon.texture) applyTexture(material, icon.texture);
     }
-    
   }, [icon, scene]);
+  useEffect(() => {
+    // Add lighting
+    const ambientLight = new THREE.AmbientLight(0xe0e0e0, 1); // soft white light
+    scene.add(ambientLight);
 
+    // const directionalLight = new THREE.DirectionalLight(0xffffff, .5);
+    // directionalLight.position.set(maxDimension, maxDimension, maxDimension);
+    // scene.add(directionalLight);
+    const maxDimension = Math.max(size?.x || 0, size?.y || 0, size?.z || 0);
+
+    camera.position.set(0,0,maxDimension);
+    return () => {
+      // Cleanup
+      scene.remove(ambientLight);
+      // scene.remove(directionalLight);
+    };
+  }, [scene, icon]);
   useFrame(() => {
     if (icon.animate?.rotate && meshRef.current) {
       const { x = 0, y = 0, z = 0, speed } = icon.animate.rotate;

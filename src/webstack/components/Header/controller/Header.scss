@@ -108,29 +108,25 @@
       .header-title {
         @extend .d-flex;
         justify-content: flex-start;
-        font-size: var(--s-1);
-        --ui-icon-size: var(--s-2);
-        gap: var(--s-9);
-        color: var(--gray-20-opaque);
-        --ui-icon-color: var(--gray-20-opaque);
+        gap: var(--s-11);
+        color: var(--gray-40);
+        --ui-icon-color: var(--gray-40);
         line-height: 1;
         font-weight: 700;
         text-transform: capitalize;
+        font-size: var(--s-1);
+        --ui-icon-size: var(--s-2);
         @media(max-width: 1100px) {
-          height: var(--s-element);
-          background-color: var(--gray-80-opaque);
-          overflow: hidden;
-          --ui-icon-size: var(--s-2);
-          padding: 0 var(--s-padding);
-          width: calc(var(--s-padding-width) - calc(var(--s-element) + var(--s-padding)));
-          border: solid 1px var(--gray-80-opaque);
-          border-radius: var(--border-radius);
-          // font-size: 100%;
-          text-transform: uppercase;
+          --ui-icon-height: var(--s-2);
+          --ui-icon-width: var(--s-3);
+          // padding: 0 var(--s-padding);
           font-style: italic;
+          height: calc(var(--s-element) + 2px);
+          overflow: hidden;
+          width: calc(var(--s-padding-width) - calc(var(--s-element) + var(--s-padding)));
+          text-transform: uppercase;
           line-height: 1;
           &:hover{
-            border: solid 1px var(--primary);
             color: var(--primary);
             --ui-icon-color: var(--primary);
           }

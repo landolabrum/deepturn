@@ -44,7 +44,8 @@ const SignInView: React.FC<ISignIn> = ({ email, onSuccess }: ISignIn) => {
   }
 
 
-  async function handleSignIn() {
+  async function handleSignIn(e:any) {
+    e.preventDefault();
     setIsSubmitting(true);
     if (credentials.email && credentials.password) {
       const validTFA = /^\d{6}$/.test(credentials.code);
@@ -55,13 +56,10 @@ const SignInView: React.FC<ISignIn> = ({ email, onSuccess }: ISignIn) => {
           ...(validTFA && { code: credentials.code }),
           user_agent,
         });
-        if(onSuccess){
-          console.log('[ SIGN IN VIEW onSuccess ]', resp);
-          onSuccess(resp);
-        }
-        if (resp?.email && isModalOpen) {
-          closeModal();
-        }
+        if(onSuccess)onSuccess(resp);
+        // if (resp?.email && isModalOpen) {
+        //   closeModal();
+        // }
         else setSignInResponse('error');
       } catch (e: any) {
         if (e.detail != undefined) {
@@ -124,12 +122,12 @@ const SignInView: React.FC<ISignIn> = ({ email, onSuccess }: ISignIn) => {
           )}
         </div>
   
-      </form>
         <div className="sign-in__login">
-          <UiButton variant='glow' onClick={handleSignIn} busy={isSubmitting}>
+          <UiButton type='submit' variant='glow' onClick={handleSignIn} busy={isSubmitting}>
             login
           </UiButton>
         </div>
+      </form>
     </>
   )
 }

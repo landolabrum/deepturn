@@ -51,6 +51,31 @@ export default class MemberService
   public userChanged = new EventEmitter<UserContext | undefined>();
   public prospectChanged = new EventEmitter<ProspectContext | undefined>();
 
+  public async signIn({ email, password, code, user_agent }: any): Promise<any> {
+    if (!email) {
+      throw new ApiError("Email is required", 400, "MS.SI.01");
+    }
+    if (!password) {
+      throw new ApiError("Password is required", 400, "MS.SI.02");
+    }
+
+    // Encrypt the login data
+    const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
+
+    const encryptedLoginData = encryptString(JSON.stringify({ email, password, code, user_agent }), ENCRYPTION_KEY);
+    const memberJwt:any = await timeoutPromise(
+      await this.post<{}, any>(
+        "usage/auth/sign-in",
+        { data: encryptedLoginData },
+      ),
+      TIMEOUT // 5 seconds timeout
+    );
+    if(memberJwt){
+      this.saveMemberToken(memberJwt);
+      this.saveLegacyAuthCookie(memberJwt);
+      return this._getCurrentUser(true)!;
+    }
+  };
   public async verifyEmail(token: string): Promise<any> {
     if (!token) {
       throw new ApiError("No Token Provided", 400, "MS.SI.02");
@@ -91,6 +116,7 @@ export default class MemberService
     }
   }
 
+ 
 
   public async toggleCustomerDefaultMethod(paymentMethodId: string): Promise<any> {
     let customerId = this._getCurrentUser(false)?.id;
@@ -391,29 +417,6 @@ public async processTransaction(sessionData: ISessionData) {
     }
   }
 
-  public async signIn({ email, password, code, user_agent }: any): Promise<UserContext> {
-    if (!email) {
-      throw new ApiError("Email is required", 400, "MS.SI.01");
-    }
-    if (!password) {
-      throw new ApiError("Password is required", 400, "MS.SI.02");
-    }
-
-    // Encrypt the login data
-    const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
-
-    const encryptedLoginData = encryptString(JSON.stringify({ email, password, code, user_agent }), ENCRYPTION_KEY);
-
-    const res = await this.post<{}, any>(
-      "usage/auth/sign-in",
-      { data: encryptedLoginData },
-    );
-    const memberJwt = await res;
-    this.deleteProspectToken();
-    this.saveMemberToken(memberJwt);
-    this.saveLegacyAuthCookie(memberJwt);
-    return this._getCurrentUser(true)!;
-  };
   public async resetPassword({ email, user_agent }: IResetPassword): Promise<OResetPassword> {
     if (!email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
@@ -554,24 +557,20 @@ public async processTransaction(sessionData: ISessionData) {
   }
 
   private saveTransactionToken(tranactionToken: string) {
-    if (this.isBrowser) {
-      localStorage?.setItem(TRANSACTION_TOKEN_NAME, tranactionToken);
-    }
+    if (!this.isBrowser)return;
+    localStorage?.setItem(TRANSACTION_TOKEN_NAME, tranactionToken);
   }
   private saveMemberToken(memberJwt: string) {
-    if (this.isBrowser) {
-      localStorage?.setItem(MEMBER_TOKEN_NAME, memberJwt);
-    }
+    if (!this.isBrowser)return;
+    const existingProspectToken = this.getProspectTokenFromStorage();
+    if (existingProspectToken)this.deleteProspectToken();
+    localStorage?.setItem(MEMBER_TOKEN_NAME, memberJwt);
   }
   private saveProspectToken(prospectJwt: string) {
-    if (this.isBrowser) {
-      // Check if a member token exists and delete it before saving the prospect token
-      const existingMemberToken = localStorage?.getItem(MEMBER_TOKEN_NAME);
-      if (existingMemberToken) {
-        this.deleteMemberToken(); // Ensure member token is deleted if it exists
-      }
-      localStorage?.setItem(PROSPECT_TOKEN_NAME, prospectJwt);
-    }
+    if (!this.isBrowser)return;
+    const existingMemberToken = this.getMemberTokenFromStorage();
+    if (existingMemberToken)this.deleteMemberToken();
+    localStorage?.setItem(PROSPECT_TOKEN_NAME, prospectJwt);
   }
   private get isBrowser(): boolean {
     return typeof window === "object";
