@@ -1,4 +1,5 @@
 
+
 .d-flex{
  display: flex;
  justify-content: center;
@@ -22,7 +23,6 @@
     align-items: flex-start;
     gap:var(--s-padding);
     flex-direction: column;
-    width: var(--s-padding-width);
     padding: var(--s-padding);
     background-color: var(--gray-90);
     border-radius: var(--border-radius);

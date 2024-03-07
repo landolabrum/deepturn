@@ -62,6 +62,7 @@ const ProductList = ({ products }:IProductList) => {
     return (
       <>
         <style jsx>{styles}</style>
+        <div className='product-list'>
         <AdaptGrid xs={1} md={3} gap={15} variant="card">
           {prods && prods.filter((prod: any,a:number)=>prod?.metadata?.mid === environment.merchant.mid).map((product: any, index: number) => (
             <div 
@@ -112,6 +113,7 @@ const ProductList = ({ products }:IProductList) => {
             </div>
           ))}
         </AdaptGrid>
+        </div>
       </>
     );
   };

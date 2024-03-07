@@ -11,10 +11,7 @@ $pad: 10px;
 .cart-list {
     @extend .d-flex;
     width: 100%;
-    margin-top: var(--s-padding);
-    @media(max-width: 900px){
-        width: var(--s-padding-width);
-    }
+
     &--mini{
         width: 100%;
         flex-direction: column;

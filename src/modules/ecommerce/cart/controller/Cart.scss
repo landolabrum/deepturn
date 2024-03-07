@@ -29,7 +29,7 @@
     @extend .d-flex-col;
     width: 100%;
     z-index: 1;
-    margin-top: var(--s-element);
+    gap:var(--s-5);
     .cart__header {
         gap:var(--s-9);
         @extend .d-flex;
@@ -42,7 +42,6 @@
         @media(max-width:900px){
             gap: 7px;
             flex-direction: column;
-            width: var(--s-padding-width);
         }
     }
 

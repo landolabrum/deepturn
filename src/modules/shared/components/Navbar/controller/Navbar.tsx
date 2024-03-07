@@ -18,7 +18,7 @@ import { Router } from "next/router";
 
 
 const Navbar = () => {
-  const [user, current, setRoute] = useRoute();
+  const { selectedUser, pathname, explicitRouter} = useRoute();
   const routes = useClearanceRoutes();
   const [scroll, _] = useScroll();
   const { openModal, closeModal, isModalOpen } = useModal();
@@ -32,7 +32,7 @@ const Navbar = () => {
   const handleMobileClick = (selectedRoute: IRoute) => {
     closeModal();
     if (selectedRoute.href && !selectedRoute.items) {
-      setRoute(selectedRoute); // Assuming setRoute expects an IRoute
+      explicitRouter(selectedRoute); // Assuming setRoute expects an IRoute
     } else if (selectedRoute.modal) {
       openModal(modals[selectedRoute.modal]);
     } else if (selectedRoute.items) {
@@ -55,7 +55,7 @@ const Navbar = () => {
     let _route: IRoute = typeof route === 'string' ? { href: route } : route;
 
     if (_route?.href) {
-      setRoute(_route);
+      explicitRouter(_route);
       setToggled(_route.label || null); // Set the route as toggled when selected
     } else if (_route?.modal && !isModalOpen) {
       openModal(modals[_route.modal]);
@@ -77,8 +77,8 @@ const Navbar = () => {
 
   // Compute user display name
   const displayName = useMemo(() => {
-    return user?.name ? `${user.name.split(" ")[0]} ${user.name.split(" ")[1][0]}.` : "";
-  }, [user]);
+    return selectedUser?.name ? `${selectedUser.name.split(" ")[0]} ${selectedUser.name.split(" ")[1][0]}.` : "";
+  }, [selectedUser]);
 
   const cartTotal = useCartTotal();
   const cartRoute = routes && routes.find((r: any) => r.href === '/cart');

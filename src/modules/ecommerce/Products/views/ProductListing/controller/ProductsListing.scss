@@ -5,19 +5,28 @@
     flex-direction: column;
 }
 
-$space: var(--s-7);
 
 .product-listing {
-    margin: 100px 0;
-    height: 100%;
-    max-width: 100%;
     overflow: hidden;
     white-space: wrap;
     color: white;
     @extend .d-flex;
-    justify-content: flex-start;
-    gap: var(--s-padding);
-    .product-listing__header {
-        width: 100%;
+    width: 100%;
+    margin: auto;
+    gap: var(--s-5);
+    justify-content: stretch;
+    align-items: stretch;
+    &__header {
+        @extend .d-flex;
+        align-items: flex-start;
+        gap:var(--s-padding);
+        flex-direction: column;
+    }
+    .product-listing__filters{
+        padding:var(--s-padding);
+        margin: auto;
+        border-radius: var(--border-radius);
+        width: calc(100% - calc(var(--s-9) * 2));
+        background-color: var(--gray-80);
     }
 }

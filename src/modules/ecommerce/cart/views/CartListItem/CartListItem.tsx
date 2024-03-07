@@ -7,11 +7,17 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import ProductBuyNow from '../../../Products/views/ProductDescription/views/ProductBuyNow/ProductBuyNow';
 import { ITraits } from '@webstack/components/FormControl/FormControl';
+import UiButton from '@webstack/components/UiButton/UiButton';
+import { useRouter } from 'next/router';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const CartListItem: React.FC<any> = ({item, traits, variant,adjustable}:{item:any, traits:ITraits, variant?:string,adjustable?:boolean}) => {
-    
+    const router = useRouter();
+    const handleClick = () =>{
+        console.log(item)
+        router.push(`/product?id=${item?.id}&pri=${item?.price?.id}`)
+    }
     useEffect(() => {}, [item]);
     return (
         <>
@@ -45,6 +51,9 @@ const CartListItem: React.FC<any> = ({item, traits, variant,adjustable}:{item:an
                     </div>
                     {adjustable !== false && 
                     <div className="cart-list-item-action">
+                        <div>
+                            <UiButton onClick={handleClick} variant='flat' size='sm'>item details</UiButton>
+                        </div>
                         <ProductBuyNow traits={traits} product={item} />
                     </div>
                     }

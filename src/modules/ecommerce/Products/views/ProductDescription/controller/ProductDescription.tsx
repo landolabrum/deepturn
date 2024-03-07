@@ -72,8 +72,8 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
     fetchProduct(); // Moved fetching into a useEffect to be run on mount and on changes of product_query_id and price_query_id
   }, [product_id, price_id, product_query_id, price_query_id, fetchProduct]); // Dependencies updated
 
-  useEffect(() => {
-  }, [product]); // Dependencies updated
+  // useEffect(() => {
+  // }, [product]); // Dependencies updated
   if (product == null) return (
     <>
       <style jsx>{styles}</style>

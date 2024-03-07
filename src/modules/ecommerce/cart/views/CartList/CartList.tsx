@@ -37,11 +37,11 @@ const CartList = ({ variant, adjustable }: { variant?: 'mini', adjustable?:boole
             className={`cart-list ${
                 variant&&` cart-list__${variant}`||''}
                 `}>
-            <AdaptGrid xs={1} gapY={20}>
+            <AdaptGrid xs={1} gap={20}>
                 {cart.map((item: any, key: number) => (
-                    <span key={key}>
+                    <div key={key}>
                         <CartListItem variant={variant} item={item} adjustable={adjustable} />
-                    </span>
+                    </div>
                 ))
                 }
             </AdaptGrid>

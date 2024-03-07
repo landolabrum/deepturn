@@ -156,7 +156,6 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
                   value={view}
                   onSelect={handleView}
                   onClose={toggleHide}
-
                 />
               </div>
             </div>

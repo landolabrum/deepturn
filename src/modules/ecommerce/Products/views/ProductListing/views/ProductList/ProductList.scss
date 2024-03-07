@@ -4,7 +4,10 @@
     align-items: center;
     flex-direction: column;
 }
-
+.product-list{
+    width: 100%;
+    margin: 0;
+}
 .product {
     &-json {
         height: max-content;
@@ -19,11 +22,11 @@
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
-    width: var(--s-padding-width);
+    width: 100%;
     gap: var(--s-element);
     margin: auto;
     --ui-icon-color: var(--gray-70-opaque);
-    padding: var(--s-padding);
+    padding: var(--s-padding) 0;
     &:hover {
         --ui-icon-color: var(--gray-60);
     }
@@ -56,9 +59,9 @@
     }
     &-content{
         @extend .d-flex;
-        flex-direction: column;
         width: var(--s-padding-width);
         padding: var(--s-padding);
+        flex-direction: column;
         line-height: 1;
         gap: var(--s-9);
         &--name {

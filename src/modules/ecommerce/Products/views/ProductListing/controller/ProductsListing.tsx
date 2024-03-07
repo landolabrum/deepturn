@@ -13,6 +13,7 @@ import Image from "next/image";
 import environment from "~/src/environment";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import ProductList from "../views/ProductList/ProductList";
+import UiSelect from "@webstack/components/UiSelect/UiSelect";
 
 interface Filter {
   [key: string]: {
@@ -29,6 +30,7 @@ const ProductsListing: NextPage = () => {
   const [hasMore, setHasMore] = useState<boolean>(false);
   const ProductService = getService<IProductService>("IProductService");
   const getSelectedCategories = (filter: any) => {
+    if(!filters?.length)return '-';
     const selectedEntries = Object.entries(filter).filter(([, value]: any) => value.selected);
     if (selectedEntries.length === 0) return "all";
     return selectedEntries.map(([key]) => key).join(", ");
@@ -78,7 +80,10 @@ const ProductsListing: NextPage = () => {
     <style jsx>{styles}</style>
     <div className="product-listing">
       {/* <ProductChapters/> */}
-      {/* <div className="product-listing__header">
+      <div className="product-listing__header">
+        <div>
+          <h1>Products</h1>
+        </div>
         <div className="product-listing__filters">
           {['categories', 'types'].map(filterKey => (
             <UiSelect
@@ -92,7 +97,7 @@ const ProductsListing: NextPage = () => {
             />
           ))}
         </div>
-      </div> */}
+      </div>
       <ProductList products={products} />
     </div>
   </>

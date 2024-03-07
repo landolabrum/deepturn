@@ -28,14 +28,16 @@ $el_gap: 7px;
   backdrop-filter: blur(7px);
   position: relative;
   &__close{
-    top: calc(var(--s-2) * -1);
-    right: 0;
+    top: calc(calc(var(--s-1) + var(--s-9)) * -1);
+    left: 0;
+    right: auto;
     position: absolute;
     margin-bottom: var(--s-9);
-    color: var(--gray-60);
-    --ui-icon-color: var(--gray-60);
+    color: var(--gray-30);
+    --ui-icon-color: var(--gray-30);
     border-radius: var(--border-radius);
     border: solid 1px transparent;
+    padding-left:var(--s-9);
     &:hover{
       color: var(--primary);
       --ui-icon-color: var(--primary);

@@ -46,10 +46,8 @@
 
   &-sm {
     position: relative;
-    // width: var(--s-9);
-    width: var(--s-6);
-    --ui-icon-width: var(--s-6);
-    --ui-icon-height: var(--s-6);
+    --ui-icon-height: var(--s-7);
+    --ui-icon-width: 100%;
    }
 
   // &__before {

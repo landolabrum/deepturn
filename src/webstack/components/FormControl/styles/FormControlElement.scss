@@ -195,10 +195,13 @@
     }
     &--button.form-control__element--flat {
         width: inherit;
+        gap: var(--s-11);
         &:first-child{
             padding: 0;
         }
     }
+ 
+
     &--checkbox {
         width: max-content;
         padding: 0;
@@ -258,9 +261,9 @@
         }
     }
 
-    &-sm:not(&--after-icon),
-    &-sm:not(&--before-icon) {
-        padding: 0 var(--s-9)
+    &-sm:not(.form-control__element--before-icon),
+    &-sm:not(.form-control__element--before-icon) {
+        padding: 0 var(--s-9);
     }
     &--flat{
         &--after-icon{

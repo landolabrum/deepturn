@@ -13,12 +13,21 @@ $actionsBg: var(--gray-90);
     height: 100%;
     left: 0;
     position: relative;
-    // width: calc(100% - 10px);
+    width: calc(var(--s-padding-width));
+    padding: var(--s-padding);
     right: auto;
-    margin: auto;
-    margin-top:  calc(var(--s-1) * 2);
+    height: 100%;
+    margin-top:  calc(var(--s-element ) * 2);
     @media (max-width: 1100px) {
+        margin-top:  0;
         width: auto;
+    }
+    @media(max-width: 900px){
+        padding: var(--s-padding) 0;
+
+        margin: var(--s-2) auto 0;
+        width: 100%;
+        position: absolute;
     }
     &__full{
         padding: 0;
@@ -26,6 +35,10 @@ $actionsBg: var(--gray-90);
         position: fixed;
     }
     &__full-width {
+        @media (max-width: 1100px) {
+            margin-top:  calc(var(--s-element ) * 2);
+            width: auto;
+        }
         border-radius: var(--border-radius);
     }
     &__full, &__full-width {
@@ -61,12 +74,7 @@ $actionsBg: var(--gray-90);
     &__full-width {
         flex-direction: column;
     }
-    //     gap: unset;
-    //     margin: var(--s-padding);
-    //     @media (max-width: 1100px) {
-    //         padding-top: var(--s-element);
-    //     }
-    // }
+
 }
 
 // ACTIONS CLASS
@@ -101,14 +109,12 @@ $actionsBg: var(--gray-90);
         }
     }
 
-    z-index: 2;
+    z-index: 999;
     top: calc(var(--s-element) * 2);
     opacity: 0;
     transform: translateX(-100%);
     @extend .d-flex;
-    @media(max-width: 1100px){
-        position: absolute;
-    }
+
     &--start {
         display: none;
     }
@@ -148,15 +154,20 @@ $actionsBg: var(--gray-90);
 
     @media (min-width: 1100px) {
         min-height: auto;
-        // min-width: 350px;
+    }    
+    @media(max-width: 1100px){
+        top: calc(var(--s-5) * -1);
+        width: 100%;
+        margin: auto;
+        position: absolute;
+        height: max-content;
+        overflow: visible;
     }
 
-    @media (max-width: 1100px) {
-        height: max-content;
-        width: var(--s-padding-width);
-        margin-left: var(--s-padding);
-        margin-right: var(--s-padding);
-        overflow: visible;
+
+    @media (max-width: 900px) {
+        width: auto;
+        margin: auto var(--s-padding);
     }
 }
 
@@ -269,7 +280,7 @@ $actionsBg: var(--gray-90);
     }
 
     @media (max-width: 900px) {
-        width: calc(var(--s-padding-width) - 2px);
+        width: calc(var(--s-border-width) - calc(var(--s-9) * 2));
 
     }
 
