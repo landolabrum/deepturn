@@ -10,8 +10,8 @@
 @font-face {
   font-family: "Game";
   src: url("/fonts/gamestationtextobl.otf") format("opentype");
-  /* font-weight: normal; */
-  /* font-style: normal; */
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
@@ -344,11 +344,12 @@ body {
   color: var(--gray-40);
   font-size: var(--s-5);
   font-weight: 300;
-
   #__next {
     overflow-y: visible;
     margin: 0;
     padding: 0;
+    height: 100%;
+    min-height: 100vh;
   }
 }
 
