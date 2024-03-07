@@ -1,15 +1,54 @@
 h2{
-    color:var(--body);
-    background-color: var(--primary);
+    background:var(--dark);
+    color: #e0e0e0;
     justify-content: flex-start;
-    width: var(--s-padding-width);
-    padding: 0 var(--s-padding);
+    // width: 100%;
+    width: var(--s-border-padding-width);
+    padding: var(--s-9) var(--s-padding);
+    margin: auto;
     height: var(--s-element);
+    border: solid 1px var(--gray-70);
     border-radius: var(--border-radius);
+    mix-blend-mode: color-dodge;
     white-space: nowrap;
+    font-size: var(--s-1);
+    // text-shadow: 2px 3px 2px var(--primary);
 }
-
+h3{
+text-shadow: 2px 3px 2px var(--primary);
+}
 h4{
-    line-height: 1.5;
+    @extend .d-flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    line-height: 1.2;
+    --ui-icon-height: var(--s-6);
     color:var(--gray-40);
+    --ui-icon-color:var(--gray-40);
 }
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.nirvana-index{
+     @extend .d-flex;
+     flex-direction: column;
+     width: 100%;
+     gap:var(--s-1);
+     &__content{
+         @extend .d-flex;
+         z-index: -1;
+         flex-wrap: wrap;
+         margin: var(--s-5) 0;
+         position: relative;
+         background-position: center;
+         background-repeat: no-repeat;
+         background-size: cover;
+         overflow: hidden;
+         padding: var(--s-1) var(--s-padding)  var(--s-element);
+         
+         border-radius:var(--border-radius);
+         // max-width: 100vw;
+        }
+    }

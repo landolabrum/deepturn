@@ -6,6 +6,7 @@ import ProductRequestSurvey from '~/src/pages/configure';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { useEffect } from 'react';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import Image from "next/image";
 
 
 const Nirvo = () => {
@@ -38,12 +39,30 @@ const NirvanaEnergy = () => {
   return (
     < >
       <style jsx>{styles}</style>
+
+      <Image
+        // fill
+        width={900}
+        height={900}
+        style={{
+          position: "fixed",
+          top: "0",
+          left: "0",
+          width: 'auto',
+          zIndex: '-1',
+          height: '100%',
+          // filter: 'brightness(.66)'
+        }}
+        objectFit="cover"
+        // src="/merchant/nirv1/backgrounds/dirt-road.jpeg"
+        src="/merchant/nirv1/backgrounds/redrock-wall.jpeg"
+        alt="bg" />
       <div id='nirvana-index'
-        className='d-flex flex-wrap s-padding-width gap-11 gap-md-element justify-start align-start margin-auto'
+        className='nirvana-index'
       >
-        <div className='d-flex-col gap-padding s-lg-border-width-50 s-h-100 '>
-          <div className='d-flex-col gap-padding align-start '>
-            <div className='d-flex-col align-start gap-9 padding s-element-width'>
+        <div className='nirvana-index__content'>
+          <AdaptGrid xs={1} sm={2} gap={15}>
+            <div className='d-flex-col align-start gap-9 s-w-100'>
               <h3>6 Key Questions to Enhance Your Solar System with Batteries</h3>
               <h4><UiIcon icon="fa-cube" />Can I add batteries to my exisiting solar system?</h4>
               <h4><UiIcon icon="fa-cube" />What determines that the battery will back up what I need?</h4>
@@ -52,24 +71,20 @@ const NirvanaEnergy = () => {
               <h4><UiIcon icon="fa-cube" />Is there a limit to how much the batteries can power in my home at the same time?</h4>
               <h4><UiIcon icon="fa-cube" />Can I change what I want backed up in the future</h4>
             </div>
-          </div>
+            <ProductRequestSurvey id='configure' startButton='configure your back up system' />
+          </AdaptGrid>
         </div>
-        <div className='s-lg-border-width-50 s-w-100'>
-          <ProductRequestSurvey id='configure' startButton='configure your back up system' />
-        </div>
-        <div className='d-flex-col align-start gap-9'>
-          <h2>
-            Time to Create your Nirvana!
-          </h2>
-          <h4>
-            On and Off-grid battery back up
-            If you&apos;re thinking about going off grid or want to learn more about backup battery systems, it&apos;s time to create your
-          </h4>
-        </div>
-        <div className='d-flex-col align-start gap-9'>
-            <h2>
-              The Importance of Backup Batteries
-            </h2>
+        <h2>
+          Time to Create your Nirvana!
+        </h2>
+        <h4>
+          On and Off-grid battery back up
+          If you&apos;re thinking about going off grid or want to learn more about backup battery systems, it&apos;s time to create your
+        </h4>
+        {/* <div className='d-flex-col align-start gap-9'> */}
+        <h2>
+          The Importance of Backup Batteries
+        </h2>
         <AdaptGrid sm={1} md={3} margin='0 0 45px' gapX={10} gapY={5}>
           <HomeGridItem icon='fal-cloud-bolt-sun' title='power outages' >
             With backup batteries, you can be sure your home will have
@@ -84,26 +99,26 @@ const NirvanaEnergy = () => {
             The 30% Federal Tax credit applies to battery storage that is connected to a PV
           </HomeGridItem>
         </AdaptGrid>
-        </div>
-
-        On-grid vs Off-grid Solar Battery Backup
-        Systems
-        <AdaptGrid sm={1} md={2} margin='0 0' gapX={10}>
-          <HomeGridItem title='on-grid'>
-            On-grid systems are connected to the utility grid and can sell excess energy back to the power company or store excess energy depending on how the system is
-          </HomeGridItem>
-          <HomeGridItem title='environmental concerns' >
-            Off-grid systems are not connected to the utility grid. These systems can be tailored to fit your needs no matter how big or small and using several different power sources.
-          </HomeGridItem>
-        </AdaptGrid>
-
-        Don&apos;t be fooled by ( Name Brand ) Batteries
-        <AdapTable
-          // variant='mini'
-          options={{ hide: ['header', 'footer'] }}
-          data={tableData}
-        />
       </div>
+      {/* </div> */}
+
+      On-grid vs Off-grid Solar Battery Backup
+      Systems
+      <AdaptGrid sm={1} md={2} margin='0 0' gapX={10}>
+        <HomeGridItem title='on-grid'>
+          On-grid systems are connected to the utility grid and can sell excess energy back to the power company or store excess energy depending on how the system is
+        </HomeGridItem>
+        <HomeGridItem title='environmental concerns' >
+          Off-grid systems are not connected to the utility grid. These systems can be tailored to fit your needs no matter how big or small and using several different power sources.
+        </HomeGridItem>
+      </AdaptGrid>
+
+      Don&apos;t be fooled by ( Name Brand ) Batteries
+      <AdapTable
+        // variant='mini'
+        options={{ hide: ['header', 'footer'] }}
+        data={tableData}
+      />
     </>
   );
 };

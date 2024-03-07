@@ -20,9 +20,9 @@
             transform: translateX( -50%);
             height: 100%;
             width: auto;
-            min-width: calc(100vw + var(--s-element));
-            min-height: 100vw;
-            z-index: -1;
+            // min-width: calc(100vw + var(--s-element));
+            // min-height: 100vw;
+            z-index: -111;
             position: absolute;
             filter: blur(4px);
             background-position: center;
