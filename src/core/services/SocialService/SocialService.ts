@@ -1,35 +1,22 @@
 import ApiService from "../ApiService";
-import { getService } from "@webstack/common";
 import environment from "~/src/environment";
-import IMemberService from "../MemberService/IMemberService";
 import ISocialService from "./ISocialService";
 
-export default class SocialService extends ApiService implements ISocialService {
-
-  private socialService: ISocialService;
-
+export default class SocialService
+  extends ApiService
+  implements ISocialService {
   constructor() {
-    super(environment.serviceEndpoints.shopping);
-    this.socialService = getService<ISocialService>('ISocialService');
+    super(environment.serviceEndpoints.social);
   }
-  public async getProducts(
+  public async instagramSignIn(
     request?: any
   ): Promise<any> {
-    if (request === undefined) return await this.get<any>(
-      `/api/products`,
+    if (request === undefined) return;
+    const response = await this.post<any, any>(
+      `/usage/social/instagram/sign-in`,
+      request
     );
-    return await this.get<any>(
-      `/api/products${request}`,
-    );
+    return response;
   }
-  public async getProduct({ id, pri }: any): Promise<any> {
-    if (pri) {
-      return this.get<any>(
-        `/api/product?id=${id}&pri=${pri}`,
-      );
-    }
-    return this.get<any>(
-      `/api/product?id=${id}`,
-    );
-  }
+
 }

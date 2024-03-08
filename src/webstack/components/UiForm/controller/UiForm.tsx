@@ -137,6 +137,7 @@ const UiForm = ({
                     )}
                     {textTypes.includes(field?.type) && field.name && field.name !== 'address' && <>
                         <UiInput
+                            autoComplete={field.autoComplete}
                             label={field.label}
                             variant={
                                 Boolean(field?.error) ? 'invalid' : variant || field?.variant

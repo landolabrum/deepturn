@@ -1,0 +1,28 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.instagram {
+    @extend .d-flex;
+    flex-direction: column;
+    background-color: #f30f3030;
+    border-radius: var(--border-radius);
+    width: 100%;
+    
+    &-header {
+        @extend .d-flex;
+        justify-content: flex-start;
+        width: var(--s-padding-width);
+        padding: var(--s-padding);
+        &--title {
+            font-size: var(--s-element);
+            // align-items: flex-start;
+        }
+    }
+    &-body{
+        width: var(--s-padding-width);
+        padding:var(--s-padding) var(--s-padding) var(--s-1);
+    }
+}

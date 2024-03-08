@@ -18,10 +18,10 @@
         img{
             left: 50%;
             transform: translateX( -50%);
-            height: 100%;
-            width: auto;
+            height: auto;
+            width: 100%;
             // min-width: calc(100vw + var(--s-element));
-            // min-height: 100vw;
+            min-height: 100vw;
             z-index: -111;
             position: absolute;
             filter: blur(4px);

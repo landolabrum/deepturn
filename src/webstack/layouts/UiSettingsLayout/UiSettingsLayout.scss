@@ -276,7 +276,8 @@ $actionsBg: var(--gray-90);
         margin: auto;
         width: calc(100% - 2px);
         height: 100%;
-        overflow-y: hidden;
+        overflow-y:auto;
+        height: max-content;
     }
 
     @media (max-width: 900px) {
@@ -317,6 +318,7 @@ $actionsBg: var(--gray-90);
         width: 100%;
         min-height: 50vh;
         position: relative;
+        height: 100%;
         &-background{
             @extend .d-flex;
             position: absolute;

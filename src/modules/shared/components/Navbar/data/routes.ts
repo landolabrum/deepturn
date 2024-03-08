@@ -53,15 +53,15 @@ export const routes: IRoute[] = [
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
   // { label: "configure", href: "/configure", icon: "fa-gear", active: true },
   { label: "products", href: "/product", icon: "fa-tags", active: true },
-  // {
-  //   label: "Social",
-  //   icon: "fa-biohazard",
-  //   href: '/social',
-  //   clearance: 10,
-  //   items: [
-  //     { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
-  //   ],
-  // },
+  {
+    label: "Social",
+    icon: "fa-biohazard",
+    href: '/social',
+    clearance: 10,
+    items: [
+      { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
+    ],
+  },
   {
     label: "Home",
     icon: "fa-home",

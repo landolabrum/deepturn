@@ -1,0 +1,10 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.instagram-sign-in{
+    @extend .d-flex;
+    flex-direction: column;
+    width: 100%;
+}

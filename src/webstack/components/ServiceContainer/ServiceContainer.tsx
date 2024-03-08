@@ -7,6 +7,7 @@ import HomeService from "~/src/core/services/HomeService/HomeService";
 import AdminService from "~/src/core/services/AdminService/AdminService";
 import DocumentService from "~/src/core/services/DocumentService/DocumentService";
 import ProspectService from "~/src/core/services/ProspectService/ProspectService";
+import SocialService from "~/src/core/services/SocialService/SocialService";
 
 interface IProps { }
 export default class ServiceContainer extends React.Component<IProps> {
@@ -19,6 +20,7 @@ export default class ServiceContainer extends React.Component<IProps> {
     serviceProvider.registerService("IHomeService", HomeService);
     serviceProvider.registerService("IAdminService", AdminService);
     serviceProvider.registerService("IDocumentService", DocumentService);
+    serviceProvider.registerService("ISocialService", SocialService);
   }
 
   render() {
