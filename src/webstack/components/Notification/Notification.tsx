@@ -126,9 +126,8 @@ const handleClick = (e:any)=>{
             {
               list && <div className='notification__list'>
                 {Object.entries(list).map(([field, value]: any, index: number) => {
-                  return <a className={`notification__list-item`} href={value.href} onClick={value.onClick}>
-                    <div key={index} className='notification__list-item__label' >
-
+                  return <a key={index} className={`notification__list-item`} href={value.href} onClick={value.onClick}>
+                    <div  className='notification__list-item__label' >
                       <UiMarkdown text={value.label || value?.name} />
                     </div>
                     <div>

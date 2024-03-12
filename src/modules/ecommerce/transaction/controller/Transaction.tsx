@@ -5,13 +5,13 @@ import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import CookieHelper from '@webstack/helpers/CookieHelper';
 import UiButton from '@webstack/components/UiButton/UiButton';
-import UiDev from '@webstack/components/UiDev/UiDev';
 import { dateFormat, numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import UserContext from '~/src/models/UserContext';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import { useProspect } from '~/src/core/authentication/hooks/useProspect';
 
 // Remember to create a sibling SCSS file with the same name as this component
+const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
 const Transaction: React.FC = () => {
   const user = useUser();
@@ -23,17 +23,17 @@ const Transaction: React.FC = () => {
 
   const loadTransaction = () => {
     if (transaction) return;
-    const hasTransaction = CookieHelper.getCookie('transaction-token');
+    const hasTransaction = CookieHelper.getCookie('transact ion-token');
     const decryptToken = async (token: string) => {
       if (token) {
         try {
           const response = await MemberService.decryptJWT({
             token: token,
-            secret: 'secretKey',
+            secret: String(ENCRYPTION_KEY),
             algorithm: 'HS256'
           });
           if (response?.decoded) {
-            console.log('[ JWT DECODE (SUCCESS) ]', response.decoded);
+            // console.log('[ JWT DECODE (SUCCESS) ]', response.decoded);
             setTransaction(response.decoded);
           }
         } catch (error: any) {
