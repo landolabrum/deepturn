@@ -5,6 +5,7 @@ import CheckoutButton from "../../CheckoutButton/CheckoutButton";
 import { ISessionCartItem } from "~/src/core/services/MemberService/IMemberService";
 import UserMethods from "~/src/modules/user/views/UserMethods/controller/UserMethods";
 import { IMethod } from "~/src/modules/user/model/IMethod";
+import UiLoader from "@webstack/components/UiLoader/view/UiLoader";
 interface ICollect {
   user?: any;
   cart_items: ISessionCartItem[];
@@ -22,7 +23,6 @@ const Collect = ({ user, cart_items }: ICollect) => {
     <style jsx>{styles}</style>
     <div className='collect'>
       <div className='collect__checkout-button'>
-       {/* <div className="dev"> {JSON.stringify(cart_items)}</div> */}
         {method && user && cart_items && (
           <CheckoutButton
             customer_id={user.id}
@@ -43,7 +43,7 @@ const Collect = ({ user, cart_items }: ICollect) => {
     </div>
   </>
   );
-  return <>Collect | NO USER ID</>
+  return <><UiLoader/></>
 
 };
 export default Collect;

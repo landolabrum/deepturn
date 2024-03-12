@@ -11,8 +11,6 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import UserCreateMethod from '../views/UserCreateMethod/controller/UserCreateMethod';
 import UserContext from '~/src/models/UserContext';
-import UserSelectMethod from '../views/UserSelectMethod/UserSelectMethod';
-import { init } from 'next/dist/compiled/webpack/webpack';
 
 
 
@@ -43,10 +41,8 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
   const getAccountMethods = async (e?: any) => {
     if (!selectedUser) return;
     const methodsResponse = await MemberService.getMethods(selectedUser.id);
-    if (methodsResponse?.data) {
+      if(methodsResponse?.data?.length === 1 && onSelect)onSelect(methodsResponse?.data[0])
       setMethods(methodsResponse?.data);
-    }
-    // setUser(signed_in_user);
   }
   const handleLabel = () => {
     if (selectedUser && methods.length && !open) {
@@ -65,13 +61,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
     if (!user) setUser(signed_in_user);
     else if (user) setUser(user);
   }
-  const handleMethod =()=>{
-    if (!customerMethods) {
-      getAccountMethods();
-    } else {
-      setMethods(customerMethods);
-    }
-  }
+  const handleMethod =()=>!customerMethods && getAccountMethods() || setMethods(customerMethods);
   const initUserMethods = () =>{
     setLoader({ active: true });
     handleMethodUser();

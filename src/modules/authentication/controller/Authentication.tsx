@@ -9,12 +9,13 @@ import UiButton from "@webstack/components/UiButton/UiButton";
 import Link from "next/link";
 import environment from "~/src/environment";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import { useNotification } from "@webstack/components/Notification/Notification";
 
 
 
 const Authentication: React.FC<any> = (props: any) => {
   const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
-  const [view, setView] = useState<string>(props?.view || "sign-in");
+  const [view, setView] = useState<string>(props?.view || "sign-up");
   const [hover, setHover] = useState<boolean>(false);
   const router = useRouter();
   const query = router.query;
@@ -27,9 +28,6 @@ const Authentication: React.FC<any> = (props: any) => {
         break;
       case "sign-up":
         setView("sign-in")
-        break;
-      // case "verify":
-        // setView("verify")
         break;
       case "customer-created":
         setView("sign-in")
@@ -57,18 +55,19 @@ const Authentication: React.FC<any> = (props: any) => {
     }
     console.log('[ handleSignIn ]: ', response)
   }
-
+const [notif,setNotification]=useNotification();
   useEffect(() => {
-    //  if(router.pathname.includes('authentication')){setNotification({
+    //  if(router.pathname == '/'){setNotification({
     //    active: true,
     //    dismissable: false,
-    //    children: <>
-    //      <p>We use cookies to give you the best experience and to ensure the safety of our users. The only non-essential cookies we use are for any personal referrals you make. We do not track you across other sites. You can see our Cookie Policy here, and our Privacy Notice here.</p>
-    //      <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', gap: '5px' }}>
-    //        <UiButton traits={{ width: "max-content" }}>Customize selection</UiButton>
-    //        <UiButton traits={{ width: "max-content" }} variant="primary">accept all</UiButton>
-    //      </div>
-    //    </>
+    //    confirm:{
+    //     title:"We use cookies to give you the best experience and to ensure the safety of our users. The only non-essential cookies we use are for any personal referrals you make. We do not track you across other sites. You can see our Cookie Policy here, and our Privacy Notice here.",
+    //     statements:[
+    //       {text:'Customize selection'},
+    //       {text:'accept all'},
+    //     ]
+    //   }
+
     //  })}else{setNotification({active: false})}
     if (query && query.verify){
       setView('verify');

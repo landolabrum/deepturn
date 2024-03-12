@@ -7,10 +7,9 @@
 .instagram {
     @extend .d-flex;
     flex-direction: column;
-    background-color: #f30f3030;
-    border-radius: var(--border-radius);
-    width: 100%;
-    
+
+    width: var(--s-padding-width);
+    padding: var(--s-padding);
     &-header {
         @extend .d-flex;
         justify-content: flex-start;
@@ -18,11 +17,11 @@
         padding: var(--s-padding);
         &--title {
             font-size: var(--s-element);
-            // align-items: flex-start;
         }
     }
     &-body{
-        width: var(--s-padding-width);
-        padding:var(--s-padding) var(--s-padding) var(--s-1);
+        @extend .d-flex;
+        flex-wrap: wrap;
+       
     }
 }

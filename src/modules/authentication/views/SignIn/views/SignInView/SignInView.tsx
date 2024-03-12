@@ -63,7 +63,7 @@ const SignInView: React.FC<ISignIn> = ({ email, onSuccess }: ISignIn) => {
         else setSignInResponse('error');
       } catch (e: any) {
         if (e.detail != undefined) {
-          console.log('[ SIGN IN VIEW onError ]', e);
+          console.error('[ SIGN IN VIEW onError ]', e);
           
           e.detail?.fields && setNotification({
             active: true,
@@ -93,7 +93,8 @@ const SignInView: React.FC<ISignIn> = ({ email, onSuccess }: ISignIn) => {
             <UiInput
               key={field}
               type={field}
-              autoComplete={field === "email" ? "username" : "current-password"}
+              autoComplete={field === "email" ? "on" : "off"}
+              // autoComplete={field === "email" ? "username" : "current-password"}
               name={field}
               variant={hasError && 'invalid'}
               placeholder={field}

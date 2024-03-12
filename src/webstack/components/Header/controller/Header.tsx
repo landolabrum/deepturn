@@ -57,7 +57,7 @@ const Header: React.FC = () => {
   );
   
   const handleTitleClick = () => {
-    console.log("[ handleTitleClick ]",{ selectedUser, pathname, explicitRouter, routeTitle});
+    // console.log("[ handleTitleClick ]",{ selectedUser, pathname, explicitRouter, routeTitle});
 
     // Extract the first part of the pathname
     // const newTitle = router.pathname.split('/')[1].split('?')[0];
@@ -88,9 +88,9 @@ const Header: React.FC = () => {
   
     const handleHeaderState = () =>{
       const currentRoute = context !== null?context:{title:keyStringConverter(`${environment?.merchant?.name}`,false)}
-      console.log("selectedContext"
-      ,currentRoute
-      )
+      // console.log("selectedContext"
+      // ,currentRoute
+      // )
       setHeaderState(routeTitle  && {title:routeTitle} || currentRoute);
       setRoute(router.asPath);
     }
@@ -100,7 +100,7 @@ const Header: React.FC = () => {
       setContext(null);
       setRoute(router.asPath);
     }
-    console.log("[ useEffect ]",{ selectedUser, pathname, explicitRouter, routeTitle});
+    // console.log("[ useEffect ]",{ selectedUser, pathname, explicitRouter, routeTitle});
   }, [HeaderContext,pathname]);
   return (
     <>

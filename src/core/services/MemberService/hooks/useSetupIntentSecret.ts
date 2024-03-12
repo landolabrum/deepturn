@@ -7,7 +7,12 @@ const useSetupIntentSecret = (user?: SetupIntentSecretRequest) => {
     const [clientSecret, setClientSecret] = useState();
     const fetchClientSecret = async () => {
         if(clientSecret || !user)return;
-        const response = await MemberService.createSetupIntent( user);
+        const customer_id = user?.id;
+        if(!customer_id){
+            console.error("Setup intent, no customer_id");
+            return;
+        }
+        const response = await MemberService.createSetupIntent(customer_id);
         if (response?.client_secret) {
             setClientSecret(response.client_secret);
         } else {

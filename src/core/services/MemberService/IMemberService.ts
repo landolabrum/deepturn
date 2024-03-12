@@ -58,12 +58,13 @@ export default interface IMemberService {
   
   getMethods(customerId?: string): Promise<any>;
   deleteMethod(id: string): Promise<any>;
-  createSetupIntent(customer: SetupIntentSecretRequest, method?: IPaymentMethod ): Promise<any>;
+  createSetupIntent(customer_id: string, method?: IPaymentMethod ): any;
 
   userChanged: EventEmitter<UserContext | undefined>;
   prospectChanged: EventEmitter<ProspectContext | undefined>;
 
   verifyEmail(token: string):Promise<any>;
+  verifyPassword(token: string):Promise<any>;
   signIn({ email,
     password,
     code,

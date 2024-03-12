@@ -7,10 +7,10 @@ import UiViewLayout from '@webstack/layouts/UiViewLayout/UiViewLayout';
 // Remember to create a sibling SCSS file with the same name as this component
 
 const Instagram: React.FC<any> = ({ current }: { current?: string }) => {
-    const [view, setView] = useState<string | undefined>('auth');
+    const [view, setView] = useState<string | undefined>('signin');
 
     const views = {
-      auth: <InstagramSignIn />,
+      signin: <InstagramSignIn />,
     };
     return (
         <>
@@ -20,7 +20,9 @@ const Instagram: React.FC<any> = ({ current }: { current?: string }) => {
                     <h1 className='instagram-header--title'>Instagram</h1>
                 </div>
                 <div className='instagram-body'>
+                <div className='instagram-body--view'>
                 {UiViewLayout({views,view})}
+                </div>
                 </div>
             </div>
         </>

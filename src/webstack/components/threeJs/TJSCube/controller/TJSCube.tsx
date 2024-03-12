@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { OrbitControls } from '@react-three/drei';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
 import IconHelper from "@webstack/helpers/IconHelper";
+import styles from "./TJSCube.scss";
 
 interface ITJSCubeBevel {
   curveSegments?: number;
@@ -116,10 +117,11 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
 };
 
 export const TJSCube = (props: ITJSCubeContent) => (
-  <div style={{ width: '100%', height: '100%' }}>
-    <Canvas>
+  <>
+  <style jsx>{styles}</style>
+    <Canvas className='tjscube'>
       <OrbitControls />
       <TJSCubeContent icon={props.icon} />
     </Canvas>
-  </div>
+  </>
 );

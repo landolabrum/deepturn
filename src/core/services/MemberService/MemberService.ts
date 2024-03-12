@@ -13,6 +13,7 @@ import errorResponse from "../../errors/errorResponse";
 const MEMBER_TOKEN_NAME = environment.legacyJwtCookie.authToken;
 const TRANSACTION_TOKEN_NAME = environment.legacyJwtCookie.transactionToken;
 const PROSPECT_TOKEN_NAME = environment.legacyJwtCookie.prospectToken;
+const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
 const TIMEOUT = 5000;
 function timeoutPromise<T>(promise: Promise<T>, ms: number): Promise<T> {
@@ -51,7 +52,7 @@ export default class MemberService
   public userChanged = new EventEmitter<UserContext | undefined>();
   public prospectChanged = new EventEmitter<ProspectContext | undefined>();
 
-  public async signIn({ email, password, code, user_agent }: any): Promise<any> {
+  public async signIn({ email, password, code, user_agent, merchant }: any): Promise<any> {
     if (!email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
@@ -116,7 +117,43 @@ export default class MemberService
     }
   }
 
- 
+  public async verifyPassword(token: string): Promise<any> {
+    if (!token) {
+      throw new ApiError("No Token Provided", 400, "MS.SI.02");
+    }
+
+    try {
+      const verifiedMemberResp = await timeoutPromise(
+        this.get<any>(`/usage/auth/verify-password?token=${token}`),
+        TIMEOUT // 5 seconds timeout
+      );
+
+      // Check if the response is an ApiError
+      if (verifiedMemberResp instanceof ApiError) {
+        throw verifiedMemberResp;
+      }
+
+      const customer_token = verifiedMemberResp?.customer_token;
+      if (customer_token) {
+        this.saveMemberToken(customer_token);
+        this.saveLegacyAuthCookie(customer_token);
+        this._getCurrentUser(true)!;
+      }
+
+      // If everything is successful, return the response
+      return verifiedMemberResp;
+    } catch (error) {
+      // Handle the error here
+      if (error instanceof ApiError) {
+        return errorResponse(error);
+      } else {
+        // Handle other types of errors as needed
+        console.error("An unexpected error occurred:", error);
+        const responseError = new ApiError("Internal Server Error", 500, "MS.SI.01", "an Unknown Error Occured");
+        return errorResponse(responseError);
+      }
+    }
+  }
 
   public async toggleCustomerDefaultMethod(paymentMethodId: string): Promise<any> {
     let customerId = this._getCurrentUser(false)?.id;
@@ -141,27 +178,36 @@ export default class MemberService
     }
   }
 
-  public async createSetupIntent(customer: SetupIntentSecretRequest, method?: IPaymentMethod): Promise<any> {
-    const memberMethod = async () => {
-      try {
-        const response: any = await this.post<any, {}>(
-          `api/setup-intent/create`,
-          customer
-        );
-        return response;
-      } catch (e: any) {
-        return e;
-      }
+  public async createSetupIntent(customer_id: string, method?: IPaymentMethod): Promise<any> {
+    if (customer_id) {
+
+      const res = await this.get<any>(
+        `api/setup-intent/create?customer_id=${customer_id}`
+      )
+      return res
+    } else {
+      throw new ApiError("No ID Provided", 400, "MS.SI.02");
     }
-    if (customer && !method) {
-      return await memberMethod();
-    }
-    else if (!customer && method) {
-      throw new ApiError("UNHANDLED (!user && method)", 400, "MS.SI.02");
-    }
-    if (!method) {
-      throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
-    }
+    // const memberMethod = async () => {
+    //   try {
+    //     const response: any = await this.post<any, {}>(
+    //       `api/setup-intent/create`,
+    //       {customer_id}
+    //     );
+    //     return response;
+    //   } catch (e: any) {
+    //     return e;
+    //   }
+    // }
+    // if (customer_id && !method) {
+    //   return await memberMethod();
+    // }
+    // else if (!customer_id && method) {
+    //   throw new ApiError("UNHANDLED (!customer_id)", 400, "MS.SI.02");
+    // }
+    // if (!method) {
+    //   throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+    // }
   }
   public async getSetupIntent(client_secret: string) {
     if (client_secret) {
@@ -259,45 +305,24 @@ public async processTransaction(sessionData: ISessionData) {
   }
 
   public async signUp(
-    {
-      name,
-      email,
-      password,
-      user_agent,
-      merchant,
-      metadata
-    }: any
+    props: any
   ): Promise<UserContext> {
-    if (!email) {
+    if (!props.email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
+    const encryptedSignUp = encryptString(JSON.stringify(props), ENCRYPTION_KEY);
+
 
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",
-      {
-        name,
-        email,
-        password,
-        merchant,
-        user_agent,
-        ...metadata
-      },
+      {data: encryptedSignUp},
     );
     // PROSPECT
     if (res?.status === "prospect") {
       const prospectJwt = await res.data;
       this.saveProspectToken(prospectJwt);
       this.saveLegacyProspectCookie(prospectJwt);
-
-      return this._getCurrentProspect(true)!;
     }
-    // EXISTING
-    // if (res?.status === "existing") {
-    //   const memberJwt = await res.data;
-    //   this.saveMemberToken(memberJwt);
-    //   this.saveLegacyAuthCookie(memberJwt);
-    //   return this._getCurrentUser(true)!;
-    // }
     return res;
   }
   public async getMethods(customerId?: string): Promise<any> {
@@ -418,12 +443,15 @@ public async processTransaction(sessionData: ISessionData) {
   }
 
   public async resetPassword({ email, user_agent }: IResetPassword): Promise<OResetPassword> {
+    const merchant = environment.merchant;
     if (!email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
+    if (!user_agent) {
+      throw new ApiError("UA is required", 400, "MS.SI.01");
+    }
 
     // Encrypt the login data
-    const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
     const encryptedResetPasswordData = encryptString(JSON.stringify({ email, user_agent }), ENCRYPTION_KEY);
 

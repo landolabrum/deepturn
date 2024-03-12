@@ -51,18 +51,17 @@ const NirvanaEnergy = () => {
           width: 'auto',
           zIndex: '-1',
           height: '100%',
-          // filter: 'brightness(.66)'
+          filter: 'brightness(.66) blur(3px)'
         }}
         objectFit="cover"
-        // src="/merchant/nirv1/backgrounds/dirt-road.jpeg"
-        src="/merchant/nirv1/backgrounds/redrock-wall.jpeg"
+        src="/merchant/nirv1/backgrounds/dirt-road.jpeg"
+        // src="/merchant/nirv1/backgrounds/redrock-wall.jpeg"
         alt="bg" />
       <div id='nirvana-index'
         className='nirvana-index'
       >
         <div className='nirvana-index__content'>
-          <AdaptGrid xs={1} sm={2} gap={15}>
-            <div className='d-flex-col align-start gap-9 s-w-100'>
+            <div className='list'>
               <h3>6 Key Questions to Enhance Your Solar System with Batteries</h3>
               <h4><UiIcon icon="fa-cube" />Can I add batteries to my exisiting solar system?</h4>
               <h4><UiIcon icon="fa-cube" />What determines that the battery will back up what I need?</h4>
@@ -72,7 +71,6 @@ const NirvanaEnergy = () => {
               <h4><UiIcon icon="fa-cube" />Can I change what I want backed up in the future</h4>
             </div>
             <ProductRequestSurvey id='configure' startButton='configure your back up system' />
-          </AdaptGrid>
         </div>
         <h2>
           Time to Create your Nirvana!

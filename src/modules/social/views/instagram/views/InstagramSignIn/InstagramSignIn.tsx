@@ -50,8 +50,13 @@ const InstagramSignIn: React.FC = () => {
     <>
       <style jsx>{styles}</style>
       <div className='instagram-sign-in'>
-      <h1>Instagram - Sign In</h1>
-      <UiForm fields={fields} onChange={setField} onSubmit={onSubmit} submitText={'instagram sign in'}/>
+      <h3>Sign In</h3>
+      <UiForm
+        fields={fields}
+        onChange={setField}
+        onSubmit={onSubmit}
+        submitText={'instagram sign in'}
+      />
       </div>
     </>
   );

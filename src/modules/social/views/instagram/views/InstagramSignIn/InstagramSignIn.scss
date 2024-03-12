@@ -6,5 +6,14 @@
 .instagram-sign-in{
     @extend .d-flex;
     flex-direction: column;
-    width: 100%;
+    gap: var(--s-element);
+    width: var(--s-padding-width);
+    padding: var(--s-1) var(--s-padding) var(--s-5);
+    background-color: var(--gray-90);
+    border-radius: var(--border-radius);
+    max-width: 800px;
+    @media (max-width:1100px) {
+        max-width: unset;
+    }
+ 
 }

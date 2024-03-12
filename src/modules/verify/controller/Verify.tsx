@@ -5,6 +5,7 @@ import VerifyEmail from '../views/VerifyEmail/VerifyEmail';
 import SignInView from '../../authentication/views/SignIn/views/SignInView/SignInView';
 import VerifyAccount from '../views/VerifyAccount/VerifyAccount';
 import VerifyPayment from '../views/VerifyPayment/VerifyPayment';
+import VerifyPassword from '../views/VerifyPassword/VerifyPassword';
 
 
 const DefaultVerifyView = () => {
@@ -28,6 +29,7 @@ const Verify = () => {
   const views: any = {
     'sign-in': <SignInView email={newCustomerEmail} />,
     email: <VerifyEmail token={token} onSuccess={(v: string) => setNewCustomerEmail(v)} />,
+    password: <VerifyPassword token={token} onSuccess={(v: string) => setNewCustomerEmail(v)} />,
     account: <VerifyAccount />,
     payment: <VerifyPayment token={token} />
   };

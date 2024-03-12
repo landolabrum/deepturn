@@ -12,6 +12,7 @@ import UserContext from '~/src/models/UserContext';
 import Collect from '../views/Collect/controller/Collect';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import CartList from '../../cart/views/CartList/CartList';
+import { useNotification } from '@webstack/components/Notification/Notification';
 
 
 const Checkout = ():React.JSX.Element => {
@@ -22,8 +23,12 @@ const Checkout = ():React.JSX.Element => {
     const { getCartItems, } = useCart();
     const prospect = useProspect();
     const handleSignUp = (res: any) => {
-        if (res.id) {
-            setView('card-details');
+        const selectedUser = res?.id && res || prospect;
+        console.log('[handleSignUp ]',res)
+        if (res?.status == 'prospect') {
+            handleUser()
+            setView('collect');
+            handleNotifictaion(res);
         }
         else if(res?.status === 'existing' && res?.email){
             setUser({email:res.email});
@@ -33,7 +38,17 @@ const Checkout = ():React.JSX.Element => {
             console.log('[ CHECKOUT (HANDLE SIGNUP)[ERROR] ]', res);
         }
     }
-
+    const [notification, setNotification]=useNotification();
+    type InotificationContext = {data: string, email: string, status: "existing" | "created" | "success"}
+    const handleNotifictaion = (notificationContext: InotificationContext) =>{
+        console.log('[ handleNotification ]',notificationContext)
+      const status = notificationContext.status;
+        setNotification({
+          active: true,
+          // persistence: 3000,
+          list:[{name:`email ${status}, sign in to continue`}]});
+      console.log('[ NOTIFICIATION ]', {notification, notificationContent: notificationContext})
+    }
     const views: IView = {
         'sign-up': (
             <SignUp
@@ -43,7 +58,7 @@ const Checkout = ():React.JSX.Element => {
                 onSuccess={handleSignUp}
             />),
         'existing': (
-            <SignIn onSuccess={console.log} title={`Account for ${selectedUser?.email}, exists. please sign in.`} email={selectedUser?.email} />
+            <SignIn onSuccess={handleSignUp} title={`Account for ${selectedUser?.email}, exists. please sign in.`} email={selectedUser?.email} />
         ),
         'collect': (
             <Collect
@@ -69,10 +84,11 @@ const Checkout = ():React.JSX.Element => {
     useEffect(() => {
         handleUser();
         handleCart();
-    }, [handleUser, user]);
+    }, [handleUser, handleCart]);
 
     if (view) return <>
         <style jsx>{styles}</style>
+        {/* user: {JSON.stringify(prospect)} */}
         <div className='checkout' id="main-checkout">
             <div className='checkout__title'>
                 Secure Checkout <UiIcon icon="fa-lock" />

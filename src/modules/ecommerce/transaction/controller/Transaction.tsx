@@ -60,7 +60,6 @@ const Transaction: React.FC = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      {/* <UiDev data={transaction} /> */}
 
       <div className='transaction'>
         {transaction?.total !== undefined && <div className='transaction__header'>
@@ -68,19 +67,26 @@ const Transaction: React.FC = () => {
             <div className='transaction__title--status'>Purchase Success</div>
           </div>
         </div>}
-        <div className='transaction__content card'>
-          <div className='transaction__content-title'>
-          {transaction?.data?.id && <div className='transaction--pi'><div>PURCHASE ID</div><div>{transaction.data.id}</div></div>}
+        <div className='transaction__content'>
+        {transaction?.data?.id && 
+        <div className='transaction__content--header'>
+        <div className='transaction__content--header-title'>
+          <div className='transaction--pi'>
+            <div>PURCHASE ID</div>
+            <div>{transaction.data.id}</div>
+          </div>
+          </div>
+          </div>}
           {transaction?.data?.created && <div className='transaction--date'><div>Purchased</div><div>{dateFormat(transaction.data.created, { isTimestamp: true })}</div></div>}
           {selectedUser && <div className='transaction--email'><div>Email</div><div>{selectedUser?.email}</div></div>}
-          </div>
           {transaction?.cart_items && <>
             <div className='transaction--list'>
               {Array(transaction?.cart_items).map(
                 ([field, value]: any) => {
                   return <div className='transaction__item' key={field.name}>
-                    <div className='transaction__item-name'>
-                      {field.name}
+                    <div className='transaction__item-identity'>
+                      <div className='identity-name'>{field.name}</div>
+                      <div className='identity-id'>{field.id}</div>
                     </div>
                     <div className='transaction__item-description'>
                       {field.description}

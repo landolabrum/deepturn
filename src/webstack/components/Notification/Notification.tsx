@@ -2,6 +2,8 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 import styles from "./Notification.scss";
 import { UiIcon } from "../UiIcon/UiIcon";
 import UiMarkdown from "../UiMarkDown/UiMarkDown";
+import { IConfirm } from "../modal/contexts/modalContext";
+import UiButton from "../UiButton/UiButton";
 
 const NO_SCROLL = "no-scroll";
 
@@ -15,17 +17,18 @@ interface INotificationListItem {
 
 export type INotification = {
   list?: INotificationListItem[];
+  confirm?: IConfirm;
   active: boolean;
   persistence?: number;
   dismissable?: boolean;
   transparent?: boolean;
-  onClick?: any;
+  onClick?: (e: any) => void;
   zIndex?: number | string;
   noScroll?: boolean;
   children?: any;
 };
 
-const INotificationContext = createContext<[INotification, (Notification: INotification) => any]>([{ active: false }, () => {}]);
+const INotificationContext = createContext<[INotification, (Notification: INotification) => any]>([{ active: false }, () => { }]);
 
 export const useNotification = () => useContext(INotificationContext);
 
@@ -84,7 +87,9 @@ const Notification: React.FC = () => {
     }
     setNotification(context);
   };
-
+const handleClick = (e:any)=>{
+  context.onClick && context.onClick(e)
+}
   useEffect(() => {
     handleNotification();
     handleBodyScroll();
@@ -104,24 +109,36 @@ const Notification: React.FC = () => {
             {notification.dismissable &&
               <div className='notification__close'><UiIcon icon='fa-xmark' onClick={handleClose} /></div>
             }
-            {notification?.children}
-            <div className='notification__list'>{
-              list &&
-              Object.entries(list).map(([field, value]: any) => {
-                return <span key={field}>
-                  <a className={`notification__list-item`} href={value.href} onClick={value.onClick}>
-                  <div className='notification__list-item__label' >
-                    
-                    <UiMarkdown text={value.label || value?.name}/>
-                  </div>
-                  <div>
-                    <UiMarkdown text={value.message}/>
-                  </div>
-                </a>
-                </span>
-              })
+            {notification?.confirm?.title || notification?.children}
+            {notification?.confirm?.statements &&  notification.confirm.statements.length &&
+              <div className={`notification__confirm ${notification.confirm.statements.length > 2 ?" notification__confirm-col":""}`}>
+                {notification.confirm.statements.map((btn: any, key: number) => {
+                  return (
+                    <div key={key} className='notification__confirm-btn'>
+                      <UiButton onClick={() => handleClick(btn)} variant={btn.text === 'yes' ? 'primary' : btn?.variant}>
+                        {btn.text}
+                      </UiButton>
+                    </div>
+                  );
+                })}
+              </div>
             }
-            </div>
+            {
+              list && <div className='notification__list'>
+                {Object.entries(list).map(([field, value]: any, index: number) => {
+                  return <a className={`notification__list-item`} href={value.href} onClick={value.onClick}>
+                    <div key={index} className='notification__list-item__label' >
+
+                      <UiMarkdown text={value.label || value?.name} />
+                    </div>
+                    <div>
+                      <UiMarkdown text={value.message} />
+                    </div>
+                  </a>
+                })}
+              </div>
+
+            }
           </div>
         </div>
       </>

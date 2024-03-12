@@ -95,16 +95,7 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
     const { name, value } = e.target;
     changeField(name, 'value', value);
   };
-  type InotificationContext = {data: string, email: string, status: "existing" | "created" | "success"}
-const handleNotifictaion = (notificationContext: InotificationContext) =>{
-  const status = notificationContext.status;
-    setNotification({
-      active: true,
-      persistence: 3000,
-      list:[{name:`email ${status}, sign in to continue`}]});
-  // const active = notification?.active;
-  console.log('[ NOTIFICIATION ]', {notification, notificationContent: notificationContext})
-}
+
   const handleSubmit = async () => {
     setLoading(true);
     const errors = handleErrors();
@@ -141,7 +132,6 @@ const handleNotifictaion = (notificationContext: InotificationContext) =>{
         }
       }finally{
         console.log('[ handleSubmit (signUp) ]',context)
-        handleNotifictaion(context);
       }
     } else {
       console.error('[ SIGN UP ERRORS LOCAL ]', errors);
