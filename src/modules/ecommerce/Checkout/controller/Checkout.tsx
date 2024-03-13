@@ -7,12 +7,12 @@ import { useUser } from '~/src/core/authentication/hooks/useUser';
 import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
 import { useProspect } from '~/src/core/authentication/hooks/useProspect';
 import SignIn from '~/src/modules/authentication/views/SignIn/controller/SignIn';
-import { IView } from '@webstack/layouts/UiViewLayout/UiViewLayout';
 import UserContext from '~/src/models/UserContext';
 import Collect from '../views/Collect/controller/Collect';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import CartList from '../../cart/views/CartList/CartList';
 import { useNotification } from '@webstack/components/Notification/Notification';
+import { IView } from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 
 
 const Checkout = ():React.JSX.Element => {
