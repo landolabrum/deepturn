@@ -24,11 +24,10 @@ export default class HomeService extends ApiService implements IHomeService {
     );
   }
   public async hue_list(
-    hue_object='lights'
+    type='light'
     ): Promise<any> {
       return await this.get<any>(
-        // `/api/home/hue/lights`,
-        `/api/home/hue/list?object=${hue_object}`,
+        `/api/home/hue/list?type=${type}`,
       );
     }
     public async lightsOn(
@@ -51,10 +50,10 @@ export default class HomeService extends ApiService implements IHomeService {
       );
     }
     public async hue_brightness(
-      id: number, brightness: number
+      id: number, brightness: number, type?: string
     ): Promise<any> {
       return this.post<any, any>(
-        `/api/home/hue/light-bri?id=${id}&bri=${brightness}`,
+        `/api/home/hue/light-bri?id=${id}&bri=${brightness}&type=${type}`,
         
       );
     }
@@ -99,15 +98,16 @@ export default class HomeService extends ApiService implements IHomeService {
       hue_object: string = 'light'
     ): Promise<any> {
       return this.get<any>(
-        `/api/home/hue/toggle?id=${id}${hue_object && `&object=${hue_object}`||''}`,
+        `/api/home/hue/toggle?id=${id}${hue_object && `&type=${hue_object}`||''}`,
       );
     }
     public async lightColor(
       id: any,
-      hex: string
+      hex: string,
+      type: string,
     ): Promise<any> {
       return this.get<any>(
-        `/api/home/hue/light-hex-color?id=${id}&hex=${hex.replaceAll('#','')}`,
+        `/api/home/hue/light-hex-color?id=${id}&hex=${hex.replaceAll('#','')}&type=${type}`,
       );
     }
     public async getVehicles(

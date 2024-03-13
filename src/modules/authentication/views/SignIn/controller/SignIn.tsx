@@ -2,12 +2,12 @@
 // Relative Path: ./SignIn.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './SignIn.scss';
-import UiViewLayout from '@webstack/layouts/UiViewLayout/UiViewLayout';
 import SignInView from '../views/SignInView/SignInView';
 import ResetPassword from '../views/ResetPassword/ResetPassword';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { capitalizeAll } from '@webstack/helpers/Capitalize';
+import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 
 // Remember to create a sibling SCSS file with the same name as this component
 export interface ISignIn{
@@ -29,7 +29,7 @@ const SignIn: React.FC<ISignIn> = ({ email, view, title, onSuccess }: ISignIn) =
     <>
       <style jsx>{styles}</style>
       <div className='sign-in'>
-        <UiViewLayout 
+        <UiViewLayout
           showTitle={true}
           title={title}
           view={current}

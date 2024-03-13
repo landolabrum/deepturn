@@ -69,7 +69,7 @@ export const routes: IRoute[] = [
     clearance: 6,
     items: [
       { label: "surveillance",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
-      { label: "lights", href: "home?vid=lights", icon: "fa-lightbulb-on", active: true},
+      { label: "lights", href: "home?vid=light", icon: "fa-lightbulb-on", active: true},
     ],
   },
   {

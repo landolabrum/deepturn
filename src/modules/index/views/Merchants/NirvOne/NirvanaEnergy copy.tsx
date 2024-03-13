@@ -2,7 +2,7 @@
 import styles from "../../../controller/Index.scss"
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import HomeGridItem from '../../HomeGridItem/HomeGridItem';
-import ProductRequestSurvey from '~/src/pages/configure';
+import ProductSurvey from '~/src/pages/configure';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { useEffect } from 'react';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
@@ -52,7 +52,7 @@ useEffect(() => {}, []);
             <div><UiIcon icon="fa-cube"/>Is there a limit to how much the batteries can power in my home at the same time?</div>
             <div><UiIcon icon="fa-cube"/>Can I change what I want backed up in the future</div>
         </div>
-      <ProductRequestSurvey id='configure' startButton='configure your back up system'/>
+      <ProductSurvey id='configure' startButton='configure your back up system'/>
     </div>
 
     <div className='index__full'>

@@ -128,11 +128,11 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
           });
         } else {
           console.error('[ SIGN UP RESPONSE ERRORS ]', e);
-          // Display a general user-friendly error message
         }
-      }finally{
-        console.log('[ handleSubmit (signUp) ]',context)
       }
+      // finally{
+        // console.log('[ handleSubmit (signUp) ]',context)
+      // }
     } else {
       console.error('[ SIGN UP ERRORS LOCAL ]', errors);
     }

@@ -66,6 +66,9 @@ public async listAccounts(): Promise<any> {
   public async listCustomers(): Promise<any> {
     try {
       const customersList = await this.get<any>(`/usage/admin/customer/list`);
+      // customersList?.data?.map((customer:any)=>
+      //   console.log('[CUSTOMERS LIST]', customer?.metadata)
+      //   )
       return customersList;
     } catch (error: any) {
       return error;

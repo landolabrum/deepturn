@@ -2,9 +2,8 @@
 import styles from "./NirvanaEnergy.scss";
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import HomeGridItem from '../../HomeGridItem/HomeGridItem';
-import ProductRequestSurvey from '~/src/pages/configure';
+import ProductSurvey from '~/src/pages/configure';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
-import { useEffect } from 'react';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import Image from "next/image";
 
@@ -39,7 +38,7 @@ const NirvanaEnergy = () => {
   return (
     < >
       <style jsx>{styles}</style>
-
+{/* 
       <Image
         // fill
         width={900}
@@ -56,10 +55,13 @@ const NirvanaEnergy = () => {
         objectFit="cover"
         src="/merchant/nirv1/backgrounds/dirt-road.jpeg"
         // src="/merchant/nirv1/backgrounds/redrock-wall.jpeg"
-        alt="bg" />
+        alt="bg" /> */}
       <div id='nirvana-index'
         className='nirvana-index'
       >
+        <div className='survey'>
+        <ProductSurvey id='configure' startButton='configure your back up system' />
+        </div>
         <div className='nirvana-index__content'>
             <div className='list'>
               <h3>6 Key Questions to Enhance Your Solar System with Batteries</h3>
@@ -70,7 +72,6 @@ const NirvanaEnergy = () => {
               <h4><UiIcon icon="fa-cube" />Is there a limit to how much the batteries can power in my home at the same time?</h4>
               <h4><UiIcon icon="fa-cube" />Can I change what I want backed up in the future</h4>
             </div>
-            <ProductRequestSurvey id='configure' startButton='configure your back up system' />
         </div>
         <h2>
           Time to Create your Nirvana!

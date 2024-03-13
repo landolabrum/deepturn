@@ -12,9 +12,9 @@ const AdminCustomers: React.FC = () => {
   const router = useRouter();
   const [view, setView] = useState<string>();
   const cid = router?.query?.cid;
+  const baseUrl = '/admin?vid=customers';    
   
   const updateViewUrl = (newView?:string, customer?: UserContext)=>{
-    const baseUrl = '/admin?vid=customers';    
     if(!newView && !view)setView(cid?'modify':'list');
     else if(newView){
       setView(newView);
@@ -22,7 +22,7 @@ const AdminCustomers: React.FC = () => {
       else if(newView === 'modify' && router.asPath === baseUrl && customer)router.push(`${baseUrl}&cid=${customer.id}`);
     }
   };
-
+ 
   
   useEffect(() => {
     updateViewUrl();
@@ -45,7 +45,10 @@ const AdminCustomers: React.FC = () => {
           </div>
         </div>
         {view === 'list' && <AdminCustomerList onSelect={(customer:UserContext)=>updateViewUrl('modify',customer)} /> }
-        {view === 'modify' && <AdminCustomerDetails id={cid}/>}
+        {view === 'modify' && <AdminCustomerDetails id={cid} setView={(e:any)=>{
+          console.log('detaiuls:::: ',e );
+          updateViewUrl(e)
+        }}/>}
         {view === 'add' && <AdminCustomerAdd /> }
       </div>
     </>

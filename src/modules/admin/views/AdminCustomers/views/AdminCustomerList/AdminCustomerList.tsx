@@ -6,19 +6,42 @@ import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 import environment from '~/src/environment';
-import UserContext from '~/src/models/UserContext';
+interface ICustomerUser {
+  clearance: number;
+  password_token: string;
+  email_verified: boolean;
+  password: string;
+  type: string;
+  user_agent: {
+    userAgent: string;
+    userAgentData: {
+      brands: Array<{
+        brand: string;
+        version: string;
+      }>;
+      mobile: boolean;
+      platform: string;
+    };
+  };
+  server_url: string;
+}
 
-// Remember to create a sibling SCSS file with the same name as this component
+interface ICustomerMerchant {
+  mid: string;
+  name: string;
+  url: string;
+}
+
 interface ICustomer {
   id: string;
   object: string;
-  address: IAddress;
+  address: IAddress | null;
   balance: number;
   created: number;
-  currency: string;
-  default_source: string;
+  currency: string | null;
+  default_source: string | null;
   delinquent: boolean;
-  description: string;
+  description: string | null;
   discount?: {
     coupon: string | null;
     customer: string | null;
@@ -48,7 +71,10 @@ interface ICustomer {
   shipping: IShipping | null;
   tax_exempt: string | null;
   test_clock: number | null;
+  user?: ICustomerUser; // Use the ICustomerUser interface here
+  merchant?: ICustomerMerchant; // Use the ICustomerMerchant interface here
 }
+
 
 type IAddress = {
   city: string | null;
@@ -82,7 +108,7 @@ const AdminCustomerList: React.FC<any> = ({ onSelect}:{onSelect:(props: string)=
   
       // Use a for loop or reduce function to transform the customer data
       const transformedCustomerList = customerList.map((customer: ICustomer) => {
-
+        console.log('[ transformedCustomerList ]', customer)
   
         // Create a new dictionary for each customer
         const extras = {
@@ -108,7 +134,7 @@ const AdminCustomerList: React.FC<any> = ({ onSelect}:{onSelect:(props: string)=
           default_source:  <AdaptTableCell cell='check' data={Boolean(customer.default_source)}/>,
           // delinquent: customer.delinquent,
           tax_exempt: <AdaptTableCell cell='check' data={Boolean(customer.tax_exempt == 'exempt')}/>,
-          clearance: <AdaptTableCell cell='id' data={customer?.metadata?.clearance}/>,
+          clearance: <AdaptTableCell cell='id' data={customer?.user?.clearance}/>,
           extras:extras,
           request: customer.metadata && <AdaptTableCell cell='check' data={Boolean( Object.entries(customer.metadata).find((f:any)=>String(f).includes(String(environment.merchant.mid))))}/>,
         };

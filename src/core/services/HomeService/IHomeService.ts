@@ -49,8 +49,8 @@ export interface IHomeService {
   listGroups(): Promise<IGroup[]>; // If you want to list all groups
   hue_list(hue_object?:string): Promise<ILight[]>;
   light({ id, name }: IHomePostLight): Promise<ILight>;
-  hue_brightness(id: number, brightness: number): Promise<ILight>;
-  lightColor(id: any, hex: string): Promise<any>;
+  hue_brightness(id: number, brightness: number, type?: string): Promise<ILight>;
+  lightColor(id: any, hex: string, type?: string): Promise<any>;
   lightsOff(): Promise<any>;
   hue_toggle(id: any, hue_object?: string): Promise<any>;
   lightsOn(): Promise<any>;

@@ -3,22 +3,26 @@
     justify-content: center;
     align-items: center;
 }
-.back-btn{
+
+.back-btn {
     @extend .d-flex;
     justify-content: flex-start;
     width: 100%;
 }
 
-.product-request-survey__success {
+.product-survey__success {
     color: var(--green-60);
     --ui-icon-color: var(--green-60);
 }
-.product-request-survey__invalid {
+
+.product-survey__invalid {
     color: var(--orange);
     --ui-icon-color: var(--orange);
 
 }
-.product-request-survey__success, .product-request-survey__invalid {
+
+.product-survey__success,
+.product-survey__invalid {
     @extend .d-flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -26,7 +30,7 @@
     width: 100%;
     flex: 1;
     gap: var(--s-element);
-    
+
     &--email {
         font-size: var(--s-4);
         color: var(--primary);
@@ -40,7 +44,7 @@
 
         text-transform: capitalize;
         font-size: var(--s-element);
-      
+
         --ui-icon-size: var(--s-1);
         line-height: 1;
         width: max-content;
@@ -62,62 +66,56 @@
         }
     }
 }
-.product-request-survey {
+
+.product-survey {
     position: relative;
     @extend .d-flex;
     flex-direction: column;
     justify-content: flex-start;
     border-radius: var(--border-radius);
-    padding:  var(--s-padding);
-    
+    padding: var(--s-padding);
     transition: all .5s;
     background-color: var(--gray-90);
     gap: var(--s-padding);
-    // min-height: 490px;
     color: var(--gray-30);
-    // width: var(--s-border-width);
-    // @media(max-width:1100px) {
-    //     width: 50%;
-    // }
-    &__btn-view{
-        border-radius: var(--border-radius);
-        @extend .d-flex;
-        transition: all .5s;
-        height: 300px;
-        color: var(--primary-opaque);
-        background-color: var(--primary-opaque);
-        border: solid 1px var(--primary);
-        @keyframes glow {
-            50% {
-                color: var(--white); /* Brighter color for the pulse peak */
-                --ui-icon-color: var(--white); /* Brighter color for the pulse peak */
-                background-color: var(--primary); /* More visible than start/end */
-                border-color: var(--primary); /* Keep consistent or adjust for effect */
-                box-shadow: 0 0 2px 3px var(--primary-lite);
-            }
-        }
-        animation: glow 5s infinite ease-in-out;
-
- 
-        cursor: pointer;
-        &-text{
-            width: 66%;
-            text-transform: uppercase;
-            text-align: center;
-            font-size: var(--s-element);
-            @media(max-width:900px){
-                width: 50%;
-                font-size: var(--s-2);
-            }
-        }
-   
-        &:hover{
-            color: var(--white);
-            background-color: var(--primary);
+    height: 100%;
+    transition: all .5s;
+    &-btn-view{
+        height: calc(100vh - 250px);
+        background-color: transparent;
+        .product-survey__title{
+            display: none;
         }
     }
+    &__btn-view {
+        height: 100%;
+        // border-radius: var(--border-radius);
+        @extend .d-flex;
+        justify-content: flex-start;
+        cursor: pointer;
+        width: var(--s-padding-width);
+        &-text {
+            background-image: url("/merchant/nirv1/backgrounds/redrock-wall.jpeg");
+            background-clip: text;
+            background-position: bottom;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: var(--primary-opaque);
+            font-family: Orbitron;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-align: center;
+            font-size: 7vw;
+            filter: blur(2px) brightness(.6);
+            transition: all .5s;
+            &:hover{
+                background-position: top;
+                filter: blur(0) brightness(1);
+            }
+        }
+    }
+
     @media(min-width:1100px) {
-        margin:  0;
+        margin: 0;
     }
 
 
@@ -133,7 +131,7 @@
 
 
 
-    #product-request-survey__options {
+    #product-survey__options {
         width: 100%;
     }
 
@@ -164,9 +162,9 @@
     &__submit {
         width: 100%;
         margin: var(--s-element) 0 0;
-        
+
         @extend .mobile-selected;
-        
+
         @media(max-width:900px) {
             margin: 0;
             bottom: 0;
@@ -236,8 +234,10 @@
                 bottom: 65px;
             }
         }
+
         @media (max-width:900px) {
             bottom: calc(var(--s-element) * -1);
+
             &:hover {
                 animation: slideUp 1s forwards;
             }
@@ -247,17 +247,19 @@
             height: 100%;
             @extend .d-flex;
             flex-wrap: wrap;
-            @media(max-width: 1100px){
+
+            @media(max-width: 1100px) {
                 background-color: var(--gray-80);
                 border-radius: var(--border-radius);
             }
+
             justify-content: flex-start;
             padding: var(--s-9);
             width: 100%;
             gap: var(--s-9);
         }
 
-        .product-request-survey__tools {
+        .product-survey__tools {
             position: absolute;
             right: var(--s-5);
             top: var(--s-9);
@@ -277,7 +279,7 @@
 
                 &:hover {
                     filter: brightness(1.5);
-                  
+
                 }
             }
         }
@@ -298,11 +300,13 @@
         color: var(--gray-40);
         min-height: var(--s-element);
         width: auto;
-        @media(max-width:900px){
+
+        @media(max-width:900px) {
             justify-content: flex-start;
             padding: var(--s-9);
             align-items: flex-start;
         }
+
         cursor: pointer;
         border: solid 1px transparent;
         @extend .d-flex;
@@ -343,16 +347,20 @@
         position: relative;
 
         overflow: hidden;
+
         &__name {
             @extend .d-flex;
             text-align: center;
+
             @media (max-width: 900px) {
                 justify-content: space-between;
                 font-size: var(--s-7);
                 text-align: unset;
             }
+
             text-transform: capitalize;
             width: 100%;
+
             &--icon {
                 flex-direction: column;
                 background-color: var(--green-opaque);

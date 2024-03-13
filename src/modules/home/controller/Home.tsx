@@ -25,7 +25,7 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
   const views = {
     home: <DefaultHome />,
     surveillance: <Surveillance />,
-    lights: <Lights />
+    light: <Lights />
   };
   if (user) return (
     <>

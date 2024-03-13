@@ -48,7 +48,6 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, }) =
       if(field.name === name)field.value = value;
       return field;
     })
-    console.log('[fieldsRef ]',fieldsRef)
     setFields(fieldsRef); // Update the state with the modified fields
     handleDisabled(fieldsRef); // Update the disabled state based on the new fields
   };
@@ -74,7 +73,6 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, }) =
 
 
   const handleDisabled = async (updatedFields: IFormField[]) => {
-    // console.log('[ updateFields ]',updatedFields)
     if (!Array.isArray(updatedFields)) {
       console.error('updatedFields is not an array', updatedFields);
       return; // Exit the function or handle this case as appropriate

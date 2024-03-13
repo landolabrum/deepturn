@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styles from './ProductRequestSurvey.scss';
+import styles from './ProductSurvey.scss';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import useUserAgent from '@webstack/hooks/getUserAgentInfo';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import ProductFeatureOther from '../views/ProductFeatureOther/ProductFeatureOther';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import keyStringConverter from "@webstack/helpers/keyStringConverter"
@@ -57,7 +56,7 @@ interface IProductMoreInfoForm {
     prod_req?: IMoreInfoField[];
 }
 
-const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
+const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     prod_req = applianceArray,
     startButton,
     title = '',
@@ -78,22 +77,22 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     const [isSuccess, setIsSuccess] = useState(false);
     const prospectService = getService<IProspectService>('IProspectService');
     const { prod_req: productRequestObject, } = form;
-    const [isBtnView, setIsBtnView] = useState<boolean>(false);
+    const [isBtnView, setIsBtnView] = useState<boolean>(true);
     const [view, setView]=useState('');
 
     const { width } = useWindow();
     const ProductRequestSuccess = () => <>
         <style jsx>{styles}</style>
-        <div className='product-request-survey__success'>
-            <div className='product-request-survey__success--status'>Success<UiIcon icon='fa-circle-check' /></div>
-            <div className='product-request-survey__success--message'>{message || ''}</div>
+        <div className='product-survey__success'>
+            <div className='product-survey__success--status'>Success<UiIcon icon='fa-circle-check' /></div>
+            <div className='product-survey__success--message'>{message || ''}</div>
         </div>
     </>;
     const ProductRequestInvalid = () => <>
         <style jsx>{styles}</style>
-        <div className='product-request-survey__invalid'>
-            <div className='product-request-survey__invalid--status'>Invalid<UiIcon icon='fa-exclamation-triangle' /></div>
-            <div className='product-request-survey__invalid--message'>{message || ''}</div>
+        <div className='product-survey__invalid'>
+            <div className='product-survey__invalid--status'>Invalid<UiIcon icon='fa-exclamation-triangle' /></div>
+            <div className='product-survey__invalid--message'>{message || ''}</div>
             <UiButton onClick={() => handleView('contact')}>return to contact form</UiButton>
 
         </div>
@@ -123,10 +122,10 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                 children: (
                     <>
                         <style jsx>{styles}</style>
-                        <div className='product-request-survey__success'>
-                            <div className='product-request-survey__success--status'>Success<UiIcon icon='fa-circle-check' /></div>
+                        <div className='product-survey__success'>
+                            <div className='product-survey__success--status'>Success<UiIcon icon='fa-circle-check' /></div>
                             <div>A verification email to
-                                <span className='product-request-survey__success--email'> {newView}, </span>
+                                <span className='product-survey__success--email'> {newView}, </span>
                                 has been sent.
                             </div>
                             <div>To complete the process, simply click on the link in the email.</div>
@@ -250,13 +249,13 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     if (form.prod_req.length) return (
         <>
             <style jsx>{styles}</style>
-            <div className='product-request-survey' ref={optionsRef}>
-                {title && <div className='product-request-survey__title'>{capitalize(title)}{`'`}s </div>}
-                {view !== '' && <div className='product-request-survey__title'>{capitalize(view)}</div>}
+            <div className={`product-survey${isBtnView?" product-survey-btn-view":""}`} ref={optionsRef}>
+                {title && <div className='product-survey__title'>{capitalize(title)}{`'`}s </div>}
+                {view !== '' && <div className='product-survey__title'>{capitalize(view)}</div>}
                 {isSuccess && <ProductRequestSuccess />}
                 {isBtnView &&
-                    <div className="product-request-survey__btn-view" onClick={handleBtnView}>
-                        <div className="product-request-survey__btn-view-text">
+                    <div className="product-survey__btn-view" onClick={handleBtnView}>
+                        <div className="product-survey__btn-view-text">
                             {startButton}
                         </div>
                     </div>
@@ -265,17 +264,17 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                     <div ref={selectedRef}
                         onMouseEnter={handleBoxShadow}
                         onMouseLeave={handleBoxShadow}
-                        className='product-request-survey__selected'>
-                        <div className='product-request-survey__selected--header'>
+                        className='product-survey__selected'>
+                        <div className='product-survey__selected--header'>
                             {`Selected ${title}s`} | total amps  {calculateTotalValue()}
                         </div>
-                        <div className='product-request-survey__tools' >
-                            <div className='product-request-survey__tools--tool'>
+                        <div className='product-survey__tools' >
+                            <div className='product-survey__tools--tool'>
                                 {Boolean(selected?.length) && <div onClick={clearAllSelected}>clear all</div>}
                             </div>
                         </div>
                         {productRequestObject && Boolean(selected?.length) &&
-                            <div className='product-request-survey__selected--content'>
+                            <div className='product-survey__selected--content'>
                                 {Object.values(productRequestObject).map((item, index) => {
                                     if (item?.selected) return (
                                         <div key={index}>
@@ -298,9 +297,9 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                                 }
                             </div>
                         }
-                        {!selected.length && <div className='product-request-survey__instructions'>please Select, {title} to continue.</div>}
+                        {!selected.length && <div className='product-survey__instructions'>please Select, {title} to continue.</div>}
                     </div>
-                    <div id='product-request-survey__options' />
+                    <div id='product-survey__options' />
                     <AdaptGrid
                         xs={3}
                         sm={4}
@@ -320,7 +319,7 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
                             )
                         })}
                     </AdaptGrid>
-                    <div className='product-request-survey__submit'>
+                    <div className='product-survey__submit'>
                         <UiButton
                             disabled={selected.length == 0}
                             onClick={() => handleView('contact')}
@@ -335,4 +334,4 @@ const ProductRequestSurvey: React.FC<IProductMoreInfoForm> = ({
     return <>error: (c-pff)</>
 };
 
-export default ProductRequestSurvey;
+export default ProductSurvey;

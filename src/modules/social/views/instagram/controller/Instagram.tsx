@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import styles from './Instagram.scss';
 import InstagramSignIn from '../views/InstagramSignIn/InstagramSignIn';
-import UiViewLayout from '@webstack/layouts/UiViewLayout/UiViewLayout';
+import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
+
 
 // Remember to create a sibling SCSS file with the same name as this component
 

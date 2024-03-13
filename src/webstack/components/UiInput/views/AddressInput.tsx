@@ -28,7 +28,6 @@ const AutocompleteAddressInput = ({ address, setAddress, variant, traits, inputC
     const autocomplete = new google.maps.places.Autocomplete(inputElement);
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
-      console.log("[ PLACE ]", place)
       if (place && place.address_components) {
         const addressComponents = place.address_components.reduce((acc: any, component: any) => {
           const type = component.types[0];

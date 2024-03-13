@@ -19,7 +19,7 @@ import { findField, updateField } from '@webstack/components/UiForm/functions/fo
 import { useClearance } from '~/src/core/authentication/hooks/useUser';
 import AdminProductRequest from '../views/AdminProductRequest';
 
-const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
+const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:(e:any)=>void}) => {
   const router = useRouter();
   const [customer, setCustomer] = useState<IFormField[] | undefined>();
   const { openModal, closeModal } = useModal();
@@ -94,13 +94,16 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
     setLoader({ active: true, body: `Deleting ${info?.name}` });
     const deleteService = async () => {
       try {
-        await adminService.deleteCustomer(customer_id);
-        router.reload();
+        const resp = await adminService.deleteCustomer(customer_id);
+        return resp;
+        // router.reload();
       } catch (e) {
-        console.error("[ ADMIN DELETE CUSTOMER (ER) ]", JSON.stringify(e))
+        console.error("[ ADMIN DELETE CUSTOMER (ER) ]", JSON.stringify(e));
       }
+      return;
     }
-    deleteService().then(() => {
+    deleteService().then((resp:any) => {
+      console.log('[deleteService ] ',resp)
       setLoader({ active: false });
       setNotification({
         active: true,
@@ -109,7 +112,10 @@ const AdminCustomerDetails: React.FC<any> = ({id}:{id?:string}) => {
           { label: 'success', message: `Deleted: ${info.name}` }
         ]
       });
-      router.push('/admin?vid=customers', undefined,{shallow: false})
+      // if(resp.delete == true){
+        setView('list')
+      // }
+      // router.push('/admin?vid=customers', undefined,{shallow: false})
     })
 
   }
