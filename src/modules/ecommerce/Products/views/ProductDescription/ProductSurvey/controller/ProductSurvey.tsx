@@ -228,8 +228,8 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         }
     };
     const handleBtnView = () =>{
-        setIsBtnView(false);
-         setView(`Appliances to Power`);
+            setIsBtnView(false);
+            setView(`Appliances to Power`);
     }
     const handleBoxShadow = () => {
         const submitContainer = selectedRef.current.parentNode.lastChild;
@@ -249,15 +249,11 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     if (form.survey.length) return (
         <>
             <style jsx>{styles}</style>
-            <div className={`product-survey${isBtnView?" product-survey-btn-view":""}`} ref={optionsRef}>
+            <div className={`product-survey${isBtnView?" product-survey-btn-view":""}`} ref={optionsRef} onClick={isBtnView&&handleBtnView|| undefined}>
                 {title && <div className='product-survey__title'>{capitalize(title)}{`'`}s </div>}
                 {view !== '' && <div className='product-survey__title'>{capitalize(view)}</div>}
                 {isSuccess && <ProductRequestSuccess />}
-                {isBtnView &&
-                    <div className="product-survey__btn-view" onClick={handleBtnView}>
-                            {startButton}
-                    </div>
-                }
+                {isBtnView && startButton }
                 {!isSuccess && !isBtnView && <>
                     <div ref={selectedRef}
                         onMouseEnter={handleBoxShadow}

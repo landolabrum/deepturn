@@ -1,3 +1,7 @@
+
+
+
+
 .d-flex {
     display: flex;
     justify-content: center;
@@ -28,7 +32,7 @@
     justify-content: flex-start;
     margin: var(--s-element) 0;
     width: 100%;
-    flex: 1;
+    flex: 1; 
     gap: var(--s-element);
 
     &--email {
@@ -74,60 +78,85 @@
     justify-content: flex-start;
     border-radius: var(--border-radius);
     padding: var(--s-padding);
-    transition: all .5s;
     background-color: var(--gray-90);
     gap: var(--s-padding);
     color: var(--gray-30);
     height: max-content;
-    transition: all .5s;
+    overflow: hidden;
+    @keyframes intro {
+        0% { 
+            opacity: 0.6;
+            filter: blur(40px);
+            transform: scale(1000%);
+            letter-spacing: calc(100 * var(--s-padding));
+            height: max-content;
+            overflow: hidden;
 
+        }
+        90% { opacity: 1; filter: blur(10px);} 
+        100% {
+            opacity: 1;
+            filter: unset; 
+        }
+    }
     &-btn-view {
-        height: 100%;
+        overflow: hidden;
+        @extend .d-flex; 
+        text-align: center;
+        height: calc(100vh - 250px);
         background-color: transparent;
+        cursor: pointer;
+        // width: 100%;
+        filter: blur(2px) brightness(.6);
+        top: 20vh;
+        font-weight: 900; 
+        font-family: Orbitron;
+        text-align: center;
+        text-transform: uppercase;
+        flex: 1; 
+        line-height: 1;
+        letter-spacing: var(--s-padding);
+        font-size: calc(7vw - var(--s-padding));
+        
+        background-image: url("/merchant/nirv1/backgrounds/redrock-wall.jpeg");
+        background-position: center;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: var(--primary-opaque);
+        text-align: center;
+        
+        animation: intro 2.6s forwards ease-in-out;
+
+
+
+        &:hover:not(&:focus) {
+            background-position: top;
+            filter: blur(0) brightness(1);
+        }
+        &:focus-within, &:focus {
+            background-position: left;
+            filter: blur(0) brightness(3.5);
+        }
+
+
+
+        @media(max-width: 1260px) {
+            width: auto;
+        }
+
+        @media(max-width: 1100px){
+            letter-spacing: var(--s-padding);
+            font-size: calc(13vw - var(--s-padding));
+        }
+        @media(max-width: 900px){
+            // letter-spacing: var(--s-padding);
+            font-size: calc(12.5vw - var(--s-padding));
+        }
         .product-survey__title {
             display: none;
         }
     }
 
-    &__btn-view {
-        height: 100%;
-        // border-radius: var(--border-radius);
-        @extend .d-flex;
-        justify-content: flex-start;
-        cursor: pointer;
-        width: 100%;
-
-        @media(max-width: 1260px) {
-            width: var(--s-padding-width);
-            margin: auto;
-        }
-
-        height: 100%;
-        background-image: url("/merchant/nirv1/backgrounds/redrock-wall.jpeg");
-        background-position: bottom;
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: var(--primary-opaque);
-        text-align: center;
-
-
-        filter: blur(2px) brightness(.6);
-        transition: all 1.5s ease-in-out;
-        @extend .d-flex;
-        font-weight: 900;
-        font-family: Orbitron;
-        text-transform: uppercase;
-        font-size: 5vw;
-        flex: 1;
-        line-height: 1;
-
-        &:hover {
-            background-position: top;
-            filter: blur(0) brightness(1);
-        }
-
-        // }
-    }
 
     @media(min-width:1100px) {
         margin: 0;
@@ -261,7 +290,6 @@
         &--content {
             height: 100%;
             @extend .d-flex;
-            flex-wrap: wrap;
 
             @media(max-width: 1100px) {
                 background-color: var(--gray-80);
@@ -281,7 +309,7 @@
             color: inerit;
             width: 100%;
             @extend .d-flex;
-            justify-content: flex-end;
+            justify-content: flex-end; 
 
             @media(max-width:900px) {
                 color: var(--gray-70);

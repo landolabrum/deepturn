@@ -77,9 +77,9 @@
     &__content {
         overflow: hidden;
         // padding: 0 var(--s-padding) var(--s-1);
-        padding-bottom: var(--s-5);
+        padding-bottom: var(--s-2);
         height: 100%;
-        margin: auto;
+        margin: auto 0;
         backdrop-filter: blur(5px);
         color: var(--gray-30);
         min-width: 600px;
@@ -134,13 +134,75 @@
         @extend .d-flex;
         justify-content: space-between;
         min-height: var(--s-element);
-        background-color: var(--gray-90-opaque);
         backdrop-filter: blur(5px);
         @media(max-width: 1100px) {
-            right: 0;
+            position: relative;
         }
 
-        // &:not(&__no-drag) {
+
+        cursor: default;
+        &:hover,
+        &:focus,
+        &:focus-within,
+        &:visited,
+        &:active {
+            cursor: pointer;
+            // cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+            --ui-icon-color: var(--primary);
+
+        }
+
+        min-height: var(--s-element);
+        width: 100%;
+        position: relative;
+        .modal-overlay__title {
+            font-size: var(--s-1);
+            text-transform: capitalize;
+            font-family: Game;
+            letter-spacing: var(--s-11);
+            font-weight: 100;
+            padding: var(--s-9) var(--s-5);
+            width: auto;
+            color: var(--primary);
+        }
+     
+        .modal-overlay__icon{
+            position: absolute;
+            right: var(--s-10);
+            top: var(--s-10);
+            font-size: var(--s-2);
+            font-family: Orbitron;
+            font-weight: 900;
+            color:var(--primary-opaque);
+            transition: all .5s ease-in;
+            &:hover{
+                color:var(--dark);
+                background-color: var(--primary-opaque);
+            }
+            @extend .d-flex;
+            border-radius: calc(var(--border-radius) * .8);
+            width: var(--s-2);
+            aspect-ratio: 1;
+            line-height: 1;
+        }
+
+        &__fullscreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            padding-right: var(--s-padding);
+            margin: 0;
+            min-height: var(--s-element);
+            border-radius: unset;
+            border: unset;
+
+            &:hover {
+                background-color: var(--gray-100);
+            }
+        }
+                // &:not(&__no-drag) {
         //     &:hover {
         //         cursor: url('/icons/fa-hand.svg'), auto;
         //         background-color: var(--gray-80);
@@ -162,70 +224,14 @@
         // &__no-drag {
         //     cursor: default;
         // }
-        cursor: default;
-
-        &:hover,
-        &:focus,
-        &:focus-within,
-        &:visited,
-        &:active {
-            cursor: pointer;
-            // cursor: url('/icons/fa-hand-back-fist.svg'), auto;
-            --ui-icon-color: var(--primary);
-
-        }
-
-        min-height: var(--s-element);
-        width: var(--s-padding-width);
-        padding: var(--s-9) var(--s-padding);
-        position: relative;
-        .modal-overlay__title {
-            font-size: var(--s-1);
-            text-transform: capitalize;
-            font-family: Game;
-        }
-     
-        .modal-overlay__icon{
-            position: absolute;
-            right: var(--s-10);
-            font-size: var(--s-2);
-            font-family: Orbitron;
-            font-weight: 900;
-            color:var(--gray-80);
-            transition: all .5s ease-in;
-            &:hover{
-                color:var(--dark);
-                background-color: var(--gray-70);
-            }
-            @extend .d-flex;
-            border-radius: calc(var(--border-radius) * .8);
-            width: var(--s-element);
-            height: var(--s-element);
-        }
-
-        &__fullscreen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 2;
-            padding-right: var(--s-padding);
-            margin: 0;
-            min-height: var(--s-element);
-            border-radius: unset;
-            border: unset;
-
-            &:hover {
-                background-color: var(--gray-100);
-            }
-        }
     }
 
     &__body {
         @extend .d-flex;
         flex-direction: column;
         height: auto;
-        width: var(--s-padding-width);
+        width: calc(100% - calc(var(--s-5) * 2));
+        // width: var(--s-padding-width);
         &__fullscreen {
             z-index: 1;
             margin-bottom: 0;
