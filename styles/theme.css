@@ -1,10 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Play:wght@300;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
 
-@font-face {
+/* @font-face {
   font-family: "Game";
   src: url("/fonts/gamestationcondobl.otf") format("opentype");
-  /* font-weight: normal; */
   font-style: italic;
 }
 
@@ -12,19 +11,21 @@
   font-family: "Game";
   src: url("/fonts/gamestationtextobl.otf") format("opentype");
   font-weight: normal;
-  font-style: normal;
 }
 
 @font-face {
   font-family: "Game";
   src: url("/fonts/gamestationdisplayoutline.otf") format("opentype");
   font-weight: 500;
-  font-style: oblique;
-}
+} @font-face {
+  font-family: "Game";
+  src: url("/fonts/gamestationtext.otf") format("opentype");
+  font-weight: 500;
+}  */
 
 @font-face {
-  font-family: "Eros";
-  src: url("/fonts/erosyt.ttf") format("opentype");
+  font-family: "Game";
+  src: url("/fonts/gamestationtext.otf") format("opentype");
   font-style: normal;
 }
 
