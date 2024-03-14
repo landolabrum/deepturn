@@ -15,14 +15,15 @@ interface IContactFormProps {
   onSubmit: (contactData: any) => void;
   user?: any;
   payment?: any
+  title?: string | React.ReactElement | boolean;
 }
 
-const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, }) => {
+const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, title='contact'}) => {
   const initialContactFields = [
-    { name: 'firstName', label: 'First Name', type: 'text', placeholder: 'First Name', required: true, 
+    { name: 'firstName', label: 'First Name', width: "50%", type: 'text', placeholder: 'First Name', required: true, 
     // value:mockDateTime(true)
   },
-    { name: 'lastName', label: 'Last Name', type: 'text', placeholder: 'Last Name', required: true
+    { name: 'lastName', label: 'Last Name', width: "50%",  type: 'text', placeholder: 'Last Name', required: true
     // , value:mockDateTime()
   },
     { name: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com', required: true
@@ -127,7 +128,7 @@ const handleUser = async () => {
     <>
       <style jsx>{styles}</style>
       <div className='contact-form'>
-        <div className='contact-form__title'>Contact</div>
+        {title && <div className='contact-form__title'>{title}</div>}
         <UiForm
           fields={fields}
           disabled={disabled}

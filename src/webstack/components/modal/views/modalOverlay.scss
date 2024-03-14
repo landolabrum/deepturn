@@ -137,7 +137,6 @@
         min-height: var(--s-element);
         background-color: var(--gray-90-opaque);
         backdrop-filter: blur(5px);
-        --ui-icon-color: transparant;
         @media(max-width: 1100px) {
             right: 0;
         }
@@ -179,27 +178,30 @@
 
         min-height: var(--s-element);
         width: var(--s-padding-width);
-        padding: 0 var(--s-padding);
+        padding: var(--s-9) var(--s-padding);
+        position: relative;
         .modal-overlay__title {
-            font-size: var(--s-4);
+            font-size: var(--s-1);
             text-transform: capitalize;
-        }
-        @font-face {
-            font-family: "Game";
-            src: url("/fonts/gamestationdisplayoutline.otf") format("opentype");
-            font-weight: 500;
-          }
-        background-clip: text;
-        background-color: var(--gray-80);
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        .modal-overlay__icon{
-            color: transparent;
-            font-size: var(--s-2);
             font-family: Game;
-            font-weight: normal;
-            --ui-icon-color: transparent;
-            width: var(--s-9);
+        }
+     
+        .modal-overlay__icon{
+            position: absolute;
+            right: var(--s-10);
+            font-size: var(--s-2);
+            font-family: Orbitron;
+            font-weight: 900;
+            color:var(--gray-80);
+            transition: all .5s ease-in;
+            &:hover{
+                color:var(--dark);
+                background-color: var(--gray-70);
+            }
+            @extend .d-flex;
+            border-radius: calc(var(--border-radius) * .8);
+            width: var(--s-element);
+            height: var(--s-element);
         }
 
         &__fullscreen {
@@ -229,6 +231,7 @@
             z-index: 1;
             margin-bottom: 0;
             padding: 0;
+            width: 100%;
         }
         &__popup{
             border-radius: var(--border-radius);

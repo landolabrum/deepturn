@@ -6,6 +6,7 @@
 .image-control {
     --icon-size: 60px;
     --font-size: var(--s-7);
+    width: inherit;
     position: relative;
     background-color: var(--black);
     overflow: hidden;

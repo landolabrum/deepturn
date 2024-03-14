@@ -28,9 +28,10 @@
     height: inherit;
     gap: var(--s-9);
     position: relative;
-    @media(max-width: 1100px) {
+    @media(max-width: 1260px) {
+        width: var(--s-padding-width);
         // padding: var(--s-padding);
-        // margin: auto;
+        margin: auto;
     }
 
     &--title {

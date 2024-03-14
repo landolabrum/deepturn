@@ -6,15 +6,20 @@ h2{
     font-size: var(--s-1);
 }
 h3{
+    @extend .d-flex;
+    background-color: var(--primary-opaque);
+    border-radius: var(--border-radius);
+    margin: var(--s-element) 0 var(--s-9);
+    padding:var(--s-9) var(--s-padding);
+    color:var(--primary-lite);
+    align-items: flex-start;
 }
 h4{
-    @extend .d-flex;
-    justify-content: flex-start;
-    align-items: flex-start;
     line-height: 1.2;
     --ui-icon-height: var(--s-6);
     color:var(--gray-40);
     --ui-icon-color:var(--gray-40);
+    width: auto;
 }
 .d-flex{
  display: flex;
@@ -23,33 +28,28 @@ h4{
 }
 .survey{
     width: 100%;
+    height: calc(100vh - 200px);
 }
 .nirvana-index{
      @extend .d-flex;
-     flex-direction: column;
      width: 100%;
      gap:var(--s-1);
+     flex-direction: column;
      &__content{
+         gap:var(--s-1);
+         flex-direction: column;
          @extend .d-flex;
-        //  z-index: -1;
-         flex-wrap: wrap;
-         margin: var(--s-5) 0;
          position: relative;
-         background-position: center;
-         background-repeat: no-repeat;
-         background-size: cover;
-         overflow: hidden;
          padding: var(--s-1) var(--s-padding)  var(--s-element);
-         
-         border-radius:var(--border-radius);
+         width: var(--s-padding-width);
+         align-items: flex-start;
          .list{
             @extend .d-flex;
             align-items: flex-start;
             justify-content: flex-start;
+            flex-wrap: nowrap;
             flex-direction: column;
             gap: var(--s-padding);
-            padding:var(--s-padding);
-            width: 100%;
          }
         }
-    }
+    } 

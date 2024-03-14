@@ -17,17 +17,17 @@
   font-family: "Game";
   src: url("/fonts/gamestationdisplayoutline.otf") format("opentype");
   font-weight: 500;
-}*/
+} @font-face {
+  font-family: "Game";
+  src: url("/fonts/gamestationtext.otf") format("opentype");
+  font-weight: 500;
+}  */
+
 @font-face {
   font-family: "Game";
   src: url("/fonts/gamestationtext.otf") format("opentype");
-  /* font-weight: 500; */
-}
-@font-face {
-  font-family: "Eros";
-  src: url("/fonts/erosyt.ttf") format("opentype");
   font-style: normal;
-} 
+}
 
 :root {
   --primary: #8c7a6b;

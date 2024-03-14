@@ -1,6 +1,6 @@
 import styles from './Index.scss';
 import Deepturn from '../views/Merchants/Deepturn/Deepturn';
-import NirvanaEnergy from '../views/Merchants/NirvOne/NirvanaEnergy';
+import NirvanaEnergy from '../views/Merchants/NirvanaEnergy/NirvanaEnergy';
 import environment from '~/src/environment';
 import { useEffect, useState } from 'react';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';

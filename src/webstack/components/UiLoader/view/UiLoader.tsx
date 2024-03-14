@@ -1,11 +1,11 @@
 import styles from "./UiLoader.scss";
 import type { NextComponentType, NextPageContext } from "next";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import environment from "~/src/environment";
 
 interface IUiLoader {
-  text?: string | boolean;
+  text?: string | React.ReactElement | boolean;
   dots?: boolean;
   height?: number | string;
   position?: string;

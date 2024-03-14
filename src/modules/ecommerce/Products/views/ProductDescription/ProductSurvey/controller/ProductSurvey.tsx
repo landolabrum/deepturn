@@ -101,7 +101,7 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         setView(newView);
         // Directly handle 'contact' case to open a modal, avoiding unnecessary context initialization for this case
         if (newView === 'contact') {
-            openModal(<ContactForm user={user} onSubmit={onContactSubmit} />);
+            openModal({title:'contact',children:<ContactForm title={false} user={user} onSubmit={onContactSubmit} />});
             return; // Early return to avoid further execution
         }
 
@@ -244,7 +244,7 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     useEffect(() => {
         handleMobileSelected();
         if (startButton && !isBtnView) setIsBtnView(true);
-    }, [width, setView]);
+    }, [width, ]);
     if (!id) return <>No ID FOR PRODUCT REQUEST</>;
     if (form.survey.length) return (
         <>
@@ -255,9 +255,7 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
                 {isSuccess && <ProductRequestSuccess />}
                 {isBtnView &&
                     <div className="product-survey__btn-view" onClick={handleBtnView}>
-                        <div className="product-survey__btn-view-text">
                             {startButton}
-                        </div>
                     </div>
                 }
                 {!isSuccess && !isBtnView && <>
