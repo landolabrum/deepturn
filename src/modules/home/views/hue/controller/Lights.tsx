@@ -189,8 +189,8 @@ const LightsList = () => {
                   <UiButton size='sm' >update</UiButton>
                 </div>
 
-                <div className='lights__light-header--action' onClick={() => multiHomeService('toggle', { id: light.id_ })}>
-                  <ToggleSwitch name={light?.id_} value={light?.is_on} />
+                <div className='lights__light-header--action' >
+                  <ToggleSwitch name={light?.id_} value={light?.is_on} onChange={() => multiHomeService('toggle', { id: light.id_ })}/>
                   <div
                     className='lights__light-header--action'
                     onClick={() => toggleBarView(light.id_)}

@@ -14,8 +14,9 @@
   @extend .d-flex;
   justify-content: space-between;
   width: 100%;
+  height: auto;
   flex-wrap: wrap;
-
+  // gap:var(--s-padding);
   &--mini {
     padding: var(--s-8) var(--s-padding);
     width: var(--s-padding-width);
@@ -47,6 +48,7 @@
   .form-field,
   .form-field__readonly {
     width: 100%;
+    margin: 0 0 var(--s-padding);
     @extend .d-flex-col;
     align-items: flex-start;
 

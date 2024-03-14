@@ -64,7 +64,8 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, }) =
         acc[fieldName] = field.value;
       }
       return acc;
-    }, {});
+    }, {}); 
+
     formData.name = `${formData.firstName} ${formData.lastName}`; // Combining firstName and lastName
     delete formData.firstName; // Remove firstName
     delete formData.lastName; // Remove lastName
@@ -110,12 +111,12 @@ const handleUser = async () => {
       }
     });
 
-    setFields(updatedFields);
+    if(!fields) setFields(updatedFields);
     if (!initialFields) setInitialFields(updatedFields);
   }
 };
   const init = async () => {
-    handleUser().then((updatedFields: any) => handleDisabled(updatedFields))
+    handleUser().then((updatedFields: any) => handleDisabled(updatedFields)) 
   }
   useEffect(() => {
     init()

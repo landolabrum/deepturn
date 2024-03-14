@@ -96,8 +96,9 @@
         width: var(--s-padding-width);
         &-text {
             background-image: url("/merchant/nirv1/backgrounds/redrock-wall.jpeg");
-            background-clip: text;
             background-position: bottom;
+            
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: var(--primary-opaque);
             font-family: Orbitron;

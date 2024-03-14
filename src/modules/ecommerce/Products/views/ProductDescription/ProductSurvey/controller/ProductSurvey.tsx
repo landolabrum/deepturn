@@ -53,11 +53,11 @@ interface IProductMoreInfoForm {
     title?: string;
     startButton?: string;
     subtitle?: string;
-    prod_req?: IMoreInfoField[];
+    survey?: IMoreInfoField[];
 }
 
 const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
-    prod_req = applianceArray,
+    survey = applianceArray,
     startButton,
     title = '',
     id,
@@ -67,16 +67,16 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     const selectedRef = useRef<any | undefined>();
     const optionsRef = useRef<any | undefined>();
     const userAgentInfo = useUserAgent();
-    const defaultForm = { prod_req: prod_req };
+    const defaultForm = { survey: survey };
     const clearAllSelected = () => setForm(defaultForm);
     const { openModal, closeModal, replaceModal } = useModal();
     // const { scrollTo, setScrollTo } = useScrollTo({ max: 1100 });
-    const [form, setForm] = useState<{ prod_req: IMoreInfoField[] }>({ prod_req: prod_req });
+    const [form, setForm] = useState<{ survey: IMoreInfoField[] }>({ survey: survey });
     const [contactData, setContactData] = useState(null);
     const [message, setMessage] = useState<string | null>(null);
     const [isSuccess, setIsSuccess] = useState(false);
     const prospectService = getService<IProspectService>('IProspectService');
-    const { prod_req: productRequestObject, } = form;
+    const { survey: productRequestObject, } = form;
     const [isBtnView, setIsBtnView] = useState<boolean>(true);
     const [view, setView]=useState('');
 
@@ -147,7 +147,7 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     }
     const handleFeature = (choice: IMoreInfoField) => {
         const addCustom = async (choice: any) => handleFeature(choice);
-        const isOther = !Boolean(prod_req.find(f => f.name === choice.name));
+        const isOther = !Boolean(survey.find(f => f.name === choice.name));
         if (choice.name === 'other') {
             return openModal(
                 <ProductFeatureOther
@@ -162,16 +162,16 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
 
         if (isOther) {
             productRequestObject.push(choice);
-            setForm({ ...form, prod_req: productRequestObject })
+            setForm({ ...form, survey: productRequestObject })
             return;
         }
 
         const updatedFeatures = productRequestObject.map(item =>
             item.name === choice.name ? { ...item, selected: !item.selected } : item
         );
-        setForm({ ...form, prod_req: updatedFeatures });
+        setForm({ ...form, survey: updatedFeatures });
     };
-    const selected = form.prod_req.filter(f => f.selected);
+    const selected = form.survey.filter(f => f.selected);
     const calculateTotalValue = (): number => {
         return productRequestObject.reduce((acc, curr) => {
             if (curr.selected) {
@@ -201,10 +201,10 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
             customer: contactDataToUse,
             user_agent: userAgentInfo,
             origin: window?.location?.origin,
-            prod_req: {
+            survey: {
                 id: id,
                 merchant_id: environment.merchant.mid,
-                data: form.prod_req.reduce((acc: any, item: any) => {
+                data: form.survey.reduce((acc: any, item: any) => {
                     if (item.selected) {
                         acc[keyStringConverter(item.name, true)] = item.value;
                     }
@@ -246,7 +246,7 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         if (startButton && !isBtnView) setIsBtnView(true);
     }, [width, setView]);
     if (!id) return <>No ID FOR PRODUCT REQUEST</>;
-    if (form.prod_req.length) return (
+    if (form.survey.length) return (
         <>
             <style jsx>{styles}</style>
             <div className={`product-survey${isBtnView?" product-survey-btn-view":""}`} ref={optionsRef}>

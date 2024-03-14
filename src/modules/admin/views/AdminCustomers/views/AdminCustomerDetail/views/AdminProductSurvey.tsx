@@ -1,6 +1,6 @@
 // ProductRequest.tsx
 import React, { useEffect, useState } from 'react';
-import styles from "./AdminProductRequest.scss";
+import styles from "./AdminProductSurvey.scss";
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { dateFormat } from '@webstack/helpers/userExperienceFormats';
 import UiButton from '@webstack/components/UiButton/UiButton';
@@ -11,8 +11,8 @@ import { useUser } from '~/src/core/authentication/hooks/useUser';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import capitalize from '@webstack/helpers/Capitalize';
 
-interface ProductRequestProps {
-  productRequest: {
+interface IAdminProductSurvey {
+  productSurvey: {
     id: string;
     merchant_id: string;
     created: string;
@@ -22,11 +22,11 @@ interface ProductRequestProps {
   customer_id: string
 }
 
-const AdminProductRequest: React.FC<ProductRequestProps> = ({ productRequest, customer_id: customerId }) => {
+const AdminProductSurvey: React.FC<IAdminProductSurvey> = ({ productSurvey, customer_id: customerId }) => {
   const [tableData, setTableData] = useState<any>()
   const MemberService = getService<IMemberService>("IMemberService");
   const user = useUser();
-  const complete = Boolean(productRequest?.completed);
+  const complete = Boolean(productSurvey?.completed);
   const encryptData = async () => {
     if (!customerId) {
       console.error('ERROR:no customer id,[ AdminProductRequest (encryptData) ]')
@@ -34,22 +34,22 @@ const AdminProductRequest: React.FC<ProductRequestProps> = ({ productRequest, cu
     }
     const request = {
       encryptionData: {
-        ...productRequest,
+        ...productSurvey,
         completed: new Date().getTime(),
         sales_rep: user?.id || 'none'
       },
       customer_id: customerId,
-      metadata_key_name: `prod_req.${environment.merchant.mid}.configure`,
+      metadata_key_name: `survey.${environment.merchant.mid}.configure`,
     }
     try {
       const response = await MemberService.encryptMetadataJWT({
         encryptionData: {
-          ...productRequest,
+          ...productSurvey,
           completed: new Date().getTime(),
           sales_rep: user?.id || 'none'
         },
         customer_id: customerId,
-        metadata_key_name: `prod_req.${environment.merchant.mid}.configure`,
+        metadata_key_name: `survey.${environment.merchant.mid}.configure`,
       });
       if (response) {
         console.log("[ ENCRYPT RESPONSE PRODUCT REQUEST ( SUCCESS ) ]", response)
@@ -69,32 +69,32 @@ const AdminProductRequest: React.FC<ProductRequestProps> = ({ productRequest, cu
     </>
   }
   useEffect(() => {
-    if (productRequest?.data) {
-        const val = Object.entries(productRequest.data).map(([infoItem,value]) => ({
+    if (productSurvey?.data) {
+        const val = Object.entries(productSurvey.data).map(([infoItem,value]) => ({
           name:keyStringConverter(infoItem),
           value:value
         }));
         setTableData(val)
     }
-  }, [productRequest])
+  }, [productSurvey])
   return (<>
     <style jsx>{styles}</style>
     <div className='product-request'>
       <div className='product-request__header'>
-        <h3 className='title'>{capitalize(productRequest.id)} Request</h3>
+        <h3 className='title'>{capitalize(productSurvey.id)} Request</h3>
         <div className='actions'>
           {tableTotal &&
             <div>Total: {tableTotal}</div>
           }
-          {productRequest?.created && 
+          {productSurvey?.created && 
           <ProductHeaderInfo 
             name='created' 
-            value={`${dateFormat(Number(productRequest?.created), { isTimestamp: true })}`}/>
+            value={`${dateFormat(Number(productSurvey?.created), { isTimestamp: true })}`}/>
           }
           {complete &&
           <ProductHeaderInfo 
           name='completed' 
-          value={`${dateFormat(Number(productRequest?.completed), { isTimestamp: true })}`}/>
+          value={`${dateFormat(Number(productSurvey?.completed), { isTimestamp: true })}`}/>
         }
 
           <div>
@@ -119,4 +119,4 @@ const AdminProductRequest: React.FC<ProductRequestProps> = ({ productRequest, cu
   );
 };
 
-export default AdminProductRequest;
+export default AdminProductSurvey;

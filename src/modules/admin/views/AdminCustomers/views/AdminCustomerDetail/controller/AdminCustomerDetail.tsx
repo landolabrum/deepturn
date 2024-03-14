@@ -17,7 +17,7 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 import environment from '~/src/environment';
 import { findField, updateField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import { useClearance } from '~/src/core/authentication/hooks/useUser';
-import AdminProductRequest from '../views/AdminProductRequest';
+import AdminProductSurvey from '../views/AdminProductSurvey';
 
 const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:(e:any)=>void}) => {
   const router = useRouter();
@@ -222,7 +222,7 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
             Object.entries(response?.metadata || {}).map(([key, value]: any) => {
               const keyParts = key.split('.');
               const isMerchant = keyParts[1] === merchantId;
-              if (keyParts[0] === 'prod_req' && Boolean(isMerchant || merchantId === 'mb1')) {
+              if (keyParts[0] === 'survey' && Boolean(isMerchant || merchantId === environment.merchant.mid)) {
                 formName = keyParts[2];
                 console.log("[ formName ]", keyParts)
                 setProductRequest(value);
@@ -264,7 +264,7 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
       <>
         <style jsx>{styles}</style>
         <div className='admin-customer'>
-          {productRequest && customer_id && <AdminProductRequest customer_id={customer_id} productRequest={productRequest} />}
+          {productRequest && customer_id && <AdminProductSurvey customer_id={customer_id} productSurvey={productRequest} />}
           {/* Render ProductRequest */}
           <div className='admin-customer__header'>
             <div className='admin-customer__header--title'>Contact Info</div>

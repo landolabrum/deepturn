@@ -46,7 +46,7 @@ const ModalOverlay: React.FC = () => {
 //     isDragging && setIsDragging(false);
 //   };
 const statements = Object(confirm?.statements);
-//   // const mouse = useMouse();
+//   // const mouse = useMouse(); 
 //   // const mousePos = mouse?.position;
 //   const startDrag = (e: React.MouseEvent) => {
 //     setStartPosition({ x: position.x, y: position.y }); // Use current mouse position
@@ -109,8 +109,9 @@ const statements = Object(confirm?.statements);
             <div className='modal-overlay__title'>
               {title || confirm?.title}
             </div>
-            <div className='modal-overlay__icon'>
-              <UiIcon icon='fa-xmark' onClick={closeModal} />
+            <div className='modal-overlay__icon' onClick={closeModal} >
+              x
+              {/* <UiIcon icon='fa-xmark' /> */}
             </div>
           </a>
 

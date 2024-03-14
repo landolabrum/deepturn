@@ -14,7 +14,7 @@ interface IImageControl {
   mediaType?: IImageMediaType;
   children?: React.ReactNode;
   refreshInterval?: number; // Interval in milliseconds to refresh the image
-  error?: string;
+  error?: string | React.ReactElement;
   fixedLoad?: boolean;
   loadingText?: string
 }
