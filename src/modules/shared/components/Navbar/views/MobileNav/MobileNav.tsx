@@ -29,20 +29,15 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }):React
                        {
                         if(route?.hide)return<></>;
                         return (
-                            <div 
-                                key={key} 
-                                className='navbar__mobile--content__nav-item' 
-                                onClick={() => handleClick(route)}
-                            >
-                                <div>
+                            <span key={key}> 
                                 <UiButton
+                                    onClick={() => handleClick(route)}
                                     traits={{beforeIcon:route?.icon}}
-                                    variant='inherit'
+                                    // variant='inherit'
                                 >
                                     {route.label}{route?.href =='/cart' ?'cart':''}
                                 </UiButton>
-                            </div>
-                            </div>
+                            </span>
                         )}
                     )}
                 </div>

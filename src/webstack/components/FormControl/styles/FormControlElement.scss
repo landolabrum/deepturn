@@ -41,7 +41,7 @@
 // Helpers
 %element-color {
     --ui-icon-color: var(--gray-40);
-    background-color: var(--gray-80-o);
+    background-color: var(--gray-70-o);
 
     &:focus-within {
         color: var(--gray-40);
@@ -76,9 +76,7 @@
 .b-rad {
     border-style: solid;
     border-width: 1px;
-    &:not(.form-control__element--button){
-        border-color: transparent;
-    }
+    border-color: transparent;
     outline: solid 1px transparent;
     border-radius: var(--border-radius);
 }
@@ -186,7 +184,9 @@
     // ELEMENTS
     &--button {
         color: inherit;
-        border: solid 1px var(--gray-70);
+        border-style: solid;
+        border-width: 1px;
+        border-color: unset;
         filter: brightness(.8);
         &:hover,
         &:focus {

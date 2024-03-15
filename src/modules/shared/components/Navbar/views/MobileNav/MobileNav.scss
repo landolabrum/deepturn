@@ -8,13 +8,11 @@
     display: none;
     
     margin: 0;
-    width: 100%;
+    width: var(--s-padding-width);
     --ui-icon-color: var(--gray-40);
     @media(max-width: 1260px) {
         margin: var(--s-padding) auto ;
-        display: flex;
-        flex-direction: column;
-        gap: var(--s-padding);
+        display: inline-block;
     }
 
     &--actions {
@@ -32,24 +30,6 @@
         gap: var(--s-padding);
         height: max-content;
         justify-content: space-between;
-        &__nav-item {
-            order: 2;
-            @extend .d-flex;
-            border-radius: var(--border-radius);
-            --ui-icon-color: var(--gray-50);
-            background-color: var(--gray-70-o);
-            color: var(--gray-40);
-            --ui-icon-color: var(--white);
-            @media(max-width:900px){
-                min-width: inherit;
-                // border
-            }
-            &:hover {
-                --ui-icon-color: var(--white);
-                color: var(--white);
-                background-color: var(--gray-70);
-
-            }
-        }
+        width: 100%;
     }
 }

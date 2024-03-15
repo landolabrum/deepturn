@@ -72,6 +72,7 @@ const statements = Object(confirm?.statements);
     return null;
   }
   const handleClick = (btn: any) => {
+    console.log('btn', btn)
     if (btn?.onClick) {
       btn.onClick(btn); // Make sure to call the function
     } else if (btn.href) {
