@@ -200,11 +200,12 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         }
         // TODO CONVERT TO JWT
         let request: any = {
-            ...contactDataToUse,
+            customer: contactDataToUse,
             user_agent: userAgentInfo,
-            merchant: environment.merchant,
+            origin: window?.location?.origin,
             survey: {
                 id: id,
+                merchant_id: environment.merchant.mid,
                 data: form.survey.reduce((acc: any, item: any) => {
                     if (item.selected) {
                         acc[keyStringConverter(item.name, true)] = item.value;
@@ -214,20 +215,22 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
                 created: new Date().getTime()
             }
         };
-        try {
-            const response = await memberService.signUp(request);
-            if (response?.email) {
-                handleView(response.email);
-            } else if (response?.status) {
-                handleView(response.status);
-                setMessage(response.message);
-            }
-        } catch (e: any) {
-            console.error("Submission failed: ", e);
-            handleView('error');
-        }
-    };
+        console.log('[ PROSPECT REQ ]', request)
 
+        // try {
+        //     const response = await memberService.signUp()
+        //     if (response?.email) {
+        //         handleView(response.email);
+        //     } else if (response?.status) {
+        //         handleView(response.status);
+        //         setMessage(response.message);
+        //     }
+        // } catch (e: any) {
+        //     console.error("Submission failed: ", e);
+        //     handleView('error');
+        // }
+    };
+   
     const handleBoxShadow = () => {
         const submitContainer = selectedRef.current.parentNode.lastChild;
         if (
@@ -240,16 +243,11 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     const formTitle = `Appliances to Power`
     const isform = view === formTitle;
     const isBtnView = !isform;
-    const handleProductClass = (newClass?: any) => {
-        if (isform || typeof newClass !== 'string') return;
-        console.log('[ handleProductClass ]: ',{view, surveyClass, newClass})
-        if(typeof newClass != 'string'){
-            setView(formTitle);
-            setSurveyClass('product-survey');
-        }else{
-            setSurveyClass(`product-survey product-survey-${newClass}`);
-        }
-    };
+    const handleProductClass = () => {
+        if(isform)return;
+        setView(formTitle);
+        setSurveyClass('product-survey');
+    }
     useEffect(() => {
         // handleProductClass();
         handleMobileSelected();
@@ -258,13 +256,7 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     if (form.survey.length) return (
         <>
             <style jsx>{styles}</style>
-            <div 
-                ref={optionsRef}
-                onClick={handleProductClass} 
-                // onMouseEnter={()=>handleProductClass('hover')}
-                // onMouseLeave={()=>handleProductClass('hover-end')}
-                className={surveyClass}
-                >
+            <div className={surveyClass} ref={optionsRef} onClick={handleProductClass}>
                 {title && <div className='product-survey__title'>{capitalize(title)}{`'`}s </div>}
                 {view !== '' && <div className='product-survey__title'>{capitalize(view)}</div>}
                 {isSuccess && <ProductRequestSuccess />}

@@ -106,20 +106,11 @@
             border-color: var(--primary);
         }
         100% {
-            border-color: var(--dark);
+            border-color: var(--primary-lite);
             background-position: top;
             opacity: 1;
             filter: blur(0) brightness(1.1);
         }
-    }
-    &-hover {
-        border-width: var(--s-9);
-        transition: all 1.5s ease-in-out;
-        border-style: solid;
-        animation: hover 5s infinite alternate;
-    }
-    &-hover-end {
-        animation: none;
     }
     &-btn-view {
         @extend .d-flex;
@@ -146,8 +137,13 @@
         -webkit-text-fill-color: var(--primary-o);
         text-align: center;
         animation: intro 2.6s forwards ease-in-out;
+        transition: all 1.5s ease-in-out;
         height: max-content;
-  
+        &:hover {
+            border-style: solid;
+            border-width: var(--s-9);
+            animation: hover 5s infinite alternate;
+        }
         //     // background-clip: unset;
         //     // -webkit-background-clip: unset;
       
