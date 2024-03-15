@@ -19,7 +19,6 @@ $actionsBg: var(--gray-90);
     height: 100%;
     margin-top:  calc(var(--s-element ) * 2);
     @media (max-width: 1100px) {
-        margin-top:  0;
         width: auto;
     }
     @media(max-width: 900px){

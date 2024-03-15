@@ -1,9 +1,10 @@
 import { IFormControlVariant } from '@webstack/components/AdapTable/models/IVariant';
-import { createContext, ReactNode, useContext,  useState } from 'react';
+import React, { createContext, ReactNode, useContext,  useState } from 'react';
 
 export type IConfirm ={
-  title?: string;
-  statements?: {text?: string, onClick?:(e:any)=>void, href?: string, variant?: IFormControlVariant}[];
+  title?: string | React.ReactElement;
+  statements?: {
+    label?: string, onClick?:(e:any)=>void, href?: string, variant?: IFormControlVariant}[];
 } | undefined;
 
 
@@ -75,9 +76,6 @@ export const useModal = () => {
     },
     modalContent: null,
   };
-  
-  // useEffect(() => {
-  //   // console.log('[ context ]', context)
-  // }, [context?.isModalOpen]);
+
   return context ?? defaultContext;
 };

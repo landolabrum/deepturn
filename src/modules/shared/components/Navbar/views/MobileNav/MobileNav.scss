@@ -6,12 +6,11 @@
 
 .navbar__mobile {
     display: none;
-    min-width: 600px;
+    
     margin: 0;
     width: 100%;
     --ui-icon-color: var(--gray-40);
     @media(max-width: 1260px) {
-        min-width: unset;
         margin: var(--s-padding) auto ;
         display: flex;
         flex-direction: column;
@@ -33,38 +32,6 @@
         gap: var(--s-padding);
         height: max-content;
         justify-content: space-between;
-
-        // padding: calc(var(--s-element) * 2) var(--s-padding) var(--s-element);
-
-        &__brand {
-            // order: 1;
-            // gap: var(--s-10);
-
-            // @media(max-width: 1100px) {
-            //     position: absolute;
-            //     top: var(--s-padding);
-            //     left: var(--s-padding);
-            // }
-
-            // text-transform: capitalize;
-            // font-size: var(--s-2);
-            // @extend .d-flex;
-            // color:var(--gray-50-o);
-            // --ui-icon-color:var(--gray-50-o);
-            // --ui-icon-size: var(--s-1);
-            // // --ui-icon-width: var(--s-1);
-            // line-height: 1;
-            // height: var(--s-element);
-            // cursor: pointer;
-
-            // &:hover {
-            //     color: var(--primary);
-            //     --ui-icon-color: var(--primary);
-            // }
-
-
-        }
-
         &__nav-item {
             order: 2;
             @extend .d-flex;
@@ -73,7 +40,6 @@
             background-color: var(--gray-70-o);
             color: var(--gray-40);
             --ui-icon-color: var(--white);
-            min-width: 600px;
             @media(max-width:900px){
                 min-width: inherit;
                 // border

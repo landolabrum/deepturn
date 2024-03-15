@@ -8,7 +8,7 @@ import Authentication from "~/src/pages/authentication";
 import { useCartTotal } from "~/src/modules/ecommerce/cart/hooks/useCart";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
-import MobileNav from "../views/MobileNav/MobileNav";
+// import MobileNav from "../views/MobileNav/MobileNav";
 import environment from "~/src/environment";
 import useNavMobile from "../hooks/useNavBreak"; // Ensure this path is correct
 import useScroll from "@webstack/hooks/useScroll";
@@ -21,7 +21,7 @@ const Navbar = () => {
   const { selectedUser, pathname, explicitRouter} = useRoute();
   const routes = useClearanceRoutes();
   const [scroll, _] = useScroll();
-  const { openModal, closeModal, isModalOpen } = useModal();
+  const { openModal, closeModal, replaceModal, isModalOpen } = useModal();
   const [currentRoutes, setCurrentRoutes] = useState<IRoute[] | undefined>(undefined);
   const [toggled, setToggled] = useState<string | null>(null);
   const navRef = useRef(null);
@@ -31,12 +31,29 @@ const Navbar = () => {
   // Handle mobile navigation click
   const handleMobileClick = (selectedRoute: IRoute) => {
     closeModal();
+    console.log({selectedRoute})
     if (selectedRoute.href && !selectedRoute.items) {
       explicitRouter(selectedRoute); // Assuming setRoute expects an IRoute
     } else if (selectedRoute.modal) {
       openModal(modals[selectedRoute.modal]);
     } else if (selectedRoute.items) {
-      openModal(<MobileNav routes={selectedRoute.items} handleClick={handleMobileClick} onBack={handleBackButtonClick} />);
+      selectedRoute.items.forEach(element => {
+        console.log("[ G ]",element)
+      });
+      replaceModal({
+        confirm:{
+          title:selectedRoute?.label,
+          statements:selectedRoute.items
+        }
+      })
+      // openModal(
+      //   {
+      //     confirm:[
+
+      //     ]
+      //   }
+      // // <MobileNav routes={selectedRoute.items} handleClick={handleMobileClick} onBack={handleBackButtonClick} />
+      // );
     }
   };
 
@@ -64,13 +81,31 @@ const Navbar = () => {
 
   // Toggle mobile navigation or modal
   const handleTrigger = () => {
-    if (currentRoutes !== undefined) openModal({
-      title:<>
-        <h1 onClick={()=>{
-          handleMobileClick({href:'/'})
-          }}><UiIcon icon={`${environment.merchant.name}-logo`}/>{environment.merchant.name && keyStringConverter(environment.merchant.name)}</h1>
-        </>,
-        children:<MobileNav routes={currentRoutes} handleClick={handleMobileClick} />});
+    if (currentRoutes !== undefined){
+      const nRoutes = currentRoutes.map((r:any)=>{
+        r.onClick = (handleMobileClick({href:r.href}));
+        delete r.href
+        return r;
+      });
+console.log({nRoutes, currentRoutes})
+      // openModal({
+      //   confirm: {
+      //     title:(<>
+      //     <h1 onClick={()=>{
+      //     handleMobileClick({href:'/'})
+      //     }}><UiIcon icon={`${environment.merchant.name}-logo`}/>{environment.merchant.name && keyStringConverter(environment.merchant.name)}</h1>
+      //   </>),
+      //     statements: currentRoutes
+      //   }
+      // })
+    }
+    // if (currentRoutes !== undefined) openModal({
+    //   title:<>
+    //     <h1 onClick={()=>{
+    //       handleMobileClick({href:'/'})
+    //       }}><UiIcon icon={`${environment.merchant.name}-logo`}/>{environment.merchant.name && keyStringConverter(environment.merchant.name)}</h1>
+    //     </>,
+    //     children:<MobileNav routes={currentRoutes} handleClick={handleMobileClick} />});
     if (isModalOpen) closeModal();
     // else closeModal();
   };

@@ -123,8 +123,8 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
     openModal({ confirm: {
       title: `Delete ${info?.name}`,
       statements: [
-        { text: 'yes', onClick: confirmDelete },
-        { text: 'no', onClick: closeModal }
+        { label: 'yes', onClick: confirmDelete },
+        { label: 'no', onClick: closeModal }
       ]
     }})
   }

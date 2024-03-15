@@ -48,8 +48,8 @@ const Authentication: React.FC<any> = (props: any) => {
       openModal({ confirm: {
         title: `Welcome, ${response?.name}`,
         statements: [
-          { text: 'go to account', onClick: ()=>router.push('/profile') },
-          { text: 'close', onClick: closeModal }
+          { label: 'go to account', onClick: ()=>router.push('/profile') },
+          { label: 'close', onClick: closeModal }
         ]
       }})
     }

@@ -200,12 +200,12 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         }
         // TODO CONVERT TO JWT
         let request: any = {
-            customer: contactDataToUse,
+            ...contactDataToUse,
             user_agent: userAgentInfo,
             origin: window?.location?.origin,
+            merchant: environment.merchant,
             survey: {
                 id: id,
-                merchant_id: environment.merchant.mid,
                 data: form.survey.reduce((acc: any, item: any) => {
                     if (item.selected) {
                         acc[keyStringConverter(item.name, true)] = item.value;
@@ -217,18 +217,19 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         };
         console.log('[ PROSPECT REQ ]', request)
 
-        // try {
-        //     const response = await memberService.signUp()
-        //     if (response?.email) {
-        //         handleView(response.email);
-        //     } else if (response?.status) {
-        //         handleView(response.status);
-        //         setMessage(response.message);
-        //     }
-        // } catch (e: any) {
-        //     console.error("Submission failed: ", e);
-        //     handleView('error');
-        // }
+        try {
+            const response = await memberService.signUp(request);
+            console.log('[ PRODUCT SURVEY ( response ) ]',response)
+            if (response?.email) {
+                handleView(response.email);
+            } else if (response?.status) {
+                handleView(response.status);
+                setMessage(response.message);
+            }
+        } catch (e: any) {
+            console.error("Submission failed: ", e);
+            handleView('error');
+        }
     };
    
     const handleBoxShadow = () => {

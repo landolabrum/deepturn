@@ -122,8 +122,8 @@ const statements = Object(confirm?.statements);
                 {statements.map((btn: any, key: number) => {
                   return (
                     <div key={key} className='modal-overlay__confirm-btn'>
-                      <UiButton onClick={() => handleClick(btn)} variant={btn.text === 'yes' ? 'primary' : btn?.variant}>
-                        {btn.text}
+                      <UiButton onClick={() => handleClick(btn)} variant={btn.label === 'yes' ? 'primary' : btn?.variant}>
+                        {btn.label}
                       </UiButton>
                     </div>
                   );
