@@ -18,7 +18,7 @@
     @extend .p-fix;
     cursor: pointer;
     z-index: 999;
-    background: var(--gray-70-opaque); // Adjusted for semi-transparent overlay
+    background: var(--gray-70-o); // Adjusted for semi-transparent overlay
     backdrop-filter: blur(5px);
 
     &__dragging {
@@ -38,7 +38,7 @@
     overflow-x: hidden;
     background-color: var(--dark);
     border: solid 1px var(--gray-80);
-    outline: solid 1px var(--gray-70-opaque);
+    outline: solid 1px var(--gray-70-o);
     border-radius: var(--border-radius);
     @media(max-width: 900px) {
         margin: 0 auto;
@@ -173,11 +173,11 @@
             font-size: var(--s-2);
             font-family: Orbitron;
             font-weight: 900;
-            color:var(--primary-opaque);
+            color:var(--primary-o);
             transition: all .5s ease-in;
             &:hover{
                 color:var(--dark);
-                background-color: var(--primary-opaque);
+                background-color: var(--primary-o);
             }
             @extend .d-flex;
             border-radius: calc(var(--border-radius) * .8);
@@ -249,17 +249,15 @@
         }
         .modal-overlay__confirm {
             @extend .d-flex;
-            gap: var(--s-9);
-            padding: var(--s-8) var(--s-9);
-            // background-color: var(--gray-70-opaque);
+            gap: var(--s-padding);
             border-radius: var(--border-radius);
             overflow: hidden;
             margin-top: var(--s-padding);
-
-            @media(max-width: 1100px) {
-                flex-direction: column;
-            }
-
+            width: var(--s-padding-width);
+            padding: var(--s-padding);
+            flex-direction: column;
+            border: solid 1px var(--gray-70);
+            background-color: var(--gray-90);
             &-col {
                 flex-direction: column;
             }

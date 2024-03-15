@@ -7,7 +7,7 @@ h2{
 }
 h3{
     @extend .d-flex;
-    background-color: var(--primary-opaque);
+    background-color: var(--primary-o);
     border-radius: var(--border-radius);
     margin: var(--s-element) 0 var(--s-9);
     padding:var(--s-9) var(--s-padding);
@@ -28,7 +28,8 @@ h4{
 }
 .survey{
     width: 100%;
-    height: calc(100vh - 200px);
+    position: relative;
+    height: calc(100vh - 280px);
 }
 .nirvana-index{
      @extend .d-flex;
@@ -39,7 +40,6 @@ h4{
          gap:var(--s-1);
          flex-direction: column;
          @extend .d-flex;
-         position: relative;
          padding: var(--s-1) var(--s-padding)  var(--s-element);
          width: var(--s-padding-width);
          align-items: flex-start;

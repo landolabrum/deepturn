@@ -4,7 +4,7 @@ import { EventEmitter } from "@webstack/helpers/EventEmitter";
 import environment from "~/src/environment";
 import CustomToken from "~/src/models/CustomToken";
 import MemberToken from "~/src/models/MemberToken";
-import UserContext, { ProspectContext } from "~/src/models/UserContext";
+import UserContext, { GuestContext } from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
 import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, IResetPassword, ISessionData, OResetPassword } from "./IMemberService";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
@@ -12,7 +12,7 @@ import { encryptString } from "@webstack/helpers/Encryption";
 import errorResponse from "../../errors/errorResponse";
 const MEMBER_TOKEN_NAME = environment.legacyJwtCookie.authToken;
 const TRANSACTION_TOKEN_NAME = environment.legacyJwtCookie.transactionToken;
-const PROSPECT_TOKEN_NAME = environment.legacyJwtCookie.prospectToken;
+const guest_TOKEN_NAME = environment.legacyJwtCookie.guestToken;
 const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
 const TIMEOUT = 5000;
@@ -45,12 +45,12 @@ export default class MemberService
     super(environment.serviceEndpoints.membership);
   }
   private _userContext: UserContext | undefined;
-  private _prospectContext: UserContext | undefined;
-  private _prospectToken: string | undefined;
+  private _guestContext: UserContext | undefined;
+  private _guestToken: string | undefined;
   private _userToken: string | undefined;
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<UserContext | undefined>();
-  public prospectChanged = new EventEmitter<ProspectContext | undefined>();
+  public guestChanged = new EventEmitter<GuestContext | undefined>();
 
   public async signIn({ email, password, code, user_agent, merchant }: any): Promise<any> {
     if (!email) {
@@ -317,11 +317,11 @@ public async processTransaction(sessionData: ISessionData) {
       "usage/auth/sign-up",
       {data: encryptedSignUp},
     );
-    // PROSPECT
-    if (res?.status === "prospect") {
-      const prospectJwt = await res.data;
-      this.saveProspectToken(prospectJwt);
-      this.saveLegacyProspectCookie(prospectJwt);
+    // guest
+    if (res?.status === "guest") {
+      const guestJwt = await res.data;
+      this.saveguestToken(guestJwt);
+      this.saveLegacyguestCookie(guestJwt);
     }
     return res;
   }
@@ -422,8 +422,8 @@ public async processTransaction(sessionData: ISessionData) {
       }
     }
   }
-  private saveLegacyProspectCookie(customJwt: string) {
-    if (environment.legacyJwtCookie?.prospectToken) {
+  private saveLegacyguestCookie(customJwt: string) {
+    if (environment.legacyJwtCookie?.guestToken) {
       const jwtCookie = environment.legacyJwtCookie;
       const a = customJwt.split(".");
       if (a.length === 3) {
@@ -435,9 +435,9 @@ public async processTransaction(sessionData: ISessionData) {
         const props: { [key: string]: string } = {};
         props.path = "/";
         props["max-age"] = diff.toString();
-        props['is_prospect']='true';
+        props['is_guest']='true';
         if (jwtCookie.domain) props.domain = jwtCookie.domain;
-        CookieHelper.setCookie(jwtCookie.prospectToken, customJwt, props);
+        CookieHelper.setCookie(jwtCookie.guestToken, customJwt, props);
       }
     }
   }
@@ -476,28 +476,28 @@ public async processTransaction(sessionData: ISessionData) {
     }
     this._userContext = context;
     this._userToken = token;
-    this._prospectToken = undefined;
+    this._guestToken = undefined;
     this.userChanged.emit(context);
   }
-  private updateProspectContext(
-    context: ProspectContext | undefined,
+  private updateguestContext(
+    context: GuestContext | undefined,
     token: string | undefined
   ) {
-    if (context == null && this._prospectContext == null) {
+    if (context == null && this._guestContext == null) {
       return;
     }
-    if (context === this._prospectContext) {
+    if (context === this._guestContext) {
       return;
     }
-    this._prospectContext = context;
+    this._guestContext = context;
     // HERE
     console.log('[ tokl ]', token)
-    this._prospectToken = token;
-    this.prospectChanged.emit(context);
+    this._guestToken = token;
+    this.guestChanged.emit(context);
   }
 
-  getCurrentProspect(): ProspectContext | undefined {
-    return this._getCurrentProspect(false);
+  getCurrentGuest(): GuestContext | undefined {
+    return this._getCurrentGuest(false);
   }
   getCurrentUser(): UserContext | undefined {
     return this._getCurrentUser(false);
@@ -514,8 +514,8 @@ public async processTransaction(sessionData: ISessionData) {
     }
     const memberToken = this.parseToken(memberJwtString);
     const user = memberToken?.user;
-    let prospectJwtString = this.getProspectTokenFromStorage();
-    if(prospectJwtString)this.signOutProspect();
+    let guestJwtString = this.getguestTokenFromStorage();
+    if(guestJwtString)this.signOutguest();
     if (memberJwtString) {
       this.updateUserContext(undefined, undefined);
     }
@@ -544,44 +544,44 @@ public async processTransaction(sessionData: ISessionData) {
 
     return this._userContext;
   }
-  private _getCurrentProspect(forceUpdate: boolean): ProspectContext | undefined {
-    if (!forceUpdate && this._prospectContext != null) {
-      return this._prospectContext;
+  private _getCurrentGuest(forceUpdate: boolean): GuestContext | undefined {
+    if (!forceUpdate && this._guestContext != null) {
+      return this._guestContext;
     }
-    let prospectJwtString = this.getProspectTokenFromStorage();
+    let guestJwtString = this.getguestTokenFromStorage();
 
-    if (!prospectJwtString) {
-      this.updateProspectContext(undefined, undefined);
+    if (!guestJwtString) {
+      this.updateguestContext(undefined, undefined);
       return;
     }
-    const prospectToken = this.parseToken(prospectJwtString);
+    const guestToken = this.parseToken(guestJwtString);
     // console.log('[ MEMBER TOKEN ]', memberToken)
-    const prospect = prospectToken?.user;
+    const guest = guestToken?.user;
 
-    if (prospect == null) {
-      this.updateProspectContext(undefined, undefined);
+    if (guest == null) {
+      this.updateguestContext(undefined, undefined);
       return;
     }
-    this.updateProspectContext({ ...prospect }, prospectJwtString);
+    this.updateguestContext({ ...guest }, guestJwtString);
 
     if (this._timeout != null) {
       clearTimeout(this._timeout);
     }
 
-    if (prospectToken?.exp) {
+    if (guestToken?.exp) {
       const now = new Date().getTime();
-      const expires = parseInt(prospectToken.exp as any) * 1000;
+      const expires = parseInt(guestToken.exp as any) * 1000;
       const diff = expires - now;
       if (diff > 0) {
         alert(1)
         this._timeout = setTimeout(() => {
-          this._getCurrentProspect(true);
+          this._getCurrentGuest(true);
         }, diff + 1000) as any;
       }
       alert(2)
     }
 
-    return this._prospectContext;
+    return this._guestContext;
   }
 
   private saveTransactionToken(tranactionToken: string) {
@@ -590,15 +590,15 @@ public async processTransaction(sessionData: ISessionData) {
   }
   private saveMemberToken(memberJwt: string) {
     if (!this.isBrowser)return;
-    const existingProspectToken = this.getProspectTokenFromStorage();
-    if (existingProspectToken)this.deleteProspectToken();
+    const existingguestToken = this.getguestTokenFromStorage();
+    if (existingguestToken)this.deleteguestToken();
     localStorage?.setItem(MEMBER_TOKEN_NAME, memberJwt);
   }
-  private saveProspectToken(prospectJwt: string) {
+  private saveguestToken(guestJwt: string) {
     if (!this.isBrowser)return;
     const existingMemberToken = this.getMemberTokenFromStorage();
     if (existingMemberToken)this.deleteMemberToken();
-    localStorage?.setItem(PROSPECT_TOKEN_NAME, prospectJwt);
+    localStorage?.setItem(guest_TOKEN_NAME, guestJwt);
   }
   private get isBrowser(): boolean {
     return typeof window === "object";
@@ -610,11 +610,11 @@ public async processTransaction(sessionData: ISessionData) {
     this.deleteLegacyCookie();
     return "Success";
   }
-  async signOutProspect(): Promise<string> {
-    if (!this.getCurrentProspectToken) return "No User";
-    this.updateProspectContext(undefined, undefined);
-    this.deleteProspectToken();
-    this.deleteLegacyProspectCookie();
+  async signOutguest(): Promise<string> {
+    if (!this.getCurrentGuestToken) return "No User";
+    this.updateguestContext(undefined, undefined);
+    this.deleteguestToken();
+    this.deleteLegacyguestCookie();
     return "Success";
   }
   private deleteLegacyCookie() {
@@ -625,12 +625,12 @@ public async processTransaction(sessionData: ISessionData) {
     CookieHelper.deleteCookie(jwtCookie.authToken)
     // CookieHelper.setCookie(jwtCookie.authToken, "poo", props);
   }
-  private deleteLegacyProspectCookie() {
+  private deleteLegacyguestCookie() {
     const props: { [key: string]: string } = {};
     const jwtCookie = environment.legacyJwtCookie;
     props.path = "/";
     if (jwtCookie.domain) props.domain = jwtCookie.domain;
-    CookieHelper.setCookie(jwtCookie.prospectToken, "", props);
+    CookieHelper.setCookie(jwtCookie.guestToken, "", props);
   }
   private parseToken(jwt: string): MemberToken | null {
     const segments = jwt.split('.');
@@ -668,9 +668,9 @@ public async processTransaction(sessionData: ISessionData) {
   //   return null;
   // }
 
-  private deleteProspectToken() {
+  private deleteguestToken() {
     if (this.isBrowser) {
-      localStorage?.removeItem(PROSPECT_TOKEN_NAME);
+      localStorage?.removeItem(guest_TOKEN_NAME);
     }
   }
   private deleteMemberToken() {
@@ -678,17 +678,17 @@ public async processTransaction(sessionData: ISessionData) {
       localStorage?.removeItem(MEMBER_TOKEN_NAME);
     }
   }
-  private getProspectTokenFromStorage(): string | null {
+  private getguestTokenFromStorage(): string | null {
     if (!this.isBrowser) {
       return null;
     }
-    const jwt = localStorage?.getItem(PROSPECT_TOKEN_NAME);
+    const jwt = localStorage?.getItem(guest_TOKEN_NAME);
     if (jwt == null) {
       return null;
     }
     const token = this.parseToken(jwt);
     if (token == null) {
-      this.deleteProspectToken();
+      this.deleteguestToken();
       return null;
     }
     return jwt;
@@ -714,8 +714,8 @@ public async processTransaction(sessionData: ISessionData) {
   getCurrentUserToken(): string | undefined {
     return this._userToken;
   }
-  getCurrentProspectToken(): string | undefined {
-    return this._prospectToken;
+  getCurrentGuestToken(): string | undefined {
+    return this._guestToken;
   }
   protected appendHeaders(headers: { [key: string]: string }) {
     super.appendHeaders(headers);

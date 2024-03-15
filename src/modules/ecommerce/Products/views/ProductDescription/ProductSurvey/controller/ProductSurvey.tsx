@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './ProductSurvey.scss';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import UiButton from '@webstack/components/UiButton/UiButton';
@@ -15,6 +15,7 @@ import ContactForm from '@shared/components/ContactForm/ContactForm';
 import useWindow from '@webstack/hooks/useWindow';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import IProspectService from '~/src/core/services/ProspectService/IProspectService';
+import IMemberService from '~/src/core/services/MemberService/IMemberService';
 
 
 export const applianceArray: IMoreInfoField[] = [
@@ -76,9 +77,10 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     const [message, setMessage] = useState<string | null>(null);
     const [isSuccess, setIsSuccess] = useState(false);
     const prospectService = getService<IProspectService>('IProspectService');
+    const memberService = getService<IMemberService>('IMemberService');
     const { survey: productRequestObject, } = form;
-    const [isBtnView, setIsBtnView] = useState<boolean>(true);
-    const [view, setView]=useState('');
+    const [view, setView] = useState('');
+    const [surveyClass, setSurveyClass] = useState('product-survey product-survey-btn-view');
 
     const { width } = useWindow();
     const ProductRequestSuccess = () => <>
@@ -101,7 +103,7 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         setView(newView);
         // Directly handle 'contact' case to open a modal, avoiding unnecessary context initialization for this case
         if (newView === 'contact') {
-            openModal({title:'contact',children:<ContactForm title={false} user={user} onSubmit={onContactSubmit} />});
+            openModal({ title: 'contact', children: <ContactForm title={false} user={user} onSubmit={onContactSubmit} /> });
             return; // Early return to avoid further execution
         }
 
@@ -198,12 +200,11 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         }
         // TODO CONVERT TO JWT
         let request: any = {
-            customer: contactDataToUse,
+            ...contactDataToUse,
             user_agent: userAgentInfo,
-            origin: window?.location?.origin,
+            merchant: environment.merchant,
             survey: {
                 id: id,
-                merchant_id: environment.merchant.mid,
                 data: form.survey.reduce((acc: any, item: any) => {
                     if (item.selected) {
                         acc[keyStringConverter(item.name, true)] = item.value;
@@ -213,9 +214,8 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
                 created: new Date().getTime()
             }
         };
-
         try {
-            const response = await prospectService.prospectRequest(request);
+            const response = await memberService.signUp(request);
             if (response?.email) {
                 handleView(response.email);
             } else if (response?.status) {
@@ -227,10 +227,7 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
             handleView('error');
         }
     };
-    const handleBtnView = () =>{
-            setIsBtnView(false);
-            setView(`Appliances to Power`);
-    }
+
     const handleBoxShadow = () => {
         const submitContainer = selectedRef.current.parentNode.lastChild;
         if (
@@ -240,20 +237,38 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
             submitContainer.style.boxShadow = 'unset'
         }
     }
-
+    const formTitle = `Appliances to Power`
+    const isform = view === formTitle;
+    const isBtnView = !isform;
+    const handleProductClass = (newClass?: any) => {
+        if (isform || typeof newClass !== 'string') return;
+        console.log('[ handleProductClass ]: ',{view, surveyClass, newClass})
+        if(typeof newClass != 'string'){
+            setView(formTitle);
+            setSurveyClass('product-survey');
+        }else{
+            setSurveyClass(`product-survey product-survey-${newClass}`);
+        }
+    };
     useEffect(() => {
+        // handleProductClass();
         handleMobileSelected();
-        if (startButton && !isBtnView) setIsBtnView(true);
-    }, [width, ]);
+    }, [width, surveyClass]);
     if (!id) return <>No ID FOR PRODUCT REQUEST</>;
     if (form.survey.length) return (
         <>
             <style jsx>{styles}</style>
-            <div className={`product-survey${isBtnView?" product-survey-btn-view":""}`} ref={optionsRef} onClick={isBtnView&&handleBtnView|| undefined}>
+            <div 
+                ref={optionsRef}
+                onClick={handleProductClass} 
+                // onMouseEnter={()=>handleProductClass('hover')}
+                // onMouseLeave={()=>handleProductClass('hover-end')}
+                className={surveyClass}
+                >
                 {title && <div className='product-survey__title'>{capitalize(title)}{`'`}s </div>}
                 {view !== '' && <div className='product-survey__title'>{capitalize(view)}</div>}
                 {isSuccess && <ProductRequestSuccess />}
-                {isBtnView && startButton }
+                {isBtnView && startButton}
                 {!isSuccess && !isBtnView && <>
                     <div ref={selectedRef}
                         onMouseEnter={handleBoxShadow}

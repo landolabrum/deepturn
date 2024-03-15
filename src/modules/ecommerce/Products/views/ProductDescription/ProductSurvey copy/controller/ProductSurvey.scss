@@ -35,7 +35,7 @@
 
     &--status {
         @extend .d-flex;
-        background-color: var(--gray-30-opaque);
+        background-color: var(--gray-30-o);
         gap: var(--s-9);
 
         text-transform: capitalize;
@@ -84,8 +84,8 @@
         @extend .d-flex;
         transition: all .5s;
         height: 300px;
-        color: var(--primary-opaque);
-        background-color: var(--primary-opaque);
+        color: var(--primary-o);
+        background-color: var(--primary-o);
         border: solid 1px var(--primary);
         @keyframes glow {
             50% {
@@ -156,7 +156,7 @@
 
     &__instructions {
         font-size: var(--s-4);
-        color: var(--orange-opaque);
+        color: var(--orange-o);
         width: 100%;
         text-align: center;
     }
@@ -196,7 +196,7 @@
 
         @media(max-width:900px) {
             padding: calc(var(--s-element) * 2) var(--s-9) var(--s-7);
-            background: var(--gray-80-opaque);
+            background: var(--gray-80-o);
             z-index: 2;
             border-color: var(--gray-70) transparent transparent var(--gray-70);
             height: max-content;
@@ -288,7 +288,7 @@
     &__sub-title {
         width: 100%;
         font-size: var(--s-4);
-        color: var(--gray-30-opaque);
+        color: var(--gray-30-o);
         text-transform: capitalize;
         line-height: 1;
     }
@@ -330,7 +330,7 @@
         }
 
         &--choice {
-            background-color: var(--primary-opaque);
+            background-color: var(--primary-o);
             border: solid 1px var(--primary-lite);
 
             &:hover {
@@ -355,7 +355,7 @@
             width: 100%;
             &--icon {
                 flex-direction: column;
-                background-color: var(--green-opaque);
+                background-color: var(--green-o);
                 backdrop-filter: blur(2px);
                 color: var(--white);
                 text-shadow: 1px 1px var(--black);

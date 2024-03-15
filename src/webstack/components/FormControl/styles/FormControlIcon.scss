@@ -10,10 +10,10 @@
   margin: 4px 3px;
   height: calc(var(--s-element) - var(--s-10));
   aspect-ratio: unset;
-  background-color: var(--dark-opaque);
+  background-color: var(--dark-o);
 
   &:hover {
-    background-color: var(--primary-opaque);
+    background-color: var(--primary-o);
   }
 }
 

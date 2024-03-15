@@ -1,4 +1,4 @@
-import UserContext, { ProspectContext, UserAddress } from "~/src/models/UserContext";
+import UserContext, { GuestContext, UserAddress } from "~/src/models/UserContext";
 import { EventEmitter } from "@webstack/helpers/EventEmitter";
 import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
@@ -52,7 +52,7 @@ export default interface IMemberService {
   processTransaction(sessionData:ISessionData): Promise<any>;
   resetPassword({email,user_agent}:IResetPassword): Promise<OResetPassword>;
   getCurrentUser(): UserContext | undefined;
-  getCurrentProspect(): UserContext | undefined;
+  getCurrentGuest(): UserContext | undefined;
   getSetupIntent(client_secret: string): any;
   updateCurrentUser(user: UserContext): void;
   
@@ -61,7 +61,7 @@ export default interface IMemberService {
   createSetupIntent(customer_id: string, method?: IPaymentMethod ): any;
 
   userChanged: EventEmitter<UserContext | undefined>;
-  prospectChanged: EventEmitter<ProspectContext | undefined>;
+  guestChanged: EventEmitter<GuestContext | undefined>;
 
   verifyEmail(token: string):Promise<any>;
   verifyPassword(token: string):Promise<any>;

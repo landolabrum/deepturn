@@ -18,7 +18,7 @@ export interface IEnvironment {
   },
   legacyJwtCookie: {
     authToken: string;
-    prospectToken: string;
+    guestToken: string;
     transactionToken: string;
     domain?: string;
   };

@@ -105,7 +105,7 @@ const Navbar = () => {
       <style jsx>{styles}</style>
       <nav id="nav-bar" className={`navbar__container ${isMobile ? 'navbar__container--hide' : ''}`} >
         <div className='navbar' ref={navRef}>
-          <div className={`navbar__trigger${scroll > 90 ? ' navbar__trigger--opaque' : ''}`}>
+          <div className={`navbar__trigger${scroll > 90 ? ' navbar__trigger--o' : ''}`}>
             <UiIcon
               icon={isModalOpen ? 'fa-xmark' : 'fa-bars'}
               onClick={handleTrigger}

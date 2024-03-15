@@ -13,10 +13,12 @@ div {
 }
 
 div {
+  
   svg {
     display: block;
     width: 100%;
     height: 100%;
+
     // path {
     //     stroke-width: var(--icon-stroke-width, auto);
     // }
@@ -54,8 +56,8 @@ div {
 //     --ui-icon-color: #e0e0e0;
 //   }
 //   // 50% {
-//   //   color: var(--gray-40-opaque);
-//   //   --ui-icon-color: var(--gray-40-opaque);
+//   //   color: var(--gray-40-o);
+//   //   --ui-icon-color: var(--gray-40-o);
 //   // }
 //   100% {
 //      color: var(--gray-40);

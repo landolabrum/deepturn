@@ -17,7 +17,7 @@
     gap: var(--s-padding);
     &--product-request{
         overflow: hidden;
-        background-color: var(--primary-opaque);
+        background-color: var(--primary-o);
         border-radius: var(--border-radius);
         border: solid 1px var(--primary);
 
@@ -29,7 +29,7 @@
             @extend .d-flex;
             justify-content: flex-start;
             padding: var(--s-padding);
-            background-color: var(--gray-100-opaque);
+            background-color: var(--gray-100-o);
             .title{
                 white-space: nowrap;
                 font-size: var(--s-3);

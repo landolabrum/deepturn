@@ -108,10 +108,10 @@
 
     &:hover {
         border: solid 1px var(--gray-60);
-        background-color: var(--gray-60-opaque);
+        background-color: var(--gray-60-o);
 
         &::before {
-            background-color: var(--gray-30-opaque);
+            background-color: var(--gray-30-o);
             border-radius: 0 0 4px 0;
         }
     }

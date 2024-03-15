@@ -5,7 +5,7 @@
   }
   
   100% {
-    background: var(--gray-100-opaque);
+    background: var(--gray-100-o);
     backdrop-filter: blur(4px);
   }
 }
@@ -51,7 +51,7 @@
   }
   &--fixed{
     position: fixed;
-    background: var(--gray-100-opaque);
+    background: var(--gray-100-o);
     top: 0;
     bottom: 0;
     left: 0;

@@ -8,8 +8,8 @@ $max: calc(100% - calc($pad * 2));
 $colorHover: var(--gray-50);
 $colorActive: var(--primary);
 $contentBackground: var(--gray-60);
-$contentBackgroundHover: var(--gray-70-opaque);
-$background: var(--gray-20-opaque);
+$contentBackgroundHover: var(--gray-70-o);
+$background: var(--gray-20-o);
 $outlineColor: var(--gray-70);
 $borderColor: var(--gray-40);
 
@@ -59,7 +59,7 @@ $borderColor: var(--gray-40);
 }
 .current-method {
     cursor: pointer;
-    background-color: var(--primary-opaque);
+    background-color: var(--primary-o);
     color: var(--gray-90);
     position: relative;
     @extend .d-flex;
@@ -146,7 +146,7 @@ $borderColor: var(--gray-40);
                     font-weight: 900;
                     color: var(--gray-20);
 
-                    background-color: var(--primary-opaque);
+                    background-color: var(--primary-o);
                     font-style: italic;
                     left: 0;
                     position: absolute;
@@ -184,7 +184,7 @@ $borderColor: var(--gray-40);
         .current-method__set-default {  
             position: relative; 
             overflow: visible; 
-            --ui-icon-color: var(--primary-opaque);
+            --ui-icon-color: var(--primary-o);
             &:hover {
                 background-color: var(--white);
                 z-index: 999;
@@ -192,7 +192,7 @@ $borderColor: var(--gray-40);
                     left: 0;
                     @extend .d-flex;
                     text-align: center;
-                    background-color: var(--gray-30-opaque);
+                    background-color: var(--gray-30-o);
                     color: var(--gray-90);
                     content:attr(data-default);
                     font-size: var(--s-8);

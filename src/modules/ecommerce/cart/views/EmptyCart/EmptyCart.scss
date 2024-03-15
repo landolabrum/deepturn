@@ -26,7 +26,8 @@ h1{
     .cart__emtpy-cart-canvas {
         z-index: -1;
         @extend .d-flex;
-        --ui-icon-color: var(--primary-opaque);
+        --ui-icon-color: var(--gray-80-o);
+
         filter: blur(1px);
         transform: skew(20px, 20px);
         --ui-icon-height: 90%;

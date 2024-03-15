@@ -9,7 +9,7 @@ $agg: var(--border-radius);
 .bar {
   width: 100%;
   &__primary{
-    background-color: var(--primary-opaque);
+    background-color: var(--primary-o);
   }
   .bar__container {
     &:hover {
@@ -43,7 +43,7 @@ $agg: var(--border-radius);
       top: 4px;
       text-transform: capitalize;
       font-size: var(--s-7);
-      color: var(--yellow-opaque);
+      color: var(--yellow-o);
       --ui-icon-width: var(--s-6);
       .bars__status-low {
         align-items: center;
@@ -70,19 +70,19 @@ $agg: var(--border-radius);
         height: 100%;
         @extend .d-flex;
         text-align: center;
-        color: var(--gray-20-opaque);
+        color: var(--gray-20-o);
       }
     }
   }
 }
   .bar__bars-content {
-    box-shadow: inset 0 0 4px 2px var(--gray-100-opaque);
+    box-shadow: inset 0 0 4px 2px var(--gray-100-o);
     border: solid 1px var(--gray-70);
     overflow: hidden;
     border-radius: $agg;
     transform: rotate(180deg);
     height: var(--s-element);
-    background-color: var(--gray-70-opaque);
+    background-color: var(--gray-70-o);
     .bar__bars-bar {
       &-partial{
         border-top: solid 1px var(--gray-70);

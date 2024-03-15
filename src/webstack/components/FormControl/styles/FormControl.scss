@@ -85,13 +85,13 @@ $elPad: 14px;
   @keyframes glow {
     0%, 100%  {
       color: var(--primary-lite);
-      background: var(--primary-opaque);
+      background: var(--primary-o);
       box-shadow: 0 0 1px 1px var(--primary);
     }
     33% {
       background-color: var(--primary);
       color: var(--gray-20);
-      box-shadow: 0 0 4px 2px var(--primary-opaque);
+      box-shadow: 0 0 4px 2px var(--primary-o);
     }
   }
   $mtrx: 4px;
@@ -112,7 +112,7 @@ $elPad: 14px;
     label {
       text-indent: var(--s-10);
       text-transform: uppercase;
-      color: var(--gray-50-opaque);
+      color: var(--gray-50-o);
       line-height: 2;
       font-weight: bold;
       font-size: var(--s-8);

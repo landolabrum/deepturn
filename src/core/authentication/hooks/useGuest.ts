@@ -4,19 +4,15 @@ import { Subscription } from "rxjs";
 import UserContext from "~/src/models/UserContext";
 import IMemberService from "../../services/MemberService/IMemberService";
 
-export const useProspect = () => {
+export const useGuest = () => {
   const MemberService = getService<IMemberService>('IMemberService');
   const [prospectContext, setProspectContext] = useState<UserContext | undefined>();
-  const current = MemberService.getCurrentProspect();
+  const current = MemberService.getCurrentGuest();
   useEffect(() => {
     if(current )setProspectContext(current);
     const subscriptions: Subscription[] = []; 
-    subscriptions.push(MemberService.prospectChanged.subscribe((pc: UserContext | undefined) => { setProspectContext(pc); }));
+    subscriptions.push(MemberService.guestChanged.subscribe((pc: UserContext | undefined) => { setProspectContext(pc); }));
     return () => { subscriptions.forEach((s) => s.unsubscribe()); };
-  }, [MemberService.prospectChanged]);
+  }, [MemberService.guestChanged]);
   return prospectContext;
 }
-// export const useClearance  = () => {
-//   const user = useProspect(); // This is valid now because it's inside a custom hook
-//   return user?.metadata?.clearance || 0;
-// };

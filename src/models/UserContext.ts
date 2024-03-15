@@ -21,7 +21,7 @@ export default interface UserContext {
   address?: UserAddress;
   origin?: string;
 }
-export interface ProspectContext {
+export interface GuestContext {
   memberId: string;
   default_source?: string;
   invoice_settings?: {

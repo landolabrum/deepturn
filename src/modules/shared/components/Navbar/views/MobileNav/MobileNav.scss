@@ -49,8 +49,8 @@
             // text-transform: capitalize;
             // font-size: var(--s-2);
             // @extend .d-flex;
-            // color:var(--gray-50-opaque);
-            // --ui-icon-color:var(--gray-50-opaque);
+            // color:var(--gray-50-o);
+            // --ui-icon-color:var(--gray-50-o);
             // --ui-icon-size: var(--s-1);
             // // --ui-icon-width: var(--s-1);
             // line-height: 1;
@@ -70,7 +70,7 @@
             @extend .d-flex;
             border-radius: var(--border-radius);
             --ui-icon-color: var(--gray-50);
-            background-color: var(--gray-70-opaque);
+            background-color: var(--gray-70-o);
             color: var(--gray-40);
             --ui-icon-color: var(--white);
             min-width: 600px;

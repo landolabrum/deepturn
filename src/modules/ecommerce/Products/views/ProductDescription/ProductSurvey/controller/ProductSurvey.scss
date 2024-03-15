@@ -43,7 +43,7 @@
 
     &--status {
         @extend .d-flex;
-        background-color: var(--gray-30-opaque);
+        background-color: var(--gray-30-o);
         gap: var(--s-9);
 
         text-transform: capitalize;
@@ -82,31 +82,53 @@
     gap: var(--s-padding);
     color: var(--gray-30);
     height: max-content;
-    overflow: hidden;
+    overflow: hidden; 
     @keyframes intro {
         0% { 
             opacity: 0.6;
-            filter: blur(40px);
-            transform: scale(1000%);
-            letter-spacing: calc(100 * var(--s-padding));
-            height: max-content;
-            overflow: hidden;
-
+            filter: blur(var(--s-4));
+            transform: scale(200%);
+            letter-spacing: calc(40 * var(--s-padding));
+            font-size: 30vw;
+            line-height: 66vh;
         }
         90% { opacity: 1; filter: blur(10px);} 
         100% {
-            opacity: 1;
+            opacity: .7;
             filter: unset; 
         }
     }
+    @keyframes hover {
+        0% {
+            background-position: bottom;
+            -webkit-text-fill-color: var(--primary-o);
+            opacity: .7;
+            border-color: var(--primary);
+        }
+        100% {
+            border-color: var(--dark);
+            background-position: top;
+            opacity: 1;
+            filter: blur(0) brightness(1.1);
+        }
+    }
+    &-hover {
+        border-width: var(--s-9);
+        transition: all 1.5s ease-in-out;
+        border-style: solid;
+        animation: hover 5s infinite alternate;
+    }
+    &-hover-end {
+        animation: none;
+    }
     &-btn-view {
-        overflow: hidden;
-        @extend .d-flex; 
+        @extend .d-flex;
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50%;
         text-align: center;
-        height: calc(100vh - 250px);
         background-color: transparent;
         cursor: pointer;
-        // width: 100%;
         filter: blur(2px) brightness(.6);
         top: 20vh;
         font-weight: 900; 
@@ -114,29 +136,26 @@
         text-align: center;
         text-transform: uppercase;
         flex: 1; 
-        line-height: 1;
-        letter-spacing: var(--s-padding);
-        font-size: calc(7vw - var(--s-padding));
-        
+        line-height: 11vw;
+        letter-spacing: 1vw;
+        font-size: 9vw; 
         background-image: url("/merchant/nirv1/backgrounds/redrock-wall.jpeg");
-        background-position: center;
+        background-position: bottom;
         background-clip: text;
         -webkit-background-clip: text;
-        -webkit-text-fill-color: var(--primary-opaque);
+        -webkit-text-fill-color: var(--primary-o);
         text-align: center;
-        
         animation: intro 2.6s forwards ease-in-out;
-
-
-
-        &:hover:not(&:focus) {
-            background-position: top;
-            filter: blur(0) brightness(1);
-        }
-        &:focus-within, &:focus {
-            background-position: left;
-            filter: blur(0) brightness(3.5);
-        }
+        height: max-content;
+  
+        //     // background-clip: unset;
+        //     // -webkit-background-clip: unset;
+      
+        // }
+        // &:focus-within:not(&:hover), &:focus:not(&:hover) {
+        //     background-position: left;
+        //     filter: blur(0) brightness(3.5);
+        // }
 
 
 
@@ -198,7 +217,7 @@
 
     &__instructions {
         font-size: var(--s-4);
-        color: var(--orange-opaque);
+        color: var(--orange-o);
         width: 100%;
         text-align: center;
     }
@@ -238,7 +257,7 @@
 
         @media(max-width:900px) {
             padding: calc(var(--s-element) * 2) var(--s-9) var(--s-7);
-            background: var(--gray-80-opaque);
+            background: var(--gray-80-o);
             z-index: 2;
             border-color: var(--gray-70) transparent transparent var(--gray-70);
             height: max-content;
@@ -333,7 +352,7 @@
     &__sub-title {
         width: 100%;
         font-size: var(--s-4);
-        color: var(--gray-30-opaque);
+        color: var(--gray-30-o);
         text-transform: capitalize;
         line-height: 1;
     }
@@ -377,7 +396,7 @@
         }
 
         &--choice {
-            background-color: var(--primary-opaque);
+            background-color: var(--primary-o);
             border: solid 1px var(--primary-lite);
 
             &:hover {
@@ -406,7 +425,7 @@
 
             &--icon {
                 flex-direction: column;
-                background-color: var(--green-opaque);
+                background-color: var(--green-o);
                 backdrop-filter: blur(2px);
                 color: var(--white);
                 text-shadow: 1px 1px var(--black);
