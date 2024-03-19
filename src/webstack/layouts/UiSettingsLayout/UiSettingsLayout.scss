@@ -17,7 +17,7 @@ $actionsBg: var(--gray-90);
     padding: var(--s-padding);
     right: auto;
     height: 100%;
-    margin-top:  calc(var(--s-element ) * 2);
+    // margin-top:  calc(var(--s-element ) * 2);
     @media (max-width: 1100px) {
         width: auto;
     }
@@ -176,7 +176,7 @@ $actionsBg: var(--gray-90);
     z-index: 2;
     @extend .d-flex;
     width: var(--s-element);
-    background-color: var(--gray-80-opaque);
+    background-color: var(--gray-80-o);
     height: var(--s-element);
     --ui-icon-width: var(--s-5);
     top: calc(var(--s-2) * -2);
@@ -230,7 +230,7 @@ $actionsBg: var(--gray-90);
         }
     
         25% {
-            border-color: var(--dark-opaque);
+            border-color: var(--dark-o);
         }
     
         50% {
@@ -238,7 +238,7 @@ $actionsBg: var(--gray-90);
         }
     
         75% {
-            border-color: var(--primary-opaque);
+            border-color: var(--primary-o);
         }
     }
     z-index: 1;
@@ -325,7 +325,7 @@ $actionsBg: var(--gray-90);
             left: 50%;
             transform: translate(-50%, -50%);
             --ui-icon-size: var(--s-padding-width);
-            --ui-icon-color: var(--gray-90-opaque);
+            --ui-icon-color: var(--gray-90-o);
             width: 100%;
             max-width: 550px;
             z-index: -1;

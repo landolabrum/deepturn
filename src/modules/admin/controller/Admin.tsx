@@ -47,7 +47,8 @@ const Admin = () => {
     <>
       <style jsx>{styles}</style>
       <UiSettingsLayout
-        variant={Boolean(current && ['globe',''].includes(current) ) && 'full' || undefined}
+        // variant='full-width'
+        // variant={Boolean(current && ['globe',''].includes(current) ) && 'full' || undefined}
         showMenu={Boolean(current && current !== 'globe')}
         title={current}
         setViewCallback={setCurrentView}

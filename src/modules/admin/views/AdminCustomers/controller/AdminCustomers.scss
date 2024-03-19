@@ -7,11 +7,11 @@
     @extend .d-flex;
     flex-direction: column;
     width: 100%;
+    gap:var(--s-padding);
     &__header{
         width: 100%;
         @extend .d-flex;
         justify-content: space-between;
-        padding-bottom:var(--s-padding);
         &--title{
             font-size: var(--s-1);
             color: var(--gray-50);

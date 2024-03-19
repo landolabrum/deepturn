@@ -5,13 +5,15 @@ import tableStyles from "./AdapTableElements.scss";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import AdapTableAlternateView from "../components/AdapTableAlternateView/AdapTableAlternateView";
-import useScroll  from "@webstack/hooks/useScroll";
+import useScroll from "@webstack/hooks/useScroll";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import { TableOptions } from "@webstack/components/AdapTable/views/AdapTable";
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 import useTable from "../hooks/useTable";
 import AdaptTableCellHover from "../components/AdaptTableCellHover/AdaptTableCellHover";
 import useDocument from "@webstack/hooks/useDocument";
+import Image from "next/image";
+import environment from "~/src/environment";
 
 export type TableStateProps = "show" | "hide" | "error" | "loading" | "empty";
 export interface TableContentProps extends TableFunctionProps {
@@ -58,7 +60,7 @@ export const AdapTableContent = ({
   });
 
   const [scroll, scrollToPosition] = useScroll();
-const viewportHeight = useDocument()?.viewport.height;
+  const viewportHeight = useDocument()?.viewport.height;
   const tableHeight = Boolean(tableRef?.current && tableRef.current?.clientHeight > viewportHeight && scroll > viewportHeight);
   const [view, setView] = useState<TableStateProps>("loading");
 
@@ -67,7 +69,7 @@ const viewportHeight = useDocument()?.viewport.height;
   const [resizeColumnIndex, setResizeColumnIndex] = useState(-1);
   const [resizeStartX, setResizeStartX] = useState(0);
   const [columnWidths, setColumnWidths] = useState<any>({});
-  const handleResizeStart = (e:any, columnIndex:number) => {
+  const handleResizeStart = (e: any, columnIndex: number) => {
     e.preventDefault();
     setIsResizing(true);
     setResizeColumnIndex(columnIndex);
@@ -75,10 +77,10 @@ const viewportHeight = useDocument()?.viewport.height;
   };
   const rowRefs = useRef<any>([]);
 
-  const handleResize = (e:any) => {
+  const handleResize = (e: any) => {
     if (isResizing && resizeColumnIndex >= 0) {
       const deltaX = e.clientX - resizeStartX;
-      const newColumnWidths:any = { ...columnWidths };
+      const newColumnWidths: any = { ...columnWidths };
       const currentColumnKey = Object.keys(data[0])[resizeColumnIndex];
       const currentColumnWidth = newColumnWidths[currentColumnKey] || 0;
       newColumnWidths[currentColumnKey] = Math.max(currentColumnWidth + deltaX, 30); // Adjust the minimum width as needed
@@ -91,9 +93,9 @@ const viewportHeight = useDocument()?.viewport.height;
     setIsResizing(false);
   };
 
-  const handleDoubleClick = (columnIndex:number) => {
+  const handleDoubleClick = (columnIndex: number) => {
     let maxWidth = 0;
-    rowRefs.current.forEach((row:any) => {
+    rowRefs.current.forEach((row: any) => {
       if (row && row.children[columnIndex]) {
         // console.log('[width]: ',row.children[columnIndex])
         maxWidth = Math.max(maxWidth, row.children[columnIndex].offsetWidth);
@@ -102,15 +104,6 @@ const viewportHeight = useDocument()?.viewport.height;
     const newColumnWidths = { ...columnWidths, [Object.keys(data[0])[columnIndex]]: maxWidth + "px" };
     setColumnWidths(newColumnWidths);
   };
- 
-
-  // const setRowRef = (row:any, index:number) => {
-  //   if (rowRefs.current.length <= index) {
-  //     // Expand the array if necessary
-  //     rowRefs.current = [...rowRefs.current, ...new Array(index + 1 - rowRefs.current.length)];
-  //   }
-  //   rowRefs.current[index] = row;
-  // };
   useEffect(() => {
     status && setView(status);
   }, [status]);
@@ -129,6 +122,7 @@ const viewportHeight = useDocument()?.viewport.height;
       onRowClick?.(item);
     }
   };
+  const internalHiddenKeys = (key: string) => ['image', 'keywords'].includes(key);
   const handleScrollToTop = () => {
     scrollToPosition(undefined, 0, 'top');
   };
@@ -175,8 +169,8 @@ const viewportHeight = useDocument()?.viewport.height;
           <tbody>
             {data &&
               data[0] &&
-              data.map((item: ItemType, i_: number) =>{
-                if(item)return   <tr
+              data.map((item: ItemType, i_: number) => {
+                if (item) return <tr
                   className={`${variant ? variant : ""}`}
                   key={startIndex + i_}
                   onClick={(e) => handleRowClick(e, item)}
@@ -187,20 +181,33 @@ const viewportHeight = useDocument()?.viewport.height;
                       {index + i_}
                     </td>
                   )}
-                  { Object.entries(item).map(
+                  {Object.entries(item).map(
                     ([key, value], index) =>
-                      key !== "keywords" &&
+
                       !options?.hideColumns?.includes(key) && (
                         <td key={index} data-key={keyStringConverter(key)}>
                           {options?.hoverable && (
                             <div className="td-hover"> {AdaptTableCellHover(value)}</div>
                           )}
-                          <div className={options?.hoverable ? "td-content" : ""}>{value}</div>
+                          {
+                            (<div
+                              className={`${options?.hoverable && "td-content" || ""
+                                }${key == 'image' && ` td-content--${key}` || ''}`}
+                            >{!['image', 'keywords'].includes(key) ? (
+                              value
+                            ) :
+                              (internalHiddenKeys(key) && (
+                                value?.length ?
+                                  (<Image src={value[0]} fill alt={key}  />) :
+                                  (<UiIcon icon={`${environment.merchant.name}-logo`} />)
+                              )
+                              )}</div>)
+                          }
                         </td>
                       )
                   )}
                 </tr>
-                }
+              }
               )}
           </tbody>
         </table>
@@ -212,7 +219,6 @@ const viewportHeight = useDocument()?.viewport.height;
         <div className="adapt-table-content__scroll-to-top">
           <UiButton
             variant="icon"
-            // onClick={() => window?.scrollTo({ top: 0, behavior: "smooth" })}
             onClick={handleScrollToTop}
           >
             <UiIcon icon="fa-chevron-up" />

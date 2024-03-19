@@ -1,4 +1,9 @@
 // Define variables for repeated values
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
 $xs: 450px;
 $sm: 900px;
 $defaultPadding: 5px 10px;
@@ -106,6 +111,7 @@ table {
           .td-content {
             display: flex;
             justify-content: flex-end;
+     
           }
         }
       }
@@ -216,6 +222,15 @@ table {
         }
         .td-content {
           position: relative;
+          &--image{
+            @extend .d-flex;
+            width: var(--s-padding-width);
+            padding: var(--s-padding);
+            aspect-ratio: 1;
+            --ui-icon-color: var(--gray-60-o);
+            --ui-icon-width: var(--s-element);
+            --ui-icon-height: 100%;
+          }
         }
         &.hoverable {
           // pointer-events: none;

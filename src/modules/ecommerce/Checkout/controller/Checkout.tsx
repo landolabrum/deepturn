@@ -5,7 +5,7 @@ import useCart from '../../cart/hooks/useCart';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 
 import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
-import { useProspect } from '~/src/core/authentication/hooks/useProspect';
+import { useGuest } from '~/src/core/authentication/hooks/useGuest';
 import SignIn from '~/src/modules/authentication/views/SignIn/controller/SignIn';
 import UserContext from '~/src/models/UserContext';
 import Collect from '../views/Collect/controller/Collect';
@@ -21,7 +21,7 @@ const Checkout = ():React.JSX.Element => {
     const [cart, setCart] = useState<any>();
     const [selectedUser, setUser] = useState<UserContext | {email:string} | undefined>();
     const { getCartItems, } = useCart();
-    const prospect = useProspect();
+    const prospect = useGuest();
     const handleSignUp = (res: any) => {
         const selectedUser = res?.id && res || prospect;
         console.log('[handleSignUp ]',res)

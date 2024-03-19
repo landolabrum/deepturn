@@ -52,7 +52,10 @@ const Navbar = () => {
 
   // Handle click events for routes and modals
   const handleSelect = (route: IRoute | string) => {
-    let _route: IRoute = typeof route === 'string' ? { href: route } : route;
+    const _route: IRoute = typeof route === 'string' ? { href: route } : route;
+
+    // const curr = routes && routes.find((r: any) => r.href === _route?.href);
+    // console.log('[ handleSelect ]', curr)
 
     if (_route?.href) {
       explicitRouter(_route);
@@ -81,8 +84,7 @@ const Navbar = () => {
   }, [selectedUser]);
 
   const cartTotal = useCartTotal();
-  const cartRoute = routes && routes.find((r: any) => r.href === '/cart');
-  // Mobile navigation component
+
   const modals: any = {
     login: <Authentication />,
   };
