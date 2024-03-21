@@ -69,14 +69,16 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
     handleMethod();
     setLoader({ active: false });
   }
+  const userHasCards = Boolean(Object.entries(methods).filter(([_, m]:any)=>m?.card)?.length);
   useEffect(() => {
   initUserMethods();
   }, [setUser, selectedUser, open]);
   if (selectedUser) return (
     <>
       <style jsx>{styles}</style>
+
       <div className='user-methods'>
-        {methods.length > 0 &&
+        {userHasCards &&
           <div
             className={`user-methods__existing ${canSelect ? ' user-methods__existing__selected' : ''}`}
           // className='user-methods__existing'
@@ -111,9 +113,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
             {/* {selected && <UserSelectMethod user={selectedUser} methods={methods}/>} */}
           </div>
         }
-        <UiCollapse label={label} open={open || methods.length < 1 || !loader.active || selectedUser?.invoice_settings?.default_payment_method == undefined}>
           <UserCreateMethod user={selectedUser} onSuccess={handleCreated} />
-        </UiCollapse>
       </div>
     </>
   );

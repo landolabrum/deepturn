@@ -73,7 +73,7 @@ const UserModify = ({ user, open = false }: any) => {
     }
     console.log('[ request ]',request)
     try{
-      const response = await MemberService.updateCustomerProfile(user.id, request);
+      const response = await MemberService.modifyCustomer(user.id, request);
       if(response.object == 'customer')setNotification({
         active: true,
         list:[

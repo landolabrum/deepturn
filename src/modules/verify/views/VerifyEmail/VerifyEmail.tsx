@@ -77,8 +77,8 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
     const onSubmit = async () => {
         const newPassword = state?.fields?.find((f: IFormField) => f.name == 'password')?.value;
         let customer = state.customer;
-        customer.metadata.password = newPassword;
-        const updateMember = await MemberService.updateCustomerProfile(customer.id, customer);
+        customer.metadata.user.password = newPassword;
+        const updateMember = await MemberService.modifyCustomer(customer);
         if (updateMember){
             handleSignInModal();
             onSuccess(updateMember.email);

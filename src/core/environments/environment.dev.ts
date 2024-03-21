@@ -14,7 +14,7 @@ const devEnvironment: IEnvironment = {
   legacyJwtCookie: {
     authToken: "auth-token",
     transactionToken: "transaction-token",
-    guestToken: "prospect-token",
+    guestToken: "guest-token",
   },
   serviceEndpoints: {
     membership: `${serverUrl}`,

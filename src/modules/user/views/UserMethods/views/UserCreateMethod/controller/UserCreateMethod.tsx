@@ -10,9 +10,9 @@ interface IStripePaymentForm {
   user?: UserContext;
   success_url?: string;
 }
-const stripeKey: string = String(process.env.NEXT_PUBLIC_STRIPE_API_KEY?.trim())
+const publishableStripeKey: string = String(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY?.trim())
 
-const stripePromise = loadStripe(stripeKey);
+const stripePromise = loadStripe(publishableStripeKey);
 
 
 const UserCreateMethod = ({ onSuccess, user, success_url }: IStripePaymentForm) => {

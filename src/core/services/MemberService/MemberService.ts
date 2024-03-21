@@ -10,9 +10,10 @@ import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, IResetPa
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
 import errorResponse from "../../errors/errorResponse";
+import { ICustomer } from "~/src/models/CustomerContext";
 const MEMBER_TOKEN_NAME = environment.legacyJwtCookie.authToken;
 const TRANSACTION_TOKEN_NAME = environment.legacyJwtCookie.transactionToken;
-const guest_TOKEN_NAME = environment.legacyJwtCookie.guestToken;
+const GUEST_TOKEN_NAME = environment.legacyJwtCookie.guestToken;
 const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
 const TIMEOUT = 5000;
@@ -352,29 +353,36 @@ public async processTransaction(sessionData: ISessionData) {
 
   };
 
-  public async updateCustomerProfile(id: string, memberData: any): Promise<any> {
-    if (id && memberData) {
-      try {
-        const res = await this.put<any, any>(
-          `api/customer/?id=${id}`,
-          memberData
-        );
-        let memberJwt: any = null;
-        if (res) memberJwt = res;
-        // res && console.log('[ RES ]', res)
-        this.saveMemberToken(memberJwt);
-        this.saveLegacyAuthCookie(memberJwt);
-        return this._getCurrentUser(true)!;
-      } catch (error) {
-        console.error("Error updating member: ", error);
-        // Handle error accordingly
-      }
+  public async modifyCustomer(customer:ICustomer): Promise<any> {
+    console.log('[ MEMBERSERVICE modifyCustomer(customer) ]',customer)
+    if (customer) {
+      const encryptedSignUp = encryptString(JSON.stringify(customer), ENCRYPTION_KEY);
+
+
+      const res = await this.put<{}, any>(
+        `api/customer/`,
+        {data: encryptedSignUp},
+      );
+      console.log('[ MODUFY ]', res)
+      // try {
+      //   const res = await this.put<any, any>(
+      //     `api/customer/`,
+      //     memberData
+      //   );
+      //   let memberJwt: any = null;
+      //   if (res) memberJwt = res;
+      //   // res && console.log('[ RES ]', res)
+      //   this.saveMemberToken(memberJwt);
+      //   this.saveLegacyAuthCookie(memberJwt);
+      //   return this._getCurrentUser(true)!;
+      // } catch (error) {
+      //   console.error("Error updating member: ", error);
+      //   // Handle error accordingly
+      // }
     }
-    if (!id) {
-      throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
-    }
-    if (!memberData) {
-      throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+
+    if (!customer) {
+      throw new ApiError("NO customer PROVIDED", 400, "MS.SI.02");
     }
   };
 
@@ -598,7 +606,7 @@ public async processTransaction(sessionData: ISessionData) {
     if (!this.isBrowser)return;
     const existingMemberToken = this.getMemberTokenFromStorage();
     if (existingMemberToken)this.deleteMemberToken();
-    localStorage?.setItem(guest_TOKEN_NAME, guestJwt);
+    localStorage?.setItem(GUEST_TOKEN_NAME, guestJwt);
   }
   private get isBrowser(): boolean {
     return typeof window === "object";
@@ -670,7 +678,7 @@ public async processTransaction(sessionData: ISessionData) {
 
   private deleteguestToken() {
     if (this.isBrowser) {
-      localStorage?.removeItem(guest_TOKEN_NAME);
+      localStorage?.removeItem(GUEST_TOKEN_NAME);
     }
   }
   private deleteMemberToken() {
@@ -682,7 +690,7 @@ public async processTransaction(sessionData: ISessionData) {
     if (!this.isBrowser) {
       return null;
     }
-    const jwt = localStorage?.getItem(guest_TOKEN_NAME);
+    const jwt = localStorage?.getItem(GUEST_TOKEN_NAME);
     if (jwt == null) {
       return null;
     }

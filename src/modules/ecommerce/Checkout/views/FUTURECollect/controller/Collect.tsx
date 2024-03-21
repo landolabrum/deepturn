@@ -10,7 +10,7 @@ interface IStripePaymentForm {
     success_url?: string;
     onSuccess:(e:any)=>void;
 }
-const stripeKey:string = String(process.env.NEXT_PUBLIC_STRIPE_API_KEY?.trim())
+const stripeKey:string = String(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY?.trim())
 
 const stripePromise = loadStripe(stripeKey);
 

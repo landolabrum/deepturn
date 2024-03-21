@@ -12,7 +12,7 @@ const prodEnvironment: IEnvironment = {
   },
   legacyJwtCookie: {
     authToken: "auth-token",
-    guestToken: "prospect-token",
+    guestToken: "guest-token",
     transactionToken: "transaction-token",
   },
   serviceEndpoints: {

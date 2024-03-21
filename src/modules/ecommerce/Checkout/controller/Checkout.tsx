@@ -25,7 +25,7 @@ const Checkout = ():React.JSX.Element => {
     const handleSignUp = (res: any) => {
         const selectedUser = res?.id && res || prospect;
         console.log('[handleSignUp ]',res)
-        if (res?.status == 'prospect') {
+        if (res?.status == 'guest') {
             handleUser()
             setView('collect');
             handleNotifictaion(res);

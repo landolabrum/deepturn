@@ -5,14 +5,14 @@ import UserContext from "~/src/models/UserContext";
 import IMemberService from "../../services/MemberService/IMemberService";
 
 export const useGuest = () => {
-  const MemberService = getService<IMemberService>('IMemberService');
-  const [prospectContext, setProspectContext] = useState<UserContext | undefined>();
-  const current = MemberService.getCurrentGuest();
+  const memberService = getService<IMemberService>('IMemberService');
+  const [guestContext, setGuestContext] = useState<UserContext | undefined>();
+  const current = memberService.getCurrentGuest();
   useEffect(() => {
-    if(current )setProspectContext(current);
+    if(current )setGuestContext(current);
     const subscriptions: Subscription[] = []; 
-    subscriptions.push(MemberService.guestChanged.subscribe((pc: UserContext | undefined) => { setProspectContext(pc); }));
+    subscriptions.push(memberService.guestChanged.subscribe((pc: UserContext | undefined) => { setGuestContext(pc); }));
     return () => { subscriptions.forEach((s) => s.unsubscribe()); };
-  }, [MemberService.guestChanged]);
-  return prospectContext;
+  }, [memberService.guestChanged]);
+  return guestContext;
 }

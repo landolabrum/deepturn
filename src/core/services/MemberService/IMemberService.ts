@@ -1,7 +1,7 @@
 import UserContext, { GuestContext, UserAddress } from "~/src/models/UserContext";
 import { EventEmitter } from "@webstack/helpers/EventEmitter";
-import { ICartItem } from "~/src/modules/ecommerce/cart/model/ICartItem";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
+import { ICustomer } from "~/src/models/CustomerContext";
 export interface IEncryptJWT{
   tokenData: object,
   secret: string,
@@ -82,7 +82,7 @@ export default interface IMemberService {
   getCurrentUserToken(): string | undefined;
   getPersonalInformation(): Promise<any | null>;
   getMemberProfileInformation(memberId: string): Promise<any | null>;
-  updateCustomerProfile(id: string, memberData: any): Promise<any>;
+  modifyCustomer(customer: ICustomer): Promise<any>;
   toggleCustomerDefaultMethod(paymentMethodId: string): Promise<any>;
   
   encryptMetadataJWT({encryptionData, customer_id, metadata_key_name}:IEncryptMetadataJWT): Promise<OEncryptMetadataJWT>;

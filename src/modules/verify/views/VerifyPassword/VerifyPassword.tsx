@@ -83,8 +83,8 @@ const VerifyPassword: React.FC<any> = ({ token, onSuccess }: VerifyPassword) => 
     const onSubmit = async () => {
         const newPassword = state?.fields?.find((f: IFormField) => f.name == 'password')?.value;
         let customer = state.customer;
-        customer.metadata.password = newPassword;
-        const updateMember = await MemberService.updateCustomerProfile(customer.id, customer);
+        customer.metadata.user.password = newPassword;
+        const updateMember = await MemberService.modifyCustomer( customer);
         if (updateMember){
             handleSignInModal();
             onSuccess(updateMember.email);
@@ -105,6 +105,7 @@ const VerifyPassword: React.FC<any> = ({ token, onSuccess }: VerifyPassword) => 
                     <div className='verify-email__content--loader'>
                         <UiLoader position='relative' text={loadingText()} dots={state?.status != undefined && ['verifying_email'].includes(state?.status)} />
                     </div>
+                    {JSON.stringify(state.fields)}
                     {state.status == 'incomplete' && state?.fields &&
                         <UiForm
                             title={String(state?.detail) || undefined}

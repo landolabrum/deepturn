@@ -1,14 +1,10 @@
 // Relative Path: ./AccountCurrentMethod.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './UserCurrentMethods.scss';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
-import { getService } from '@webstack/common';
 import { useNotification } from '@webstack/components/Notification/Notification';
-import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { IMethod } from '~/src/modules/user/model/IMethod';
 import UserContext from '~/src/models/UserContext';
-import UserCreateMethod from '../UserCreateMethod/controller/UserCreateMethod';
 import UserCurrentMethod from '../UserCurrentMethod/UserCurrentMethod';
 
 // Remember to create a sibling SCSS file with the same name as this component
@@ -79,7 +75,7 @@ const UserCurrentMethods: React.FC<any> = ({ methods, onDeleteSuccess, response,
     return (
         <>
             <style jsx>{styles}</style>
-            { methods && Object.entries(methods).map(([key, method]:any) => <div 
+            { methods && Object.entries(methods).filter(([_, m]:any)=>m?.card).map(([key, method]:any) => <div 
                 className={`current-method--container`} key={key}
             >
                 <UserCurrentMethod

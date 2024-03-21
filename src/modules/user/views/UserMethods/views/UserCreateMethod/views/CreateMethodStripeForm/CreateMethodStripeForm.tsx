@@ -26,7 +26,7 @@ const CreateMethodStripeForm = ({ onSuccess, user, shippable, success_url="/chec
     const [loader,setLoader] = useLoader();
     const options = {
         layout: { 
-            type: 'tabs',
+            type: 'accordion',
             defaultCollapsed: false,
             radios: false,
             spacedAccordionItems: true
