@@ -363,6 +363,7 @@ public async processTransaction(sessionData: ISessionData) {
         `api/customer/`,
         {data: encryptedSignUp},
       );
+      
       console.log('[ MODUFY ]', res)
       // try {
       //   const res = await this.put<any, any>(

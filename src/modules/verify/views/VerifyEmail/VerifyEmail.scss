@@ -12,8 +12,11 @@
     background-color: var(--gray-90);
     height: 100%;
     
+    @media(max-width: 1260px) {
+        width: var(--s-padding-width);
+        margin: auto;
+    }
     @media(max-width: 1100px) {
-        margin: var(--s-element) var(--s-padding);
         width: var(--s-padding-width);
         align-items: center;
     }
@@ -22,6 +25,7 @@
         @extend .d-flex;
         justify-content: space-between;
         gap: var(--s-element);
+        margin:auto;
         padding: var(--s-padding);
         width: var(--s-padding-width);
         flex-direction: column;
