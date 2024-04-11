@@ -112,11 +112,11 @@ const handleClick = (e:any)=>{
             {notification?.confirm?.title || notification?.children}
             {notification?.confirm?.statements &&  notification.confirm.statements.length &&
               <div className={`notification__confirm ${notification.confirm.statements.length > 2 ?" notification__confirm-col":""}`}>
-                {notification.confirm.statements.map((btn: any, key: number) => {
+                {notification.confirm.statements.map((statement: any, key: number) => {
                   return (
                     <div key={key} className='notification__confirm-btn'>
-                      <UiButton onClick={() => handleClick(btn)} variant={btn.text === 'yes' ? 'primary' : btn?.variant}>
-                        {btn.text}
+                      <UiButton onClick={() => handleClick(statement)} variant={statement.text === 'yes' ? 'primary' : statement?.variant}>
+                        {statement.text || statement.label}
                       </UiButton>
                     </div>
                   );
@@ -128,7 +128,7 @@ const handleClick = (e:any)=>{
                 {Object.entries(list).map(([field, value]: any, index: number) => {
                   return <a key={index} className={`notification__list-item`} href={value.href} onClick={value.onClick}>
                     <div  className='notification__list-item__label' >
-                      <UiMarkdown text={value.label || value?.name} />
+                      <UiMarkdown text={value.label || value?.name} />{JSON.stringify(value?.onClick)}
                     </div>
                     <div>
                       <UiMarkdown text={value.message} />

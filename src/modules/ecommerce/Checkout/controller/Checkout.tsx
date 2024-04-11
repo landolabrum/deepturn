@@ -21,9 +21,10 @@ const Checkout = ():React.JSX.Element => {
     const [cart, setCart] = useState<any>();
     const [selectedUser, setUser] = useState<UserContext | {email:string} | undefined>();
     const { getCartItems, } = useCart();
-    const prospect = useGuest();
+    const guest = useGuest();
+    console.log('[ GUEsT ] ', guest)
     const handleSignUp = (res: any) => {
-        const selectedUser = res?.id && res || prospect;
+        const selectedUser = res?.id && res || guest;
         console.log('[handleSignUp ]',res)
         if (res?.status == 'guest') {
             handleUser()
@@ -69,10 +70,10 @@ const Checkout = ():React.JSX.Element => {
     }
     const handleUser = () => {
         if(selectedUser)return;
-        // console.log('[ USER ]', {user, prospect})
-        if (user || prospect) {
+        console.log('[ USER ]', {user, prospect: guest})
+        if (user || guest) {
             setView('collect');
-            setUser(user || prospect);
+            setUser(user || guest);
         }else {
             setView('sign-up');
         }

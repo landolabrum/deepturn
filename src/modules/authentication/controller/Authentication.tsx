@@ -15,7 +15,7 @@ import { useNotification } from "@webstack/components/Notification/Notification"
 
 const Authentication: React.FC<any> = (props: any) => {
   const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
-  const [view, setView] = useState<string>(props?.view || "sign-up");
+  const [view, setView] = useState<string>(props?.view || "sign-in");
   const [hover, setHover] = useState<boolean>(false);
   const router = useRouter();
   const query = router.query;
@@ -40,6 +40,11 @@ const Authentication: React.FC<any> = (props: any) => {
     }
   }
   const handleSignup = (response:any)=>{
+    if(response?.status == 'existing'){
+      setNotification({active: true, list:[{'label':`email: ${response.email}, exists. Sign in to continue`,
+      
+    }]})
+    }
     setView('sign-in');
     setNewCustomerEmail(response.email)
   }
@@ -75,7 +80,7 @@ const [notif,setNotification]=useNotification();
     }
 
     if (newCustomerEmail != undefined) setView("sign-in");
-  }, [handleSignup, handleSignIn])
+  }, [handleSignup, handleSignIn, setView])
 
   return (
     <>

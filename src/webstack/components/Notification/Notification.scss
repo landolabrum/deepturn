@@ -32,7 +32,7 @@
   z-index: 1004;
   width: 100vw;
   cursor: pointer;
-  color: var(--gray-60);
+  color: var(--secondary);
   animation: dropIn 1s forwards ease-out;
   @media(max-width:900px){
     height: 100%;
@@ -44,6 +44,11 @@
     width: 100%;
     justify-content: flex-end;
     gap:var(--s-9);
+    background-color: var(--gray-90);
+    border-radius: var(--border-radius);
+    &-btn{
+      width: 100%;
+    }
   }
   &.notification-hide{
     animation: dropOut 1s forwards ease-in;
@@ -52,7 +57,7 @@
     padding:  var(--s-padding);
     @extend .d-flex-col;
     position: relative;
-    background: var(--gray-80);
+    background: var(--gray-90);
     border-radius: 0 0 var(--border-radius) var(--border-radius);
     align-items: flex-start;
     width: 100%;
@@ -68,7 +73,7 @@
     .notification__list{
       @extend .d-flex-col;
       border:solid 1px;
-      background-color: var(--gray-90);
+      background-color: var(--gray-80);
       border-radius: var(--border-radius);
       gap: var(--s-9);
       justify-content: flex-start;
