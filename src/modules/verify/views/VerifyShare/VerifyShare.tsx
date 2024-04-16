@@ -1,10 +1,6 @@
 // Relative Path: ./VerifyShare.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './VerifyShare.scss';
-import UiForm from '@webstack/components/UiForm/controller/UiForm';
-import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
-import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
-import capitalize from '@webstack/helpers/Capitalize';
 import UiInput from '@webstack/components/UiInput/UiInput';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
@@ -15,9 +11,10 @@ const VerifyShare: React.FC = () => {
   useEffect(() => {
   }, [onChange]);
   let x = 0;
-  if (1 == x) return <>
-    {/* if (!token || token !== initial) return <> */}
-    <style jsx>{styles}</style>{token}
+  // if (1 == x) return <>
+
+  if (!token || token !== initial) return <>
+    <style jsx>{styles}</style>
     <div className='token-wall'>
       <div className='token-wall-content'>
         <UiInput label='token' placeholder='* * * * * *' value={token} onChange={(e) => onChange(e.target.value)} />
@@ -47,7 +44,7 @@ const VerifyShare: React.FC = () => {
 
           <div className='proposal-content_title'>Enhanced Audience Targeting</div>
           <div className="proposal-content_body">
-            Communication has evolved. Traditional blanket advertising no longer yields a strong return on investment for every campaign. The advent of big data has transformed how organizations identify and engage their ideal prospects. However, data alone is not sufficient. At Deepturn, we're pioneering a future where individuals can engage in genuinely personal interactions with their preferred brands and causes. We enable organizations to understand not only where people are but also what they truly value and what motivates their behaviors.
+            Communication has evolved. Traditional blanket advertising no longer yields a strong return on investment for every campaign. The advent of big data has transformed how organizations identify and engage their ideal prospects. However, data alone is not sufficient. At Deepturn, we&apos;re pioneering a future where individuals can engage in genuinely personal interactions with their preferred brands and causes. We enable organizations to understand not only where people are but also what they truly value and what motivates their behaviors.
           </div>
         </div>
         <div className='service-item'>
@@ -83,7 +80,7 @@ const VerifyShare: React.FC = () => {
             </div>
             <div className='list-item'>
               <div className='list-item_title'>Evaluate</div>
-              Determine the current stategic performances of KPI's and adjust the process accordingly.
+              Determine the current stategic performances of KPI&apos;s and adjust the process accordingly.
             </div>
           </div>
         </div>
