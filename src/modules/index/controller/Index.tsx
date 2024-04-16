@@ -33,7 +33,7 @@ return (
       <style jsx>{styles}</style>
       <div className='index'>
         <UiViewLayout
-          view={view}
+          currentView={view}
           views={views}
         />
       </div>

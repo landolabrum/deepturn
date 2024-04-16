@@ -65,7 +65,7 @@ return (
     <div className='admin-products'>
       <UiViewLayout
         views={views}
-        view={view}
+        currentView={view}
         showActions={['list', 'add']}
         showTitle={true}
         title="Admin Products"

@@ -5,27 +5,30 @@ import rehypeRaw from 'rehype-raw';
 interface UiMarkdownProps {
   text: string;
   color?: string; // Optional prop for text color
+  jsx?: string; // Optional prop for text color
 }
 
-const UiMarkdown: React.FC<UiMarkdownProps> = ({ text, color }) => {
+const UiMarkdown: React.FC<UiMarkdownProps> = ({ text, color, jsx }) => {
   // Style object for text color
   const plug: any = rehypeRaw;
   const markdownStyle = {
     color: color, // Use the textColor prop
   };
-
-  return (
+  return (<>
     <div style={markdownStyle}> {/* Apply the style to a div that wraps ReactMarkdown */}
+      {jsx && <style jsx>{jsx}</style>}
       <ReactMarkdown
+        
         rehypePlugins={[plug]}
         components={{
-          // Customize the rendering of paragraph elements
-          p: ({ node, ...props }) => <span {...props} />
+          // Keep the paragraph as block-level element, potentially changing only text-related properties
+          p: ({ node, ...props }) => <div style={{ color: color }} {...props} />
         }}
-      >
+        >
         {text}
       </ReactMarkdown>
     </div>
+    </>
   );
 };
 

@@ -22,6 +22,7 @@
 
     &__view,
     &__actions {
+   
         width: 100%;
     }
 
@@ -37,4 +38,12 @@
             text-transform: capitalize;
         }
     }
+}
+.current{
+    position: absolute;
+    top: calc(var(--s-padding) * .5);
+    color:var(--gray-30-o);
+    right: var(--s-9);
+    height: var(--s-6);
+    line-height: 1;
 }

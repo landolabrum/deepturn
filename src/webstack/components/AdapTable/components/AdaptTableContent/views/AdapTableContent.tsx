@@ -174,7 +174,9 @@ export const AdapTableContent = ({
                   className={`${variant ? variant : ""}`}
                   key={startIndex + i_}
                   onClick={(e) => handleRowClick(e, item)}
-                  ref={(el) => (rowRefs.current[i_] = el)}
+                  ref={(el) => {
+                    rowRefs.current[i_] = el
+                  }}
                 >
                   {index !== 0 && (
                     <td data-key="#" className="index">

@@ -25,7 +25,7 @@
 }
 
 .verify{
-    margin-top: var(--s-padding);
+    // margin-top: var(--s-padding);
     @media(max-width:900px){
         margin-top: 0;
         padding: var(--s-padding);
@@ -58,6 +58,10 @@
         border-radius: var(--border-radius);
         border: solid 1px var(--gray-60);
         box-shadow: var(--box-shadow-xl);
+        @media(max-width:1260px){
+            width:var(--s-padding-width);
+            margin: var(--s-padding);
+        }
         h1,p{
             line-height: 1;
             margin: 0;

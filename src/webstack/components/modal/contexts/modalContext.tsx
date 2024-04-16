@@ -19,7 +19,7 @@ export type IModalContent = {
 } | ReactNode | null;
 
 export interface ModalContextType {
-  confirm?:any;
+  confirm?:IConfirm;
   isModalOpen: boolean;
   openModal: (content: IModalContent) => void;
   closeModal: () => void;

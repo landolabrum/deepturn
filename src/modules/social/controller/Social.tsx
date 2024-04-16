@@ -36,7 +36,7 @@ const Social: React.FC<any> = () => {
       <style jsx>{styles}</style>
 
       <UiViewLayout
-        view={view}
+        currentView={view}
         views={views}
       />
     </>

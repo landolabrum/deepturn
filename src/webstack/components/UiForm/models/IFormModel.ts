@@ -43,6 +43,7 @@ export interface IForm {
     variant?: IFormControlVariant;
     disabled?: boolean;
     loading?: OForm;
+    submitIcon?: string;
     fields?: IFormField[];
     title?: string | React.ReactElement;
     submitText?: string | React.ReactElement;

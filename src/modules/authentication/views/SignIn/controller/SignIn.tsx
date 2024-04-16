@@ -32,7 +32,7 @@ const SignIn: React.FC<ISignIn> = ({ email, view, title, onSuccess }: ISignIn) =
         <UiViewLayout
           showTitle={true}
           title={title}
-          view={current}
+          currentView={current}
           showActions={false}
           views={views}
         />

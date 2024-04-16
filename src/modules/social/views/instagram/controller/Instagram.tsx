@@ -22,7 +22,7 @@ const Instagram: React.FC<any> = ({ current }: { current?: string }) => {
                 </div>
                 <div className='instagram-body'>
                 <div className='instagram-body--view'>
-                {UiViewLayout({views,view})}
+                {UiViewLayout({views,currentView: view})}
                 </div>
                 </div>
             </div>

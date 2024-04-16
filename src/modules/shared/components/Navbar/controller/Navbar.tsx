@@ -39,7 +39,7 @@ const Navbar = () => {
       openModal(<MobileNav routes={selectedRoute.items} handleClick={handleMobileClick} onBack={handleBackButtonClick} />);
     }
   };
-
+const isMerchant = (route:IRoute) => route.label === keyStringConverter(String(environment.merchant.name));
   // Function to go back to the original routes in mobile view
   const handleBackButtonClick = () => {
     setCurrentRoutes(routes);
@@ -119,7 +119,8 @@ const Navbar = () => {
                 key={key}
                 className={
                   `nav__nav-item nav__nav-item--${
-                    route.label ? (route.label !== keyStringConverter(String(environment.merchant.name)) ? route.label.toLowerCase() : 'brand') : (
+                    route.label ? (
+                      isMerchant(route) ? 'brand': route.label.toLowerCase()) : (
                       String(route.href).split('/')[1]
                     )
                   }${
@@ -130,7 +131,14 @@ const Navbar = () => {
               >
               {route.href !== '/cart' ? !route?.items ? (
                 <UiButton
-                  traits={route?.icon ? { afterIcon: { icon: route.icon }, } : undefined}
+                  traits={route?.icon ? (
+                    // PUTS ICON BEFORE TEXT ON BRAND
+                    isMerchant(route)?{ 
+                      beforeIcon: { icon: route.icon }
+                     }:{ 
+                      afterIcon: { icon: route.icon }
+                     }
+                  ) : undefined}
                   variant='flat'
                   onClick={() => handleSelect(route)}
                   >

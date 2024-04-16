@@ -6,6 +6,7 @@ import SignInView from '../../authentication/views/SignIn/views/SignInView/SignI
 import VerifyAccount from '../views/VerifyAccount/VerifyAccount';
 import VerifyPayment from '../views/VerifyPayment/VerifyPayment';
 import VerifyPassword from '../views/VerifyPassword/VerifyPassword';
+import VerifyShare from '../views/VerifyShare/VerifyShare';
 
 
 const DefaultVerifyView = () => {
@@ -31,7 +32,8 @@ const Verify = () => {
     email: <VerifyEmail token={token} onSuccess={(v: string) => setNewCustomerEmail(v)} />,
     password: <VerifyPassword token={token} onSuccess={(v: string) => setNewCustomerEmail(v)} />,
     account: <VerifyAccount />,
-    payment: <VerifyPayment token={token} />
+    payment: <VerifyPayment token={token} />,
+    share: <VerifyShare />,
   };
 
   useEffect(() => {
