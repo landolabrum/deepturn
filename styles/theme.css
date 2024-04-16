@@ -1,32 +1,53 @@
 @import url("https://fonts.googleapis.com/css2?family=Play:wght@300;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
 
-/* @font-face {
-  font-family: "Game";
-  src: url("/fonts/gamestationcondobl.otf") format("opentype");
-  font-style: italic;
-}
+
 
 @font-face {
   font-family: "Game";
-  src: url("/fonts/gamestationtextobl.otf") format("opentype");
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: "Game";
-  src: url("/fonts/gamestationdisplayoutline.otf") format("opentype");
-  font-weight: 500;
-} @font-face {
-  font-family: "Game";
-  src: url("/fonts/gamestationtext.otf") format("opentype");
-  font-weight: 500;
-}  */
-
-@font-face {
-  font-family: "Game";
-  src: url("/fonts/gamestationtext.otf") format("opentype");
+  src: url("/fonts/gamestation/gamestationtext.otf") format("opentype");
   font-style: normal;
+}
+@font-face {
+  font-family: 'Eros';
+  src: url('/fonts/eros/erosyt.ttf') format('opentype');
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: FreightSans;
+  font-weight: 700;
+  font-style: normal;
+  src: url("/fonts/freight/freight-sans-bold.woff2") format("woff2"),url("/fonts/freight/freight-sans-bold.woff") format("woff")
+}
+
+@font-face {
+  font-family: FreightSans;
+  font-weight: 700;
+  font-style: italic;
+  src: url("/fonts/freight/freight-sans-bold-italic.woff2") format("woff2"),url("/fonts/freight/freight-sans-bold-italic.woff") format("woff")
+}
+
+@font-face {
+  font-family: FreightSans;
+  font-weight: 500;
+  font-style: normal;
+  src: url("/fonts/freight/freight-sans-medium.woff2") format("woff2"),url("/fonts/freight/freight-sans-medium.woff") format("woff")
+}
+
+@font-face {
+  font-family: FreightSans;
+  font-weight: 500;
+  font-style: italic;
+  src: url("/fonts/freight/freight-sans-medium-italic.woff2") format("woff2"),url("/fonts/freight/freight-sans-medium-italic.woff") format("woff")
+}
+@font-face {
+  font-family: Decimal;
+  font-weight: 500;
+  font-style: normal;
+  src: url("/fonts/decimal/Decimal-Book-Pro_Web.woff2") format("woff2"),
+  url("/fonts/decimal/Decimal-Book-Pro_Web.woff2") format("woff2")
 }
 
 :root {
@@ -379,6 +400,14 @@ body {
 }
 .p-fix{position: fixed;}
 .p-abs{position: absolute;}
+.top-0{top: 0;}
+.left-0{left: 0;}
+.right-0{right: 0;}
+.bottom-0{right: 0;}
+
+.top-s-5{top: calc(100% - var(--s-5));}
+
+
 .z-n-1{z-index: -1;}
 /* FLEX CLASS DEFINITIONS */
 .d-flex {
