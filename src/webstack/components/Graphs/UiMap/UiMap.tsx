@@ -21,7 +21,7 @@ interface VesselFeature
 
 
 
-const getUserLocation = (): LngLatLike | undefined => {
+const useLocation = ():LngLatLike | undefined => {
   const [loc, setLoc] = useState<LngLatLike | undefined>()
   function success(position: any) {
     const latitude = position.coords.latitude;
@@ -44,7 +44,7 @@ const getUserLocation = (): LngLatLike | undefined => {
   }, [setLoc]);
   return loc;
 }
-const MapComponent: React.FC = () => {
+const MapComponent: React.FC<any> = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const vessels: Vessel[] = [
     {
@@ -60,7 +60,7 @@ const MapComponent: React.FC = () => {
     // Add more vessels as needed
   ];
   
-  const userLocation = getUserLocation();
+  const userLocation = useLocation();
   useEffect(() => {
     mapboxgl.accessToken =
       "pk.eyJ1IjoibGFuZG9sYWJydW0iLCJhIjoiY2xnMDZ1aGVsMHJ5MzNsdGF3aHZhM3dtbyJ9.UihOXtkEeRk5tQDgDK8cLg";
