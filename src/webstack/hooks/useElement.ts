@@ -7,7 +7,7 @@ interface IElement {
   content: string;
   // ... other properties
 }
-
+// The useElement component is a custom React hook designed to manage and manipulate an element's state within a React application. This hook provides functionalities to add, modify, and remove an element, making it a versatile tool for dynamic content management.
 const useElement = () => {
   const [element, setElementState] = useState<IElement | null>(null);
   const elementRef = useRef<HTMLElement | null>(null);

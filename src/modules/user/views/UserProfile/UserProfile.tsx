@@ -1,5 +1,5 @@
 // Relative Path: ./UserProfile.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './UserProfile.scss';
 import UserContext from '~/src/models/UserContext';
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
@@ -15,7 +15,8 @@ type IView = { [key: string]: React.ReactElement };
 
 const UserProfile: React.FC<any> = ({ user }: IUserProfile) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
-
+  
+  useEffect(() => {}, [user, isEdit]);
   return (
     <>
       <style jsx>{styles}</style>
@@ -34,6 +35,7 @@ const UserProfile: React.FC<any> = ({ user }: IUserProfile) => {
           <h3>Edit Profile</h3>
 
         <div className='user-profile__card'>
+          {/* {JSON.stringify(user)} */}
           <ContactForm user={user} onSubmit={console.log} />
           {/* <UserModify user={user}/> */}
           </div>

@@ -59,15 +59,12 @@
                 font-family: Play;
                 @extend .d-flex;
                 gap: var(--s-9);
-                font-size: var(--s-1);
+                font-size: var(--s-element);
                 margin: var(--s-6) 0 var(--s-1);
 
-                color: var(--gray-30);
-                .marquee-logo{
-                    --ui-icon-color: var(--gray-30);
-                    --ui-icon-size: var(--s-1);
-                }
-                
+                color: var(--gray-10);
+                --ui-icon-color: var(--gray-10);
+                --ui-icon-size: var(--s-element);
             }
             &_client{
                 font-family: Play;

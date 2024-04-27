@@ -11,9 +11,9 @@ const VerifyShare: React.FC = () => {
   useEffect(() => {
   }, [onChange]);
   let x = 0;
-  // if (1 == x) return <>
 
-  if (!token || token !== initial) return <>
+  if (1 == x) return <>
+  {/* if (!token || token !== initial) return <> */}
     <style jsx>{styles}</style>
     <div className='token-wall'>
       <div className='token-wall-content'>
@@ -38,15 +38,20 @@ const VerifyShare: React.FC = () => {
             <div className='proposal-header_marquee'>
               <div className='marquee-logo'>
                 <UiIcon icon="deepturn-logo" />
-              </div>Deepturn Services
+              </div>
+              Deepturn Services
             </div>
+          </div>
+          </div>
+        <div className='service-item'>
+          <div className='proposal-header_title'>
+            Social Engineering
           </div>
 
           <div className='proposal-content_title'>Enhanced Audience Targeting</div>
           <div className="proposal-content_body">
             Communication has evolved. Traditional blanket advertising no longer yields a strong return on investment for every campaign. The advent of big data has transformed how organizations identify and engage their ideal prospects. However, data alone is not sufficient. At Deepturn, we&apos;re pioneering a future where individuals can engage in genuinely personal interactions with their preferred brands and causes. We enable organizations to understand not only where people are but also what they truly value and what motivates their behaviors.
           </div>
-        </div>
         <div className='service-item'>
           <div className='proposal-content_title'>Advanced Data Modeling</div>
           <div className="proposal-content_body">
@@ -59,8 +64,7 @@ const VerifyShare: React.FC = () => {
             We employ the scientifically validated OCEAN scale of personality traits to gain deep insights into what people value, why they act as they do, and what truly influences their decisions. This approach ensures that our strategies are finely tuned to resonate with individuals at a meaningful level.
           </div>
         </div>
-
-
+        </div>
         <hr/>
         <div className='service-item'>
             <div className='proposal-header_marquee'>Proposed Actions</div>
@@ -87,15 +91,18 @@ const VerifyShare: React.FC = () => {
         <AdaptGrid xs={1} md={3} gap={10}>
           <div className='service-item'>
             <div className='proposal-content_title'>Social Automation</div>
-
             <div className="proposal-content_body">
               {/* Broudy Nissan stands at a pivotal point where enhancing the service department&apos;s digital engagement can significantly increase traffic and revenue. */}
               Deepturn is uniquely positioned to implement targeted digital solutions that will drive higher service bookings and elevate customer loyalty. This proposal outlines our strategy to leverage sophisticated tools and analytics for substantial growth in your service department.
             </div>
           </div>
-
-
-
+          <div className='service-item'>
+            <div className='proposal-content_title'>Funnel Design</div>
+            <div className="proposal-content_body">
+              {/* Broudy Nissan stands at a pivotal point where enhancing the service department&apos;s digital engagement can significantly increase traffic and revenue. */}
+              Deepturn is uniquely positioned to implement targeted digital solutions that will drive higher service bookings and elevate customer loyalty. This proposal outlines our strategy to leverage sophisticated tools and analytics for substantial growth in your service department.
+            </div>
+          </div>
 
         </AdaptGrid>
 

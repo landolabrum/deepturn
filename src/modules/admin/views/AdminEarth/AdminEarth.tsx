@@ -58,7 +58,12 @@ const AdminEarth: React.FC = () => {
     return (
         <>
             <style jsx>{styles}</style>
-            {custLocations && <UiEarth points={custLocations} rotate={false} onPointClick={onPointClick}/>}
+            {/* {custLocations && */}
+             <UiEarth 
+              points={custLocations}
+              rotate={false}
+              onPointClick={onPointClick}
+            />
         </>
     );
 };

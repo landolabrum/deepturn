@@ -18,11 +18,13 @@ const Surveillance: React.FC = () => {
     
         {/* <UiMedia  type='image' variant='dark' src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=1`} /> */}
         <UiMedia src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=1`} loadingText='loading camera 1'/>
-        <UiMedia 
+        {/* <UiMedia 
         // rotate={180}
-         src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=2`} loadingText='loading camera 2'/>
-        <UiMedia src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=3`} loadingText='loading camera 3'/>
-        <UiMedia  src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=4`} loadingText='loading camera 4'/>
+        src=''
+        //  src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=2`} 
+         loadingText='loading camera 2'/> */}
+        {/* {/* <UiMedia src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=3`} loadingText='loading camera 3'/> */}
+        <UiMedia  src={`${environment.serviceEndpoints.membership}/api/stream/rtsp/?id=2`} loadingText='loading camera 2'/> 
       </AdaptGrid>
       </div>
 

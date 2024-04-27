@@ -39,7 +39,6 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
   const [fields, setFields] = useState<IFormField[]>(initialContactFields);
   const [initialFields, setInitialFields]=useState<IFormField[] | undefined>();
   const [disabled, setDisabled] = useState<boolean>(true);
-  const [selectedUser, setUser]=useState<UserContext | undefined>()
   // const selectedUser:  = user || loggedInUser;
 
 
@@ -93,9 +92,11 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
 
 const handleUser = async () => {
   // Check if a user has been selected and update fields accordingly
-  const userToUse = selectedUser || user || loggedInUser;
+  const userToUse = user || loggedInUser;
+  console.log({user, loggedInUser})
   if (userToUse) {
     const updatedFields = fields.map((field) => {
+      console.log('fName: ', field)
       switch (field.name) {
         case 'firstName':
           return { ...field, value: userToUse.name ? userToUse.name.split(' ')[0] : field.value, width: "50%" };
@@ -117,17 +118,20 @@ const handleUser = async () => {
   }
 };
   const init = async () => {
-    handleUser().then((updatedFields: any) => handleDisabled(updatedFields)) 
+    handleUser().then(
+      (updatedFields: any) => handleDisabled(updatedFields)
+    ) 
   }
   useEffect(() => {
     init()
-  }, []);
+  }, [init, handleUser]);
 
 
   return (
     <>
       <style jsx>{styles}</style>
       <div className='contact-form'>
+        {JSON.stringify(fields)}
         {title && <div className='contact-form__title'>{title}</div>}
         <UiForm
           fields={fields}

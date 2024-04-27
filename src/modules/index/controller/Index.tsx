@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
+// import AireHotel from '../views/Merchants/AireHotel/AireHotel';
 // import useCampaign from '@webstack/hooks/useCampaign';
 // import { useEffect } from 'react';
 
@@ -18,7 +19,8 @@ const Index = () => {
 
   const views = {
     'nirv1': <NirvanaEnergy />,
-    'mb1':<Deepturn/>
+    'mb1':<Deepturn/>,
+    // 'ah':<AireHotel/>,
   }
   // const campaign = useCampaign();
   useEffect(() => {

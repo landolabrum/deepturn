@@ -28,6 +28,7 @@ const UiEarthObject = (
     const earthImgs: any = [
         { name: "map", value: "no-clouds.jpg" },
         { name: "lrg", value: "earth-large.jpg" },
+        { name: "night", value: "earth-night.jpg" },
         // { name: "dark", value: "dark.jpg" },
         // { name: "day", value: "day.jpg" },
         // { name: "night", value: "night.jpg" },
@@ -35,7 +36,7 @@ const UiEarthObject = (
 
     const [earthImg, setEarthImg] = useState<any | undefined>({
         ...earthImgs[0],
-        value: `/assets/globe-textures/${earthImgs[0].value}`
+        value: `/assets/globe-textures/${earthImgs[2].value}`
     });
     const [pts, setPoints] = useState<EarthPoint[] | undefined>();
     const { width } = useWindow();

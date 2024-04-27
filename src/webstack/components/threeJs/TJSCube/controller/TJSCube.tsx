@@ -18,6 +18,7 @@ interface ITJSCubeBevel {
 interface ITJSCubeIcon {
   icon: string;
   color?: string;
+  backgroundColor?: string;
   size: { x: number, y: number, z: number };
   animate?: { rotate: { y?: number, x?: number, z?: number, speed: number } };
   metalness?: number;
@@ -116,12 +117,20 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
   return null;
 };
 
-export const TJSCube = (props: ITJSCubeContent) => (
-  <>
+export const TJSCube:any = (props: ITJSCubeContent) => {
+  const instanceRef:any = useRef();
+  const bg = String(props?.icon?.backgroundColor) || undefined;
+  useEffect(() => {
+    if(instanceRef?.current && bg)instanceRef.current.style.backgroundColor = bg;
+    }, [instanceRef, bg]);
+  return<>
   <style jsx>{styles}</style>
-    <Canvas className='tjscube'>
+    <div className='tjscube' ref={instanceRef}>
+    <Canvas className='tjscube--content' >
       <OrbitControls />
       <TJSCubeContent icon={props.icon} />
     </Canvas>
+    </div>
   </>
-);
+
+}

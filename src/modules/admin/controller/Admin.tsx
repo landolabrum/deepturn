@@ -21,7 +21,7 @@ const Admin = () => {
   const initialViews = {
     dashboard: <AdminDashboard />,
     sales: <AdminDashboard />,
-    // globe: <AdminEarth />,
+    globe: <AdminEarth />,
     customers: <AdminCustomers />,
     products: <AdminProducts />,
     invoice: <AdminInvoices />,
