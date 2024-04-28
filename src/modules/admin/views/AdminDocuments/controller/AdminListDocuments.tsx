@@ -6,6 +6,7 @@ import UiButton from '@webstack/components/UiButton/UiButton';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const RenderFile = ({ currentDoc }:{currentDoc:any}) => {
     const retrieved = currentDoc.retrieved;
@@ -17,7 +18,7 @@ const RenderFile = ({ currentDoc }:{currentDoc:any}) => {
     if (currentDoc) {
         if(retrieved?.object && retrieved.object === 'file_link'){
             if(currentDoc.type === 'png'){
-                return <img src={retrieved.url} alt={currentDoc.filename} />;
+                return <Image src={retrieved.url} alt={currentDoc.filename} />;
             }
             else if (currentDoc.type === 'pdf') {
                 return (

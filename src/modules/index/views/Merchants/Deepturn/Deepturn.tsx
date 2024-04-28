@@ -3,18 +3,26 @@ import React, { useEffect, useState } from 'react';
 import styles from './Deepturn.scss';
 import { TJSCube } from '@webstack/components/threeJs/TJSCube/controller/TJSCube';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import UiMap from '../../../../../webstack/components/Graphs/UiMap/UiMap';
+import UiMap from '../../../../../webstack/components/Graphs/UiMap/controller/UiMap';
+import useLocation from '@webstack/hooks/user/useLocation';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const Deepturn: React.FC = () => {
+  const loc = useLocation();
+  if (!loc) return '...load';
   return (
     <>
       <style jsx>{styles}</style>
       <div className='mbone'>
         <div className="background-video">
           {/* <img src="/assets/backgrounds/lava1.jpeg" /> */}
-          <UiMap/>
+          <UiMap
+            vessels={[
+              { id: 1, name: "Vessel 1", coordinates: [loc?.lng, loc?.lat], path: [] },
+              // { id: 2, name: "Vessel 2", coordinates: [-74.1, 40.8], path: [] },
+            ]}
+          />
           {/* <TJSCube
             icon={{
               bevel: {

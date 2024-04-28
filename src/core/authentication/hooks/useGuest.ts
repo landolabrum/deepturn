@@ -13,6 +13,6 @@ export const useGuest = () => {
     const subscriptions: Subscription[] = []; 
     subscriptions.push(memberService.guestChanged.subscribe((pc: UserContext | undefined) => { setGuestContext(pc); }));
     return () => { subscriptions.forEach((s) => s.unsubscribe()); };
-  }, [memberService.guestChanged]);
+  }, [memberService.guestChanged, current]);
   return guestContext;
 }
