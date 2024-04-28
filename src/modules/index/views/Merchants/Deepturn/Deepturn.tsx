@@ -10,7 +10,7 @@ import useLocation from '@webstack/hooks/user/useLocation';
 
 const Deepturn: React.FC = () => {
   const loc = useLocation();
-  if (!loc) return '...load';
+  if (!loc) return <>...load</>;
   return (
     <>
       <style jsx>{styles}</style>
