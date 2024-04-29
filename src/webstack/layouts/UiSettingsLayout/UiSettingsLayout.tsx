@@ -56,15 +56,17 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     }, undefined, { shallow: false });
     setViewCallback?.(view);
   }, [router, setViewCallback]);
-  
+
   // useMemo for handling complex calculations or conditional logic is fine
   const modalContext: IConfirm = useMemo(() => ({
-    title: keyStringConverter(MODAL_ID),
-    statements: Object.keys(views).map((key: string) => ({
-      text: key,
-      onClick: () => handleView(key),
 
-    })),
+    title: keyStringConverter(MODAL_ID),
+    statements: Object.keys(views).map((key: string) => (
+      {
+      label: key,
+      onClick: () => handleView(key),
+    }
+  )),
   }), [views, handleView]); // Assuming handleView does not change or is wrapped in useCallback
 
 

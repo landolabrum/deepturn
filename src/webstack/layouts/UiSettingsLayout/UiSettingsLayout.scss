@@ -17,7 +17,7 @@ $actionsBg: var(--gray-90);
     padding: var(--s-padding);
     right: auto;
     height: 100%;
-    // margin-top:  calc(var(--s-element ) * 2);
+    margin-top:  var(--s-padding );
     @media (max-width: 1100px) {
         width: auto;
     }

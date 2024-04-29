@@ -30,9 +30,8 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
   if (user) return (
     <>
       <style jsx>{styles}</style>
-      {/* <div className='home'> */}
         <UiSettingsLayout
-          // variant="full"
+          variant="full"
           // variant="full-width"
           // title='home'
           defaultView='home'

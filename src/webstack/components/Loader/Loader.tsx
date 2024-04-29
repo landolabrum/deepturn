@@ -7,6 +7,7 @@ import {
 import styles from "./Loader.scss";
 import { UiIcon } from "../UiIcon/UiIcon";
 import environment from "~/src/environment";
+import { TJSCube } from "../threeJs/TJSCube/controller/TJSCube";
 
 
 type ILoader = {
@@ -43,7 +44,6 @@ export const LoaderProvider: React.FC<LoaderProviderProps> = ({
     </LoaderContext.Provider>
   );
 };
-
 const Loader: React.FC = () => {
   const [context, setContext] = useContext(LoaderContext);
   const [LoaderState, setLoaderState] = useState<ILoader | null>(null);
@@ -53,20 +53,29 @@ const Loader: React.FC = () => {
     bevelSize: 2, // Adjust the bevel size as needed
     bevelSegments: 2, // Adjust the number of bevel segments as needed
   };
+  
+  const NoChildrenLoader = (context: ILoader) => {
+    return <>
+      <style jsx>{styles}</style>
+      {context?.children === undefined && <div className='loader__content--icon'>
+        <UiIcon icon={`${environment.merchant.name}-logo`} glow />
+      </div>}
+    </>
+  }
 
   useEffect(() => {
     // if (context?.active !== LoaderState?.active) {
-      setLoaderState(context);
-      // Check if persistence is set and active is true
-      if (context?.active && context.persistence) {
-        // Set a timeout to automatically set active to false after the persistence duration
-        const timer = setTimeout(() => {
-          setContext({ ...context, active: false }); // Update context to set active to false
-        }, context.persistence);
-        return () => clearTimeout(timer); // Clear the timeout if the component unmounts or updates
-      }
+    setLoaderState(context);
+    // Check if persistence is set and active is true
+    if (context?.active && context.persistence) {
+      // Set a timeout to automatically set active to false after the persistence duration
+      const timer = setTimeout(() => {
+        setContext({ ...context, active: false }); // Update context to set active to false
+      }, context.persistence);
+      return () => clearTimeout(timer); // Clear the timeout if the component unmounts or updates
+    }
     // }
-  }, [context, setContext, LoaderState?.active]);
+  }, [context, LoaderContext, setContext, LoaderState?.active]);
 
   if (LoaderState?.active) {
     return (
@@ -77,31 +86,32 @@ const Loader: React.FC = () => {
           onClick={context?.onClick}
         >
           <div className='loader__content'>
-            <div className='loader__content--icon'>
-            <UiIcon icon={`${environment.merchant.name}-logo`} glow />
-
-              {/* {context?.animation ? (
-                <TJSCube
-                  color={"#ff3300"}
-                  metalness={1}
-                  svgOptions={bevelOptions} // Pass the bevelOptions object as a 
-                  
-                  animate={{
-                    rotate: {
-                      x: 0,
-                      y: 1, // Specify the desired rotation angles in radians
-                      z: 0, // Specify the desired rotation angles in radians
-                      speed: 5000,
-                      duration: 'infinite'
-                    },
-                  }}
-                  svg={<UiIcon icon={`${environment.merchant.name}-logo`} />}
-                  size={{ x: 100, y: 100, z: 20 }}
-                />
-              ) : (
-                <UiIcon icon={`${environment.merchant.name}-logo`} glow />
-              )} */}
-            </div>
+            {context?.animation === true ? (
+              <TJSCube
+                icon={{
+                  bevel: {
+                    bevelEnabled: true,
+                    bevelThickness: 5,
+                    bevelSegments: 15,
+                    bevelSize: 2
+                  },
+                  // color:"#e0e0e0"/,
+                  // backgroundColor:"#e0e0e0",
+                  // metalness: 10,
+                  // roughness: .51,
+                  // opacity: opacity !== 0 && opacity * .1 || .1,
+                  // opacity: .7,
+                  icon: "deepturn-logo",
+                  texture: "/assets/backgrounds/lava1.jpeg",
+                  // bumpMap:"/assets/textures/texture-leaves.jpeg",
+                  size: { x: 120, y: 120, z: 9 },
+                  animate: { rotate: { y: -2, x: 1, speed: .001 } }
+                }}
+              // metalness={5}
+              />
+            ) : (
+              <NoChildrenLoader {...context} />
+            )}
             <div className='loader__content--body'>
               {LoaderState.body || 'loading'}
             </div>
