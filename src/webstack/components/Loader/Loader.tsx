@@ -113,11 +113,11 @@ const Loader: React.FC = () => {
               <NoChildrenLoader {...context} />
             )}
             <div className='loader__content--body'>
-              {LoaderState.body || 'loading'}
+              {context?.children}
+              {LoaderState.body || !context?.children && 'loading'}
             </div>
           </div>
         </div>
-        {context?.children}
       </>
     );
   }

@@ -1,11 +1,16 @@
 import { IFormControlVariant } from '@webstack/components/AdapTable/models/IVariant';
 import React, { createContext, ReactNode, useContext,  useState } from 'react';
 
-export type IConfirm ={
+export type IConfirm = {
   title?: string | React.ReactElement;
   statements?: {
-    label?: string, onClick?:(e:any)=>void, href?: string, variant?: IFormControlVariant}[];
+      label?: string,
+      onClick?: (e: any) => void,
+      href?: string,
+      variant?: IFormControlVariant
+  }[] | undefined;
 } | undefined;
+
 
 
 export type IModalContent = {

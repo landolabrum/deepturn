@@ -27,28 +27,24 @@ const UiMap: React.FC<IMap> = (props: IMap) => {
     if (mapContainer.current && userLocation) {
       const mapBoxOptions: MapboxOptions = {
         container: mapContainer?.current,
-        style: 'mapbox://styles/landolabrum/clvk7ukio00k501rdbgodcq8p',
+        style: 'mapbox://styles/landolabrum/clvlv72k500np01rd1bb44jhc',
         // style: 'mapbox://styles/mapbox/dark-v11',
         center: userLocation,
         zoom: 3,
-        maxZoom: 15,
+        maxZoom: 15
       };
       const map = new mapboxgl.Map(mapBoxOptions)
       handleVessels(map, vessels);
     }
     
-const colorBg = () =>{
-  const bgElement = mapContainer?.current
-  console.log("[ mapContainer?.current ]", mapContainer?.current)
-  if(bgElement){
-    console.log("[ mapContainer?.curren SUCCESS t ]", mapContainer?.current)
-  }
-  colorBg();
-  // var canvas = document.getElementById("canvas");
-  // if(!canvas)return;
-  // var ctx = canvas.getContext("2d");
-  // ctx.fillStyle = "blue";
-}
+// const colorBg = () =>{
+//   const bgElement = mapContainer?.current
+//   console.log("[ mapContainer?.current ]", mapContainer?.current)
+//   if(bgElement){
+//     console.log("[ mapContainer?.curren SUCCESS t ]", mapContainer?.current)
+//   }
+//   colorBg();
+// }
 
   }, [userLocation, vessels]);
 
