@@ -1,7 +1,14 @@
-.map-container{
-  position: fixed;
+.p-fix{
+  position: absolute;
   bottom: 0;
   top: 0;
   left: 0;
   right: 0;
+  height: 100%;
+  width: 100%;
+  
+}
+@import url("https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css");
+.map-container{
+  @extend .p-fix;
 }

@@ -8,7 +8,7 @@ const INTERVALS = 5000
 const handleVessels = (map: any, vessels?: IVessel[]) => {
   if (!map || !vessels) return;
 
-  map.on('load', () => {
+  map.on('style.load', () => {
     map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/cat.png', (error: any, image: any) => {
       if (error) throw error;
       map.addImage('custom-marker', image);
@@ -22,7 +22,7 @@ const handleVessels = (map: any, vessels?: IVessel[]) => {
             features: [{
               type: 'Feature',
               geometry: {
-                type: 'Point',
+                type: 'Point', 
                 coordinates: vessel.coordinates,
               },
               properties: {
