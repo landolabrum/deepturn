@@ -36,12 +36,12 @@
   src: url("/fonts/freight/freight-sans-medium.woff2") format("woff2"),url("/fonts/freight/freight-sans-medium.woff") format("woff")
 }
 
-@font-face {
+/* @font-face {
   font-family: FreightSans;
   font-weight: 500;
   font-style: italic;
   src: url("/fonts/freight/freight-sans-medium-italic.woff2") format("woff2"),url("/fonts/freight/freight-sans-medium-italic.woff") format("woff")
-}
+} */
 @font-face {
   font-family: Decimal;
   font-weight: 500;
