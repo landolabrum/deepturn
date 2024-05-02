@@ -10,6 +10,7 @@ import styles from "./SignInView.scss";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import { ISignIn } from "../../controller/SignIn";
+import environment from "~/src/environment";
 
 const DEFAULT_RESPONSE = { response: "", message: "" };
 const defaultCodeValue = "------";
@@ -55,6 +56,7 @@ const SignInView: React.FC<ISignIn> = ({ email, onSuccess }: ISignIn) => {
           password: credentials.password.replace(/\s+/g, ''),
           ...(validTFA && { code: credentials.code }),
           user_agent,
+          merchant: environment.merchant
         });
         if(onSuccess)onSuccess(resp);
         // if (resp?.email && isModalOpen) {

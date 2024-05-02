@@ -1,6 +1,6 @@
-export interface IVessel {
-  id: number; // Unique identifier for the vessel
-  name: string; // Name of the vessel
+export interface IMapMarker {
+  id: number; // Unique identifier for the marker
+  name: string; // Name of the marker
   coordinates: [number, number]; // Geographical coordinates [longitude, latitude]
   path?: Array<{
     type: string; // Type of the feature, typically "Feature"
@@ -9,18 +9,18 @@ export interface IVessel {
       coordinates: [number, number]; // Coordinates of the point
     };
     properties: {
-      name: string; // Property name for the vessel
+      name: string; // Property name for the marker
     };
-  }>; // Optional path array to track the vessel's movement
+  }>; // Optional path array to track the marker's movement
 }
 
-export interface VesselFeatureProperties {
+export interface MarkerFeatureProperties {
   name: string;
 }
 
 export interface VesselFeature
-  extends GeoJSON.Feature<GeoJSON.Point, VesselFeatureProperties> { }
+  extends GeoJSON.Feature<GeoJSON.Point, MarkerFeatureProperties> { }
 
 export default interface IMap {
-  vessels?: IVessel[]
+  vessels?: IMapMarker[]
 }

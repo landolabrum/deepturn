@@ -68,7 +68,8 @@ export default interface IMemberService {
   signIn({ email,
     password,
     code,
-    user_agent
+    user_agent,
+    merchant
   }: any): Promise<any>;
   signUp({
     name,

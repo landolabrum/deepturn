@@ -64,10 +64,10 @@ export default class MemberService
     // Encrypt the login data
     const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
-    const encryptedLoginData = encryptString(JSON.stringify({ email, password, code, user_agent }), ENCRYPTION_KEY);
+    const encryptedLoginData = encryptString(JSON.stringify({ email, password, code, user_agent, merchant }), ENCRYPTION_KEY);
     const memberJwt:any = await timeoutPromise(
       await this.post<{}, any>(
-        "usage/auth/sign-in",
+        "usage/auth/login",
         { data: encryptedLoginData },
       ),
       TIMEOUT // 5 seconds timeout

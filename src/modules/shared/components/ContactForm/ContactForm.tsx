@@ -75,7 +75,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
 
   const handleDisabled = async (updatedFields: IFormField[]) => {
     if (!Array.isArray(updatedFields)) {
-      console.error('updatedFields is not an array', updatedFields);
+      // console.error('updatedFields is not an array', updatedFields);
       return; // Exit the function or handle this case as appropriate
     }
     const isComplete = updatedFields.map((field: IFormField) => {
@@ -131,7 +131,7 @@ const handleUser = async () => {
     <>
       <style jsx>{styles}</style>
       <div className='contact-form'>
-        {JSON.stringify(fields)}
+        {/* {JSON.stringify(fields)} */}
         {title && <div className='contact-form__title'>{title}</div>}
         <UiForm
           fields={fields}

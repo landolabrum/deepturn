@@ -4,14 +4,13 @@ const devEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: false,
   merchant:{
-    // mid: "ah",
+    // mid: "nirv1",
+    // name:"nirvana-energy",
+    url: 'http://localhost:3000',
+       // mid: "ah",
     // name:"aire-hotel",
     mid: "mb1",
     name:"deepturn",
-    // mid: "nirv1",
-    // name:"nirvana-energy",
-
-    url: 'http://localhost:3000',
   },
   legacyJwtCookie: {
     authToken: "auth-token",

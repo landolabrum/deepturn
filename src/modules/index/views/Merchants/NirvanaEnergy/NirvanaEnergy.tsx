@@ -38,24 +38,6 @@ const NirvanaEnergy = () => {
   return (
     < >
       <style jsx>{styles}</style>
-      {/* 
-      <Image
-        // fill
-        width={900}
-        height={900}
-        style={{
-          position: "fixed",
-          top: "0",
-          left: "0",
-          width: 'auto',
-          zIndex: '-1',
-          height: '100%',
-          filter: 'brightness(.66) blur(3px)'
-        }}
-        objectFit="cover"
-        src="/merchant/nirv1/backgrounds/dirt-road.jpeg"
-        // src="/merchant/nirv1/backgrounds/redrock-wall.jpeg"
-        alt="bg" /> */}
       <div id='nirvana-index'
         className='nirvana-index'
       >

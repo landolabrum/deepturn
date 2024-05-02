@@ -34,7 +34,7 @@ const Deepturn: React.FC = () => {
           <UiMap
             vessels={[
               { id: 1, name: "Vessel 1", coordinates: [loc?.lng, loc?.lat], path: [] },
-              // { id: 2, name: "Vessel 2", coordinates: [-74.1, 40.8], path: [] },
+              { id: 2, name: "Vessel 2", coordinates: [-74.1, 40.8], path: [] },
             ]}
           />
           {/* <TJSCube

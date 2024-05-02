@@ -120,7 +120,9 @@ export class UiIcon extends React.Component<Props, State> {
     return (
       <>
         <style jsx>{styles}</style>
-        <div className={classes} onClick={onClick} style={combinedStyles} data-testid={this.props.icon ? `${this.props.icon}-icon` : undefined}>
+        <div className={classes} onClick={onClick} style={combinedStyles} 
+        // data-testid={this.props.icon ? `${this.props.icon}-icon` : undefined}
+        >
           <div dangerouslySetInnerHTML={{ __html: innerHtml }} />
           {badgeElement}
         </div>

@@ -32,7 +32,7 @@ export default function BreadCrumbs({ defaultLink, links }: BreadCrumbsProps) {
     <style jsx >{styles}</style>
     <div className="breadcrumbs">
       <div className="crumb" onClick={() => defaultLink?.href&& handleClick(defaultLink.href) || handleClick( "/")}>
-        {defaultLink?.label || keyStringConverter(String(environment.merchant.name))} <UiIcon icon="fa-chevron-right" />
+        {/* {defaultLink?.label || environment.merchant.name && keyStringConverter(String(environment.merchant.name))} <UiIcon icon="fa-chevron-right" /> */}
       </div>
       {links && width > 1100 && links.map((link, key) => {
         return <div key={key} onClick={() => key + 1 !== links.length && handleClick(link.href ? link.href : "/" + link.label)} className={`crumb ${key === linkLen ? "active" : ""}`}>

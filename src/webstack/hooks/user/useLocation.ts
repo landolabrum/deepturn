@@ -79,6 +79,7 @@ const useLocation = (): IUseLocation | undefined => {
     };
 
     useEffect(() => {
+        if(location) alert(JSON.stringify(location))
         initializeLocation();
     }, []);
 

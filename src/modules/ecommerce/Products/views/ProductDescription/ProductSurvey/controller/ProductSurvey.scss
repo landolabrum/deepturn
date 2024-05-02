@@ -83,29 +83,32 @@
     color: var(--gray-30);
     height: max-content;
     overflow: hidden; 
-    @keyframes intro {
-        0% { 
-            opacity: 0.6;
-            filter: blur(var(--s-4));
-            transform: scale(200%);
-            letter-spacing: calc(40 * var(--s-padding));
-            font-size: 30vw;
-            line-height: 66vh;
-        }
-        90% { opacity: 1; filter: blur(10px);} 
-        100% {
-            opacity: .7;
-            filter: unset; 
-        }
-    }
+    // @keyframes intro {
+    //     0% { 
+    //         opacity: 0.6;
+    //         filter: blur(var(--s-4));
+    //         transform: scale(200%);
+    //         letter-spacing: calc(40 * var(--s-padding));
+    //         font-size: 30vw;
+    //         line-height: 66vh;
+    //     }
+    //     90% { opacity: 1; filter: blur(10px);} 
+    //     100% {
+    //         opacity: .7;
+    //         filter: unset; 
+    //     }
+    // }
     @keyframes hover {
         0% {
             background-position: bottom;
             -webkit-text-fill-color: var(--primary-o);
             opacity: .7;
             border-color: var(--primary);
+            border-width: 0px;
         }
         100% {
+            border-style: solid;
+            border-width: 2px;
             border-color: var(--primary-lite);
             background-position: top;
             opacity: 1;
@@ -136,13 +139,15 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: var(--primary-o);
         text-align: center;
-        animation: intro 2.6s forwards ease-in-out;
-        transition: all 1.5s ease-in-out;
         height: max-content;
+        background-position: bottom;
+        -webkit-text-fill-color: var(--primary-o);
+        opacity: .7;
+        border-color: var(--primary);
+        border-width: 0px;
         &:hover {
-            border-style: solid;
-            border-width: var(--s-9);
-            animation: hover 5s infinite alternate;
+            animation-play-state: running;
+            animation: hover 1s forwards ease-in-out;
         }
         //     // background-clip: unset;
         //     // -webkit-background-clip: unset;
