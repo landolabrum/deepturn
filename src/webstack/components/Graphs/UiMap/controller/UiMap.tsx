@@ -25,7 +25,7 @@ const UiMap = ({ vessels }: any) => {
         if (!mapContainer.current) return;
         const config: any = {
             container: mapContainer.current,
-            style: 'mapbox://styles/landolabrum/clvu938ig01li01rjfx5m69sm',
+            style: 'mapbox://styles/landolabrum/clvu95nn901lc01q14qdf7w97',
             projection: 'globe',
             center: [0, 0],
             zoom: 1,
