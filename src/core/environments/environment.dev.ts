@@ -7,7 +7,7 @@ const devEnvironment: IEnvironment = {
     // mid: "nirv1",
     // name:"nirvana-energy",
     url: 'http://localhost:3000',
-       // mid: "ah",
+    // mid: "ah1",
     // name:"aire-hotel",
     mid: "mb1",
     name:"deepturn",

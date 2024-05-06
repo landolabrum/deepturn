@@ -1,5 +1,6 @@
+// functions/mapRotate.ts
 
-const secondsPerRevolution = 720;
+const secondsPerRevolution = 180;
 const maxSpinZoom = 5;
 const slowSpinZoom = 3;
 
@@ -19,6 +20,9 @@ function mapRotate(map: any) {
         center.lng -= distancePerSecond;
         map.easeTo({ center, duration: 1000, easing: (n: number) => n });
     }
+}
+
+function setUpInteractionListeners(map: any) {
     map.on("mousedown", () => {
         userInteracting = true;
     });
@@ -27,4 +31,5 @@ function mapRotate(map: any) {
         userInteracting = false;
     });
 }
-export default mapRotate;
+
+export { mapRotate, setUpInteractionListeners };

@@ -1,60 +1,75 @@
-"use client";
-
-// https://github.com/louisyoong/mapbox-react/blob/main/src/components/Map.tsx
 import React, { useEffect, useRef } from "react";
-import mapboxgl, { MapboxOptions } from "mapbox-gl";
+import mapboxgl from "mapbox-gl";
 import styles from "./UiMap.scss";
 import useLocation from "@webstack/hooks/user/useLocation";
-import IMap from "../models/IUiMap";
-import setMarkers from '../functions/setMarkers';
-import maps from "../data/maps";
-import mapRotate from "../functions/mapRotate";
+import setPoints from '../functions/setPoints';
+import { mapRotate, setUpInteractionListeners } from "../functions/mapRotate";
+import token from "../data/token";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoibGFuZG9sYWJydW0iLCJhIjoiY2xnMDZ1aGVsMHJ5MzNsdGF3aHZhM3dtbyJ9.UihOXtkEeRk5tQDgDK8cLg";
+// Ensure you have set your Mapbox access token in your environment variables
 
+mapboxgl.accessToken = token;
 
+const UiMap = ({ vessels }: any) => {
+    const mapContainer = useRef(null);
 
-const UiMap: React.FC<IMap> = (props: IMap) => {
-  const { vessels } = props;
-  const mapContainer = useRef<any>(null);
+    const initializeMap = (map: any) => {
+        if (!map) return;
+        setPoints(map, vessels);
+        mapRotate(map);
+        map.on("moveend", () => mapRotate(map));
+        setUpInteractionListeners(map); // Setting up interaction listeners right after initializing the map
+    };
 
-  const userLocation = useLocation();
-  const defaultConfig = maps[1];
+    useEffect(() => {
+        if (!mapContainer.current) return;
+        const config: any = {
+            container: mapContainer.current,
+            style: 'mapbox://styles/landolabrum/clvu938ig01li01rjfx5m69sm',
+            projection: 'globe',
+            center: [0, 0],
+            zoom: 1,
+            minZoom: 1,
+            antialias: true,
+            bearing: 26.2
+        }
+        const map = new mapboxgl.Map(config);
+        initializeMap(map);
 
-  const initializeMap = (map:any) =>{
-    if(!map)return;
-    setMarkers(map, vessels);
-    mapRotate(map);
-    map.on("moveend", () => mapRotate(map));
-  }
+        map.on('load', () => {
+            //   map.setFog({
+            //     color: 'rgba(0,0,0,1)', // black background
+            //     'high-color': 'rgba(0,0,0,0)', // transitioning to clear
+            //     'horizon-blend': 0.1,
+            //     'space-color': '#1d1d1d01',
+            //     'star-intensity': 0.3
+            //   });
 
-  useEffect(() => {
-    if (mapContainer.current && userLocation) {
+            // Example to add a custom grid layer, needs custom implementation
+            //   map.addLayer({
+            //     'id': 'custom-grid',
+            //     'type': 'custom', // You would need to define this type
+            //     'renderingMode': '3d', // 3d layer
+            //     'onAdd': function (map, gl) {
+            //       // Custom shader or grid drawing logic goes here
+            //     },
+            //     'render': function (gl, matrix) {
+            //       // Drawing code for the grid
+            //     }
+            //   });
+        });
 
-      // REMOVE EXISTING MAPS
-      const mapChildren = mapContainer.current?.children;
-      if(mapChildren.length)Object.entries(mapChildren).map(([key,child])=>mapContainer.current.removeChild(child));
+        return () => {
+            map.remove();
+        };
+    }, [initializeMap]);
 
-      
-      const mapBoxOptions: MapboxOptions = {
-        container: mapContainer.current,
-        ...defaultConfig,
-        center: userLocation
-      };
-      const map = new mapboxgl.Map(mapBoxOptions);
-      initializeMap(map);
-    }
-  }, [userLocation, mapContainer?.current]);
-
-  return (
-    <>
-      <style jsx>{styles}</style>
-      <div className='ui-map'>
-        <div className='map-container' ref={mapContainer} />
-      </div>
-    </>
-  );
+    return (
+        <>
+            <style jsx>{styles}</style>
+            <div className='map-container' ref={mapContainer} />
+        </>
+    );
 };
 
-export default UiMap; 
+export default UiMap;

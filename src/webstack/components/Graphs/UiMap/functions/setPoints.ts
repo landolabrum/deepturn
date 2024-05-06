@@ -9,6 +9,7 @@ const setMarkers = (map: any, markers?: IMapMarker[]) => {
   if (!map || !markers) return;
 
   map.on('style.load', () => {
+    
     map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/cat.png', (error: any, image: any) => {
       if (error) throw error;
       map.addImage('custom-marker', image);
@@ -73,6 +74,8 @@ const setMarkers = (map: any, markers?: IMapMarker[]) => {
             'line-width': 2,
           },
         });
+              // Add water dots layer
+
       });
 
       setInterval(() => {

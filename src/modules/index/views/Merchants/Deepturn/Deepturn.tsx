@@ -16,15 +16,15 @@ const Deepturn: React.FC = () => {
   
 
   useEffect(() => {
-    if(!loc && !showLoader){
-      setLoader({active:true,
-        body:"loading map"
-        // children: <h1>Hello World!</h1>
-      });
-    }else if(loc && showLoader)setLoader({active:false});
+    // if(!loc && !showLoader){
+    //   setLoader({active:true,
+    //     body:"loading map"
+    //     // children: <h1>Hello World!</h1>
+    //   });
+    // }else if(showLoader)setLoader({active:false});
   }, [showLoader, setLoader, loc]);
 
-  if (!loc) return <></>;
+  // if (!loc) return <></>;
   return (
     <>
       <style jsx>{styles}</style>
@@ -32,10 +32,10 @@ const Deepturn: React.FC = () => {
         <div className="background-video">
           {/* <img src="/assets/backgrounds/lava1.jpeg" /> */}
           <UiMap
-            vessels={[
-              { id: 1, name: "Vessel 1", coordinates: [loc?.lng, loc?.lat], path: [] },
-              { id: 2, name: "Vessel 2", coordinates: [-74.1, 40.8], path: [] },
-            ]}
+            // vessels={[
+            //   { id: 1, name: "Vessel 1", coordinates: [loc?.lng, loc?.lat], path: [] },
+            //   { id: 2, name: "Vessel 2", coordinates: [-74.1, 40.8], path: [] },
+            // ]}
           />
           {/* <TJSCube
             icon={{

@@ -13,7 +13,6 @@ import environment from "~/src/environment";
 import useNavMobile from "../hooks/useNavBreak"; // Ensure this path is correct
 import useScroll from "@webstack/hooks/useScroll";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
-import { Router } from "next/router";
 
 
 
@@ -54,12 +53,9 @@ const isMerchant = (route:IRoute) => route.label === keyStringConverter(String(e
   const handleSelect = (route: IRoute | string) => {
     const _route: IRoute = typeof route === 'string' ? { href: route } : route;
 
-    // const curr = routes && routes.find((r: any) => r.href === _route?.href);
-    // console.log('[ handleSelect ]', curr)
-
     if (_route?.href) {
       explicitRouter(_route);
-      setToggled(_route.label || null); // Set the route as toggled when selected
+      setToggled(_route.label || null);
     } else if (_route?.modal && !isModalOpen) {
       openModal(modals[_route.modal]);
     }
@@ -69,7 +65,8 @@ const isMerchant = (route:IRoute) => route.label === keyStringConverter(String(e
   const handleTrigger = () => {
     if (currentRoutes !== undefined) openModal({
       title:<>
-        <h1 onClick={()=>{
+        <h1
+          onClick={()=>{
           handleMobileClick({href:'/'})
           }}><UiIcon icon={`${environment.merchant.name}-logo`}/>{environment.merchant.name && keyStringConverter(environment.merchant.name)}</h1>
         </>,
@@ -105,7 +102,9 @@ const isMerchant = (route:IRoute) => route.label === keyStringConverter(String(e
   return (
     <>
       <style jsx>{styles}</style>
-      <nav id="nav-bar" className={`navbar__container ${isMobile ? 'navbar__container--hide' : ''}`} >
+      <nav id="nav-bar" 
+      style={{display: 'none'}} 
+      className={`navbar__container ${isMobile ? 'navbar__container--hide' : ''}`} >
         <div className='navbar' ref={navRef}>
           <div className={`navbar__trigger${scroll > 90 ? ' navbar__trigger--o' : ''}`}>
             <UiIcon

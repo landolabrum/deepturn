@@ -15,7 +15,9 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }):React
     return (
         <>
             <style jsx>{styles}</style>
-            <div className='navbar__mobile'>
+            <div 
+              style={{display: 'none'}} 
+            className='navbar__mobile'>
                 {onBack && <div className='navbar__mobile--actions'>
                     <div>
                         <UiButton

@@ -1,3 +1,24 @@
+
+$a: #ff0000;
+$b: #20202090;
+$c: #38005d30;
+$d: #0000ff50;
+$e: #462300;
+@keyframes space {
+  0%, 100% {
+  background: 
+  linear-gradient(217deg, $a, $b 70.71%),
+  linear-gradient(127deg, $c, $d 70.71%),
+  linear-gradient(336deg, $c, $e 70.71%);
+  }
+
+  50% {
+    background: 
+    linear-gradient(127deg, $c, $d 70.71%),
+    linear-gradient(336deg, $c, $e 70.71%),
+    linear-gradient(217deg, $a, $b 70.71%);
+  }
+}
 .p-fix{
   position: absolute;
   bottom: 0;
@@ -6,6 +27,12 @@
   right: 0;
   height: 100%;
   width: 100%;
+  background-color: #000;
+  // animation: space 5s infinite ease-in-out;
+  // background: 
+  // linear-gradient(217deg, $a, $b 70.71%),
+  // linear-gradient(127deg, $c, $d 70.71%),
+  // linear-gradient(336deg, $c, $e 70.71%);
   
 }
 @import url("https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css");
