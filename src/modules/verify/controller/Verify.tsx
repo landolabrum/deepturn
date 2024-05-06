@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Verify.scss';
 import { useRouter } from 'next/router';
 import VerifyEmail from '../views/VerifyEmail/VerifyEmail';
-import SignInView from '../../authentication/views/SignIn/views/SignInView/SignInView';
+import SignInView from '../../authentication/views/Login/views/LoginView/LoginView';
 import VerifyAccount from '../views/VerifyAccount/VerifyAccount';
 import VerifyPayment from '../views/VerifyPayment/VerifyPayment';
 import VerifyPassword from '../views/VerifyPassword/VerifyPassword';

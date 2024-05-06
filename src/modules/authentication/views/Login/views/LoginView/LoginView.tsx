@@ -6,10 +6,10 @@ import { useUser } from "~/src/core/authentication/hooks/useUser";
 import { getService } from "@webstack/common";
 import IMemberService from "~/src/core/services/MemberService/IMemberService";
 import useUserAgent from "~/src/core/authentication/hooks/useUserAgent";
-import styles from "./SignInView.scss";
+import styles from "./LoginView.scss";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
-import { ISignIn } from "../../controller/SignIn";
+import { ILogin } from "../../controller/Login";
 import environment from "~/src/environment";
 
 const DEFAULT_RESPONSE = { response: "", message: "" };
@@ -24,7 +24,7 @@ const authResponseMessages: any = {
   default: "Sorry, an unexpected error occurred. Our team has been notified and we'll work to resolve it as soon as possible.",
 };
 
-const SignInView: React.FC<ISignIn> = ({ email, onSuccess }: ISignIn) => {
+const SignInView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
   const defaultCredentials = {
     email: "",
     password: "",

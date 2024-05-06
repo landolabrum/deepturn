@@ -1,7 +1,7 @@
 // Relative Path: ./ResetPassword.tsx
 import React, { useState } from 'react';
 import styles from './ResetPassword.scss';
-import { ISignIn } from '../../controller/SignIn';
+import { ILogin } from '../../controller/Login';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { getService } from '@webstack/common';
@@ -11,7 +11,7 @@ import { findField } from '@webstack/components/UiForm/functions/formFieldFuncti
 
 // Remember to create a sibling SCSS file with the same name as this component
 
-const ResetPassword: React.FC<ISignIn> = ({ email }) => {
+const ResetPassword: React.FC<ILogin> = ({ email }) => {
     const MemberService = getService<IMemberService>("IMemberService");
     const [fields, setFields] = useState<IFormField[]>([
         { name: 'email', value: email }

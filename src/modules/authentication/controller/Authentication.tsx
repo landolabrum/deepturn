@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SignInView from "../views/SignIn/views/SignInView/SignInView";
+import SignInView from "../views/Login/views/LoginView/LoginView";
 import styles from "./Authentication.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import SignUp from "../views/SignUp/SignUp";

@@ -6,7 +6,8 @@ import { useUser } from '~/src/core/authentication/hooks/useUser';
 
 import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
 import { useGuest } from '~/src/core/authentication/hooks/useGuest';
-import SignIn from '~/src/modules/authentication/views/SignIn/controller/SignIn';
+
+import Login from '~/src/modules/authentication/views/Login/controller/Login';
 import UserContext from '~/src/models/UserContext';
 import Collect from '../views/Collect/controller/Collect';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
@@ -59,7 +60,7 @@ const Checkout = ():React.JSX.Element => {
                 onSuccess={handleSignUp}
             />),
         'existing': (
-            <SignIn onSuccess={handleSignUp} title={`Account for ${selectedUser?.email}, exists. please sign in.`} email={selectedUser?.email} />
+            <Login onSuccess={handleSignUp} title={`Account for ${selectedUser?.email}, exists. please sign in.`} email={selectedUser?.email} />
         ),
         'collect': (
             <Collect

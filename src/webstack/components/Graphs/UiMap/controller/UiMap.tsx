@@ -62,7 +62,7 @@ const UiMap = ({ vessels }: any) => {
         return () => {
             map.remove();
         };
-    }, [initializeMap]);
+    }, []);
 
     return (
         <>

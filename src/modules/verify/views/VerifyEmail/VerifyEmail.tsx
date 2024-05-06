@@ -7,7 +7,7 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
-import SignIn from '~/src/modules/authentication/views/SignIn/controller/SignIn';
+import Login from '~/src/modules/authentication/views/Login/controller/Login';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 
@@ -80,12 +80,12 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
         customer.metadata.user.password = newPassword;
         const updateMember = await MemberService.modifyCustomer(customer);
         if (updateMember){
-            handleSignInModal();
+            handleLoginModal();
             onSuccess(updateMember.email);
         }
     }
-    const handleSignInModal = () =>{
-       openModal(<SignIn email={state.customer.email} />)
+    const handleLoginModal = () =>{
+       openModal(<Login email={state.customer.email} />)
     }
     useEffect(() => {
         handleVerify()
@@ -109,7 +109,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
                     }
 
                     {state.status === 'verification_success' && state.customer.email && <div className='verify-email__content__sign-in'>
-                    <UiButton onClick={handleSignInModal}>Login</UiButton>
+                    <UiButton onClick={handleLoginModal}>Login</UiButton>
 
                     </div>}
                 </div>

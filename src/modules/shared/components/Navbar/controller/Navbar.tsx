@@ -103,7 +103,7 @@ const isMerchant = (route:IRoute) => route.label === keyStringConverter(String(e
     <>
       <style jsx>{styles}</style>
       <nav id="nav-bar" 
-      style={{display: 'none'}} 
+      // style={{display: 'none'}} 
       className={`navbar__container ${isMobile ? 'navbar__container--hide' : ''}`} >
         <div className='navbar' ref={navRef}>
           <div className={`navbar__trigger${scroll > 90 ? ' navbar__trigger--o' : ''}`}>
