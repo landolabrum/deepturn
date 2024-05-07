@@ -64,7 +64,7 @@ const ColorPicker = ({ hex, onChange }: IColorPicker) => {
   };
 const handleInput = (e: any)=>{
   const {name, value}=e.target;
-  console.log('[ handleInput ]',{name,value})
+  // console.log('[ handleInput ]',{name,value})
   setColor(`#${value}`);
   value.length === 6 && debouncedOnChange(value);
 };

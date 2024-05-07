@@ -1,73 +1,69 @@
-import React, { useEffect, useRef } from "react";
-import mapboxgl from "mapbox-gl";
-import styles from "./UiMap.scss";
-import useLocation from "@webstack/hooks/user/useLocation";
-import setPoints from '../functions/setPoints';
-import { mapRotate, setUpInteractionListeners } from "../functions/mapRotate";
-import token from "../data/token";
+import React, { useEffect, useRef, useState } from "react";
+import mapboxgl, { Map as MapboxMap } from "mapbox-gl";
 
-// Ensure you have set your Mapbox access token in your environment variables
+import styles from "./UiMap.scss";
+import token from "../data/token";
+import useWindow from "@webstack/hooks/useWindow";
+import useElement from "@webstack/hooks/useElement";
+import addVessels, { Vessel } from "../functions/mapVessels";
+import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import mapVessels from "../data/mapVessels";
+import { mapRotate, setUpInteractionListeners } from "../functions/mapRotate";
 
 mapboxgl.accessToken = token;
 
-const UiMap = ({ vessels }: any) => {
-    const mapContainer = useRef(null);
+const UiMap = ({ vessels }: { vessels?: Vessel[] }) => {
+    const { openModal } = useModal();
+    const mapContainer = useRef<HTMLDivElement>(null);
+    const [currentLocation, setCurrentLocation]=useState();
+    const { width } = useWindow();
+    const { remove } = useElement();
 
-    const initializeMap = (map: any) => {
-        if (!map) return;
-        setPoints(map, vessels);
-        mapRotate(map);
-        map.on("moveend", () => mapRotate(map));
-        setUpInteractionListeners(map); // Setting up interaction listeners right after initializing the map
+    const handleVesselClick = (vessel: Vessel) => {
+        console.log(vessel);
+        openModal({variant:'fullscreen',children:<ol>{Object.entries(vessel).map(([a,b])=><li><strong>{JSON.stringify(a)}</strong>:{JSON.stringify(b)}</li>)}</ol>});
     };
+    const initializeMap = (map: MapboxMap) => {
+        if (!map) return;
+        addVessels(map, vessels || mapVessels, handleVesselClick);
+        mapRotate(map); // This now handles setting up interaction listeners internally
+    };
+    
+
+    const setZoomLevel = () => width > 1260 ? 2 : 0.9;
 
     useEffect(() => {
         if (!mapContainer.current) return;
-        const config: any = {
+
+        const config: mapboxgl.MapboxOptions = {
             container: mapContainer.current,
             style: 'mapbox://styles/landolabrum/clvu95nn901lc01q14qdf7w97',
-            projection: 'globe',
+            projection: { name: "globe" },
             center: [0, 0],
-            zoom: 1,
-            minZoom: 1,
-            antialias: true,
-            bearing: 26.2
-        }
+            zoom: setZoomLevel(),
+            antialias: true
+        };
+
         const map = new mapboxgl.Map(config);
         initializeMap(map);
 
-        map.on('load', () => {
-            //   map.setFog({
-            //     color: 'rgba(0,0,0,1)', // black background
-            //     'high-color': 'rgba(0,0,0,0)', // transitioning to clear
-            //     'horizon-blend': 0.1,
-            //     'space-color': '#1d1d1d01',
-            //     'star-intensity': 0.3
-            //   });
-
-            // Example to add a custom grid layer, needs custom implementation
-            //   map.addLayer({
-            //     'id': 'custom-grid',
-            //     'type': 'custom', // You would need to define this type
-            //     'renderingMode': '3d', // 3d layer
-            //     'onAdd': function (map, gl) {
-            //       // Custom shader or grid drawing logic goes here
-            //     },
-            //     'render': function (gl, matrix) {
-            //       // Drawing code for the grid
-            //     }
-            //   });
+        map.on('style.load', () => {
+            remove("mapboxgl-ctrl-logo");
+            remove("mapboxgl-canary");
+            remove("mapboxgl-ctrl");
         });
 
-        return () => {
-            map.remove();
-        };
-    }, []);
+        return () => map.remove();
+    }, [mapContainer, vessels, setZoomLevel]); // Ensure dependencies are correctly listed to avoid excessive re-renders
 
     return (
         <>
             <style jsx>{styles}</style>
-            <div className='map-container' ref={mapContainer} />
+            <div className='map-container'>
+                <div className='map' ref={mapContainer} />
+                <div className="menu"></div>
+                {/* <ol>{Object.entries(vessel).map(([a,b])=><li><strong>{JSON.stringify(a)}</strong>:{JSON.stringify(b)}</li>)}</ol> */}
+            </div>
         </>
     );
 };

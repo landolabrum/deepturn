@@ -25,11 +25,13 @@ const Index = () => {
   }
   // const campaign = useCampaign();
   useEffect(() => {
+    const mid = environment.merchant.mid;
+// console.log(environment)
+// 
     if (!view) {
-        setView(environment.merchant.mid);
+        setView(mid);
     }
 }, [view]);
-
 
 return (
     <>

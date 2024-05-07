@@ -46,7 +46,11 @@ a {
   //   @media(max-width: 1100px) {
   //   }
   // }
-
+  &__welcome-modal{
+    width: 100%;
+    @extend .d-flex-col;
+    gap:var(--s-9);
+  }
   &__email-verify {
     font-size: var(--s-5);
     min-height: 500px;

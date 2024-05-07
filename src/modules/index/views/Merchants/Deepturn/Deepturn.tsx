@@ -30,7 +30,7 @@ const Deepturn: React.FC = () => {
       <style jsx>{styles}</style>
       <div className='mbone'>
         <div className="background-video">
-          {/* <img src="/assets/backgrounds/lava1.jpeg" /> */}
+          <img src="/assets/backgrounds/lava1.jpeg" />
           <UiMap
             // vessels={[
             //   { id: 1, name: "Vessel 1", coordinates: [loc?.lng, loc?.lat], path: [] },

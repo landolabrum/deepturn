@@ -1,39 +1,44 @@
 import { useState, useRef, useCallback } from 'react';
 
 interface IElement {
-  // Define the properties of your element here
   id: string;
   type: string;
   content: string;
-  // ... other properties
+  className?: string;  // Optional property to store class name
 }
-// The useElement component is a custom React hook designed to manage and manipulate an element's state within a React application. This hook provides functionalities to add, modify, and remove an element, making it a versatile tool for dynamic content management.
+
+// The useElement component is a custom React hook designed to manage and manipulate an element's state within a React application.
 const useElement = () => {
   const [element, setElementState] = useState<IElement | null>(null);
   const elementRef = useRef<HTMLElement | null>(null);
 
   const modify = useCallback((modification: Partial<IElement>) => {
     if (elementRef.current && element) {
-      // Update the element properties based on the modification
       const updatedElement = { ...element, ...modification };
       setElementState(updatedElement);
-      // Perform any additional DOM updates if necessary
       console.log('Modifying element:', updatedElement);
     }
   }, [element]);
 
-  const remove = useCallback(() => {
-    if (elementRef.current) {
+  // Updated remove function to support removing by className
+  const remove = useCallback((className?: string) => {
+    if (className) {
+      // Remove all elements that contain the className
+      document.querySelectorAll(`.${className}`).forEach(el => {
+        el.remove();
+      });
+      // console.log(`Removed all elements with class: ${className}`);
+    } else if (elementRef.current) {
+      // Default behavior to remove the single managed element
       elementRef.current.remove();
       setElementState(null);
-      console.log('Element removed');
+      // console.log('Element removed');
     }
   }, []);
 
   const add = useCallback((newElement: IElement) => {
-    // Logic to add a new element
     setElementState(newElement);
-    console.log('Adding element:', newElement);
+    // console.log('Adding element:', newElement);
   }, []);
 
   return {

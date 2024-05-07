@@ -39,9 +39,11 @@
         height: 100%;
         margin-top: var(--s-element);
         &__image {
+            
             position: relative; // For Image fill layout to work
             margin: auto;
             aspect-ratio: 1;
+            width: var(--s-padding-width);
             height: 100%;
             @media(max-width: 900px){
                 width: var(--s-padding-width); // Image container fills its parent

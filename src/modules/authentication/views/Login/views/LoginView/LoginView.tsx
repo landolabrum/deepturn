@@ -84,7 +84,7 @@ const SignInView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
   useEffect(() => {
     if (email) setCredentials({ ...credentials, email: email });
     setIsSubmitting(false);
-  }, [userResponse, setCredentials, Boolean(credentials == defaultCredentials)]);
+  }, [userResponse, handleSignIn, setCredentials, Boolean(credentials == defaultCredentials)]);
   return (
     <>
       <style jsx>{styles}</style>

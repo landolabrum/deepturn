@@ -21,16 +21,16 @@ interface IContactFormProps {
 const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, title='contact'}) => {
   const initialContactFields = [
     { name: 'firstName', label: 'First Name', width: "50%", type: 'text', placeholder: 'First Name', required: true, 
-    // value:mockDateTime(true)
+    value:"Test"
   },
     { name: 'lastName', label: 'Last Name', width: "50%",  type: 'text', placeholder: 'Last Name', required: true
-    // , value:mockDateTime()
+    , value:`${mockDateTime()} | ${mockDateTime(true)}`
   },
     { name: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com', required: true
-    // , value:'larzrandana@gmail.com'
+    , value:'larzrandana@gmail.com'
   },
     { name: 'phone', label: 'Phone', type: 'tel', placeholder: '1 (555) 555-5555', required: true, 
-    // value:'4344343433'
+    value:'4344343433'
   },
     { name: 'address', label: 'Address', type: 'text', placeholder: 'Your Address', required: true },
   ];

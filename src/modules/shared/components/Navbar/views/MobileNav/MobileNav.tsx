@@ -16,7 +16,7 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }):React
         <>
             <style jsx>{styles}</style>
             <div 
-              style={{display: 'none'}} 
+            //   style={{display: 'none'}} 
             className='navbar__mobile'>
                 {onBack && <div className='navbar__mobile--actions'>
                     <div>
@@ -29,14 +29,15 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack, }):React
                 <div className='navbar__mobile--content'>
                     {routes && routes.reverse().map((route: IRoute, key: number) => 
                        {
-                        if(route?.hide)return<></>;
-                        return (
-                            <span key={key}> 
+                           if(route?.hide)return<></>;
+                           return (
+                               <span key={key}>
                                 <UiButton
                                     onClick={() => handleClick(route)}
                                     traits={{beforeIcon:route?.icon}}
                                     // variant='inherit'
-                                >
+                                    >
+
                                     {route.label}{route?.href =='/cart' ?'cart':''}
                                 </UiButton>
                             </span>

@@ -115,6 +115,7 @@ const Header: React.FC = () => {
             <div className="header-left">
               <BreadCrumbs links={headerState?.breadcrumbs} />
               <div className="header-title" onClick={handleTitleClick}>
+                {/* {environment.merchant.name}-logo */}
                 {width < 1100 && <UiIcon icon={`${environment.merchant.name}-logo`} />}
                 {headerState?.title}</div>
             </div>

@@ -1,16 +1,28 @@
 import { IEnvironment } from "./environment.interface";
-const serverUrl ="http://localhost:8000"
+const serverUrl = "http://10.1.10.10:8000";
+
+const merchants:any = {
+  mb1: {
+    mid: "mb1",
+    name: "deepturn",
+  },
+  ah1: {
+    mid: "ah1",
+    name: "aire-hotel",
+  },
+  nirv1: {
+    mid: "nirv1",
+    name: "nirvana-energy",
+  }
+}
+
 const devEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: false,
-  merchant:{
-    // mid: "nirv1",
-    // name:"nirvana-energy",
+  merchant: {
+    ...merchants.nirv1,
     url: 'http://localhost:3000',
-    // mid: "ah1",
-    // name:"aire-hotel",
-    mid: "mb1",
-    name:"deepturn",
+
   },
   legacyJwtCookie: {
     authToken: "auth-token",

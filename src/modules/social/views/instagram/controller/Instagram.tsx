@@ -13,6 +13,7 @@ const Instagram: React.FC<any> = ({ current }: { current?: string }) => {
     const views = {
       signin: <InstagramSignIn />,
     };
+    const viewProps = {views,currentView: view};
     return (
         <>
             <style jsx>{styles}</style>
@@ -22,7 +23,10 @@ const Instagram: React.FC<any> = ({ current }: { current?: string }) => {
                 </div>
                 <div className='instagram-body'>
                 <div className='instagram-body--view'>
-                {UiViewLayout({views,currentView: view})}
+                    <UiViewLayout 
+                        {...viewProps}
+                    />
+                {/* {UiViewLayout({views,currentView: view})} */}
                 </div>
                 </div>
             </div>

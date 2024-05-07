@@ -48,18 +48,27 @@ const Authentication: React.FC<any> = (props: any) => {
     setView('sign-in');
     setNewCustomerEmail(response.email)
   }
-  const handleSignIn = (response:any)=>{
-    if(response?.id){
-      openModal({ confirm: {
-        title: `Welcome, ${response?.name}`,
-        statements: [
-          { label: 'go to account', onClick: ()=>router.push('/profile') },
-          { label: 'close', onClick: closeModal }
-        ]
-      }})
+  const handleSignIn = (user: any) => {
+    if (user?.id) {
+      const WelcomeModalContent = ({ user, onProfileClick, onClose }:any) => (
+        <>      <style jsx>{styles}</style>
+<div className='authentication__welcome-modal'>
+            <h1>Welcome, {user.name}</h1>
+            <UiButton onClick={onProfileClick}>Go to account</UiButton>
+            <UiButton onClick={onClose}>Close</UiButton>
+            </div>
+        </>
+    );
+    
+    // Usage within a component
+    openModal({
+        title: 'User Details',
+        children: <WelcomeModalContent user={user} onProfileClick={() => router.push('/profile')} onClose={closeModal} />
+    });
     }
-    console.log('[ handleSignIn ]: ', response)
-  }
+    console.log('[handleSignIn]:', user);
+};
+
 const [notif,setNotification]=useNotification();
   useEffect(() => {
     //  if(router.pathname == '/'){setNotification({
