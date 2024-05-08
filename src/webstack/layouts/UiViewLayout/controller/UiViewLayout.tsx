@@ -12,50 +12,47 @@ export type IView = {
 export interface IViewLayout {
     views?: IView;
     currentView?: string;
+    backBtn?: boolean;
     title?: string;
-    showActions?: boolean | string[]; // Can be a boolean or an array of strings
+    actions?: boolean | string[]; // Can be a boolean or an array of strings
     showTitle?: boolean;
     onViewChange?:(e:any)=>void;
 }
 
-const UiViewLayout: React.FC<IViewLayout> = ({ views, currentView, onViewChange: onChange, title, showActions = false, showTitle = false }) => {
-    const [view, setView] = useViewState(views, currentView);
-    const _title = showTitle && title ? keyStringConverter(title) : showTitle && view ? typeof view === 'string' && keyStringConverter(view) : '';
-    const handleView = (newView:any) =>{
-        if(!newView)return;
-        if(onChange)onChange(newView);
+const UiViewLayout: React.FC<IViewLayout> = ({
+    views,
+    currentView,
+    onViewChange: onChange,
+    title,
+    actions = false,
+    showTitle = false,
+    backBtn = false
+}) => {
+    const { view, setView, goBack, last } = useViewState(views, currentView);
+
+    const handleViewChange = (newView: string) => {
+        if (!newView) return;
         setView(newView);
-    }
-    useEffect(() => {}, [currentView]);
+        onChange?.(newView);
+    };
 
-    if (!views || !view) return (<UiLoader />);
+    if (!views || !view || view == 'loading') return <UiLoader />;
 
-    // Determine which actions to display based on showActions prop
-    const actionButtons = Array.isArray(showActions) ?
-        showActions.filter(action => Object.keys(views).includes(action)).map(action => (
-            <div key={action} className='ui-view-layout__actions-item'>
-                <UiButton disabled={action === currentView}  onClick={() => handleView(action)}>{action}</UiButton>
-            </div>
-        )) : [];
-            
     return (
         <>
             <style jsx>{styles}</style>
             <div className='ui-view-layout'>
-                {_title && (
-                    <div className='ui-view-layout__header'>
-                        <div className='ui-view-layout__header-title'>{_title}</div>
+                {backBtn && last !== currentView && (
+                    <div className='back-btn'>
+                        <div>
+                            <UiButton traits={{beforeIcon:"fa-chevron-left"}} variant='flat' onClick={goBack}>Back</UiButton>
+                        </div>
                     </div>
                 )}
-                {showActions && Array.isArray(showActions) && (
-                    <>
-                    <div className='ui-view-layout__actions'>
-                    <div className='current'>
-                        {currentView}
+                {showTitle && (
+                    <div className='ui-view-layout__header'>
+                        <div className='ui-view-layout__header-title'>{title}</div>
                     </div>
-                        {actionButtons}
-                    </div>
-                    </>
                 )}
                 <div className='ui-view-layout__view'>
                     {view || <div>View not found</div>}

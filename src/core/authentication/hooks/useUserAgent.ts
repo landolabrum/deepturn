@@ -6,11 +6,11 @@ const useUserAgent = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const navigator: any = window.navigator;
-      const userAgent = navigator.userAgent;
-      const userAgentData = navigator.userAgentData;
+      const user_agent = navigator.userAgent;
+      const user_agent_data = navigator.userAgentData;
 
       // Combine userAgent and userAgentData into one object
-      setUserAgentInfo({ userAgent, userAgentData });
+      setUserAgentInfo({ user_agent, user_agent_data });
     }
   }, []);
 

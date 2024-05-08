@@ -29,7 +29,6 @@ h4{
 .survey{
     width: 100%;
     position: relative;
-    height: calc(100vh - 280px);
 }
 .nirvana-index{
      @extend .d-flex;
@@ -40,8 +39,7 @@ h4{
          gap:var(--s-1);
          flex-direction: column;
          @extend .d-flex;
-         padding: var(--s-1) var(--s-padding)  var(--s-element);
-         width: var(--s-padding-width);
+         width: 100%;
          align-items: flex-start;
          .list{
             @extend .d-flex;

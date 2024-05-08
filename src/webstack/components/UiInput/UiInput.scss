@@ -32,6 +32,7 @@ input, textarea {
   //   }
   // }
 
+  -webkit-text-fill-color: inherit;
 
   // Override the autofilled input styles
   &:-webkit-autofill,
@@ -40,8 +41,9 @@ input, textarea {
   &:-webkit-autofill:active,
   &:-internal-autofill-selected
   {
+    color: inherit !important;
     background-color: transparent !important;
-    -webkit-text-fill-color: var(--primary) !important;
+    -webkit-text-fill-color: inherit;
     -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
     transition: background-color 5000s ease-in-out 0s !important;
   }

@@ -211,33 +211,35 @@
     &--input,
     &--textarea {
 
+        -webkit-text-fill-color: var(--gray-50);
         --ui-icon-color: var(--gray-50);
         background-color: var(--gray-60-o);
         border: solid 1px var(--gray-50-o) !important;
         box-shadow: inset 1px 1px 3px 2px var(--gray-80-o);
-
+        
         &:not( &--signature) {
             font-family: 'Game', sans-serif;
             font-style: italic;
         }
-
+        
         &:focus-within {
             &:not(.form-control__element--nav-item, .form-control__element--signature) {
                 border: solid 1px var(--gray-10) !important;
                 --ui-icon-color: var(--gray-10);
+                -webkit-text-fill-color: var(--gray-50);
                 color: var(--gray-10);
                 background-color: var(--gray-70);
             }
         }
-
+        
         &:not(&--signature, &--dark, &--disabled) {
             &:hover:not(&:focus-within) {
+                -webkit-text-fill-color: var(--gray-70);
                 // border-radius:0 0  var(--border-radius) var(--border-radius);
-
                 background-color: var(--gray-60);
                 font-weight: 500;
-                color: var(--gray-100);
-                --ui-icon-color: var(--gray-100);
+                color: var(--gray-70);
+                --ui-icon-color: var(--gray-70);
             }
         }
 

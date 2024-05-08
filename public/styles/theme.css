@@ -22,12 +22,7 @@
   src: url("/fonts/freight/freight-sans-bold.woff2") format("woff2"),url("/fonts/freight/freight-sans-bold.woff") format("woff")
 }
 
-@font-face {
-  font-family: FreightSans;
-  font-weight: 700;
-  font-style: italic;
-  src: url("/fonts/freight/freight-sans-bold-italic.woff2") format("woff2"),url("/fonts/freight/freight-sans-bold-italic.woff") format("woff")
-}
+
 
 @font-face {
   font-family: FreightSans;
@@ -192,8 +187,10 @@
 
   --s-padding: 20px;
   --s-padding-width: calc(100% - calc(var(--s-padding) * 2));
+
   --s-border-width: calc(100% - 2px);
   --s-border-padding-width: calc(var(--s-padding-width) - 2px);
+  --s-9-width:calc(100% - calc(var(--s-9) * 2));
   --s-padding-sm: calc(--s-padding * 2);
   --s-element-width: calc(100% - calc(var(var(--s-element))));
 

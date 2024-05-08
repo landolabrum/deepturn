@@ -1,4 +1,5 @@
 // Relative Path: ./MbOne.tsx
+import React, { useEffect } from 'react';
 import styles from "./NirvanaEnergy.scss";
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import HomeGridItem from '../../HomeGridItem/HomeGridItem';
@@ -6,6 +7,7 @@ import ProductSurvey from '~/src/pages/configure';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import Image from "next/image";
+import { useModal } from '@webstack/components/modal/contexts/modalContext';
 
 
 const NirvanaEnergyIcon = () => {
@@ -35,16 +37,15 @@ const NirvanaEnergy = () => {
     { manufacturer: 'GrowWatt', 'capacity': 10, 'output': 6 },
     { manufacturer: <NirvanaEnergyIcon />, 'capacity': 15, 'output': 12 },
   ];
+  const {openModal, isModalOpen}=useModal();
+
   return (
     < >
       <style jsx>{styles}</style>
       <div id='nirvana-index'
         className='nirvana-index'
       >
-        <div className='survey'>
-    
-          <ProductSurvey id='configure' startButton='configure your back up system' />
-        </div>
+      <ProductSurvey id='configure' startButton='configure your back up system' />
         <div className='nirvana-index__content'>
           <div className='list'>
             <h3>6 Key Questions to Enhance Your Solar System with Batteries</h3>

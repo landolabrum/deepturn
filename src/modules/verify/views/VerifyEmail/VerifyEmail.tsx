@@ -10,6 +10,7 @@ import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import Login from '~/src/modules/authentication/views/Login/controller/Login';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { Router, useRouter } from 'next/router';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IVerifyEmail {
@@ -26,17 +27,22 @@ interface IVerifyEmailState {
     customer?: any;
 }
 const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
+
     const [state, setState] = useState<IVerifyEmailState>({ status: 'verifying_email' });
     const MemberService = getService<IMemberService>("IMemberService");
     const {openModal}=useModal();
-
+    const router = useRouter();
     const handleVerify = async () => {
         if (!token) {
             setState({ status: 'no_token_present' });
             return;
         }
-        const verifiedResponse = await MemberService.verifyEmail(String(token));
-        if (verifiedResponse) setState(verifiedResponse);
+        try{
+            const verifiedResponse = await MemberService.verifyEmail(String(token));
+            if (verifiedResponse) setState(verifiedResponse);
+        }catch(e:any){
+            console.error('[ HANDLE VERIFY ]', e)
+        }
     }
 
     const loadingText = (): string => {
@@ -88,7 +94,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
        openModal(<Login email={state.customer.email} />)
     }
     useEffect(() => {
-        handleVerify()
+        handleVerify();
     }, [token]);
 
     return (
@@ -97,7 +103,11 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
             <div className='verify-email'>
                 <div className={`verify-email__content${state.status === 'verification_success'?' verify-email__content--success':'' }`}>
                     <div className='verify-email__content--loader'>
-                        <UiLoader position='relative' text={loadingText()} dots={state?.status != undefined && ['verifying_email'].includes(state?.status)} />
+                        <UiLoader 
+                            position='relative'
+                            text={loadingText()}
+                            dots={state?.status != undefined && ['verifying_email'].includes(state?.status)}
+                        />
                     </div>
                     {state.status == 'incomplete' && state?.fields &&
                         <UiForm

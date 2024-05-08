@@ -78,8 +78,7 @@ const statements = Object(confirm?.statements);
               {title || confirm?.title}
             </div>
             <div className='modal-overlay__icon' onClick={closeModal} >
-              x
-              {/* <UiIcon icon='fa-xmark' /> */}
+              <UiIcon icon='fa-xmark' />
             </div>
           </a>
 

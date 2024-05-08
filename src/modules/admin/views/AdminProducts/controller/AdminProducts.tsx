@@ -66,7 +66,7 @@ return (
       <UiViewLayout
         views={views}
         currentView={view}
-        showActions={['list', 'add']}
+        actions={['list', 'add']}
         showTitle={true}
         title="Admin Products"
       />

@@ -31,7 +31,7 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
     <>
       <style jsx>{styles}</style>
         <UiSettingsLayout
-          variant="full"
+          // variant="full-width"
           // variant="full-width"
           // title='home'
           defaultView='home'

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SignInView from "../views/Login/views/LoginView/LoginView";
+import LoginView from "../views/Login/views/LoginView/LoginView";
 import styles from "./Authentication.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import SignUp from "../views/SignUp/SignUp";
@@ -107,7 +107,7 @@ const [notif,setNotification]=useNotification();
           An email has been sent to
           <Link onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} style={hover?{color:'var(--primary'}:undefined} href={`mailto://${view}`}>{' '+view+', '}</Link> click the link in the email to continue.
         </div>}
-        {view == 'sign-in' && <SignInView email={newCustomerEmail} onSuccess={handleSignIn}/>}
+        {view == 'sign-in' && <LoginView email={newCustomerEmail} onSuccess={handleSignIn}/>}
         {view == 'sign-up' && <SignUp onSuccess={handleSignup} />}
         <div className="authentication__view-action">
           <div className="authentication__view-label">

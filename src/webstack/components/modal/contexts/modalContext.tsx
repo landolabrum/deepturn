@@ -29,7 +29,7 @@ export interface ModalContextType {
   openModal: (content: IModalContent) => void;
   closeModal: () => void;
   modalContent: IModalContent;
-  replaceModal: (content: IModalContent) => void; // Add this line
+  replaceModal: (content: IModalContent) => void; 
 }
 
 

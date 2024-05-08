@@ -24,7 +24,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
     value:"Test"
   },
     { name: 'lastName', label: 'Last Name', width: "50%",  type: 'text', placeholder: 'Last Name', required: true
-    , value:`${mockDateTime()} | ${mockDateTime(true)}`
+    , value:`${mockDateTime()} ${mockDateTime(true)}`
   },
     { name: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com', required: true
     , value:'larzrandana@gmail.com'

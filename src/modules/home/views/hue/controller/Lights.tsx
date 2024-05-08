@@ -14,6 +14,7 @@ import UiButton from '@webstack/components/UiButton/UiButton';
 import { calculateHexFromHueSatBri } from '../functions/LightHelpers';
 import { reverseString } from '@webstack/helpers/Strings/reverseString';
 import ColorPicker from '@webstack/components/ColorPicker/ColorPicker';
+import UiKnob from '@webstack/components/UiKnob/UiKnob';
 
 interface ILightDisplay extends ILight {
   view?: string;
@@ -155,7 +156,8 @@ const LightsList = () => {
     <>
       <style jsx>{styles}</style>
       <div className='lights'>
-        <AdaptGrid xs={2} lg={3} gap={15}>
+
+        {/* <AdaptGrid xs={2} lg={3} gap={15}>
           <UiButton variant={go && 'primary'} onClick={() => getHueList(oppoView)}>{oppoView}</UiButton>
           <UiButton variant={go && 'primary'} onClick={() => setGo(!go)}>start animation</UiButton>
           <UiButton variant={go && 'primary'} onClick={() => isAll == false ? setIsAll({ ...onLights[0], id_: 'all-lights' }) : false}>
@@ -167,8 +169,8 @@ const LightsList = () => {
           atPoints={atPoints}
           duration={10000}
           start={go}
-        />
-
+        /> */}
+        <UiKnob percent={10} />
         {hueData && !isAll && <AdaptGrid xs={1} sm={3} gap={15}>
           {Object.entries(hueData).map(([key, light]: any, index: number) =>
             <div

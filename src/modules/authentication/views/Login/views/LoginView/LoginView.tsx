@@ -24,14 +24,14 @@ const authResponseMessages: any = {
   default: "Sorry, an unexpected error occurred. Our team has been notified and we'll work to resolve it as soon as possible.",
 };
 
-const SignInView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
+const LoginView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
   const defaultCredentials = {
     email: "",
     password: "",
     code: defaultCodeValue,
   }
   const [notification, setNotification] = useNotification();
-  const { closeModal, isModalOpen} = useModal();
+  const { closeModal, isModalOpen } = useModal();
 
   const [signInResponse, setSignInResponse] = useState<any>(DEFAULT_RESPONSE);
   const userResponse = useUser();
@@ -45,7 +45,7 @@ const SignInView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
   }
 
 
-  async function handleSignIn(e:any) {
+  async function handleSignIn(e: any) {
     e.preventDefault();
     setIsSubmitting(true);
     if (credentials.email && credentials.password) {
@@ -53,20 +53,24 @@ const SignInView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
       try {
         const resp = await MemberService.signIn({
           email: credentials.email,
-          password: credentials.password.replace(/\s+/g, ''),
-          ...(validTFA && { code: credentials.code }),
-          user_agent,
-          merchant: environment.merchant
+          metadata: {
+            user: {
+              password: credentials.password.replace(/\s+/g, ''),
+              ...(validTFA && { code: credentials.code }),
+              user_agent,
+              merchant: environment.merchant
+            }
+          }
         });
-        if(onSuccess)onSuccess(resp);
-        // if (resp?.email && isModalOpen) {
-        //   closeModal();
-        // }
+        if (onSuccess) onSuccess(resp);
+        if (resp?.email && isModalOpen) {
+          closeModal();
+        }
         else setSignInResponse('error');
       } catch (e: any) {
         if (e.detail != undefined) {
           console.error('[ SIGN IN VIEW onError ]', e);
-          
+
           e.detail?.fields && setNotification({
             active: true,
             list: e.detail.fields
@@ -84,7 +88,7 @@ const SignInView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
   useEffect(() => {
     if (email) setCredentials({ ...credentials, email: email });
     setIsSubmitting(false);
-  }, [userResponse, handleSignIn, setCredentials, Boolean(credentials == defaultCredentials)]);
+  }, [userResponse, setCredentials, Boolean(credentials == defaultCredentials)]);
   return (
     <>
       <style jsx>{styles}</style>
@@ -124,7 +128,7 @@ const SignInView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
             </div>
           )}
         </div>
-  
+
         <div className="sign-in__login">
           <UiButton type='submit' variant='glow' onClick={handleSignIn} busy={isSubmitting}>
             login
@@ -135,4 +139,4 @@ const SignInView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
   )
 }
 
-export default SignInView;
+export default LoginView;

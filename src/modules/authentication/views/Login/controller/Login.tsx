@@ -2,7 +2,7 @@
 // Relative Path: ./SignIn.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './Login.scss';
-import SignInView from '../views/LoginView/LoginView';
+import LoginView from '../views/LoginView/LoginView';
 import ResetPassword from '../views/ResetPassword/ResetPassword';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
@@ -19,9 +19,9 @@ export interface ILogin{
 const Login: React.FC<ILogin> = ({ email, view, title, onSuccess }: ILogin) => {
   const [current, setView] = useState<string | undefined>(view || 'login');
     const views = {
-        'login':<SignInView onSuccess={onSuccess} email={email}/>,
+        'login':<LoginView onSuccess={onSuccess} email={email}/>,
         'reset-password':<ResetPassword email={email}/>
-    }
+    };
     const oppo = current === 'login'?'reset-password':'login';
     
     useEffect(() => {}, [current, setView]);
@@ -33,7 +33,7 @@ const Login: React.FC<ILogin> = ({ email, view, title, onSuccess }: ILogin) => {
           showTitle={true}
           title={title}
           currentView={current}
-          showActions={false}
+          actions={false}
           views={views}
         />
         <div className="login__reset">

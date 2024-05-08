@@ -199,7 +199,7 @@
             "type": "text"
         },
         {
-            "name": "metadata.user.user_agent.userAgentData",
+            "name": "metadata.user.user_agent.user_agent_data",
             "label": "metadata user user agent user agent data",
             "value": {
                 "brands": [

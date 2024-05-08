@@ -47,15 +47,11 @@
         width: calc(100% - calc(var(--s-9) * 2));
     }
     &__popup {
-        top: calc(var(--s-element) + var(--s-9));
+        top: var(--s-padding);
         left: 0;
-        // bottom: calc(var(--s-element) + var(--s-9));
         margin: auto;
-        max-height: calc(100vh - calc(var(--s-padding) + calc(var(--s-9) + 2px)));
         right: 0;
-        width: var(--s-padding-width);
         transform: unset;
-        @media(max-width:1100px){top: var(--s-padding);}
     }
 
 
@@ -95,8 +91,8 @@
         &__popup{
             margin: 0;
             @media(max-width: 1100px){
-                
-                padding: 0 var(--s-9) var(--s-element);
+                height: 100%;
+                // padding: var(--s-9);
             }
         }
         
@@ -143,7 +139,9 @@
         @media(max-width: 1100px) {
             position: relative;
         }
-
+        &__popup{
+            // min-height: 0;
+        }
 
         cursor: default;
         &:hover,
@@ -170,23 +168,29 @@
         }
      
         .modal-overlay__icon{
-            position: absolute;
-            right: var(--s-10);
-            top: var(--s-10);
-            font-size: var(--s-2);
-            font-family: Orbitron;
-            font-weight: 900;
-            color:var(--primary-o);
-            transition: all .5s ease-in;
-            &:hover{
-                color:var(--dark);
-                background-color: var(--primary-o);
-            }
             @extend .d-flex;
             border-radius: calc(var(--border-radius) * .8);
-            width: var(--s-2);
-            aspect-ratio: 1;
-            line-height: 1;
+            position: absolute;
+            top: 0;
+            right: var(--s-10);
+            margin: auto;
+            padding: var(--s-11);
+            --ui-icon-height: var(--s-3);
+            --ui-icon-width: var(--s-1);
+            height: var(--s-1);
+
+            font-weight: 900;
+            --ui-icon-color:var(--dark);
+            
+            z-index: 1000;
+            background-color: var(--gray-90);
+            // border-radius: 50%;
+            transition: all .5s ease-in;
+            &:hover{
+                --ui-icon-color: var(--gray-90);
+                background-color: var(--primary-o);
+            }
+  
         }
 
         &__fullscreen {
@@ -248,11 +252,8 @@
         &__popup{
             border-radius: var(--border-radius);
             height:max-content;
-            width: var(--s-padding-width);
-            // width: calc(100% - calc(var(--s-padding) * 4)); 
             overflow-y: auto;
             overflow-x: hidden;
-            padding: var(--s-padding) var(--s-padding) var(--s-element);
         }
         .modal-overlay__confirm {
             font-family: Play;

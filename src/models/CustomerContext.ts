@@ -5,8 +5,8 @@ export interface ICustomerUser {
   password: string;
   type: string;
   user_agent: {
-    userAgent: string;
-    userAgentData: {
+    user_agent: string;
+    user_agent_data: {
       brands: Array<{
         brand: string;
         version: string;

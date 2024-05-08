@@ -100,13 +100,18 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
     setLoading(true);
     const errors = handleErrors();
     if (!errors) {
-      let request = fields.reduce((acc: any, obj: any) => {
-        acc[obj.name] = obj.value;
-        return acc;
-      }, {});
-      request.name = `${request.first_name} ${request.last_name}`;
-      request.user_agent = user_agent;
-      request.merchant = environment.merchant;
+      const request = {
+        name: `${findField(fields, 'first_name')?.value} ${findField(fields, 'first_name')?.value}`,
+        email: findField(fields, 'email')?.value,
+        phone: findField(fields, 'phone')?.value,
+        address: findField(fields, 'address')?.value,
+        metadata: {
+            user:{
+              user_agent:user_agent,
+            },
+            merchant:environment.merchant
+        }
+      }
       let context;
       try {
         const response = await MemberService.signUp(request);

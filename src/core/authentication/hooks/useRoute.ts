@@ -28,6 +28,7 @@ const useRoute = (): ORoute => {
     if (route?.href) router.push(route.href, undefined, { shallow: false });
   };
   const implicitRouter = useCallback(() => {
+
     if (user && !selectedUser) setUser(user);
     if (clearanceRoutes) {
       const matchingRoute = clearanceRoutes.find(clearRoute => {
@@ -54,6 +55,8 @@ const useRoute = (): ORoute => {
         const hrefIsString:boolean = typeof matchingRoute?.href === 'string';
         const notCurrent = matchingRoute?.href && !router.asPath.includes(matchingRoute?.href) || 'current-route';
         const canNavigate = Boolean( typeof hrefIsString === 'boolean' && typeof notCurrent === 'boolean');
+        const emailVerified = Boolean(router.pathname == '/verify' && router?.query?.vid == 'email' && user);
+        if(emailVerified)router.push('/profile');
         if(canNavigate){
           router.push(String(matchingRoute.href), undefined, { shallow: true });
         }

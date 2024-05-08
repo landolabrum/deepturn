@@ -29,7 +29,7 @@
     gap: var(--s-9);
     position: relative;
     @media(max-width: 1260px) {
-        width: var(--s-padding-width);
+        width: calc(100% - calc(var(--s-9) * 2));
         // padding: var(--s-padding);
         margin: auto;
     }

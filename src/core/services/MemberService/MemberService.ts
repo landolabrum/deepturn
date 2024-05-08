@@ -53,18 +53,18 @@ export default class MemberService
   public userChanged = new EventEmitter<UserContext | undefined>();
   public guestChanged = new EventEmitter<GuestContext | undefined>();
 
-  public async signIn({ email, password, code, user_agent, merchant }: any): Promise<any> {
-    if (!email) {
+  public async signIn(cust: any): Promise<any> {
+    if (!cust.email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
-    if (!password) {
+    if (!cust.metadata.user.password) {
       throw new ApiError("Password is required", 400, "MS.SI.02");
     }
 
     // Encrypt the login data
     const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
-    const encryptedLoginData = encryptString(JSON.stringify({ email, password, code, user_agent, merchant }), ENCRYPTION_KEY);
+    const encryptedLoginData = encryptString(JSON.stringify(cust), ENCRYPTION_KEY);
     const memberJwt:any = await timeoutPromise(
       await this.post<{}, any>(
         "usage/auth/login",
@@ -312,8 +312,7 @@ public async processTransaction(sessionData: ISessionData) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
     const encryptedSignUp = encryptString(JSON.stringify(props), ENCRYPTION_KEY);
-
-
+    console.log("[ SIGN UP ]", props)
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",
       {data: encryptedSignUp},
@@ -358,28 +357,27 @@ public async processTransaction(sessionData: ISessionData) {
     if (customer) {
       const encryptedSignUp = encryptString(JSON.stringify(customer), ENCRYPTION_KEY);
 
-
-      const res = await this.put<{}, any>(
-        `api/customer/`,
-        {data: encryptedSignUp},
-      );
       
-      console.log('[ MODUFY ]', res)
-      // try {
+      // console.log('[ MODUFY ]', res)
       //   const res = await this.put<any, any>(
       //     `api/customer/`,
       //     memberData
       //   );
-      //   let memberJwt: any = null;
-      //   if (res) memberJwt = res;
-      //   // res && console.log('[ RES ]', res)
-      //   this.saveMemberToken(memberJwt);
-      //   this.saveLegacyAuthCookie(memberJwt);
-      //   return this._getCurrentUser(true)!;
-      // } catch (error) {
-      //   console.error("Error updating member: ", error);
-      //   // Handle error accordingly
-      // }
+      try {
+        const res = await this.put<{}, any>(
+          `api/customer/`,
+          {data: encryptedSignUp},
+        );
+        let memberJwt: any = null;
+        if (res && res?.data) memberJwt = res?.data;
+        res && console.log('[ Sigin  RES ]', res)
+        this.saveMemberToken(memberJwt);
+        this.saveLegacyAuthCookie(memberJwt);
+        return this._getCurrentUser(true)!;
+      } catch (error) {
+        console.error("Error updating member: ", error);
+        // Handle error accordingly
+      }
     }
 
     if (!customer) {

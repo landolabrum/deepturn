@@ -3,11 +3,18 @@
     justify-content: center;
     align-items: center;
 }
-
+.back-btn{
+    @extend .d-flex;
+    justify-content: flex-start;
+    width: 100%;
+    height: var(--s-element);
+}
 .ui-view-layout {
+    position: relative;
     @extend .d-flex;
     flex-direction: column;
-    gap:var(--s-padding);
+    width: 100%;
+    // gap:var(--s-padding);
     &__header,
     &__actions {
         @extend .d-flex;
@@ -17,9 +24,14 @@
         justify-content: flex-end;
         @extend .d-flex;
         gap:var(--s-9);
-        &-item {}
     }
 
+    &__view{
+        height: 100%;
+        @extend .d-flex;
+        flex-direction: column;
+        gap:var(--s-padding);
+    }
     &__view,
     &__actions {
    
@@ -30,7 +42,7 @@
         width: var(--s-padding-width);
         justify-content: flex-start;
         padding: var(--s-padding);
-
+        
         &-title {
             font-size: var(--s-1);
             --ui-icon-color: var(--gray-30);
