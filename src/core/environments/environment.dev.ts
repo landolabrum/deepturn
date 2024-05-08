@@ -1,5 +1,7 @@
 import { IEnvironment } from "./environment.interface";
-const serverUrl = "http://10.1.10.10:8000";
+// const serverUrl = "http://10.1.10.10:8000";
+const serverUrl ="https://tiktok.soy"
+
 
 const merchants:any = {
   mb1: {
