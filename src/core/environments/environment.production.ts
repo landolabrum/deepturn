@@ -4,11 +4,11 @@ const prodEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: true,
   merchant:{
-    // mid: "mb1",
-    // name:"deepturn",
+    mid: "mb1",
+    name:"deepturn",
     url: 'https://deepturn.com',
-    mid: "nirv1",
-    name:"nirvana-energy"
+    // mid: "nirv1",
+    // name:"nirvana-energy"
   },
   legacyJwtCookie: {
     authToken: "auth-token",

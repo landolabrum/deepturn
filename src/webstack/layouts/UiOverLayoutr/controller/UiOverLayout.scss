@@ -1,0 +1,13 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.over-layout{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    inset: 0 0 0 0;
+    z-index: 1111;
+}

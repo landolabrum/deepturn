@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styles from './UiViewLayout.scss';
-import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { useViewState } from '../hooks/useViewState';
 import UiButton from '@webstack/components/UiButton/UiButton';
@@ -35,13 +34,15 @@ const UiViewLayout: React.FC<IViewLayout> = ({
         setView(newView);
         onChange?.(newView);
     };
-
-    if (!views || !view || view == 'loading') return <UiLoader />;
+    
+    useEffect(() => {}, [views]);
+    if (!views || !view || currentView == 'loading') return <UiLoader />;
 
     return (
         <>
             <style jsx>{styles}</style>
             <div className='ui-view-layout'>
+                {/* <div className='dev'>{JSON.stringify({currentView, last, })}</div> */}
                 {backBtn && last !== currentView && (
                     <div className='back-btn'>
                         <div>

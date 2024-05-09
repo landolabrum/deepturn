@@ -1,22 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from './ProductSurvey.scss';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import useUserAgent from '@webstack/hooks/getUserAgentInfo';
-import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
-import ProductFeatureOther from '../views/ProductFeatureOther/ProductFeatureOther';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import keyStringConverter from "@webstack/helpers/keyStringConverter"
 import environment from "~/src/environment"
-import capitalize from '@webstack/helpers/Capitalize';
 import ContactForm from '@shared/components/ContactForm/ContactForm';
-import useWindow from '@webstack/hooks/useWindow';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
-import IProspectService from '~/src/core/services/ProspectService/IProspectService';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
+import SurveyForm from '../views/SurveyForm/SurveyForm';
 
 
 export const applianceArray: IMoreInfoField[] = [
@@ -65,60 +59,19 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     id,
     subtitle = 'Select applicable appliances that you need power'
 }) => {
-    const user = useUser()
-    const selectedRef = useRef<any | undefined>();
-    const optionsRef = useRef<any | undefined>();
-    const userAgentInfo = useUserAgent();
-    const defaultForm = { survey: survey };
-    const clearAllSelected = () => setForm(defaultForm);
-    const { openModal, closeModal, replaceModal } = useModal();
-    // const { scrollTo, setScrollTo } = useScrollTo({ max: 1100 });
-    const [form, setForm] = useState<{ survey: IMoreInfoField[] }>({ survey: survey });
-    const [contactData, setContactData] = useState(null);
-    const [message, setMessage] = useState<string | null>(null);
-    const [isSuccess, setIsSuccess] = useState(false);
-    const prospectService = getService<IProspectService>('IProspectService');
     const memberService = getService<IMemberService>('IMemberService');
-    const { survey: productRequestObject, } = form;
+    const user = useUser()
+    const userAgentInfo = useUserAgent();
+
+    const optionsRef = useRef<any | undefined>();
+
+    const [contactData, setContactData] = useState(null);
     const [view, setView] = useState('start');
+    const [message, setMessage] = useState<string | null>(null);
 
 
-    const handleFeature = (choice: IMoreInfoField) => {
-        const addCustom = async (choice: any) => handleFeature(choice);
-        const isOther = !Boolean(survey.find(f => f.name === choice.name));
-        if (choice.name === 'other' && !isOther) {
-            return openModal(
-                <ProductFeatureOther
-                    title={title}
-                    choice={choice}
-                    onSubmit={(e: any) => {
-                        addCustom(e).then(closeModal)
-                    }}
-                />
-            );
-        }
+    const [form, setForm] = useState<{ survey: IMoreInfoField[] }>({ survey: survey });
 
-        if (isOther) {
-            productRequestObject.push(choice);
-            setForm({ ...form, survey: productRequestObject });
-            setView('content')
-            return;
-        }
-
-        const updatedFeatures = productRequestObject.map(item =>
-            item.name === choice.name ? { ...item, selected: !item.selected } : item
-        );
-        setForm({ ...form, survey: updatedFeatures });
-    };
-    const selected = form.survey.filter(f => f.selected);
-    const calculateTotalValue = (): number => {
-        return productRequestObject.reduce((acc, curr) => {
-            if (curr.selected) {
-                return acc + curr.value;
-            }
-            return acc;
-        }, 0);
-    };
 
 
     const onContactSubmit = async (submittedContactData: any) => {
@@ -126,7 +79,6 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         handleView('loading'); // Move to loading view while processing the submission
         onSubmit(submittedContactData); // Pass the contact data directly to onSubmit
     };
-
 
     const onSubmit = async (submittedContactData: any) => {
         let contactDataToUse = submittedContactData || contactData;
@@ -173,10 +125,6 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         }
     };
 
-
-    const formTitle = `Appliances to Power`
-    const isform = view === formTitle;
-
     const handleView = (newView: any) => {
         setView(newView);
     }
@@ -199,73 +147,12 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         </div>,
         contact: <ContactForm title={false} user={user} onSubmit={onContactSubmit} />,
         start: <><style jsx>{styles}</style><div className='product-survey-btn-view' onClick={() => handleView('form')}><div className='button-text'>{startButton}</div></div></>,
-        form: <><style jsx>{styles}</style>
-            <div ref={selectedRef}
-                className='product-survey__selected'>
-                <div className='product-survey__selected--header'>
-                    {`Selected ${formTitle}`} | total amps  {calculateTotalValue()}
-                </div>
-                <div className='product-survey__tools' >
-                    <div className='product-survey__tools--tool'>
-                        {Boolean(selected?.length) && <div onClick={clearAllSelected}>clear all</div>}
-                    </div>
-                </div>
-                {productRequestObject && Boolean(selected?.length) &&
-                    <div className='product-survey__selected--content'>
-                        {Object.values(productRequestObject).map((item, index) => {
-                            if (item?.selected) return (
-                                <div key={index} className='selected-button'>
-                                    <UiButton
-                                        variant='flat'
-                                        size='sm'
-                                        traits={{
-                                            afterIcon: {
-                                                icon: 'fa-xmark',
-                                                onClick: () => handleFeature(item)
-                                            },
-                                        }}
-                                        onClick={() => handleFeature(item)}
-                                    >
-                                        {item.name} - {item?.value}
-                                    </UiButton>
-                                </div>
-                            )
-                        })
-                        }
-                    </div>
-                }
-                {!selected.length && <div className='product-survey__instructions'>please Select, {title} to continue.</div>}
-            </div>
-            <div id='product-survey__options' />
-            <div id='product-survey__options' >
-                <AdaptGrid
-                    xs={3}
-                    sm={4}
-                    lg={4}
-                    gap={10} >
-                    {productRequestObject !== null && productRequestObject.map((item, index) => {
-                        return (
-                            <div key={index} className={`product-description__choice ${item?.selected ? 'product-description__choice--choice' : ''}`} onClick={() => handleFeature(item)}>
-                                <div className='product-description__choice__name'>
-                                    {item?.name} {item?.selected && (
-                                        <div className='product-description__choice__name--icon '>
-                                            {item?.value}
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        )
-                    })}
-                </AdaptGrid>
-            </div>
-            <div className='product-survey__submit'>
-                <UiButton
-                    disabled={selected.length == 0}
-                    onClick={() => handleView('contact')}
-                    variant={Boolean(selected.length) && 'glow' || 'disabled'}
-                >Proceed to Quote</UiButton>
-            </div>
-        </>
+        form: <SurveyForm
+            title={title}
+            handleView={handleView}
+            form={form}
+            setForm={setForm}
+        />
     };
 
     if (!id) return <>No ID FOR PRODUCT REQUEST</>;

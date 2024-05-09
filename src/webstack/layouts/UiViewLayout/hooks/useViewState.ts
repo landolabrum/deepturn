@@ -27,7 +27,7 @@ export const useViewState = (views?: any, initialKey?: string | number) => {
         if (initialKey && views?.[initialKey]) {
             setView(initialKey);
         }
-    }, [views, initialKey]);
+    }, [initialKey, views]);
 
     return { view, setView, last: history[history.length - 2], goBack };
 };

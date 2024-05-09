@@ -93,10 +93,8 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
 const handleUser = async () => {
   // Check if a user has been selected and update fields accordingly
   const userToUse = user || loggedInUser;
-  console.log({user, loggedInUser})
   if (userToUse) {
     const updatedFields = fields.map((field) => {
-      console.log('fName: ', field)
       switch (field.name) {
         case 'firstName':
           return { ...field, value: userToUse.name ? userToUse.name.split(' ')[0] : field.value, width: "50%" };

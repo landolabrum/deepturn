@@ -24,7 +24,9 @@
   backdrop-filter: blur(0);
   background: transparent;
   animation: fadeIn .5s ease-in-out forwards;
+  position: relative;
   &__content {
+    position: fixed;
     padding: var(--s-padding);
     @extend .d-flex;
     flex-direction: column;

@@ -3,7 +3,7 @@ main {
   overflow-y: visible;
   position: relative;
   margin: var(--s-element) auto 100px;
-  height: calc(100% - calc(var(--s-padding) * 2));
+  height: calc(100vh - calc(var(--s-padding) * 2));
   @media(min-width: 1260px){
     margin: 0 auto;
     padding: var(--s-1) 0;

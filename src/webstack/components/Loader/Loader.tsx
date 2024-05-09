@@ -85,7 +85,7 @@ const Loader: React.FC = () => {
           className={`loader ${Boolean(context) && 'loader--fixed' || ''}`}
           onClick={context?.onClick}
         >
-          <div className='loader__content'>
+          <div className='loader__content' >
             {context?.animation === true ? (
               <TJSCube
                 icon={{

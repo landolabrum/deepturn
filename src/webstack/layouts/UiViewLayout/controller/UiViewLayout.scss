@@ -15,6 +15,7 @@
     flex-direction: column;
     width: 100%;
     // gap:var(--s-padding);
+    min-height: 100%;
     &__header,
     &__actions {
         @extend .d-flex;
@@ -41,7 +42,7 @@
     &__header {
         width: var(--s-padding-width);
         justify-content: flex-start;
-        padding: var(--s-padding);
+        padding: 0 var(--s-padding) var(--s-9);
         
         &-title {
             font-size: var(--s-1);

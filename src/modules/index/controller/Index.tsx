@@ -40,7 +40,7 @@ return (
         <UiViewLayout
           currentView={view}
           views={views}
-        />
+        /> 
       </div>
     </>
   );

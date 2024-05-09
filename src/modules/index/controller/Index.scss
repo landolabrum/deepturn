@@ -25,13 +25,16 @@
     @extend .d-flex-column;
     justify-content: flex-start;
     padding: 0;
-    height: inherit;
+
     gap: var(--s-9);
     position: relative;
+    height: 100%;
     @media(max-width: 1260px) {
         width: calc(100% - calc(var(--s-9) * 2));
         // padding: var(--s-padding);
         margin: auto;
+        height: 100% !important;
+
     }
 
     &--title {
@@ -116,6 +119,7 @@
             /* Updated to allow text wrapping */
             font-family: Play;
             line-height: 1;
+            
             margin: var(--s-element) 0 var(--s-padding);
             --ui-icon-size: var(--s-1);
             @extend .d-flex;
