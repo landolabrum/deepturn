@@ -235,7 +235,7 @@
   width: max-content;
   height: max-content;
   padding: var(--s-9);
-  background-color: var(--gray-100-o);
+  background-color: var(--blue);
   border-radius: var(--border-radius);
   font-size: 10px;
   /* Use transition to specify which properties to animate */
