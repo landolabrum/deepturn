@@ -47,20 +47,12 @@
         width: calc(100% - calc(var(--s-9) * 2));
     }
     &__popup {
-        top: var(--s-padding);
         left: 0;
         margin: auto;
         right: 0;
+        margin: var(--s-padding);
         transform: unset;
     }
-
-
-
-    &__dragging {
-        cursor: url('/icons/fa-hand-back-fist.svg'), auto;
-        filter: blur(3px);
-    }
-
     &__fullscreen {
         top: 0;
         // right: 0;
@@ -72,9 +64,16 @@
 
     }
 
+
+
+    &__dragging {
+        cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+        filter: blur(3px);
+    }
+
+
     &__content {
         overflow: hidden;
-        // padding: 0 var(--s-padding) var(--s-1);
         padding: var(--s-10) 0 var(--s-4);
         height: 100%;
         margin: auto 0;
@@ -92,7 +91,6 @@
             margin: 0;
             @media(max-width: 1100px){
                 height: 100%;
-                // padding: var(--s-9);
             }
         }
         
@@ -120,7 +118,6 @@
             width: 100%;
             padding: 0;
             margin: 0;
-
             &:hover {
                 background-color: #ffffff00;
             }
@@ -192,7 +189,6 @@
     
         &__popup{
             // min-height: 0;
-
         }
         &__fullscreen {
             position: absolute;

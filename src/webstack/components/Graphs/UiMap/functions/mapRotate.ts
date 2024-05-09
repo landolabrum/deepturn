@@ -13,7 +13,7 @@ export type IMapRotate = {
     maxZoom?: number;
 };
 
-const defaultRpm = 180;
+const defaultRpm = 120;
 const defaultMaxZoom = 5;
 const defaultZoom = 3;
 import debounce from 'lodash/debounce';

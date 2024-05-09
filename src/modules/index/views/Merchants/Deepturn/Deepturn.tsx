@@ -32,10 +32,11 @@ const Deepturn: React.FC = () => {
         <div className="background-video">
           <img src="/assets/backgrounds/lava1.jpeg" />
           <UiMap
-            // vessels={[
-            //   { id: 1, name: "Vessel 1", coordinates: [loc?.lng, loc?.lat], path: [] },
-            //   { id: 2, name: "Vessel 2", coordinates: [-74.1, 40.8], path: [] },
-            // ]}
+            vessels={[
+              // {  name: "Vessel 1", location: [loc?.lng, loc?.lat], path: [] },
+              {  name: "Vessel 1", location:loc },
+              {  name: "Vessel 2", location:{lat:32, lng: 20.8} },
+            ]}
           />
           {/* <TJSCube
             icon={{

@@ -21,7 +21,7 @@ const UiMap = ({ vessels }: { vessels?: Vessel[] }) => {
 
     const handleVesselClick = (vessel: Vessel) => {
         console.log(vessel);
-        openModal({variant:'fullscreen',children:<ol>{Object.entries(vessel).map(([a,b])=><li key={a}><strong>{JSON.stringify(a)}</strong>:{JSON.stringify(b)}</li>)}</ol>});
+        openModal({variant:'popup',children:<ol>{Object.entries(vessel).map(([a,b])=><li key={a}><strong>{JSON.stringify(a)}</strong>:{JSON.stringify(b)}</li>)}</ol>});
     };
     const initializeMap = (map: MapboxMap) => {
         if (!map) return;

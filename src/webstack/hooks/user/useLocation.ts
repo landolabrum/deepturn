@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 
-interface IUseLocation {
+export interface ICoordinates {
     lat: number;
     lng: number;
 }
 
-const useLocation = (): IUseLocation | undefined => {
+const useLocation = (): ICoordinates | undefined => {
     const { openModal, closeModal } = useModal();
-    const [location, setLocation] = useState<IUseLocation | undefined>();
+    const [location, setLocation] = useState<ICoordinates | undefined>();
     const [permissionDenied, setPermissionDenied] = useState<boolean>(false);
     const permissionStatusRef = useRef<PermissionStatus | null>(null);
 

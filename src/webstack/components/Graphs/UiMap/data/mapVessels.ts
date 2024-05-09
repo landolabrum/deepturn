@@ -5,7 +5,7 @@ const mapVessels = [
         "description": "Enjoy a relaxing stay at our cozy lakefront cottage. Perfect for weekend getaways and family vacations.",
         "location": {
             lat: 20,
-            lon: 20,
+            lng: 20,
             "address": "123 Lakeview Drive, Lakeside, FL 32034",
             "city": "Lakeside",
             "state": "Florida",
