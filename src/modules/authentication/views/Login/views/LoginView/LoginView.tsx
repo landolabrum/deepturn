@@ -87,7 +87,7 @@ const LoginView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
   }
   const tryError: any = (field: IFormField) => {
     const context = Array(signInResponse?.fields)?.length && Array(signInResponse?.fields).find((f: any) => Boolean(f?.name) && f.name == field);
-console.log('[ CONTEX ]', context)
+// console.log('[ CONTEX ]', context)
     return context;
   }
 

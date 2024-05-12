@@ -23,7 +23,6 @@ const Checkout = ():React.JSX.Element => {
     const [selectedUser, setUser] = useState<UserContext | {email:string} | undefined>();
     const { getCartItems, } = useCart();
     const guest = useGuest();
-    console.log('[ GUEsT ] ', guest)
     const handleSignUp = (res: any) => {
         const selectedUser = res?.id && res || guest;
         console.log('[handleSignUp ]',res)

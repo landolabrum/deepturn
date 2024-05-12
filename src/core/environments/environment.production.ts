@@ -1,14 +1,12 @@
 import { IEnvironment } from "./environment.interface";
-const serverUrl ="https://tiktok.soy"
+import merchants from "./merchants";
+
+const serverUrl = "https://tiktok.soy"
 const prodEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: true,
-  merchant:{
-    mid: "mb1",
-    name:"deepturn",
-    url: 'https://deepturn.com',
-    // mid: "nirv1",
-    // name:"nirvana-energy"
+  merchant: {
+    ...merchants.nirv1,
   },
   legacyJwtCookie: {
     authToken: "auth-token",
