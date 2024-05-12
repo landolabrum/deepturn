@@ -13,29 +13,30 @@ const Deepturn: React.FC = () => {
   const [loader,setLoader]=useLoader();
   const showLoader:boolean = loader?.active;
   const loc = useLocation();
-  
+  const startLoader = () =>{
+    if(!loc && !showLoader){
+      setLoader({active:true,
+        body:"loading map"
+        // children: <h1>Hello World!</h1>
+      });
+    }else if(showLoader)setLoader({active:false});
+  }
 
   useEffect(() => {
-    // if(!loc && !showLoader){
-    //   setLoader({active:true,
-    //     body:"loading map"
-    //     // children: <h1>Hello World!</h1>
-    //   });
-    // }else if(showLoader)setLoader({active:false});
-  }, [showLoader, setLoader, loc]);
+    startLoader();
+  }, [startLoader ]);
 
-  // if (!loc) return <></>;
+  if (!loc) return <></>;
   return (
     <>
       <style jsx>{styles}</style>
       <div className='mbone'>
         <div className="background-video">
-          {/* <img src="/assets/backgrounds/lava1.jpeg" /> */}
+          <img src="/assets/backgrounds/lava1.jpeg" />
           <UiMap
+            options={{center: [0, 10]}}
             vessels={[
-              // {  name: "Vessel 1", location: [loc?.lng, loc?.lat], path: [] },
-              {  name: "Vessel 1", location:loc },
-              {  name: "Vessel 2", location:{lat:32, lng: 20.8} },
+              {  name: "Vessel 1", location: loc,},
             ]}
           />
           {/* <TJSCube

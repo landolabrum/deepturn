@@ -6,7 +6,7 @@ const prodEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: true,
   merchant: {
-    ...merchants.nirv1,
+    ...merchants.mb1,
   },
   legacyJwtCookie: {
     authToken: "auth-token",

@@ -10,20 +10,27 @@ import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import mapVessels from "../data/mapVessels";
 import { mapRotate, setUpInteractionListeners } from "../functions/mapRotate";
 mapboxgl.accessToken = token;
+// export type byPassMapOptions = mapboxgl.MapboxOptions;
+
+// export interface IuIMapOptions extends byPassMapOptions{
+//     container?:any
+// } 
 interface IuiMap{
+    options?: any,
      vessels?: Vessel[];
      onVesselClick?: (e?:Vessel)=>void;
 };
-const UiMap = ({ vessels, onVesselClick }: IuiMap) => {
+const UiMap = ({ options, vessels, onVesselClick }: IuiMap) => {
     const { openModal } = useModal();
     const mapContainer = useRef<HTMLDivElement>(null);
     const { width } = useWindow();
     const { remove } = useElement();
     
     const setZoomLevel = () => width > 1260 ? 2 : 0.9;
-    const CAMERA_POS:any = {
+    const default_options:any = {
         center: [0, 10],
         zoom: setZoomLevel(),
+        ...options,
         // bearing:10,
         // pitch: 12
     };
@@ -45,7 +52,7 @@ const UiMap = ({ vessels, onVesselClick }: IuiMap) => {
             style: 'mapbox://styles/landolabrum/clw02qoqe01x701q1fe3zfdut',
             projection: { name: "globe" },
             antialias: true,
-            ...CAMERA_POS
+            ...default_options
         };
 
         const map = new mapboxgl.Map(config);
