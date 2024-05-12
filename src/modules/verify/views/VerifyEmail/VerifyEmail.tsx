@@ -91,11 +91,11 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
         }
     }
     const handleLoginModal = () =>{
-       openModal(<Login email={state.customer.email} />)
+       openModal(<Login email={state.customer.email} onSuccess={(e)=>JSON.stringify(e)}/>)
     }
     useEffect(() => {
         handleVerify();
-    }, [token]);
+    }, [token,onSuccess]);
 
     return (
         <>
@@ -109,7 +109,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
                             dots={state?.status != undefined && ['verifying_email'].includes(state?.status)}
                         />
                     </div>
-                    {state.status == 'incomplete' && state?.fields &&
+                    {state.status && ["418",'incomplete'].includes(state.status) && state?.fields &&
                         <UiForm
                             title={String(state?.detail) || undefined}
                             onChange={onChange}

@@ -14,8 +14,6 @@ import AireHotel from '../views/Merchants/AireHotel/AireHotel';
 
 
 const Index = () => {
-  // const prospect = useProspect();
-  const user = useUser()
   const [view, setView] = useState<any>()
 
   const views = {
@@ -24,24 +22,18 @@ const Index = () => {
     'ah1':<AireHotel/>,
   }
   // const campaign = useCampaign();
+  const mid = environment.merchant.mid;
   useEffect(() => {
-    const mid = environment.merchant.mid;
-// console.log(environment)
-// 
-    if (!view) {
-        setView(mid);
-    }
-}, [view]);
+    if (!view)setView(mid);
+}, [mid]);
 
 return (
     <>
       <style jsx>{styles}</style>
-      <div className='index'>
         <UiViewLayout
           currentView={view}
           views={views}
         /> 
-      </div>
     </>
   );
 

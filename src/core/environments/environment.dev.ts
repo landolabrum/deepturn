@@ -22,7 +22,7 @@ const devEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: false,
   merchant: {
-    ...merchants.ah1,
+    ...merchants.nirv1,
     url: 'http://localhost:3000',
 
   },

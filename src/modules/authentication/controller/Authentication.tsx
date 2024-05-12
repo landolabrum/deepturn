@@ -39,53 +39,57 @@ const Authentication: React.FC<any> = (props: any) => {
         setView("sign-up")
     }
   }
-  const handleSignup = (response:any)=>{
-    if(response?.status == 'existing'){
-      setNotification({active: true, list:[{'label':`email: ${response.email}, exists. Sign in to continue`,
-      
-    }]})
+  const handleSignup = (response: any) => {
+    const status = response?.status;
+    if (!status) {
+      alert("lando, handle this! 212");
+      return;
     }
+
+    let label = "404, an error occured signing up. "
+    switch (status) {
+      case 'created':
+        label = `email: ${response?.email}, successfully created.`
+        break;
+      case 'existing':
+        label = `email: ${response?.email}, exists.`
+        break;
+
+      default:
+        break;
+    }
+    setNotification({ active: true, list: [{ 'label': label, message:"Sign in to continue." }] });
+
     setView('sign-in');
     setNewCustomerEmail(response.email)
   }
   const handleSignIn = (user: any) => {
     if (user?.id) {
-      const WelcomeModalContent = ({ user, onProfileClick, onClose }:any) => (
+      const WelcomeModalContent = ({ user, onProfileClick, onClose }: any) => (
         <>      <style jsx>{styles}</style>
-<div className='authentication__welcome-modal'>
+          <div className='authentication__welcome-modal'>
             <h1>Welcome, {user.name}</h1>
             <UiButton onClick={onProfileClick}>Go to account</UiButton>
             <UiButton onClick={onClose}>Close</UiButton>
-            </div>
+          </div>
         </>
-    );
-    
-    // Usage within a component
-    openModal({
+      );
+
+      // Usage within a component
+      openModal({
         title: 'User Details',
         children: <WelcomeModalContent user={user} onProfileClick={() => router.push('/profile')} onClose={closeModal} />
-    });
+      });
     }
     console.log('[handleSignIn]:', user);
-};
+  };
 
-const [notif,setNotification]=useNotification();
+  const [notif, setNotification] = useNotification();
   useEffect(() => {
-    //  if(router.pathname == '/'){setNotification({
-    //    active: true,
-    //    dismissable: false,
-    //    confirm:{
-    //     title:"We use cookies to give you the best experience and to ensure the safety of our users. The only non-essential cookies we use are for any personal referrals you make. We do not track you across other sites. You can see our Cookie Policy here, and our Privacy Notice here.",
-    //     statements:[
-    //       {text:'Customize selection'},
-    //       {text:'accept all'},
-    //     ]
-    //   }
 
-    //  })}else{setNotification({active: false})}
-    if (query && query.verify){
+    if (query && query.verify) {
       setView('verify');
-      console.log('[router]',router)
+      console.log('[router]', router)
     }
 
     if (newCustomerEmail != undefined) setView("sign-in");
@@ -105,9 +109,9 @@ const [notif,setNotification]=useNotification();
         </div>
         {view.includes("@") && <div className='authentication__email-verify'>
           An email has been sent to
-          <Link onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} style={hover?{color:'var(--primary'}:undefined} href={`mailto://${view}`}>{' '+view+', '}</Link> click the link in the email to continue.
+          <Link onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={hover ? { color: 'var(--primary' } : undefined} href={`mailto://${view}`}>{' ' + view + ', '}</Link> click the link in the email to continue.
         </div>}
-        {view == 'sign-in' && <LoginView email={newCustomerEmail} onSuccess={handleSignIn}/>}
+        {view == 'sign-in' && <LoginView email={newCustomerEmail} onSuccess={handleSignIn} />}
         {view == 'sign-up' && <SignUp onSuccess={handleSignup} />}
         <div className="authentication__view-action">
           <div className="authentication__view-label">

@@ -9,39 +9,43 @@ import addVessels, { Vessel } from "../functions/mapVessels";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import mapVessels from "../data/mapVessels";
 import { mapRotate, setUpInteractionListeners } from "../functions/mapRotate";
-
 mapboxgl.accessToken = token;
-
-const UiMap = ({ vessels }: { vessels?: Vessel[] }) => {
+interface IuiMap{
+     vessels?: Vessel[];
+     onVesselClick?: (e?:Vessel)=>void;
+};
+const UiMap = ({ vessels, onVesselClick }: IuiMap) => {
     const { openModal } = useModal();
     const mapContainer = useRef<HTMLDivElement>(null);
-    const [currentLocation, setCurrentLocation]=useState();
     const { width } = useWindow();
     const { remove } = useElement();
-
-    const handleVesselClick = (vessel: Vessel) => {
-        console.log(vessel);
-        openModal({variant:'popup',children:<ol>{Object.entries(vessel).map(([a,b])=><li key={a}><strong>{JSON.stringify(a)}</strong>:{JSON.stringify(b)}</li>)}</ol>});
-    };
-    const initializeMap = (map: MapboxMap) => {
-        if (!map) return;
-        addVessels(map, vessels || mapVessels, handleVesselClick);
-        mapRotate(map); // This now handles setting up interaction listeners internally
+    
+    const setZoomLevel = () => width > 1260 ? 2 : 0.9;
+    const CAMERA_POS:any = {
+        center: [0, 10],
+        zoom: setZoomLevel(),
+        // bearing:10,
+        // pitch: 12
     };
     
 
-    const setZoomLevel = () => width > 1260 ? 2 : 0.9;
+    const initializeMap = (map: MapboxMap) => {
+        if (!map) return;
+        addVessels(map, vessels || mapVessels, onVesselClick);
+        const pos = mapRotate(map); // This now handles setting up interaction listeners internally
+        console.log("[ POS ]", pos)
+    };
+    
+
 
     useEffect(() => {
         if (!mapContainer.current) return;
-
         const config: mapboxgl.MapboxOptions = {
             container: mapContainer.current,
-            style: 'mapbox://styles/landolabrum/clvu95nn901lc01q14qdf7w97',
+            style: 'mapbox://styles/landolabrum/clw02qoqe01x701q1fe3zfdut',
             projection: { name: "globe" },
-            center: [0, 0],
-            zoom: setZoomLevel(),
-            antialias: true
+            antialias: true,
+            ...CAMERA_POS
         };
 
         const map = new mapboxgl.Map(config);
@@ -54,7 +58,7 @@ const UiMap = ({ vessels }: { vessels?: Vessel[] }) => {
         });
 
         return () => map.remove();
-    }, [mapContainer, vessels, setZoomLevel]); // Ensure dependencies are correctly listed to avoid excessive re-renders
+    }, [setZoomLevel]); // Ensure dependencies are correctly listed to avoid excessive re-renders
 
     return (
         <>

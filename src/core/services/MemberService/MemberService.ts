@@ -312,17 +312,19 @@ public async processTransaction(sessionData: ISessionData) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
     const encryptedSignUp = encryptString(JSON.stringify(props), ENCRYPTION_KEY);
-    console.log("[ SIGN UP ]", props)
+    // console.log("[ SIGN UP ]", props)
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",
       {data: encryptedSignUp},
     );
-    // guest
+    // GUEST TEMP SIGN IN
+    console.log("[ RES ]", res)
     if (res?.status === "guest") {
       const guestJwt = await res.data;
       this.saveguestToken(guestJwt);
       this.saveLegacyguestCookie(guestJwt);
     }
+    // console.log("[ SIGN UP RES ]", res)
     return res;
   }
   public async getMethods(customerId?: string): Promise<any> {

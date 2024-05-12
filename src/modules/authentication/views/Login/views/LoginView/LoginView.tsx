@@ -11,6 +11,7 @@ import { useNotification } from "@webstack/components/Notification/Notification"
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import { ILogin } from "../../controller/Login";
 import environment from "~/src/environment";
+import { IFormField } from "@webstack/components/UiForm/models/IFormModel";
 
 const DEFAULT_RESPONSE = { response: "", message: "" };
 const defaultCodeValue = "------";
@@ -84,17 +85,22 @@ const LoginView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
     }
     setIsSubmitting(false);
   }
+  const tryError: any = (field: IFormField) => {
+    const context = Array(signInResponse?.fields)?.length && Array(signInResponse?.fields).find((f: any) => Boolean(f?.name) && f.name == field);
+console.log('[ CONTEX ]', context)
+    return context;
+  }
 
   useEffect(() => {
     if (email) setCredentials({ ...credentials, email: email });
     setIsSubmitting(false);
-  }, [userResponse, setCredentials, Boolean(credentials == defaultCredentials)]);
+  }, [userResponse, setCredentials, setSignInResponse, Boolean(credentials == defaultCredentials)]);
   return (
     <>
       <style jsx>{styles}</style>
       <form className="sign-in" style={{ color: 'black' }}>
         {["email", "password"].map((field) => {
-          const hasError = signInResponse?.fields !== undefined && signInResponse?.fields.find((f: any) => f.name == field)
+          const hasError = tryError(field);
           return (
             <UiInput
               key={field}
@@ -104,7 +110,7 @@ const LoginView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
               name={field}
               variant={hasError && 'invalid'}
               placeholder={field}
-              error={hasError && hasError.message}
+              error={hasError && hasError?.message}
               label={field}
               value={credentials[field]}
               onChange={handleCredentials}

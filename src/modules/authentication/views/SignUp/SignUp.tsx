@@ -90,7 +90,7 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
   }
 
 
-  const URL = useReferrer();
+  // const URL = useReferrer();
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     changeField(name, 'value', value);
@@ -108,6 +108,7 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
         metadata: {
             user:{
               user_agent:user_agent,
+              password: findField(fields, "password")?.value
             },
             merchant:environment.merchant
         }
@@ -128,6 +129,7 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
         }
       } catch (e: any) {
         if (e?.detail?.fields) {
+          console.log("[ e.detail.fields ]",e.detail.fields)
           e.detail.fields.forEach((field: any) => {
             changeField(field.name, 'error', field.message);
           });
