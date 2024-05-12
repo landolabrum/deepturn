@@ -9,7 +9,7 @@ let environment: IEnvironment = devEnvironment;
 const DEV_URL: string = ":3000"
 // const DEV_URL: string = ":3000"
 
-export const useDevEnvironment = () => {
+const useDevEnvironment = () => {
     if(typeof window == "object"){
         const isDev = window.location.href?.toLowerCase().includes(DEV_URL);;
         // console.error("[ usDiv ]", isDev)
