@@ -24,7 +24,7 @@ const AdminCustomerList: React.FC<any> = ({ onSelect}:{onSelect:(props: string)=
   
       // Use a for loop or reduce function to transform the customer data
       const transformedCustomerList = customerList.map((customer: ICustomer) => {
-        console.log('[ transformedCustomerList ]', customer)
+        // console.log('[ transformedCustomerList ]', customer)
   
         // Create a new dictionary for each customer
         const extras = {

@@ -1,33 +1,50 @@
 // Relative Path: ./MbOne.tsx
-
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './AireHotel.scss';
-import UiMap from '@webstack/components/Graphs/UiMap/controller/UiMap';
-import UiOverLayout from '@webstack/layouts/UiOverLayoutr/controller/UiOverLayout';
+// import { TJSCube } from '@webstack/components/threeJs/TJSCube/controller/TJSCube';
+// import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import UiMap from '../../../../../webstack/components/Graphs/UiMap/controller/UiMap';
+import useLocation from '@webstack/hooks/user/useLocation';
+import { useLoader } from '@webstack/components/Loader/Loader';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const AireHotel: React.FC = () => {
+  const [loader, setLoader] = useLoader();
+  const [mapOptions, setMapOptions] = useState({ center: [-90, 26] })
+  const showLoader: boolean = loader?.active;
+  const { location, requestLocation, permissionDenied } = useLocation();
 
-  useEffect(() => { }, []);
+  const handleVesselClick = (e: any) => {
+    console.log("[ handleVesselClick ]", e)
+  }
+  const init = () => {
+    if (location == undefined) {
+      requestLocation();
+      setLoader({
+        active: true,
+        body: "loading map"
+      });
+    } else {
+      setLoader({ active: false })
+    }
+  }
+  useEffect(() => {
+    init()
+  }, [location]);
+
+  if (showLoader) return <></>;
   return (
     <>
       <style jsx>{styles}</style>
-
-      {/* <div style={{background:"#f39", zIndex:"99",position:"fixed",top:"0", width: "900px", height: "900px",}}>fdsa</div> */}
-      <div className='aire-hotel'>
-        <UiOverLayout>
-            <h1 data-top='1' data-right='1'>h1</h1>
-        </UiOverLayout>
-
-        <div className="background-video">
-          <UiMap
-          // vessels={[
-          //   // { id: 1, name: "Vessel 1", coordinates: [loc?.lng, loc?.lat], path: [] },
-          //   { id: 2, name: "Vessel 2", coordinates: [-74.1, 40.8], path: [] },
-          // ]}
-          />
-        </div>
+      <div className="aire-hotel">
+        <UiMap
+          options={mapOptions}
+          onVesselClick={handleVesselClick}
+          vessels={[
+            { name: "Vessel 1", location: location },
+          ]}
+        />
       </div>
     </>
   );

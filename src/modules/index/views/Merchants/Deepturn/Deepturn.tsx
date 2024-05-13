@@ -11,6 +11,7 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 
 const Deepturn: React.FC = () => {
   const [loader,setLoader]=useLoader();
+  const [mapOptions, setMapOptions]=useState({center:[10,10]})
   const showLoader:boolean = loader?.active;
   const loc = useLocation();
   const startLoader = () =>{
@@ -21,7 +22,10 @@ const Deepturn: React.FC = () => {
       });
     }else if(showLoader)setLoader({active:false});
   }
-
+  const handleVesselClick=(e:any)=>{
+    console.log("[ handleVesselClick ]",e)
+    // setMapOptions({center: [e.location.lat, e.location.lng]})
+  }
   useEffect(() => {
     startLoader();
   }, [startLoader ]);
@@ -34,7 +38,8 @@ const Deepturn: React.FC = () => {
         <div className="background-video">
           <img src="/assets/backgrounds/lava1.jpeg" />
           <UiMap
-            options={{center: [0, 10]}}
+            options={mapOptions}
+            onVesselClick={handleVesselClick}
             vessels={[
               {  name: "Vessel 1", location: loc,},
             ]}

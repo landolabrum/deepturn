@@ -9,6 +9,7 @@ export type IConfirm = {
       href?: string,
       variant?: IFormControlVariant
   }[] | undefined;
+  body?: any;
 } | undefined;
 
 

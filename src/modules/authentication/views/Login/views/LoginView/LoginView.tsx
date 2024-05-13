@@ -63,9 +63,12 @@ const LoginView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
             }
           }
         });
-        if (onSuccess) onSuccess(resp);
-        if (resp?.email && isModalOpen) {
-          closeModal();
+         const  closeMod = async () =>{
+          if (resp?.email && isModalOpen) closeModal();
+          return;
+        }
+        if (onSuccess) {
+          closeMod().then(()=>onSuccess(resp))
         }
         else setSignInResponse('error');
       } catch (e: any) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 
 export interface ICoordinates {
@@ -6,7 +6,7 @@ export interface ICoordinates {
     lng: number;
 }
 
-const useLocation = (): ICoordinates | undefined => {
+const useLocation = () => {
     const { openModal, closeModal } = useModal();
     const [location, setLocation] = useState<ICoordinates | undefined>();
     const [permissionDenied, setPermissionDenied] = useState<boolean>(false);
@@ -24,21 +24,20 @@ const useLocation = (): ICoordinates | undefined => {
         setPermissionDenied(true);
     };
 
-    const handlePermissionChange = () => {
+    const handlePermissionChange = useCallback(() => {
         const permissionStatus = permissionStatusRef.current;
         if (permissionStatus && permissionStatus.state === 'granted') {
             closeModal();
-            navigator.geolocation.getCurrentPosition(success, error); // Retrieve location after permission is granted
+            navigator.geolocation.getCurrentPosition(success, error);
         } else {
             setPermissionDenied(true);
         }
-    };
+    }, [closeModal, error, success]);
 
-    const initializeLocation = () => {
+    const requestLocation = useCallback(() => {
         if (navigator.permissions) {
             navigator.permissions.query({ name: 'geolocation' }).then((permissionStatus: PermissionStatus) => {
                 permissionStatusRef.current = permissionStatus;
-
                 permissionStatus.addEventListener('change', handlePermissionChange);
 
                 if (permissionStatus.state === 'granted') {
@@ -46,15 +45,14 @@ const useLocation = (): ICoordinates | undefined => {
                 } else if (permissionStatus.state === 'prompt') {
                     openModal({
                         title: "Know Your Location",
-                        children: "To use this feature, please enable location access.",
                         confirm: {
                             title: "Enable Location",
+                            body: "To use this feature, please enable location access.",
                             statements: [
                                 {
                                     label: 'Allow',
                                     onClick: () => {
                                         permissionStatusRef.current?.addEventListener('change', handlePermissionChange);
-                                        // Now try to retrieve location again
                                         navigator.geolocation.getCurrentPosition(success, error);
                                     }
                                 },
@@ -71,19 +69,21 @@ const useLocation = (): ICoordinates | undefined => {
                 } else {
                     setPermissionDenied(true);
                 }
+            }).catch(error => {
+                console.error("Error querying permissions", error);
+                setPermissionDenied(true);
             });
         } else {
             console.error("Permission API not supported");
             setPermissionDenied(true);
         }
+    }, [openModal, closeModal, success, error, handlePermissionChange]);
+
+    return {
+        location,
+        requestLocation, // This function can be triggered by a user action
+        permissionDenied,
     };
-
-    useEffect(() => {
-        // if(location) alert(JSON.stringify(location))
-        initializeLocation();
-    }, []);
-
-    return location;
 };
 
 export default useLocation;

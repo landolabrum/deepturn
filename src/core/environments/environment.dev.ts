@@ -9,7 +9,7 @@ const devEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: false,
   merchant: {
-    ...merchants.mb1,
+    ...merchants.ah1,
     url: 'http://localhost:3000',
 
   },

@@ -40,7 +40,7 @@
     border: solid 1px var(--gray-80);
     outline: solid 1px var(--gray-70-o);
     border-radius: var(--border-radius);
-
+    gap: var(--s-padding);
     @media(max-width: 900px) {
         margin: 0 auto;
         top: var(--s-9);
@@ -165,23 +165,20 @@
             @extend .d-flex;
             border-radius: calc(var(--border-radius) * .8);
             position: absolute;
-            top: 0;
+            top: var(--s-10);
             right: var(--s-10);
             margin: auto;
-            padding: var(--s-11);
-            --ui-icon-height: var(--s-3);
-            --ui-icon-width: var(--s-1);
+            padding: var(--s-12);
             height: var(--s-1);
-
             font-weight: 900;
-            --ui-icon-color:var(--dark);
-            
             z-index: 1000;
-            background-color: var(--gray-90);
-            // border-radius: 50%;
             transition: all .5s ease-in;
+            --ui-icon-color: transparent;
+            background-color: var(--gray-80-o);
+            --ui-icon-size: var(--s-3);
+            width: var(--s-1);
             &:hover{
-                --ui-icon-color: var(--gray-90);
+                --ui-icon-color: var(--primary);
                 background-color: var(--primary-o);
             }
   
@@ -253,15 +250,29 @@
             overflow-y: auto;
             overflow-x: hidden;
         }
+        min-width: 500px;
         .modal-overlay__confirm {
+            &--header, .header{
+                @extend .d-flex;
+                flex-direction: column;
+                width: var(--s-padding-width);
+                padding: 0 var(--s-padding);
+                align-items: flex-start;
+                .header--title{
+                    width: 100%;
+                    font-weight: bold;
+                }
+                .header--body{
+                    width: 100%;
+                }
+            }
             font-family: Play;
             @extend .d-flex;
             gap: var(--s-6);
             border-radius: var(--border-radius);
             overflow: hidden;
-            margin-top: var(--s-padding);
-            // width: var(--s-padding-width);
-            width: 100%;
+            width: var(--s-padding-width);
+            padding: var(--s-padding);
             flex-direction: column;
             // border: solid 1px var(--gray-70);
             // background-color: var(--gray-80-o);

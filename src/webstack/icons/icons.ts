@@ -31,6 +31,7 @@ const Icons: UiIconSet = {
   spinner: { width: 100, height: 100, html: spinner },
   "deepturn-logo":brandIcons.deepturn_logo,
   "nirvana-energy-logo":brandIcons.nirvana_logo,
+  "aire-hotel-logo":brandIcons.aire_hotel_logo,
   "fmc-logo": brandIcons.fmc,
 
   'offgrid-box': offGridBox,

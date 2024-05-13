@@ -42,19 +42,19 @@ function setUpInteractionListeners(map: MapboxMap, rotateFunction: () => void): 
     map.on("touchmove", endInteraction);
 }
 
-function mapRotate(map: MapboxMap, options: IMapRotate = {}): void {
+function useMapRotatae(map: MapboxMap, options: IMapRotate = {}): void {
     const { rpm = defaultRpm, zoom = defaultZoom, maxZoom = defaultMaxZoom } = options;
 
-    function rotate(): void {
+    function rotate() {
         if (userInteracting || !spinEnabled) return;
         const currentZoom = map.getZoom();
+        const center = map.getCenter();
         if (currentZoom < maxZoom) {
             let distancePerSecond = (360 / rpm) * speedMultiplier;
             if (currentZoom > zoom) {
                 const zoomDif = (maxZoom - currentZoom) / (maxZoom - zoom);
                 distancePerSecond *= zoomDif;
             }
-            const center = map.getCenter();
             center.lng -= distancePerSecond;
             map.easeTo({ center, duration: 1000, easing: (n: number) => n });
         }
@@ -65,4 +65,4 @@ function mapRotate(map: MapboxMap, options: IMapRotate = {}): void {
     setUpInteractionListeners(map, rotate); // Set up interaction listeners and pass the rotate function
 }
 
-export { mapRotate, setUpInteractionListeners };
+export default useMapRotatae;

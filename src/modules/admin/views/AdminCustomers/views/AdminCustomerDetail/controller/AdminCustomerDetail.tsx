@@ -103,7 +103,6 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
       return;
     }
     deleteService().then((resp:any) => {
-      console.log('[deleteService ] ',resp)
       setLoader({ active: false });
       setNotification({
         active: true,
@@ -120,13 +119,25 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
 
   }
   const handleDelete = () => {
-    openModal({ confirm: {
+    const modalContext = { 
       title: `Delete ${info?.name}`,
+      confirm: {
       statements: [
         { label: 'yes', onClick: confirmDelete },
         { label: 'no', onClick: closeModal }
       ]
-    }})
+    }};
+
+    console.log(modalContext)
+    openModal(modalContext)
+    
+    // openModal({ confirm: {
+    //   title: `Delete ${info?.name}`,
+    //   statements: [
+    //     { label: 'yes', onClick: confirmDelete },
+    //     { label: 'no', onClick: closeModal }
+    //   ]
+    // }})
   }
 
   const onChange = (e: { target: { name: string, value: any } }) => {

@@ -38,7 +38,8 @@ const Navbar = () => {
       openModal(<MobileNav routes={selectedRoute.items} handleClick={handleMobileClick} onBack={handleBackButtonClick} />);
     }
   };
-const isMerchant = (route:IRoute) => route.label === keyStringConverter(String(environment.merchant.name));
+  const merchantName = String(environment.merchant.name);
+const isBrandRoute = (route:IRoute) => route.label === keyStringConverter(merchantName);
   // Function to go back to the original routes in mobile view
   const handleBackButtonClick = () => {
     setCurrentRoutes(routes);
@@ -85,7 +86,7 @@ const isMerchant = (route:IRoute) => route.label === keyStringConverter(String(e
   const modals: any = {
     login: <Authentication />,
   };
-
+  const navClass = `navbar__container ${isMobile ? 'navbar__container--hide' : ''} ${merchantName}`;
   useEffect(() => {
     if (!isModalOpen && toggled) setToggled('');
   }, [setToggled, isModalOpen]);
@@ -104,7 +105,7 @@ const isMerchant = (route:IRoute) => route.label === keyStringConverter(String(e
       <style jsx>{styles}</style>
       <nav id="nav-bar" 
       // style={{display: 'none'}} 
-      className={`navbar__container ${isMobile ? 'navbar__container--hide' : ''}`} >
+      className={navClass} >
         <div className='navbar' ref={navRef}>
           <div className={`navbar__trigger${scroll > 90 ? ' navbar__trigger--o' : ''}`}>
             <UiIcon
@@ -119,7 +120,7 @@ const isMerchant = (route:IRoute) => route.label === keyStringConverter(String(e
                 className={
                   `nav__nav-item nav__nav-item--${
                     route.label ? (
-                      isMerchant(route) ? 'brand': route.label.toLowerCase()) : (
+                      isBrandRoute(route) ? 'brand': route.label.toLowerCase()) : (
                       String(route.href).split('/')[1]
                     )
                   }${
@@ -132,7 +133,7 @@ const isMerchant = (route:IRoute) => route.label === keyStringConverter(String(e
                 <UiButton
                   traits={route?.icon ? (
                     // PUTS ICON BEFORE TEXT ON BRAND
-                    isMerchant(route)?{ 
+                    isBrandRoute(route)?{ 
                       beforeIcon: { icon: route.icon }
                      }:{ 
                       afterIcon: { icon: route.icon }
