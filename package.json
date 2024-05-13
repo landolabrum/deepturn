@@ -6,8 +6,8 @@
     "build": "next build",
     "start": "next start",
     "export": "next build",
-    "deploy": "npm run export && touch ./out/.nojekyll && touch out/CNAME && echo \"deepturn.com\" >> out/CNAME && git add out/  && git commit -m \"Deploy to gh-pages\" && gh-pages -d out -t true",
-    "dep": "next build && touch out/.nojekyll && touch out/CNAME && echo \"deepturn.com\" >> out/CNAME && git add out/  && git commit -m \"Deploy to gh-pages\"  && git subtree push --prefix out origin gh-pages"
+    "deploy": "npm run export && touch ./out/.nojekyll && touch out/CNAME && echo \"deepturn.com\" >> out/CNAME && git add out/ && git commit -m \"Deploy to gh-pages\" && gh-pages -d out -t true && rm -rf ./out",
+    "dep": "next build && touch out/.nojekyll && touch out/CNAME && echo \"deepturn.com\" >> out/CNAME && git add out/ && git commit -m \"Deploy to gh-pages\" && git subtree push --prefix out origin gh-pages && rm -rf ./out"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.2",

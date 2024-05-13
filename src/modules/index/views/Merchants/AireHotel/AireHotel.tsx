@@ -11,7 +11,7 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 
 const AireHotel: React.FC = () => {
   const [loader, setLoader] = useLoader();
-  const [mapOptions, setMapOptions] = useState({ center: [-90, 26] })
+  const [mapOptions, setMapOptions] = useState<any>();
   const showLoader: boolean = loader?.active;
   const { location, requestLocation, permissionDenied } = useLocation();
 
@@ -31,9 +31,10 @@ const AireHotel: React.FC = () => {
   }
   useEffect(() => {
     init()
+    if(location)setMapOptions({center:[location.lng, location.lat]})
   }, [location]);
 
-  if (showLoader) return <></>;
+  if (!mapOptions) return <></>;
   return (
     <>
       <style jsx>{styles}</style>

@@ -64,7 +64,7 @@ const UiMap = ({ options, vessels, onVesselClick }: IuiMap) => {
         });
 
         return () => map.remove();
-    }, [options]);
+    }, [options, width]);
 
     return (
         <>
