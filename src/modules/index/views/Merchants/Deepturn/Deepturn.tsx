@@ -40,9 +40,7 @@ const Deepturn: React.FC = () => {
           <UiMap
             options={mapOptions}
             onVesselClick={handleVesselClick}
-            vessels={[
-              {  name: "Vessel 1", location: loc,},
-            ]}
+        
           />
           {/* <TJSCube
             icon={{
