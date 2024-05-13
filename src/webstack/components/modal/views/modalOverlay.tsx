@@ -6,7 +6,6 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 const ModalOverlay: React.FC = () => {
   const modalRef = useRef<HTMLDivElement>(null);
-  if(!ModalContext)return<></>;
   const { isModalOpen, closeModal, modalContent }:any = useContext<ModalContextType | undefined>(ModalContext);
   
   if (!isModalOpen || !modalContent) {
