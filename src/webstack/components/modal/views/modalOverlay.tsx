@@ -6,47 +6,50 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 const ModalOverlay: React.FC = () => {
   const modalRef = useRef<HTMLDivElement>(null);
-  const { isModalOpen, closeModal, modalContent }:any = useContext<ModalContextType | undefined>(ModalContext);
+  const { isModalOpen, closeModal, modalContent }: any = useContext<ModalContextType | undefined>(ModalContext);
+  if (!isModalOpen || !modalContent)return null;
+  const { confirm, title, children, footer, variant }: any = modalContent;
   
-  if (!isModalOpen || !modalContent) {
-    return null;
-  }
 
-  // Call useClass outside of any conditional logic to ensure hooks are called consistently
-  const modalOverlayClass = 'modal__overlay ' + (modalContent?.variant || '');
-  const modalClass = 'modal ' + (modalContent?.variant || '');
-  const modalHeaderClass = 'modal__header ' + (modalContent?.variant || '');
-  const modalBodyClass = 'modal__body ' + (modalContent?.variant || '');
 
-  const { confirm, title, children, footer, variant }:any = modalContent;
-
-  const handleClick = (btn:any) => {
-    if (btn.onClick) {
-      btn.onClick(); // call the onClick function passed with the button
-    }
+  const handleClick = (btn: any) => {
+    btn?.onClick();
     closeModal();
   };
 
-  return (
+  const renderModalContent = () => {
+    if (React.isValidElement(modalContent)) {
+      if(modalContent !== null)return modalContent;
+    }
+    return children;
+  };
+  const classMaker = (c:string):string =>{
+    if(!c && !variant)return'';
+    else if(c && variant)return `${c} ${c}__${variant}`
+    return c
+  };
+  const body:any = renderModalContent();
+
+return (
     <>
       <style jsx>{styles}</style>
-      <div onClick={closeModal} className={modalOverlayClass} />
-      <div ref={modalRef} className={modalClass}>
-        <div className={modalHeaderClass}>
+      <div onClick={closeModal} className={classMaker("modal__overlay")} />
+      <div ref={modalRef} className={classMaker("modal")}>
+        <div className={classMaker("modal__header")}>
           <div className='modal-overlay__title'>{title}</div>
           <div className='modal-overlay__icon' onClick={closeModal}>
             <UiIcon icon='fa-xmark' />
           </div>
         </div>
-        <div className={modalBodyClass}>
-          {children}
-     <div className='modal-overlay__confirm--header header'>
-          {confirm?.title && <div className='header--title'>{confirm.title}</div>}
-          {confirm?.body && <div className='header--body'>{confirm.body}</div>}
-            </div>
+        <div className={classMaker("modal__body")}>
+          {JSON.stringify(body == null)}
+          <div className='modal-overlay__confirm--header header'>
+            {confirm?.title && <div className='header--title'>{confirm.title}</div>}
+            {confirm?.body && <div className='header--body'>{confirm.body}</div>}
+          </div>
           {confirm && (
             <div className={`modal-overlay__confirm ${confirm.statements.length > 2 ? "modal-overlay__confirm-col" : ""}`}>
-              {confirm.statements.map((btn:any, index:number) => (
+              {confirm.statements.map((btn: any, index: number) => (
                 <UiButton key={index} onClick={() => handleClick(btn)} variant={btn.label === 'yes' ? 'primary' : btn?.variant}>
                   {btn.label}
                 </UiButton>

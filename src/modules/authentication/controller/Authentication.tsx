@@ -56,12 +56,9 @@ const Authentication: React.FC<any> = (props: any) => {
       case 'existing':
         label = `email: ${response?.email}, exists.`
         break;
-
-      default:
-        break;
+      default: break;
     }
     setNotification({ active: true, list: [{ 'label': label, message: "Sign in to continue." }] });
-
     setView('sign-in');
     setNewCustomerEmail(response.email)
   }
@@ -92,14 +89,12 @@ const Authentication: React.FC<any> = (props: any) => {
         children: <WelcomeModalContent user={user} onClose={closeModal} />
       });
     }
-    console.log('[handleSignIn]:', user);
   };
 
   useEffect(() => {
 
     if (query && query.verify) {
       setView('verify');
-      console.log('[router]', router)
     }
 
     if (newCustomerEmail != undefined) setView("sign-in");

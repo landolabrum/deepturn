@@ -18,7 +18,7 @@ export type IModalContent = {
   title?: string | ReactNode;
   children?: ReactNode | null | string;
   footer?: ReactNode;
-  variant?: "popup" | 'fullscreen';
+  variant?: "popup" | 'fullscreen' | 'container';
   confirm?: IConfirm;
   zIndex?: number;
   draggable?: boolean;

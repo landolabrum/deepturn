@@ -1,8 +1,5 @@
-// Relative Path: ./MbOne.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './AireHotel.scss';
-// import { TJSCube } from '@webstack/components/threeJs/TJSCube/controller/TJSCube';
-// import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import UiMap from '../../../../../webstack/components/Graphs/UiMap/controller/UiMap';
 import useLocation from '@webstack/hooks/user/useLocation';
 import { useLoader } from '@webstack/components/Loader/Loader';
@@ -26,13 +23,11 @@ const AireHotel: React.FC = () => {
         body: "loading map"
       });
     } else {
+      if(location)setMapOptions({center:[location.lng, location.lat]});
       setLoader({ active: false })
     }
   }
-  useEffect(() => {
-    init()
-    if(location)setMapOptions({center:[location.lng, location.lat]})
-  }, [location]);
+  useEffect(() => init, [location]);
 
   if (!mapOptions) return <></>;
   return (
@@ -42,9 +37,7 @@ const AireHotel: React.FC = () => {
         <UiMap
           options={mapOptions}
           onVesselClick={handleVesselClick}
-          vessels={[
-            { name: "Vessel 1", location: location },
-          ]}
+          vessels={[{ name: "Vessel 1", location: location }]}
         />
       </div>
     </>

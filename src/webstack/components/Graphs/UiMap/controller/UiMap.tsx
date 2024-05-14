@@ -11,7 +11,7 @@ import mapVessels from "../data/mapVessels";
 import useMapRotate from "../functions/mapRotate";
 
 mapboxgl.accessToken = token;
-const styleId: string = "clw02qoqe01x701q1fe3zfdut";
+const styleId: string = "clw5mw741024a01q151205r2l";
 
 interface IuiMap {
     options?: any,

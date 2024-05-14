@@ -41,6 +41,8 @@
     outline: solid 1px var(--gray-70-o);
     border-radius: var(--border-radius);
     gap: var(--s-padding);
+    min-width: 450px;
+    
     @media(max-width: 900px) {
         margin: 0 auto;
         top: var(--s-9);
@@ -63,7 +65,7 @@
         padding: 0;
 
     }
-
+  
 
 
     &__dragging {
@@ -79,7 +81,6 @@
         margin: auto 0;
         backdrop-filter: blur(5px);
         color: var(--gray-30);
-        min-width: 600px;
         height: max-content;
         justify-content: flex-start;
         transition: all 1s;
@@ -181,11 +182,6 @@
                 --ui-icon-color: var(--primary);
                 background-color: var(--primary-o);
             }
-  
-        }
-    
-        &__popup{
-            // min-height: 0;
         }
         &__fullscreen {
             position: absolute;
@@ -238,19 +234,20 @@
         height: auto;
         width: calc(100% - calc(var(--s-5) * 2));
         color: var(--gray-50);
+        margin: auto;
         &__fullscreen {
             z-index: 1;
             margin-bottom: 0;
             padding: 0;
             width: 100%;
         }
+      
         &__popup{
             border-radius: var(--border-radius);
             height:max-content;
             overflow-y: auto;
             overflow-x: hidden;
         }
-        min-width: 500px;
         .modal-overlay__confirm {
             &--header, .header{
                 @extend .d-flex;
