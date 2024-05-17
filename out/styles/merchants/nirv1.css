@@ -44,10 +44,14 @@
 
 :root {
   /* GOOD BLUE -> #5e727d */
-  /* --primary: #8c7a6b;
+  --primary: #8c7a6b;
+  /* Updated to a more nuanced earthy brown, reminiscent of worn leather or soil */
   --primary-lite: #a89b8d;
+  /* A lighter, warmer shade, akin to sunlit earth */
   --primary-o: rgba(140, 122, 107, 0.5);
-  --primary-o-1: rgba(140, 122, 107, 0.3); */
+  /* 50% opacity for subtle overlays */
+  --primary-o-1: rgba(140, 122, 107, 0.3);
+  /* 30% opacity for even subtler overlays */
 
   --secondary: #c5b9a8;
   /* A muted, sandy beige, softer and more aligned with natural landscapes */

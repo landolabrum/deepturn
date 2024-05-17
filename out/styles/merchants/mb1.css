@@ -44,10 +44,14 @@
 
 :root {
   /* GOOD BLUE -> #5e727d */
-  /* --primary: #8c7a6b;
-  --primary-lite: #a89b8d;
-  --primary-o: rgba(140, 122, 107, 0.5);
-  --primary-o-1: rgba(140, 122, 107, 0.3); */
+  --primary: #d40;
+  /* Updated to a more nuanced earthy brown, reminiscent of worn leather or soil */
+  --primary-lite: #f30;
+  /* A lighter, warmer shade, akin to sunlit earth */
+  --primary-o: #dd440050;
+  /* 50% opacity for subtle overlays */
+  --primary-o-1: #dd440030;
+  /* 30% opacity for even subtler overlays */
 
   --secondary: #c5b9a8;
   /* A muted, sandy beige, softer and more aligned with natural landscapes */
@@ -59,7 +63,7 @@
   --invalid-border: #d14343;
   /* A less saturated red, ensuring visibility against various backgrounds */
 
-  --body: #1d1d1d;
+  --body: #101010;
   /* Updated to a slightly lighter shade of grey for improved readability */
   --lite: #f0edeb;
   /* A very light grey, evoking the subtle variations found in natural stones */
@@ -78,48 +82,27 @@
   /* Darkened grayscale spectrum to reflect more natural, subdued tones */
   /* COLORS */
   --black: #111111;
-  --gray-10: #f8f8f8;
-  --gray-10-o: #f8f8f850;
-  --gray-20: #f5f5f5;
-  --gray-20-o: #f5f5f550;
-  --gray-30: #e0e0e0;
-  --gray-30-o: #e0e0e050;
-  --gray-40: #d4d4d4;
-  --gray-40-o: #d4d4d450;
-  --gray-50: #a3a3a3;
-  --gray-50-o: #a3a3a350;
-  --gray-60: #737373;
-  --gray-60-o: #73737350;
-  --gray-70: #525252;
-  --gray-70-o: #52525250;
-  --gray-80: #404040;
-  --gray-80-o: #40404050;
-  --gray-90: #262626;
-  --gray-90-o: #26262650;
-  --gray-100: #171717;
-  --gray-100-o: #17171750;
-  /* INVERTED  */
-  /* --black: #f8f8f8; 
- --gray-10: #171717;
- --gray-10-o: rgba(23, 23, 23, 0.5);
- --gray-20: #262626;
- --gray-20-o: rgba(38, 38, 38, 0.5);
- --gray-30: #404040; 
- --gray-30-o: rgba(64, 64, 64, 0.5);
- --gray-40: #525252;
- --gray-40-o: rgba(82, 82, 82, 0.5);
- --gray-50: #737373;
- --gray-50-o: rgba(115, 115, 115, 0.5);
- --gray-60: #a3a3a3; 
- --gray-60-o: rgba(163, 163, 163, 0.5); 
- --gray-70: #d4d4d4;
- --gray-70-o: rgba(212, 212, 212, 0.5); 
- --gray-80: #e0e0e0; 
- --gray-80-o: rgba(224, 224, 224, 0.5); 
- --gray-90: #f5f5f5; 
- --gray-90-o: rgba(245, 245, 245, 0.5); 
- --gray-100: #f8f8f8; 
- --gray-100-o: rgba(248, 248, 248, 0.5);  */
+  --gray-10: #e5d5c5;   /* Light earth tone */
+  --gray-10-o: #e5d5c550;  /* Light earth tone with opacity */
+  --gray-20: #d2b9a3;   /* Light-medium earth tone */
+  --gray-20-o: #d2b9a350;  /* Light-medium earth tone with opacity */
+  --gray-30: #bf9e81;   /* Medium earth tone */
+  --gray-30-o: #bf9e8150;  /* Medium earth tone with opacity */
+  --gray-40: #ad8360;   /* Medium-dark earth tone */
+  --gray-40-o: #ad836050;  /* Medium-dark earth tone with opacity */
+  --gray-50: #8a6848;   /* Dark earth tone */
+  --gray-50-o: #8a684850;  /* Dark earth tone with opacity */
+  --gray-60: #705240;   /* Darker earth tone */
+  --gray-60-o: #70524050;  /* Darker earth tone with opacity */
+  --gray-70: #59412f;   /* Even darker earth tone */
+  --gray-70-o: #59412f50;  /* Even darker earth tone with opacity */
+  --gray-80: #45331e;   /* Deep earth tone */
+  --gray-80-o: #45331e50;  /* Deep earth tone with opacity */
+  --gray-90: #2e2210;   /* Deeper earth tone */
+  --gray-90-o: #2e221050;  /* Deeper earth tone with opacity */
+  --gray-100: #1b1405;  /* Deepest earth tone */
+  --gray-100-o: #1b140550;  /* Deepest earth tone with opacity */
+  
 
   --white: #ffffff;
   --white-o: rgba(255, 255, 255, 0.5);
@@ -136,34 +119,13 @@
   --blue-o: rgba(79, 150, 255, 0.5);
   --blue-10: #54e3ff;
   --blue-10-o: rgba(84, 227, 255, 0.5);
-  /*   
-   */
-  /* MORE PASTEL */
-  /* --yellow: #f4f4c1;
-   --yellow-o: rgba(244, 244, 193, 0.7);
-   --orange: #f9bea6;
-   --orange-o: rgba(249, 190, 166, 0.5);
-   --red: #e89a8a; 
-   --green: #a0d9af;
-   --green-o: rgba(160, 217, 175, 0.62);
-   --green-60: #8cc69b;
-   --red-60: #f2a4a4;
-   --blue: #a3c1e2; 
-   --blue-o: rgba(163, 193, 226, 0.5);
-   --blue-10: #b3d4f2; 
-   --blue-10-o: rgba(179, 212, 242, 0.5);  */
 
-  /* Box shadow presets */
   --box-shadow: 2px 2px 10px rgba(23, 23, 23, 0.5);
   --box-shadow-inset: inset 2px 2px 10px rgba(23, 23, 23, 0.5);
   --box-shadow-sm: 2px 2px 5px rgba(23, 23, 23, 0.5);
   --box-shadow-xl: 0px 4px 6px rgba(23, 23, 23, 0.3),
     0px 2px 4px rgba(64, 64, 64, 0.2), 0px 10px 10px rgba(23, 23, 23, 0.3);
 
-  /* @media (max-width: 1100px) {
-    --box-shadow-xl: 0px 2px 3px rgba(38, 38, 38, 0.3),
-      0px 1px 2px rgba(82, 82, 82, 0.2), 0px 5px 10px rgba(38, 38, 38, 0.3);
-  } */
 
   --s-1: 32px;
   --s-2: 28px;
