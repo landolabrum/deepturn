@@ -227,30 +227,6 @@
   font-style: italic;
 }
 
-.globe-marker {
-  user-select: all;
-  cursor: pointer;
-  pointer-events: all;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: max-content;
-  height: max-content;
-  padding: var(--s-9);
-  background-color: var(--blue);
-  border-radius: var(--border-radius);
-  font-size: 10px;
-  /* Use transition to specify which properties to animate */
-  transition: all 0.5s;
-
-  &:hover {
-    font-size: var(--s-7);
-    /* This will now animate smoothly */
-    background-color: var(--gray-100);
-    /* So will this */
-  }
-}
 
 .globe-html {
   display: flex;
@@ -1087,6 +1063,3 @@ a:-webkit-any-link {
 /* .aire-host{
   background-color: var(--primary);
 } */
-.aire-user{
-  background-color: var(--primary);
-}
