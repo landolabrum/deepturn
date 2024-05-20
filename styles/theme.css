@@ -48,7 +48,9 @@
   --primary-lite: #a89b8d;
   --primary-o: rgba(140, 122, 107, 0.5);
   --primary-o-1: rgba(140, 122, 107, 0.3); */
-
+  /* GOOD BLUE -> #5e727d */
+  --user: #1880cf;
+  --marker: #cf0f0f;
   --secondary: #c5b9a8;
   /* A muted, sandy beige, softer and more aligned with natural landscapes */
   --secondary-o: rgba(197, 185, 168, 0.25);
