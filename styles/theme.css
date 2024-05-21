@@ -302,7 +302,9 @@
     }
   }
 }
-
+html{
+  overflow-x: hidden;
+}
 body {
   font-family: "Play", sans-serif;
   margin: 0;
@@ -310,8 +312,11 @@ body {
   color: var(--gray-40);
   font-size: var(--s-5);
   font-weight: 300;
+  
+  -webkit-overflow-scrolling: touch;
+  overflow-y: visible;
+  overflow-x: hidden;
   #__next {
-    overflow-y: visible;
     margin: 0;
     padding: 0;
     height: 100%;
@@ -319,10 +324,8 @@ body {
   }
 }
 
-@media screen and (min-height: 400px) {
+@media (min-height: 400px) {
   body {
-    overflow-x: hidden;
-    overflow-y: auto;
     min-height: 100vh;
   }
 
