@@ -43,41 +43,21 @@
 }
 
 :root {
-  /* GOOD BLUE -> #5e727d */
-  /* --primary: #8c7a6b;
-  --primary-lite: #a89b8d;
-  --primary-o: rgba(140, 122, 107, 0.5);
-  --primary-o-1: rgba(140, 122, 107, 0.3); */
-  /* GOOD BLUE -> #5e727d */
+
   --user: #1880cf;
   --marker: #cf0f0f;
   --secondary: #c5b9a8;
-  /* A muted, sandy beige, softer and more aligned with natural landscapes */
   --secondary-o: rgba(197, 185, 168, 0.25);
-  /* 25% opacity for light, airy backgrounds */
 
   --error: #8b0000;
-  /* A deeper, more intense shade of red, signaling errors with a natural, urgent tone */
   --invalid-border: #d14343;
-  /* A less saturated red, ensuring visibility against various backgrounds */
-
   --body: #1d1d1d;
-  /* Updated to a slightly lighter shade of grey for improved readability */
   --lite: #f0edeb;
-  /* A very light grey, evoking the subtle variations found in natural stones */
   --dark: #16191d;
-  /* A deep, dark blue-grey, reminiscent of the night sky or deep waters */
   --dark-o: rgba(22, 25, 29, 0.5);
-  /* Adding a touch of opacity for overlay elements */
-
   --warning: #d4661a;
-  /* A darker, earth-toned orange for warnings */
   --warning-hover: #e77a3f;
-  /* A darker hover state for warning elements */
   --warning-focus: #b35816;
-  /* A darker focus state for warning elements */
-
-  /* Darkened grayscale spectrum to reflect more natural, subdued tones */
   /* COLORS */
   --black: #111111;
   --gray-10: #f8f8f8;
@@ -249,7 +229,19 @@
     border: var(--border-focus);
   }
 }
-
+.c-success{
+  background-color: #00371b;
+  border-color: #5fe341;
+  border: solid 1px;
+  color: #5fe341;
+  --ui-icon-color: #5fe341;
+}
+.c-error{
+  background-color: #370002;
+  border-color: #e34150;
+  color: #e34150;
+  --ui-icon-color: #e34150;
+}
 /* GOOGLE ADDRESS STYLES */
 
 .pac-container {
