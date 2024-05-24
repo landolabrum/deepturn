@@ -75,7 +75,6 @@ const AdapTable = ({
       }
       keyA = charFinder(keyA);
       keyB = charFinder(keyB);
-      // console.log("sort", { keyA: keyA, keyb: keyB });
       try {
         keyA.toLowerCase();
         keyB.toLowerCase();

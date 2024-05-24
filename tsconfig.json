@@ -6,7 +6,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": false, // Allow case-insensitive imports
+    "forceConsistentCasingInFileNames": false,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -31,6 +31,6 @@
       }
     ]
   },
-  "include": [ "src/**/*", "typings.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "sass-plugin.ts"],
+  "include": ["src/**/*", "typings.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "sass-plugin.ts", "merchants.config.js", "deploy.js"],
   "exclude": ["node_modules"]
 }

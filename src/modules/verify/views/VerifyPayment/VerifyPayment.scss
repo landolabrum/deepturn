@@ -4,16 +4,16 @@
  align-items: center;
 }
 .card{
-    width: var(--s-padding-width);
+    width: var(--s-4-width);
     border-radius: var(--border-radius);
-    padding: var(--s-padding);
+    padding: var(--s-4);
     background-color: var(--gray-90);
 }
 .verify-payment{
     @extend .d-flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: var(--s-padding);
+    gap: var(--s-4);
     width: 100%;
     &__item{
         width: 100%;
@@ -40,7 +40,7 @@
     &--content{
         flex-direction: column;
         color: var(--gray-40);
-        gap: var(--s-padding);
+        gap: var(--s-4);
         width: 100%;
         &__contact-form{
             @extend .d-flex, .card;

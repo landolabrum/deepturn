@@ -7,8 +7,8 @@
     @extend .d-flex;
     flex-direction: column;
     gap: var(--s-element);
-    width: var(--s-padding-width);
-    padding: var(--s-1) var(--s-padding) var(--s-5);
+    width: var(--s-4-width);
+    padding: var(--s-1) var(--s-4) var(--s-5);
     background-color: var(--gray-90);
     border-radius: var(--border-radius);
     max-width: 800px;

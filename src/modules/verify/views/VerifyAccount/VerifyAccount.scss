@@ -7,7 +7,7 @@
 .verify-account {
     @extend .d-flex;
     flex-direction: column;
-    padding: var(--s-padding);
+    padding: var(--s-4);
     border-radius: var(--border-radius);
     background-color: var(--gray-80);
 }

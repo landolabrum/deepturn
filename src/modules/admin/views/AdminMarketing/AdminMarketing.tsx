@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './AdminMarketing.scss'; // Ensure the filename is correct
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 import CreatePDF from '@webstack/components/CreatePDF/controller/CreatePDF';
 
 const AdminMarketing: React.FC = () => {

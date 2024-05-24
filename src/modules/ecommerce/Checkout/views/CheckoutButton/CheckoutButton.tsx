@@ -26,8 +26,7 @@ interface ICheckoutButton {
 }
 const CheckoutButton: React.FC<ICheckoutButton> = (props) => {
     const { label = "Checkout", isModal = false, traits, collect, method_id, customer_id } = props;
-    const { getCartItems, cart } = useCart();
-    const cartItems = getCartItems();
+    const {  cart } = useCart();
     const [error, setError] = useState<any>();
     const [sessionData, setSessionData] = useState<ISessionData | undefined>();
     const router = useRouter();
@@ -57,11 +56,11 @@ const CheckoutButton: React.FC<ICheckoutButton> = (props) => {
     };
 
     const prepareSession = () => {
-        const session_cart_items = cartItems.map((item: any) => {
+        const session_cart_items = cart && cart.map((item: any) => {
             return { price: item.price.id, quantity: item.price.qty };
         });
         const contextSession = {
-            cart_items: cartItems,  // Updated to use cart_items
+            cart_items: cart?cart:[],  // Updated to use cart_items
             method_id: method_id,
             customer_id: customer_id,
         };
@@ -78,7 +77,7 @@ const CheckoutButton: React.FC<ICheckoutButton> = (props) => {
         {/* SESSION: {JSON.stringify(sessionData)}<hr/>
         {cart} */}
         <div className='checkout-button'>
-            <UiButton variant="glow" traits={traits} onClick={handleCheckout} >{`${label} ${calculateCartTotal(cartItems)}`}</UiButton>
+            <UiButton variant="glow" traits={traits} onClick={handleCheckout} >{`${label} ${calculateCartTotal(cart)}`}</UiButton>
         </div>
     </>
 };

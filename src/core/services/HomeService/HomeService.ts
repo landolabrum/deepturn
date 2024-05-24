@@ -1,5 +1,5 @@
 import ApiService from "../ApiService";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 import IHomeService, { IGroup, IHomePostLight, IHomePostLightRename, ILight } from "./IHomeService"
 import { getService } from "@webstack/common";
 import IMemberService from "../MemberService/IMemberService";

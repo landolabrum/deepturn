@@ -1,5 +1,5 @@
 import ApiService from "../ApiService";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 import ISocialService from "./ISocialService";
 
 export default class SocialService

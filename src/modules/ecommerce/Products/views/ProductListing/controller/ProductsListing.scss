@@ -12,21 +12,22 @@
     color: white;
     @extend .d-flex;
 
-    width: var(--s-padding-width);
-    padding: var(--s-padding);
+    width: var(--s-4-width);
+    padding: var(--s-4);
 
     margin: auto;
-    gap: var(--s-5);
+    gap: var(--s-element);
     justify-content: stretch;
     align-items: stretch;
     &__header {
+        color: var(--primary);
         @extend .d-flex;
         align-items: flex-start;
-        gap:var(--s-padding);
+        gap:var(--s-4);
         flex-direction: column;
     }
     .product-listing__filters{
-        padding:var(--s-padding);
+        padding:var(--s-4);
         margin: auto;
         border-radius: var(--border-radius);
         width: calc(100% - calc(var(--s-9) * 2));

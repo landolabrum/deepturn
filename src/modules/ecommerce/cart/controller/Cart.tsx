@@ -10,8 +10,7 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 
 
 const Cart = ({ variant, traits }: any) => {
-  const { getCartItems, } = useCart();
-  const cart = getCartItems();
+  const { cart } = useCart();
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
   let query = String(router.query.ref);

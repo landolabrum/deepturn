@@ -9,8 +9,8 @@ $item-height: 500px;
 .product-slider--container {
   position: relative;
   height: max-content;
-  padding: var(--s-padding);
-  width: var(--s-padding-width);
+  padding: var(--s-4);
+  width: var(--s-4-width);
   border: solid 1px var(--gray-60);
   background-color: var(--gray-100);
   @media(min-width: 1100px) {
@@ -51,7 +51,7 @@ $item-height: 500px;
     z-index: 1000;
     transform: translateY(calc($item-height * .5));
     width: var(--s-element);
-    height: calc(var(--s-element) + calc(var(--s-padding)* 2));
+    height: calc(var(--s-element) + calc(var(--s-4)* 2));
     --ui-icon-width: var(--s-1);
     --ui-icon-height: var(--s-1);
     --ui-icon-color: var(--gray-70-o);
@@ -132,8 +132,8 @@ $item-height: 500px;
 
       &--image,
       &--info {
-        height: var(--s-padding-width);
-        width: var(--s-padding-width);
+        height: var(--s-4-width);
+        width: var(--s-4-width);
       }
 
       &--image {
@@ -142,13 +142,13 @@ $item-height: 500px;
       }
 
       &--info {
-        padding: var(--s-padding);
+        padding: var(--s-4);
         border-radius: var(--border-radius);
         @extend .d-flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        gap: var(--s-padding);
+        gap: var(--s-4);
 
         &__name {
           text-transform: capitalize;
@@ -209,11 +209,11 @@ $item-height: 500px;
           border-radius: unset;
 
           &__name {
-            padding: 0 var(--s-padding);
+            padding: 0 var(--s-4);
           }
 
           &__description {
-            padding: 0 var(--s-padding);
+            padding: 0 var(--s-4);
             -webkit-line-clamp: 3;
             /* Approximate number of lines based on max-height and line-height */
           }
@@ -221,7 +221,7 @@ $item-height: 500px;
           &__action {
             margin-bottom: var(--s-9);
             width: auto;
-            padding: 0 var(--s-padding);
+            padding: 0 var(--s-4);
           }
         }
       }
@@ -241,7 +241,7 @@ $item-height: 500px;
           height: max-content;
           border-radius: unset;
           background-color: transparent;
-          padding: 0 var(--s-padding) 0;
+          padding: 0 var(--s-4) 0;
 
           &__description {
             -webkit-line-clamp: 2;
@@ -251,7 +251,7 @@ $item-height: 500px;
           &__action {
             justify-content: flex-end;
             width: 100%;
-            margin-bottom: var(--s-padding);
+            margin-bottom: var(--s-4);
           }
         }
       }

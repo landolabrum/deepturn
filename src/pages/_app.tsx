@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Head from "next/head";
 import type { AppProps } from "next/app";
 import MainLayout from "../layouts/default/DefaultLayout";
@@ -16,7 +18,6 @@ import { LoaderProvider } from "@webstack/components/Loader/Loader";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 
-
   return (
     <>
       <Head>
@@ -31,11 +32,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             <ModalProvider>
               <HeaderProvider>
                 <ModalOverlay />
-
                 <MainLayout>
-
                   <Component {...pageProps} />
-
                 </MainLayout>
               </HeaderProvider>
             </ModalProvider>

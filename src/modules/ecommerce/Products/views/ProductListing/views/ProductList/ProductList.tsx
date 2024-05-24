@@ -5,7 +5,7 @@ import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import Image from 'next/image';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 import { useRouter } from 'next/router';
 
 // Remember to create a sibling SCSS file with the same name as this component
@@ -63,7 +63,7 @@ const ProductList = ({ products }:IProductList) => {
       <>
         <style jsx>{styles}</style>
         <div className='product-list'>
-        <AdaptGrid xs={1} md={3} gap={15} variant="card">
+        <AdaptGrid xs={1} md={3} gap={10} >
           {prods && prods.filter((prod: any,a:number)=>prod?.metadata?.mid === environment.merchant.mid).map((product: any, index: number) => (
             <div 
                 key={index}
@@ -74,12 +74,11 @@ const ProductList = ({ products }:IProductList) => {
                 {product.images.length ? (
                   <>
                     <div className="product--images__image">
-                      {/* Style your image container to maintain aspect ratio if needed */}
                       <Image
                         src={product.images[0]}
                         alt={product.name}
-                        fill // Use fill to make the image fill the container
-                        style={{ objectFit: 'cover' }} // Adjust object-fit as needed
+                        fill
+                        style={{ objectFit: 'cover' }}
                         unoptimized={true}
                       />
                     </div>
@@ -91,8 +90,7 @@ const ProductList = ({ products }:IProductList) => {
                             <Image
                               src={img}
                               alt={`${product.name} ${imgIndex + 1}`}
-                              fill // Use fill to make the image fill the container
-                              style={{ width: '100%'}} // Adjust object-fit as needed
+                              // fill
                               unoptimized={true}
                             />
                           </div>

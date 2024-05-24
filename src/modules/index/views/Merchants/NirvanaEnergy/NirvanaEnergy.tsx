@@ -6,8 +6,7 @@ import HomeGridItem from '../../HomeGridItem/HomeGridItem';
 import ProductSurvey from '~/src/pages/configure';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import Image from "next/image";
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { useUser } from '~/src/core/authentication/hooks/useUser';
 
 
 const NirvanaEnergyIcon = () => {
@@ -28,17 +27,23 @@ const NirvanaEnergyIcon = () => {
 }
 // Remember to create a sibling SCSS file with the same name as this component
 const NirvanaEnergy = () => {
-
+  const outputValue = (powerInKW: number) => {
+    const volts = 240;
+    const powerFactor = 1;
+    const ampStr = String((powerInKW * 1000) / (volts * powerFactor)).split('.');
+    const addAmp = Number(String(ampStr[1])[0]) > 5;
+    const amps = addAmp?Number(ampStr[0])+2:ampStr[0];
+    return `${powerInKW} kW = ${amps} Amps`;
+  };
   const tableData = [
-    { manufacturer: 'Tesla', 'capacity': 13, 'output': 5.5 },
-    { manufacturer: 'LG', 'capacity': 15, 'output': 6.4 },
-    { manufacturer: 'Enphase', 'capacity': 12, 'output': 5 },
-    { manufacturer: 'Generack', 'capacity': 15.5, 'output': 4.5 },
-    { manufacturer: 'GrowWatt', 'capacity': 10, 'output': 6 },
-    { manufacturer: <NirvanaEnergyIcon />, 'capacity': 15, 'output': 12 },
+    { manufacturer: 'Tesla', 'capacity': "13 kW", 'output': outputValue(5.5) },
+    { manufacturer: 'LG', 'capacity': "15 kW", 'output': outputValue(6.4) },
+    { manufacturer: 'Enphase', 'capacity': "12 kW", 'output': outputValue(5) },
+    { manufacturer: 'Generack', 'capacity': "15.5 kW", 'output': outputValue(4.5) },
+    { manufacturer: 'GrowWatt', 'capacity': "10 kW", 'output': outputValue(6) },
+    { manufacturer: <NirvanaEnergyIcon />, 'capacity': "15 kW", 'output': outputValue(12) },
   ];
-  const {openModal, isModalOpen}=useModal();
-
+const user = useUser()
   return (
     < >
       <style jsx>{styles}</style>
@@ -63,7 +68,6 @@ const NirvanaEnergy = () => {
             On and Off-grid battery back up
             If you&apos;re thinking about going off grid or want to learn more about backup battery systems, it&apos;s time to create your
           </h4>
-          {/* <div className='d-flex-col align-start gap-9'> */}
           <h2>
             The Importance of Backup Batteries
           </h2>
@@ -91,10 +95,11 @@ const NirvanaEnergy = () => {
               Off-grid systems are not connected to the utility grid. These systems can be tailored to fit your needs no matter how big or small and using several different power sources.
             </HomeGridItem>
           </AdaptGrid>
-          <h3>Don&apos;t be fooled by ( Name Brand ) Batteries</h3>
+          <br/>
+          <br/>
+          <br/>
           <AdapTable
-            // variant='mini'
-            options={{ hide: ['header', 'footer'] }}
+            options={{ hide:  'footer', tableTitle:"Discover Better Performance, Compared to Leading Brands." }}
             data={tableData}
           />
         </div>

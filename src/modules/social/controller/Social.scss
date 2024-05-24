@@ -6,8 +6,8 @@
 
 .social__default{
     @extend .d-flex;
-    width: var(--s-padding-width);
-    padding: var(--s-padding);
+    width: var(--s-4-width);
+    padding: var(--s-4);
     &--title{
         color: var(--gray-30);
         font-size: var(--s-3);

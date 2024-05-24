@@ -1,70 +1,39 @@
-// Relative Path: ./MbOne.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './Deepturn.scss';
-// import { TJSCube } from '@webstack/components/threeJs/TJSCube/controller/TJSCube';
-// import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import UiMap from '../../../../../webstack/components/Graphs/UiMap/controller/UiMap';
-import useLocation from '@webstack/hooks/user/useLocation';
-import { useLoader } from '@webstack/components/Loader/Loader';
+import { IVessel } from '@webstack/components/Graphs/UiMap/models/IMapVessel';
+import MapVesselDetails from '@webstack/components/Graphs/UiMap/views/MapVessel/views/MapVesselDetails/MapVesselDetails';
+const Deepturn = () => {
+  const [currentVessel, setCurrentVessel] = useState<IVessel | false | undefined>();
+  const closeVessel = () => currentVessel && setCurrentVessel(false);
 
-// Remember to create a sibling SCSS file with the same name as this component
+  const vessels: IVessel[] = [
+    {
+      name: 'Two Story Smart Home',
+      lngLat: [-75.1867254, 39.9307048],
+      className: "partner",
+      images: [
+        "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNDAxNzM1NTk1NjgzMjg4Mw%3D%3D/original/e1573119-8f57-4e97-9d4f-9ed4be4de8b4.jpeg?im_w=1200",
+        "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNDAxNzM1NTk1NjgzMjg4Mw%3D%3D/original/a6f2bd88-0ef0-455b-8f00-433eee5b13c2.jpeg?im_w=720"
+      ],
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+    },
+  ];
 
-const Deepturn: React.FC = () => {
-  const [loader,setLoader]=useLoader();
-  const [mapOptions, setMapOptions]=useState({center:[10,10]})
-  const showLoader:boolean = loader?.active;
-  const loc = useLocation();
-  const startLoader = () =>{
-    if(!loc && !showLoader){
-      setLoader({active:true,
-        body:"loading map"
-        // children: <h1>Hello World!</h1>
-      });
-    }else if(showLoader)setLoader({active:false});
-  }
-  const handleVesselClick=(e:any)=>{
-    console.log("[ handleVesselClick ]",e)
-    // setMapOptions({center: [e.location.lat, e.location.lng]})
-  }
-  useEffect(() => {
-    startLoader();
-  }, [startLoader ]);
-
-  if (!loc) return <></>;
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='mbone'>
-        <div className="background-video">
-          <img src="/assets/backgrounds/lava1.jpeg" />
+      <div className='deepturn'>
+        <div className='map-container' onDoubleClick={closeVessel}>
           <UiMap
-            options={mapOptions}
-            onVesselClick={handleVesselClick}
-        
-          />
-          {/* <TJSCube
-            icon={{
-              bevel: {
-                bevelEnabled: true,
-                bevelThickness: 5,
-                bevelSegments: 15,
-                bevelSize: 2
-              },
-              // color:"#e0e0e0"/,
-              // backgroundColor:"#e0e0e0",
-              // metalness: 10,
-              // roughness: .51,
-              // opacity: opacity !== 0 && opacity * .1 || .1,
-              // opacity: .7,
-              icon: "deepturn-logo",
-              texture: "/assets/backgrounds/lava1.jpeg",
-              // bumpMap:"/assets/textures/texture-leaves.jpeg",
-              size: { x: 120, y: 120, z: 9 },
-              animate: { rotate: { y: -2, x: 1, speed: .001 } }
+            onVesselClick={setCurrentVessel}
+            options={{
+              rpm: 200,
             }}
-          // metalness={5}
-          /> */}
+            vessels={vessels}
+          />
         </div>
+        <MapVesselDetails vessel={currentVessel} setVessel={setCurrentVessel} />
       </div>
     </>
   );

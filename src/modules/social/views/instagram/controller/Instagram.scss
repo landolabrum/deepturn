@@ -7,21 +7,33 @@
 .instagram {
     @extend .d-flex;
     flex-direction: column;
-
-    width: var(--s-padding-width);
-    padding: var(--s-padding);
+    color: var(--gray-90);
+    gap:var(--s-4);
+    width: var(--s-4-width);
+    padding: var(--s-4);
+    background-color: var(--black);
+    border-radius: var(--border-radius);
     &-header {
+        color: var(--gray-70);
+        border-radius: var(--border-radius);
+        background-color: var(--gray-100);
         @extend .d-flex;
         justify-content: flex-start;
-        width: var(--s-padding-width);
-        padding: var(--s-padding);
+        width: var(--s-4-width);
+        padding: var(--s-4);
         &--title {
             font-size: var(--s-element);
         }
     }
     &-body{
+        margin-bottom: var(--s-1);
         @extend .d-flex;
+        align-items: space-between;
+        border-radius: var(--border-radius);
+        aspect-ratio: 5/4;
         flex-wrap: wrap;
-       
+        width: var(--s-1-width);
+        padding: var(--s-1);
+        background-color: var(--gray-100);
     }
 }

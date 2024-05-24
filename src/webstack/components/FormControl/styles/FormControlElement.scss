@@ -34,7 +34,7 @@
     }
 
     100% {
-        text-shadow: 0 0 var(--s-8) var(--secondary);
+        text-shadow: 0 0 var(--s-8) var(--primary-o);
     }
 }
 
@@ -85,7 +85,7 @@
 // FORM CONTROL ELEMENT
 
 .form-control__element {
-    color: var(--gray-50);
+    // color: var(--gray-50);
     font-size: var(--font-size);
     --ui-icon-width: var(--font-size);
     --ui-icon-height: var(--font-size);
@@ -151,12 +151,12 @@
         @extend %element-color;
     }
 
-    &:not( &--signature, &--checkbox) {
+    &:not( &--signature, &--checkbox, &--round) {
         @extend .b-rad;
     }
 
     // HANDLE ICONS
-    &:not(&--before-icon, &--after-icon){
+    &:not(&--before-icon, &--after-icon, &--glow){
         padding: 0 var(--s-9);
     }
   
@@ -195,7 +195,7 @@
     }
     &--button.form-control__element--flat {
         width: inherit;
-        gap: var(--s-11);
+        gap: var(--s-12);
         &:first-child{
             padding: 0;
         }
@@ -284,6 +284,9 @@
 
 
     // FORM CONTROL ELEMENTS - VARIANT DEFINITIONS
+    &--round{
+        border-radius: var(--s-1);
+    }
     @mixin variant($name,
         $bg, $c, $bc,
         $hBg, $hC, $hBc,
@@ -380,7 +383,7 @@
             content: '';
             bottom: 0;
             border-top: solid 1px var(--gray-70);
-            width: calc(100% - var(--s-padding));
+            width: calc(100% - var(--s-4));
         }
 
         &:hover {
@@ -420,38 +423,38 @@
         transparent, var(--blue), transparent,
         transparent, var(--blue-10), transparent,
         transparent, var(--blue-10), transparent);
+ 
+    &--glow {
+        color: inherit;
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        width: 100%;
 
-         &--glow {
-            color: inherit;
-            overflow: hidden;
-            position: absolute;
-            left: 0;
-            width: 100%;
-
-            // mix-blend-mode: color-dodge;
-            outline: none;
-            border: none;
-            height: 100%;
-            backdrop-filter: blur(var(--s-11));
-        }
-        
-         &--glow:focus,
-         &--glow:focus-within {
-            background-color: var(--gray-80);
-        }
-        
-         &--glow:hover:not(:focus, :focus-within) {
-            animation: none;
-            background-color: var(--primary-lite);
-            color: var(--gray-10);
-        }
+        // mix-blend-mode: color-dodge;
+        outline: none;
+        border: none;
+        height: 100%;
+        backdrop-filter: blur(var(--s-12));
+    }
+    
+    &--glow:focus,
+    &--glow:focus-within {
+        background-color: var(--gray-80);
+    }
+    
+    &--glow:hover:not(:focus, :focus-within) {
+        animation: none;
+        background-color: var(--primary-lite);
+        color: var(--gray-10);
+    }
 
     &--link {
         padding: 0;
         width: max-content;
         gap: var(--s-10);
         &:hover {
-            animation: glowTxt 1s infinite;
+            animation: glowTxt 2s infinite;
         }
     }
     &--bump {
@@ -498,7 +501,8 @@
     &--select {
         &--flat{
             background-color: var(--gray-70-o);
-            color: var(--gray-70-o);
+            // color: var(--gray-70-o);
+            color: inherit;
             --ui-icon-color: var(--gray-70-o);
             border: solid 1px transparent;
             
@@ -533,4 +537,5 @@
             background-color: var(--gray-70);
         }
     }
+    
 }

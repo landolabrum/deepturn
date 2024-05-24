@@ -6,7 +6,7 @@
 
 
 .header__container {
-  z-index: 998;
+  z-index: 999;
   width: 100vw;
   position: relative;
   color: var(--gray-40-o);
@@ -20,14 +20,15 @@
   justify-content: space-between;
   background-color: var(--primary-o);
   top: 0;
-  
+  &.aire-hotel--index, &.deepturn--index{
+    display: none;
+  }
   @media(max-width: 1099px) {
-    top: var(--s-padding);
     flex-direction: row-reverse;
     background-color: transparent;
     height: max-content;
-    width: 100%;
-    padding: 0 var(--s-padding);
+    width: var(--s-9-width);
+    padding: var(--s-9);
     border-bottom: unset;
     box-shadow: unset;
     align-items: flex-start;
@@ -43,7 +44,6 @@
 
   @media(max-width:1099px) {
     width: 100%;
-
     padding: 0;
     margin: 0;
   }
@@ -80,12 +80,12 @@
       animation: slideDown 1s forwards;
     }
     @media(min-width: 1260px) {
-      max-width: calc(1260px - calc(var(--s-padding) * 2));
-      inline-size: var(--s-padding-width);
+      max-width: calc(1260px - calc(var(--s-9) * 2));
+      inline-size: var(--s-9-width);
     }
     
     @media(max-width:1260px) {
-      // padding: 0 var(--s-padding);
+      // padding: 0 var(--s-9);
       flex-direction: column;
       // width: 100%;
     }
@@ -94,6 +94,7 @@
     .header-right {
       display: flex;
       width: 100%;
+      height: max-content;
     }
     
     .header-left {
@@ -103,32 +104,33 @@
       @media(max-height: 500px) {
         flex-direction: row-reverse;
         align-items: center;
-        gap: var(--s-4);
+        gap: var(--s-9);
       }
       .header-title {
         @extend .d-flex;
         justify-content: flex-start;
-        gap: var(--s-10);
         color: var(--gray-40-o);
         --ui-icon-color: var(--gray-40-o);
+        --ui-icon-height: auto;
+        --ui-icon-width: 100%;
         font-weight: 700;
         text-transform: capitalize;
-        font-size: var(--s-1);
-        --ui-icon-size: var(--s-2);
         line-height: 1;
+        height: max-content;
         @media(max-width: 1099px) {
-          align-items: flex-start;
-          --ui-icon-size: var(--s-1);
-          // padding: 0 var(--s-padding);
+          white-space: nowrap;
           font-style: italic;
-          height: calc(var(--s-element) + 2px);
           overflow: hidden;
-          width: calc(var(--s-padding-width) - calc(var(--s-element) + var(--s-padding)));
+          min-height: max-content;
           text-transform: uppercase;
           &:hover{
             color: var(--primary);
             --ui-icon-color: var(--primary);
           }
+        }
+        .brand-logo{
+          @extend .d-flex;
+          height: inherit;
         }
       }
     }

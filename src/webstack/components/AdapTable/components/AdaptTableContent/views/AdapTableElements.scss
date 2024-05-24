@@ -224,8 +224,8 @@ table {
           position: relative;
           &--image{
             @extend .d-flex;
-            width: var(--s-padding-width);
-            padding: var(--s-padding);
+            width: var(--s-4-width);
+            padding: var(--s-4);
             aspect-ratio: 1;
             --ui-icon-color: var(--gray-60-o);
             --ui-icon-width: var(--s-element);

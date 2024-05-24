@@ -214,9 +214,9 @@ $wid: calc(100%);
 }
 
 .collapse__body {
-    width: calc(100% - var(--s-padding));
+    width: calc(100% - var(--s-4));
     height: var(--s-element);
-    padding: var(--s-padding) 0;
+    padding: var(--s-4) 0;
     &__open {
 
         animation: openBody 1s forwards;

@@ -6,7 +6,7 @@
 form{
     @extend .d-flex;
     flex-direction: column;
-    gap:var(--s-padding);
-    width: var(--s-padding-width);
+    gap:var(--s-4);
+    width: var(--s-4-width);
     
 }

@@ -5,27 +5,33 @@ import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 import { ICustomer } from '~/src/models/CustomerContext';
+import { useClearance } from '~/src/core/authentication/hooks/useUser';
+import canViewCustomer from '../../functions/canViewCustomer';
 
 
-const AdminCustomerList: React.FC<any> = ({ onSelect}:{onSelect:(props: string)=>void}) => {
-  const [customers, setCustomers]=useState<ICustomer | undefined>();
-  const [hasMore, setHasMore]=useState(false);
+const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: string) => void }) => {
+  const [customers, setCustomers] = useState<ICustomer | undefined>();
+
+  const [hasMore, setHasMore] = useState(false);
   const adminService = getService<IAdminService>('IAdminService');
 
-  const hideColumns = ['extras','id'];
- 
+  const hideColumns = ['extras', 'id'];
+  const level = useClearance();
+
   const getCustomerList = async () => {
     let customerList = await adminService.listCustomers();
     if (customerList?.object === 'list') {
       setHasMore(customerList.has_more)
       customerList = customerList.data;
-  
+
       // Use a for loop or reduce function to transform the customer data
       const transformedCustomerList = customerList.map((customer: ICustomer) => {
-        // console.log('[ transformedCustomerList ]', customer)
-  
+        // if(level >= 10 )
+
+          
+          const canViwCustomer = canViewCustomer(customer, level);
         // Create a new dictionary for each customer
         const extras = {
           ...customer.metadata,
@@ -34,57 +40,57 @@ const AdminCustomerList: React.FC<any> = ({ onSelect}:{onSelect:(props: string)=
           description: customer.description,
           discount: customer.discount,
           currency: customer.currency,
-          invoice_prefix:customer.invoice_prefix,
+          invoice_prefix: customer.invoice_prefix,
           next_invoice_sequence: customer.next_invoice_sequence,
         }
-        return {
+        if(canViwCustomer)return {
           customer: <AdaptTableCell cell='member' data={{
             id: customer.id,
             name: customer.name,
             email: customer.email,
-          }}/>,
+          }} />,
           id: customer.id,
           name: customer.name,
           balance: customer.balance,
-          created: <AdaptTableCell cell='date' data={customer.created}/>,
-          default_source:  <AdaptTableCell cell='check' data={Boolean(customer.default_source)}/>,
+          created: <AdaptTableCell cell='date' data={customer.created} />,
+          default_source: <AdaptTableCell cell='check' data={Boolean(customer.default_source)} />,
           // delinquent: customer.delinquent,
-          tax_exempt: <AdaptTableCell cell='check' data={Boolean(customer.tax_exempt == 'exempt')}/>,
-          clearance: <AdaptTableCell cell='id' data={customer?.user?.clearance}/>,
-          extras:extras,
-          request: customer.metadata && <AdaptTableCell cell='check' data={Boolean( Object.entries(customer.metadata).find((f:any)=>String(f).includes(String(environment.merchant.mid))))}/>,
+          tax_exempt: <AdaptTableCell cell='check' data={Boolean(customer.tax_exempt == 'exempt')} />,
+          clearance: <AdaptTableCell cell='id' data={customer?.user?.clearance} />,
+          extras: extras,
+          request: customer.metadata && <AdaptTableCell cell='check' data={Boolean(Object.entries(customer.metadata).find((f: any) => String(f).includes(String(environment.merchant.mid))))} />,
         };
       });
-  
+
       // Set the transformed customer list in state
       setCustomers(transformedCustomerList);
     }
   };
-  
-  
-  
+
+
+
   useEffect(() => {
-     if(!customers)getCustomerList();
+    if (!customers) getCustomerList();
   }, [setCustomers]);
   return (
     <>
       <style jsx>{styles}</style>
       <div className='admin-customer-list'>
-      <div className='admin-customer-list__table'>
-      <AdapTable 
-        // page={1}
-        // limit={5}
-        // total={Number(Object(customers)?.length)}
-        // setPage={console.log}
-        // setLimit={console.log}
-        options={{
-          hideColumns:hideColumns,
-          tableTitle:'customer list'
-        }}
-        loading={!Object(customers)?.length}
-        data={customers}
-        onRowClick={onSelect}
-        />
+        <div className='admin-customer-list__table'>
+          <AdapTable
+            // page={1}
+            // limit={5}
+            // total={Number(Object(customers)?.length)}
+            // setPage={console.log}
+            // setLimit={console.log}
+            options={{
+              hideColumns: hideColumns,
+              tableTitle: 'customer list'
+            }}
+            loading={!Object(customers)?.length}
+            data={customers}
+            onRowClick={onSelect}
+          />
         </div>
       </div>
     </>

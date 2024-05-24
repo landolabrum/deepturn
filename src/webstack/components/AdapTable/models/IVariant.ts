@@ -1,5 +1,4 @@
-export type IFormControlVariant =
-  | ""
+export type IFormControlBaseVariant =
   | "lowercase"
   | "inherit"
   | "left"
@@ -9,19 +8,17 @@ export type IFormControlVariant =
   | "glow"
   | "lite"
   | "warning"
-  | "center dark"
+  | "center"
   | "account"
   | "active"
   | "pill"
   | "blue"
-  | "center"
   | "disabled"
   | "select__disabled"
   | "fit-text"
   | "disabled-icon"
   | "false"
   | "bump"
-  | "bump pill"
   | "flat"
   | "gray"
   | "hide-sort"
@@ -35,31 +32,19 @@ export type IFormControlVariant =
   | "null"
   | "undefined"
   | "wordmark"
-  // UiCal
   | "daily"
   | "custom"
   | "monthly"
-  | "dark invalid"
-  | "invalid dark"
-  | "dark account"
-  | "account dark"
   | "primary"
-  | "primary round mini"
-  | "round primary"
+  | "round"
   | "secondary"
-  | "signature"
-  | "signature invalid"
-  | false
-  // Add other combinations as needed
-  ;
+  | "signature";
 
-export type IOverlayVariant =
+export type IOverlayBaseVariant =
   | "blur"
-  | "blur-disabled"
-  | "disabled"
-  | "dark invalid"
-  | "invalid dark"
-  | "dark disabled"
-  | "disabled dark"
-  // Add other combinations as needed
-  ;
+  | "disabled";
+
+
+export type IFormControlVariant = string | false;
+
+export type IOverlayVariant = string;

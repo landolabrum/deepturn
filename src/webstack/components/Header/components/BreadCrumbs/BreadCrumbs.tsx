@@ -4,7 +4,7 @@ import styles from "./BreadCrumbs.scss";
 import capitalize from "@webstack/helpers/Capitalize";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import useWindow from "@webstack/hooks/useWindow";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 
 export type BreadCrumbLinkProps = {

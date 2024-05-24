@@ -10,8 +10,8 @@ interface IGuestCheckoutProps {
 }
 
 const PaymentElementForm: React.FC<IGuestCheckoutProps> = ({  onSuccess, success_url }) => {
-    const [cart,setCart]=useState<any | undefined>();
-    const { getCartItems, } = useCart();
+    const [_cart,setCart]=useState<any | undefined>();
+    const { cart } = useCart();
 
 
     const stripe = useStripe();
@@ -47,7 +47,7 @@ const PaymentElementForm: React.FC<IGuestCheckoutProps> = ({  onSuccess, success
     
 
     useEffect(() => {
-        if(!cart)setCart(getCartItems());
+        if(!_cart)setCart(cart);
     }, [setCart]);
     return (
         <>
@@ -55,7 +55,7 @@ const PaymentElementForm: React.FC<IGuestCheckoutProps> = ({  onSuccess, success
 
           <form onSubmit={handleSubmit}>
           <div>
-          {JSON.stringify(cart)}
+          {JSON.stringify(_cart)}
           </div>
               <PaymentElement />
               <UiButton variant={!stripe?'disabled':'glow'} type='submit' disabled={!stripe}>Submit</UiButton>

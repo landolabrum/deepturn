@@ -1,5 +1,5 @@
 h2{
-    color: var(--gray-20);
+    color: var(--primary);
     justify-content: flex-start;
     width: 100%;
     white-space: nowrap;
@@ -10,14 +10,14 @@ h3{
     background-color: var(--primary-o);
     border-radius: var(--border-radius);
     margin: var(--s-element) 0 var(--s-9);
-    padding:var(--s-9) var(--s-padding);
+    padding:var(--s-9) var(--s-4);
     color:var(--primary-lite);
     align-items: flex-start;
 }
 h4{
     line-height: 1.2;
     --ui-icon-height: var(--s-6);
-    color:var(--gray-40);
+    color:var(--gray-30);
     --ui-icon-color:var(--gray-40);
     width: auto;
 }
@@ -32,9 +32,19 @@ h4{
 }
 .nirvana-index{
      @extend .d-flex;
-     width: 100%;
      gap:var(--s-1);
      flex-direction: column;
+     padding-bottom: 100px;
+     width: 100%;
+     margin: var(--s-element) 0;
+     @media(max-width:1260px){
+         padding: var(--s-4);
+         width: var(--s-4-width);
+     }
+     @media(max-width:900px){
+         width: var(--s-9-width);
+         padding: var(--s-9);
+     }
      &__content{
          gap:var(--s-1);
          flex-direction: column;
@@ -47,7 +57,7 @@ h4{
             justify-content: flex-start;
             flex-wrap: nowrap;
             flex-direction: column;
-            gap: var(--s-padding);
+            gap: var(--s-4);
          }
         }
     } 

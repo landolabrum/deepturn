@@ -1,17 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, {  useEffect, useRef, useState } from 'react';
 import styles from './ProductSurvey.scss';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import useUserAgent from '@webstack/hooks/getUserAgentInfo';
+import useUserAgent from '@webstack/hooks/useUserAgent';
 import { getService } from '@webstack/common';
-import keyStringConverter from "@webstack/helpers/keyStringConverter"
-import environment from "~/src/environment"
+import keyStringConverter from "@webstack/helpers/keyStringConverter";
+import environment from "~/src/core/environment";
 import ContactForm from '@shared/components/ContactForm/ContactForm';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 import SurveyForm from '../views/SurveyForm/SurveyForm';
-
+import useScrollTo from '@webstack/components/AdapTable/hooks/useScrollTo';
 
 export const applianceArray: IMoreInfoField[] = [
     { name: "refrigerator", selected: false, value: 6 },
@@ -37,12 +37,11 @@ export const applianceArray: IMoreInfoField[] = [
     { name: "other", selected: false, value: 10 },
 ];
 
-
 export type IMoreInfoField = {
     name: string;
     selected?: boolean;
-    value?: any
-}
+    value?: any;
+};
 
 interface IProductMoreInfoForm {
     id: string;
@@ -55,24 +54,18 @@ interface IProductMoreInfoForm {
 const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     survey = applianceArray,
     startButton,
-    title = '',
+    title = 'Appliances to Power',
     id,
-    subtitle = 'Select applicable appliances that you need power'
+    subtitle = 'Select applicable appliances that you need power for'
 }) => {
     const memberService = getService<IMemberService>('IMemberService');
-    const user = useUser()
+    const user = useUser();
     const userAgentInfo = useUserAgent();
-
     const optionsRef = useRef<any | undefined>();
-
     const [contactData, setContactData] = useState(null);
-    const [view, setView] = useState('start');
+    const [view, setView] = useState<string>('start');
     const [message, setMessage] = useState<string | null>(null);
-
-
-    const [form, setForm] = useState<{ survey: IMoreInfoField[] }>({ survey: survey });
-
-
+    const [appliances, setAppliances] = useState<IMoreInfoField[]>( survey );
 
     const onContactSubmit = async (submittedContactData: any) => {
         setContactData(submittedContactData); // Save the contact data in state
@@ -97,8 +90,8 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
                 },
                 merchant: environment.merchant,
                 survey: {
-                    id: id,
-                    data: form.survey.reduce((acc: any, item: any) => {
+                    id,
+                    data: appliances.reduce((acc: any, item: any) => {
                         if (item.selected) {
                             acc[keyStringConverter(item.name, true)] = item.value;
                         }
@@ -108,10 +101,8 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
                 }
             },
         };
-        // console.log(request)
         try {
             const response = await memberService.signUp(request);
-            console.log('[ PRODUCT SURVEY ( response ) ]', response)
             if (response?.email) {
                 handleView('success');
                 setMessage(response.email);
@@ -125,56 +116,95 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
         }
     };
 
+    const { scrollTo, setScrollTo } = useScrollTo();
     const handleView = (newView: any) => {
+        setScrollTo(id = 'product-survey');
         setView(newView);
-    }
-
-    const views = {
-        error: <>error: (c-pff)</>,
-        success: <><style jsx>{styles}</style><div className='product-survey__success'>
-            <div className='product-survey__success--status'>Success<UiIcon icon='fa-circle-check' /></div>
-            <div>A verification email to
-                <span className='product-survey__success--email'> {message}, </span>
-                has been sent.
-            </div>
-            <div>To complete the process, simply click on the link in the email.</div>
-        </div></>,
-        invalid: <div className='product-survey__invalid'>
-            <div className='product-survey__invalid--status'>Invalid<UiIcon icon='fa-exclamation-triangle' /></div>
-            <div className='product-survey__invalid--message'>{message || ''}</div>
-            <UiButton onClick={() => handleView('contact')}>return to contact form</UiButton>
-
-        </div>,
-        contact: <ContactForm title={false} user={user} onSubmit={onContactSubmit} />,
-        start: <><style jsx>{styles}</style><div className='product-survey-btn-view' onClick={() => handleView('form')}><div className='button-text'>{startButton}</div></div></>,
-        form: <SurveyForm
-            title={title}
-            handleView={handleView}
-            form={form}
-            setForm={setForm}
-        />
     };
-
+    
+    useEffect(() => {}, [handleView]);
+    const views = {
+        start: (
+            <>
+                <style jsx>{styles}</style>
+                <div className='product-survey-btn-view' onClick={() => handleView('appliances')}>
+                    <div className='button-text'>{startButton}</div>
+                </div>
+            </>
+        ),
+        contact: (
+            <>
+                <style jsx>{styles}</style>
+                <div className='product-survey__contact-form'>
+                    <div className='product-survey__description'>
+                        <h2>Contact Information</h2>
+                        <p>Please provide your contact information so we can reach out to you with the quote.</p>
+                    </div>
+                    <ContactForm title={false} user={user} onSubmit={onContactSubmit} />
+                </div>
+            </>
+        ),
+        appliances: (
+            <SurveyForm
+                title={title}
+                handleView={handleView}
+                survey={appliances}
+                setSurvey={setAppliances}
+            />
+        ),
+        error: (
+            <div className='c-error'>
+                <h1>An error occurred</h1>
+            </div>
+        ),
+        success: (
+            <>
+                <style jsx>{styles}</style>
+                <div className='product-survey__success c-success'>
+                    <div className='product-survey__success--status'>
+                        Success<UiIcon icon='fa-circle-check' />
+                    </div>
+                    <div>
+                        A verification email to
+                        <span className='product-survey__success--email'> {message}, </span>
+                        has been sent.
+                    </div>
+                    <div>To complete the process, simply click on the link in the email.</div>
+                </div>
+            </>
+        ),
+        invalid: (
+            <div className='product-survey__invalid'>
+                <div className='product-survey__invalid--status'>
+                    Invalid<UiIcon icon='fa-exclamation-triangle' />
+                </div>
+                <div className='product-survey__invalid--message'>{message || ''}</div>
+                <UiButton onClick={() => handleView('contact')}>return to contact appliances</UiButton>
+            </div>
+        ),
+    };
+    
     if (!id) return <>No ID FOR PRODUCT REQUEST</>;
+
     return (
         <>
             <style jsx>{styles}</style>
-            <div className='product-survey card' ref={optionsRef} >
+            <div 
+                id='product-survey'
+                className='product-survey'
+                ref={optionsRef}
+            >
                 <UiViewLayout
-                    backBtn={true}
+                    backBtn={view !== 'start'}
                     showTitle={view !== 'start'}
                     title={view}
-                    // actions={Object.keys(views)}
-                    onViewChange={handleView}
+                    onChange={handleView}
                     currentView={view}
                     views={views}
-
                 />
             </div>
         </>
     );
-
-
 };
 
 export default ProductSurvey;

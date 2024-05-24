@@ -15,16 +15,16 @@
     width: var(--s-border-width);
 
     &__header {
-        width: var(--s-padding-width);
+        width: var(--s-4-width);
         @extend .d-flex;
         justify-content: flex-start;
-        padding: var(--s-padding);
+        padding: var(--s-4);
         background-color: var(--gray-100-o);
         align-items: flex-start;
         height: 100%;
         &-info{
             @extend .d-flex;
-            gap: var(--s-11);
+            gap: var(--s-12);
             
             font-size: var(--s-7);
             &--name{

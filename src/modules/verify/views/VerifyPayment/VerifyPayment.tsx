@@ -16,10 +16,10 @@ interface ICartItem {
 const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
     const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6InBvb0BuYW5pLmNvbSIsIml0ZW1zIjpbeyJwcm9kdWN0X2lkIjoicHJvZF9QNWxJMzVyMkVXVEF4aSIsInByaWNlX2lkIjoicHJpY2VfMU9IWm1KSW9kZUtaUkxEVlVlU2xZNk03In1dfQ.Zju6uFgG1L6xI26i8CQGVub-PnCoqP2Q-93qtnD1Yvo"
     const [tokenData, setTokenData] = useState<any | undefined>();
-    const { addCartItem, getCartItems } = useCart();
+    const { addCartItem, cart } = useCart();
     const MemberService = getService<IMemberService>('IMemberService');
     const ProductService = getService<IProductService>('IProductService');
-    const [cart, setCart]=useState<ICartItem | undefined>();
+    const [_cart, setCart]=useState<ICartItem | undefined>();
     const isTokenComplete = () => {
         console.log("[ ITEM ]", {
             tokenData
@@ -100,9 +100,8 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
         }
     }, [token]);
 
-    const currentCart = getCartItems();
     useEffect(() => {
-        setCart(currentCart);
+        cart && setCart(cart);
         if (tokenData?.items && isTokenComplete()) {
             getProducts();
         }

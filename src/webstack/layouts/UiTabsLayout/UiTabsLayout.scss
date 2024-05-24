@@ -82,13 +82,13 @@
         width: 400px;
 
         @media(max-width:900px) {
-            padding: var(--s-padding);
-            width: var(--s-padding-width);
+            padding: var(--s-4);
+            width: var(--s-4-width);
         }
     }
 
     .tabs__view {
-        padding: var(--s-padding);
+        padding: var(--s-4);
         width: auto;
         @extend .d-flex;
         flex-direction: column;

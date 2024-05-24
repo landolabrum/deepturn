@@ -51,7 +51,7 @@
                 max-width:calc(100vw - 40px);
             }
             &__top {
-                top: var(--s-padding);
+                top: var(--s-4);
             }
             &__center {
                 top: 50%;
@@ -60,19 +60,19 @@
             }
 
             &__right {
-                right: var(--s-padding);
+                right: var(--s-4);
             }
 
             &__bottom {
-                bottom: var(--s-padding);
+                bottom: var(--s-4);
             }
             
             &__left {
-                left: var(--s-padding);
+                left: var(--s-4);
             }
 
             &__card {
-                padding: var(--s-padding);
+                padding: var(--s-4);
                 background-color: var(--gray-40);
                 border: solid 1px var(--gray-60);
                 outline: solid 1px var(--gray-80);

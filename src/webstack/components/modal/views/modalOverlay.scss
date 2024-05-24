@@ -17,7 +17,8 @@
     @extend .d-flex;
     @extend .p-fix;
     cursor: pointer;
-    z-index: 999;
+    overflow: hidden;
+    z-index: 998;
     background: var(--gray-70-o); // Adjusted for semi-transparent overlay
     backdrop-filter: blur(5px);
 
@@ -29,50 +30,55 @@
 .modal {
     position: fixed; // Use fixed to keep it relative to the viewport
     z-index: 1000;
+    font-family: Game;
     top: 200px;
     left: 50%; // Center horizontally
     transform: translateX(-50%); // Adjust position to truly center the modal
-    overflow-y: auto; // Allow scrolling for overflow content
     display: flex;
+    overflow-x:hidden;
     flex-direction: column;
-    overflow-x: hidden;
     background-color: var(--gray-100);
-    border: solid 1px var(--gray-80);
+    border: solid 1px var(--gray-80-o);
     outline: solid 1px var(--gray-70-o);
-    border-radius: var(--border-radius);
-    gap: var(--s-padding);
+    box-shadow: 2px 4px 15px 5px var(--dark);
+    border-radius: var(--s-7);
+    gap: var(--s-1);
     min-width: 450px;
-    
+    max-width: var(--s-6-width);
+    @media(max-height: 900px) {
+        top:var(--s-9);
+        bottom:var(--s-9);
+    }
     @media(max-width: 900px) {
+        min-width: unset;
+        max-width: var(--s-9-width);
+        width: var(--s-9-width);
         margin: 0 auto;
+        padding-bottom:var(--s-9);
         top: var(--s-9);
-        width: calc(100% - calc(var(--s-9) * 2));
+        bottom: var(--s-9);
+        height: max-content;
     }
     &__popup {
-        left: 0;
-        margin: auto;
-        right: 0;
-        margin: var(--s-padding);
-        transform: unset;
+        width: var(--s-4-width);
+        @keyframes popup{
+            0% { min-width: 0px; }
+            100% { min-width: 450px; }
+        }
     }
     &__fullscreen {
         top: 0;
-        // right: 0;
         border: none;
         border-radius: unset;
         height: max-content;
         width: 100%;
         padding: 0;
-
     }
-  
-
 
     &__dragging {
         cursor: url('/icons/fa-hand-back-fist.svg'), auto;
         filter: blur(3px);
     }
-
 
     &__content {
         overflow: hidden;
@@ -88,9 +94,9 @@
         @extend .d-flex;
         flex-direction: column;
         gap: var(--s-5);
-        &__popup{
+        &__popup {
             margin: 0;
-            @media(max-width: 1100px){
+            @media(max-width: 1100px) {
                 height: 100%;
             }
         }
@@ -110,7 +116,7 @@
             background-color: #00000033;
         }
         
-        @media(max-width:900px) {
+        @media(max-width: 900px) {
             justify-content: flex-start;
             min-width: unset;
         }
@@ -123,20 +129,18 @@
                 background-color: #ffffff00;
             }
         }
-
     }
 
     &__header {
         @extend .d-flex;
         justify-content: space-between;
-        min-height: var(--s-element);
         backdrop-filter: blur(5px);
-        width: 100%;
+        padding: var(--s-8) var(--s-9) 0 var(--s-4);
+        gap: var(--s-4);
         position: relative;
         @media(max-width: 1100px) {
             position: relative;
         }
-
 
         cursor: default;
         &:hover,
@@ -145,51 +149,26 @@
         &:visited,
         &:active {
             cursor: pointer;
-            // cursor: url('/icons/fa-hand-back-fist.svg'), auto;
             --ui-icon-color: var(--primary);
-
         }
-
    
         .modal-overlay__title {
             font-size: var(--s-1);
             text-transform: capitalize;
-            font-family: Game;
-            letter-spacing: var(--s-11);
-            font-weight: 100;
-            padding: 0 var(--s-5);
-            width: auto;
+            font-family: Play;
+            letter-spacing: var(--s-12);
             color: var(--primary);
-        }
-     
-        .modal-overlay__icon{
-            @extend .d-flex;
-            border-radius: calc(var(--border-radius) * .8);
-            position: absolute;
-            top: var(--s-10);
-            right: var(--s-10);
-            margin: auto;
-            padding: var(--s-12);
-            height: var(--s-1);
-            font-weight: 900;
-            z-index: 1000;
-            transition: all .5s ease-in;
-            --ui-icon-color: transparent;
-            background-color: var(--gray-80-o);
-            --ui-icon-size: var(--s-3);
-            width: var(--s-1);
-            &:hover{
-                --ui-icon-color: var(--primary);
-                background-color: var(--primary-o);
+            @media(max-width: 900px) {
+                font-size: var(--s-4);
             }
         }
+     
         &__fullscreen {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             z-index: 2;
-            // padding-right: var(--s-padding);
             margin: 0;
             min-height: var(--s-element);
             border-radius: unset;
@@ -200,41 +179,29 @@
             }
             top: var(--s-9);
         }
-                // &:not(&__no-drag) {
-        //     &:hover {
-        //         cursor: url('/icons/fa-hand.svg'), auto;
-        //         background-color: var(--gray-80);
-
-        //     }
-
-        //     :focus,
-        //     &:focus-within,
-        //     &:visited,
-        //     &:active {
-        //         cursor: url('/icons/fa-hand-back-fist.svg'), auto;
-        //     }
-        // }
-
-        // &__dragging {
-        //     cursor: url('/icons/fa-hand-back-fist.svg'), auto;
-        // }
-
-        // &__no-drag {
-        //     cursor: default;
-        // }
     }
 
     &__body {
+        position: relative;
         @extend .d-flex;
         flex-direction: column;
         align-items: flex-start;
-        gap:var(--s-padding);
+        gap: var(--s-4);
         font-family: FreightSans;
         font-weight: 500;
         height: auto;
-        width: calc(100% - calc(var(--s-5) * 2));
         color: var(--gray-50);
-        margin: auto;
+        padding: var(--s-4);
+        overflow-y: auto; 
+        overflow-x: hidden; 
+
+        max-height: 80vh; // Set a maximum height for the modal body
+        @media(max-width: 900px) {
+            align-items: center;
+            height: max-content;
+            // width: 100%;
+            padding: var(--s-9);
+        }
         &__fullscreen {
             z-index: 1;
             margin-bottom: 0;
@@ -242,41 +209,38 @@
             width: 100%;
         }
       
-        &__popup{
+        &__popup {
             border-radius: var(--border-radius);
-            height:max-content;
+            height: max-content;
             overflow-y: auto;
             overflow-x: hidden;
         }
         .modal-overlay__confirm {
-            &--header, .header{
-                @extend .d-flex;
-                flex-direction: column;
-                width: var(--s-padding-width);
-                padding: 0 var(--s-padding);
-                align-items: flex-start;
-                .header--title{
-                    width: 100%;
-                    font-weight: bold;
-                }
-                .header--body{
-                    width: 100%;
-                }
-            }
             font-family: Play;
             @extend .d-flex;
             gap: var(--s-6);
             border-radius: var(--border-radius);
             overflow: hidden;
-            width: var(--s-padding-width);
-            padding: var(--s-padding);
             flex-direction: column;
-            // border: solid 1px var(--gray-70);
-            // background-color: var(--gray-80-o);
+            width: 100%;
+            &--header, .header {
+                @extend .d-flex;
+                flex-direction: column;
+                align-items: flex-start;
+                margin: auto 0 var(--s-4);
+                width: 100%;
+                color: var(--gray-60);
+                font-size: var(--s-7);
+
+                .header--title {
+                    font-size: var(--s-6);
+                    color: var(--gray-50);
+                    font-weight: bold;
+                }
+            }
             &-col {
                 flex-direction: column;
             }
-
             &-btn {
                 width: 100%;
             }

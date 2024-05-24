@@ -6,7 +6,7 @@ import { TableFunctionProps } from "../AdaptTableContent/views/AdapTableContent"
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 import { TableOptions } from "../../views/AdapTable";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 
 interface TableHeaderProps extends TableFunctionProps {
   title?: string;

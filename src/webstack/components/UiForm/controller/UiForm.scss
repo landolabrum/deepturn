@@ -7,7 +7,7 @@
 .d-flex-col {
   @extend .d-flex;
   flex-direction: column;
-  gap: var(--s-padding);
+  gap: var(--s-4);
 }
 
 .form {
@@ -16,10 +16,10 @@
   width: 100%;
   height: auto;
   flex-wrap: wrap;
-  // gap:var(--s-padding);
+  // gap:var(--s-4);
   &--mini {
-    padding: var(--s-8) var(--s-padding);
-    width: var(--s-padding-width);
+    padding: var(--s-8) var(--s-4);
+    width: var(--s-4-width);
     gap: var(--s-10);
 
     &__submit {
@@ -31,8 +31,8 @@
     background-color: var(--gray-90);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    padding: var(--s-padding);
-    width: var(--s-padding-width);
+    padding: var(--s-4);
+    width: var(--s-4-width);
   }
 
   &__title {
@@ -48,7 +48,7 @@
   .form-field,
   .form-field__readonly {
     width: 100%;
-    margin: 0 0 var(--s-padding);
+    margin: 0 0 var(--s-4);
     @extend .d-flex-col;
     align-items: flex-start;
 
@@ -98,7 +98,7 @@
           font-size: var(--s-8);
         }
         &-item{
-          // gap: var(--s-11);
+          // gap: var(--s-12);
           @extend .d-flex;
           align-items: flex-start;
           justify-content: flex-start;
@@ -131,8 +131,8 @@
     // border-top-color: var(--gray-40);
     // border-width: 1px;
     width: 100%;
-    margin-top: var(--s-padding);
-    padding-top: var(--s-padding);
+    margin-top: var(--s-4);
+    padding-top: var(--s-4);
 
     &--mini {
       margin-top: 0;

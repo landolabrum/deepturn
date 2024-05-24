@@ -9,12 +9,12 @@
 }
 @keyframes dropIn{
   0%{transform: translateY(calc(20px - 100%));}
-  90%{transform: translateY(var(--s-padding));}
+  90%{transform: translateY(var(--s-4));}
   100%{transform: translateY(0%);}
 }
 @keyframes dropOut{
   0%{transform: translateY(0%);}
-  10%{transform: translateY(var(--s-padding));}
+  10%{transform: translateY(var(--s-4));}
   100%{transform: translateY(calc(20px - 100%)); display: none;}
 }
 
@@ -54,7 +54,7 @@
     animation: dropOut 1s forwards ease-in;
   }
   .notification__content{
-    padding:  var(--s-padding);
+    padding:  var(--s-4);
     @extend .d-flex-col;
     position: relative;
     background: var(--gray-90);
@@ -63,11 +63,11 @@
     width: 100%;
     gap:var(--s-9);
     @media(max-width:900px){
-      top: var(--s-padding);
+      top: var(--s-4);
       border-radius:var(--border-radius);
-      bottom: var(--s-padding);
-      width: var(--s-padding-width);
-      margin: 0 var(--s-padding);
+      bottom: var(--s-4);
+      width: var(--s-4-width);
+      margin: 0 var(--s-4);
       height: max-content;
     }
     .notification__list{
@@ -95,7 +95,7 @@
         position: relative;
         width: 100%;
         font-size: var(--s-7);
-        padding:0 var(--s-padding);
+        padding:0 var(--s-4);
         line-height: 1;
         &__label{
           font-size: var(--s-4);

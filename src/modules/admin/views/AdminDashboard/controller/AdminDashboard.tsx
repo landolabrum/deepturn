@@ -21,7 +21,7 @@ const AdminDashboard: React.FC = () => {
         <div className='admin-dashboard__header'>
         </div>
         <div className='admin-dashboard__body'>
-          <AdaptGrid xs={2} md={4} variant='card' gap={10} margin={`var(--s-padding) 0`}>
+          <AdaptGrid xs={2} md={4} variant='card' gap={10} margin={`var(--s-4) 0`}>
             <div className='admin-dashboard__card'>
               <div className='admin-dashboard__card-header'>new customers</div>
               <div className='admin-dashboard__card-body'>5</div>

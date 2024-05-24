@@ -1,7 +1,7 @@
 
 import CookieHelper from "@webstack/helpers/CookieHelper";
 import { EventEmitter } from "@webstack/helpers/EventEmitter";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 import CustomToken from "~/src/models/CustomToken";
 import MemberToken from "~/src/models/MemberToken";
 import UserContext, { GuestContext } from "~/src/models/UserContext";
@@ -90,31 +90,24 @@ export default class MemberService
         this.get<any>(`/usage/auth/verify-email?token=${encodedToken}`),
         TIMEOUT // 5 seconds timeout
       );
-
+console.log("[verifiedMemberResp  ]",verifiedMemberResp)
       // Check if the response is an ApiError
       if (verifiedMemberResp instanceof ApiError) {
         throw verifiedMemberResp;
       }
-
-      const customer_token = verifiedMemberResp?.customer_token;
-      if (customer_token) {
-        this.saveMemberToken(customer_token);
-        this.saveLegacyAuthCookie(customer_token);
-        this._getCurrentUser(true)!;
-      }
-
-      // If everything is successful, return the response
+      // if (verifiedMemberResp?.data) {
+      //   this.saveMemberToken(verifiedMemberResp.data);
+      //   this.saveLegacyAuthCookie(verifiedMemberResp.data);
+      //   return this._getCurrentUser(true)!;
+      // }
+      console.log("[ verifiedMemberResp ]:",verifiedMemberResp)
+      
       return verifiedMemberResp;
+      
     } catch (error) {
-      // Handle the error here
-      if (error instanceof ApiError) {
-        return errorResponse(error);
-      } else {
-        // Handle other types of errors as needed
-        console.error("An unexpected error occurred:", error);
-        const responseError = new ApiError("Internal Server Error", 500, "MS.SI.01", "an Unknown Error Occured");
-        return errorResponse(responseError);
-      }
+      console.log("[ verifiedMemberResp ]:",error)
+
+return error
     }
   }
 
@@ -169,12 +162,10 @@ export default class MemberService
         { paymentMethodId, customerId }
       );
       if (response?.data) {
-        // console.log('[ RESPO DATA ]', response)
         this.updateUserContext(response.data, undefined);
       }
       return response;
     } catch (error: any) {
-      // console.error("[MemberService]: ", error);
       throw new ApiError("Error toggling default payment method", 500, "MS.TDPM.02");
     }
   }
@@ -372,7 +363,6 @@ public async processTransaction(sessionData: ISessionData) {
         );
         let memberJwt: any = null;
         if (res && res?.data) memberJwt = res?.data;
-        res && console.log('[ Sigin  RES ]', res)
         this.saveMemberToken(memberJwt);
         this.saveLegacyAuthCookie(memberJwt);
         return this._getCurrentUser(true)!;

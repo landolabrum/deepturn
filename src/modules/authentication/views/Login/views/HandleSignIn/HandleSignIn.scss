@@ -1,0 +1,20 @@
+.d-flex-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.welcome-modal {
+    width: 100%;
+    @extend .d-flex-col;
+    align-items: flex-start;
+
+    h1 {
+        line-height: 1;
+        margin-bottom: var(--s-1);
+    }
+
+    gap:var(--s-9);
+}
+

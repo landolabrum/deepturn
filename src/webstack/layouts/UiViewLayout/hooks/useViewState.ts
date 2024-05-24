@@ -14,20 +14,19 @@ export const useViewState = (views?: any, initialKey?: string | number) => {
 
     const goBack = () => {
         setHistory((prevHistory) => {
-            const newHistory = [...prevHistory];
-            if (newHistory.length > 1) {
-                newHistory.pop(); // Remove the current view
-                setView(newHistory[newHistory.length - 1]);
+            if (prevHistory.length > 1) {
+                const newHistory = prevHistory.slice(0, -1);
+                const previousView = newHistory[newHistory.length - 1];
+                setViewState(views[previousView]);
+                return newHistory;
             }
-            return newHistory;
+            return prevHistory;
         });
     };
 
     useEffect(() => {
-        if (initialKey && views?.[initialKey]) {
-            setView(initialKey);
-        }
-    }, [initialKey, views]);
+        if (initialKey && views?.[initialKey] && history[history.length - 1] !== initialKey)setView(initialKey);
+    }, [views, initialKey, ]);
 
-    return { view, setView, last: history[history.length - 2], goBack };
+    return { view, setView, last: history[history.length - 1], goBack };
 };

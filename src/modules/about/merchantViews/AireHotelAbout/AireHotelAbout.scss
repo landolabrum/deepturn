@@ -1,0 +1,83 @@
+// Relative Path: ./AireHotelAbout.scss
+
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aire-hotel-about {
+    @extend .d-flex;
+    gap: var(--s-4);
+    width: 100%;
+    padding: var(--s-1) var(--s-4);
+    flex-direction: column;
+    // background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        color: primary;
+        font-size: 2.5rem;
+        margin-bottom: var(--s-2);
+        text-align: center;
+    }
+
+    h3 {
+        color: var(--gray-40);
+        font-size: 2rem;
+        margin-bottom: var(--s-1);
+        text-align: center;
+    }
+
+    p {
+        color: #666;
+        font-size: 1.25rem;
+        text-align: center;
+        margin-bottom: var(--s-4);
+        line-height: 1.6;
+    }
+
+    .charts-container {
+        @extend .d-flex;
+        flex-direction: column;
+        gap: var(--s-3);
+        width: 100%;
+
+        .chart {
+            background: var(--gray-100);
+            padding: var(--s-2);
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+            h4 {
+                color: #888;
+                text-align: center;
+                margin-bottom: var(--s-2);
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    .member-experience {
+        background: var(--gray-100);
+        padding: var(--s-2);
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-top: var(--s-4);
+
+        h4 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: var(--s-1);
+            text-align: center;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.25rem;
+            text-align: center;
+            line-height: 1.6;
+        }
+    }
+}

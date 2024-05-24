@@ -9,7 +9,7 @@
     @extend .d-flex;
     height: 100%;
     width: 100%;
-    gap: var(--s-padding);
+    gap: var(--s-4);
     justify-content: space-between;
     flex-direction: column;
     .checkout__title{
@@ -34,7 +34,7 @@
     @extend .d-flex;
     justify-content: flex-start;
     flex-direction: column;
-    gap:var(--s-padding);
+    gap:var(--s-4);
     height: 100%;
     width: 100%;
     i{

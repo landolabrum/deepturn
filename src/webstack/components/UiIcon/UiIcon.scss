@@ -6,14 +6,16 @@
 
 div {
   width: var(--ui-icon-width, var(--ui-icon-size, 20px));
+  // width: var(--ui-icon-width, var(--ui-icon-size, 20px));
   height: var(--ui-icon-height, var(--ui-icon-size, 20px));
+  // height: var(--ui-icon-height, var(--ui-icon-size, 20px));
   color: var(--ui-icon-color, #666);
   position: relative;
   overflow: visible;
 }
 
 div {
-  
+  @extend .d-flex;
   svg {
     display: block;
     width: 100%;
@@ -78,7 +80,7 @@ div {
   position: absolute;
   @extend .d-flex;
   top: calc(var(--s-9) * -1);
-  right: var(--s-11);
+  right: var(--s-12);
   background-color: var(--red); // Example background color
   color: white; // Text color
   border-radius: 50%; // Circular badge

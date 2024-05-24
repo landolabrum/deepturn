@@ -8,11 +8,11 @@
     border-radius: var(--border-radius);
     border: solid 1px var(--gray-70);
     background-color: var(--gray-90);
-    padding: var(--s-padding);
+    padding: var(--s-4);
     &:hover {
         background-color: var(--gray-80);
     }
-    height: var(--s-padding-width);
+    height: var(--s-4-width);
     @media(max-width: 900px) {
         height: auto;
         padding: var(--s-1) var(--s-4);
@@ -23,7 +23,7 @@
         height: 100%;
         margin: auto;
         justify-content: flex-start;
-        gap: var(--s-padding);
+        gap: var(--s-4);
         @media(max-width: 900px) {
             gap: 0;
             width: var(--s-border-width);

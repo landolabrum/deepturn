@@ -2,7 +2,7 @@ import styles from "./UiLoader.scss";
 import type { NextComponentType, NextPageContext } from "next";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import React, { useEffect, useRef } from "react";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 
 interface IUiLoader {
   text?: string | React.ReactElement | boolean;

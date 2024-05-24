@@ -8,7 +8,7 @@
     justify-content: flex-start;
     width: 100%;
     color:var(--primary);
-    gap: var(--s-padding);
+    gap: var(--s-4);
     &__chapter{
         cursor: pointer;
         height: calc(var(--s-element) * 4);

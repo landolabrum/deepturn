@@ -14,12 +14,12 @@ import { useRouter } from 'next/router';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import AdminListDocuments from '../../../../AdminDocuments/controller/AdminListDocuments';
 import { useLoader } from '@webstack/components/Loader/Loader';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 import { findField, updateField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import { useClearance } from '~/src/core/authentication/hooks/useUser';
 import AdminProductSurvey from '../views/AdminProductSurvey';
 
-const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:(e:any)=>void}) => {
+const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, setView: (e: any) => void }) => {
   const router = useRouter();
   const [customer, setCustomer] = useState<IFormField[] | undefined>();
   const { openModal, closeModal } = useModal();
@@ -43,7 +43,7 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
   function modifyCustomerData(data: any, round2?: string): any {
     const removeKeys = ['id', 'methods', 'user', 'files', 'default_source', 'shipping', 'object', 'currency', 'invoice_settings', 'next_invoice_sequence', 'preferred_locales', 'test_clock', 'invoice_prefix'];
     const modifiedKeys = ['metadata'];
-    const readOnlyKeys = ['created', 'server_url', 'merchant', 'email_verified', 'delinquent', 'livemode', 'balance','user_agent'];
+    const readOnlyKeys = ['created', 'server_url', 'email_verified', 'delinquent', 'livemode', 'balance', 'user_agent'];
 
     // SET FILES
     if (data?.files) {
@@ -51,14 +51,11 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
     }
     // SET FILES
     const handleFormatValue = (key: string, value: any) => {
-      // if (key == 'default_source') console.log('default:', value)
       let val = value;
 
-      if (key == 'methods')value?.data?.length && setMethods(value.data);
+      if (key == 'methods') value?.data?.length && setMethods(value.data);
       if (key == 'phone') val = phoneFormat(value);
       if (key == 'created') val = `${dateFormat(value, { isTimestamp: true })}`;
-      // if (key == 'created') val = dateFormat(value, { time: true, isTimestamp: true, returnType: "object" });
-      
       else if (value == null) val = '';
       return val;
     }
@@ -84,13 +81,16 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
           placeholder: '',
         }));
     };
-    return [...formatted(), ...formatted(data.metadata, 'metadata'), ...formatted(data.metadata?.user, 'user')];
+    const merchantData = [...formatted(), ...formatted(data.metadata?.user, 'metadata.user')];
+    let context = merchantData;
+    if (level >= 11) context = ([...merchantData, ...formatted(data?.metadata?.merchant, 'metadata.merchant')])
+    return context;
   }
 
 
 
   const confirmDelete = () => {
-    if(!customer_id)return;
+    if (!customer_id) return;
     setLoader({ active: true, body: `Deleting ${info?.name}` });
     const deleteService = async () => {
       try {
@@ -102,7 +102,7 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
       }
       return;
     }
-    deleteService().then((resp:any) => {
+    deleteService().then((resp: any) => {
       setLoader({ active: false });
       setNotification({
         active: true,
@@ -112,25 +112,26 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
         ]
       });
       // if(resp.delete == true){
-        setView('list')
+      setView('list')
       // }
       // router.push('/admin?vid=customers', undefined,{shallow: false})
     })
 
   }
   const handleDelete = () => {
-    const modalContext = { 
+    const modalContext = {
       title: `Delete ${info?.name}`,
       confirm: {
-      statements: [
-        { label: 'yes', onClick: confirmDelete },
-        { label: 'no', onClick: closeModal }
-      ]
-    }};
+        statements: [
+          { label: 'yes', onClick: confirmDelete },
+          { label: 'no', onClick: closeModal }
+        ]
+      }
+    };
 
     console.log(modalContext)
     openModal(modalContext)
-    
+
     // openModal({ confirm: {
     //   title: `Delete ${info?.name}`,
     //   statements: [
@@ -157,7 +158,7 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
 
   }
   const onSubmit = async () => {
-    if ( !customer || !customer_id ) return;
+    if (!customer || !customer_id) return;
     if (level < 10) {
       setNotification({ active: true, persistence: 3000, list: [{ name: "you do nott have authority to modify" }] })
     }
@@ -169,13 +170,24 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
       metadata: {}
     };
 
-    // Extract metadata fields from the customer state and add them to the request
     customer != undefined && customer.forEach((field: any) => {
-      if (field.name.startsWith('metadata.')) {
-        const metadataKey = field.name.substring('metadata.'.length);
-        request.metadata[metadataKey] = field.value;
+      const fieldName = field.name;
+      const splitArr = fieldName.split('.');
+      const splitLen = splitArr?.length;
+      let currentLevel = request.metadata;
+
+      for (let i = 1; i < splitLen; i++) {
+        const key = splitArr[i];
+        if (i === splitLen - 1) {
+          currentLevel[key] = field.value;
+        } else {
+          currentLevel[key] = currentLevel[key] || {};
+          currentLevel = currentLevel[key];
+        }
       }
     });
+
+    console.log("[ ADMIN CUST DETAILS (REQ) ]:", { request });
     try {
       const updatedCustomer = await adminService.updateCustomer(customer_id, request);
       setCustomer(modifyCustomerData(updatedCustomer));
@@ -237,7 +249,8 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
                 formName = keyParts[2];
                 console.log("[ formName ]", keyParts)
                 setProductRequest(value);
-            }});
+              }
+            });
             // test against the default formName = ''
             if (formName && formName?.length) {
               setNotification({
@@ -255,11 +268,11 @@ const AdminCustomerDetails: React.FC<any> = ({id, setView}:{id?:string, setView:
           console.error("Couldn't get customer");
         }
       } catch (error) {
-        console.error('[ ADMIN CUSTOMER DETAULS ]',error);
+        console.error('[ ADMIN CUSTOMER DETAULS ]', error);
       } finally {
       }
-    }else{
-      customer &&   setNotification({active: true, list:[{label:`Customer: ${findField(customer, 'name')}`}]})
+    } else {
+      customer && setNotification({ active: true, list: [{ label: `Customer: ${findField(customer, 'name')}` }] })
     }
   };
 

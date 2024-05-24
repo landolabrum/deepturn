@@ -4,10 +4,8 @@
     align-items: center;
     flex-direction: column;
 }
-.product-list{
-    width: 100%;
-    margin: 0;
-}
+// .product-list{
+// }
 .product {
     &-json {
         height: max-content;
@@ -15,71 +13,79 @@
         font-size: 11px;
         line-height: 1;
     }
-
+    gap:var(--s-element);    
     cursor: pointer;
-    height: 100%;
+    width: calc(var(--s-9-width) - 2px);
+
+    padding: var(--s-9)var(--s-9) var(--s-3);
     @extend .d-flex;
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
-    width: 100%;
-    gap: var(--s-element);
-    margin: auto;
+    // width: var(--s-4-width);
+    margin: 0 auto;
     --ui-icon-color: var(--gray-70-o);
-    padding: var(--s-padding) 0;
+    // border: solid 1px;
+    background-color: var(--gray-90);
+    
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 2px var(--gray-80), 0 2px 4px var(--gray-80-o), inset 0 0 0px 2px var(--gray-80-o);
     &:hover {
-        --ui-icon-color: var(--gray-60);
+        background-color: var(--gray-80-o);
+        box-shadow: 0 0 2px var(--gray-70), 0 2px 4px var(--gray-70-o), inset 0 0 0px 2px var(--gray-70);
+        .product--images {
+            --ui-icon-color: var(--gray-60);
+        }
     }
-
+    border: solid 1px var(--gray-90);
+    overflow: hidden;
     &--images {
         display: flex;
         flex-direction: column;
-        gap: var(--s-padding);
-        width: 100%; // Images container fills the product card
-        height: 100%;
-        margin-top: var(--s-element);
+        // justify-content: flex-start;
+        height: auto;
+        border: solid 1px var(--gray-70);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        width: var(--s-border-width);
         &__image {
-            
-            position: relative; // For Image fill layout to work
-            margin: auto;
             aspect-ratio: 1;
-            width: var(--s-padding-width);
-            height: 100%;
-            @media(max-width: 900px){
-                width: var(--s-padding-width); // Image container fills its parent
-                padding:0 var(--s-padding);
+            position: relative;
+            // @media(max-width: 900px){
+                //     width: var(--s-4-width); // Image container fills its parent
+                //     padding:0 var(--s-4);
+                // }
+            }
+            
+            &__icon {
+                width: 50%;
+                @extend .d-flex;
+                margin: auto;
+                --ui-icon-width: 100%;
+                min-height: 320px;
+                --ui-icon-height: 100%;
+                --ui-icon-color: var(--primary-o);
             }
         }
-
-        &__icon {
-            width: 50%;
+        &-content{
             @extend .d-flex;
-            margin: auto;
-            --ui-icon-width: 100%;
-            --ui-icon-height: 100%;
-        }
-    }
-    &-content{
-        @extend .d-flex;
-        width: var(--s-padding-width);
-        padding: var(--s-padding);
-        flex-direction: column;
-        line-height: 1;
-        gap: var(--s-9);
-        &--name {
-            @extend .d-flex;
-            font-size: var(--s-4);
-            text-transform: capitalize;
-            align-items: flex-start;
-            color: var(--primary);
-            width: 100%;
-            justify-content: flex-end;
-        }
-    
+            justify-content: space-between;
+            width: var(--s-4-width);
+            // padding: var(--s-2) var(--s-4);
+            flex-direction: column;
+            line-height: 1;
+            gap: var(--s-9);
+            &--name {
+                @extend .d-flex;
+                font-size: var(--s-4);
+                text-transform: capitalize;
+                align-items: flex-start;
+                color: var(--primary);
+            }
+            
         &--price {
             font-family: Game;
             @extend .d-flex;
-            align-items: flex-start;
             justify-content: flex-end;
             width: 100%;
             color: var(--gray-60);

@@ -50,7 +50,7 @@ const UiMedia: React.FC<IMedia> = ({ src, variant, type, alt, loadingText, rotat
       imgRef.current.style.transform = `rotate(${rotate}deg)`
     }else if(!rotate && imgRef?.current?.style.transform)delete imgRef.current.style
 
-  }, [handleError, imageControlProps, rotate, imgRef?.current]); // 
+  }, [handleError, imageControlProps,handleReload,  imgRef?.current]); // 
 
   return (
     <>

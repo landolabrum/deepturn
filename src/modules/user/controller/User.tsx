@@ -3,7 +3,7 @@ import styles from "./User.scss";
 import UserMethods from "../views/UserMethods/controller/UserMethods";
 import { useClearance, useUser } from "~/src/core/authentication/hooks/useUser";
 import UserModify from "../views/UserModify/UserModify";
-import UiSettingsLayout from "@webstack/layouts/UiSettingsLayout/UiSettingsLayout";
+import UiSettingsLayout from "@webstack/layouts/UiSettingsLayout/controller/UiSettingsLayout";
 import UserSubscriptions from "../views/UserSubscriptions/controller/UserSubscriptions";
 import UserDocs from "../views/UserDocs/controller/UserDocs";
 import { useEffect, useState } from "react";

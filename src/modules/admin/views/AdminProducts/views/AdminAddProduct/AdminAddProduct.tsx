@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './AdminAddProduct.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 import { IProduct } from '~/src/models/Shopping/IProduct';
 
 

@@ -118,7 +118,7 @@ input::placeholder {
   height: var(--s-element);
   line-height: 1;
   display: none;
-  text-indent: var(--s-padding);
+  text-indent: var(--s-4);
   &.input__message-show{
     display: flex;
   }

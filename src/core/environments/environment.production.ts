@@ -1,12 +1,18 @@
-import { IEnvironment } from "./environment.interface";
-import merchants from "./merchants";
+// environment.production.ts
+import { IEnvironment, Merchant } from "./environment.interface";
+import merchants, {deploy} from "~/merchants.config";
+import { MerchantsConfig } from "./environment.interface";
 
-const serverUrl = "https://tiktok.soy"
+const serverUrl = "https://tiktok.soy";
+
+// Cast the merchants object to the appropriate type
+const merchant: Merchant = (merchants as MerchantsConfig).merchants[deploy];
+
 const prodEnvironment: IEnvironment = {
   useMockApi: false,
   isProduction: true,
   merchant: {
-    ...merchants.mb1,
+    ...merchant,
   },
   legacyJwtCookie: {
     authToken: "auth-token",

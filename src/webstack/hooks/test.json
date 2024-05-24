@@ -1,0 +1,123 @@
+{
+    "profile": {
+        "id": "cus_Q1sllqBBe7sckq",
+        "object": "customer",
+        "address": null,
+        "balance": 0,
+        "created": 1714615454,
+        "currency": null,
+        "default_source": null,
+        "delinquent": false,
+        "description": null,
+        "discount": null,
+        "email": "lando@deepturn.com",
+        "invoice_prefix": "2F8393C6",
+        "invoice_settings": {
+            "custom_fields": null,
+            "default_payment_method": null,
+            "footer": null,
+            "rendering_options": null
+        },
+        "livemode": false,
+        "metadata": {
+            "merchant": {
+                "url": "http://localhost:3000",
+                "name": "nirvana-energy",
+                "mid": "nirv1"
+            },
+            "user": {
+                "clearance": 12,
+                "password_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImxhbmRvQGRlZXB0dXJuLmNvbSJ9.jo8e3QqtfPUKYUDOBIh4BluQY4ZmKGuBfv6E5Kx4gEo",
+                "password": null,
+                "email_verified": false,
+                "email": null,
+                "type": "customer",
+                "user_agent": {
+                    "public_ip": null,
+                    "user_agent": null,
+                    "user_agent_data": null
+                },
+                "server_url": "localhost:8000"
+            },
+            "survey": null
+        },
+        "name": "Lando labrum",
+        "next_invoice_sequence": 1,
+        "phone": null,
+        "preferred_locales": [],
+        "shipping": null,
+        "tax_exempt": "none",
+        "test_clock": null,
+        "methods": {
+            "object": "list",
+            "data": [
+                {
+                    "id": "pm_1PDdsaIodeKZRLDVSdhaOE4c",
+                    "object": "payment_method",
+                    "allow_redisplay": "unspecified",
+                    "billing_details": {
+                        "address": {
+                            "city": null,
+                            "country": "US",
+                            "line1": null,
+                            "line2": null,
+                            "postal_code": "84424",
+                            "state": null
+                        },
+                        "email": null,
+                        "name": null,
+                        "phone": null
+                    },
+                    "card": {
+                        "brand": "visa",
+                        "checks": {
+                            "address_line1_check": null,
+                            "address_postal_code_check": "pass",
+                            "cvc_check": "pass"
+                        },
+                        "country": "US",
+                        "display_brand": "visa",
+                        "exp_month": 12,
+                        "exp_year": 2029,
+                        "fingerprint": "EAKIZ5pVRt2vtnLd",
+                        "funding": "credit",
+                        "generated_from": null,
+                        "last4": "4242",
+                        "networks": {
+                            "available": [
+                                "visa"
+                            ],
+                            "preferred": null
+                        },
+                        "three_d_secure_usage": {
+                            "supported": true
+                        },
+                        "wallet": null
+                    },
+                    "created": 1715049344,
+                    "customer": "cus_Q1sllqBBe7sckq",
+                    "livemode": false,
+                    "metadata": {},
+                    "type": "card"
+                }
+            ],
+            "has_more": false,
+            "url": "/v1/payment_methods"
+        },
+        "exp": 1716175509,
+        "iat": 1716175209,
+        "userAgent": {
+            "user_agent": "",
+            "user_agent_data": null,
+            "public_ip": ""
+        },
+        "lngLat": [
+            -111.87,
+            40.67
+        ]
+    },
+    "lngLat": [
+        -111.87,
+        40.67
+    ]
+}

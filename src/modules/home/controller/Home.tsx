@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import styles from './Home.scss';
 import Surveillance from '../views/surveillance/controller/Surveillance';
-import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/UiSettingsLayout';
+import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/controller/UiSettingsLayout';
 import Lights from '../views/hue/controller/Lights';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import capitalize from '@webstack/helpers/Capitalize';

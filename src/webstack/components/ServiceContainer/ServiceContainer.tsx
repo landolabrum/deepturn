@@ -1,6 +1,6 @@
 import React from "react";
 import { serviceProvider } from "@webstack/common";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 import MemberService from "~/src/core/services/MemberService/MemberService";
 import ProductService from "~/src/core/services/ProductService/ProductService";
 import HomeService from "~/src/core/services/HomeService/HomeService";

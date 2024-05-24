@@ -3,13 +3,13 @@ import CookieHelper from "@webstack/helpers/CookieHelper";
 import { IProduct } from "~/src/models/Shopping/IProduct";
 
 const useCart = () => {
-    const [cart, setCart] = useState<IProduct[] | null>([]);
-
     const getCartItems = () => {
         let cartItems: string | undefined | object = CookieHelper.getCookie('cart');
         if (typeof cartItems === "string") cartItems = JSON.parse(cartItems)?.items;
         return cartItems ? (cartItems as IProduct[]) : [];
     };
+    const [cart, setCart] = useState<IProduct[] | null>(getCartItems());
+
 
     const updateCartInCookie = (updatedCart: IProduct[]) => {
         if (updatedCart.length === 0) {
@@ -19,6 +19,7 @@ const useCart = () => {
         }
         setCart(updatedCart);
     };
+
     const addCartItem = (newItem: IProduct) => {
         const currentCart = getCartItems();
         const existingIndex = currentCart.findIndex(item => item.price.id === newItem.price.id);
@@ -42,18 +43,11 @@ const useCart = () => {
         
         updateCartInCookie(currentCart);
     };
-    
-
-
-
-
- 
 
     useEffect(() => {
         const updateCart = () => {
             setCart(getCartItems());
         };
-
 
         const cookieChangeHandler = (e: CustomEvent) => {
             if (e.detail.cookieName === "cart") {
@@ -65,18 +59,22 @@ const useCart = () => {
         return () => window.removeEventListener("cookieChange", cookieChangeHandler as EventListener);
     }, []);
 
-    return { cart, getCartItems,  addCartItem };
-};
-
-export const useCartTotal = () => {
-    const { getCartItems } = useCart();
-    const [totalQty, setTotalQty] = useState<number>(0);
-    const cartItems = getCartItems();
-    useEffect(() => {
-        const newTotalQty = cartItems.reduce((sum: number, item: any) => sum + (item?.price?.qty || 0), 0);
-        setTotalQty(newTotalQty);
-    }, [cartItems]); // Updated to cartItems to ensure re-calculation on cart update
-    return totalQty;
+    return { cart, addCartItem };
 };
 
 export default useCart;
+
+
+export const useCartTotal = () => {
+    const { cart } = useCart();
+    const [totalQty, setTotalQty] = useState<number>(0);
+
+    useEffect(() => {
+        if (cart) {
+            const newTotalQty = cart.reduce((sum: number, item: any) => sum + (item?.price?.qty || 0), 0);
+            setTotalQty(newTotalQty);
+        }
+    }, [cart]); 
+
+    return totalQty;
+};

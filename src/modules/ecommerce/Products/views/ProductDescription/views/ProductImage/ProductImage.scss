@@ -69,12 +69,12 @@ $hite: calc(100% - 20px);
         --ui-icon-color: var(--gray-10);
         .product-image__content{
 
-            height: var(--s-padding-width);
+            height: var(--s-4-width);
             width: auto;
             @media(max-width: 1100px){
-                width: var(--s-padding-width);
+                width: var(--s-4-width);
                 height: auto;
-                // padding: var(--s-padding);
+                // padding: var(--s-4);
             }   
         }
     }

@@ -34,7 +34,7 @@
         justify-content: stretch;
         z-index: 999;
         width: 100%;
-        padding: var(--s-padding);
+        padding: var(--s-4);
         @media(max-width:900px){
             width: 100%;
             max-width: 100%;
@@ -76,7 +76,7 @@
                 border: solid 1px;
                 border-radius: var(--border-radius);
                 @extend .d-flex;
-                padding: var(--s-9) var(--s-padding);
+                padding: var(--s-9) var(--s-4);
                 background-color: var(--secondary);
                 
                 @media(max-width:900px){

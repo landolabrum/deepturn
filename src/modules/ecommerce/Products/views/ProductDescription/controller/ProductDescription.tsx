@@ -10,7 +10,7 @@ import IProductService from '~/src/core/services/ProductService/IProductService'
 import UiButton from '@webstack/components/UiButton/UiButton';
 import Image from 'next/image';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 
 interface IProductDescription {
   product_id?: string,
@@ -23,9 +23,8 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
   const price_query_id: string | undefined = router?.query?.pri != undefined ? router?.query?.pri.toString() : undefined
   const [product, setProduct] = useState<any>(null); // Changed from {} to null
   const [isLoading, setIsLoading] = useState<boolean | string>(true); // Add a loading state
-  const { getCartItems, } = useCart();
+  const { cart } = useCart();
 
-  const cart = getCartItems();
   const fetchProduct = useCallback(
     async () => {
       if (
@@ -107,10 +106,8 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
               <Image
                 src={product.images[0]}
                 alt={product.name}
-                width={500}
-                height={500}
-                // fill // Use fill to make the image fill the container
-                // style={{ objectFit: 'cover' }} // Adjust object-fit as needed
+                fill // Use fill to make the image fill the container
+                style={{ objectFit: 'cover' }} // Adjust object-fit as needed
                 unoptimized={true}
               />
             ) : (<div className='img-placeholder'>
@@ -128,7 +125,7 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
               {product.description}
             </div>
             <div className='product-description__footer'>
-              {cart?.length >= 1 && (
+              {cart && cart?.length >= 1 && (
                 <div className='product-description__go-to-cart'>
                   <UiButton traits={{ afterIcon: 'fal-bag-shopping' }} variant='link' href='/cart'>go to cart</UiButton>
                 </div>

@@ -14,7 +14,7 @@
     height: max-content;
     width: 100%;
     align-items: stretch;
-    gap: var(--s-padding);
+    gap: var(--s-4);
     &--product-request{
         overflow: hidden;
         background-color: var(--primary-o);
@@ -25,10 +25,10 @@
         flex-direction: column;
         width: var(--s-border-width);
         &__header{
-            width: var(--s-padding-width);
+            width: var(--s-4-width);
             @extend .d-flex;
             justify-content: flex-start;
-            padding: var(--s-padding);
+            padding: var(--s-4);
             background-color: var(--gray-100-o);
             .title{
                 white-space: nowrap;
@@ -52,7 +52,7 @@
         @extend .d-flex;
         justify-content: space-between;
         flex-direction: column;
-        gap: var(--s-padding);
+        gap: var(--s-4);
         align-items: flex-start;
         overflow: hidden;
         &--title{
@@ -71,12 +71,12 @@
             }
         }
         &--contact{
-            padding: 0 var(--s-padding) var(--s-padding);
+            padding: 0 var(--s-4) var(--s-4);
             @extend .d-flex;
             flex-direction: column;
             align-items: flex-end;
-            gap: var(--s-padding);
-            width: var(--s-padding-width);
+            gap: var(--s-4);
+            width: var(--s-4-width);
         }
      
     }
@@ -84,7 +84,7 @@
         @extend .d-flex;
         flex-direction: column;
         justify-content: flex-start;
-        gap: var(--s-padding);
+        gap: var(--s-4);
     }
     &__delete {
         width: max-content;
@@ -105,7 +105,7 @@
         gap: var(--s-9);
         width: auto;
         border-radius: var(--border-radius);
-        padding: var(--s-padding);
+        padding: var(--s-4);
         background-color: var(--gray-70);
 
         &--field {

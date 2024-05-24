@@ -3,7 +3,7 @@ import { useStripe, useElements } from '@stripe/react-stripe-js';
 import styles from "./CreateMethodStripeForm.scss";
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UserContext from '~/src/models/UserContext';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 import { useNotification } from '@webstack/components/Notification/Notification';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { useLoader } from '@webstack/components/Loader/Loader';

@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from './Surveillance.scss';
 import UiMedia from '@webstack/components/UiMedia/controller/UiMedia';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import { useEffect } from 'react';

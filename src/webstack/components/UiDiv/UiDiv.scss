@@ -19,7 +19,7 @@
 .ui-div, .div{
     height: max-content;
     @extend .d-flex-col_j-fs_a-fs;
-    gap: var(--s-padding);
+    gap: var(--s-4);
     font-size: var(--s-5);
     width: 100%;
     &__card{
@@ -41,8 +41,8 @@
         var(--gray-60-o)
         var(--gray-20-o);
         border-width: 2px;
-        padding: var(--s-padding);
-        width: calc(calc(100% - 4px) -  calc(var(--s-padding) * 2));
+        padding: var(--s-4);
+        width: calc(calc(100% - 4px) -  calc(var(--s-4) * 2));
     }
     &__lite{
         color:var(--gray-70);

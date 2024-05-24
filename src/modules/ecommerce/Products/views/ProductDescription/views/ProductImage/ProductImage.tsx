@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ProductImage.scss';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 
 const ProductImage: React.FC<{ image?: any, options?: any }> = ({ image, options }) => {
     const [imageLoadError, setImageLoadError] = useState<boolean>(false);

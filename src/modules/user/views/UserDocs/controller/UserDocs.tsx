@@ -3,7 +3,7 @@ import styles from './UserDocs.scss';
 import UserContext from '~/src/models/UserContext';
 import { getService } from '@webstack/common';
 import IProductService from '~/src/core/services/ProductService/IProductService';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import capitalize, { capitalizeAll } from '@webstack/helpers/Capitalize';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
@@ -182,7 +182,7 @@ const UserDocs = ({ user, previewPdf }: IDocuments) => {
             {user?.name && `${capitalizeAll(user.name)}'s Documents`}
           </div>
         </div>
-        {docs?.length && <AdaptGrid xs={1} md={2} variant='card' gapX={10} margin="var(--s-padding) 0">
+        {docs?.length && <AdaptGrid xs={1} md={2} variant='card' gapX={10} margin="var(--s-4) 0">
           <DocStatusBox status='incomplete' docs={docs} />
           <DocStatusBox status='complete' />
         </AdaptGrid> || null}

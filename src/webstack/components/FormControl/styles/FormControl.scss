@@ -85,18 +85,18 @@ $elPad: 14px;
   @keyframes glow {
     0%, 100%  {
       color: var(--primary-lite);
-      background: var(--primary-o);
-      box-shadow: 0 0 1px 1px var(--primary);
+      border: solid 1px var(--primary-o);
+      // box-shadow: 0 0 1px 1px var(--primary);
     }
     33% {
-      background-color: var(--primary);
+      border: solid 1px var(--primary);
       color: var(--gray-20);
-      box-shadow: 0 0 4px 2px var(--primary-o);
+      // box-shadow: 0 0 4px 2px var(--primary-o);
     }
   }
   $mtrx: 4px;
   &--glow {
-    animation: glow 1.2s infinite ease-in;
+    animation: glow 1.5s infinite ease-in;
     height: calc(var(--s-element) - 2px);
     overflow: hidden !important;
     border-radius: var(--border-radius);

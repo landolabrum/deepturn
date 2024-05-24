@@ -16,7 +16,7 @@ export interface IProductBuyNow {
 
 const ProductBuyNow: React.FC<IProductBuyNow> = ({ product, traits, btnText = 'Add' }) => {
     // Hooks are called unconditionally at the top level
-    const { addCartItem, getCartItems } = useCart();
+    const { addCartItem, cart } = useCart();
     const [label, setLabel] = useState<string>('add');
     const { openModal } = useModal(); // Assuming this is used elsewhere in the component
 
@@ -38,8 +38,7 @@ const ProductBuyNow: React.FC<IProductBuyNow> = ({ product, traits, btnText = 'A
         return <>No Product</>;
     }
 
-    const cart = getCartItems();
-    let cookieProduct: any = cart.find((item: any) => item.id === product.id);
+    let cookieProduct: any = cart?.find((item: any) => item.id === product.id);
     const qty = cookieProduct?.price?.qty || 0;
 
     const handleCart = (newQty?: number) => {

@@ -26,8 +26,9 @@ const Instagram: React.FC<any> = ({ current }: { current?: string }) => {
                     <UiViewLayout 
                         {...viewProps}
                     />
-                {/* {UiViewLayout({views,currentView: view})} */}
                 </div>
+                </div>
+                <div>Not Responsible
                 </div>
             </div>
         </>

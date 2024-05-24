@@ -7,7 +7,7 @@
   @extend .d-flex;
   justify-content: flex-start;
   line-height: 1;
-  width: var(--s-padding-width);
+  width: var(--s-4-width);
   font-family: Game;
   @media(max-width: 1100px){
     --ui-icon-color: var(--gray-10);

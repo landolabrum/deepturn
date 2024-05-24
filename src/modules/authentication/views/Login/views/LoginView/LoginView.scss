@@ -14,7 +14,7 @@
   &--success{
     width:100%;
     @extend .d-flex-col;
-    gap: var(--s-padding);
+    gap: var(--s-4);
     &--header{
       color:var(--gray-30);
       --ui-icon-color:var(--gray-30);
@@ -23,9 +23,9 @@
       @extend .d-flex;
       justify-content: flex-start;
       align-items: flex-start;
-      gap: var(--s-padding);
-      padding: var(--s-padding) var(--s-padding) var(--s-element);
-      width: calc(var(--s-padding-width) - 2px);
+      gap: var(--s-4);
+      padding: var(--s-4) var(--s-4) var(--s-element);
+      width: calc(var(--s-4-width) - 2px);
       margin: var(--s-9) 0 var(--s-element);
       border-radius: var(--border-radius);
       border: solid 1px var(--gray-60);

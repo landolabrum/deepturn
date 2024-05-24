@@ -6,7 +6,7 @@ import {
 } from "react";
 import styles from "./Loader.scss";
 import { UiIcon } from "../UiIcon/UiIcon";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 import { TJSCube } from "../threeJs/TJSCube/controller/TJSCube";
 
 
@@ -82,10 +82,11 @@ const Loader: React.FC = () => {
       <>
         <style jsx>{styles}</style>
         <div
+          style={context?.animation === true?{width:"100vw", height:"100%"}:{}}
           className={`loader ${Boolean(context) && 'loader--fixed' || ''}`}
           onClick={context?.onClick}
         >
-          <div className='loader__content' >
+          <div className='loader__content' style={context?.animation === true?{width:"100%", height:"100%"}:{}}>
             {context?.animation === true ? (
               <TJSCube
                 icon={{

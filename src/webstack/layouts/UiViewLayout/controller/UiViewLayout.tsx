@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './UiViewLayout.scss';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { useViewState } from '../hooks/useViewState';
@@ -15,47 +15,47 @@ export interface IViewLayout {
     title?: string;
     actions?: boolean | string[]; // Can be a boolean or an array of strings
     showTitle?: boolean;
-    onViewChange?:(e:any)=>void;
+    onChange?:(e:any)=>void;
 }
 
 const UiViewLayout: React.FC<IViewLayout> = ({
     views,
     currentView,
-    onViewChange: onChange,
+    onChange,
     title,
     actions = false,
     showTitle = false,
     backBtn = false
 }) => {
+    useEffect(() => {}, [currentView]);
     const { view, setView, goBack, last } = useViewState(views, currentView);
-
-    const handleViewChange = (newView: string) => {
+    const changeView = (newView: string) => {
         if (!newView) return;
         setView(newView);
         onChange?.(newView);
     };
-    
-    useEffect(() => {}, [views]);
-    if (!views || !view || currentView == 'loading') return <UiLoader />;
 
+
+    
+    if (!views || !view || currentView == 'loading') return <UiLoader />;
+    
     return (
         <>
             <style jsx>{styles}</style>
             <div className='ui-view-layout'>
-                {/* <div className='dev'>{JSON.stringify({currentView, last, })}</div> */}
-                {backBtn && last !== currentView && (
+                {backBtn && last !== 'start' &&(
                     <div className='back-btn'>
                         <div>
                             <UiButton traits={{beforeIcon:"fa-chevron-left"}} variant='flat' onClick={goBack}>Back</UiButton>
                         </div>
                     </div>
                 )}
-                {showTitle && (
+                {showTitle  && last !== 'start'&& (
                     <div className='ui-view-layout__header'>
                         <div className='ui-view-layout__header-title'>{title}</div>
                     </div>
                 )}
-                <div className='ui-view-layout__view'>
+                <div data-view={currentView} className='ui-view-layout__view'>
                     {view || <div>View not found</div>}
                 </div>
             </div>

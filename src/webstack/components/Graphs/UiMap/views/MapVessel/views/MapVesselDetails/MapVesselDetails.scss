@@ -1,0 +1,166 @@
+$vesselBg: var(--gray-100);
+$vessel: var(--gray-30);
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vessel-details {
+    flex: 2;
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--s-4);
+    box-shadow: calc(calc(var(--s-1) * -1) + var(--s-1)) 0 var(--s-3) var(--s-10) var(--gray-60-o);
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    right: 0;
+
+    @media (max-width: 1260px) {
+        right: unset;
+        bottom: 0;
+        max-width: unset;
+        max-height: 70vh;
+        width: 100%;
+        box-shadow: var(--s-11) calc(var(--s-11) * -1) var(--s-5) var(--s-11) var(--gray-60-o);
+    }
+
+    @keyframes bigSlide {
+        from {
+            transform: translateX(100%);
+        }
+
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes smallSlide {
+        from {
+            transform: translateY(100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    &.show {
+        opacity: 1;
+        visibility: visible;
+        animation: bigSlide 0.5s forwards ease-out;
+        max-width: 40vw;
+        @media (max-width: 1260px) {
+            max-width: unset;
+            flex-direction: column;
+            animation: smallSlide 0.5s forwards ease-out;
+        }
+    }
+
+    &.hide {
+        opacity: 0;
+        visibility: hidden;
+        animation: bigSlide 0.5s reverse ease-out;
+
+        @media (max-width: 1260px) {
+            animation: smallSlide 0.5s reverse ease-out;
+        }
+    }
+
+    &--content {
+        height: calc(100vh - calc(90px - var(--s-4)));
+        padding: 90px var(--s-4) var(--s-4);
+        margin: 0;
+        background-color: $vesselBg;
+        color: $vessel;
+        width: var(--s-4-width);
+        position: relative;
+        @extend .d-flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: var(--s-9);
+        z-index: 1;
+        overflow-y: auto;
+
+        @media (max-width: 1260px) {
+            padding: var(--s-1) var(--s-4);
+        }
+    }
+
+    &__close,
+    .globe {
+        position: absolute;
+        left: calc(var(--s-7) * -1);
+        top: 50%;
+        transform: translateX(-50%);
+        --ui-icon-color: var(--gray-90);
+        --ui-icon-width: var(--s-1);
+        --ui-icon-height: 70px;
+        height: 70px;
+        cursor: pointer;
+
+        &:hover {
+            filter: brightness(1.5)
+        }
+
+        @media (max-width: 1260px) {
+            padding: var(--s-11) 0 0 0;
+            top: calc(calc(70px + var(--s-9)) * -.5);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    &__close {
+        background-color: $vesselBg;
+        width: var(--s-element);
+        border-radius: var(--s-3) 0 0 var(--s-3);
+        box-shadow: calc(var(--s-9) * -1) var(--s-11) var(--s-5) var(--s-11) var(--gray-60-o);
+
+        @media (max-width: 1260px) {
+            box-shadow: var(--s-11) calc(var(--s-11) * -1) var(--s-5) var(--s-11) var(--gray-60-o);
+            border-radius: var(--s-3) var(--s-3) 0 0;
+            top: calc(var(--s-element) * -0.5);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    .globe {
+        z-index: 2;
+    }
+
+    &__header,
+    &__body {
+        width: 100%;
+        @extend .d-flex;
+    }
+
+    &__header {
+        font-size: var(--s-1);
+
+        &--title {
+            color: var(--primary);
+            width: 100%;
+        }
+    }
+
+    &__body {
+        flex-direction: column;
+        color: var(--gray-70);
+        gap: var(--s-9);
+
+        .vessel-image-main {
+            position: relative;
+            width: 100%;
+        }
+
+        .vessel-description {
+            width: 100%;
+        }
+    }
+}

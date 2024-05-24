@@ -7,17 +7,17 @@
     justify-content: flex-start;
     @extend .d-flex;
     border-radius: var(--border-radius);
-    gap: var(--s-padding);
+    gap: var(--s-4);
     flex-direction: column;
     background-color: var(--gray-90);
     overflow: hidden;
-    padding: var(--s-element) var(--s-padding);
+    padding: var(--s-element) var(--s-4);
    
     &__header{
         width: 100%;
         @extend .d-flex;
         flex-direction: column;
-        gap:var(--s-padding);
+        gap:var(--s-4);
     }
     &__title {
         height: 100%;

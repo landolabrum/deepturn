@@ -6,7 +6,7 @@ import { dateFormat } from '@webstack/helpers/userExperienceFormats';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import capitalize from '@webstack/helpers/Capitalize';

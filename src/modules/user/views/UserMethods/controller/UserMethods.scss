@@ -10,20 +10,20 @@
     outline: solid 1px var(--gray-60);
 }
 .body {
-    padding: 0 var(--s-padding);
+    padding: 0 var(--s-4);
 }
 .user-methods {
     display: flex;
     flex-direction: column;
-    gap: var(--s-padding);
+    gap: var(--s-4);
     width: 100%;
     .user-methods__existing {
         @extend .d-flex;
         align-items: flex-start;
         box-sizing: border-box; /* Include padding and border in the width calculation */
         flex-direction: column;
-        gap: var(--s-padding);
-        padding: var(--s-padding);
+        gap: var(--s-4);
+        padding: var(--s-4);
         border-radius: var(--border-radius);
         border: solid 1px var(--gray-70);
         background-color: var(--gray-80);
@@ -42,7 +42,7 @@
         }
         .existing__select{
             color: var(--orange);
-            text-indent: var(--s-padding);
+            text-indent: var(--s-4);
         }
         .existing__selected{
             // min-height: 100px;

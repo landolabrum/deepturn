@@ -13,7 +13,7 @@ import useTable from "../hooks/useTable";
 import AdaptTableCellHover from "../components/AdaptTableCellHover/AdaptTableCellHover";
 import useDocument from "@webstack/hooks/useDocument";
 import Image from "next/image";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 
 export type TableStateProps = "show" | "hide" | "error" | "loading" | "empty";
 export interface TableContentProps extends TableFunctionProps {

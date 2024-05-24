@@ -47,7 +47,7 @@
     &__header{
         @extend .d-flex;
         justify-content: flex-start;
-        padding: 0 0 var(--s-padding);
+        padding: 0 0 var(--s-4);
         &--title{
             font-size: var(--s-3);
             color: var(--gray-30);
@@ -61,7 +61,7 @@
         flex-direction: column;
 
         align-items: flex-start;
-        gap: var(--s-padding);
+        gap: var(--s-4);
         min-height: 600px;
         &--content{
             min-height: 600px;
@@ -75,14 +75,14 @@
                 background-color: var(--gray-90);
                 &__description{
                     color: var(--gray-40);
-                    padding: var(--s-padding);
+                    padding: var(--s-4);
                 }
             }
             &__terms{
                 @extend .d-flex;
                 align-items: flex-start;
                 flex-direction: column;
-                gap: var(--s-padding);
+                gap: var(--s-4);
                 margin: var(--s-9) 0;
                 &--term{
                     max-width: calc(100% - calc(var(--s-5) * 2));
@@ -101,7 +101,7 @@
         }
     }
     &__actions{
-        padding: calc(var(--s-element) * 2) var(--s-padding) calc(var(--s-element) * 2);
+        padding: calc(var(--s-element) * 2) var(--s-4) calc(var(--s-element) * 2);
         @extend .d-flex;
         flex-direction: column;
         gap: var(--s-element);

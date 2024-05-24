@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useUserAgent from './getUserAgentInfo';
+import useUserAgent from './useUserAgent';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import { useRouter } from 'next/router';
 

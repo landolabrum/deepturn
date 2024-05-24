@@ -1,6 +1,6 @@
 import ApiService, { ApiError } from "../ApiService";
 import { getService } from "@webstack/common";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 import IProductService, { IGetProduct } from "./IProductService"
 import IMemberService from "../MemberService/IMemberService";
 

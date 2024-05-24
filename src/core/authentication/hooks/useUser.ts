@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Subscription } from "rxjs";
 import UserContext from "~/src/models/UserContext";
 import IMemberService from "../../services/MemberService/IMemberService";
+import environment from "../../environment";
+import { ICustomer } from "~/src/models/CustomerContext"; 
 
 export const useUser = () => {
   const MemberService = getService<IMemberService>('IMemberService');

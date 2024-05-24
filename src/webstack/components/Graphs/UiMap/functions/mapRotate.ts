@@ -1,24 +1,25 @@
-// TypeScript type definitions for better type checking
-type MapboxMap = mapboxgl.Map;
+import { Map as MapboxMap } from "mapbox-gl";
+import debounce from 'lodash/debounce';
 
 let userInteracting = false;
 let spinEnabled = true;
+let hoverPaused = false;
 let interactionTimeout: NodeJS.Timeout | null = null;
 let interactionStartTime: number | null = null;
 let speedMultiplier = 1;
+
+const defaultRpm = 500;
+const defaultMaxZoom = 5;
+const defaultZoom = 3;
+const interactionDelay = 3000;
+const easeDuration = 1500;
+const hoverLayer = 'LandSvg';
 
 export type IMapRotate = {
     rpm?: number;
     zoom?: number;
     maxZoom?: number;
 };
-
-const defaultRpm = 120;
-const defaultMaxZoom = 5;
-const defaultZoom = 3;
-import debounce from 'lodash/debounce';
-
-const interactionDelay = 5000; // 5000 ms delay to resume rotation after the last interaction
 
 function setUpInteractionListeners(map: MapboxMap, rotateFunction: () => void): void {
     const startInteraction = () => {
@@ -40,13 +41,29 @@ function setUpInteractionListeners(map: MapboxMap, rotateFunction: () => void): 
     map.on("touchend", endInteraction);
     map.on("mousemove", endInteraction);
     map.on("touchmove", endInteraction);
+
+    map.on("userhoverstart", () => {
+        hoverPaused = true;
+    });
+
+    map.on("userhoverend", () => {
+        hoverPaused = false;
+        rotateFunction();
+    });
+
+    if (map.getLayer(hoverLayer)) {
+        map.on('mouseenter', hoverLayer, () => map.fire('userhoverstart'));
+        map.on('mouseleave', hoverLayer, () => map.fire('userhoverend'));
+    } else {
+        console.warn(`Layer "${hoverLayer}" does not exist`);
+    }
 }
 
-function useMapRotatae(map: MapboxMap, options: IMapRotate = {}): void {
+function mapRotate(map: MapboxMap, options: IMapRotate = {}): void {
     const { rpm = defaultRpm, zoom = defaultZoom, maxZoom = defaultMaxZoom } = options;
 
     function rotate() {
-        if (userInteracting || !spinEnabled) return;
+        if (userInteracting || !spinEnabled || hoverPaused) return;
         const currentZoom = map.getZoom();
         const center = map.getCenter();
         if (currentZoom < maxZoom) {
@@ -56,13 +73,13 @@ function useMapRotatae(map: MapboxMap, options: IMapRotate = {}): void {
                 distancePerSecond *= zoomDif;
             }
             center.lng -= distancePerSecond;
-            map.easeTo({ center, duration: 1000, easing: (n: number) => n });
+            map.easeTo({ center, duration: easeDuration, easing: (n: number) => n });
         }
     }
 
     map.on("moveend", rotate);
-    rotate(); // Start the rotation when the map is loaded
-    setUpInteractionListeners(map, rotate); // Set up interaction listeners and pass the rotate function
+    rotate();
+    setUpInteractionListeners(map, rotate);
 }
 
-export default useMapRotatae;
+export default mapRotate;

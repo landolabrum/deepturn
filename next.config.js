@@ -1,3 +1,4 @@
+const { merchants }= require('./merchants.config');
 
 const nextConfig = {
   reactStrictMode: true,
@@ -36,6 +37,9 @@ const nextConfig = {
         hostname: "**",
       },
     ],
+  },
+  env: {
+    SITE_URL: merchants.mb1.url,
   },
 };
 

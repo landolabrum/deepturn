@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import styles from './CartListItemMini.scss';
 import Image from 'next/image';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import ProductBuyNow from '../../../Products/views/ProductDescription/views/ProductBuyNow/ProductBuyNow';

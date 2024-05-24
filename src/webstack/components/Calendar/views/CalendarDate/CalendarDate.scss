@@ -93,7 +93,7 @@
     @media(max-width: 900px) {
         justify-content: flex-end;
         // gap: var(--s-4);
-        // padding: 5px 5px var(--s-padding);
+        // padding: 5px 5px var(--s-4);
         &__has-event{
             z-index: 1;
             &::before {

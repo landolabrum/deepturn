@@ -1,60 +1,13 @@
-
-$a: #ff0000;
-$b: #20202090;
-$c: #38005d30;
-$d: #0000ff50;
-$e: #462300;
-@keyframes space {
-  0%, 100% {
-  background: 
-  linear-gradient(217deg, $a, $b 70.71%),
-  linear-gradient(127deg, $c, $d 70.71%),
-  linear-gradient(336deg, $c, $e 70.71%);
-  }
-
-  50% {
-    background: 
-    linear-gradient(127deg, $c, $d 70.71%),
-    linear-gradient(336deg, $c, $e 70.71%),
-    linear-gradient(217deg, $a, $b 70.71%);
-  }
-}
-.p-fix{
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
+.map {
   width: 100%;
-  // background-color: #000;
-  // animation: space 5s infinite ease-in-out;
-  // background: 
-  // linear-gradient(217deg, $a, $b 70.71%),
-  // linear-gradient(127deg, $c, $d 70.71%),
-  // linear-gradient(336deg, $c, $e 70.71%);
-  
-}
-.d-flex{
- display: flex;
- justify-content: center;
- align-items: center;
- width: 100%;
- height: 100vh;
-}
-@import url("https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css");
-.map-container{
-  .current-location{
-    @extend .p-fix;
-    z-index: 1;
-    top:auto;
-    
-  }
-  @extend .p-fix;
-  .map{
-    @extend .d-flex;
-    @media(max-width:1100px){
-      justify-content: flex-end;
-    }
+  height: 100%;
+  position: relative;
+  &-tools__main{
+    color: var(--green);
+    position: absolute;
+    bottom: var(--s-9);
+    right: var(--s-9);
+    padding: var(--s-9);
+    --ui-icon-color: var(--white);
   }
 }

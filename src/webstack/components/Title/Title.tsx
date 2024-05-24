@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 import capitalize, { capitalizeAll } from '@webstack/helpers/Capitalize';
 import useDarkMode from "@webstack/hooks/useDarkMode";
 

@@ -27,7 +27,7 @@
   position: relative;
   &__content {
     position: fixed;
-    padding: var(--s-padding);
+    padding: var(--s-4);
     @extend .d-flex;
     flex-direction: column;
     // border: solid 1px #f00;
@@ -47,7 +47,7 @@
       min-height: var(--s-element);
       width: 100%;
       color: var(--gray-30);
-      margin-top: var(--s-padding);
+      margin-top: var(--s-4);
       text-transform: capitalize;
     }
   }

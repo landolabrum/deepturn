@@ -18,7 +18,7 @@
         @extend .d-flex;
         width: 100%;
         flex-direction: column;
-        gap: var(--s-padding);
+        gap: var(--s-4);
         &--actions{
             width: 100%;
             @extend .d-flex;

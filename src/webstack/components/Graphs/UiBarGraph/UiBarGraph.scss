@@ -45,11 +45,11 @@
         overflow-y: auto;
     }
     &__header {
-        width: var(--s-padding-width);
+        width: var(--s-4-width);
         min-height: var(--s-element);
         @extend .d-flex;
         justify-content: flex-start;
-        padding: 0 var(--s-padding);
+        padding: 0 var(--s-4);
         border-bottom: solid 1px var(--gray-70);
         &--title {
             line-height: 1;

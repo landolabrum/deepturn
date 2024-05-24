@@ -10,7 +10,7 @@ import styles from "./LoginView.scss";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import { ILogin } from "../../controller/Login";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 import { IFormField } from "@webstack/components/UiForm/models/IFormModel";
 
 const DEFAULT_RESPONSE = { response: "", message: "" };
@@ -32,7 +32,6 @@ const LoginView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
     code: defaultCodeValue,
   }
   const [notification, setNotification] = useNotification();
-  const { closeModal, isModalOpen } = useModal();
 
   const [signInResponse, setSignInResponse] = useState<any>(DEFAULT_RESPONSE);
   const userResponse = useUser();
@@ -64,7 +63,6 @@ const LoginView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
           }
         });
          const  closeMod = async () =>{
-          if (resp?.email && isModalOpen) closeModal();
           return;
         }
         if (onSuccess) {

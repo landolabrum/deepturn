@@ -14,16 +14,16 @@
     
     &__header {
         position: absolute;
-        top: calc(var(--s-element) + var(--s-padding));
+        top: calc(var(--s-element) + var(--s-4));
         z-index: 1;
-        width: var(--s-padding-width);
+        width: var(--s-4-width);
     }
     
     &__tools {
         @extend .d-flex;
         justify-content: flex-end;
         opacity: 0.5;
-        margin-top:var(--s-padding);
+        margin-top:var(--s-4);
         margin-right: -1px;
         &:hover{
             opacity: 1;
@@ -37,7 +37,7 @@
 }
 .globe-marker{
     min-width: var(--s-element);
-    padding: var(--s-padding);
+    padding: var(--s-4);
     background-color: #f30;
     z-index: 1111;
 }

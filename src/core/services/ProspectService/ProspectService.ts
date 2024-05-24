@@ -1,5 +1,5 @@
 
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 import ApiService, { ApiError } from "../ApiService";
 import IProspectService from "./IProspectService";
 

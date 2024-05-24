@@ -1,7 +1,7 @@
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { useEffect, useMemo, useState } from "react";
 import { useUser } from "~/src/core/authentication/hooks/useUser";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 
 export type SelectableRoute = {
   href: string;
@@ -18,6 +18,7 @@ export interface IRoute extends HandleRouteProps {
   active?: boolean;
   altLabel?: string;
   altIcon?: string;
+  mid?:string;
 }
 export interface HandleRouteProps {
   href?: string;
@@ -33,7 +34,7 @@ const merchantName = environment.merchant?.name || 'deepturn';
 export const routes: IRoute[] = [
   {
     href:"/payment",
-    hide: true
+    hide: true,
   },
   {
     href:"/verify",
@@ -53,6 +54,7 @@ export const routes: IRoute[] = [
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
   // { label: "configure", href: "/configure", icon: "fa-gear", active: true },
   { label: "products", href: "/product", icon: "fa-tags", active: true },
+  // { label: "portfolio", href: "/portfolio", icon: "fa-tags", active: true },
   {
     label: "Social",
     icon: "fa-biohazard",
@@ -96,7 +98,7 @@ export const routes: IRoute[] = [
     icon: 'fa-circle-user',
     clearance: 0,
   },
-  // { label: "about", href: "/about", icon: "fal-circle-info" , active: true },
+  { label: "about", href: "/about", icon: "fal-circle-info" , active: true },
   { label: "", href: "/cart", icon: "fal-bag-shopping" },
   { label: "", href: "/checkout", hide: true},
 ];

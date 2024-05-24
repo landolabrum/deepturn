@@ -9,7 +9,7 @@ import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import useReferrer from "@webstack/hooks/useReferrer";
 import { findField } from "@webstack/components/UiForm/functions/formFieldFunctions";
 import { useNotification } from "@webstack/components/Notification/Notification";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 
 
 export interface ISignUp {

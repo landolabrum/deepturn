@@ -7,7 +7,7 @@ import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { useRouter } from "next/router";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import Link from "next/link";
-import environment from "~/src/environment";
+import environment from "~/src/core/environment";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import { useClearance } from "~/src/core/authentication/hooks/useUser";
@@ -68,13 +68,15 @@ const Authentication: React.FC<any> = (props: any) => {
         const adminClearance = useClearance() > 9;
         const onProfileClick = (isAdmin: boolean) => {
           if (isAdmin && adminClearance) router.push('/admin');
+          else router.push('/profile');
+          closeModal();
         }
         return (
 
           <>
             <style jsx>{styles}</style>
             <div className='authentication__welcome-modal'>
-              <h1>Welcome, {user.name}</h1>
+              <h3>Welcome, {user.name}</h3>
               {adminClearance && <UiButton onClick={onProfileClick}>admin</UiButton>}
               <UiButton onClick={onProfileClick}>account</UiButton>
               <UiButton onClick={onClose}>Close</UiButton>
@@ -93,7 +95,7 @@ const Authentication: React.FC<any> = (props: any) => {
 
   useEffect(() => {
 
-    if (query && query.verify) {
+    if (query && query.verify && view !== 'verify') {
       setView('verify');
     }
 

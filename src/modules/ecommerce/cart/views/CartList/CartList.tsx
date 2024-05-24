@@ -7,7 +7,7 @@ import useCart from '../../hooks/useCart';
 // import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 // import Image from 'next/image';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import environment from '~/src/environment';
+import environment from '~/src/core/environment';
 // import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 
 interface ICartTableItem {
@@ -17,9 +17,8 @@ interface ICartTableItem {
     image?: React.ReactElement;
 }
 const CartList = ({ variant, adjustable }: { variant?: 'mini', adjustable?:boolean }) => {
-    const [cart, setCart] = useState<IProduct[] | ICartTableItem[]>();
-    const { getCartItems } = useCart();
-    const currentCart = getCartItems();
+    const [_cart, setCart] = useState<IProduct[] | ICartTableItem[]>();
+    const { cart } = useCart();
     const BrandIcon = () => {
         return <>
             <style jsx>{styles}</style>
@@ -29,16 +28,16 @@ const CartList = ({ variant, adjustable }: { variant?: 'mini', adjustable?:boole
         </>
     };
     useEffect(() => {
-        if (!cart && currentCart) setCart(currentCart);
+        if (!_cart && cart) setCart(cart);
     }, []);
-    if (cart) return <>
+    if (_cart) return <>
         <style jsx>{styles}</style>
         <div 
             className={`cart-list ${
                 variant&&` cart-list__${variant}`||''}
                 `}>
             <AdaptGrid xs={1} gap={20}>
-                {cart.map((item: any, key: number) => (
+                {_cart.map((item: any, key: number) => (
                     <div key={key}>
                         <CartListItem variant={variant} item={item} adjustable={adjustable} />
                     </div>

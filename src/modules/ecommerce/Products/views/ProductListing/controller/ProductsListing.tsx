@@ -2,16 +2,11 @@ import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import styles from "./ProductsListing.scss";
 import { getService } from "@webstack/common";
-import ProductSlider from "../views/ProductSlider/ProductSlider";
 import { dateFormat, numberToUsd } from "@webstack/helpers/userExperienceFormats";
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import IProductService from "~/src/core/services/ProductService/IProductService";
-import ProductChapters from "../views/ProductChapters/ProductChapters";
 import { useLoader } from "@webstack/components/Loader/Loader";
-import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
-import Image from "next/image";
-import environment from "~/src/environment";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import environment from "~/src/core/environment";
 import ProductList from "../views/ProductList/ProductList";
 import UiSelect from "@webstack/components/UiSelect/UiSelect";
 
@@ -26,11 +21,10 @@ const ProductsListing: NextPage = () => {
   const user = useUser();
   const [filters, setFilters] = useState<Filter>({ categories: {}, types: {} });
   const [products, setProducts] = useState<any[]>();
-  // const [products, setProducts] = useState<any[]>();
   const [hasMore, setHasMore] = useState<boolean>(false);
   const ProductService = getService<IProductService>("IProductService");
+
   const getSelectedCategories = (filter: any) => {
-    if(!filters?.length)return '-';
     const selectedEntries = Object.entries(filter).filter(([, value]: any) => value.selected);
     if (selectedEntries.length === 0) return "all";
     return selectedEntries.map(([key]) => key).join(", ");
@@ -45,71 +39,69 @@ const ProductsListing: NextPage = () => {
       }
     }));
   };
-  useEffect(() => {
-    const fetchProducts = async () => {
-      !loader.active && setLoader({ active: true, body: 'loading products', animation: true });
-      try {
-        const memberResponse = await ProductService.getProducts();
-        const fetchedProducts: any = memberResponse?.data;
-        if (fetchedProducts) {
-          // const formatted = fetchedProducts
-          // // .filter((product: any)=>product?.metadata?.mid == merchantId)
-          // .map((product: any) => ({
-          //   id: product.id,
-          //   description: product.description,
-          //   name: product.name,
-          //   created: dateFormat(product.price.created, { isTimestamp: true }),
-          //   images: product.images[0],
-          //   price: product.price,
-          //   type: product.type,
-          //   metadata: product.metadata
-          // }));
-          setHasMore(memberResponse.has_more);
-          setProducts(fetchedProducts);
-        }
-      } catch (error) {
-        console.error("Error fetching products:", error);
+
+  const fetchProducts = async () => {
+    !loader.active && setLoader({ active: true, body: 'loading products', animation: true });
+    try {
+      const memberResponse = await ProductService.getProducts();
+      const fetchedProducts: any = memberResponse?.data;
+
+      if (fetchedProducts) {
+        const filteredProducts = fetchedProducts.filter((product: any) => {
+          const { category, hide_price, mid, type } = product.metadata;
+          if (mid !== environment.merchant.mid) return false;
+
+          const categoryMatch = Object.entries(filters.categories).some(([key, val]) => val.selected && key === category);
+          const typeMatch = Object.entries(filters.types).some(([key, val]) => val.selected && key === type);
+
+          return (categoryMatch || Object.keys(filters.categories).length === 0) && (typeMatch || Object.keys(filters.types).length === 0);
+        });
+
+        const formattedProducts = filteredProducts.map((product: any) => ({
+          ...product,
+          created: dateFormat(product.price.created, { isTimestamp: true }),
+        }));
+
+        setHasMore(memberResponse.has_more);
+        setProducts(formattedProducts);
       }
-      finally { setLoader({ active: false }); }
-    };
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setLoader({ active: false });
+    }
+  };
 
-     fetchProducts();
-  }, [setProducts]);
+  useEffect(() => {
+    fetchProducts();
+  }, [filters]); // Refetch products whenever filters change
 
-  return (<>
-    <style jsx>{styles}</style>
-    <div className="product-listing">
-      {/* <ProductChapters/> */}
-      <div className="product-listing__header">
-        <div>
-          <h1>Products</h1>
+  return (
+    <>
+      <style jsx>{styles}</style>
+      <div className="product-listing">
+        <div className="product-listing__header">
+          <div>
+            <h1>Products</h1>
+          </div>
+          {/* <div className="product-listing__filters">
+            {['categories', 'types'].map(filterKey => (
+              <UiSelect
+                key={filterKey}
+                variant="dark"
+                onSelect={(value) => updateFilters(filterKey as keyof Filter, value)}
+                label={filterKey}
+                options={Object.keys(filters[filterKey])}
+                title={getSelectedCategories(filters[filterKey])}
+                value={getSelectedCategories(filters[filterKey])}
+              />
+            ))}
+          </div> */}
         </div>
-        <div className="product-listing__filters">
-          {['categories', 'types'].map(filterKey => (
-            <UiSelect
-              key={filterKey}
-              variant="dark"
-              onSelect={(value) => updateFilters(filterKey as keyof Filter, value)}
-              label={filterKey}
-              options={Object.keys(filters[filterKey])}
-              title={getSelectedCategories(filters[filterKey])}
-              value={getSelectedCategories(filters[filterKey])}
-            />
-          ))}
-        </div>
+        <ProductList products={products} />
       </div>
-      <ProductList products={products} />
-    </div>
-  </>
+    </>
   );
 };
 
 export default ProductsListing;
-
-// Choose your nirvana
-
-// ON SUBMIT Add to POSTGRES
-
-// Contact Info
-// Package info
-
