@@ -73,6 +73,7 @@ export default class MemberService
       TIMEOUT // 5 seconds timeout
     );
     if(memberJwt){
+      console.log("[ MEMBER JWT ]", memberJwt)
       this.saveMemberToken(memberJwt);
       this.saveLegacyAuthCookie(memberJwt);
       return this._getCurrentUser(true)!;
@@ -315,7 +316,6 @@ public async processTransaction(sessionData: ISessionData) {
       this.saveguestToken(guestJwt);
       this.saveLegacyguestCookie(guestJwt);
     }
-    // console.log("[ SIGN UP RES ]", res)
     return res;
   }
   public async getMethods(customerId?: string): Promise<any> {

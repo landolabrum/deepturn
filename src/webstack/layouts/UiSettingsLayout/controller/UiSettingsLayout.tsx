@@ -104,13 +104,6 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     }
   }, [router.query.vid, defaultView, views]);
 
-  // useEffect(() => {
-  //   if (showMenu) setHide('show');
-  //   if (showMenu === false) setHide('hide');
-  // }, [showMenu]);
-
-
-
   if (view === undefined) return <UiLoader />;
 
   return (
@@ -119,22 +112,24 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       <div
         id="settings-container"
         className={classes.container}>
-        <div className={classes.content}>
-          {title && (
-            <div className={classes.header}>
-              <div className="settings__view--header--title">
-                {title}
-              </div>
-            </div>
-          )}
-         {Array(views)?.length  && <UiSettingsLayoutNav view={view} views={views} handleView={handleView} />}
 
-          <div id="settings-view" className={classes.view}>
-            <div className="settings__view__content">
-              <div className="settings__view__content-background">
-                <UiIcon icon={`${environment.merchant.name}-logo`} />
+        <div className={classes.content}>
+          {Array(views)?.length && <UiSettingsLayoutNav view={view} views={views} handleView={handleView} />}
+          <div className='settings__view--container'>
+            {title && (
+              <div className={classes.header}>
+                <div className="settings__view--header--title">
+                  {typeof title == 'string' && keyStringConverter(title, undefined, false)}
+                </div>
               </div>
-              {views[view]}
+            )}
+            <div id="settings-view" className={classes.view}>
+              <div className="settings__view__content">
+                <div className="settings__view__content-background">
+                  <UiIcon icon={`${environment.merchant.name}-logo`} />
+                </div>
+                {views[view]}
+              </div>
             </div>
           </div>
         </div>

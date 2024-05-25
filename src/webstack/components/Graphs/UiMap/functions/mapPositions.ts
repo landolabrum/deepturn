@@ -4,7 +4,8 @@ export const flyToView = (map: any,
     const { lngLat = [0, 0], zoom = 9 } = props;
     if (!map) return;
     map.flyTo({
-        ...props,
+        center: lngLat,
+        zoom: zoom,
         essential: true,
     });
 }

@@ -20,17 +20,18 @@ const UiSettingsLayoutNav: React.FC<IUiSettingsLayoutNav> = (props: IUiSettingsL
         (item as HTMLElement).style.animationDelay = `${index * 0.1}s`;
       });
     }
-  }, []);
-  if (!views || !view) return<>..load</>;
+  }, [views, view]);
   return (
     <>
       <style jsx>{styles}</style>
       <div className='settings-nav' >
-        {Object.keys(views).map((v) => (
+      <div className='settings-nav--content' >
+        {Object.keys(views)?.map((v) => (
           <div className={`nav-item ${view === v ?'nav-item--selected':''}`} key={v} onClick={()=>handleView(v)}>
             {keyStringConverter(v, false)} {view === v && <span className='nav-item--selected-icon'><UiIcon icon="fa-check"/></span>}
           </div>
         ))}
+      </div>
       </div>
     </>
   );

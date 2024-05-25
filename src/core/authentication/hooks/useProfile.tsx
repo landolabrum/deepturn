@@ -159,17 +159,18 @@ export const useProfile = ({ require }: UseProfileOptions = {}): ProfileContext 
   }, [profile]);
 
   const addUser = () => {
-    if (require !== 'location' || requirement !== 'done' || !requirement) setRequirement('user');
-    if (!require || (require === 'location' && profile?.id && requirement === 'user')) return;
+    if (!require || (require === 'location' && profile?.id && requirement === 'user') && isModalOpen) return;
+    else if (!requirement || Boolean(require !== 'location' || requirement !== 'done')) setRequirement('user');
     openAuthenticationModal("sign-in");
   };
 
   const addLocation = () => {
     if (requirement === 'user' && view === 'sign-in' && !isModalOpen) setRequirement('location');
-    else if (profile || require === 'location') setRequirement('location');
+    else if (profile || require === 'location' ) setRequirement('location');
   };
 
   useEffect(() => {
+    console.log("[ useProfile ]",{view, requirement, profile})
     if (!profile?.id && requirement === undefined) addUser();
     if (requirement !== 'location') addLocation();
     if (requirement === 'location' && !profile?.lngLat && !isModalOpen && !permissionDenied) requestLocation();

@@ -19,11 +19,11 @@ const Transaction: React.FC = () => {
   const MemberService = getService<IMemberService>('IMemberService');
   const [selectedUser, setUser] = useState<UserContext | { email: string } | undefined>();
   const [transaction, setTransaction] = useState<any>();
-  const prospect = useGuest();
+  const guest = useGuest();
 
   const loadTransaction = () => {
     if (transaction) return;
-    const hasTransaction = CookieHelper.getCookie('transact ion-token');
+    const hasTransaction = CookieHelper.getCookie('transaction-token');
     const decryptToken = async (token: string) => {
       if (token) {
         try {
@@ -49,18 +49,17 @@ const Transaction: React.FC = () => {
   }
   const handleUser = () => {
     if (selectedUser) return;
-    if (user || prospect) setUser(user || prospect);
+    if (user || guest) setUser(user || guest);
   };
   useEffect(() => {
     handleUser();
   }, [handleUser, user]);
   useEffect(() => {
     loadTransaction();
-  }, []);
+  }, [setTransaction]);
   return (
     <>
       <style jsx>{styles}</style>
-
       <div className='transaction'>
         {transaction?.total !== undefined && <div className='transaction__header'>
           <div className='transaction__title'>

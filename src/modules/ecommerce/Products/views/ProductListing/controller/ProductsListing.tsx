@@ -41,7 +41,11 @@ const ProductsListing: NextPage = () => {
   };
 
   const fetchProducts = async () => {
-    !loader.active && setLoader({ active: true, body: 'loading products', animation: true });
+    !loader.active && setLoader({ 
+      active: true,
+      body: 'loading products',
+      // animation: true
+     });
     try {
       const memberResponse = await ProductService.getProducts();
       const fetchedProducts: any = memberResponse?.data;

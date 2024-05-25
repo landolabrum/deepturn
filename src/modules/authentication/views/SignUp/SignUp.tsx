@@ -107,7 +107,7 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
         address: findField(fields, 'address')?.value,
         metadata: {
             user:{
-              user_agent:user_agent,
+              user_agent: user_agent,
               password: findField(fields, "password")?.value
             },
             merchant:environment.merchant

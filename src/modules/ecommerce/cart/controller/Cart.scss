@@ -28,6 +28,7 @@
 .cart {
     @extend .d-flex-col;
     width: 100%;
+    margin-top: var(--s-nav-height);
     z-index: 1;
     gap:var(--s-5);
     .cart__header {

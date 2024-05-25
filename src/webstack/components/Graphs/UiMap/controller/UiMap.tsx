@@ -10,6 +10,7 @@ import { IVessel, IVesselActions } from "../models/IMapVessel";
 import useProfile from "~/src/core/authentication/hooks/useProfile";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { flyToView } from "../functions/mapPositions";
+import { useRouter } from "next/router";
 
 mapboxgl.accessToken = token;
 const styleId = "clw76pwt4003o01q120rh1mkk";
@@ -26,7 +27,8 @@ const UiMap: React.FC<IuiMap> = ({ options, vessels, onVesselClick, require = 'b
     const mapRef = useRef<MapboxMap | null>(null);
     const [loader, setLoader] = useLoader();
     const profile = useProfile({ require: require });
-
+    const router = useRouter();
+    const [mapPath, setMapPath]=useState<string | undefined>();
     const { width } = useWindow();
     const MAPCONFIG = {
         zoom: width < 900 ? 1.5 : 2,
@@ -109,9 +111,11 @@ const UiMap: React.FC<IuiMap> = ({ options, vessels, onVesselClick, require = 'b
     };
 
     useEffect(() => {
-        if (!mapRef.current) setLoader({ active: true, body: 'loading map' });
-
-        if (Boolean(profile?.lngLat || !require) && mapContainer.current) {
+        const isMapPath = mapPath && mapPath == router.asPath;
+        if(!mapPath)setMapPath(router.asPath);
+        else if(!isMapPath && loader.active)setLoader({active: false})
+        if (!mapRef.current && isMapPath) setLoader({ active: true, body: 'loading map' });
+        if (Boolean(profile?.lngLat || !require) && mapContainer.current && isMapPath) {
             const map = new mapboxgl.Map({
                 container: mapContainer.current,
                 ...mapOptions,
@@ -119,13 +123,16 @@ const UiMap: React.FC<IuiMap> = ({ options, vessels, onVesselClick, require = 'b
             initializeMap(map);
             return () => map.remove();
         }
-    }, [mapContainer.current, require, profile]);
+    }, [mapContainer.current, require, profile, router.asPath]);
 
 
 
     return (
         <>
             <style jsx>{styles}</style>
+            <div className='dev'>
+                {JSON.stringify({mapPath})}
+            </div>
             <div className="map" ref={mapContainer} />
             {mapContainer?.current && <div className='map-tools__main'>
                 {zoom > 6 && <UiIcon 

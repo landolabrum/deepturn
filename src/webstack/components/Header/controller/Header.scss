@@ -20,8 +20,13 @@
   justify-content: space-between;
   background-color: var(--primary-o);
   top: 0;
-  &.aire-hotel--index, &.deepturn--index{
-    display: none;
+  &.aire-hotel--index{display: none;}
+  &.deepturn--index{
+    opacity: 0.1;
+    transition: all .2s;
+    &:hover{
+      opacity: 1;
+    }
   }
   @media(max-width: 1099px) {
     flex-direction: row-reverse;

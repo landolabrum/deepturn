@@ -14,12 +14,12 @@ const MainLayout = (props: IProps) => {
   const styleMerchant = () => {
     if (!mid || !mainRef?.current) return;
     
-    // Set margin-top based on header height
-    const mainRefStyle = mainRef.current.style;
-    const headerHeight = document.getElementById('header-container')?.offsetHeight;
-    if (headerHeight) {
-      mainRefStyle.marginTop = `${headerHeight}px`;
-    }
+    // // Set margin-top based on header height
+    // const mainRefStyle = mainRef.current.style;
+    // const headerHeight = document.getElementById('header-container')?.offsetHeight;
+    // if (headerHeight) {
+    //   mainRefStyle.marginTop = `${headerHeight}px`;
+    // }
 
     // Dynamically load the merchant-specific stylesheet
     const existingLink = document.querySelector(`link[href*="${mid}.css"]`);

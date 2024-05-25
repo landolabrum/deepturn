@@ -76,8 +76,8 @@
     &__full-width {
         flex-direction: column;
     }
-}
 
+}
 
 // ICON CLASS
 .settings__trigger {
@@ -149,10 +149,6 @@
     border: solid 1px var(--gray-90);
     border-radius: var(--s-3);
     padding: var(--s-9);
-    // border-style: solid;
-    // border-width: 0 1px 1px 1px;
-
-    // border-radius: var(--border-radius);
     animation: viewBorderAnimation 5s infinite alternate;
     @extend .d-flex;
     flex-direction: column;
@@ -184,11 +180,17 @@
         width: calc(var(--s-border-width) - calc(var(--s-9) * 2));
     }
 
-    &--header {
-        display: none;
+    &--container {
+        width: 100%;
+        @extend .d-flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: var(--s-9);
+    }
 
+    &--header {
         &__full {
-            color: var(--gray-60);
             width: var(--s-4-width);
             padding: var(--s-4);
             text-transform: capitalize;
@@ -204,8 +206,14 @@
         }
 
         &--title {
-            font-size: var(--s-1);
-            color: var(--gray-40);
+            height: max-content;
+            vertical-align: top;
+            display: inline;
+            text-transform: capitalize;
+            color: var(--primary-o);
+            font-size: var(--s-element);
+            font-family: Game;
+            align-self: flex-start; /* Align the text to the top */
         }
     }
 

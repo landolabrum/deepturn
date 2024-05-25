@@ -22,26 +22,21 @@ const UiLoader: NextComponentType<NextPageContext, {}, IUiLoader> = ({
   fontSize,
 }: IUiLoader) => {
   const text = !propText && typeof propText != 'string' ? "Loading" : propText;
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (ref.current) {
-      const style = ref.current.style;
-      if (position) style.position = position;
-      if (width) style.width = typeof width === "number" ? `${width}px` : width;
-      if (height) style.height = typeof height === "number" ? `${height}px` : height;
-      if (fontSize) style.fontSize = typeof fontSize === "number" ? `${fontSize}px` : fontSize;
-    }
-  }, [dots, height, position, width, fontSize]);
-
+  const merchantName = environment.merchant.name;
+  let loaderStyles:any = {
+    width: width,
+    height: height,
+    position: position,
+    fontSize: fontSize
+  }
   return (
     <>
       <style jsx>{styles}</style>
-      <div ref={ref} className="ui-loader">
+      <div style={loaderStyles} className="ui-loader">
         <div className="ui-loader--content">
           <div className="ui-loader__icon">
             <div className="ui-loader__icon-content">
-              <UiIcon icon={`${environment.merchant.name}-logo`} />
+              <UiIcon icon={`${merchantName}-logo`} />
             </div>
           </div>
           <div className={`ui-loader__text${dots === false ? ' ui-loader__text-no-dots' : ''}`}>

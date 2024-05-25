@@ -15,7 +15,7 @@ type ILoader = {
   onClick?: any;
   body?: any;
   children?: any;
-  animation?: true;
+  animation?: boolean;
   persistence?: number; // New property for persistence
 };
 

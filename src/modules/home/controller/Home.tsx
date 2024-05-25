@@ -6,7 +6,6 @@ import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/controller/UiSe
 import Lights from '../views/hue/controller/Lights';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import capitalize from '@webstack/helpers/Capitalize';
-import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
@@ -27,7 +26,7 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
     surveillance: <Surveillance />,
     light: <Lights />
   };
-  if (user) return (
+  return (
     <>
       <style jsx>{styles}</style>
         <UiSettingsLayout
@@ -39,7 +38,7 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
         />
       {/* </div> */}
     </>
-  ); return <><UiLoader /></>
+  ); 
 };
 
 export default Home;
