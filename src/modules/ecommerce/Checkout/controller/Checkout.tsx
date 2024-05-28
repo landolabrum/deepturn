@@ -10,7 +10,6 @@ import { useGuest } from '~/src/core/authentication/hooks/useGuest';
 import Login from '~/src/modules/authentication/views/Login/controller/Login';
 import UserContext from '~/src/models/UserContext';
 import Collect from '../views/Collect/controller/Collect';
-import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import CartList from '../../cart/views/CartList/CartList';
 import { useNotification } from '@webstack/components/Notification/Notification';
 import UiViewLayout, { IView } from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';

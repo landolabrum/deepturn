@@ -40,7 +40,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
       console.error('[ HANDLE VERIFY ]', verifiedResponse)
       if (verifiedResponse) setState(verifiedResponse);
     } catch (e: any) {
-      console.error('[ HANDLE VERIFY ]', e)
+      console.error('[ HANDLE VERIFY ERROR ]', e)
     }
   }
 

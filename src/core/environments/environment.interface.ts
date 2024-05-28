@@ -7,6 +7,7 @@ export interface Merchant {
   mid: string;
   name: string;
   url: string;
+  stripeId: string;
 }
 
 export interface MerchantsConfig {

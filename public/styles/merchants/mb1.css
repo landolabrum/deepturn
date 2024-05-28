@@ -1,11 +1,11 @@
 :root {
-  --primary: #d40;
+  --primary: #cc6f50;
 
-  --primary-lite: #f30;
+  --primary-lite: #d40;
 
-  --primary-o: #dd440050;
+  --primary-o: #cc6f5050;
 
-  --primary-o-1: #dd440030;
+  --primary-o-1: #cc6f5030;
 
 
   --secondary: #c5b9a8;
@@ -22,7 +22,7 @@
 
   --lite: #f0edeb;
 
-  --dark: #16191d;
+  --dark: #242c36;
 
   --dark-o: rgba(22, 25, 29, 0.5);
 

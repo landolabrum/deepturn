@@ -14,17 +14,17 @@ import AdminMarketing from '../views/AdminMarketing/AdminMarketing';
 import { useRouter } from 'next/router';
 import AdminDashboard from '../views/AdminDashboard/controller/AdminDashboard';
 import AdminMgmt from '../views/AdminMgmt/controller/AdminMgmt';
-import AdminSales from '../views/AdminMgmt/controller/AdminSales';
+import AdminSales from '../views/AdminSales/controller/AdminSales';
 
 
 
 const Admin = () => {
-  const initialViews = {
+  let initialViews = {
     management: <AdminMgmt/>,
+    sales: <AdminSales/>,
     operations: <h1>Operations</h1>,
     finance: <h1>Finance and Accounting</h1>,
     marketing: <h1>Marketing</h1>,
-    sales: <AdminSales/>,
     humanResources: <h1>Human Resources</h1>,
     customerService: <h1>Customer Service</h1>,
     infoTechnology: <h1>Information Technology</h1>,
@@ -62,6 +62,9 @@ const Admin = () => {
     <>
       <style jsx>{styles}</style>
       <UiSettingsLayout
+        title="admin"
+        subTitle={current && `${current} `}
+
         setViewCallback={setCurrentView}
         views={views}
       />

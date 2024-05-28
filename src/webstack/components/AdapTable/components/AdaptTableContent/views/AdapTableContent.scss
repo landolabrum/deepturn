@@ -3,13 +3,13 @@ $defaultPadding: 5px 10px;
 $bRad: 5px;
 $break: 900px;
 $verySmall: 450px;
-$colorGray30: var(--gray-30);
-$colorGray40: var(--gray-40);
-$colorGray50: var(--gray-50);
-$colorGray60: var(--gray-60);
-$colorGray70: var(--gray-70);
-$colorGray90: var(--gray-90);
-$colorBlue: var(--blue);
+// $colorGray30: var(--gray-30);
+// $colorGray40: var(--gray-40);
+// $colorGray50: var(--gray-50);
+// $colorGray60: var(--gray-60);
+// $colorGray70: var(--gray-70);
+// $colorGray90: var(--gray-90);
+// $colorBlue: var(--blue);
 .adapt-table-content__scroll-to-top{
   display: flex;
   justify-content: center;
@@ -48,7 +48,7 @@ $colorBlue: var(--blue);
       width: 100%;
       
       &::-webkit-scrollbar-thumb {
-        background-color: $colorBlue;
+        background-color: var(--blue);
         border-radius: 5px;
         width: 15px;
       }
@@ -57,7 +57,7 @@ $colorBlue: var(--blue);
         border-radius: 0 7px 7px 0;
         width: 17px;
         aspect-ratio: 1/1;
-        background-color: #40404060;
+        background-color: var(--dark);
       }
     }
   }

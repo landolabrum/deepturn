@@ -11,6 +11,7 @@ import useProfile from "~/src/core/authentication/hooks/useProfile";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { flyToView } from "../functions/mapPositions";
 import { useRouter } from "next/router";
+import mapRotate from "../functions/mapRotate";
 
 mapboxgl.accessToken = token;
 const styleId = "clw76pwt4003o01q120rh1mkk";
@@ -28,17 +29,17 @@ const UiMap: React.FC<IuiMap> = ({ options, vessels, onVesselClick, require = 'b
     const [loader, setLoader] = useLoader();
     const profile = useProfile({ require: require });
     const router = useRouter();
-    const [mapPath, setMapPath]=useState<string | undefined>();
+    const [mapPath, setMapPath] = useState<string | undefined>();
     const { width } = useWindow();
     const MAPCONFIG = {
-        zoom: width < 900 ? 1.5 : 2,
+        globeZoom: width < 900 ? 1.5 : 2,
+        mapZoom: 7,
         isGlobe: 5
     };
 
-
     let mapOptions: any = {
         center: options?.center || profile?.lngLat || [0, 10],
-        zoom: options?.zoom || MAPCONFIG.zoom,
+        zoom: options?.zoom || MAPCONFIG.globeZoom,
         style: `mapbox://styles/landolabrum/${styleId}`,
         projection: { name: "globe" } as any,
         antialias: true,
@@ -61,7 +62,7 @@ const UiMap: React.FC<IuiMap> = ({ options, vessels, onVesselClick, require = 'b
         const map = mapRef?.current;
         if (!map || !vessel) return;
         onVesselClick && onVesselClick(vessel);
-        flyToView(map, {lngLat:vessel.lngLat, zoom: 9});
+        flyToView(map, { lngLat: vessel.lngLat, zoom: 9 });
     };
 
     const handleVesselEnter = (vessel: IVessel) => {
@@ -78,6 +79,19 @@ const UiMap: React.FC<IuiMap> = ({ options, vessels, onVesselClick, require = 'b
         onMouseLeave: handleVesselLeave,
     };
 
+    const handleToolZoom = (newLngLat: number[]) => {
+        const map = mapRef.current;
+        if (!map) return;
+        setLngLat(newLngLat);
+        flyToView(
+            map,
+            {
+                zoom: zoom > MAPCONFIG.isGlobe ? MAPCONFIG.globeZoom : MAPCONFIG.mapZoom,
+                lngLat: newLngLat
+            }
+        );
+    };
+
     const initializeMap = (map: MapboxMap) => {
         const hasUserLocation = profile?.lngLat && profile.lngLat.every(item => item !== 0);
         mapRef.current = map;
@@ -91,16 +105,16 @@ const UiMap: React.FC<IuiMap> = ({ options, vessels, onVesselClick, require = 'b
                         id: index + 1,
                     }));
                 } else {
-                    flyToView(map, {lngLat: [-95, 37]})
+                    flyToView(map, { lngLat: [-95, 37] })
                     return [...vessels].map((vessel, index) => ({
                         ...vessel,
                         id: index + 1,
                     }));
                 }
-            }
+            };
             const initializedVessels = setInitialVessels();
             addVessels(map, actions, initializedVessels);
-            // mapRotate(map);
+            options?.rpm && mapRotate(map);
             setLoader({ active: false });
         });
 
@@ -112,8 +126,8 @@ const UiMap: React.FC<IuiMap> = ({ options, vessels, onVesselClick, require = 'b
 
     useEffect(() => {
         const isMapPath = mapPath && mapPath == router.asPath;
-        if(!mapPath)setMapPath(router.asPath);
-        else if(!isMapPath && loader.active)setLoader({active: false})
+        if (!mapPath) setMapPath(router.asPath);
+        else if (!isMapPath && loader.active) setLoader({ active: false });
         if (!mapRef.current && isMapPath) setLoader({ active: true, body: 'loading map' });
         if (Boolean(profile?.lngLat || !require) && mapContainer.current && isMapPath) {
             const map = new mapboxgl.Map({
@@ -125,21 +139,16 @@ const UiMap: React.FC<IuiMap> = ({ options, vessels, onVesselClick, require = 'b
         }
     }, [mapContainer.current, require, profile, router.asPath]);
 
-
-
     return (
         <>
             <style jsx>{styles}</style>
-            <div className='dev'>
-                {JSON.stringify({mapPath})}
-            </div>
             <div className="map" ref={mapContainer} />
-            {mapContainer?.current && <div className='map-tools__main'>
-                {zoom > 6 && <UiIcon 
-                onClick={()=>flyToView(mapRef.current,{zoom: MAPCONFIG.zoom})}
-                icon='fa-globe'
-                />}
-            </div>}
+            <div className='map-tools__main'>
+                <UiIcon
+                    onClick={() => handleToolZoom(lngLat)}
+                    icon={zoom > MAPCONFIG.isGlobe ? 'fa-globe' : 'fa-map'}
+                />
+            </div>
         </>
     );
 };

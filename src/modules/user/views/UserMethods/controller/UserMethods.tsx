@@ -8,7 +8,7 @@ import { useUser } from '~/src/core/authentication/hooks/useUser';
 import UserCurrentMethods from '../views/UserCurrentMethods/UserCurrentMethods';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import { useLoader } from '@webstack/components/Loader/Loader';
+import Loader, { useLoader } from '@webstack/components/Loader/Loader';
 import UserCreateMethod from '../views/UserCreateMethod/controller/UserCreateMethod';
 import UserContext from '~/src/models/UserContext';
 
@@ -72,8 +72,8 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
   const userHasCards = Boolean(Object.entries(methods).filter(([_, m]:any)=>m?.card)?.length);
   useEffect(() => {
   initUserMethods();
-  }, [setUser, selectedUser, open]);
-  if (selectedUser) return (
+  }, [selectedUser]);
+  if (selectedUser !== undefined) return (
     <>
       <style jsx>{styles}</style>
 
@@ -117,7 +117,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
       </div>
     </>
   );
-  return <>..load user</>
+  return <><Loader/></>
 };
 
 export default UserMethods;

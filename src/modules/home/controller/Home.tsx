@@ -33,7 +33,7 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
           // variant="full-width"
           // variant="full-width"
           // title='home'
-          defaultView='home'
+          viewName='home'
           views={views}
         />
       {/* </div> */}

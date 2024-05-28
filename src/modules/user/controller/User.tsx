@@ -31,12 +31,12 @@ const User: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
       };
       setViews({...views, ...tenantViews})
     }
-  }, [level, setViews]);
+  }, [level, setViews, user]);
     return (
       <>
         <style jsx>{styles}</style>
         {level && <UiSettingsLayout
-          defaultView='profile'
+          viewName='profile'
           title={current}
           showMenu={current === 'profile'}
           setViewCallback={(v)=> setCurrent(v)}

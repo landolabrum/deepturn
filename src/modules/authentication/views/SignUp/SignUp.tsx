@@ -6,7 +6,6 @@ import IMemberService from "~/src/core/services/MemberService/IMemberService";
 import useUserAgent from "~/src/core/authentication/hooks/useUserAgent";
 import UiForm from "@webstack/components/UiForm/controller/UiForm";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
-import useReferrer from "@webstack/hooks/useReferrer";
 import { findField } from "@webstack/components/UiForm/functions/formFieldFunctions";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import environment from "~/src/core/environment";
@@ -101,12 +100,13 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
     const errors = handleErrors();
     if (!errors) {
       const request = {
-        name: `${findField(fields, 'first_name')?.value} ${findField(fields, 'first_name')?.value}`,
+        name: `${findField(fields, 'first_name')?.value} ${findField(fields, 'last_name')?.value}`,
         email: findField(fields, 'email')?.value,
         phone: findField(fields, 'phone')?.value,
         address: findField(fields, 'address')?.value,
         metadata: {
-            user:{
+          user:{
+              email: findField(fields, 'email')?.value,
               user_agent: user_agent,
               password: findField(fields, "password")?.value
             },

@@ -73,7 +73,7 @@ const useRoute = (): ORoute => {
   const pathname: string = router.pathname;
   useEffect(() => {
     implicitRouter();
-  }, [clearanceRoutes, implicitRouter, routeTitle ]); // Added routeTitle to dependencies array
+  }, [ implicitRouter  ]); // Added routeTitle to dependencies array
   
 
   return { selectedUser, pathname, explicitRouter, routeTitle};

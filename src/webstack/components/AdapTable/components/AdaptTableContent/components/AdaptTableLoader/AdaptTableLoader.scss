@@ -1,12 +1,13 @@
 .table-loader{
   width: auto;
   margin:10px;
-  border:solid 1px var(--gray-60);
+  border:solid 1px var(--gray-70);
   border-radius: 5px;
-  background-color: var(--gray-70);
+  background-color: var(--gray-80-o);
   display: flex;
   justify-content: center;
   align-items: center;
-  height:33vh;
+  height:inherit;
+  min-height:500px;
   position: relative;
 }

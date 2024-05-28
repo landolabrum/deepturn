@@ -114,6 +114,9 @@
 
       &--brand {
         padding: 0;
+        @media(min-width: 1260px){
+          padding-left: var(--s-9)
+        }
       }
 
       &--about {

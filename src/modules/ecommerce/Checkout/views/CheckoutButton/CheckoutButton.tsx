@@ -37,15 +37,8 @@ const CheckoutButton: React.FC<ICheckoutButton> = (props) => {
             try {
                 const checkoutResponse = await MemberService.processTransaction(sessionData);
                 const hasTransaction = CookieHelper.getCookie('transaction-token');
-                if(hasTransaction){
-                    router.push('/transaction');
-                }
-                // if (checkoutResponse.total) {
-                //     const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
-                //     const encryptedResponse = encryptString(JSON.stringify(checkoutResponse), ENCRYPTION_KEY);
-                //     router.push(`/transaction?token=${encryptedResponse}`)
-                // }
-
+                if(hasTransaction)router.push('/transaction');
+                else setError("No Transaction Cookie")
             } catch (error: any) {
                 setError(error);
             }

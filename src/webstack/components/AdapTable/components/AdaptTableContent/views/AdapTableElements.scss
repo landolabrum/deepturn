@@ -1,4 +1,7 @@
 // Define variables for repeated values
+$borderColor: var(--gray-70);
+$hoverColor: var(--gray-80-o);
+$headerColor: var(--gray-80-o);
 .d-flex{
  display: flex;
  justify-content: center;
@@ -41,7 +44,7 @@ $bRad: 5px;
     padding: 0 8px;
   }
   &:hover {
-    background-color: var(--gray-60);
+    background-color: $hoverColor;
   }
   @media (max-width: $xs) {
     max-width: calc(100% - 8px);
@@ -75,8 +78,12 @@ $bRad: 5px;
 table {
   margin-bottom: auto;
   width: 100%;
-  border-spacing: unset;
   display: none;
+  -webkit-border-horizontal-spacing:0;
+  -webkit-border-vertical-spacing:0;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border: solid 1px $borderColor;
   &.table-show{
     display: table;
   }
@@ -91,7 +98,7 @@ table {
       display: none;
     }
     tr {
-      background-color: var(--gray-80);
+      background-color: $headerColor;
       th {
         text-transform: capitalize;
       }
@@ -124,7 +131,7 @@ table {
       height: 50px;
       width: 100%;
       &:hover {
-        background-color: var(--gray-80);
+        background-color: $hoverColor;
       }
 
       &.mobile-tr {
@@ -177,7 +184,7 @@ table {
           right: 0;
           bottom: 0;
           width: 10px; /* Width of the resizing handle */
-          background-color: #f0f0f0; /* Color of the resizing handle */
+          background-color: $headerColor; /* Color of the resizing handle */
           cursor: col-resize;
         }
         
@@ -197,10 +204,10 @@ table {
         }
 
         &:not(:last-child) {
-          border-right: solid 1px var(--gray-60);;
+          border-right: solid 1px $borderColor;
         }
 
-        border-bottom: solid 1px var(--gray-60);;
+        border-bottom: solid 1px $borderColor;
 
         &.mobile-td {
           @include mobileTd();

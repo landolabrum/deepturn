@@ -122,7 +122,7 @@ const handleUser = async () => {
   }
   useEffect(() => {
     init()
-  }, [init, handleUser]);
+  }, [init, handleUser, user]);
 
 
   return (

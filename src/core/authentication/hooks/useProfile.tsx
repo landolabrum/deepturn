@@ -97,6 +97,7 @@ export const useProfile = ({ require }: UseProfileOptions = {}): ProfileContext 
     if (isModalOpen) return;
     setView(initialView);
     openModal({
+      title:"sign in ",
       children: (
         <Authentication 
           view={initialView} 

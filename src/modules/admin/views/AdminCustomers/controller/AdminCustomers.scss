@@ -7,10 +7,14 @@
     @extend .d-flex;
     flex-direction: column;
     gap:var(--s-4);
-    width: var(--s-4-width);
-    padding: var(--s-4);
     border-radius: var(--border-radius);
     background-color: var(--gray-90);
+    width: var(--s-4-width);
+    padding: var(--s-4);
+    @media(max-width: 1100px){
+        width: var(--s-9-width);
+        padding: var(--s-1) var(--s-9);
+    }
     &__header-container{
         width: 100%;
         @extend .d-flex;
@@ -31,7 +35,7 @@
             //     }
             margin-bottom:var(--s-1);
             &--title{
-                display: table;
+                // display: table;
                 color: var(--primary);
                 text-transform: capitalize;
                 font-size: var(--s-element);

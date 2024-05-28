@@ -3,6 +3,9 @@ import React from 'react';
 import styles from './AdminSales.scss';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { NaCell } from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
+import { getService } from '@webstack/common';
+import IAdminService from '~/src/core/services/AdminService/IAdminService';
+import environment from '~/src/core/environment';
 
 // Remember to create a sibling SCSS file with the same name as this component
 const data:any = [
@@ -13,8 +16,18 @@ const data:any = [
   { count: 8, date: '2023-01-05' },
 ];
 const AdminSales: React.FC<any> = () => {
+  const adminService = getService<IAdminService>("IAdminService");
+  const {mid, stripeId}=environment.merchant;
+  const getTransactions = () =>{
+    try {
+      // const response = adminService.getAccount()
+    } catch (error:any) {
+      
+    }
+  }
   return (
     <>
+      <style jsx>{styles}</style>
       <div className='admin-mgmt'>
         <div className='admin-mgmt__header'>
         </div>

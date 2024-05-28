@@ -901,7 +901,9 @@ button {
 .grid {
   --card-primary-bg: var(--gray-80);
 }
-
+table{
+  border-spacing: none;
+}
 .adaptable {
   --header-height: 80px;
   --header-border-radius: var(--border-radius);

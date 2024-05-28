@@ -304,13 +304,11 @@ public async processTransaction(sessionData: ISessionData) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
     const encryptedSignUp = encryptString(JSON.stringify(props), ENCRYPTION_KEY);
-    // console.log("[ SIGN UP ]", props)
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",
       {data: encryptedSignUp},
     );
     // GUEST TEMP SIGN IN
-    console.log("[ RES ]", res)
     if (res?.status === "guest") {
       const guestJwt = await res.data;
       this.saveguestToken(guestJwt);
@@ -319,7 +317,6 @@ public async processTransaction(sessionData: ISessionData) {
     return res;
   }
   public async getMethods(customerId?: string): Promise<any> {
-    // let id = customerId || this._getCurrentUser(false)?.id;
     if (customerId) {
       const OGetMethods = await this.get<any>(
         `/api/method/customer/?id=${customerId}`,
@@ -346,16 +343,8 @@ public async processTransaction(sessionData: ISessionData) {
   };
 
   public async modifyCustomer(customer:ICustomer): Promise<any> {
-    console.log('[ MEMBERSERVICE modifyCustomer(customer) ]',customer)
     if (customer) {
       const encryptedSignUp = encryptString(JSON.stringify(customer), ENCRYPTION_KEY);
-
-      
-      // console.log('[ MODUFY ]', res)
-      //   const res = await this.put<any, any>(
-      //     `api/customer/`,
-      //     memberData
-      //   );
       try {
         const res = await this.put<{}, any>(
           `api/customer/`,
@@ -368,7 +357,6 @@ public async processTransaction(sessionData: ISessionData) {
         return this._getCurrentUser(true)!;
       } catch (error) {
         console.error("Error updating member: ", error);
-        // Handle error accordingly
       }
     }
 
@@ -490,7 +478,6 @@ public async processTransaction(sessionData: ISessionData) {
     }
     this._guestContext = context;
     // HERE
-    console.log('[ tokl ]', token)
     this._guestToken = token;
     this.guestChanged.emit(context);
   }
@@ -554,7 +541,6 @@ public async processTransaction(sessionData: ISessionData) {
       return;
     }
     const guestToken = this.parseToken(guestJwtString);
-    // console.log('[ MEMBER TOKEN ]', memberToken)
     const guest = guestToken?.user;
 
     if (guest == null) {
@@ -698,7 +684,6 @@ public async processTransaction(sessionData: ISessionData) {
       return null;
     }
     const jwt = localStorage?.getItem(MEMBER_TOKEN_NAME);
-    // console.log("[ JWT ** ]", jwt)
     if (jwt == null) {
       return null;
     }
