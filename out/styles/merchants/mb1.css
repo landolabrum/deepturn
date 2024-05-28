@@ -1,0 +1,51 @@
+:root {
+  --primary: #cc6f50;
+
+  --primary-lite: #d40;
+
+  --primary-o: #cc6f5050;
+
+  --primary-o-1: #cc6f5030;
+
+
+  --secondary: #c5b9a8;
+
+  --secondary-o: rgba(197, 185, 168, 0.25);
+
+
+  --error: #8b0000;
+
+  --invalid-border: #d14343;
+
+
+  --body: #1d1d1d;
+
+  --lite: #f0edeb;
+
+  --dark: #242c36;
+
+  --dark-o: rgba(22, 25, 29, 0.5);
+
+
+  --warning: #d4661a;
+  --warning-hover: #e77a3f;
+  --warning-focus: #b35816;
+  --black: #111111;
+  
+
+  --white: #ffffff;
+  --white-o: rgba(255, 255, 255, 0.5);
+  --yellow: #fbff00;
+  --yellow-o: rgba(251, 255, 0, 0.7);
+  --orange: #ff9900;
+  --orange-o: rgba(255, 153, 0, 0.5);
+  --red: #dd4400;
+  --green: #44b432;
+  --green-o: rgba(68, 180, 50, 0.62);
+  --green-60: #22c553;
+  --red-60: #ef4444;
+  --blue: #4f96ff;
+  --blue-o: rgba(79, 150, 255, 0.5);
+  --blue-10: #54e3ff;
+  --blue-10-o: rgba(84, 227, 255, 0.5);
+}
