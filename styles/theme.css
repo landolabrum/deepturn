@@ -229,11 +229,11 @@
 .pac-container {
   font-family: "Game";
   font-style: italic;
-  letter-spacing: 1.5px;
+  /* letter-spacing: 1.5px;
   background-color: var(--gray-70);
   border: 1px solid var(--gray-50);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow); */
 
   &::after {
     display: none;

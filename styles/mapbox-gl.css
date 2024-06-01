@@ -789,7 +789,9 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   opacity: 1;
   transition: opacity 0.1s ease-in-out;
 }
-
+.mapboxgl-canvas-container{
+  position: relative;
+}
 .mapboxgl-canvas-container.mapboxgl-touch-pan-blocker-override.mapboxgl-scrollable-page,
 .mapboxgl-canvas-container.mapboxgl-touch-pan-blocker-override.mapboxgl-scrollable-page
   .mapboxgl-canvas {
