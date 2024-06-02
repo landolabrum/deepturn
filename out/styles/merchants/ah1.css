@@ -83,7 +83,8 @@
  --gray-90-o: rgba(245, 245, 245, 0.5); 
  --gray-100: #f8f8f8; 
  --gray-100-o: rgba(248, 248, 248, 0.5);  */
-
+  --vsl-hover-lite:var(--gray-60);
+  --vsl-hover-dark: var(--gray-70);
   --white: #ffffff;
   --white-o: rgba(255, 255, 255, 0.5);
   --yellow: #fbff00;
@@ -91,14 +92,14 @@
   --orange: #ff9900;
   --orange-o: rgba(255, 153, 0, 0.5);
   --red: #dd4400;
-  --green: #44b432;
-  --green-o: rgba(68, 180, 50, 0.62);
+  --green-20: #44b432;
+  --green-20-o: rgba(68, 180, 50, 0.62);
   --green-60: #22c553;
   --red-60: #ef4444;
-  --blue: #4f96ff;
-  --blue-o: rgba(79, 150, 255, 0.5);
+  --blue-60: #4f96ff;
+  --blue-60-o: #4f96ff80;
   --blue-10: #54e3ff;
-  --blue-10-o: rgba(84, 227, 255, 0.5);
+  --blue-10-o: #54e3ff80;
   /*   
    */
   /* MORE PASTEL */
@@ -107,12 +108,12 @@
    --orange: #f9bea6;
    --orange-o: rgba(249, 190, 166, 0.5);
    --red: #e89a8a; 
-   --green: #a0d9af;
-   --green-o: rgba(160, 217, 175, 0.62);
+   --green-20: #a0d9af;
+   --green-20-o: rgba(160, 217, 175, 0.62);
    --green-60: #8cc69b;
    --red-60: #f2a4a4;
-   --blue: #a3c1e2; 
-   --blue-o: rgba(163, 193, 226, 0.5);
+   --blue-60: #a3c1e2; 
+   --blue-60-o: rgba(163, 193, 226, 0.5);
    --blue-10: #b3d4f2; 
    --blue-10-o: rgba(179, 212, 242, 0.5);  */
 
