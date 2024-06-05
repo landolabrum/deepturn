@@ -82,7 +82,7 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
                     algorithm: 'HS256'
                 });
                 if (response?.decoded) {
-                    console.log('[ JWT DECODE (SUCCESS) ]', response.decoded);
+                    // console.log('[ JWT DECODE (SUCCESS) ]', response.decoded);
                     setTokenData(response.decoded);
                 }
             } catch (error: any) {

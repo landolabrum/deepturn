@@ -117,7 +117,7 @@ export class UiIcon extends React.Component<Props, State> {
     const combinedStyles = { ...iconStyles, ...(glow ? { textShadow: `0 0 5px ${iconStyles.color || 'currentColor'}` } : {}) };
     const badgeElement = badge && (<><style jsx>{styles}</style><div className="ui-icon__badge">{badge}</div></>);
 
-    return (
+    if(!badge)return (
       <>
         <style jsx>{styles}</style>
         <div
@@ -126,6 +126,21 @@ export class UiIcon extends React.Component<Props, State> {
           style={combinedStyles} 
           dangerouslySetInnerHTML={{ __html: innerHtml }} 
         />
+      </>
+    );
+    return (
+      <>
+        <style jsx>{styles}</style>
+        <div
+          className={classes}
+        >
+        <div
+          onClick={onClick}
+          style={combinedStyles} 
+          dangerouslySetInnerHTML={{ __html: innerHtml }} 
+        />
+        {badgeElement}
+        </div>
       </>
     );
   }

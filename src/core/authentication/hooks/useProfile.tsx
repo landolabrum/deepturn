@@ -171,7 +171,8 @@ export const useProfile = ({ require }: UseProfileOptions = {}): ProfileContext 
   };
 
   useEffect(() => {
-    console.log("[ useProfile ]",{view, requirement, profile})
+    if(!require)return;
+    // console.log("[ useProfile ]",{view, requirement, profile})
     if (!profile?.id && requirement === undefined) addUser();
     if (requirement !== 'location') addLocation();
     if (requirement === 'location' && !profile?.lngLat && !isModalOpen && !permissionDenied) requestLocation();

@@ -1,165 +1,216 @@
-$vesselBg: var(--gray-100);
-$vessel: var(--gray-30);
+$vesselBg: var(--gray-90);
+$vesselHover: var(--gray-70);
+$vesselContent: var(--gray-80-o);
+
 .d-flex {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.vessel-details {
-    flex: 2;
+.d-flex-content {
     display: flex;
-    position: fixed;
     flex-direction: column;
-    align-items: stretch;
-    gap: var(--s-4);
-    box-shadow: calc(calc(var(--s-1) * -1) + var(--s-1)) 0 var(--s-3) var(--s-10) var(--gray-60-o);
-    height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-    right: 0;
+    gap: var(--s-9);
+    overflow: hidden;
+}
 
-    @media (max-width: 1260px) {
-        right: unset;
-        bottom: 0;
-        max-width: unset;
-        max-height: 70vh;
-        width: 100%;
-        box-shadow: var(--s-11) calc(var(--s-11) * -1) var(--s-5) var(--s-11) var(--gray-60-o);
-    }
+.detail-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 2px 2px 2px 4px var(--gray-100-o), -2px -2px 4px 4px var(--gray-70-o);
+    border-radius: var(--border-radius);
+    color: var(--gray-40);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
 
-    @keyframes bigSlide {
-        from {
-            transform: translateX(100%);
-        }
-
-        to {
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes smallSlide {
-        from {
-            transform: translateY(100%);
-        }
-
-        to {
-            transform: translateY(0);
-        }
-    }
-
-    &.show {
-        opacity: 1;
-        visibility: visible;
-        animation: bigSlide 0.5s forwards ease-out;
-        max-width: 40vw;
-        @media (max-width: 1260px) {
-            max-width: unset;
-            flex-direction: column;
-            animation: smallSlide 0.5s forwards ease-out;
-        }
-    }
-
-    &.hide {
-        opacity: 0;
-        visibility: hidden;
-        animation: bigSlide 0.5s reverse ease-out;
-
-        @media (max-width: 1260px) {
-            animation: smallSlide 0.5s reverse ease-out;
-        }
-    }
-
-    &--content {
-        height: calc(100vh - calc(90px - var(--s-4)));
-        padding: 90px var(--s-4) var(--s-4);
-        margin: 0;
+@keyframes flicker {
+    0% {
         background-color: $vesselBg;
-        color: $vessel;
-        width: var(--s-4-width);
-        position: relative;
-        @extend .d-flex;
-        justify-content: flex-start;
-        flex-direction: column;
-        gap: var(--s-9);
-        z-index: 1;
-        overflow-y: auto;
+    }
 
-        @media (max-width: 1260px) {
-            padding: var(--s-1) var(--s-4);
+    50% {
+        background-color: var(--gray-50);
+        box-shadow:
+            -2px -1px 7px var(--gray-50),
+            2px 1px 6px $vesselHover;
+    }
+
+    100% {
+        background-color: $vesselBg;
+    }
+}
+
+@keyframes bigSlide {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes smallSlide {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.vessel-details {
+    @extend .d-flex;
+
+    width: 100%;
+    z-index: 1001;
+    position: absolute !important;
+    box-shadow: inset 2px 1px 5px 2px $vesselBg;
+    overflow: hidden;
+    left: calc(var(--s-8) * -1);
+    top: 0;
+    height: calc(var(--s-1-width) - 2px);
+    padding: var(--s-1) var(--s-6) var(--s-1) 0;
+    width: var(--s-12-width);
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    overflow-y: auto;
+    background-color: $vesselBg;
+    border: solid 1px $vesselHover;
+
+    @media(max-width: 1100px) {
+        border-radius: var(--border-radius);
+        border: none;
+        height: calc(100% + var(--s-8));
+        width: var(--s-9-width);
+        padding: 0 var(--s-9) var(--s-9);
+        flex-direction: column;
+        left: auto;
+        right: auto;
+        top: calc(var(--s-8) * -1);
+    }
+
+    &--container {
+        @extend .d-flex;
+        width: 100%;
+        box-shadow: calc(var(--s-5) * -1) 0 var(--s-9) var(--s-11) var(--gray-100-o);
+        z-index: 1;
+        position: relative;
+
+        @media(max-width: 1100px) {
+            background-color: $vesselBg;
+        }
+
+        &.show {
+            opacity: 1;
+            visibility: visible;
+            animation: bigSlide 0.5s forwards ease-out;
+
+            @media (max-width: 1260px) {
+                width: var(--s-9-width);
+                flex-direction: column;
+                animation: smallSlide 0.5s forwards ease-out;
+            }
+        }
+
+        &.hide {
+            opacity: 0;
+            visibility: hidden;
+            animation: bigSlide 0.5s reverse ease-out;
+
+            @media (max-width: 1260px) {
+                animation: smallSlide 0.5s reverse ease-out;
+            }
         }
     }
 
-    &__close,
-    .globe {
-        position: absolute;
-        left: calc(var(--s-7) * -1);
-        top: 50%;
-        transform: translateX(-50%);
-        --ui-icon-color: var(--gray-90);
-        --ui-icon-width: var(--s-1);
-        --ui-icon-height: 70px;
-        height: 70px;
-        cursor: pointer;
+    &-sliver {
+        box-shadow:
+            -2px -1px 6px $vesselHover,
+            2px 1px 5px var(--black);
+        border-radius: var(--s-1);
+        background-color: $vesselContent;
+        margin: var(--s-7);
+        cursor: grab;
+        animation: flicker 0.3s 3 ease-in;
+        animation-delay: 1s;
+        height: 300px;
+        min-width: var(--s-10);
+
+        @media(max-width: 1100px) {
+            height: var(--s-9);
+            min-width: 300px;
+        }
 
         &:hover {
-            filter: brightness(1.5)
+            background-color: $vesselHover;
+            box-shadow:
+                -2px -1px 6px $vesselHover,
+                2px 1px 5px var(--gray-100);
         }
 
-        @media (max-width: 1260px) {
-            padding: var(--s-11) 0 0 0;
-            top: calc(calc(70px + var(--s-9)) * -.5);
-            left: 50%;
-            transform: translateX(-50%);
-        }
-    }
-
-    &__close {
-        background-color: $vesselBg;
-        width: var(--s-element);
-        border-radius: var(--s-3) 0 0 var(--s-3);
-        box-shadow: calc(var(--s-9) * -1) var(--s-11) var(--s-5) var(--s-11) var(--gray-60-o);
-
-        @media (max-width: 1260px) {
-            box-shadow: var(--s-11) calc(var(--s-11) * -1) var(--s-5) var(--s-11) var(--gray-60-o);
-            border-radius: var(--s-3) var(--s-3) 0 0;
-            top: calc(var(--s-element) * -0.5);
-            left: 50%;
-            transform: translateX(-50%);
+        &.dragging {
+            background-color: var(--primary);
+            box-shadow:
+                -2px -1px 6px var(--secondary),
+                2px 1px 5px var(--primary);
         }
     }
 
-    .globe {
-        z-index: 2;
-    }
+    &-content {
+        @extend .d-flex-content;
+        gap: var(--s-4);
+        height: 100%;
 
-    &__header,
-    &__body {
-        width: 100%;
-        @extend .d-flex;
-    }
+        &.dragging {
+            filter: blur(2px) brightness(1.2);
+        }
 
-    &__header {
-        font-size: var(--s-1);
+        @media(max-height: 1100px) {
+            height: unset;
+            align-items: flex-start;
+        }
 
-        &--title {
-            color: var(--primary);
-            width: 100%;
+        @media(max-width: 1100px) {
+            padding: var(--s-9) 0 var(--s-1);
+        }
+
+        &--header {
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        &--body {
+            @extend .d-flex-content, .detail-card;
+            gap: var(--s-1);
+            width: var(--s-4-width);
+            height: var(--s-9-width);
+            padding: var(--s-9);
+            margin: var(--s-9);
+
+            &-description {
+                font-family: Game;
+                color: var(--gray-40);
+            }
         }
     }
 
-    &__body {
-        flex-direction: column;
-        color: var(--gray-70);
+    &--images {
+        @extend .d-flex-content;
+        user-select: none;
         gap: var(--s-9);
+    }
 
-        .vessel-image-main {
-            position: relative;
-            width: 100%;
-        }
+    &--image {
+        width: 33%;
+        height: auto;
+        overflow: hidden;
+        border-radius: var(--s-11);
 
-        .vessel-description {
+        &-main {
+            border-radius: var(--s-11);
             width: 100%;
         }
     }

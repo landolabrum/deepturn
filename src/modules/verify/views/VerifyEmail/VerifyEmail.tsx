@@ -87,9 +87,9 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
 
       const updateMember = await MemberService.modifyCustomer(customer);
       if (updateMember) {
-        console.log(updateMember)
+        // console.log(updateMember)
         handleLoginModal();
-        onSuccess(updateMember.email);
+        // onSuccess(updateMember.email);
       }
     } catch (error: any) {
       alert(JSON.stringify(error))

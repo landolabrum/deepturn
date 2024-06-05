@@ -73,7 +73,7 @@ const LightsList = () => {
     };
   });
   const hueList = async (hue_object?: string) => {
-    setLoader({ active: true, body: `loading ${hue_object}`, animation: true });
+    setLoader({ active: true, body: `loading ${hue_object}` });
     try {
       const response = await homeService.hue_list(hue_object);
       setHueData(response);
@@ -94,7 +94,7 @@ const LightsList = () => {
   const multiHomeService = async (action: string, data?: any) => {
     // console.log('[ CHATGPT HELP! ]',JSON.stringify({action, data, group}));
     const handleLoader = (active: boolean, action?: string, name?: string) => {
-      setLoader({ active: active, body: `${action}, ${name} `, animation: true });
+      setLoader({ active: active, body: `${action}, ${name} ` });
     };
 
     handleLoader(true, action, data?.name);

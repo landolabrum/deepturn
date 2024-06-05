@@ -24,10 +24,8 @@ export default function AdapTableHeader({
 }: TableHeaderProps) {
   const busy = loading && search !== "";
 
-  useEffect(() => {
 
-  }, [search, loading, traits]);
-  if (!traits?.hide?.includes("header")) return <>
+  if (!traits?.hide?.includes("header") && traits?.tableTitle) return <>
     <style jsx>{styles}</style>
     <div className='adaptable-header'>
       <div className='adaptable-header__table-title'>

@@ -109,7 +109,7 @@ const Verify = () => {
   useEffect(() => {
     
     intLayout().then((a)=>initView(a));
-    console.log('initview:',view)
+    // console.log('initview:',view)
 
     // if (newCustomerEmail) {
     //   setView('sign-in');

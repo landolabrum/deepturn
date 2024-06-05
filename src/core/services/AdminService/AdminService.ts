@@ -1,8 +1,10 @@
 
+import { encryptString } from "@webstack/helpers/Encryption";
 import environment from "../../environment";
 import ApiService, { ApiError } from "../ApiService";
 
 import IAdminService from "./IAdminService";
+const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
 
 
@@ -75,10 +77,12 @@ export default class AdminService
     }
   };
 
-  public async updateCustomer(id: string, memberData: any): Promise<any> {
-    if (id && memberData) return await this.put<any, any>(`/usage/admin/customer?id=${id}`, memberData);
-    if (!id) throw new ApiError("NO ID PROVIDED", 400, "MS.SI.02");
-    if (!memberData) throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+  public async updateCustomer(customer: any): Promise<any> {
+    if (customer) {
+      const encryptedCustomerData = encryptString(JSON.stringify(customer), ENCRYPTION_KEY);
+      return await this.put<any, any>(`/usage/admin/customer`, {data:encryptedCustomerData});
+    }
+    if (!customer) throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
   };
 
   public async createCustomer(customerData: any): Promise<any> {

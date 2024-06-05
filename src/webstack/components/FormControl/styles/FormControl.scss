@@ -41,6 +41,7 @@ $elPad: 14px;
 }
 
 .form-control {
+  color: inherit;
   width: var(--s-border-width);
   position: relative;
   display: flex;

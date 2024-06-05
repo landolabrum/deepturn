@@ -84,7 +84,7 @@ const VerifyPassword: React.FC<any> = ({ token, onSuccess }: VerifyPassword) => 
         const newPassword = state?.fields?.find((f: IFormField) => f.name == 'password')?.value;
         let customer = state.customer;
         customer.metadata.user.password = newPassword;
-        console.log('CUSTOMER', customer)
+        // console.log('CUSTOMER', customer)
         const updateMember = await MemberService.modifyCustomer( customer);
         if (updateMember){
             handleLoginModal();

@@ -1,4 +1,3 @@
-// AdminCustomer.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './AdminCustomerDetail.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
@@ -49,7 +48,7 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
     if (data?.files) {
       setFiles(data.files);
     }
-    // SET FILES
+
     const handleFormatValue = (key: string, value: any) => {
       let val = value;
 
@@ -81,13 +80,34 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
           placeholder: '',
         }));
     };
-    const merchantData = [...formatted(), ...formatted(data.metadata?.user, 'metadata.user')];
+
+    const handleDevices = (devices: any) => {
+      return devices.map((device: any, index: number) => {
+        const deviceFields = Object.entries(device.user_agent).map(([key, value]) => ({
+          name: `metadata.user.devices[${index}].${key}`,
+          label: `Device ${index + 1} - ${keyStringConverter(key)}`,
+          value: handleFormatValue(key, value),
+          type: handleFormatType(key, handleFormatValue(key, value)),
+          variant: 'default',
+          readonly: true,
+          width: '50%',
+          placeholder: '',
+        }));
+
+        return deviceFields;
+      }).flat();
+    };
+
+    const merchantData = [
+      ...formatted(),
+      ...formatted(data.metadata?.user, 'metadata.user'),
+      ...handleDevices(data.metadata?.user?.devices || [])
+    ];
+
     let context = merchantData;
     if (level >= 11) context = ([...merchantData, ...formatted(data?.metadata?.merchant, 'metadata.merchant')])
     return context;
   }
-
-
 
   const confirmDelete = () => {
     if (!customer_id) return;
@@ -96,7 +116,6 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
       try {
         const resp = await adminService.deleteCustomer(customer_id);
         return resp;
-        // router.reload();
       } catch (e) {
         console.error("[ ADMIN DELETE CUSTOMER (ER) ]", JSON.stringify(e));
       }
@@ -111,13 +130,10 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
           { label: 'success', message: `Deleted: ${info.name}` }
         ]
       });
-      // if(resp.delete == true){
       setView('list')
-      // }
-      // router.push('/admin?vid=customers', undefined,{shallow: false})
     })
-
   }
+
   const handleDelete = () => {
     const modalContext = {
       title: `Delete ${info?.name}`,
@@ -129,16 +145,7 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
       }
     };
 
-    console.log(modalContext)
     openModal(modalContext)
-
-    // openModal({ confirm: {
-    //   title: `Delete ${info?.name}`,
-    //   statements: [
-    //     { label: 'yes', onClick: confirmDelete },
-    //     { label: 'no', onClick: closeModal }
-    //   ]
-    // }})
   }
 
   const onChange = (e: { target: { name: string, value: any } }) => {
@@ -155,18 +162,24 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
     } else if (isNewField) {
       setCustomer([...customer, ...[{ name: `metadata.${name}`, label: value }]]);
     }
-
   }
+
   const onSubmit = async () => {
     if (!customer || !customer_id) return;
     if (level < 10) {
-      setNotification({ active: true, persistence: 3000, list: [{ name: "you do nott have authority to modify" }] })
+      setNotification({ active: true, persistence: 3000, list: [{ name: "you do not have authority to modify" }] })
     }
+    const addressValue: any = findField(customer, 'address').value
+    const emailValue: any = findField(customer, 'email').value
+    let phoneValue: any = phoneFormat(String(findField(customer, 'phone').value), 'US', true);
+    if (phoneValue == '+1') phoneValue = null;
+
     let request: any = {
+      id: customer_id,
       name: findField(customer, 'name').value,
-      email: findField(customer, 'email').value,
-      phone: phoneFormat(String(findField(customer, 'phone').value), 'US', true),
-      address: findField(customer, 'address').value,
+      email: emailValue,
+      phone: phoneValue,
+      address: addressValue?.length ? addressValue : null,
       metadata: {}
     };
 
@@ -187,9 +200,11 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
       }
     });
 
-    console.log("[ ADMIN CUST DETAILS (REQ) ]:", { request });
+    const removeKeys = ['methods', 'user', 'files', 'default_source', 'shipping', 'object', 'currency', 'invoice_settings', 'next_invoice_sequence', 'preferred_locales', 'test_clock', 'invoice_prefix'];
+    removeKeys.forEach(key => delete request[key]);
+    console.log("[ Update Custmer REQUEST ]", request)
     try {
-      const updatedCustomer = await adminService.updateCustomer(customer_id, request);
+      const updatedCustomer = await adminService.updateCustomer(request);
       setCustomer(modifyCustomerData(updatedCustomer));
       setNotification({
         active: true,
@@ -198,22 +213,21 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
           { label: 'success', message: `Updated Customer: ${request.name}` }
         ]
       });
-
     } catch (errorResponse: any) {
       if (errorResponse.detail?.detail) {
         const errorDetail = errorResponse.detail?.detail;
         if (errorDetail?.length) {
-          let errors:any = []
+          let errors: any = []
           for (let index = 0; index < Object.values(errorDetail).length; index++) {
             const error: any = Object.values(errorDetail)[index];
-            errors += {label: error.loc, message: error.msg};
+            errors += { label: error.loc, message: error.msg };
             if (error.loc.includes('address')) {
               const newFields = updateField(customer, 'address', { error: error.msg });
               setCustomer(newFields);
-              break; // Break the loop when 'address' is found
+              break;
             }
           }
-          if(errors?.length){
+          if (errors?.length) {
             setNotification({
               active: true,
               persistence: 3000,
@@ -224,8 +238,6 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
       }
     }
   }
-
-
 
   const getCustomer = async () => {
     if (customer_id && !customer) {
@@ -239,7 +251,6 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
             email: response?.email
           });
 
-
           const handleCustomerMetadata = () => {
             let formName: string | undefined;
             Object.entries(response?.metadata || {}).map(([key, value]: any) => {
@@ -251,7 +262,6 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
                 setProductRequest(value);
               }
             });
-            // test against the default formName = ''
             if (formName && formName?.length) {
               setNotification({
                 active: true,
@@ -268,20 +278,20 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
           console.error("Couldn't get customer");
         }
       } catch (error) {
-        console.error('[ ADMIN CUSTOMER DETAULS ]', error);
+        console.error('[ ADMIN CUSTOMER DETAILS ]', error);
       } finally {
       }
     } else {
-      customer && setNotification({ active: true, list: [{ label: `Customer: ${findField(customer, 'name')}` }] })
+      console.log("[ CUSTOMER DETAILS ( getCustomer ) ]", customer)
     }
   };
-
-
+  
   const addressString = Object.values(info.address).join(' ');
-
+  
   useEffect(() => {
+    // console.log("[ Customer ]", customer)
     getCustomer();
-  }, [setProductRequest, customer_id]);
+  }, [setProductRequest, customer_id, customer]);
 
   if (customer) {
     return (
@@ -289,7 +299,6 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
         <style jsx>{styles}</style>
         <div className='admin-customer'>
           {productRequest && customer_id && <AdminProductSurvey customer_id={customer_id} productSurvey={productRequest} />}
-          {/* Render ProductRequest */}
           <div className='admin-customer__header'>
             <div className='admin-customer__header--title'>Contact Info</div>
             <div className='admin-customer__header--contact'>
@@ -306,7 +315,6 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
                       window.open(googleMapsQuery, '_blank');
                     }}>
                     {addressString}
-
                   </UiButton>
                 </div> || ''
               }

@@ -6,6 +6,7 @@ import AdminCustomerDetails from '~/src/modules/admin/views/AdminCustomers/views
 import UiButton from '@webstack/components/UiButton/UiButton';
 import UserContext from '~/src/models/UserContext';
 import { useRouter } from 'next/router';
+import UiHeader from '@webstack/components/Header/views/UiHeader/UiHeader';
 
 
 const AdminCustomers: React.FC = () => {
@@ -40,10 +41,7 @@ const AdminCustomers: React.FC = () => {
       <style jsx>{styles}</style>
       <div className='admin-customer'>
         <div className='admin-customer__header-container'>
-          <div className='header'>
-            <div className='header--title'>Customer</div>
-            <div className='header--subtitle'>{view}</div>
-          </div>
+          <UiHeader title='Customer' subTitle={view}/>
           <div className='actions'>
             {view !== 'add' && (
               <UiButton

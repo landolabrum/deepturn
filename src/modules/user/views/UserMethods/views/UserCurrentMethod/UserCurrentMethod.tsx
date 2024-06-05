@@ -73,7 +73,7 @@ const UserCurrentMethod: React.FC<IUserCurrentMethod> = (
         }
     };
     useEffect(() => {
-        console.log('[ methodsClass ]', methodsClass)
+        // console.log('[ methodsClass ]', methodsClass)
     }, [method, methodsClass]);
     if (typeof methodsClass === 'object' && method?.card) return (
         <>

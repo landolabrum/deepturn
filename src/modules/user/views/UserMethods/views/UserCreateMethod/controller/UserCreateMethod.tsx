@@ -1,3 +1,4 @@
+import styles from "./UserCreateMethod.scss"
 import { useUser } from "~/src/core/authentication/hooks/useUser";
 import CreateMethodStripeForm from "../views/CreateMethodStripeForm/CreateMethodStripeForm";
 import { loadStripe } from "@stripe/stripe-js";
@@ -5,6 +6,10 @@ import { Elements } from "@stripe/react-stripe-js";
 import useSetupIntentSecret from "~/src/core/services/MemberService/hooks/useSetupIntentSecret";
 import UserContext from "~/src/models/UserContext";
 import { useEffect, useState } from "react";
+import { useLoader } from "@webstack/components/Loader/Loader";
+import UiLoader from "@webstack/components/UiLoader/view/UiLoader";
+import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import environment from "~/src/core/environment";
 interface IStripePaymentForm {
   onSuccess?: (e: any) => void;
   user?: UserContext;
@@ -25,8 +30,16 @@ const UserCreateMethod = ({ onSuccess, user, success_url }: IStripePaymentForm) 
       colorText: '#e0e0e0',
     },
   };
-  useEffect(()=>{},[clientSecret, user])
-  if (clientSecret) return (
+  useEffect(() => {
+  }, [clientSecret, user])
+  if (!clientSecret) return <>
+    <style jsx>{styles}</style>
+    <div className='user-create-methods--loader'>
+      <UiIcon icon={`${environment.merchant.name}-logo`} />
+      <div>Loading User Methods</div>
+    </div>
+  </>
+  return (
     <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
       <CreateMethodStripeForm
         user={user}
@@ -35,6 +48,5 @@ const UserCreateMethod = ({ onSuccess, user, success_url }: IStripePaymentForm) 
       />
     </Elements>
   );
-  return <>... load</>
 };
 export default UserCreateMethod;  

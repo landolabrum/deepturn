@@ -13,6 +13,7 @@
     "@react-three/drei": "^9.97.6",
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.2.0",
+    "address": "^2.0.2",
     "axios": "^1.6.2",
     "d3": "^7.8.5",
     "d3-fetch": "^3.0.1",
@@ -26,6 +27,7 @@
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
+    "macaddress": "^0.5.3",
     "mapbox-gl": "^3.3.0",
     "next": "^14.2.3",
     "next-i18next": "^11.3.0",
@@ -46,7 +48,8 @@
     "three": "^0.164.0",
     "three-conic-polygon-geometry": "^1.6.3",
     "three-globe": "^2.28.0",
-    "topojson-client": "^3.1.0"
+    "topojson-client": "^3.1.0",
+    "uninstall": "^0.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",

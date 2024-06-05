@@ -1,40 +1,37 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState, ReactNode, useRef } from "react";
 import styles from "./Loader.scss";
 import { UiIcon } from "../UiIcon/UiIcon";
 import environment from "~/src/core/environment";
-import { TJSCube } from "../threeJs/TJSCube/controller/TJSCube";
-
 
 type ILoader = {
   active: boolean;
-  onClick?: any;
-  body?: any;
-  children?: any;
-  animation?: boolean;
-  persistence?: number; // New property for persistence
+  backgroundColor?: string;
+  iconSize?: string | number;
+  onClick?: () => void;
+  body?: ReactNode;
+  children?: ReactNode;
+  persistence?: number;
+  animation?: {
+    duration: number;
+    delay: number;
+    keyframes: {
+      [key: number]: string;
+    };
+  };
+  position?: number[];
 };
 
-const LoaderContext =
-  createContext<[ILoader, (Loader: ILoader) => any]>
-    (
-      [
-        { active: false },
-        () => { }
-      ]
-    );
+const LoaderContext = createContext<[ILoader, (Loader: ILoader) => void]>(
+  [{ active: false }, () => { }]
+);
 
 export const useLoader = () => useContext(LoaderContext);
+
 type LoaderProviderProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
-export const LoaderProvider: React.FC<LoaderProviderProps> = ({
-  children,
-}) => {
+
+export const LoaderProvider: React.FC<LoaderProviderProps> = ({ children }) => {
   const LoaderState = useState<ILoader>({ active: false });
 
   return (
@@ -44,85 +41,104 @@ export const LoaderProvider: React.FC<LoaderProviderProps> = ({
     </LoaderContext.Provider>
   );
 };
+
 const Loader: React.FC = () => {
+  const iconRef = useRef<any>();
   const [context, setContext] = useContext(LoaderContext);
   const [LoaderState, setLoaderState] = useState<ILoader | null>(null);
-  const bevelOptions = {
-    bevelEnabled: true,
-    bevelThickness: 1, // Set the bevel thickness to 10px
-    bevelSize: 2, // Adjust the bevel size as needed
-    bevelSegments: 2, // Adjust the number of bevel segments as needed
-  };
-  
+
   const NoChildrenLoader = (context: ILoader) => {
-    return <>
-      <style jsx>{styles}</style>
-      {context?.children === undefined && <div className='loader__content--icon'>
-        <UiIcon icon={`${environment.merchant.name}-logo`} glow />
-      </div>}
-    </>
-  }
+    return (
+      <>
+        <style jsx>{styles}</style>
+        {context?.children === undefined && (
+          <div ref={iconRef} className="loader__content--icon">
+            <UiIcon icon={`${environment.merchant.name}-logo`} glow />
+          </div>
+        )}
+      </>
+    );
+  };
 
   useEffect(() => {
-    // if (context?.active !== LoaderState?.active) {
-    setLoaderState(context);
-    // Check if persistence is set and active is true
-    if (context?.active && context.persistence) {
-      // Set a timeout to automatically set active to false after the persistence duration
+    if (context.active && context.persistence) {
       const timer = setTimeout(() => {
-        setContext({ ...context, active: false }); // Update context to set active to false
+        setContext({ ...context, active: false });
       }, context.persistence);
-      return () => clearTimeout(timer); // Clear the timeout if the component unmounts or updates
+      return () => clearTimeout(timer);
     }
-    // }
-  }, [context, LoaderContext, setContext, LoaderState?.active]);
+  }, [context, setContext]);
 
-  if (LoaderState?.active) {
+  useEffect(() => {
+    setLoaderState(context);
+  }, [context]);
+
+  useEffect(() => {
+    if (iconRef?.current && LoaderState?.active === true) {
+      if (context?.iconSize) {
+        iconRef.current.style.width = typeof context.iconSize === "string" ? context.iconSize : `${context.iconSize}px`;
+      }
+
+      if (context?.animation && context.animation.keyframes) {
+        const { duration, delay, keyframes } = context.animation;
+        const keyframesName = `custom-animation-${Date.now()}`;
+        const keyframesStyle = `
+          @keyframes ${keyframesName} {
+            ${Object.entries(keyframes)
+            .map(([key, value]) => `${key}% { ${value} }`)
+            .join(" ")}
+          }
+        `;
+
+
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        styleSheet.innerText = keyframesStyle;
+        document.head.appendChild(styleSheet);
+
+        // Directly set the animation duration and delay
+        iconRef.current.style.animationName = keyframesName;
+        iconRef.current.style.animationDuration = `${duration}ms`;
+        iconRef.current.style.animationDelay = `${delay}ms`;
+        iconRef.current.style.animationTimingFunction = "ease-in-out";
+        iconRef.current.style.animationFillMode = "forwards";
+
+        // // Log the applied style to verify
+        // console.log(iconRef.current.style.animation);
+
+        // // Log the computed styles to verify CSS variable
+        // const computedStyles = getComputedStyle(iconRef.current);
+        // console.log("Computed animation duration:", computedStyles.animationDuration);
+        // console.log("Computed animation delay:", computedStyles.animationDelay);
+      }
+    }
+  }, [LoaderState?.active, context?.iconSize, context?.animation]);
+
+  if (!LoaderState?.active) {
+    return <></>;
+  }
+  else {
     return (
       <>
         <style jsx>{styles}</style>
         <div
-          style={context?.animation === true?{width:"100vw", height:"100%"}:{}}
-          className={`loader ${Boolean(context) && 'loader--fixed' || ''}`}
+          style={{
+            ...(context?.backgroundColor && { backgroundColor: `${context.backgroundColor}` }),
+          }}
+          className={`loader ${context ? "loader--fixed" : ""}`}
           onClick={context?.onClick}
         >
-          <div className='loader__content' style={context?.animation === true?{width:"100%", height:"100%"}:{}}>
-            {context?.animation === true ? (
-              <TJSCube
-                icon={{
-                  bevel: {
-                    bevelEnabled: true,
-                    bevelThickness: 5,
-                    bevelSegments: 15,
-                    bevelSize: 2
-                  },
-                  // color:"#e0e0e0"/,
-                  // backgroundColor:"#e0e0e0",
-                  // metalness: 10,
-                  // roughness: .51,
-                  // opacity: opacity !== 0 && opacity * .1 || .1,
-                  // opacity: .7,
-                  icon: "deepturn-logo",
-                  texture: "/assets/backgrounds/lava1.jpeg",
-                  // bumpMap:"/assets/textures/texture-leaves.jpeg",
-                  size: { x: 120, y: 120, z: 9 },
-                  animate: { rotate: { y: -2, x: 1, speed: .001 } }
-                }}
-              // metalness={5}
-              />
-            ) : (
-              <NoChildrenLoader {...context} />
-            )}
-            <div className='loader__content--body'>
+          <div className="loader__content">
+            <NoChildrenLoader {...context} />
+            <div className="loader__content--body">
               {context?.children}
-              {LoaderState.body || !context?.children && 'loading'}
+              {LoaderState.body || (!context?.children && "loading")}
             </div>
           </div>
         </div>
       </>
     );
   }
-  return <></>;
 };
 
 export default Loader;

@@ -3,7 +3,9 @@ import styles from './AireHotel.scss';
 import UiMap from '@/webstack/components/Graphs/UiMap/controller/UiMap';
 import { IVessel } from '@webstack/components/Graphs/UiMap/models/IMapVessel';
 import MapVesselDetails from '@webstack/components/Graphs/UiMap/views/MapVessel/views/MapVesselDetails/MapVesselDetails';
+import { useRouter } from 'next/router';
 const AireHotel = () => {
+  const { pathname } = useRouter()
   const [currentVessel, setCurrentVessel] = useState<IVessel | false | undefined>();
   const closeVessel = () => currentVessel && setCurrentVessel(false);
 
@@ -24,17 +26,17 @@ const AireHotel = () => {
     <>
       <style jsx>{styles}</style>
       <div className='deepturn'>
-        <div className='map-container' onDoubleClick={closeVessel}>
-          <UiMap
+          {pathname == '/' && <UiMap
             onVesselClick={setCurrentVessel}
+            hideHover={true}
             options={{
               rpm: 200,
+              loadingDelay: 3000
             }}
             vessels={vessels}
-          />
+          />}
+
         </div>
-        <MapVesselDetails vessel={currentVessel} setVessel={setCurrentVessel} />
-      </div>
     </>
   );
 };

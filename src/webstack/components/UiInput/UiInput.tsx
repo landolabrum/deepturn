@@ -11,7 +11,7 @@ import { debounce } from "lodash";
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
   const { name, type, value, onChange, onKeyDown, onKeyUp, message, required, size, onDelete, onClick } = props;
   const [show, setShow] = useState<boolean>(false);
-  
+
   const handleChange = (e: any) => {
     // console.log('[handleChange]',e)
     if (props?.max && props.max < e.target.value.length) return;
@@ -39,8 +39,8 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   const inputValue = value !== undefined && value !== null ? value : '';
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (onDelete && (e.key === 'Backspace' || e.key === 'Delete')) {
-      let {name, value} = e.currentTarget;
-      onDelete({name:name, value:value});
+      let { name, value } = e.currentTarget;
+      onDelete({ name: name, value: value });
     }
     if (onKeyDown) {
       onKeyDown(e);
@@ -61,7 +61,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             } : props.traits?.afterIcon,
           }}>
           {!isTextArea ? <input
-            onClick={type == 'button'&& onClick && onClick ||undefined}
+            onClick={type == 'button' && onClick && onClick || undefined}
             data-element={props['data-element'] || 'input'}
             disabled={props?.disabled || undefined}
             id={props?.id}
@@ -72,7 +72,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
             min={props.min}
             max={props.max}
             value={inputValue}
-            onChange={elType != 'color'?handleChange:debouncedChangeHandler}
+            onChange={elType != 'color' ? handleChange : debouncedChangeHandler}
             autoComplete={props.autoComplete}
             onKeyDown={handleKeyDown}
             onKeyUp={onKeyUp}
@@ -97,19 +97,19 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
 
         </FormControl>
       }
-      {props.name == 'address' && <AutocompleteAddressInput
-        label={props.label}
-        inputClasses={inputClasses} traits={{
-          ...props.traits,
-          afterIcon: type === "password" ? {
-            icon: show ? "fa-eye" : "fa-eye-slash",
-            onClick: () => setShow(!show)
-          } : props.traits?.afterIcon,
-        }}
-        error={props.error}
-        address={value}
-        setAddress={handleChange}
-      />}
+
+      {props.name == 'address' && (
+        <AutocompleteAddressInput
+          label={props.label}
+          inputClasses={inputClasses}
+          traits={{
+            ...props.traits
+          }}
+          error={props.error}
+          address={value}
+          variant={props.variant}
+          setAddress={handleChange}
+        />)}
       <div className={`input__message ${message ? 'input__message-show' : ''}${props?.variant ? ' input__message-' + props.variant : ''}`}>
         {message && message}
       </div>

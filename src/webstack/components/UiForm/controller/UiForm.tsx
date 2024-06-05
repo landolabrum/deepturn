@@ -16,9 +16,11 @@ const UiForm = ({
     fields,
     onSubmit,
     onError: onLocalErrors,
-    title, submitText,
+    title, 
+    submitText,
     submitIcon,
-    onChange, loading,
+    onChange, 
+    loading,
     disabled,
     onAddField,
 }: IForm):React.JSX.Element => {
@@ -121,20 +123,23 @@ const UiForm = ({
             {fieldsCanPopulate && fields.map((field, index) => field.name && !field.readonly && (
                 <div
                     key={index}
-                    className='form-field'
+                    className={`form-field`}
                     style={typeof field?.width == 'string' ?
                         { width: `calc(${field.width} - 6px)` } : {}}
                 >
-                    {field.name === 'address' && (
+                    {field.name === 'address' && ( <div className='s-w-100'>
+
                         <AutocompleteAddressInput
                             variant={
                                 Boolean(field?.error) ? 'invalid' : variant || field?.variant
                             }
+                            
                             label='address'
                             address={field.value}
                             error={field?.error}
                             setAddress={e => handleInputChange(e, field.constraints)}
-                        />
+                            />
+                            </div>
                     )}
                     {textTypes.includes(field?.type) && field.name && field.name !== 'address' && <>
                         <UiInput
@@ -143,6 +148,7 @@ const UiForm = ({
                             variant={
                                 Boolean(field?.error) ? 'invalid' : variant || field?.variant
                             }
+
                             disabled={field?.disabled}
                             error={field.error}
                             type={field.type}

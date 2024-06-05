@@ -43,7 +43,6 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
           invoice_prefix: customer.invoice_prefix,
           next_invoice_sequence: customer.next_invoice_sequence,
         }
-        console.log("[ customer ]",customer)
         if(canViwCustomer)return {
           customer: <AdaptTableCell cell='member' data={{
             id: customer.id,
@@ -86,8 +85,9 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
             // setLimit={console.log}
             options={{
               hideColumns: hideColumns,
-              tableTitle: 'customer list'
+              // hide:['header']
             }}
+
             loading={!Object(customers)?.length}
             data={customers}
             onRowClick={onSelect}

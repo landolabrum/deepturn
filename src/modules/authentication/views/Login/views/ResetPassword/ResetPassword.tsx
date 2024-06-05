@@ -20,7 +20,7 @@ const ResetPassword: React.FC<ILogin> = ({ email }) => {
     const handleResetPassword = (fields: IFormField[]) => {
         const email = findField(fields,'email')?.value;
         if(email && user_agent){
-            console.log('[handleResetPassword]',{email, user_agent});
+            // console.log('[handleResetPassword]',{email, user_agent});
             MemberService.resetPassword({email, user_agent})
         }
 

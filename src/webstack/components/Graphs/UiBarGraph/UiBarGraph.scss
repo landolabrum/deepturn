@@ -33,7 +33,7 @@
 
     &:hover {
         &::-webkit-scrollbar-thumb {
-            background-color: var(--blue);
+            background-color: var(--blue-60);
         }
     }
 
@@ -164,7 +164,7 @@
                         }
 
                         &.pos {
-                            background-color: var(--green);
+                            background-color: var(--green-20);
                         }
 
                         &.neg {

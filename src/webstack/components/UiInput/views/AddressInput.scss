@@ -1,7 +1,55 @@
-input{
-    position: absolute;
-    width: 100%;
-    padding: 0;
-    left: 0;
-    text-indent: var(--s-4);
-}
+.address-input {
+    position: relative;
+    height: max-content;
+  
+    input {
+      height: max-content;
+      position: absolute;
+      width: 100%;
+      padding: 0;
+      left: 0;
+      text-indent: var(--s-4);
+    }
+  
+    .menu-container {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+  
+    .pac-container {
+      width: 100%;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      max-height: 200px;
+      overflow-y: auto;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+      .pac-item {
+        padding: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+  
+        &:hover {
+          background-color: #eee;
+        }
+  
+        .pac-icon {
+          margin-right: 10px;
+        }
+  
+        .pac-item-query {
+          font-weight: bold;
+        }
+  
+        .pac-item-secondary {
+          font-size: 0.9em;
+          color: #666;
+        }
+      }
+    }
+  }
+  

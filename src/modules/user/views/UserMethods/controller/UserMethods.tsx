@@ -6,7 +6,6 @@ import { getService } from '@webstack/common';
 import { IMethod } from '../../../model/IMethod';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import UserCurrentMethods from '../views/UserCurrentMethods/UserCurrentMethods';
-import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import Loader, { useLoader } from '@webstack/components/Loader/Loader';
 import UserCreateMethod from '../views/UserCreateMethod/controller/UserCreateMethod';
@@ -76,12 +75,10 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
   if (selectedUser !== undefined) return (
     <>
       <style jsx>{styles}</style>
-
       <div className='user-methods'>
         {userHasCards &&
           <div
             className={`user-methods__existing ${canSelect ? ' user-methods__existing__selected' : ''}`}
-          // className='user-methods__existing'
           >
             {onSelect && <div className={`${!selected ? 'existing__select' : 'existing__selected'}`}>
               {selected ?
@@ -110,14 +107,13 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
                 />
               </div>
             }
-            {/* {selected && <UserSelectMethod user={selectedUser} methods={methods}/>} */}
           </div>
         }
           <UserCreateMethod user={selectedUser} onSuccess={handleCreated} />
       </div>
     </>
   );
-  return <><Loader/></>
+  return <></>
 };
 
 export default UserMethods;

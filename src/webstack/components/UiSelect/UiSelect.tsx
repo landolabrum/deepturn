@@ -10,7 +10,7 @@ type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string 
 
 export interface ISelect  {
   label?: string;
-  options?: IMenuOption[],
+  options?: any,
   onSelect?: (value: any) => void;
   openDirection?: "up" | "down" | "left" | "right";
   onToggle?: (isOpen: boolean) => void;

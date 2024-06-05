@@ -7,15 +7,16 @@ const gitDir = `${merchant.mid}.git`;
 const repoUrl = `https://github.com/landolabrum/${merchant.name}.git`; // Replace with your actual repository URL
 
 const deployCommand = `
-npm run export &&
-touch ./out/.nojekyll &&
-touch out/CNAME &&
-echo "${merchant.url}" >> out/CNAME &&
-git --git-dir=${gitDir} --work-tree=. add out/ &&
-git --git-dir=${gitDir} --work-tree=. commit -m "Deploy to gh-pages" &&
-gh-pages -d out -t true --repo ${repoUrl} &&
-rm -rf ./out &&
-echo "########  [ PUBLISHED: ${merchant.url} ]  ########"
+  echo "****** PUBLISHING: ${merchant.url}" &&
+  npm run build &&
+  touch ./out/.nojekyll &&
+  touch out/CNAME &&
+  echo "${merchant.url}" >> out/CNAME &&
+  git --git-dir=${gitDir} --work-tree=. add -f out/ &&
+  git --git-dir=${gitDir} --work-tree=. commit -m "Deploy to gh-pages" &&
+  gh-pages -d out -t true --repo ${repoUrl} &&
+  rm -rf ./out && 
+  echo "########  [ PUBLISHED: ${merchant.url} ]  ########"
 `;
 
 exec(deployCommand, (err, stdout, stderr) => {

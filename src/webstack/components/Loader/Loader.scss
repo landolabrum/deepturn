@@ -1,12 +1,66 @@
+$black: #050505;
+
 @keyframes fadeIn {
   0% {
-    // background: var(--gray-100);
     backdrop-filter: blur(0);
+    opacity: 0;
+    transform: scale(0.95);
   }
   
   100% {
-    background: var(--gray-100-o);
     backdrop-filter: blur(4px);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    backdrop-filter: blur(4px);
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  100% {
+    backdrop-filter: blur(0);
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes translateIn {
+  0% {
+    transform: var(--start-translate);
+  }
+  100% {
+    transform: var(--end-translate);
+  }
+}
+
+@keyframes translateOut {
+  0% {
+    transform: var(--end-translate);
+  }
+  100% {
+    transform: var(--start-translate);
   }
 }
 
@@ -16,28 +70,54 @@
   align-items: center;
 }
 
-
 .loader {
-  @extend .d-flex;
-
   z-index: 2;
   backdrop-filter: blur(0);
   background: transparent;
-  animation: fadeIn .5s ease-in-out forwards;
-  position: relative;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
   &__content {
-    position: fixed;
-    padding: var(--s-4);
-    @extend .d-flex;
-    flex-direction: column;
-    // border: solid 1px #f00;
+    overflow: visible;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     &--icon {
-      @extend .d-flex;
       width: 100%;
-      min-width: 150px;
+      @extend .d-flex;
+
+      min-width: 200px;
+      aspect-ratio: 1;
       --ui-icon-size: 100%;
       --ui-icon-color: var(--gray-30);
-      // border: solid 1px #f0f;
+      animation: inherit; // Inherit the parent animation
+
+      &.loader--translate-in {
+        animation: translateIn var(--animation-duration) ease-in-out forwards;
+      }
+
+      &.loader--translate-out {
+        animation: translateOut var(--animation-duration) ease-in-out forwards;
+      }
+
+      &.loader--scale-in {
+        animation: scaleIn var(--animation-duration) ease-in-out forwards;
+      }
+
+      &.loader--scale-out {
+        animation: scaleOut var(--animation-duration) ease-in-out forwards;
+      }
+
+      &.loader--fade-in {
+        animation: fadeIn var(--animation-duration) ease-in-out forwards;
+      }
+
+      &.loader--fade-out {
+        animation: fadeOut var(--animation-duration) ease-in-out forwards;
+      }
     }
 
     &--body {
@@ -49,19 +129,6 @@
       color: var(--gray-30);
       margin-top: var(--s-4);
       text-transform: capitalize;
-    }
-  }
-  &--fixed{
-    position: fixed;
-    background: var(--gray-100-o);
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    right: 0;
-    height: 100vh;
-    &__content {
-      min-width: 240px;
     }
   }
 }

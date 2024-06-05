@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 const CartListItem: React.FC<any> = ({item, traits, variant,adjustable}:{item:any, traits:ITraits, variant?:string,adjustable?:boolean}) => {
     const router = useRouter();
     const handleClick = () =>{
-        console.log(item)
+        // console.log(item)
         router.push(`/product?id=${item?.id}&pri=${item?.price?.id}`)
     }
     useEffect(() => {}, [item]);

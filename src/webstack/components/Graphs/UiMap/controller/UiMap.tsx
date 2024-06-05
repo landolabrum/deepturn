@@ -1,54 +1,85 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import mapboxgl, { Map as MapboxMap } from "mapbox-gl";
 import styles from "./UiMap.scss";
 import token from "../data/token";
 import useWindow from "@webstack/hooks/useWindow";
-import useElement from "@webstack/hooks/useElement";
-import addVessels from "../functions/mapVessels";
 import { useLoader } from "@webstack/components/Loader/Loader";
 import { IVessel, IVesselActions } from "../models/IMapVessel";
 import useProfile from "~/src/core/authentication/hooks/useProfile";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
-import { flyToView } from "../functions/mapPositions";
 import { useRouter } from "next/router";
-import mapRotate from "../functions/mapRotate";
+import { flyToView } from "../functions/mapPositions";
+import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import MapVesselDetails, { IVesselType } from "../views/MapVessel/views/MapVesselDetails/MapVesselDetails";
+import MapSearch from "../views/MapSearch/MapSearch";
+import useMapSearch from "../hooks/useMapSearch";
+import initializeMap from "../functions/initializeMap";
+import handleResize from "../functions/handleResize";
 
 mapboxgl.accessToken = token;
-const styleId = "clw76pwt4003o01q120rh1mkk";
 
-interface IuiMap {
-    options?: any;
+interface MapOptions {
+    center?: [number, number];
+    zoom?: number;
+    rpm?: number;
+    loadingDelay?: number;
+}
+
+interface ICustomMapOptions extends mapboxgl.MapboxOptions{
+    rpm?: number;
+}
+interface UiMapProps {
+    hideHover?:boolean;
+    options?: MapOptions;
     vessels?: IVessel[];
     onVesselClick?: (vessel: IVessel) => void;
     require?: "user" | "location" | "both";
 }
 
-const UiMap: React.FC<IuiMap> = ({ options, vessels, onVesselClick, require = 'both' }) => {
-    const mapContainer = useRef<HTMLDivElement>(null);
+const UiMap: React.FC<UiMapProps> = ({ options, vessels, onVesselClick, require, hideHover }) => {
+    const mapContainerRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<MapboxMap | null>(null);
+    const initialStyleID = "clw76pwt4003o01q120rh1mkk";
+
     const [loader, setLoader] = useLoader();
     const profile = useProfile({ require: require });
     const router = useRouter();
+    const [selectedVessel, setSelectedVessel] = useState<IVessel | null | false>(null);
+    const [styleId, setStyleId] = useState(initialStyleID);
     const [mapPath, setMapPath] = useState<string | undefined>();
-    const { width } = useWindow();
-    const MAPCONFIG = {
-        globeZoom: width < 900 ? 1.5 : 2,
+    const { width: windowWidth, height: windowHeight } = useWindow();
+
+    const calculateZoomLevel = (width: number) => {
+        const minZoom = 0.6;
+        const maxZoom = 2;
+        const minWidth = 900;
+        const maxWidth = 1400;
+        if (width < minWidth) return minZoom;
+        if (width > maxWidth) return maxZoom;
+        return ((width - minWidth) / (maxWidth - minWidth)) * (maxZoom - minZoom) + minZoom;
+    };
+
+    const MAP_CONFIG = {
+        globeZoom: calculateZoomLevel(windowWidth),
         mapZoom: 7,
         isGlobe: 5
     };
 
-    let mapOptions: any = {
+    // const mapOptions: mapboxgl.MapboxOptions = {
+    const mapOptions: ICustomMapOptions = {
+        container: mapContainerRef.current!,
         center: options?.center || profile?.lngLat || [0, 10],
-        zoom: options?.zoom || MAPCONFIG.globeZoom,
+        zoom: options?.zoom || MAP_CONFIG.globeZoom,
         style: `mapbox://styles/landolabrum/${styleId}`,
         projection: { name: "globe" } as any,
         antialias: true,
-        rpm: options?.rpm,
+        rpm: options?.rpm
     };
-    const [zoom, setZoom] = useState(mapOptions?.zoom || 8);
-    const [lngLat, setLngLat] = useState(mapOptions?.center || [0, 0]);
 
-    let userVesselConfig: IVessel = ({
+    const [zoomLevel, setZoomLevel] = useState(mapOptions.zoom || 8);
+    const [centerCoordinates, setCenterCoordinates] = useState(mapOptions.center || [0, 0]);
+    const { searched, handleSearch } = useMapSearch({ lngLat: centerCoordinates, setLngLat: setCenterCoordinates, map: mapRef.current });
+
+    const userVesselConfig: IVessel = {
         name: profile?.name ? `${profile.name}` : 'You are here',
         className: "user",
         images: [
@@ -56,98 +87,126 @@ const UiMap: React.FC<IuiMap> = ({ options, vessels, onVesselClick, require = 'b
             "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNDAxNzM1NTk1NjgzMjg4Mw%3D%3D/original/a6f2bd88-0ef0-455b-8f00-433eee5b13c2.jpeg?im_w=720"
         ],
         lngLat: profile?.lngLat || [0, 0]
-    });
+    };
 
     const handleVesselClick = (vessel: IVessel) => {
+        // console.log('[ handleVesselClick ]: ', vessel);
         const map = mapRef?.current;
         if (!map || !vessel) return;
+        setSelectedVessel(vessel);
         onVesselClick && onVesselClick(vessel);
         flyToView(map, { lngLat: vessel.lngLat, zoom: 9 });
     };
 
     const handleVesselEnter = (vessel: IVessel) => {
-        console.log('[ HANDLE VESSEL ENTER ]', { vessel });
+        // console.log('[ HANDLE VESSEL ENTER ]', { vessel });
     };
 
     const handleVesselLeave = () => {
-        console.log('[ HANDLE VESSEL LEAVE ]');
+        // console.log('[ HANDLE VESSEL LEAVE ]');
     };
 
-    const actions: IVesselActions = {
+    const vesselActions: IVesselActions = {
         onClick: handleVesselClick,
         onMouseEnter: handleVesselEnter,
         onMouseLeave: handleVesselLeave,
     };
 
-    const handleToolZoom = (newLngLat: number[]) => {
-        const map = mapRef.current;
-        if (!map) return;
-        setLngLat(newLngLat);
-        flyToView(
-            map,
-            {
-                zoom: zoom > MAPCONFIG.isGlobe ? MAPCONFIG.globeZoom : MAPCONFIG.mapZoom,
-                lngLat: newLngLat
-            }
-        );
-    };
-
-    const initializeMap = (map: MapboxMap) => {
-        const hasUserLocation = profile?.lngLat && profile.lngLat.every(item => item !== 0);
-        mapRef.current = map;
-        map.on('style.load', () => {
-            const setInitialVessels = () => {
-                if (profile?.lngLat) userVesselConfig.lngLat = profile?.lngLat;
-                if (!vessels) return [userVesselConfig];
-                if (hasUserLocation) {
-                    return [...vessels, userVesselConfig].map((vessel, index) => ({
-                        ...vessel,
-                        id: index + 1,
-                    }));
-                } else {
-                    flyToView(map, { lngLat: [-95, 37] })
-                    return [...vessels].map((vessel, index) => ({
-                        ...vessel,
-                        id: index + 1,
-                    }));
-                }
-            };
-            const initializedVessels = setInitialVessels();
-            addVessels(map, actions, initializedVessels);
-            options?.rpm && mapRotate(map);
+    const stopLoader = () => {
+        if (!options?.loadingDelay) {
             setLoader({ active: false });
-        });
-
-        map.on('move', () => {
-            setLngLat(map.getCenter().toArray());
-            setZoom(map.getZoom());
-        });
+        } else if (options.loadingDelay) {
+            setTimeout(() => {
+                setLoader({ active: false });
+            }, options.loadingDelay);
+        }
     };
-
+const {width}=useWindow();
     useEffect(() => {
-        const isMapPath = mapPath && mapPath == router.asPath;
+        const isMapInParent = mapPath && mapPath === router.asPath;
+        const isReadyToLoadMap = (
+            Boolean(profile?.lngLat || !require) && mapContainerRef.current && isMapInParent
+        );
+
         if (!mapPath) setMapPath(router.asPath);
-        else if (!isMapPath && loader.active) setLoader({ active: false });
-        if (!mapRef.current && isMapPath) setLoader({ active: true, body: 'loading map' });
-        if (Boolean(profile?.lngLat || !require) && mapContainer.current && isMapPath) {
+        if (!mapRef.current && isMapInParent && !loader.active) {
+            // console.log('Loading map...');
+            setLoader({
+                active: true,
+                body: " ",
+                iconSize: width <= 1100?"70vh":"50vh",
+                // animation: {
+                //     duration: 4000,
+                //     delay: 0,
+                //     keyframes: {
+                //         0: "transform: scale(0.1) opacity: 1;",
+                //         80: "transform: scale(0.1) opacity: 1;",
+                //         100: "transform: scale(1) opacity: 0;",
+                //         // 0: "transform: translateX(0) translateY(0)",
+                //         // 100: "transform: translateX(30vw) translateY(20vh)",
+                //     },
+                // },
+            });
+        } else if (!isMapInParent && loader.active) {
+            stopLoader();
+        }
+        if (isReadyToLoadMap) {
+            // console.log('Initializing map...');
             const map = new mapboxgl.Map({
-                container: mapContainer.current,
                 ...mapOptions,
             });
-            initializeMap(map);
-            return () => map.remove();
+            initializeMap({
+                map,
+                profile,
+                vessels,
+                userVesselConfig,
+                vesselActions,
+                mapOptions,
+                stopLoader,
+                setLngLat: setCenterCoordinates,
+                setZoom: setZoomLevel,
+                hideHover: hideHover
+            });
+            mapRef.current = map; // Ensure mapRef is set correctly
+            return () => {
+                map.remove();
+                mapRef.current = null;
+            };
         }
-    }, [mapContainer.current, require, profile, router.asPath]);
+    }, [mapContainerRef.current, setStyleId, require, profile, windowWidth, router.asPath, styleId]);
+
+
+    useEffect(() => {
+        if (mapContainerRef?.current) {
+            mapContainerRef.current.style.height = '100vh';
+            mapContainerRef.current.style.width = '100%';
+            if (mapRef.current) mapRef.current.resize();
+        }
+    }, [selectedVessel == false]);
+    const handleResizeCallback = useCallback((newSize: any) => handleResize(mapContainerRef, mapRef, windowWidth, windowHeight, selectedVessel !== null, newSize, setSelectedVessel), [windowWidth, windowHeight, selectedVessel]);
 
     return (
         <>
             <style jsx>{styles}</style>
-            <div className="map" ref={mapContainer} />
-            <div className='map-tools__main'>
-                <UiIcon
-                    onClick={() => handleToolZoom(lngLat)}
-                    icon={zoom > MAPCONFIG.isGlobe ? 'fa-globe' : 'fa-map'}
-                />
+            <div className='map-container'>
+                <div className='map-content'>
+                    <div className="map" ref={mapContainerRef} onDoubleClick={() => selectedVessel && setSelectedVessel(null)} />
+                    {selectedVessel &&  (
+                        <MapVesselDetails
+                            vessel={selectedVessel}
+                            setVessel={setSelectedVessel as (vessel: IVesselType) => void}
+                            onResize={handleResizeCallback}
+                        />
+                    )}
+                    {!loader.active && (
+                        <div className='map-tools'>
+                            <div className='map-tools--layer'>
+                                <UiIcon icon="fa-xmark" onClick={() => setStyleId("clwvqyuxe01bl01q11d6m8nh7")} />
+                            </div>
+                            <MapSearch searched={searched} handleSearch={handleSearch} />
+                        </div>
+                    )}
+                </div>
             </div>
         </>
     );

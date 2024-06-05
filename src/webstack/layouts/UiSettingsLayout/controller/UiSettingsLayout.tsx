@@ -4,12 +4,10 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { useRouter } from 'next/router';
 import useClass from '@webstack/hooks/useClass';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
-import {  useModal } from '@webstack/components/modal/contexts/modalContext';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import environment from '~/src/core/environment';
+import UiHeader from '@webstack/components/Header/views/UiHeader/UiHeader';
 
-type ISettingsView = string | {name:string, icon:string};
-const MODAL_ID = 'settings-views';
 
 interface ISettingsLayout {
   views: any;
@@ -79,43 +77,34 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
         <thead>
           <tr>
             <th></th>
-            <th className={classes.header}>
-              {title && (
-                <span className={`${classes.header}--title`}>
-                  {titleContent}
-                </span>
-              )}
-              {subTitle && (
-                <span className={`${classes.header}--sub-title`}>
-                  {subTitle}
-                </span>
-              )}
+            <th >
+              <UiHeader title={titleContent} subTitle={subTitle} />
             </th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td className={classes.nav}>
-                <div className="settings-nav--content">
-                  {Object.keys(views)?.map((v) => (
-                    <div
-                      className={`nav-item ${view === v ? 'nav-item--selected' : ''}`}
-                      key={v}
-                      onClick={() => handleView(v)}
-                    >
-                      {keyStringConverter(v, false)} {view === v && <span className="nav-item--selected-icon"><UiIcon icon="fa-check" /></span>}
-                    </div>
-                  ))}
-                </div>
-              </td>
-            <td className='settings-view'>
-            <div className='settings-view--content'>
-
-              {views[view]}
-              <div className='settings-view--logo'>
-                <UiIcon  icon={`${environment.merchant.name}-logo`}/>
+              <div className="settings-nav--content">
+                {Object.keys(views)?.map((v) => (
+                  <div
+                    className={`nav-item ${view === v ? 'nav-item--selected' : ''}`}
+                    key={v}
+                    onClick={() => handleView(v)}
+                  >
+                    {keyStringConverter(v, false)} {view === v && <span className="nav-item--selected-icon"><UiIcon icon="fa-check" /></span>}
+                  </div>
+                ))}
               </div>
-            </div>
+            </td>
+            <td className='settings-view'>
+              <div className='settings-view--content'>
+
+                {views[view]}
+                <div className='settings-view--logo'>
+                  <UiIcon icon={`${environment.merchant.name}-logo`} />
+                </div>
+              </div>
             </td>
           </tr>
         </tbody>

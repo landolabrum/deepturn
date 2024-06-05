@@ -54,13 +54,13 @@ const CreatePDF: FC<ICreatePDF> = ({ pdfRef, preview, downloadable }) => {
                     <div className='pdf-preview__options'>
                         <div className='pdf-preview__options--actions'>
                             <div>
-                                <UiSelect
+                                {/* <UiSelect
                                     options={['in', 'px']}
                                     onSelect={(unit) => setUnit(unit)}
                                     variant='lite'
                                     label='units'
                                     value={unit}
-                                />
+                                /> */}
                             </div>
                             <div>
                                 <UiInput

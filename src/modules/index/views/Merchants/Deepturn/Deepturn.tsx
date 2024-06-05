@@ -3,10 +3,11 @@ import styles from './Deepturn.scss';
 import UiMap from '../../../../../webstack/components/Graphs/UiMap/controller/UiMap';
 import { IVessel } from '@webstack/components/Graphs/UiMap/models/IMapVessel';
 import MapVesselDetails from '@webstack/components/Graphs/UiMap/views/MapVessel/views/MapVesselDetails/MapVesselDetails';
+import { useRouter } from 'next/router';
 const Deepturn = () => {
   const [currentVessel, setCurrentVessel] = useState<IVessel | false | undefined>();
   const closeVessel = () => currentVessel && setCurrentVessel(false);
-
+  const {pathname} = useRouter()
   const vessels: IVessel[] = [
     {
       name: 'Two Story Smart Home',
@@ -25,15 +26,15 @@ const Deepturn = () => {
       <style jsx>{styles}</style>
       <div className='deepturn'>
         <div className='map-container' onDoubleClick={closeVessel}>
-          <UiMap
+         {pathname == '/' &&  <UiMap
             onVesselClick={setCurrentVessel}
+            require='both'
             options={{
               rpm: 200,
             }}
             vessels={vessels}
-          />
+          />}
         </div>
-        <MapVesselDetails vessel={currentVessel} setVessel={setCurrentVessel} />
       </div>
     </>
   );

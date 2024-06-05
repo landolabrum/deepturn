@@ -121,6 +121,10 @@
     }
 
     &--input {
+        color: inherit;
+        &::placeholder{
+            color: inherit
+        }
         &-sm{
             font-size: var(--s-8);
             height: var(--s-4);
@@ -147,7 +151,7 @@
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
 
-    &:not(&--warning, &--center, &--glow, &--checkbox, &--primary,&--inherit, &--dark, &--lite, &--flat, &--secondary, &--link,  &--select, &--invalid, &--input, &--textarea, &--signature) {
+    &:not(&--warning, &--center, &--glow, &--checkbox, &--primary,&--inherit, &--dark, &--transparent, &--lite, &--flat, &--secondary, &--link,  &--select, &--invalid, &--input, &--textarea, &--signature) {
         @extend %element-color;
     }
 
@@ -207,23 +211,22 @@
         padding: 0;
         height: var(--s-element);
     }
-
+  
     &--input,
     &--textarea {
 
-        -webkit-text-fill-color: var(--gray-50);
-        --ui-icon-color: var(--gray-50);
-        background-color: var(--gray-60-o);
-        border: solid 1px var(--gray-50-o) !important;
-        box-shadow: inset 1px 1px 3px 2px var(--gray-80-o);
-        
+            -webkit-text-fill-color: var(--gray-50);
+            --ui-icon-color: var(--gray-50);
+            background-color: var(--gray-60-o);
+            border: solid 1px var(--gray-50-o) !important;
+            box-shadow: inset 1px 1px 3px 2px var(--gray-80-o);
         &:not( &--signature) {
             font-family: 'Game', sans-serif;
             font-style: italic;
         }
         
         &:focus-within {
-            &:not(.form-control__element--nav-item, .form-control__element--signature) {
+            &:not(.form-control__element--nav-item, .form-control__element--signature, .form-control__element--transparent) {
                 border: solid 1px var(--gray-10) !important;
                 --ui-icon-color: var(--gray-10);
                 -webkit-text-fill-color: var(--gray-50);
@@ -232,7 +235,7 @@
             }
         }
         
-        &:not(&--signature, &--dark, &--disabled) {
+        &:not(&--signature, &--dark, &--disabled, &--transparent) {
             &:hover:not(&:focus-within) {
                 -webkit-text-fill-color: var(--gray-70);
                 // border-radius:0 0  var(--border-radius) var(--border-radius);
@@ -412,15 +415,15 @@
         var(--gray-30), var(--gray-70), var(--secondary),
         var(--gray-40), var(--gray-50), var(--gray-50));
     @include variant('dark',
-        var(--gray-100), var(--gray-50), var(--gray-80),
-        var(--gray-70-o), var(--primary), var(--primary),
-        var(--primary-o), var(--gray-50), var(--gray-50));
+        var(--black), var(--primary), var(--primary),
+        var(--gray-80-o), var(--primary), var(--primary),
+        var(--primary-o), var(--gray-100), var(--gray-70));
     @include variant('secondary',
         var(--secondary-o), var(--gray-20), var(--gray-20),
         var(--secondary-o), var(--gray-20), var(--gray-20),
         var(--secondary-o), var(--gray-20), var(--gray-20));
     @include variant('link',
-        transparent, var(--blue), transparent,
+        transparent, var(--blue-60), transparent,
         transparent, var(--blue-10), transparent,
         transparent, var(--blue-10), transparent);
  
@@ -537,5 +540,22 @@
             background-color: var(--gray-70);
         }
     }
-    
+    &--transparent{
+
+        background-color: var(--gray-100-o);
+        background-color: transparent;
+        color: var(--orange) !important;
+        --ui-icon-color: var(--primary);
+        &:hover:not(&:focus-within) {
+            -webkit-text-fill-color: var(--gray-50);
+            // border-radius:0 0  var(--border-radius) var(--border-radius);
+            background-color: var(--gray-80-o);
+            color: var(--gray-50);
+            --ui-icon-color: var(--gray-50);
+        }
+        &:focus-within {
+            color: var(--gray-50);
+            background-color: var(--gray-90-o);
+        }
+    }
 }
