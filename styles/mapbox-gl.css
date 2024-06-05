@@ -798,6 +798,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   display: inline-block;
   --ui-icon-size: var(--s-4);
   filter: brightness(0.77);
+  width: var(--s-1);
 }
 
 @-webkit-keyframes vslIconPulse {
@@ -864,7 +865,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   background-color: var(--user);
   border-radius: 50%;
   padding: var(--s-12);
-  width: var(--s-4);
+  width: max-content;
 }
 
 .partner-mrkr {
