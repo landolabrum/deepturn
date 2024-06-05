@@ -1,0 +1,182 @@
+
+:root {
+
+
+
+  --primary: #ffffff;
+  /* Updated to a more nuanced earthy brown, reminiscent of worn leather or soil */
+  --primary-lite: #a89b8d;
+  /* A lighter, warmer shade, akin to sunlit earth */
+  --primary-o: rgba(140, 122, 107, 0.5);
+  /* 50% opacity for subtle overlays */
+  --primary-o-1: rgba(140, 122, 107, 0.3);
+  /* 30% opacity for even subtler overlays */
+
+  --secondary: #c5b9a8;
+  /* A muted, sandy beige, softer and more aligned with natural landscapes */
+  --secondary-o: rgba(197, 185, 168, 0.25);
+  /* 25% opacity for light, airy backgrounds */
+
+  --error: #8b0000;
+  /* A deeper, more intense shade of red, signaling errors with a natural, urgent tone */
+  --invalid-border: #d14343;
+  /* A less saturated red, ensuring visibility against various backgrounds */
+
+  --body: #161616;
+  /* Updated to a slightly lighter shade of grey for improved readability */
+  --lite: #f0edeb;
+  /* A very light grey, evoking the subtle variations found in natural stones */
+  --dark: #16191d;
+  /* A deep, dark blue-grey, reminiscent of the night sky or deep waters */
+  --dark-o: rgba(22, 25, 29, 0.5);
+  /* Adding a touch of opacity for overlay elements */
+
+  --warning: #d4661a;
+  /* A darker, earth-toned orange for warnings */
+  --warning-hover: #e77a3f;
+  /* A darker hover state for warning elements */
+  --warning-focus: #b35816;
+  /* A darker focus state for warning elements */
+
+  /* Darkened grayscale spectrum to reflect more natural, subdued tones */
+  /* COLORS */
+  --black: #111111;
+  --gray-10: #f8f8f8;
+  --gray-10-o: #f8f8f850;
+  --gray-20: #f5f5f5;
+  --gray-20-o: #f5f5f550;
+  --gray-30: #e0e0e0;
+  --gray-30-o: #e0e0e050;
+  --gray-40: #d4d4d4;
+  --gray-40-o: #d4d4d450;
+  --gray-50: #a3a3a3;
+  --gray-50-o: #a3a3a350;
+  --gray-60: #737373;
+  --gray-60-o: #73737350;
+  --gray-70: #525252;
+  --gray-70-o: #52525250;
+  --gray-80: #404040;
+  --gray-80-o: #40404050;
+  --gray-90: #262626;
+  --gray-90-o: #26262650;
+  --gray-100: #171717;
+  --gray-100-o: #17171750;
+  /* INVERTED  */
+  /* --black: #f8f8f8; 
+ --gray-10: #171717;
+ --gray-10-o: rgba(23, 23, 23, 0.5);
+ --gray-20: #262626;
+ --gray-20-o: rgba(38, 38, 38, 0.5);
+ --gray-30: #404040; 
+ --gray-30-o: rgba(64, 64, 64, 0.5);
+ --gray-40: #525252;
+ --gray-40-o: rgba(82, 82, 82, 0.5);
+ --gray-50: #737373;
+ --gray-50-o: rgba(115, 115, 115, 0.5);
+ --gray-60: #a3a3a3; 
+ --gray-60-o: rgba(163, 163, 163, 0.5); 
+ --gray-70: #d4d4d4;
+ --gray-70-o: rgba(212, 212, 212, 0.5); 
+ --gray-80: #e0e0e0; 
+ --gray-80-o: rgba(224, 224, 224, 0.5); 
+ --gray-90: #f5f5f5; 
+ --gray-90-o: rgba(245, 245, 245, 0.5); 
+ --gray-100: #f8f8f8; 
+ --gray-100-o: rgba(248, 248, 248, 0.5);  */
+  --vsl-hover-lite:var(--gray-60);
+  --vsl-hover-dark: var(--gray-70);
+  --white: #ffffff;
+  --white-o: rgba(255, 255, 255, 0.5);
+  --yellow: #fbff00;
+  --yellow-o: rgba(251, 255, 0, 0.7);
+  --orange: #ff9900;
+  --orange-o: rgba(255, 153, 0, 0.5);
+  --red: #dd4400;
+  --green-20: #44b432;
+  --green-20-o: rgba(68, 180, 50, 0.62);
+  --green-60: #22c553;
+  --red-60: #ef4444;
+  --blue-60: #4f96ff;
+  --blue-60-o: #4f96ff80;
+  --blue-10: #54e3ff;
+  --blue-10-o: #54e3ff80;
+  /*   
+   */
+  /* MORE PASTEL */
+  /* --yellow: #f4f4c1;
+   --yellow-o: rgba(244, 244, 193, 0.7);
+   --orange: #f9bea6;
+   --orange-o: rgba(249, 190, 166, 0.5);
+   --red: #e89a8a; 
+   --green-20: #a0d9af;
+   --green-20-o: rgba(160, 217, 175, 0.62);
+   --green-60: #8cc69b;
+   --red-60: #f2a4a4;
+   --blue-60: #a3c1e2; 
+   --blue-60-o: rgba(163, 193, 226, 0.5);
+   --blue-10: #b3d4f2; 
+   --blue-10-o: rgba(179, 212, 242, 0.5);  */
+
+  /* Box shadow presets */
+  --box-shadow: 2px 2px 10px rgba(23, 23, 23, 0.5);
+  --box-shadow-inset: inset 2px 2px 10px rgba(23, 23, 23, 0.5);
+  --box-shadow-sm: 2px 2px 5px rgba(23, 23, 23, 0.5);
+  --box-shadow-xl: 0px 4px 6px rgba(23, 23, 23, 0.3),
+    0px 2px 4px rgba(64, 64, 64, 0.2), 0px 10px 10px rgba(23, 23, 23, 0.3);
+
+  /* @media (max-width: 1100px) {
+    --box-shadow-xl: 0px 2px 3px rgba(38, 38, 38, 0.3),
+      0px 1px 2px rgba(82, 82, 82, 0.2), 0px 5px 10px rgba(38, 38, 38, 0.3);
+  } */
+
+  --s-1: 32px;
+  --s-2: 28px;
+  --s-3: 24px;
+  --s-4: 20px;
+  --s-5: 18px;
+  --s-6: 16px;
+  --s-7: 14px;
+  --s-8: 12px;
+  --s-9: 10px;
+  --s-10: 8px;
+  --s-11: 5px;
+  --s-12: 2px;
+
+  --s-1-width: calc(100% - calc(var(--s-1) * 2));
+  --s-2-width: calc(100% - calc(var(--s-2) * 2));
+  --s-3-width: calc(100% - calc(var(--s-3) * 2));
+  --s-4-width: calc(100% - calc(var(--s-4) * 2));
+  --s-5-width: calc(100% - calc(var(--s-5) * 2));
+  --s-6-width: calc(100% - calc(var(--s-6) * 2));
+  --s-7-width: calc(100% - calc(var(--s-7) * 2));
+  --s-8-width: calc(100% - calc(var(--s-8) * 2));
+  --s-9-width: calc(100% - calc(var(--s-9) * 2));
+  --s-10-width: calc(100% - calc(var(--s-10) * 2));
+  --s-12-width: calc(100% - calc(var(--s-12) * 2));
+
+  --s-border-width: calc(100% - 2px);
+  --s-border-padding-width: calc(var(--s-4-width) - 2px);
+  --s-9-width: calc(100% - calc(var(--s-9) * 2));
+  --s-4-sm: calc(--s-4 * 2);
+  --s-element-width: calc(100% - calc(var(var(--s-element))));
+
+  /* PAGE BREAKS */
+  --breakpoint-xs: 600px;
+  --breakpoint-sm: 1100px;
+  --breakpoint-md: 1100px;
+  --breakpoint-lg: 1400px;
+  --breakpoint-xl: 1600px;
+  --border-radius: 8px;
+  --s-element: 45px;
+
+  @media (max-width: 1100px) {
+    --border-radius: 5px;
+  }
+
+  --border: solid 1px rgba(82, 82, 82, 0.5);
+  --border-hover: solid 1px rgba(163, 163, 163, 0.5);
+  --border-focus: solid 1px rgba(224, 224, 224, 0.5);
+  --header-height: 175px;
+
+}
+
