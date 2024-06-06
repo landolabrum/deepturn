@@ -3,7 +3,7 @@ import styles from './ContactForm.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
-import UserContext from '~/src/models/UserContext';
+import IUser from '~/src/models/UserContext';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import { mockDateTime } from '@webstack/helpers/MockData';

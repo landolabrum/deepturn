@@ -1,4 +1,4 @@
-import UserContext, { UserAddress } from "~/src/models/UserContext";
+import IUser, { UserAddress } from "~/src/models/UserContext";
 
 export interface OPaymentMethod{
     name?: string;
@@ -26,7 +26,7 @@ export interface IPaymentMethod{
 export interface IMethod {
     id: string;
     object: string;
-    customer: UserContext;
+    customer: IUser;
     card: IPaymentMethod;
     billing_details: {
         address: UserAddress;

@@ -78,7 +78,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
           <tr>
             <th></th>
             <th >
-              <UiHeader title={titleContent} subTitle={subTitle} />
+              {isView && <UiHeader title={titleContent} subTitle={subTitle} />}
             </th>
           </tr>
         </thead>

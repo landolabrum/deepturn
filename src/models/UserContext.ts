@@ -1,4 +1,4 @@
-export default interface UserContext {
+export default interface IUser {
   memberId: string;
   default_source?: string;
   invoice_settings?: {
@@ -56,5 +56,5 @@ export interface UserAddress {
 }
 
 export interface UserProps {
-  user?: UserContext
+  user?: IUser
 }

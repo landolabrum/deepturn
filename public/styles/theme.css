@@ -661,6 +661,31 @@ h6 {
   font-size: var(--s-6);
   font-weight: 700;
 }
+.f-1{font-size: var(--s-1);}
+.f-2{font-size: var(--s-2);}
+.f-3{font-size: var(--s-3);}
+.f-4{font-size: var(--s-4);}
+.f-5{font-size: var(--s-5);}
+.f-6{font-size: var(--s-6);}
+.f-7{font-size: var(--s-7);}
+.f-8{font-size: var(--s-8);}
+.f-9{font-size: var(--s-9);}
+.f-10{font-size: var(--s-10);}
+.f-11{font-size: var(--s-11);}
+.f-12{font-size: var(--s-12);}
+
+.g-1{gap: var(--s-1);}
+.g-2{gap: var(--s-2);}
+.g-3{gap: var(--s-3);}
+.g-4{gap: var(--s-4);}
+.g-5{gap: var(--s-5);}
+.g-6{gap: var(--s-6);}
+.g-7{gap: var(--s-7);}
+.g-8{gap: var(--s-8);}
+.g-9{gap: var(--s-9);}
+.g-10{gap: var(--s-10);}
+.g-11{gap: var(--s-11);}
+.g-12{gap: var(--s-12);}
 
 .bodycopy {
   font-size: 16px;

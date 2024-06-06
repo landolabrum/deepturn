@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from '../UiInput.scss';
 import aStyles from './AddressInput.scss';
 import { Loader } from '@googlemaps/js-api-loader';
@@ -9,9 +9,9 @@ import UiMenu from '@webstack/components/UiMenu/UiMenu';
 interface IAddressInput {
   address?: any;
   setAddress: (e: any) => void;
-  traits?: ITraits,
-  variant?: IFormControlVariant,
-  inputClasses?: string,
+  traits?: ITraits;
+  variant?: IFormControlVariant;
+  inputClasses?: string;
   label?: string;
   error?: string | null;
 }
@@ -19,6 +19,8 @@ interface IAddressInput {
 const AutocompleteAddressInput = ({ address, setAddress, variant, traits, inputClasses, label, error }: IAddressInput) => {
   const inputRef = useRef<any>();
   const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [display, setDisplay] = useState<string | undefined>("");
+
   const [autocompleteService, setAutocompleteService] = useState<any>(null);
   const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GAPI_KEY?.trim() || "";
 
@@ -34,6 +36,7 @@ const AutocompleteAddressInput = ({ address, setAddress, variant, traits, inputC
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
+    setDisplay(query);  // Update display state with input value
     if (query.length > 2 && autocompleteService) {
       autocompleteService.getPlacePredictions({ input: query }, (predictions: any) => {
         setSuggestions(predictions || []);
@@ -42,6 +45,17 @@ const AutocompleteAddressInput = ({ address, setAddress, variant, traits, inputC
       setSuggestions([]);
     }
   };
+
+  const handleDisplay = useCallback(() => {
+    const addressDisplay = address ? 
+      `${address?.line1 ? address?.line1 + ', ' : ''
+      }${address?.line2 ? address?.line2 + ' ' : ''
+      }${address?.city ? address?.city + ' ' : ''
+      }${address?.state ? address?.state + ', ' : ''
+      }${address?.postal_code ? address?.postal_code + ', ' : ''
+      }${address?.country ? address?.country : ''}` : "";
+    setDisplay(addressDisplay);
+  }, [address]);
 
   const handleSuggestionSelect = (option: any) => {
     const placeId = option.value;
@@ -81,51 +95,44 @@ const AutocompleteAddressInput = ({ address, setAddress, variant, traits, inputC
     initAutocomplete();
   }, []);
 
-  const addressDisplay = address != undefined ?
-    `${address?.line1 ? address?.line1 + ', ' : ''
-    }${address?.line2 ? address?.line2 + ' ' : ''
-    }${address?.city ? address?.city + ' ' : ''
-    }${address?.state ? address?.state + ', ' : ''
-    }${address?.postal_code ? address?.postal_code + ', ' : ''
-    }${address?.country ? address?.country : ''}` : undefined;
+  useEffect(() => {
+    handleDisplay();
+  }, [address, handleDisplay]);
 
   return (
     <>
       <style jsx>{styles}</style>
       <style jsx>{aStyles}</style>
-      <div className='address-input'>
-        <FormControl
-          error={error}
-          label={label}
-
-          traits={traits}
-          variant={variant}
-          >
-          <input
-            data-element='input'
-            className={inputClasses}
-            id="autocomplete-address"
-            type="text"
-            ref={inputRef}
-            placeholder="Enter address"
-            defaultValue={addressDisplay}
-            name="address"
-            onChange={handleInputChange}
-          />
-        </FormControl>
-        {suggestions.length > 0 && (
-          <div className='address-input--suggestions'>
-          <UiMenu 
+      <FormControl
+        error={error}
+        label={label}
+        traits={traits}
+        variant={variant}
+      >
+        <input
+          data-element='input'
+          className={inputClasses}
+          id="autocomplete-address"
+          type="text"
+          ref={inputRef}
+          placeholder="Enter address"
+          value={display}
+          name="address"
+          onChange={handleInputChange}
+        />
+      </FormControl>
+      {suggestions.length > 0 && (
+        <div className='address-input--suggestions'>
+          <UiMenu
             options={suggestions.map(suggestion => ({
               label: suggestion.structured_formatting.main_text,
               value: suggestion.place_id,
               secondary: suggestion.structured_formatting.secondary_text
             }))}
             onSelect={handleSuggestionSelect}
-            />
-            </div>
-        )}
-      </div>
+          />
+        </div>
+      )}
     </>
   );
 };

@@ -6,7 +6,7 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import CookieHelper from '@webstack/helpers/CookieHelper';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { dateFormat, numberToUsd } from '@webstack/helpers/userExperienceFormats';
-import UserContext from '~/src/models/UserContext';
+import IUser from '~/src/models/UserContext';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import { useGuest } from '~/src/core/authentication/hooks/useGuest';
 
@@ -17,7 +17,7 @@ const Transaction: React.FC = () => {
   const user = useUser();
 
   const MemberService = getService<IMemberService>('IMemberService');
-  const [selectedUser, setUser] = useState<UserContext | { email: string } | undefined>();
+  const [selectedUser, setUser] = useState<IUser | { email: string } | undefined>();
   const [transaction, setTransaction] = useState<any>();
   const guest = useGuest();
 

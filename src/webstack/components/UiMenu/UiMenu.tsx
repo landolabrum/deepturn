@@ -3,8 +3,6 @@ import { IFormControl } from "../FormControl/FormControl";
 import styles from "./UiMenu.scss";
 import Input from "../UiInput/UiInput";
 import UiButton from "../UiButton/UiButton";
-import { IRoute, SelectableRoute } from "@shared/components/Navbar/data/routes";
-import { UiIcon } from "../UiIcon/UiIcon";
 
 export type IMenuOption = {
   label: string;
@@ -75,10 +73,10 @@ const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearc
               {filteredOptions?.map((option, index) => (
                 <div
                   key={index}
-                  className={`menu__option ${option?.active === false ? "disabled" : ""}${value === option.value ? ' active' : ''}${size ? ` menu__option-${size}` : ''}`}
+                  className={`menu__option ${option?.active === false ? "disabled" : ""}${selectedOption === option.value ? ' active' : ''}${size ? ` menu__option-${size}` : ''}`}
                   onClick={() => handleSelect(option)}
                 >
-                  <UiButton variant='flat' size={size} traits={{ beforeIcon: option.icon, afterIcon: value === option.value ? { icon: 'fa-check' } : '' }}>
+                  <UiButton variant='flat' size={size} traits={{ beforeIcon: option.icon, afterIcon: selectedOption === option.value ? { icon: 'fa-check' } : '' }}>
                     <div className='d-flex-col'>
                       <span className="menu__option-secondary">{option.label}</span>
                       {option.secondary && <span className="menu__option-secondary">{option.secondary}</span>}

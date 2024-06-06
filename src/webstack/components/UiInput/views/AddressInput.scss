@@ -1,7 +1,7 @@
 .address-input {
     position: relative;
     height: max-content;
-  
+    width: 100%;
     input {
       height: max-content;
       position: absolute;
@@ -33,6 +33,7 @@
         display: flex;
         align-items: center;
   
+        
         &:hover {
           background-color: #eee;
         }

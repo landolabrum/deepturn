@@ -4,7 +4,7 @@ import styles from './UserCurrentMethods.scss';
 
 import { useNotification } from '@webstack/components/Notification/Notification';
 import { IMethod } from '~/src/modules/user/model/IMethod';
-import UserContext from '~/src/models/UserContext';
+import IUser from '~/src/models/UserContext';
 import UserCurrentMethod from '../UserCurrentMethod/UserCurrentMethod';
 
 // Remember to create a sibling SCSS file with the same name as this component
@@ -14,7 +14,7 @@ interface UserCurrentMethod {
     response?: string;
     selected?: IMethod | false;
     onSelect?: (method: IMethod | false) => void;
-    user: UserContext;
+    user: IUser;
 }
 const UserCurrentMethods: React.FC<any> = ({ methods, onDeleteSuccess, response, user, selected, onSelect }: UserCurrentMethod) => {
     const default_payment_method = user?.invoice_settings?.default_payment_method
