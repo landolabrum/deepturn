@@ -97,7 +97,7 @@
         &__has-event{
             z-index: 1;
             &::before {
-                color: var(--primary);
+                color: var(--primary-50);
             }
         }
     }
@@ -146,7 +146,7 @@
         &:hover {
             color: var(--white);
             --ui-icon-color: var(--white);
-            background-color: var(--primary);
+            background-color: var(--primary-50);
 
         }
         &--title {

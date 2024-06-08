@@ -78,7 +78,7 @@
     .tabs__actions {
         background-color: var(--dark);
         // background-color: #f30;
-        border-right: inset 1px var(--primary);
+        border-right: inset 1px var(--primary-50);
         width: 400px;
 
         @media(max-width:900px) {

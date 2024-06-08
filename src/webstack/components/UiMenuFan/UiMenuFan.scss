@@ -26,7 +26,7 @@
         transition: filter 0.5s ease;
 
         &--show {
-            --ui-icon-color: var(--primary);
+            --ui-icon-color: var(--primary-50);
             filter: blur(2px);
             background-color: var(--dark);
         }

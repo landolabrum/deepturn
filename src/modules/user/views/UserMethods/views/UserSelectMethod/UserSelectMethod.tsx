@@ -1,12 +1,12 @@
 // Relative Path: ./UserSelectMethod.tsx
 import React, { useEffect } from 'react';
 import styles from './UserSelectMethod.scss';
-import IUser from '~/src/models/UserContext';
+import IAuthenticatedUser from '~/src/models/UserContext';
 import { IMethod } from '~/src/modules/user/model/IMethod';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IUserSelectMethods{
-    user?:IUser;
+    user?:IAuthenticatedUser;
     methods:IMethod[]
 }
 const UserSelectMethod: React.FC<IUserSelectMethods> = ({user, methods}:IUserSelectMethods) => {

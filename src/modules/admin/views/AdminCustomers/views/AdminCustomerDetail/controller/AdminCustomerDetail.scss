@@ -9,7 +9,7 @@
     @extend .d-flex;
     flex-direction: column;
     gap:var(--s-9);
-    &__form{
+    &--section{
         // width: var(--s-9-width);
         // padding: var(--s-9);
         // background-color: var(--gray-80);

@@ -106,7 +106,7 @@ const AutocompleteAddressInput = ({ address, setAddress, variant, traits, inputC
       <FormControl
         error={error}
         label={label}
-        traits={traits}
+        traits={{...traits, variant:"address"}}
         variant={variant}
       >
         <input

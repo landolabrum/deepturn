@@ -16,9 +16,9 @@
     justify-content: flex-start;
     padding: 0 10px;
     height: var(--s-element);
-    color: var(--primary);
+    color: var(--primary-50);
     background-color: var(--gray-60);
     &.current-method__response-error{
-        color: var(--orange);
+        color: var(--orange-50);
     }
 }

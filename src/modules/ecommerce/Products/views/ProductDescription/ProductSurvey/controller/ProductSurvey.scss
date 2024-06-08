@@ -31,7 +31,7 @@
     @extend .product-survey-card;
     &--email {
         font-size: var(--s-4);
-        color: var(--primary);
+        color: var(--primary-50);
         font-weight: 600;
     }
 
@@ -67,8 +67,8 @@
 }
 
 .product-survey__invalid {
-    color: var(--orange);
-    --ui-icon-color: var(--orange);
+    color: var(--orange-50);
+    --ui-icon-color: var(--orange-50);
 }
 
 .product-survey {

@@ -152,10 +152,10 @@ $vesselContent: var(--gray-80-o);
         }
 
         &.dragging {
-            background-color: var(--primary);
+            background-color: var(--primary-50);
             box-shadow:
                 -2px -1px 6px var(--secondary),
-                2px 1px 5px var(--primary);
+                2px 1px 5px var(--primary-50);
         }
     }
 

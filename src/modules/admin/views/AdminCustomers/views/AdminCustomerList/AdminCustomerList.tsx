@@ -7,8 +7,9 @@ import IAdminService from '~/src/core/services/AdminService/IAdminService';
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 import environment from '~/src/core/environment';
 import { ICustomer } from '~/src/models/CustomerContext';
-import { useClearance } from '~/src/core/authentication/hooks/useUser';
+import { getUserClearance, useClearance } from '~/src/core/authentication/hooks/useUser';
 import canViewCustomer from '../../functions/canViewCustomer';
+import keyStringConverter from '@webstack/helpers/keyStringConverter';
 
 
 const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: string) => void }) => {
@@ -19,7 +20,7 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
 
   const hideColumns = ['extras', 'id'];
   const level = useClearance();
-
+  
   const getCustomerList = async () => {
     let customerList = await adminService.listCustomers();
     if (customerList?.object === 'list') {
@@ -30,8 +31,8 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
       const transformedCustomerList = customerList.map((customer: ICustomer) => {
         // if(level >= 10 )
 
-          
-          const canViwCustomer = canViewCustomer(customer, level);
+
+        const canViwCustomer = canViewCustomer(customer, level);
         // Create a new dictionary for each customer
         const extras = {
           ...customer.metadata,
@@ -43,7 +44,7 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
           invoice_prefix: customer.invoice_prefix,
           next_invoice_sequence: customer.next_invoice_sequence,
         }
-        if(canViwCustomer)return {
+        if (canViwCustomer) return {
           customer: <AdaptTableCell cell='member' data={{
             id: customer.id,
             name: customer.name,
@@ -56,7 +57,7 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
           default_source: <AdaptTableCell cell='check' data={Boolean(customer.default_source)} />,
           // delinquent: customer.delinquent,
           tax_exempt: <AdaptTableCell cell='check' data={Boolean(customer.tax_exempt == 'exempt')} />,
-          clearance: <AdaptTableCell cell='id' data={customer?.user?.clearance} />,
+          clearance: <AdaptTableCell cell='id' data={keyStringConverter(getUserClearance(customer?.metadata?.user?.clearance)?.user.type,{textTransform:"capitalize"})} />,
           extras: extras,
           request: customer.metadata && <AdaptTableCell cell='check' data={Boolean(Object.entries(customer.metadata).find((f: any) => String(f).includes(String(environment.merchant.mid))))} />,
         };

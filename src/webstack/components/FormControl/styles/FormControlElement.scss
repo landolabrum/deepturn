@@ -13,7 +13,7 @@
 
     30% {
         transform: rotate(5deg);
-        background-color: var(--error);
+        background-color: var(--red-70);
     }
 
     70% {
@@ -23,14 +23,14 @@
 
     100% {
         transform: rotate(0deg);
-        background-color: var(--error);
+        background-color: var(--red-70);
     }
 }
 
 
 @keyframes glowTxt {
     0% {
-        text-shadow: 0 0 var(--s-9) var(--primary);
+        text-shadow: 0 0 var(--s-9) var(--primary-50);
     }
 
     100% {
@@ -320,8 +320,8 @@
 
     @include variant('primary',
         var(--primary-o), var(--gray-30), var(--primary-o),
-        var(--primary-o), var(--primary), var(--primary),
-        var(--primary), var(--white), transparent,
+        var(--primary-o), var(--primary-50), var(--primary-50),
+        var(--primary-50), var(--white), transparent,
     );
 
     &--secondary {
@@ -335,9 +335,9 @@
     }
 
     @include variant('warning',
-        var(--gray-80), var(--warning), var(--warning-hover),
-        var(--warning-hover), var(--gray-40), var(--warning-focus),
-        var(--warning-focus), var(--gray-10), transparent,
+        var(--gray-80), var(--warning), var(--red-30),
+        var(--red-30), var(--gray-40), var(--red-30),
+        var(--red-30), var(--gray-10), transparent,
     );
     @include variant('signature',
         inherit, var(--gray-40), transparent,
@@ -415,8 +415,8 @@
         var(--gray-30), var(--gray-70), var(--secondary),
         var(--gray-40), var(--gray-50), var(--gray-50));
     @include variant('dark',
-        var(--black), var(--primary), var(--primary),
-        var(--gray-80-o), var(--primary), var(--primary),
+        var(--black), var(--primary-50), var(--primary-50),
+        var(--gray-80-o), var(--primary-50), var(--primary-50),
         var(--primary-o), var(--gray-100), var(--gray-70));
     @include variant('secondary',
         var(--secondary-o), var(--gray-20), var(--gray-20),
@@ -448,7 +448,7 @@
     
     &--glow:hover:not(:focus, :focus-within) {
         animation: none;
-        background-color: var(--primary-lite);
+        background-color: var(--primary-10);
         color: var(--gray-10);
     }
 
@@ -472,17 +472,17 @@
     // FORM CONTROL ELEMENTS - INVALID DEFINITIONS
     &--error {
         position: relative;
-        color: var(--invalid-border) !important;
-        --ui-icon-color: var(--invalid-border) !important;
+        color: var(--red-70) !important;
+        --ui-icon-color: var(--red-70) !important;
         &:not(&--signature) {
-            border: solid 1px var(--invalid-border) !important;
+            border: solid 1px var(--red-70) !important;
         }
 
         &--signature {
             border: solid 1px transparent !important;
 
             .form-control__invalid {
-                color: var(--error) !important;
+                color: var(--red-70) !important;
 
             }
         }
@@ -544,8 +544,8 @@
 
         background-color: var(--gray-100-o);
         background-color: transparent;
-        color: var(--orange) !important;
-        --ui-icon-color: var(--primary);
+        color: var(--orange-50) !important;
+        --ui-icon-color: var(--primary-50);
         &:hover:not(&:focus-within) {
             -webkit-text-fill-color: var(--gray-50);
             // border-radius:0 0  var(--border-radius) var(--border-radius);

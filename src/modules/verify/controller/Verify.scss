@@ -81,12 +81,12 @@
             background-color: var(--orange-o);
             display: flex;
             font-family: Game;
-            border:solid 1px var(--orange);
+            border:solid 1px var(--orange-50);
             justify-content: flex-start;
             padding:var(--s-4);
             width: var(--s-4-width);
             font-size: var(--s-3);
-            color: var(--orange);
+            color: var(--orange-50);
             flex:1;
             border-radius: var(--border-radius);
         }

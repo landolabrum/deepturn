@@ -34,7 +34,7 @@ const VerifyErrorView = (props: IVerifyErrorView) => {
       <style jsx>{styles}</style>
       <div className='verify__error' id={props.view}>
         <h3>¡Error!</h3>
-        <div className='verify__error-header'>Verify: <span className="c-error">{props?.name && keyStringConverter(props?.name, false)}</span>
+        <div className='verify__error-header'>Verify: <span className="c-error">{props?.name && keyStringConverter(props?.name)}</span>
         </div>
         <p className=''>{props?.message}</p>
         <span className='error--more-info'>If you think you are seeing this message as an error, please contact your admin.</span>

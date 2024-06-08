@@ -93,7 +93,7 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
                     id,
                     data: appliances.reduce((acc: any, item: any) => {
                         if (item.selected) {
-                            acc[keyStringConverter(item.name, true)] = item.value;
+                            acc[keyStringConverter(item.name, {dashed: true})] = item.value;
                         }
                         return acc;
                     }, {}),

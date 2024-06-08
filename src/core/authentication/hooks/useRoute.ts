@@ -2,10 +2,10 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useClearance, useUser } from './useUser';
 import { IRoute, useClearanceRoutes } from '@shared/components/Navbar/data/routes';
-import IUser from '~/src/models/UserContext';
+import IAuthenticatedUser from '~/src/models/UserContext';
 
 interface ORoute{
-  selectedUser:IUser | undefined;
+  selectedUser:IAuthenticatedUser | undefined;
   pathname:string;
   explicitRouter:(e:any)=>void;
   routeTitle?:string | false;
@@ -14,7 +14,7 @@ interface ORoute{
 
 const useRoute = (): ORoute => {
   const user = useUser();
-  const [selectedUser, setUser] = useState<IUser | undefined>();
+  const [selectedUser, setUser] = useState<IAuthenticatedUser | undefined>();
   const router = useRouter();
   const clearanceRoutes = useClearanceRoutes();
   const level = useClearance();

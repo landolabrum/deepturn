@@ -72,7 +72,7 @@ $item-height: 500px;
     
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
     &:focus {
-      --ui-icon-color: var(--primary)
+      --ui-icon-color: var(--primary-50)
     }
   }
   
@@ -81,7 +81,7 @@ $item-height: 500px;
     border-width: 1px 0 0 1px;
     border-radius: var(--border-radius) 0 0 var(--border-radius) ;
     &:focus {
-      --ui-icon-color: var(--primary)
+      --ui-icon-color: var(--primary-50)
     }
   }
 
@@ -126,7 +126,7 @@ $item-height: 500px;
       border: solid 1px var(--gray-80);
 
       &:hover {
-        color: var(--primary);
+        color: var(--primary-50);
         background-color: var(--gray-70);
       }
 

@@ -28,7 +28,7 @@
         color: var(--gray-10);
 
         &-header{
-            color: var(--primary);
+            color: var(--primary-50);
             @extend .d-flex;
             min-height: var(--s-element);
             text-transform: capitalize;

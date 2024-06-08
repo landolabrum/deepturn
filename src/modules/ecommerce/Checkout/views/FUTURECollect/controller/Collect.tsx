@@ -4,9 +4,9 @@ import CollectStripeForm from "../views/Payment";
 import styles from "./Collect.scss";
 import { useEffect } from "react";
 import useSetupIntentSecret from "~/src/core/services/MemberService/hooks/useSetupIntentSecret";
-import IUser from "~/src/models/UserContext";
+import IAuthenticatedUser from "~/src/models/UserContext";
 interface IStripePaymentForm {
-    user?: IUser;
+    user?: IAuthenticatedUser;
     success_url?: string;
     onSuccess:(e:any)=>void;
 }

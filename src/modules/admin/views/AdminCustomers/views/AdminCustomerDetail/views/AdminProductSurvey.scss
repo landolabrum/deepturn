@@ -8,7 +8,7 @@
     overflow: hidden;
     background-color: var(--primary-o);
     border-radius: var(--border-radius);
-    border: solid 1px var(--primary);
+    border: solid 1px var(--primary-50);
 
     @extend .d-flex;
     flex-direction: column;

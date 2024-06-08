@@ -121,7 +121,7 @@
         
         &-content {
             &_title {
-                color: var(--primary);
+                color: var(--primary-50);
                 width: 100%;
                 @extend .d-flex;
                 font-size: var(--s-2);
@@ -154,8 +154,8 @@
             }
             padding: 0 var(--s-4);
             .list-item {
-                border: solid 1px var(--primary);
-                border-left: solid 5px var(--primary);
+                border: solid 1px var(--primary-50);
+                border-left: solid 5px var(--primary-50);
                 border-radius: 3px;
                 padding: var(--s-10);
                 @extend .d-flex;

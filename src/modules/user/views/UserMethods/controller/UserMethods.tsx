@@ -9,14 +9,14 @@ import UserCurrentMethods from '../views/UserCurrentMethods/UserCurrentMethods';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import Loader, { useLoader } from '@webstack/components/Loader/Loader';
 import UserCreateMethod from '../views/UserCreateMethod/controller/UserCreateMethod';
-import IUser from '~/src/models/UserContext';
+import IAuthenticatedUser from '~/src/models/UserContext';
 
 
 
 interface IUserMethods {
   open?: boolean | 'opened';
   customerMethods?: any;
-  user?: IUser;
+  user?: IAuthenticatedUser;
   selected?: string;
   onSelect?: (method?: IMethod) => void;
   onSuccess?: (e: any) => void;
@@ -25,7 +25,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
   const [loader, setLoader] = useLoader();
   const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
-  const [selectedUser, setUser] = useState<IUser | undefined>();
+  const [selectedUser, setUser] = useState<IAuthenticatedUser | undefined>();
 
   const MemberService = getService<IMemberService>("IMemberService");
 
@@ -108,7 +108,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
               </div>
             }
           </div>
-        }
+        }{JSON.stringify(selectedUser)}
           <UserCreateMethod user={selectedUser} onSuccess={handleCreated} />
       </div>
     </>

@@ -1,7 +1,7 @@
 // Relative Path: ./UserProfile.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './UserProfile.scss';
-import IUser from '~/src/models/UserContext';
+import IAuthenticatedUser from '~/src/models/UserContext';
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 import UserModify from '../UserModify/UserModify';
 import UiButton from '@webstack/components/UiButton/UiButton';
@@ -12,7 +12,7 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IUserProfile {
-  user?: IUser
+  user?: IAuthenticatedUser
 }
 type IView = { [key: string]: React.ReactElement };
 

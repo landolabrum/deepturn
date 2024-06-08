@@ -92,7 +92,7 @@ const Header: React.FC = () => {
   const titleRef = useRef<any>();
 
   const handleHeaderState = () => {
-    const currentRoute = context !== null ? context : { title: keyStringConverter(`${merchantName}`, false) }
+    const currentRoute = context !== null ? context : { title: keyStringConverter(`${merchantName}`, {dashed: false}) }
 
     setHeaderState(routeTitle && { title: routeTitle } || currentRoute);
     setRoute(router.asPath);

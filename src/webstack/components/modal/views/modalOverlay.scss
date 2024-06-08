@@ -149,7 +149,7 @@
         &:visited,
         &:active {
             cursor: pointer;
-            --ui-icon-color: var(--primary);
+            --ui-icon-color: var(--primary-50);
         }
    
         .modal-overlay__title {
@@ -157,7 +157,7 @@
             text-transform: capitalize;
             font-family: Play;
             letter-spacing: var(--s-12);
-            color: var(--primary);
+            color: var(--primary-50);
             @media(max-width: 900px) {
                 font-size: var(--s-4);
             }

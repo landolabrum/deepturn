@@ -34,8 +34,8 @@ $grid-gutter: 20px;
   box-shadow: var(--box-shadow);
 }
 .dashboard-item-look--focus {
-  color: var(--primary);
-  --ui-icon-color: var(--primary);
+  color: var(--primary-50);
+  --ui-icon-color: var(--primary-50);
   background-color: var(--gray-60);
 
   border: solid 1px var(--gray-40);
@@ -88,8 +88,8 @@ $grid-gutter: 20px;
 //     }
 //   }
 //   &.dashboard__active {
-//     color: var(--red);
-//     --ui-icon-color: var(--orange);
+//     color: var(--red-50);
+//     --ui-icon-color: var(--orange-50);
 //     background-clip: text;
 //     // mix-blend-mode: multiply;
 //     background-color: var(--gray-80);

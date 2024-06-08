@@ -22,7 +22,7 @@ const AdminMgmt: React.FC = () => {
         <div className='admin-mgmt__header'>
         </div>
         <div className='admin-mgmt__body'>
-          <AdaptGrid xs={2} md={4} variant='card' gap={10} margin={`var(--s-4) 0`}>
+          <AdaptGrid xs={2} md={4} variant='card' gap={10} >
             <div className='admin-mgmt__card'>
               <div className='admin-mgmt__card-header'>new customers</div>
               <div className='admin-mgmt__card-body'>5</div>

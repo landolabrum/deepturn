@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getService } from "@webstack/common";
-import IUser from "~/src/models/UserContext";
+import IAuthenticatedUser from "~/src/models/UserContext";
 import IMemberService from "../../services/MemberService/IMemberService";
 import useLocation from "@webstack/hooks/user/useLocation";
 import { useRouter } from "next/router";
@@ -22,12 +22,12 @@ export interface UserAgentContext {
 }
 
 // Profile context
-export interface ProfileUserContext extends IUser {
+export interface ProfileUserContext extends IAuthenticatedUser {
   userAgent: UserAgentContext;
   lngLat?: [number, number];
 }
 
-export interface ProfileContext extends IUser {
+export interface ProfileContext extends IAuthenticatedUser {
   userAgent: UserAgentContext;
   lngLat?: [number, number];
 }

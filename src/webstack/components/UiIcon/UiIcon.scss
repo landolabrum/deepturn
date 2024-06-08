@@ -29,12 +29,12 @@ div {
 
 @keyframes glow {
   0% {
-    filter: drop-shadow(0 0 5px var(--primary-lite));
+    filter: drop-shadow(0 0 5px var(--primary-10));
   }
 
   // 30% {filter: drop-shadow( 0 0 15px #fff);}
   100% {
-    filter: drop-shadow(0 0 20px var(--primary-lite));
+    filter: drop-shadow(0 0 20px var(--primary-10));
   }
 }
 
@@ -81,7 +81,7 @@ div {
   @extend .d-flex;
   top: calc(var(--s-9) * -1);
   right: var(--s-12);
-  background-color: var(--red); // Example background color
+  background-color: var(--red-50); // Example background color
   color: white; // Text color
   border-radius: 50%; // Circular badge
   font-size: var(--s-8);

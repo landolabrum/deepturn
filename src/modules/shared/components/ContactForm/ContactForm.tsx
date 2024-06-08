@@ -3,7 +3,7 @@ import styles from './ContactForm.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
-import IUser from '~/src/models/UserContext';
+import IAuthenticatedUser from '~/src/models/UserContext';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import { mockDateTime } from '@webstack/helpers/MockData';
@@ -83,7 +83,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
       return; // Exit the function or handle this case as appropriate
     }
     const isComplete = updatedFields.map((field: IFormField) => {
-      const initialValue = initialFields && findField(initialFields, field.name)?.value;
+      const initialValue = initialFields && field.name && findField(initialFields, field.name)?.value;
       const isInitialValue = field?.value === initialValue;
       const isEmptyValue = !['', undefined, null, {}].includes(field.value);
       return Boolean(isInitialValue && isEmptyValue);

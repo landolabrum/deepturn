@@ -8,7 +8,7 @@ import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
 import { useGuest } from '~/src/core/authentication/hooks/useGuest';
 
 import Login from '~/src/modules/authentication/views/Login/controller/Login';
-import IUser from '~/src/models/UserContext';
+import IAuthenticatedUser from '~/src/models/UserContext';
 import Collect from '../views/Collect/controller/Collect';
 import CartList from '../../cart/views/CartList/CartList';
 import { useNotification } from '@webstack/components/Notification/Notification';
@@ -20,7 +20,7 @@ const Checkout = (): React.JSX.Element => {
     const user = useUser();
     const [view, setView] = useState<any>();
     const [_cart, setCart] = useState<any>();
-    const [selectedUser, setUser] = useState<IUser | { email: string } | undefined>();
+    const [selectedUser, setUser] = useState<IAuthenticatedUser | { email: string } | undefined>();
     const { cart } = useCart();
     const guest = useGuest();
     const handleSignUp = (res: any) => {

@@ -1,34 +1,47 @@
-// Relative Path: ./UiHeader.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './UiHeader.scss';
 
-// Remember to create a sibling SCSS file with the same name as this component
 interface IUiHeader {
     title?: any;
-    subTitle?: string
+    subTitle?: string;
 }
+
 const UiHeader: React.FC<IUiHeader> = ({ title, subTitle }) => {
-    const header = useRef<any>();
+    const hdRef = useRef<HTMLDivElement>(null);
+    const head = hdRef?.current;
     const [set, setSet] = useState(false);
-    const headerRef = header?.current;
-    const sub = headerRef?.children[0];
-    const initHeader = () => {
-        if (!headerRef || set) return;
-        headerRef.style.width = `${headerRef.offsetWidth}px`;
-        headerRef.style.minHeight = `${headerRef.offsetHeight}px`;
-        sub.classList += " header--sub-title-set"
-        setSet(!set);
+
+
+    const initHeader = async () => {
+        if (set == true || !head) return;
+        setSet(true);
+        const title = head.querySelector('.header--title');
+        const sub = head.querySelector('.header--sub-title');
+        head.style.width = `${head.offsetWidth}px`;
+        head.style.minHeight = `${Number(head.offsetHeight / 2)}px`;
+        title?.classList.add("header--title-set");
+        sub?.classList.add("header--sub-title-set");
+
+        console.log("[ initHeader ]", { c: sub?.classList });
+        return;
+    };
+
+
+useEffect(() => {
+    !set && initHeader();
+    while (!set) {
+        setTimeout(initHeader, 500);
+        break;
     }
-    useEffect(() => {
-        initHeader();
-        // if(Array(sub?.classList).length > 2)console.log(sub?.classList?.includes("header--sub-title-set"))
-    }, [!set, sub?.classList]);
+}, [head]);
     return (
         <>
+
             <style jsx>{styles}</style>
-            {/* {set.toString()} */}
-            <div className='header' ref={header}>
-                {title}
+            <div className='header' ref={hdRef}>
+                <div className="header--title">
+                    {title}
+                </div>
                 {subTitle && (
                     <div className="header--sub-title">
                         {subTitle}

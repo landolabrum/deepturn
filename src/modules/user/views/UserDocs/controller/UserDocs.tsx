@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './UserDocs.scss';
-import IUser from '~/src/models/UserContext';
+import IAuthenticatedUser from '~/src/models/UserContext';
 import { getService } from '@webstack/common';
 import IProductService from '~/src/core/services/ProductService/IProductService';
 import environment from '~/src/core/environment';
@@ -19,7 +19,7 @@ import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IDocuments {
-  user?: IUser;
+  user?: IAuthenticatedUser;
   previewPdf?: boolean;
 }
 

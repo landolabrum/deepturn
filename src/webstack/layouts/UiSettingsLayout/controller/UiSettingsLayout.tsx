@@ -43,12 +43,12 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   const handleView = useCallback((view: string) => {
     router.push({
       pathname: router.pathname,
-      query: { vid: view?.includes("-") && keyStringConverter(view, false) || view },
+      query: { vid: view?.includes("-") && keyStringConverter(view) || view },
     }, undefined, { shallow: false });
     setViewCallback?.(view);
   }, [router, setViewCallback]);
 
-  const titleContent = typeof title == 'string' && keyStringConverter(title, undefined, false);
+  const titleContent = typeof title == 'string' && keyStringConverter(title);
 
   const firstView = router.query.vid || viewName || Object.keys(views)[0];
   const isView = view && Object.keys(views).includes(view);
@@ -86,13 +86,13 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
           <tr>
             <td className={classes.nav}>
               <div className="settings-nav--content">
-                {Object.keys(views)?.map((v) => (
+                {Object.keys(views)?.map((vue) => (
                   <div
-                    className={`nav-item ${view === v ? 'nav-item--selected' : ''}`}
-                    key={v}
-                    onClick={() => handleView(v)}
+                    className={`nav-item ${view === vue ? 'nav-item--selected' : ''}`}
+                    key={vue}
+                    onClick={() => handleView(vue)}
                   >
-                    {keyStringConverter(v, false)} {view === v && <span className="nav-item--selected-icon"><UiIcon icon="fa-check" /></span>}
+                    {keyStringConverter(vue)} {view === vue && <span className="nav-item--selected-icon"><UiIcon icon="fa-check" /></span>}
                   </div>
                 ))}
               </div>

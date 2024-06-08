@@ -14,7 +14,7 @@ const EmptyCart: React.FC = () => {
             <div className="cart__empty-cart">
                 <div className={`cart__emtpy-cart-canvas `}>
                     <div className='canvas-texture' />
-                    <UiIcon icon={"empty-cart"} />
+                    <UiIcon glow icon={"empty-cart"} />
                 </div>
             </div>
         </>

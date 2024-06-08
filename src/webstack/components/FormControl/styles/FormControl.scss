@@ -76,7 +76,6 @@ $elPad: 14px;
     top: 0;
     right: 0;
     position: absolute;
-    background-color: #f30;
     width: var(--s-5);
     height: var(--s-5);
     font-size: var(--s-7);
@@ -85,12 +84,12 @@ $elPad: 14px;
 
   @keyframes glow {
     0%, 100%  {
-      color: var(--primary-lite);
+      color: var(--primary-10);
       border: solid 1px var(--primary-o);
-      // box-shadow: 0 0 1px 1px var(--primary);
+      // box-shadow: 0 0 1px 1px var(--primary-50);
     }
     33% {
-      border: solid 1px var(--primary);
+      border: solid 1px var(--primary-50);
       color: var(--gray-20);
       // box-shadow: 0 0 4px 2px var(--primary-o);
     }
@@ -146,7 +145,7 @@ $elPad: 14px;
 
   &.form-control--invalid {
     label {
-      color: var(--orange);
+      color: var(--orange-50);
     }
   }
 

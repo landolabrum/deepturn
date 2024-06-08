@@ -4,7 +4,7 @@ import { EventEmitter } from "@webstack/helpers/EventEmitter";
 import environment from "~/src/core/environment";
 import CustomToken from "~/src/models/CustomToken";
 import MemberToken from "~/src/models/MemberToken";
-import IUser, { GuestContext } from "~/src/models/UserContext";
+import IAuthenticatedUser, { GuestContext } from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
 import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, IResetPassword, ISessionData, OResetPassword } from "./IMemberService";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
@@ -45,12 +45,12 @@ export default class MemberService
   constructor() {
     super(environment.serviceEndpoints.membership);
   }
-  private _userContext: IUser | undefined;
-  private _guestContext: IUser | undefined;
+  private _userContext: IAuthenticatedUser | undefined;
+  private _guestContext: IAuthenticatedUser | undefined;
   private _guestToken: string | undefined;
   private _userToken: string | undefined;
   private _timeout: number | undefined;
-  public userChanged = new EventEmitter<IUser | undefined>();
+  public userChanged = new EventEmitter<IAuthenticatedUser | undefined>();
   public guestChanged = new EventEmitter<GuestContext | undefined>();
 
   public async signIn(cust: any): Promise<any> {
@@ -299,7 +299,7 @@ public async processTransaction(sessionData: ISessionData) {
 
   public async signUp(
     props: any
-  ): Promise<IUser> {
+  ): Promise<IAuthenticatedUser> {
     if (!props.email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
@@ -452,7 +452,7 @@ public async processTransaction(sessionData: ISessionData) {
   };
 
   private updateUserContext(
-    context: IUser | undefined,
+    context: IAuthenticatedUser | undefined,
     token: string | undefined
   ) {
     if (context == null && this._userContext == null) {
@@ -485,10 +485,10 @@ public async processTransaction(sessionData: ISessionData) {
   getCurrentGuest(): GuestContext | undefined {
     return this._getCurrentGuest(false);
   }
-  getCurrentUser(): IUser | undefined {
+  getCurrentUser(): IAuthenticatedUser | undefined {
     return this._getCurrentUser(false);
   }
-  private _getCurrentUser(forceUpdate: boolean): IUser | undefined {
+  private _getCurrentUser(forceUpdate: boolean): IAuthenticatedUser | undefined {
     if (!forceUpdate && this._userContext != null) {
       return this._userContext;
     }

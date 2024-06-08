@@ -11,11 +11,10 @@
     &__nav {
         display: flex;
         position: relative;
-        padding: var(--s-9) 0;
-
+        
         @media(min-width:1101px) {
-            width: var(--s-9-width);
-            padding: var(--s-9);
+            width: var(--s-5-width);
+            padding: 0 var(--s-5);
         }
     }
 
@@ -28,20 +27,16 @@
 
     &-view {
         @keyframes viewBorderAnimation {
-            0% {
-                border-color: transparent;
+            0%, 100% {
+                border-color: var(--gray-100);
             }
 
             25% {
-                border-color: transparent;
+                border-color: var(--gray-60);
             }
-
+            
             50% {
-                border-color: var(--primary);
-            }
-
-            100% {
-                border-color: var(--primary);
+                border-color: var(--orange-50);
             }
         }
 
@@ -63,9 +58,8 @@
             flex-direction: column;
             position: relative;
             @media (min-width: 1101px) {
-                width: var(--s-4-width);
-                height: var(--s-9-width);
-                padding: var(--s-9) var(--s-4) var(--s-4);
+                width: var(--s-9-width);
+                padding: var(--s-9) var(--s-9) var(--s-4);
             }
         }
     }
@@ -133,23 +127,6 @@
     }
 }
 
-@keyframes viewHighlight {
-    0% {
-        border-color: transparent;
-    }
-
-    25% {
-        border-color: transparent;
-    }
-
-    50% {
-        border-color: var(--primary);
-    }
-
-    100% {
-        border-color: var(--primary);
-    }
-}
 
 .settings-nav--content {
     transition: all 0.5s ease-in;
@@ -161,7 +138,7 @@
 
     @media(max-width: 1100px) {
         width: var(--s-9-width);
-        box-shadow: inset 4px 2px 3px 3px var(--black);
+        box-shadow: inset 4px 2px 3px 3px var(--gray-100);
         top: 0;
         left: 0;
         right: 0;
@@ -173,7 +150,7 @@
         overflow: hidden;
         overflow-x: auto;
         flex-direction: row;
-        padding: var(--s-10) var(--s-9);
+        padding: var(--s-11) var(--s-9);
         justify-content: flex-start;
 
         &::-webkit-scrollbar {
@@ -186,7 +163,7 @@
     .nav-item {
         width: calc(var(--s-4-width) - 2px);
         cursor: pointer;
-
+        animation:viewBorderAnimation 5s ease-in-out infinite;
 
         height: var(--s-2);
         user-select: all;
@@ -198,27 +175,26 @@
         --ui-icon-color: var(--gray-70);
         padding: var(--s-11) var(--s-1);
         text-transform: capitalize;
-        border-radius: var(--s-element);
+        border-radius: var(--s-9);
         white-space: nowrap;
         cursor: pointer;
         position: relative;
         --ui-icon-size: var(--s-5);
         border: solid 1px transparent;
         z-index: 1;
-        animation: navItemHighlight 5s infinite;
+        // animation: navItemHighlight 5s infinite;
         animation-delay: calc(var(--animation-order) * 0.5s);
-        /* Dynamic delay */
-
+        filter: blur(1px);
         @media (max-width: 1100px) {
+            border-radius: var(--s-1);
             padding: var(--s-9) var(--s-4);
             gap: var(--s-9);
         }
-
-        &:hover {
-            color: var(--gray-60) !important;
-            --ui-icon-color: var(--gray-60) !important;
-            background-color: var(--gray-90-o) !important;
-        }
+        // &:hover {
+        //     color: var(--gray-60) !important;
+        //     --ui-icon-color: var(--gray-60) !important;
+        //     background-color: var(--gray-90-o) !important;
+        // }
 
         &--selected-icon {
             position: absolute;
@@ -229,12 +205,11 @@
                 right: 0;
             }
 
-            --ui-icon-color: var(--primary) !important;
+            --ui-icon-color: var(--primary-50) !important;
         }
-        filter: blur(1px);
 
         &--selected {
-            color: var(--primary) !important;
+            color: var(--primary-50) !important;
             background-color: var(--dark) !important;
             filter: blur(0) !important;
         }
@@ -248,7 +223,7 @@
 }
 
 .settings-view {
-    animation: viewHighlight 5s infinite;
+    // animation: viewAnimation 5s infinite;
     width: 100%;
 
     @media(max-width:1100px) {

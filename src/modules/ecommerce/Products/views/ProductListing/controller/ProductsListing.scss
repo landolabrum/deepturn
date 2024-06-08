@@ -20,7 +20,7 @@
     justify-content: stretch;
     align-items: stretch;
     &__header {
-        color: var(--primary);
+        color: var(--primary-50);
         @extend .d-flex;
         align-items: flex-start;
         gap:var(--s-4);

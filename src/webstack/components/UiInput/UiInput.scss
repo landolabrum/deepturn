@@ -74,7 +74,7 @@ input, textarea {
     z-index: 2;
     text-decoration: underline dashed;
     border-width: 0px 0px 2px 0px;
-    border-bottom-color: var(--invalid-border);
+    border-bottom-color: var(--red-70);
   }
   // &:focus,
   // &:-webkit-autofill:focus{
@@ -120,7 +120,7 @@ input, textarea {
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  color: var(--orange);
+  color: var(--orange-50);
   height: var(--s-element);
   line-height: 1;
   display: none;

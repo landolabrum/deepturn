@@ -7,7 +7,7 @@
     @extend .d-flex;
     justify-content: flex-start;
     width: 100%;
-    color:var(--primary);
+    color:var(--primary-50);
     gap: var(--s-4);
     &__chapter{
         cursor: pointer;
@@ -40,7 +40,7 @@
                 .chapter__title{
                     font-weight: 900;
                     font-size: var(--s-6);
-                    color: var(--primary);
+                    color: var(--primary-50);
                 }
                 .chapter__extras{
                     font-size: var(--s-8);

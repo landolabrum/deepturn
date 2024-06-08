@@ -85,8 +85,11 @@ export default class AdminService
     if (!customer) throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
   };
 
-  public async createCustomer(customerData: any): Promise<any> {
-    if (customerData) return await this.post<any, any>(`/usage/admin/customer/create`, customerData);
-    if (!customerData) throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+  public async createCustomer(customer: any): Promise<any> {
+    if (customer) {
+      const encryptedCustomerData = encryptString(JSON.stringify(customer), ENCRYPTION_KEY);
+      return await this.post<any, any>(`/usage/admin/customer/create`, {data:encryptedCustomerData});
+    }
+    if (!customer) throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
   };
 }

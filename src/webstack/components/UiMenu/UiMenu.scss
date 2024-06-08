@@ -39,17 +39,17 @@ $el_gap: 7px;
     border: solid 1px transparent;
     padding-left:var(--s-9);
     &:hover{
-      color: var(--primary);
-      --ui-icon-color: var(--primary);
-      border: solid 1px var(--primary);
+      color: var(--primary-50);
+      --ui-icon-color: var(--primary-50);
+      border: solid 1px var(--primary-50);
     }
     &:focus, &:focus-within{
       background-color: var(--primary-o);
 
     }
     // transparent, var(--gray-50), transparent,
-    // transparent, var(--primary), var(--primary),
-    // var(--primary), var(--white), transparent,
+    // transparent, var(--primary-50), var(--primary-50),
+    // var(--primary-50), var(--white), transparent,
     --ui-icon-color: var(--gray-50);
     @extend .d-flex;
   }
@@ -58,7 +58,7 @@ $el_gap: 7px;
       background-color: var(--gray-30);
       color: var(--gray-100);
       &:hover {
-        background-color: var(--primary);
+        background-color: var(--primary-50);
         color: var(--gray-10);
       }
     }
@@ -102,7 +102,7 @@ $el_gap: 7px;
       }
     }
 
-    // background-color: var(--primary);
+    // background-color: var(--primary-50);
   }
 
   .menu__option {
@@ -140,7 +140,7 @@ $el_gap: 7px;
     }
 
     &.active {
-      background-color: var(--primary);
+      background-color: var(--primary-50);
       color: var(--gray-30);
       --ui-icon-color: var(--gray-30);
     }

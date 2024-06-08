@@ -1,4 +1,4 @@
-import IUser, { GuestContext, UserAddress } from "~/src/models/UserContext";
+import IAuthenticatedUser, { GuestContext, UserAddress } from "~/src/models/UserContext";
 import { EventEmitter } from "@webstack/helpers/EventEmitter";
 import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
 import { ICustomer } from "~/src/models/CustomerContext";
@@ -51,16 +51,16 @@ export default interface IMemberService {
   // IMemberService
   processTransaction(sessionData:ISessionData): Promise<any>;
   resetPassword({email,user_agent}:IResetPassword): Promise<OResetPassword>;
-  getCurrentUser(): IUser | undefined;
-  getCurrentGuest(): IUser | undefined;
+  getCurrentUser(): IAuthenticatedUser | undefined;
+  getCurrentGuest(): IAuthenticatedUser | undefined;
   getSetupIntent(client_secret: string): any;
-  updateCurrentUser(user: IUser): void;
+  updateCurrentUser(user: IAuthenticatedUser): void;
   
   getMethods(customerId?: string): Promise<any>;
   deleteMethod(id: string): Promise<any>;
   createSetupIntent(customer_id: string, method?: IPaymentMethod ): any;
 
-  userChanged: EventEmitter<IUser | undefined>;
+  userChanged: EventEmitter<IAuthenticatedUser | undefined>;
   guestChanged: EventEmitter<GuestContext | undefined>;
 
   verifyEmail(token: string):Promise<any>;

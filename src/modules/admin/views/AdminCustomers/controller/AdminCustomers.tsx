@@ -4,7 +4,7 @@ import AdminCustomerAdd from '~/src/modules/admin/views/AdminCustomers/views/Adm
 import AdminCustomerList from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerList/AdminCustomerList';
 import AdminCustomerDetails from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerDetail/controller/AdminCustomerDetail';
 import UiButton from '@webstack/components/UiButton/UiButton';
-import IUser from '~/src/models/UserContext';
+import IAuthenticatedUser from '~/src/models/UserContext';
 import { useRouter } from 'next/router';
 import UiHeader from '@webstack/components/Header/views/UiHeader/UiHeader';
 
@@ -15,7 +15,7 @@ const AdminCustomers: React.FC = () => {
   const cid = router?.query?.cid;
   const vid = router?.query?.vid;
   
-  const updateViewUrl = (newView?: string, customer?: IUser) => {
+  const updateViewUrl = (newView?: string, customer?: IAuthenticatedUser) => {
     if (!newView && !view) {
       setView(cid ? 'modify' : 'list');
     } else if (newView) {
@@ -62,7 +62,7 @@ const AdminCustomers: React.FC = () => {
           </div>
         </div>
         {view === 'list' && (
-          <AdminCustomerList onSelect={(customer: IUser) => updateViewUrl('modify', customer)} />
+          <AdminCustomerList onSelect={(customer: IAuthenticatedUser) => updateViewUrl('modify', customer)} />
         )}
         {view === 'modify' && (
           <AdminCustomerDetails
