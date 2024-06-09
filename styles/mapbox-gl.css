@@ -893,7 +893,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 
 .vsl-mrkr--hover {
   filter: brightness(1.33);
-  display: flex;
+  /* display: flex; */
 }
 
 .vsl-mrkr--content:hover {
