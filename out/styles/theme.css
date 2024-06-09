@@ -861,7 +861,7 @@ button {
   --input-option-hover: var(--gray-40);
   --input-box-shadow: var(--box-shadow);
   --input-border-radius: calc(var(--border-radius) * 0.66);
-  --select-option-selected: var(--blue);
+  --select-option-selected: var(--blue-50);
   --select-option-selected-bg: #c8def0;
   --select-default-color: var(--gray-50);
 }
@@ -878,13 +878,13 @@ table {
 }
 
 a:-webkit-any-link {
-  color: var(--blue);
+  color: var(--blue-50);
   cursor: pointer;
   text-decoration: none;
 
   &:hover {
     text-shadow: 0 0 var(--s-9) var(--blue-10);
-    color: var(--blue);
+    color: var(--blue-50);
   }
 }
 
