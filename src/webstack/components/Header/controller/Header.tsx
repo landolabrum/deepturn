@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext, createContext, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
 import Navbar from "@shared/components/Navbar/controller/Navbar";
-import BreadCrumbs, { BreadCrumbLinkProps } from "../components/BreadCrumbs/BreadCrumbs";
 import styles from "./Header.scss";
 import useWindow from "@webstack/hooks/useWindow";
 import environment from "~/src/core/environment";
@@ -12,7 +11,6 @@ import useRoute from "~/src/core/authentication/hooks/useRoute";
 
 
 export type HeaderProps = {
-  breadcrumbs?: BreadCrumbLinkProps[];
   title?: string;
   right?: React.ReactElement | React.ReactFragment | string;
   subheader?: React.ReactElement | React.ReactFragment | string;
@@ -105,14 +103,17 @@ const Header: React.FC = () => {
     if(!titleLength)return;
     
     
-    const nfz = headerTitleWidth / titleLength;
+    const nfz = headerTitleWidth / titleLength ;
     const ratio = 1/5;
-    const fontNum = Number((nfz * Number(1 - ratio)).toFixed(2));
+    let fontNum = Number((nfz * Number(1 - ratio)).toFixed(2));
+    if(fontNum > 50)fontNum = 50;
     const fontSize = `${fontNum}px`;
-    const gap = `${(nfz * ratio).toFixed(2)}px`;
+    const spacingDim = Number((nfz * ratio).toFixed(2))
+    const spacing = `${spacingDim}px`;
     const headTitleEl = titleRef?.current;
     headTitleEl.style.fontSize = fontSize;
-    headTitleEl.style.letterSpacing = gap;
+    headTitleEl.style.letterSpacing = spacing;
+    headTitleEl.style.gap = `${spacingDim * .88}px`;
     const brandLogo:HTMLElement = headTitleEl.children[0];
     if(brandLogo)brandLogo.style.minWidth = fontSize;
   };
@@ -139,7 +140,6 @@ const Header: React.FC = () => {
         >
           <div className={`header-content ${show ? ' header-content__show' : ""}`}>
             <div  className="header-left">
-              {/* <BreadCrumbs links={headerState?.breadcrumbs} /> */}
               <div
                 ref={titleRef}
                 className="header-title"

@@ -21,63 +21,60 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
 
   const adminService = getService<IAdminService>('IAdminService');
 
-  function createForm(obj: any, parentKey: string = '', result: object[] = []): object[] {
+  const createForm = (obj: any, parentKey: string = '', result: any = {}, fieldSet: Set<string> = new Set()) => {
     for (let key in obj) {
       if (obj.hasOwnProperty(key)) {
         const newKey = parentKey ? `${parentKey}.${key}` : key;
         if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
-          createForm(obj[key], newKey, result);
+          createForm(obj[key], newKey, result, fieldSet);
         } else if (Array.isArray(obj[key])) {
           obj[key].forEach((item: any, index: number) => {
-            createForm(item, `${newKey}[${index}]`, result);
+            createForm(item, `${newKey}[${index}]`, result, fieldSet);
           });
         } else {
-          const getValue = (value:any) =>{
-            if(value == null)return 'N/A';
-            else return value;
+          const getValue = (value: any) => value == null ? 'N/A' : value;
+          if (!fieldSet.has(newKey)) {
+            result[newKey] = {
+              label: keyStringConverter(key),
+              name: newKey,
+              value: getValue(obj[key]),
+              type:newKey?.includes('password')&&'password'||undefined
+            };
+            fieldSet.add(newKey);
           }
-          newKey && result.push({
-            label: keyStringConverter(key),
-            name: newKey,
-            value: getValue(obj[key]),
-          });
         }
       }
     }
     return result;
-  }
+  };
 
-  const listForms = (devices: any[]): object[] => {
-    return devices.map((device: any) => {
-      return createForm(device);
+  const createForms = (data: any) => {
+    const contactForm = createForm(data, '', {}, new Set());
+    const invoiceSettingsForm = createForm(data.invoice_settings, 'invoice_settings', {}, new Set());
+    const metadataForm = createForm(data.metadata, 'metadata', {}, new Set());
+    const userForm = createForm(data.metadata.user, 'user', {}, new Set());
+    const methodsForm = createForm(data.methods, 'methods', {}, new Set());
+
+    const devicesForms = data.metadata.user.devices.map((device: any, index: number) => {
+      return createForm(device, `devices[${index}]`, {}, new Set());
     });
-  };
-
-  const filterUserFields = (fields: IFormField[]):  IFormField[] => {
-    return fields.filter(field => !String(field.name).startsWith('devices['));
-  };
-
-  const createCustomerDetailsForms: any = (data: any) => {
-    const firstLevelMap = ['metadata', 'invoice_settings', 'methods'];
-    const firstLevelRemove = ['id', 'object'];
-    const userFields = filterUserFields(createForm(data.metadata.user));
-    const devicesFields = listForms(data.metadata.user.devices);
-    firstLevelMap.forEach(key => delete data[key]);
-    firstLevelRemove.forEach(key => delete data[key]);
 
     return {
-      devices: devicesFields,
-      user: userFields,
-      contact: createForm(data)
+      contactForm: Object.values(contactForm),
+      invoiceSettingsForm: Object.values(invoiceSettingsForm),
+      metadataForm: Object.values(metadataForm),
+      userForm: Object.values(userForm),
+      methodsForm: Object.values(methodsForm),
+      devicesForms: devicesForms.map((deviceForm: IFormField[]) => Object.values(deviceForm))
     };
-  }
+  };
 
   const getCustomer = async () => {
     if (customer_id && !allFields) {
       try {
         const response = await adminService.getCustomer(customer_id);
-        console.log({ response });
         if (response) {
+          console.log({response});
           const handleCustomerMetadata = () => {
             let formName: string | undefined;
             Object.entries(response?.metadata || {}).forEach(([key, value]: any) => {
@@ -98,7 +95,7 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
           };
 
           handleCustomerMetadata();
-          const transformedData = createCustomerDetailsForms(response);
+          const transformedData = createForms(response);
           console.log("[ TRANSFORM ]", transformedData);
           setAllFields(transformedData);
         } else {
@@ -107,8 +104,6 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
       } catch (error) {
         console.error('[ ADMIN CUSTOMER DETAILS ]', error);
       }
-    } else {
-      console.log("[ CUSTOMER DETAILS ( getCustomer ) ]", allFields);
     }
   };
 
@@ -116,23 +111,24 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
     getCustomer();
   }, [customer_id, allFields]);
 
-  if (allFields?.user) {
+  if (allFields) {
     return (
       <>
         <style jsx>{styles}</style>
         <div className='admin-customer-detail'>
-          {allFields?.contact && <UiForm fields={allFields.contact} />}
-          {allFields?.devices && Object.values(allFields.devices).map((device: any, key: number) => (
-            <div className='admin-customer-detail--section admin-customer-detail__devices' key={key} id={String(key)}>
-              <UiCollapse label={`Device ${key + 1}`}>
-                <UiForm fields={device} />
+          {allFields && Object.entries(allFields).map(
+            ([afKey,afVal]:any, index:number)=>{
+            return <div key={afKey} className='s-w-100'><UiCollapse label={afKey}>
+              <UiForm fields={afVal} />
+            </UiCollapse></div>})
+          }
+          {allFields.devicesForms.map((deviceForm: any, index: number) => (
+            <div className='admin-customer-detail--section admin-customer-detail__devices' key={index} id={String(index)}>
+              <UiCollapse label={`Device ${index + 1}`}>
+                <UiForm fields={deviceForm} />
               </UiCollapse>
             </div>
           ))}
-          {allFields?.user &&
-            <UiCollapse label="user">
-              <UiForm fields={allFields.user} />
-            </UiCollapse>}
         </div>
       </>
     );

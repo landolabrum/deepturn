@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './AireHotel.scss';
-import UiMap from '@/webstack/components/Graphs/UiMap/controller/UiMap';
-import { IVessel } from '@webstack/components/Graphs/UiMap/models/IMapVessel';
-import MapVesselDetails from '@webstack/components/Graphs/UiMap/views/MapVessel/views/MapVesselDetails/MapVesselDetails';
+import UiMap from '@webstack/components/ThreeComponents/UiMap/controller/UiMap';
+import { IVessel } from '@webstack/components/ThreeComponents/UiMap/models/IMapVessel';
+import MapVesselDetails from '@webstack/components/ThreeComponents/UiMap/views/MapVessel/views/MapVesselDetails/MapVesselDetails';
 import { useRouter } from 'next/router';
 const AireHotel = () => {
   const { pathname } = useRouter()

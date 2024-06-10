@@ -43,7 +43,7 @@ $agg: var(--border-radius);
       top: 4px;
       text-transform: capitalize;
       font-size: var(--s-7);
-      color: var(--yellow-o);
+      color: var(--yellow-50);
       --ui-icon-width: var(--s-6);
       .bars__status-low {
         align-items: center;
@@ -89,7 +89,7 @@ $agg: var(--border-radius);
       }
       &-filled, &-partial{
         height: 100%;
-        background-color: var(--bar-background, var(--yellow));
+        background-color: var(--bar-background, var(--yellow-50));
       }
     }
 }

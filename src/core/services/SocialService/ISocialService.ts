@@ -3,6 +3,6 @@
 
 
 export default interface ISocialService {
-  instagramSignIn(request?: any): Promise<any>;
+  instagramAuthenticate(request?: any): Promise<any>;
 }
 

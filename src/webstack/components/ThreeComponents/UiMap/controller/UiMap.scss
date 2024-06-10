@@ -1,0 +1,167 @@
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+    filter: blur(2px)
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0)
+  }
+}
+
+.map-container {
+
+  @extend .d-flex;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  @media(max-width: 1100px){
+    flex-direction: column;
+  }
+}
+
+.map {
+  height: 100%;
+
+  @media (max-width: 1100px) {
+    position: relative;
+  }
+  &-content{
+    @extend .d-flex;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    @media(max-width: 1100px){
+      flex-direction: column;
+    }
+  }
+  &__vessel-details {
+    display: flex;
+    width: max-content;
+    height: max-content;
+  }
+
+  &-tools {
+    @extend .d-flex;
+    gap: var(--s-9);
+    cursor: pointer;
+    color: var(--white);
+    --ui-icon-color: var(--white);
+    position: absolute;
+    bottom: var(--s-element);
+    left: var(--s-9);
+    right: var(--s-9);
+    bottom: 0;
+    padding: var(--s-1);
+    --ui-icon-color: var(--gray-30);
+    animation-delay: 1s;
+    animation: fadein 1s ease-in forwards;
+    transition: all 1s ease-in-out;
+    height: max-content;
+
+  
+  }
+}
+
+
+
+// .map-container {
+//   position: relative;
+//   width: 100%;
+//   height: 100vh;
+//   background-color: #000; // Set the background to black
+
+//   .map-content {
+//       position: relative;
+//       width: 100%;
+//       height: 100%;
+//   }
+
+//   .map {
+//       width: 100%;
+//       height: 100%;
+//   }
+
+//   .map-tools {
+//       position: absolute;
+//       top: 10px;
+//       left: 10px;
+//       background-color: #ffdb4d; // Bright yellow background
+//       border-radius: 10px;
+//       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 8px 10px rgba(0, 0, 0, 0.1);
+//       padding: 10px;
+//       color: #000; // Black text color
+
+//       .map-tools--layer {
+//           margin-bottom: 10px;
+
+//           .fa-xmark {
+//               color: #000; // Black color for icons
+//               font-size: 24px;
+//               cursor: pointer;
+
+//               &:hover {
+//                   color: #333; // Slightly darker on hover
+//               }
+//           }
+//       }
+
+//       .map-tools--item {
+//           display: flex;
+//           align-items: center;
+//           justify-content: center;
+//           background-color: #ffdb4d;
+//           border-radius: 5px;
+//           margin: 5px 0;
+//           padding: 10px;
+//           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+//           &:hover {
+//               background-color: #ffc107; // Slightly darker yellow on hover
+//           }
+
+//           .fa-icon {
+//               color: #000; // Black color for icons
+//               font-size: 20px;
+//               margin-right: 5px;
+//           }
+//       }
+//   }
+
+//   .map-tools--search {
+//       background-color: #ffdb4d; // Bright yellow background
+//       border: none;
+//       border-radius: 5px;
+//       padding: 10px;
+//       width: calc(100% - 20px);
+//       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+//       &:focus {
+//           outline: none;
+//           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+//       }
+//   }
+// }
+
+// // Example of how to style the UiIcon component to match the Walkman theme
+// .ui-icon {
+//   color: #000; // Black icon color
+//   font-size: 24px;
+//   cursor: pointer;
+
+//   &:hover {
+//       color: #333; // Slightly darker on hover
+//   }
+// }

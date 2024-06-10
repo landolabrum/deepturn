@@ -21,9 +21,6 @@ const UiHeader: React.FC<IUiHeader> = ({ title, subTitle }) => {
         head.style.minHeight = `${Number(head.offsetHeight / 2)}px`;
         title?.classList.add("header--title-set");
         sub?.classList.add("header--sub-title-set");
-
-        console.log("[ initHeader ]", { c: sub?.classList });
-        return;
     };
 
 

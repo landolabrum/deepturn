@@ -6,7 +6,7 @@ import capitalize from '@webstack/helpers/Capitalize';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import Instagram from '../views/instagram/controller/Instagram';
 import { useRouter } from 'next/router';
-import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
+import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/controller/UiSettingsLayout';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
@@ -31,14 +31,10 @@ const Social: React.FC<any> = () => {
   };
 
   useEffect(() => { if (platform && !view) setView(String(platform)) }, [platform]);
-  if (user) return (
+  if (user && platform) return (
     <>
       <style jsx>{styles}</style>
-
-      <UiViewLayout
-        currentView={view}
-        views={views}
-      />
+     <UiSettingsLayout viewName={view} title="social" subTitle={view} views={views}/>
     </>
   ); return <><UiLoader /></>
 };

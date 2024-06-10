@@ -849,7 +849,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   animation: vslIconPulse 2s infinite;
   animation-play-state: running;
   color: var(--dark);
-  --ui-icon-color: var(--blue);
+  --ui-icon-color: var(--blue-50);
   background-color: var(--primary-10);
   box-shadow: 0 0 0 var(--primary-50);
   transition: animation-play-state 2s ease-in-out;
@@ -864,7 +864,6 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   --ui-icon-color: var(--white);
   background-color: var(--user);
   border-radius: 50%;
-  padding: var(--s-12);
   width: max-content;
 }
 
@@ -893,7 +892,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 
 .vsl-mrkr--hover {
   filter: brightness(1.33);
-  display: flex;
+  /* display: flex; */
 }
 
 .vsl-mrkr--content:hover {

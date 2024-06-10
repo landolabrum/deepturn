@@ -108,7 +108,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
               </div>
             }
           </div>
-        }{JSON.stringify(selectedUser)}
+        }
           <UserCreateMethod user={selectedUser} onSuccess={handleCreated} />
       </div>
     </>
