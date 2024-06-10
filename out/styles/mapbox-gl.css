@@ -864,7 +864,6 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   --ui-icon-color: var(--white);
   background-color: var(--user);
   border-radius: 50%;
-  padding: var(--s-12);
   width: max-content;
 }
 
