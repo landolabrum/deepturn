@@ -30,7 +30,18 @@
 
   --white: #ffffff;
   --white-o: #ffffff70;
-  --yellow: #fbff00;
+
+  --yellow-10: #F9E0B5;
+  --yellow-10-o: #F9E0B550;
+  --yellow-20: #ffdb4d;
+  --yellow-20-o: #ffdb4d50;
+  --yellow-30: #EDCA60;
+  --yellow-30-o: #EDCA6050;
+  --yellow-50: #E3AF1F;
+  --yellow-50-o: #E3AF1F50;
+  --yellow-70: #C4871C;
+  --yellow-70-o: #C4871C50;
+
   --yellow-o: #fbff0070;
   --orange: #ff9900;
   --orange-o: #ff990070;
