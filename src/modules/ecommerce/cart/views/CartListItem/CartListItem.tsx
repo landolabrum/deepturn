@@ -6,7 +6,7 @@ import environment from '~/src/core/environment';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import ProductBuyNow from '../../../Products/views/ProductDescription/views/ProductBuyNow/ProductBuyNow';
-import { ITraits } from '@webstack/components/FormControl/FormControl';
+import { ITraits } from '@webstack/components/UiForm/components/FormControl/FormControl';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useRouter } from 'next/router';
 

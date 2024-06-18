@@ -42,8 +42,7 @@
   --yellow-70: #C4871C;
   --yellow-70-o: #C4871C50;
 
-  --yellow-o: #fbff0070;
-  --orange: #ff9900;
+  --orange-50: #ff9900;
   --orange-o: #ff990070;
 
   --red-10: #ef4444;
@@ -68,12 +67,12 @@
   --blue-90: #031d40; /* Deep, dark blue */
 
 
-  --purple: #9b59b6;
+  --purple-50: #9b59b6;
   --purple-10: #d0a1e2;
   --purple-30: #b97acc;
   --purple-70: #7d3a98;
   --purple-90: #5d2975;
-  --purple-o: #9b59b670;
+  --purple-50-o: #9b59b670;
   
   --pink: #e91e63;
   --pink-10: #ff80ab;
@@ -81,4 +80,7 @@
   --pink-70: #c2185b;
   --pink-90: #880e4f;
   --pink-o: #e91e6370;
+}
+h3{
+  font-family: Decimal;
 }

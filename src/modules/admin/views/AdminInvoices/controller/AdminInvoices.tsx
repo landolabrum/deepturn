@@ -1,7 +1,7 @@
 // Relative Path: ./AdminInvoices.tsx
 import React, { useState } from 'react';
 import styles from './AdminInvoices.scss';
-import UiInput from '@webstack/components/UiInput/UiInput';
+import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
 
 const AdminInvoices: React.FC = () => {
   const [view, setview] = useState<string>('list')

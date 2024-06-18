@@ -121,7 +121,9 @@ const Authentication: React.FC<any> = (props: any) => {
         {view == 'sign-in' && <LoginView email={newCustomerEmail} onSuccess={handleSignIn} />}
         {view == 'sign-up' && <SignUp onSuccess={handleSignup} />}
         <div className="authentication__view-action">
+            <div className='authentication__view-label--strike'/>
           <div className="authentication__view-label">
+            {/* else */}
             {view == 'sign-in' && "no account?"}
             {view == 'sign-up' && "already have an account?"}
           </div>

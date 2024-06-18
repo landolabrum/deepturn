@@ -31,11 +31,14 @@ interface ITJSCubeIcon {
 interface ITJSCubeContent {
   icon: ITJSCubeIcon;
 }
+
 const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
   const meshRef = useRef<any>(null);
+  const particlesRef = useRef<any>(null);
   const { scene, camera } = useThree();
-    const {size }=icon;
-  const applyTexture = (material:any, texturePath:string) => {
+  const { size } = icon;
+
+  const applyTexture = (material: any, texturePath: string) => {
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load(texturePath, (texture) => {
       texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
@@ -44,7 +47,7 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
       material.needsUpdate = true;
     });
   };
- 
+
   useEffect(() => {
     const lightExists = scene.children.some(child => child instanceof THREE.AmbientLight);
     if (!lightExists) {
@@ -96,13 +99,32 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
       scene.add(mesh);
       meshRef.current = mesh;
       const maxDimension = Math.max(size?.x || 0, size?.y || 0, size?.z || 0);
-      camera.position.set(0,0,maxDimension);
+      camera.position.set(0, 0, maxDimension);
+
+      // Add particles
+      const particleMaterial = new THREE.PointsMaterial({
+        color: 0x888888,
+        size: 0.1,
+      });
+
+      const particleGeometry = new THREE.BufferGeometry();
+      const particles = [];
+      for (let i = 0; i < 1000; i++) {
+        particles.push(
+          (Math.random() - 0.5) * 2 * size.x,
+          (Math.random() - 0.5) * 2 * size.y,
+          (Math.random() - 0.5) * 2 * size.z
+        );
+      }
+      particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particles, 3));
+      const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+      scene.add(particleSystem);
+      particlesRef.current = particleSystem;
     } else {
       const material = meshRef.current.material as THREE.MeshStandardMaterial;
       if (icon.texture) applyTexture(material, icon.texture);
       Object.assign(material, materialOptions);
     }
-    
   }, [icon, scene]);
 
   useFrame(() => {
@@ -112,25 +134,29 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
       meshRef.current.rotation.y += y * speed;
       meshRef.current.rotation.z += z * speed;
     }
+
+    // Animate particles
+    if (particlesRef.current) {
+      particlesRef.current.rotation.y += 0.001;
+    }
   });
 
   return null;
 };
 
-export const TJSCube:any = (props: ITJSCubeContent) => {
-  const instanceRef:any = useRef();
+export const TJSCube: any = (props: ITJSCubeContent) => {
+  const instanceRef: any = useRef();
   const bg = String(props?.icon?.backgroundColor) || undefined;
   useEffect(() => {
-    if(instanceRef?.current && bg)instanceRef.current.style.backgroundColor = bg;
-    }, [instanceRef, bg]);
-  return<>
-  <style jsx>{styles}</style>
+    if (instanceRef?.current && bg) instanceRef.current.style.backgroundColor = bg;
+  }, [instanceRef, bg]);
+  return <>
+    <style jsx>{styles}</style>
     <div className='tjscube' ref={instanceRef}>
-    <Canvas className='tjscube--content' >
-      <OrbitControls />
-      <TJSCubeContent icon={props.icon} />
-    </Canvas>
+      <Canvas className='tjscube--content'>
+        <OrbitControls />
+        <TJSCubeContent icon={props.icon} />
+      </Canvas>
     </div>
-  </>
-
+  </>;
 }

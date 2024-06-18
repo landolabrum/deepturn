@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styles from "./UiButton.scss";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import type { NextComponentType, NextPageContext } from "next";
-import FormControl, { IFormControl as IFormControl, IFormControlSize } from "../FormControl/FormControl";
+import FormControl, { IFormControl as IFormControl, IFormControlSize } from "@webstack/components/UiForm/components/FormControl/FormControl";
 import Link from "next/link";
 import type { FC } from "react";
 import { IFormControlVariant } from "../AdapTable/models/IVariant";

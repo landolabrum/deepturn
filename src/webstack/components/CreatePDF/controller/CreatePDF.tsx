@@ -3,8 +3,8 @@ import React, { FC, useState } from 'react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import UiInput from '@webstack/components/UiInput/UiInput';
-import UiSelect from '@webstack/components/UiSelect/UiSelect';
+import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
+import UiSelect from '@webstack/components/UiForm/components/UiSelect/UiSelect';
 import UiButton from '@webstack/components/UiButton/UiButton';
 
 interface ICreatePDF {

@@ -2,9 +2,9 @@ import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { SetStateAction, useState } from "react";
 import styles from "./AdapTableFooter.scss";
 import { Dispatch } from "react";
-import UiInput from "@webstack/components/UiInput/UiInput";
+import UiInput from "@webstack/components/UiForm/components/UiInput/UiInput";
 import UiButton from "@webstack/components/UiButton/UiButton";
-import UiSelect from "@webstack/components/UiSelect/UiSelect";
+import UiSelect from "@webstack/components/UiForm/components/UiSelect/UiSelect";
 import { NaCell } from "../AdaptTableContent/components/AdaptTableCell/AdaptTableCell";
 import { TableOptions } from "../../views/AdapTable";
 

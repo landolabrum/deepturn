@@ -1,0 +1,21 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.admin-customer-detail{
+    @extend .d-flex;
+    overflow: hidden;
+    flex-direction: column;
+    gap:var(--s-9);
+    width: 100%;
+    &--section{
+        width: 100%;
+        overflow: hidden;
+        // width: var(--s-9-width);
+        // padding: var(--s-9);
+        // background-color: var(--gray-80);
+    }
+}

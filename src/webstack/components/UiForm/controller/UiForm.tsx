@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import UiInput from '../../UiInput/UiInput';
+import UiInput from '../components/UiInput/UiInput';
 import styles from './UiForm.scss';
 import UiButton from '../../UiButton/UiButton';
 import { IForm, IFormField } from '../models/IFormModel';
-import UiSelect from '../../UiSelect/UiSelect';
+import UiSelect from '../components/UiSelect/UiSelect';
 import UiLoader from '../../UiLoader/view/UiLoader';
-import ToggleSwitch from '../../UiToggle/UiToggle';
-import UiCheckBox from '../../UiCheckbox/UiCheckBox';
-import FormControl from '../../FormControl/FormControl';
+import ToggleSwitch from '../components/UiToggle/UiToggle';
+import FormControl from '../components/FormControl/FormControl';
 import AddFieldForm from '../views/AddFieldForm/AddFieldForm';
-import AutocompleteAddressInput from '@webstack/components/UiInput/views/AddressInput';
+import AutocompleteAddressInput from '@webstack/components/UiForm/components/UiInput/views/AddressInput';
 import { getFieldType, updateField, findField } from '../functions/formFieldFunctions';
 
 const UiForm = ({

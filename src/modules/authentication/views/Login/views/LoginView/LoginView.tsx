@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import UiInput from "@webstack/components/UiInput/UiInput";
+import UiInput from "@webstack/components/UiForm/components/UiInput/UiInput";
 import TwoFactorAuth from "../TwoFactorAuth/TwoFactorAuth";
 import UiButton from "@webstack/components/UiButton/UiButton";
 import { useUser } from "~/src/core/authentication/hooks/useUser";
@@ -58,8 +58,8 @@ const LoginView: React.FC<ILogin> = ({ email, onSuccess }: ILogin) => {
               password: credentials.password.replace(/\s+/g, ''),
               ...(validTFA && { code: credentials.code }),
               user_agent,
-              merchant: environment.merchant
-            }
+            },
+            merchant: environment.merchant
           }
         });
          const  closeMod = async () =>{

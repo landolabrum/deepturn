@@ -1,5 +1,5 @@
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
-import { IFormControl, IFormControlSize } from "@webstack/components/FormControl/FormControl";
+import { IFormControl, IFormControlSize } from "@webstack/components/UiForm/components/FormControl/FormControl";
 
 
 export type ValueType = any;
@@ -23,6 +23,7 @@ export interface IInput extends IFormControl {
   onDelete?: (e: any) => void;
   onKeyUp?: (e: any) => void;
   placeholder?: string;
+  traits?: any;
   variant?: IFormControlVariant;
   min?: number;
   max?: number;

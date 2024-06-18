@@ -6,7 +6,7 @@ import CalendarDate from '../views/CalendarDate/CalendarDate';
 import { ICalendar } from '../models/ICalendar';
 import { IDate } from '../models/IDate';
 import { dowArray, monthArray } from '@webstack/helpers/userExperienceFormats';
-import UiPill from '@webstack/components/UiPill/UiPill';
+import UiPill from '@webstack/components/UiForm/components/UiPill/UiPill';
 import UiButton from '@webstack/components/UiButton/UiButton';
 
 const Calendar: React.FC<ICalendar> = ({

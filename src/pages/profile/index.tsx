@@ -1,2 +1,2 @@
-import User from "~/src/modules/user/controller/User";
+import User from "~/src/modules/profile/controller/User";
 export default User;

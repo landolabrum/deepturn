@@ -1,25 +1,26 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-interface ICanyonLoaderProps {
-  flyTo?: { x: number, y: number, z: number };
+interface IUiTerrain {
+  flyTo?: [number, number, number];
   disableBelowTerrain?: boolean;
-  cameraPosition?: { x: number, y: number, z: number };
+  cameraPosition?: [number, number, number];
   lights?: {
     ambient?: { color: string | number, intensity: number };
     directional?: { color: string | number, intensity: number, position?: [number, number, number] };
   };
   colors?: { background?: string };
   terrainOverlay?: { img?: string, repeat?: boolean, opacity?: number };
-  animation?: Array<{ x: number, y: number, z: number }>;
+  animation?: Array<[number, number, number]>;
 }
 
-const CanyonLoader: React.FC<ICanyonLoaderProps> = ({
+const UiTerrain: React.FC<IUiTerrain> = ({
   flyTo,
   disableBelowTerrain = false,
-  cameraPosition = {"x":2.6520046469315024,"y":0.47112981322851,"z":-1.080838656327484},
+  cameraPosition = [2.6520046469315024, 0.47112981322851, -1.080838656327484],
   lights = {
     ambient: { color: 0xffffff, intensity: 1 },
     directional: { color: 0xffffff, intensity: 1, position: [1, 1, 1] },
@@ -27,21 +28,27 @@ const CanyonLoader: React.FC<ICanyonLoaderProps> = ({
   colors = { background: 0x1c9df6 },
   terrainOverlay,
   animation = [
-    {"x":10.3376482188985,"y":0.36890421841098925,"z":-6.194272964246333}
-    // { x: 9.976378566994422, y: 0.15518100680619346, z: -6.545817610608842 },
-    // { x: 8.942772475117179, y: 0.21527020849510325, z: -5.760161412007365 },
-    // { x: 9.285526562984671, y: 0.1480317810843473, z: -2.3367612794322135 },
-    // { x: 4.217541312568285, y: 0.6271942882641335, z: -3.8873331110420266 },
-  ]
+    [10.3376482188985, 0.36890421841098925, -6.194272964246333],
+    [9.976378566994422, 0.15518100680619346, -6.545817610608842],
+    [8.942772475117179, 0.21527020849510325, -5.760161412007365],
+    [9.285526562984671, 0.1480317810843473, -2.3367612794322135],
+    [4.217541312568285, 0.6271942882641335, -3.8873331110420266],
+  ],
 }) => {
+  const router = useRouter();
+
   const mountRef = useRef<HTMLDivElement | null>(null);
   const [currentAnimationIndex, setCurrentAnimationIndex] = useState(0);
   const [cameraPos, setCameraPos] = useState(cameraPosition);
   const [isAnimating, setIsAnimating] = useState(true);
 
-  const stopAnimation = useCallback(() => setIsAnimating(false), []);
+  const stopAnimation = useCallback(() => {
+    setIsAnimating(false);
+  }, []);
 
   useEffect(() => {
+    if (router.pathname !== '/') return;
+
     const mount = mountRef.current;
     if (!mount) return;
 
@@ -53,10 +60,10 @@ const CanyonLoader: React.FC<ICanyonLoaderProps> = ({
 
     // Camera setup
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+    camera.position.set(cameraPos[0], cameraPos[1], cameraPos[2]);
 
     // Renderer setup
-    let renderer:any = new THREE.WebGLRenderer({ antialias: true });
+    let renderer: THREE.WebGLRenderer | null = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     mount.appendChild(renderer.domElement);
 
@@ -78,7 +85,7 @@ const CanyonLoader: React.FC<ICanyonLoaderProps> = ({
 
     if (lights.directional) {
       const directionalLight = new THREE.DirectionalLight(lights.directional.color, lights.directional.intensity);
-      const { x = 0, y = 0, z = 0 }:any = lights.directional.position || {};
+      const [x = 0, y = 0, z = 0] = lights.directional.position || [];
       directionalLight.position.set(x, y, z).normalize();
       scene.add(directionalLight);
     }
@@ -121,11 +128,11 @@ const CanyonLoader: React.FC<ICanyonLoaderProps> = ({
     const onWindowResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer!.setSize(window.innerWidth, window.innerHeight);
     };
 
     const animate = () => {
-      if (!isAnimating) return;
+      if (!renderer) return;
 
       requestAnimationFrame(animate);
       controls.update();
@@ -135,31 +142,27 @@ const CanyonLoader: React.FC<ICanyonLoaderProps> = ({
         console.error("Renderer error:", error);
         return;
       }
-      if (animation.length > 0) {
+      if (isAnimating && animation.length > 0) {
         const targetPosition = animation[currentAnimationIndex];
         const delta = 0.001;
-        const targetVector = new THREE.Vector3(targetPosition.x, targetPosition.y, targetPosition.z);
+        const targetVector = new THREE.Vector3(targetPosition[0], targetPosition[1], targetPosition[2]);
         camera.position.lerp(targetVector, delta);
         if (camera.position.distanceTo(targetVector) < 0.1) {
           setCurrentAnimationIndex((prevIndex) => (prevIndex + 1) % animation.length);
         }
+        setCameraPos([camera.position.x, camera.position.y, camera.position.z]);
       }
-      setCameraPos({
-        x: camera.position.x,
-        y: camera.position.y,
-        z: camera.position.z,
-      });
     };
 
     const disposeScene = () => {
-      scene.traverse((object:any) => {
+      scene.traverse((object: any) => {
         if (!object.isMesh) return;
 
         if (object.geometry) object.geometry.dispose();
 
         if (object.material) {
           if (Array.isArray(object.material)) {
-            object.material.forEach((material:any) => material.dispose());
+            object.material.forEach((material: any) => material.dispose());
           } else {
             object.material.dispose();
           }
@@ -172,8 +175,8 @@ const CanyonLoader: React.FC<ICanyonLoaderProps> = ({
     window.addEventListener('touchstart', stopAnimation, false);
 
     if (flyTo) {
-      camera.position.set(flyTo.x, flyTo.y, flyTo.z);
-      controls.target.set(flyTo.x, flyTo.y, flyTo.z);
+      camera.position.set(flyTo[0], flyTo[1], flyTo[2]);
+      controls.target.set(flyTo[0], flyTo[1], flyTo[2]);
     }
 
     animate();
@@ -182,26 +185,47 @@ const CanyonLoader: React.FC<ICanyonLoaderProps> = ({
       window.removeEventListener('resize', onWindowResize);
       window.removeEventListener('mousedown', stopAnimation);
       window.removeEventListener('touchstart', stopAnimation);
-      renderer.dispose();
-      disposeScene();
-      if (mount.contains(renderer.domElement)) {
-        mount.removeChild(renderer.domElement);
+      if (renderer) {
+        renderer.dispose();
+        if (mount.contains(renderer.domElement)) {
+          mount.removeChild(renderer.domElement);
+        }
+        if (renderer.forceContextLoss) {
+          renderer.forceContextLoss(); // Optional: Force WebGL context loss to release resources
+        }
       }
-      renderer.forceContextLoss && renderer.forceContextLoss(); // Optional: Force WebGL context loss to release resources
-      renderer = null;
+      disposeScene();
     };
-  }, [ setCameraPos, currentAnimationIndex ]);
+  }, [
+    animation,
+    cameraPos,
+    colors.background,
+    currentAnimationIndex,
+    disableBelowTerrain,
+    flyTo,
+    isAnimating,
+    lights.ambient,
+    lights.directional,
+    stopAnimation,
+    terrainOverlay?.img,
+    terrainOverlay?.opacity,
+    terrainOverlay?.repeat,
+    router.pathname,
+  ]);
+
+  if (router.pathname !== '/') return <>sorry, not Index</>;
+
   return (
     <>
-      <div className='dev' style={{fontSize: "10px"}}>
+      <div className='dev' style={{ fontSize: "10px" }}>
         Dev
-        {Object.entries(cameraPos).map(
-          (([k,v])=><div key={k}>{k}: {v}</div>)
-        )}
+        {cameraPos.map((pos, index) => (
+          <div key={index}>{`pos[${index}]: ${pos}`}</div>
+        ))}
       </div>
       <div ref={mountRef} style={{ width: '100vw', height: '100vh' }} />
     </>
   );
 };
 
-export default CanyonLoader;
+export default UiTerrain;

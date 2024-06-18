@@ -1,10 +1,10 @@
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { useEffect } from "react";
 import styles from "./AdapTableHeader.scss";
-import UiInput from "@webstack/components/UiInput/UiInput";
+import UiInput from "@webstack/components/UiForm/components/UiInput/UiInput";
 import { TableFunctionProps } from "../AdaptTableContent/views/AdapTableContent";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
-import UiSelect from "@webstack/components/UiSelect/UiSelect";
+import UiSelect from "@webstack/components/UiForm/components/UiSelect/UiSelect";
 import { TableOptions } from "../../views/AdapTable";
 import environment from "~/src/core/environment";
 

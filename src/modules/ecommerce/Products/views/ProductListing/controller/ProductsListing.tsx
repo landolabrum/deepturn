@@ -8,7 +8,7 @@ import IProductService from "~/src/core/services/ProductService/IProductService"
 import { useLoader } from "@webstack/components/Loader/Loader";
 import environment from "~/src/core/environment";
 import ProductList from "../views/ProductList/ProductList";
-import UiSelect from "@webstack/components/UiSelect/UiSelect";
+import UiSelect from "@webstack/components/UiForm/components/UiSelect/UiSelect";
 
 interface Filter {
   [key: string]: {

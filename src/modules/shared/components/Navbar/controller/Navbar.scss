@@ -141,7 +141,7 @@
         height: var(--s-element);
         width: var(--s-element);
         @extend .d-flex;
-        padding: 0;
+        padding: 0 var(--s-9) 0 0;
         --ui-icon-width: 100%;
         --ui-icon-height: var(--s-5);
         --ui-icon-color: var(--gray-50);

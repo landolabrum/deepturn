@@ -135,7 +135,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
       <style jsx>{styles}</style>
       <div className='contact-form'>
 
-        {JSON.stringify(fields[0]?.value == undefined)}
+        {/* {JSON.stringify(fields[0]?.value == undefined)} */}
         {title && <div className='contact-form__title'>{title}</div>}
         <UiForm
           fields={fields}

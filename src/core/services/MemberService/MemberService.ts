@@ -7,7 +7,7 @@ import MemberToken from "~/src/models/MemberToken";
 import IAuthenticatedUser, { GuestContext } from "~/src/models/UserContext";
 import ApiService, { ApiError } from "../ApiService";
 import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, IResetPassword, ISessionData, OResetPassword } from "./IMemberService";
-import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
+import { IPaymentMethod } from "~/src/modules/profile/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
 import errorResponse from "../../errors/errorResponse";
 import { ICustomer } from "~/src/models/CustomerContext";
@@ -303,6 +303,7 @@ public async processTransaction(sessionData: ISessionData) {
     if (!props.email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
+    
     const encryptedSignUp = encryptString(JSON.stringify(props), ENCRYPTION_KEY);
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",

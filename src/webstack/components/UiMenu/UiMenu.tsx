@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
-import { IFormControl } from "../FormControl/FormControl";
+import { IFormControl } from "@webstack/components/UiForm/components/FormControl/FormControl";
 import styles from "./UiMenu.scss";
-import Input from "../UiInput/UiInput";
+import Input from "../UiForm/components/UiInput/UiInput";
 import UiButton from "../UiButton/UiButton";
 
 export type IMenuOption = {

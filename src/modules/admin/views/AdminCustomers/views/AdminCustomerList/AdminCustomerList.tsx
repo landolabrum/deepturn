@@ -74,7 +74,7 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
     if (!customers) getCustomerList();
   }, [setCustomers]);
   return (
-    <>
+    <>l:{level}
       <style jsx>{styles}</style>
       <div className='admin-customer-list'>
         <div className='admin-customer-list__table'>

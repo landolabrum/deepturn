@@ -7,7 +7,7 @@ import UiButton from "@webstack/components/UiButton/UiButton";
 import Authentication from "~/src/pages/authentication";
 import { useCartTotal } from "~/src/modules/ecommerce/cart/hooks/useCart";
 import { useModal } from "@webstack/components/modal/contexts/modalContext";
-import UiSelect from "@webstack/components/UiSelect/UiSelect";
+import UiSelect from "@webstack/components/UiForm/components/UiSelect/UiSelect";
 import MobileNav from "../views/MobileNav/MobileNav";
 import environment from "~/src/core/environment";
 import useNavMobile from "../hooks/useNavBreak";

@@ -1,4 +1,31 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
 .surveillance{
     min-height: 500px;
     width: 100%;
+}
+
+.joystick{
+    width: var(--s-9-width);
+    padding: var(--s-9);
+    margin: auto;
+    @extend .d-flex;
+    aspect-ratio: 1;
+    border-radius: 100%;
+    border: solid 1px;
+    background-color: var(--gray-100);
+    position: relative;
+    &-thumb{
+        position: absolute;
+        // top: 50%;
+        // transform:  translate(50%, 50%);
+        // left: 50%;
+        aspect-ratio: 1;
+        border-radius: 100%;
+        min-width: 90px;
+        background-color: var(--primary-70);
+    }
 }

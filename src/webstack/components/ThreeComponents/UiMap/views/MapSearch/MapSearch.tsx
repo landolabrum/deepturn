@@ -1,7 +1,7 @@
 // Relative Path: ./MapSearch.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './MapSearch.scss';
-import UiInput from '@webstack/components/UiInput/UiInput';
+import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
 
 // Remember to create a sibling SCSS file with the same name as this component
 

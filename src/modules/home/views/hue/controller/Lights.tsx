@@ -6,15 +6,15 @@ import IHomeService, { ILight } from '~/src/core/services/HomeService/IHomeServi
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import UiBar from '@webstack/components/Graphs/UiBar/UiBar';
-import ToggleSwitch from '@webstack/components/UiToggle/UiToggle';
+import ToggleSwitch from '@webstack/components/UiForm/components/UiToggle/UiToggle';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import UiInput from '@webstack/components/UiInput/UiInput';
+import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
 import UiMediaSlider from '@webstack/components/UiMedia/views/UiMediaSlider/UiMediaSlider';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { calculateHexFromHueSatBri } from '../functions/LightHelpers';
 import { reverseString } from '@webstack/helpers/Strings/reverseString';
 import ColorPicker from '@webstack/components/ColorPicker/ColorPicker';
-import UiKnob from '@webstack/components/UiKnob/UiKnob';
+import UiKnob from '@webstack/components/UiForm/components/UiKnob/UiKnob';
 
 interface ILightDisplay extends ILight {
   view?: string;

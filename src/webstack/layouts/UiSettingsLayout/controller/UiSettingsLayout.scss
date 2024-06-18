@@ -6,7 +6,7 @@
 
 .settings {
     width: 100%;
-    padding-top: var(--s-element);
+    // padding-top: var(--s-element);
     
     &__nav {
         display: flex;
@@ -77,7 +77,7 @@
     @media (max-width: 1100px) {
         display: flex;
         flex-direction: column;
-        margin: var(--s-1) auto;
+        margin: 0 auto var(--s-1);
         width: var(--s-9-width);
         border-spacing: var(--s-9) 0;
         gap: var(--s-5);

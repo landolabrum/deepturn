@@ -5,7 +5,7 @@ import UiButton from '@webstack/components/UiButton/UiButton';
 import { calculateCartTotal } from '@webstack/helpers/userExperienceFormats';
 import { useRouter } from 'next/router';
 import Checkout from '~/src/pages/checkout';
-import { ITraits } from '@webstack/components/FormControl/FormControl';
+import { ITraits } from '@webstack/components/UiForm/components/FormControl/FormControl';
 import { getService } from '@webstack/common';
 import IMemberService, { ISessionData } from '~/src/core/services/MemberService/IMemberService';
 import { encryptString } from '@webstack/helpers/Encryption';

@@ -1,7 +1,7 @@
 // Relative Path: ./VerifyShare.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './VerifyShare.scss';
-import UiInput from '@webstack/components/UiInput/UiInput';
+import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 const initial = "broudy";
