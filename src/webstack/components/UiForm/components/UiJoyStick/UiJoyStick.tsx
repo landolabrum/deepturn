@@ -36,7 +36,6 @@ const UiJoyStick: React.FC = () => {
 
         const newX = from[0] + (to[0] - from[0]) * progress;
         const newY = from[1] + (to[1] - from[1]) * progress;
-        console.log([newX, newY])
         setPos([newX, newY]);
 
         if (progress < 1) {

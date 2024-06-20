@@ -104,6 +104,8 @@
     $focusColor: var(--primary-50);
 
     .nav__nav-item {
+      user-select: none;
+
       color: $defaultColor;
       --ui-icon-color: $defaultColor;
       height: var(--s-element);

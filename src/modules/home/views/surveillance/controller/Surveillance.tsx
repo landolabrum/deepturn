@@ -17,10 +17,14 @@ const Surveillance: React.FC = () => {
     <>
       <style jsx>{styles}</style>
       <div className='surveillance'>
-      <UiJoyStick/>
         <AdaptGrid xs={1} md={2} padding="0 0 200px">
-          <UiMedia src={url1} loadingText='loading camera 1' />
+          <div>
+            <UiMedia src={url1} loadingText='loading camera 1' />
+            <UiJoyStick/>
+          </div>
+          <div>
           <UiMedia src={`${environment.serviceEndpoints.membership}/api/stream/rtsp?id=2`} loadingText='loading camera 2' />
+          </div>
         </AdaptGrid>
       </div>
 

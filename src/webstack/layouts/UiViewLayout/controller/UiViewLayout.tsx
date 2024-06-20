@@ -43,7 +43,7 @@ const UiViewLayout: React.FC<IViewLayout> = ({
         <>
             <style jsx>{styles}</style>
             <div className='ui-view-layout'>
-                {backBtn && last !== 'start' &&(
+                {Boolean(backBtn && last !== 'start' )&&(
                     <div className='back-btn'>
                         <div>
                             <UiButton traits={{beforeIcon:"fa-chevron-left"}} variant='flat' onClick={goBack}>Back</UiButton>

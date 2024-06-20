@@ -73,7 +73,7 @@ export default class MemberService
       TIMEOUT // 5 seconds timeout
     );
     if(memberJwt){
-      console.log("[ MEMBER JWT ]", memberJwt)
+      // console.log("[ MEMBER JWT ]", memberJwt)
       this.saveMemberToken(memberJwt);
       this.saveLegacyAuthCookie(memberJwt);
       return this._getCurrentUser(true)!;
@@ -91,7 +91,7 @@ export default class MemberService
         this.get<any>(`/usage/auth/verify-email?token=${encodedToken}`),
         TIMEOUT // 5 seconds timeout
       );
-console.log("[verifiedMemberResp  ]",verifiedMemberResp)
+// console.log("[verifiedMemberResp  ]",verifiedMemberResp)
       // Check if the response is an ApiError
       if (verifiedMemberResp instanceof ApiError) {
         throw verifiedMemberResp;
@@ -101,7 +101,7 @@ console.log("[verifiedMemberResp  ]",verifiedMemberResp)
       //   this.saveLegacyAuthCookie(verifiedMemberResp.data);
       //   return this._getCurrentUser(true)!;
       // }
-      console.log("[ verifiedMemberResp ]:",verifiedMemberResp)
+      // console.log("[ verifiedMemberResp ]:",verifiedMemberResp)
       
       return verifiedMemberResp;
       

@@ -22,7 +22,15 @@
     user-select: none;
     opacity: 0;
     animation: fadeInSubHeader 4s ease-in forwards;
-    // &--title{}
+    line-height: 1;
+    &--title{
+        @extend .d-flex;
+        min-height: var(--s-element);
+        --ui-icon-size:var(--s-1);
+        filter:blur(1px);
+        --ui-icon-color:var(--primary-70);
+        gap:var(--s-10);
+    }
     &--sub-title {
         text-transform: capitalize;
         right: 0;

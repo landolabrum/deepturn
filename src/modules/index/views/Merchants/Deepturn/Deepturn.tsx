@@ -31,7 +31,7 @@ const Deepturn = () => {
          <div className='deepturn__components'>
          <div className='component--map'>
      {/* {/*  */}
-     {/* <TJSCube
+     <TJSCube
             icon={{
               bevel: {
                 bevelEnabled: true,
@@ -52,7 +52,7 @@ const Deepturn = () => {
               animate: { rotate: { y: -2, x: 1, speed: .0007 } }
             }}
           // metalness={5}
-          />  */}
+          /> 
           {/*
            <UiMap
             onVesselClick={setCurrentVessel}

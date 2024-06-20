@@ -11,6 +11,14 @@
     flex-direction: column;
     gap:var(--s-9);
     width: 100%;
+    &__actions{
+        @extend .d-flex;
+        width: 100%;
+        gap:var(--s-9);
+        @media(min-width: 900px){
+            flex-direction: column;
+        }
+    }
     &--section{
         width: 100%;
         overflow: hidden;

@@ -22,6 +22,8 @@
     height: 100%;
 }
 .deepturn {
+    background: #f30;
+    background:radial-gradient(circle, var(--gray-90) 34%, var(--black) 100%);
     @extend .d-flex;
     width: 100%;
     position: fixed;

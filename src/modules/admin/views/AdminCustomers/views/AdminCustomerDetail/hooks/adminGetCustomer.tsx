@@ -10,26 +10,41 @@ const useAdminCustomer =  (customer_id?: string) => {
     let context: any = {
       contact: []
     };
-    const handleField = (formName: string, field: any) => {
+    const handleField = (formName: string, field: {name: any, value: any}) => {
       const readOnlyFieldNames = [''];
-      const { key, value } = field;
+      const { name: name, value } = field;
       if (!context[formName]) {
-        context[formName] = [{ name: key, value: value, label: key }];
+        context[formName] = [{ name: name, value: value, label: name }];
       } else {
-        context[formName].push({ name: key, value: value, label: key });
+        context[formName].push({ name: name, value: value, label: name });
       }
     };
     const initForms = (response: any, parent?: string) => {
+      const testFirstLevel = (value:any)=>{
+        return ['string', 'number', undefined, 'boolean'].includes(typeof value) || !value
+      }
       Object.entries(response).map(([key, value]: any) => {
-        const keyToUse = parent || 'contact';
-        // console.log({ keyToUse })
-        if (
-          // HANDLE FIRST LEVEL
-          ['string', 'number', undefined, 'boolean'].includes(typeof value) || !value
-        ) handleField(keyToUse, { key, value });
-        else if (value?.constructor == Object) {
-          console.log({ obj: true, value })
-          initForms(value, key)
+        let keyToUse = parent || 'contact';
+        if (testFirstLevel(value))handleField(keyToUse, { name: key, value });
+        else if (value?.constructor == Object)initForms(value, key);
+
+        else if (value?.constructor == Array) {
+          value.map((listKey,listVal)=>{
+            const val:any = value[listVal];
+            if(context[keyToUse])keyToUse=`${key.substring(0, Number(key.length) - 1)}-${listVal}`;
+            Object.entries(val).map(
+              ([dictKey,dictValue])=>{
+                if(dictValue && dictValue.constructor === Object){
+                  Object.entries(dictValue).map(([k,v])=>{
+                    if(testFirstLevel(v)){
+                      // console.log({keyToUse, dictKey, dictValue, k,v})
+                      handleField(keyToUse, { name:k, value:v });
+                    }
+                  })
+                }else handleField(keyToUse, {name:dictKey, value:dictValue});
+              }
+            )
+          })
         }
       });
     };

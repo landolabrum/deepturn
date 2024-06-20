@@ -164,9 +164,10 @@
         width: calc(var(--s-4-width) - 2px);
         cursor: pointer;
         animation:viewBorderAnimation 5s ease-in-out infinite;
+        user-select: none;
 
         height: var(--s-2);
-        user-select: all;
+        // user-select: all;
         background-color: var(--gray-100);
         flex-wrap: nowrap;
         @extend .d-flex;

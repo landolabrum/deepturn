@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './UiHeader.scss';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import environment from '~/src/core/environment';
 
 interface IUiHeader {
     title?: any;
@@ -37,6 +39,7 @@ useEffect(() => {
             <style jsx>{styles}</style>
             <div className='header' ref={hdRef}>
                 <div className="header--title">
+                    <UiIcon icon={`${environment.merchant.name}-logo`}/>
                     {title}
                 </div>
                 {subTitle && (
