@@ -293,7 +293,73 @@ body {
   justify-content: center;
   align-items: center;
 }
+.justify-start {
+  justify-content: flex-start;
+}
 
+.justify-end {
+  justify-content: flex-end;
+}
+
+.s-1 {
+  padding: var(--s-1);
+  width: var(--s-1-width);
+}
+
+.s-2 {
+  padding: var(--s-2);
+  width: var(--s-2-width);
+}
+
+.s-3 {
+  padding: var(--s-3);
+  width: var(--s-3-width);
+}
+
+.s-4 {
+  padding: var(--s-4);
+  width: var(--s-4-width);
+}
+
+.s-5 {
+  padding: var(--s-5);
+  width: var(--s-5-width);
+}
+
+.s-6 {
+  padding: var(--s-6);
+  width: var(--s-6-width);
+}
+
+.s-7 {
+  padding: var(--s-7);
+  width: var(--s-7-width);
+}
+
+.s-8 {
+  padding: var(--s-8);
+  width: var(--s-8-width);
+}
+
+.s-9 {
+  padding: var(--s-9);
+  width: var(--s-9-width);
+}
+
+.s-10 {
+  padding: var(--s-10);
+  width: var(--s-10-width);
+}
+
+.s-11 {
+  padding: var(--s-11);
+  width: var(--s-11-width);
+}
+
+.s-12 {
+  padding: var(--s-12);
+  width: var(--s-12-width);
+}
 .d-flex-col {
   display: flex;
   flex-direction: column;
@@ -305,13 +371,6 @@ body {
   flex: 1;
 }
 
-.justify-start {
-  justify-content: flex-start;
-}
-
-.justify-end {
-  justify-content: flex-end;
-}
 
 .flex-wrap {
   flex-wrap: wrap;
