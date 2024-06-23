@@ -1,4 +1,4 @@
-import IAuthenticatedUser, { UserAddress } from "~/src/models/UserContext";
+import IAuthenticatedUser, { UserAddress } from "~/src/models/ICustomer";
 
 export interface OPaymentMethod{
     name?: string;

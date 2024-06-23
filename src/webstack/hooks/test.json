@@ -33,7 +33,7 @@
                 "email": null,
                 "type": "customer",
                 "user_agent": {
-                    "public_ip": null,
+                    "wan": null,
                     "user_agent": null,
                     "user_agent_data": null
                 },
@@ -109,7 +109,7 @@
         "userAgent": {
             "user_agent": "",
             "user_agent_data": null,
-            "public_ip": ""
+            "wan": ""
         },
         "lngLat": [
             -111.87,

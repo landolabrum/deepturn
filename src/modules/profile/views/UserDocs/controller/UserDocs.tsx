@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './UserDocs.scss';
-import IAuthenticatedUser from '~/src/models/UserContext';
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import { getService } from '@webstack/common';
 import IProductService from '~/src/core/services/ProductService/IProductService';
 import environment from '~/src/core/environment';

@@ -71,8 +71,8 @@ $black: #050505;
 }
 
 .loader {
-  z-index: 2;
-  backdrop-filter: blur(0);
+  z-index: 1001;
+  backdrop-filter: blur(2px);
   background: transparent;
   height: 100%;
   width: 100%;

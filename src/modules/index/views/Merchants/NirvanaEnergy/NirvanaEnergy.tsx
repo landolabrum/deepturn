@@ -7,6 +7,8 @@ import ProductSurvey from '~/src/pages/configure';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
+import capitalize from '@webstack/helpers/Capitalize';
+import { upperCase } from 'lodash';
 
 
 const NirvanaEnergyIcon = () => {
@@ -18,9 +20,11 @@ const NirvanaEnergyIcon = () => {
       font-size: var(--s-5);
   }`;
   return <>
-    <style jsx>{nStyle}</style>
+    <style jsx>{nStyle}</style><style jsx>{styles}</style>
     <div className='nirv'>
+    <div className='nirv--icon'>
       <UiIcon icon={`nirvana-energy-logo`} />
+    </div>
       Nirvana Energy
     </div>
   </>
@@ -32,25 +36,46 @@ const NirvanaEnergy = () => {
     const powerFactor = 1;
     const ampStr = String((powerInKW * 1000) / (volts * powerFactor)).split('.');
     const addAmp = Number(String(ampStr[1])[0]) > 5;
-    const amps = addAmp?Number(ampStr[0])+2:ampStr[0];
+    const amps = addAmp ? Number(ampStr[0]) + 2 : ampStr[0];
     return `${powerInKW} kW = ${amps} Amps`;
   };
+  const CompetitorBrand
+ = ({ competitor }: { competitor: string }) => {
+    return <>
+      <style jsx>{styles}</style>
+      <div className='nirvana-energy__competitor'>
+      {upperCase(competitor)}
+      </div>
+    </>
+  }
   const tableData = [
-    { manufacturer: 'Tesla', 'capacity': "13 kW", 'output': outputValue(5.5) },
-    { manufacturer: 'LG', 'capacity': "15 kW", 'output': outputValue(6.4) },
-    { manufacturer: 'Enphase', 'capacity': "12 kW", 'output': outputValue(5) },
-    { manufacturer: 'Generack', 'capacity': "15.5 kW", 'output': outputValue(4.5) },
-    { manufacturer: 'GrowWatt', 'capacity': "10 kW", 'output': outputValue(6) },
-    { manufacturer: <NirvanaEnergyIcon />, 'capacity': "15 kW", 'output': outputValue(12) },
+    { manufacturer: <CompetitorBrand
+ competitor="tesla" />, 'capacity': "13 kW", 'output': outputValue(5.5) },
+    { manufacturer: <CompetitorBrand
+ competitor='LG' />, 'capacity': "15 kW", 'output': outputValue(6.4) },
+
+    {
+      manufacturer:
+        <CompetitorBrand
+ competitor='Enphase' />, 'capacity': "12 kW", 'output': outputValue(5)
+    },
+    { manufacturer: <CompetitorBrand
+ competitor='Generack' />, 'capacity': "15.5 kW", 'output': outputValue(4.5) },
+    { manufacturer: <CompetitorBrand
+ competitor='GrowWatt' />, 'capacity': "10 kW", 'output': outputValue(6) },
+    {
+      manufacturer:
+        <NirvanaEnergyIcon />, 'capacity': "15 kW", 'output': outputValue(12)
+    },
   ];
-const user = useUser()
+  const user = useUser()
   return (
     < >
       <style jsx>{styles}</style>
       <div id='nirvana-index'
         className='nirvana-index'
       >
-      <ProductSurvey id='configure' startButton='configure your back up system' />
+        <ProductSurvey id='configure' startButton='configure your back up system' />
         <div className='nirvana-index__content'>
           <div className='list'>
             <h3>6 Key Questions to Enhance Your Solar System with Batteries</h3>
@@ -66,7 +91,7 @@ const user = useUser()
           </h2>
           <h4>
             On and Off-grid battery back up
-            If you&apos;re thinking about going off grid or want to learn more about backup battery systems, it&apos;s time to create your
+            If you&apos;re thinking about going off grid or want to learn more about backup battery systems, it&apos;s time to create your Nirvana Solar.
           </h4>
           <h2>
             The Importance of Backup Batteries
@@ -89,17 +114,17 @@ const user = useUser()
           <h3>On-grid vs Off-grid Solar Battery Backup Systems</h3>
           <AdaptGrid sm={1} md={2} margin='0 0' gapX={10}>
             <HomeGridItem title='on-grid'>
-              On-grid systems are connected to the utility grid and can sell excess energy back to the power company or store excess energy depending on how the system is
+              On-grid systems are connected to the utility grid and can sell excess energy back to the power competitor or store excess energy depending on how the system is
             </HomeGridItem>
             <HomeGridItem title='environmental concerns' >
               Off-grid systems are not connected to the utility grid. These systems can be tailored to fit your needs no matter how big or small and using several different power sources.
             </HomeGridItem>
           </AdaptGrid>
-          <br/>
-          <br/>
-          <br/>
+          <br />
+          <br />
+          <br />
           <AdapTable
-            options={{ hide:  'footer', tableTitle:"Discover Better Performance, Compared to Leading Brands." }}
+            options={{ hide: 'footer', tableTitle: "Discover Better Performance, Compared to Leading Brands." }}
             data={tableData}
           />
         </div>

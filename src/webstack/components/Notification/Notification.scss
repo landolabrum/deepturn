@@ -39,6 +39,24 @@
     width: 100%;
 
   }
+  &__api-errors{
+    width: 100%;
+    @extend .d-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap:var(--s-9);
+    .error-message{
+      font-size: var(--s-4);
+      color:var(--red-50);
+    }
+    .error-detail{
+      @extend .d-flex;
+      flex-direction: column;
+      gap:var(--s-9);
+
+    }
+  }
   &__confirm{
     @extend .d-flex;
     width: 100%;

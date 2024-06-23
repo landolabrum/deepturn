@@ -4,7 +4,7 @@ import CreateMethodStripeForm from "../views/CreateMethodStripeForm/CreateMethod
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import useSetupIntentSecret from "~/src/core/services/MemberService/hooks/useSetupIntentSecret";
-import IAuthenticatedUser from "~/src/models/UserContext";
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import { useEffect, useState } from "react";
 import { useLoader } from "@webstack/components/Loader/Loader";
 import UiLoader from "@webstack/components/UiLoader/view/UiLoader";

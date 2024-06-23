@@ -1,4 +1,4 @@
-import IAuthenticatedUser from "~/src/models/UserContext";
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import { IAccountsResponse } from "./adminModels/iAdminAccounts";
 
 export default interface IAdminService {

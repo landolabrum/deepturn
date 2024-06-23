@@ -1,7 +1,7 @@
 // Relative Path: ./UserProfile.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './UserProfile.scss';
-import IAuthenticatedUser from '~/src/models/UserContext';
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 import UserModify from '../UserModify/UserModify';
 import UiButton from '@webstack/components/UiButton/UiButton';

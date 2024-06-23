@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './UserSubscriptions.scss';
 import { dateFormat } from '@webstack/helpers/userExperienceFormats';
 import Calendar from '@webstack/components/Calendar/controller/Calendar';
-import IAuthenticatedUser from '~/src/models/UserContext';
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import { IEvent } from '@webstack/components/Calendar/models/IEvent';
 
 // Remember to create a sibling SCSS file with the same name as this component

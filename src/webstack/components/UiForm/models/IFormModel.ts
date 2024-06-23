@@ -1,7 +1,7 @@
 import { IRoute } from "@shared/components/Navbar/data/routes";
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 import { ITraits } from "@webstack/components/UiForm/components/FormControl/FormControl";
-import { UserAddress } from "~/src/models/UserContext";
+import { UserAddress } from "~/src/models/ICustomer";
 
 export type IFormMinMax = {
     value?: number;

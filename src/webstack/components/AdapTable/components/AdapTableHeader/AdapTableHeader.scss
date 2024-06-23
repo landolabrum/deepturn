@@ -8,50 +8,74 @@ $defaultPadding: 15px;
   align-items: center;
   justify-content: space-between;
   margin: 15px 10px 10px;
-  @media(max-width: 900px){
+
+  @media(max-width: 900px) {
     height: auto;
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
-    @media(max-width: 450px){
+
+    @media(max-width: 450px) {
       padding: 10px 5px;
     }
-  }.adaptable-header__search-input{
-    @media(max-width: 900px){
+  }
+
+  .adaptable-header__search-input {
+    @media(max-width: 900px) {
       width: 100%;
     }
-    @media(max-width: 450px){
+
+    @media(max-width: 450px) {
       padding: 0 5px;
       width: calc(100% - 10px);
     }
   }
-  .adaptable-header__table-title { 
+
+  .adaptable-header__table-title {
     display: flex;
     width: 100%;
     align-items: center;
     height: var(--s-element);
     gap: calc($defaultPadding / 2);
     text-transform: capitalize;
-    
+
+    @media(max-width:900px) {
+      flex-direction: column;
+      height: 100%;
+      padding: var(--s-9);
+      width: var(--s-9-width);
+
+    }
+
     .adaptable-header__logo {
-      --ui-icon-width: var(--s-2); 
+      --ui-icon-width: var(--s-2);
       --ui-icon-height: var(--s-2);
       --ui-icon-color: var(--gray-40);
-      @media(max-width:900px){
-        --ui-icon-color: var(--gray-40);
-        --ui-icon-width: var(--s-2); 
-        --ui-icon-height: var(--s-2);
+
+      @media(max-width:900px) {
+        --ui-icon-color: var(--primary);
+        --ui-icon-width: 200px;
+        --ui-icon-height: 200px;
+        transform: scale(400%);
+        height: 200px;
       }
     }
-    
+
     .adaptable-header__title {
       display: flex;
+      font-family: Play;
       width: 100%;
       align-items: center;
       padding: 0;
       height: inherit;
       font-size: var(--s-4);
       font-weight: 500;
+
+      @media(max-width:900px) {
+        font-size: var(--s-3);
+        height: 100%;
+        text-transform: uppercase;
+      }
     }
   }
 
@@ -59,8 +83,9 @@ $defaultPadding: 15px;
     display: flex;
     width: 100%;
     justify-content: flex-end;
-    .adaptable-header__filter{
-      @media(max-width:900px){
+
+    .adaptable-header__filter {
+      @media(max-width:900px) {
         width: 100%;
       }
     }

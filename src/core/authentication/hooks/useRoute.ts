@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useClearance, useUser } from './useUser';
 import { IRoute, useClearanceRoutes } from '@shared/components/Navbar/data/routes';
-import IAuthenticatedUser from '~/src/models/UserContext';
+import IAuthenticatedUser from "~/src/models/ICustomer";
 
 interface ORoute{
   selectedUser:IAuthenticatedUser | undefined;

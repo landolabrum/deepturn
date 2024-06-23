@@ -3,21 +3,9 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import IUITerrain from '../models/IuITerrain';
 
-interface IUiTerrain {
-  flyTo?: [number, number, number];
-  disableBelowTerrain?: boolean;
-  cameraPosition?: [number, number, number];
-  lights?: {
-    ambient?: { color: string | number, intensity: number };
-    directional?: { color: string | number, intensity: number, position?: [number, number, number] };
-  };
-  colors?: { background?: string };
-  terrainOverlay?: { img?: string, repeat?: boolean, opacity?: number };
-  animation?: Array<[number, number, number]>;
-}
-
-const UiTerrain: React.FC<IUiTerrain> = ({
+const UiTerrain = ({
   flyTo,
   disableBelowTerrain = false,
   cameraPosition = [2.6520046469315024, 0.47112981322851, -1.080838656327484],
@@ -34,9 +22,8 @@ const UiTerrain: React.FC<IUiTerrain> = ({
     [9.285526562984671, 0.1480317810843473, -2.3367612794322135],
     [4.217541312568285, 0.6271942882641335, -3.8873331110420266],
   ],
-}) => {
+}:IUITerrain) => {
   const router = useRouter();
-
   const mountRef = useRef<HTMLDivElement | null>(null);
   const [currentAnimationIndex, setCurrentAnimationIndex] = useState(0);
   const [cameraPos, setCameraPos] = useState(cameraPosition);
@@ -53,7 +40,7 @@ const UiTerrain: React.FC<IUiTerrain> = ({
     if (!mount) return;
 
     // Scene setup
-    const scene = new THREE.Scene();
+    const scene:any = new THREE.Scene();
     if (colors.background) {
       scene.background = new THREE.Color(colors.background);
     }
@@ -63,7 +50,7 @@ const UiTerrain: React.FC<IUiTerrain> = ({
     camera.position.set(cameraPos[0], cameraPos[1], cameraPos[2]);
 
     // Renderer setup
-    let renderer: THREE.WebGLRenderer | null = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     mount.appendChild(renderer.domElement);
 
@@ -93,7 +80,7 @@ const UiTerrain: React.FC<IUiTerrain> = ({
     // Load GLB model
     const loader = new GLTFLoader();
     loader.load(
-      '/assets/threeModels/red_sand_desert_canyon4K.glb', // Update this path
+      '/assets/threeModels/red_sand_desert_canyon4K.glb',
       (gltf) => {
         const model = gltf.scene;
         scene.add(model);
@@ -121,19 +108,17 @@ const UiTerrain: React.FC<IUiTerrain> = ({
       },
       undefined,
       (error) => {
-        console.error('An error happened', error);
+        console.error('An error happened during GLTF loading:', error);
       }
     );
 
     const onWindowResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer!.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
     const animate = () => {
-      if (!renderer) return;
-
       requestAnimationFrame(animate);
       controls.update();
       try {
@@ -142,6 +127,7 @@ const UiTerrain: React.FC<IUiTerrain> = ({
         console.error("Renderer error:", error);
         return;
       }
+
       if (isAnimating && animation.length > 0) {
         const targetPosition = animation[currentAnimationIndex];
         const delta = 0.001;
@@ -197,29 +183,29 @@ const UiTerrain: React.FC<IUiTerrain> = ({
       disposeScene();
     };
   }, [
-    animation,
-    cameraPos,
+    // animation,
+    // cameraPos,
     colors.background,
     currentAnimationIndex,
-    disableBelowTerrain,
-    flyTo,
-    isAnimating,
-    lights.ambient,
-    lights.directional,
-    stopAnimation,
-    terrainOverlay?.img,
-    terrainOverlay?.opacity,
-    terrainOverlay?.repeat,
+    // disableBelowTerrain,
+    // flyTo,
+    // isAnimating,
+    // lights.ambient,
+    // lights.directional,
+    // stopAnimation,
+    // terrainOverlay?.img,
+    // terrainOverlay?.opacity,
+    // terrainOverlay?.repeat,
     router.pathname,
   ]);
 
-  if (router.pathname !== '/') return <>sorry, not Index</>;
+  if (router.pathname !== '/') return <>Sorry, not Index</>;
 
   return (
     <>
-      <div className='dev' style={{ fontSize: "10px" }}>
+      <div className="dev" style={{ fontSize: '10px' }}>
         Dev
-        {cameraPos.map((pos, index) => (
+        {cameraPos.map((pos:[number, number, number], index:number) => (
           <div key={index}>{`pos[${index}]: ${pos}`}</div>
         ))}
       </div>

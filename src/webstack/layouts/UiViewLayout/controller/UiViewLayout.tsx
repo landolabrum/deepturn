@@ -16,6 +16,7 @@ export interface IViewLayout {
     actions?: boolean | string[]; // Can be a boolean or an array of strings
     showTitle?: boolean;
     onChange?:(e:any)=>void;
+    variant?:"anchor"
 }
 
 const UiViewLayout: React.FC<IViewLayout> = ({
@@ -25,7 +26,8 @@ const UiViewLayout: React.FC<IViewLayout> = ({
     title,
     actions = false,
     showTitle = false,
-    backBtn = false
+    backBtn = false,
+    variant
 }) => {
     useEffect(() => {}, [currentView]);
     const { view, setView, goBack, last } = useViewState(views, currentView);
@@ -42,7 +44,7 @@ const UiViewLayout: React.FC<IViewLayout> = ({
     return (
         <>
             <style jsx>{styles}</style>
-            <div className='ui-view-layout'>
+            <div className={`ui-view-layout${variant?variant:undefined}`}>
                 {Boolean(backBtn && last !== 'start' )&&(
                     <div className='back-btn'>
                         <div>

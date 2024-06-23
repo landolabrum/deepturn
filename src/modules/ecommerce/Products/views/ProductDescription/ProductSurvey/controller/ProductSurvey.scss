@@ -188,6 +188,7 @@
         }
         @media(max-width: 900px) {
             line-height: 2;
+            padding:var(--s-element) 0;
             font-size: calc(14vw - var(--s-4));
         }
         @media(min-width: 1500px) {

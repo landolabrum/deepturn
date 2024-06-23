@@ -1,0 +1,72 @@
+{
+    "name": "test dBSignUp33",
+    "email": "larz33@gmail.com",
+    "metadata": {
+        "user": {
+            "email": "larz33@gmail.com",
+            "devices": [
+                {
+                    "navigator": {
+                        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                        "platform": "MacIntel",
+                        "language": "en-US",
+                        "languages": [
+                            "en-US",
+                            "en",
+                            "ru",
+                            "la",
+                            "zh",
+                            "zh-CN"
+                        ],
+                        "cookieEnabled": True,
+                        "brands": [
+                            {
+                                "brand": "Chromium",
+                                "version": "124"
+                            },
+                            {
+                                "brand": "Google Chrome",
+                                "version": "124"
+                            },
+                            {
+                                "brand": "Not-A.Brand",
+                                "version": "99"
+                            }
+                        ],
+                        "mobile": False
+                    },
+                    "wan": "194.5.52.8",
+                    "lan": None,
+                    "connection": {
+                        "effectiveType": "4g",
+                        "downlink": 10,
+                        "rtt": 50,
+                        "saveData": False,
+                        "type": "cellular"
+                    },
+                    "device": {
+                        "memory": 8,
+                        "hardwareConcurrency": 10,
+                        "screen": {},
+                        "window": {}
+                    },
+                    "permissions": {
+                        "geolocation": "granted",
+                        "notifications": "prompt",
+                        "camera": "granted",
+                        "microphone": "granted",
+                        "persistent-storage": "prompt"
+                    },
+                    "created": "1718951384766"
+                }
+            ],
+            "password": "burrito"
+        },
+        "merchant": {
+            "mid": "mb1",
+            "name": "deepturn",
+            "url": "http://localhost:3000",
+            "stripeId": "acct_1G38IXIodeKZRLDV"
+        }
+    }
+}

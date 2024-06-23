@@ -3,7 +3,7 @@ import styles from './ContactForm.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
-import IAuthenticatedUser from '~/src/models/UserContext';
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import { mockDateTime } from '@webstack/helpers/MockData';
@@ -33,7 +33,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
       // , value:'larzrandana@gmail.com'
     },
     {
-      name: 'phone', label: 'Phone', type: 'tel', placeholder: '1 (555) 555-5555', required: true,
+      name: 'phone', label: 'Phone', type: 'tel', placeholder: '1 (###) ###-####', required: true,
       // value:'4344343433'
     },
     { name: 'address', label: 'Address', type: 'text', placeholder: 'Your Address', required: true },
@@ -69,7 +69,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
       }
       return acc;
     }, {});
-
+    // formData.devices
     formData.name = `${formData.firstName} ${formData.lastName}`; // Combining firstName and lastName
     delete formData.firstName; // Remove firstName
     delete formData.lastName; // Remove lastName
@@ -89,6 +89,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
       return Boolean(isInitialValue && isEmptyValue);
     });
     const shouldDisable = isComplete.filter(f => f === false)?.length === 0;
+    // console.log({updatedFields, shouldDisable})
     if (shouldDisable !== disabled) setDisabled(shouldDisable);
     return;
   };
@@ -127,7 +128,7 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
   }
   useEffect(() => {
     if(!fields[0]?.value)init()
-  }, [_user]);
+  }, [_user,disabled]);
 
 
   return (
@@ -135,7 +136,6 @@ const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, titl
       <style jsx>{styles}</style>
       <div className='contact-form'>
 
-        {/* {JSON.stringify(fields[0]?.value == undefined)} */}
         {title && <div className='contact-form__title'>{title}</div>}
         <UiForm
           fields={fields}

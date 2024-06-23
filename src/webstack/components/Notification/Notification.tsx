@@ -14,9 +14,16 @@ interface INotificationListItem {
   onClick?: (e: any) => void;
   href?: string;
 }
+interface INotificationApiError {
+  message: string;
+  status: number;
+  detail: string;
+  error:boolean;
+}
 
 export type INotification = {
   list?: INotificationListItem[];
+  apiError?: INotificationApiError;
   confirm?: IConfirm;
   active: boolean;
   persistence?: number;
@@ -77,7 +84,7 @@ const Notification: React.FC = () => {
   }, [context]);
 
   const list = notification?.list;
-
+  const apiErrors:INotificationApiError | undefined = notification?.apiError;
   const handleNotification = () => {
     if (context?.dismissable === undefined) context.dismissable = true;
     if (context?.persistence) {
@@ -99,6 +106,9 @@ const handleClick = (e:any)=>{
     return (
       <>
         <style jsx>{styles}</style>
+        {/* <div className='dev'>
+                  {JSON.stringify(apiErrors)}
+                </div> */}
         <div
           id="app-notification"
           style={notification?.zIndex ? { zIndex: `${notification?.zIndex}` } : {}}
@@ -115,12 +125,22 @@ const handleClick = (e:any)=>{
                 {notification.confirm.statements.map((statement: any, key: number) => {
                   return (
                     <div key={key} className='notification__confirm-btn'>
-                      <UiButton onClick={() => handleClick(statement)} variant={statement.text === 'yes' ? 'primary' : statement?.variant}>
-                        {statement.text || statement.label}
+                      <UiButton onClick={statement?.onClick} variant={statement.text === 'yes' ? 'primary' : statement?.variant}>
+                        {statement.text || statement.label} 
                       </UiButton>
                     </div>
                   );
                 })}
+              </div>
+            }
+            
+            { apiErrors && <div className='notification__api-errors'>
+                <div className='error-message'>
+                  {apiErrors?.message}
+                </div>
+                <div className='error-detail'>
+                  {apiErrors?.detail && Object.entries(apiErrors.detail).map(([d,i])=><div key={d}>{i}</div>)}
+                </div>
               </div>
             }
             {

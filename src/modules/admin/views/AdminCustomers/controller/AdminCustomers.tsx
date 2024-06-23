@@ -4,7 +4,7 @@ import AdminCustomerAdd from '~/src/modules/admin/views/AdminCustomers/views/Adm
 import AdminCustomerList from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerList/AdminCustomerList';
 import AdminCustomerDetails from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerDetail/controller/AdminCustomerDetail';
 import UiButton from '@webstack/components/UiButton/UiButton';
-import IAuthenticatedUser from '~/src/models/UserContext';
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import { useRouter } from 'next/router';
 import UiHeader from '@webstack/components/Header/views/UiHeader/UiHeader';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
@@ -13,13 +13,12 @@ import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout
 const AdminCustomers: React.FC = () => {
   const router = useRouter();
   const query = router?.query;
-
-
   const updateViewUrl = (newView?: string, customer?: IAuthenticatedUser) => {
-    const quer = { ...query, cid: customer?.id || newView};
-
-    console.log(`[ FUNCTION ]: `, { newView, customer, quer });
-    router.push({ query: quer}, undefined, { shallow: true })
+    router.push({ 
+      query: { ...query, cid: customer?.id || newView}},
+      undefined,
+      { shallow: true }
+    );
   };
   const views = {
     modify: <AdminCustomerDetails
@@ -32,9 +31,6 @@ const AdminCustomers: React.FC = () => {
     add: <AdminCustomerAdd />,
   };
 
-  useEffect(() => {
-    // updateViewUrl();
-  }, [query.cid]); // Update on cid or vid change
 
   return (
     <>
@@ -72,16 +68,3 @@ const AdminCustomers: React.FC = () => {
 };
 
 export default AdminCustomers;
-{/* 
-        {view === 'list' && (
-          <AdminCustomerList onSelect={(customer: IAuthenticatedUser) => updateViewUrl('modify', customer)} />
-        )}
-        {view === 'modify' && (
-          <AdminCustomerDetails
-            id={cid}
-            setView={(e: any) => {
-              updateViewUrl(e);
-            }}
-          />
-        )}
-        {view === 'add' && <AdminCustomerAdd />} */}

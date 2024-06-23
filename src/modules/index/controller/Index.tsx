@@ -1,5 +1,5 @@
 import styles from './Index.scss';
-import Deepturn from '../views/Merchants/Deepturn/Deepturn';
+import Deepturn from '../views/Merchants/Deepturn/controller/Deepturn';
 import NirvanaEnergy from '../views/Merchants/NirvanaEnergy/NirvanaEnergy';
 import environment from '~/src/core/environment';
 import { useEffect, useState } from 'react';

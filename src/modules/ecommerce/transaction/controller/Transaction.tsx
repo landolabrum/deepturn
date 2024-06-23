@@ -6,7 +6,7 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import CookieHelper from '@webstack/helpers/CookieHelper';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { dateFormat, numberToUsd } from '@webstack/helpers/userExperienceFormats';
-import IAuthenticatedUser from '~/src/models/UserContext';
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import { useGuest } from '~/src/core/authentication/hooks/useGuest';
 

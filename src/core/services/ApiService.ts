@@ -136,16 +136,16 @@ export default class ApiService {
 
 export class ApiError {
   public status?: number;
-  public code?: string;
+  // public code?: string;
   public message?: string;
   public error?: boolean;
-  public detail?: string
+  public detail?: string;
   // public errorHandlerResult?: ErrorHandlerResult;
   constructor(message?: string, status?: number, code?: string, detail?:string) {
     this.message = message ?? 'Unhandled Error'
     this.status = status;
-    this.detail = detail
-    this.code = code;
+    this.detail = detail;
+    // this.code = code;
     this.error = true;
   }
 }

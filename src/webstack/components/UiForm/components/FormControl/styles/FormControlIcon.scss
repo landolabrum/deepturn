@@ -21,7 +21,9 @@
 
   @extend .d-flex;
   --ui-icon-color: inherit;
-  --ui-icon-size: var(--s-5);
+  --ui-icon-size: inherit;
+  --ui-icon-width: inherit;
+  --ui-icon-height: inherit;
   padding: 0 var(--s-9) 0 var(--s-10);
   &-nav-item {
     justify-content: flex-end;

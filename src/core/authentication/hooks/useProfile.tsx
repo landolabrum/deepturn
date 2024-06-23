@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getService } from "@webstack/common";
-import IAuthenticatedUser from "~/src/models/UserContext";
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import IMemberService from "../../services/MemberService/IMemberService";
 import useLocation from "@webstack/hooks/user/useLocation";
 import { useRouter } from "next/router";
@@ -18,7 +18,7 @@ export interface UserAgentContext {
     mobile: boolean;
     platform: string;
   } | null;
-  public_ip?: string;
+  wan?: string;
 }
 
 // Profile context
@@ -50,7 +50,7 @@ export const useProfile = ({ require }: UseProfileOptions = {}): ProfileContext 
     const userAgent = {
       user_agent: '',
       user_agent_data: null,
-      public_ip: '',
+      wan: '',
     };
     return initialUser ? { ...initialUser, userAgent, lngLat } : undefined;
   });
@@ -71,10 +71,10 @@ export const useProfile = ({ require }: UseProfileOptions = {}): ProfileContext 
         const response = await fetch('https://ipapi.co/json/');
         if (response.ok) {
           const data = await response.json();
-          const public_ip = data.ip;
+          const wan = data.ip;
           setProfile(prevProfile => ({
             ...prevProfile!,
-            userAgent: { ...prevProfile!.userAgent, public_ip }
+            userAgent: { ...prevProfile!.userAgent, wan }
           }));
         } else {
           console.error('Failed to fetch IP address information.');

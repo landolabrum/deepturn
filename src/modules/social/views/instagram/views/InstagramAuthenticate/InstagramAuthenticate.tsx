@@ -8,7 +8,7 @@ import { getService } from '@webstack/common';
 import ISocialService from '~/src/core/services/SocialService/ISocialService';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import { ICustomer } from '~/src/models/UserContext';
+import { ICustomer } from "~/src/models/ICustomer";
 
 // Remember to create a sibling SCSS file with the same name as this component
 
@@ -31,7 +31,7 @@ const InstagramAuthenticate: React.FC<any> = (user: ICustomer): any => {
 
   const socialService = getService<ISocialService>("ISocialService");
   const onSubmit = async (submitFields?: any) => {
-    console.log('[ onSubmit ]', submitFields)
+    // console.log('[ onSubmit ]', submitFields)
     const username = findField(fields, 'username')?.value;
     const password = findField(fields, 'password')?.value;
     const request = {
@@ -41,15 +41,16 @@ const InstagramAuthenticate: React.FC<any> = (user: ICustomer): any => {
     }
     try {
       const response = await socialService.instagramAuthenticate(request);
-      console.log('[ onSubmit ] ( SUCCESS! )', response)
+      // console.log('[ onSubmit ] ( SUCCESS! )', response)
 
     } catch (error: any) {
-      console.log('Instagram [ onSubmit ]( error )', error)
+      console.error('Instagram [ onSubmit ]( error )', error)
 
     }
 
 
   };
+ 
   return (
     <>
       <style jsx>{styles}</style>

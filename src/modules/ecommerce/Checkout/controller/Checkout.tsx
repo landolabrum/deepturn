@@ -8,7 +8,7 @@ import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
 import { useGuest } from '~/src/core/authentication/hooks/useGuest';
 
 import Login from '~/src/modules/authentication/views/Login/controller/Login';
-import IAuthenticatedUser from '~/src/models/UserContext';
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import Collect from '../views/Collect/controller/Collect';
 import CartList from '../../cart/views/CartList/CartList';
 import { useNotification } from '@webstack/components/Notification/Notification';

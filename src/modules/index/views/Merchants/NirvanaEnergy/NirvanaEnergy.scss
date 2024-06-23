@@ -1,8 +1,8 @@
 h2{
-    color: var(--primary-50);
     justify-content: flex-start;
     width: 100%;
     white-space: nowrap;
+    color: var(--primary-50);
     font-size: var(--s-1);
 }
 h3{
@@ -29,6 +29,31 @@ h4{
 .survey{
     width: 100%;
     position: relative;
+}
+
+.nirv,
+ .nirvana-energy__competitor{
+    text-transform: uppercase;
+    font-size: var(--s-4);
+ 
+    
+    font-family: Play;
+}
+.nirv{
+    position: relative;
+    // text-indent: var(--s-1);
+    font-size: var(--s-2);
+    // overflow: visible;
+    justify-content: flex-start;
+    @extend .d-flex;
+    &--icon{
+        //     overflow: visible;
+        @extend .d-flex;
+        width: var(--s-element);
+        --ui-icon-height:var(--s-1);
+        --ui-icon-width:var(--s-1);
+        width: var(--s-element);
+    }
 }
 .nirvana-index{
      @extend .d-flex;

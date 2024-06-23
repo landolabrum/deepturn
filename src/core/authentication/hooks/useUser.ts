@@ -1,7 +1,7 @@
 import { getService } from "@webstack/common";
 import { useEffect, useState } from "react";
 import { Subscription } from "rxjs";
-import IAuthenticatedUser from "~/src/models/UserContext";
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import IMemberService from "../../services/MemberService/IMemberService";
 
 

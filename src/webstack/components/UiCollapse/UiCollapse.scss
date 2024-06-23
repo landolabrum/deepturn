@@ -126,7 +126,7 @@ $wid: calc(100%);
     }
 
     &__action {
-        background-color: var(--gray-70);
+        background-color: var(--gray-90);
         position: absolute;
         top: 0;
         left: 0;
@@ -150,7 +150,8 @@ $wid: calc(100%);
         line-height: 1;
 
         &:hover {
-            background-color: var(--gray-80);
+            background-color: var(--gray-80-o);
+            backdrop-filter: blur(4px);
         }
         &__opened {
             color: var(--gray-40);

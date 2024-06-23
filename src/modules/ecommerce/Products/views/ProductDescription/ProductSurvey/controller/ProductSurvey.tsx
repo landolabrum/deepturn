@@ -12,6 +12,7 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 import SurveyForm from '../views/SurveyForm/SurveyForm';
 import useScrollTo from '@webstack/components/AdapTable/hooks/useScrollTo';
+import useDevice from '~/src/core/authentication/hooks/useDevice';
 
 export const applianceArray: IMoreInfoField[] = [
     { name: "refrigerator", selected: false, value: 6 },
@@ -66,6 +67,7 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     const [view, setView] = useState<string>('start');
     const [message, setMessage] = useState<string | null>(null);
     const [appliances, setAppliances] = useState<IMoreInfoField[]>( survey );
+    const device = useDevice()
 
     const onContactSubmit = async (submittedContactData: any) => {
         setContactData(submittedContactData); // Save the contact data in state
@@ -85,8 +87,8 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
             ...contactDataToUse,
             metadata: {
                 user: {
-                    user_agent: userAgentInfo,
-                    email: contactDataToUse.email
+                    email: contactDataToUse.email,
+                    devices: [{...device, created:`${Date.now()}`}],
                 },
                 merchant: environment.merchant,
                 survey: {

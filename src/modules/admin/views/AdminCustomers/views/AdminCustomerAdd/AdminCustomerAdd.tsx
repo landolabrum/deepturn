@@ -8,7 +8,7 @@ import IAdminService from '~/src/core/services/AdminService/IAdminService';
 import { useLoader } from '@webstack/components/Loader/Loader';
 
 import useCustomerAddForm from '@webstack/components/UiForm/defaults/useCustomerAddForm';
-import {ICustomer} from '~/src/models/UserContext';
+import {ICustomer} from "~/src/models/ICustomer";
 import environment from '~/src/core/environment';
 
 // Remember to create a sibling SCSS file with the same name as this component

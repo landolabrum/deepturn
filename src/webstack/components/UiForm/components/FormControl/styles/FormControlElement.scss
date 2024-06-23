@@ -107,7 +107,7 @@
     &-xl,
     &-xxl {
         height: auto;
-        width: max-content !important;
+        // width: max-content !important;
         line-height: 1.5;
     }
 
@@ -146,12 +146,15 @@
 
     &-xxl {
         font-size: var(--s-2);
+        --ui-icon-width: var(--s-1);
+        // --ui-icon-height: calc(var(--s-element) * 2);
+        line-height: 2.3;
     }
 
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
 
-    &:not(&--warning, &--center, &--glow, &--checkbox, &--primary,&--inherit, &--dark, &--transparent, &--lite, &--flat, &--secondary, &--link,  &--select, &--invalid, &--input, &--textarea, &--signature) {
+    &:not(&--warning, &--center, &--glow, &--checkbox, &--primary, &--inherit, &--dark, &--transparent, &--lite, &--flat, &--secondary, &--link,  &--select, &--invalid, &--input, &--textarea, &--signature) {
         @extend %element-color;
     }
 

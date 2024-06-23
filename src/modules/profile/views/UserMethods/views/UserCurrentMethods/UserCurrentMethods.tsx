@@ -4,7 +4,7 @@ import styles from './UserCurrentMethods.scss';
 
 import { useNotification } from '@webstack/components/Notification/Notification';
 import { IMethod } from '~/src/modules/profile/model/IMethod';
-import IAuthenticatedUser from '~/src/models/UserContext';
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import UserCurrentMethod from '../UserCurrentMethod/UserCurrentMethod';
 
 // Remember to create a sibling SCSS file with the same name as this component

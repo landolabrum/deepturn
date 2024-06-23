@@ -58,7 +58,7 @@ const Authentication: React.FC<any> = (props: any) => {
         break;
       default: break;
     }
-    setNotification({ active: true, list: [{ 'label': label, message: "Sign in to continue." }] });
+    setNotification({ active: true, list: [{ 'label': label, message: "Please wait a few minutes before logging in" }] });
     setView('sign-in');
     setNewCustomerEmail(response.email)
   }

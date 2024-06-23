@@ -10,14 +10,14 @@ export interface UserAgentContext {
       mobile: boolean;
       platform: string;
     } | null;
-    public_ip?: string;
+    wan?: string;
 }
 
 const useUserAgent = () => {
   const [userInformation, setUserInformation] = useState<UserAgentContext>({
     user_agent: '',
     user_agent_data: null,
-    public_ip: '',
+    wan: '',
   });
 
   useEffect(() => {
@@ -36,8 +36,8 @@ const useUserAgent = () => {
         const response = await fetch('https://ipapi.co/json/');
         if (response.ok) {
           const data = await response.json();
-          const public_ip = data.ip;
-          setUserInformation(prevState => ({ ...prevState, public_ip }));
+          const wan = data.ip;
+          setUserInformation(prevState => ({ ...prevState, wan }));
         } else {
           console.error('Failed to fetch IP address information.');
         }
