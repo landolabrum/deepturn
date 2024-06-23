@@ -20,7 +20,34 @@
     width: 100%;
     height: 100%;
 }
+@keyframes fadeOut {
+    from{
+        opacity: 1;
+    }
+    to{opacity: 0;}
+}
+.deepturn__coming-soon{
+    min-height: 900px;
+    @extend .d-flex;
+    flex-direction: column;
+    gap:var(--s-1);
+    align-items: flex-start;
+    max-width: var(--s-9-width);
+    
+    // animation: fadeOut 8s forwards ease-out;
+    &--title{
+        font-size:var(--s-element);
+        color:var(--gray-10);
+        max-width: 80vw;
+    }
+    &--body{
+        max-width: 80vw;
+        color:var(--gray-40);
+        line-height: 1.5;
+        white-space: wrap;
 
+    }
+}
 .deepturn__business-select {
     @extend .d-flex;
     flex-direction: column;
@@ -78,7 +105,7 @@
 
     max-width: 100vw;
     overflow: hidden;
-    background:radial-gradient(circle, var(--gray-90) 34%, var(--black) 100%);
+    background:radial-gradient(circle, var(--dark) 34%, #040404 100%);
     flex-wrap: wrap;
     @extend .d-flex;
     width: 100%;

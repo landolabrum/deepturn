@@ -12,7 +12,8 @@ import AireHotelAbout from '../merchantViews/AireHotelAbout/AireHotelAbout';
 const AboutPage:React.FC<any> = () => {
   const {mid}=environment.merchant;
   const views = {
-    'ah1':<AireHotelAbout/>
+    'ah1':<AireHotelAbout/>,
+    'mb1':<h1 className="h1">Coming Soon</h1>
   }
   return (
     <>

@@ -418,7 +418,7 @@
         var(--gray-30), var(--gray-70), var(--secondary),
         var(--gray-40), var(--gray-50), var(--gray-50));
     @include variant('dark',
-        var(--black), var(--primary-50), var(--primary-50),
+        var(--dark), var(--primary-50), var(--primary-50),
         var(--gray-80-o), var(--primary-50), var(--primary-50),
         var(--primary-o), var(--gray-100), var(--gray-70));
     @include variant('secondary',
@@ -521,7 +521,10 @@
             }
         }
     }
-
+    &--dark{
+        color:var(--green-10);
+        background: radial-gradient(circle,#130218 70%, #03092c 100%,)  !important;
+    }
     // FORM CONTROL ELEMENTS - ELEM TYPES
     &--select:not( &--flat) {
         color: var(--gray-90);

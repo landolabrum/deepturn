@@ -41,8 +41,28 @@ const Deepturn = () => {
     return () => window.removeEventListener('DOMContentLoaded', handleLoad);
 
   }, []);
+ 
   const DeepturnCommercial = () => {
 
+  }
+  const ComingSoon = () =>{
+    return <>
+    <style jsx>{styles}</style>
+    <div className='deepturn__coming-soon'>
+    <div className='deepturn__coming-soon--title'>
+Coming Soon
+    </div>
+    <div>
+    <pre className='deepturn__coming-soon--body'>
+    Digital marketing is the vehicle to take the insights from our Behavioral Microtargeting program and deliver the right messages to the right individuals in meaningful ways online.
+    </pre>
+
+    <pre className='deepturn__coming-soon--body'>
+Our full-service in-house marketing operation gives you access to a powerful collaboration of behavioral insight and industry-leading advertising technology, with a transparent pricing structure driven solely by your success.
+    </pre>
+    </div>
+    </div>
+    </>
   }
   const DeepturnEntitySelect = () => {
     const BusinessSelectMarquee = ({ btnText, title, description, onClick }: { btnText: string, title?: string, description: string, onClick?: (e: any) => void }) => <>
@@ -56,7 +76,16 @@ const Deepturn = () => {
         <div className='business-select--marquee__description'>
           {description}
         </div>
-        <UiButton variant="primary" traits={{ beforeIcon: `${environment.merchant.name}-logo` }} size='xxl'>visit {capitalizeAll(btnText)}</UiButton>
+        <UiButton 
+          variant="primary"
+          traits={{ 
+            beforeIcon: `${environment.merchant.name}-logo`
+            }}
+          size='xxl'
+          onClick={()=>setView('coming-soon')}
+          // FUTURE USAGE
+          // onClick={()=>setView(btnText)}
+          >visit {capitalizeAll(btnText)}</UiButton>
       </div></>
     return <>
       <style jsx>{styles}</style>
@@ -77,7 +106,8 @@ const Deepturn = () => {
   }
   const views = {
     enter: <div><UiButton variant='dark' size='xxl' onClick={()=>setView('businessSelect')}>&zwnj; &zwnj; &zwnj; enter &zwnj; &zwnj; &zwnj; </UiButton></div>,
-    businessSelect: <DeepturnEntitySelect />
+    businessSelect: <DeepturnEntitySelect />,
+    "coming-soon":<ComingSoon/>
   }
   return (
     <>
@@ -96,14 +126,15 @@ bevel: {
 },
 color:"#303030",
 // backgroundColor:"#e0e0e0",
-metalness: 8,
+metalness: 15,
 // roughness: .51,
 // opacity: opacity !== 0 && opacity * .1 || .1,
 // opacity: .7,
 icon: "deepturn-logo",
 // texture: "/assets/backgrounds/lava1.jpeg",
 // bumpMap:"/assets/textures/texture-leaves.jpeg",
-size: width > 1100?{ x: 100, y: 100, z: 9 }:{ x: 300, y: 300, z: 9 },
+texture:"/assets/backgrounds/contour_bg.gif",
+size: width > 1100?{ x: 100, y: 100, z: 9 }:{ x: 70, y: 70, z: 9 },
 animate: { rotate: { y: -2, x: 1, speed: .0007 } }
 }}
 // metalness={5}
