@@ -755,6 +755,7 @@ export default class MemberService
   protected appendHeaders(headers: { [key: string]: string }) {
     super.appendHeaders(headers);
     const token = this.getCurrentUserToken();
+    console.log("[ TOKEM ]", token)
     if (token) {
       headers["Authorization"] = `Bearer ${token}`;
     }

@@ -10,10 +10,14 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 import useCustomerAddForm from '@webstack/components/UiForm/defaults/useCustomerAddForm';
 import {ICustomer} from "~/src/models/ICustomer";
 import environment from '~/src/core/environment';
+import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import capitalize from '@webstack/helpers/Capitalize';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const AdminCustomerAdd: React.FC = () => {
+  const {openModal, closeModal, isModalOpen}=useModal();
   const [loader, setLoader] = useLoader();
 const formDefaultCustomerAdd = useCustomerAddForm()
   
@@ -51,7 +55,7 @@ const formDefaultCustomerAdd = useCustomerAddForm()
   };
 
   const adminService = getService<IAdminService>('IAdminService');
-  let notificationMessage = { name: 'error', label: 'Error!', message: "unable to create member" };
+  let modalContext = { name: 'error', label: 'Error!', message: "unable to create member" };
   const handleAddCustomer = async (e: any) => {
     const customerName = `${findField(customer, 'first_name').value} ${findField(customer, 'last_name').value}`;
     setLoader({ active: true, body: `Creating ${customerName}` });
@@ -75,21 +79,33 @@ const formDefaultCustomerAdd = useCustomerAddForm()
     const handleSubmit = async () => {
       try {
         const createCustomerResponse = await adminService.createCustomer(customerData);
-        notificationMessage = {
-          name: 'success',
-          label: 'Success',
-          message: `Successfully created Customer: ${createCustomerResponse?.name}`
-        }
-      } catch (e: any) { console.log('[ Create Customer ERROR ]', e) }
+        console.log({createCustomerResponse})
+       if(createCustomerResponse)return createCustomerResponse;
+      } catch (e: any) { console.log('[ Create Customer ERROR ]', e); return e }
     }
-    handleSubmit().then(() => {
+    const ModalBody = (response:any) =>{
+      return Object.entries(response).map(([k,v]:any)=>{
+        if(k!== 'data')return <>
+        <style jsx>{styles}</style>
+        <div key={k} className='admin-customer-add__modal-body'>
+          <div className='body--key'>{capitalize(k)}</div>
+          <div className='body--value'>{typeof v == 'boolean' ? <UiIcon icon={v?'fa-check':"fa-xmark"}/>:v}</div>
+        </div></>
+    })
+    }
+    handleSubmit().then((a) => {
+      console.log("[ handleSubmit().then((a) ]",{a})
+      openModal({
+        title: `${a.status}`,
+        children:ModalBody(a)
+      })
       setLoader({ active: false })
     })
   }
 
   useEffect(() => {
     if (!customer) setCustomer(formDefaultCustomerAdd);
-  }, []);
+  }, [handleAddCustomer]);
   return (
     <>
       <style jsx>{styles}</style>
@@ -97,6 +113,7 @@ const formDefaultCustomerAdd = useCustomerAddForm()
         <div className='admin-customer-add__title'>
           add customer
         </div>
+        {JSON.stringify(customer)}
         <UiForm
           fields={customer}
           onChange={updateField}

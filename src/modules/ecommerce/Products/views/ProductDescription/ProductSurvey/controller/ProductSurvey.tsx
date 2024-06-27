@@ -14,7 +14,7 @@ import SurveyForm from '../views/SurveyForm/SurveyForm';
 import useScrollTo from '@webstack/components/AdapTable/hooks/useScrollTo';
 import useDevice from '~/src/core/authentication/hooks/useDevice';
 
-export const applianceArray: IMoreInfoField[] = [
+export const applianceArray: IProductSurveyField[] = [
     { name: "refrigerator", selected: false, value: 6 },
     { name: "freezer", selected: false, value: 6 },
     { name: "tv", selected: false, value: 2 },
@@ -38,21 +38,21 @@ export const applianceArray: IMoreInfoField[] = [
     { name: "other", selected: false, value: 10 },
 ];
 
-export type IMoreInfoField = {
+export type IProductSurveyField = {
     name: string;
     selected?: boolean;
     value?: any;
 };
 
-interface IProductMoreInfoForm {
+interface IProductSurvey {
     id: string;
     title?: string;
     startButton?: string;
     subtitle?: string;
-    survey?: IMoreInfoField[];
+    survey?: IProductSurveyField[];
 }
 
-const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
+const ProductSurvey: React.FC<IProductSurvey> = ({
     survey = applianceArray,
     startButton,
     title = 'Appliances to Power',
@@ -66,7 +66,7 @@ const ProductSurvey: React.FC<IProductMoreInfoForm> = ({
     const [contactData, setContactData] = useState(null);
     const [view, setView] = useState<string>('start');
     const [message, setMessage] = useState<string | null>(null);
-    const [appliances, setAppliances] = useState<IMoreInfoField[]>( survey );
+    const [appliances, setAppliances] = useState<IProductSurveyField[]>( survey );
     const device = useDevice()
 
     const onContactSubmit = async (submittedContactData: any) => {

@@ -6,53 +6,69 @@ import { useRouter } from 'next/router';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import useAdminCustomer from '../hooks/useAdminCustomer';
-import deleteCustomer from '../functions/deleteCustomer';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
-import { customerPayload } from '../functions/customerPayload';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
+import useAdminDeleteCustomer from '../hooks/useAdminCustomerDelete';
 
 const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, setView: (e: any) => void }) => {
   const router = useRouter();
   const customer_id = router?.query?.cid && String(router?.query?.cid) || id;
-  const [notification, setNotification] = useNotification();
-  const { customer, setCustomer, data: readOnlyData } = useAdminCustomer(customer_id);
-  const { isModalOpen, openModal, closeModal } = useModal();
-  const handleDelete = async () => {
-    const deleted: any = await deleteCustomer(customer_id);
-    if (deleted) {
-      let notificationContext = { label: "Error", message: `Error Deleting: ${customer_id}` };
-      if (deleted.deleted) notificationContext = { label: "Success", message: `Deleted: ${customer_id}` };
-      closeModal();
-      router.query.cid = undefined;
-      setNotification({
-        active: true,
-        list: [
-          notificationContext
-        ]
+  const { customer, setCustomer, data: readOnlyData, initialCustomer } = useAdminCustomer(customer_id);
+
+  const handleDelete = useAdminDeleteCustomer(id);
+  const handleUpdate = () => {
+    let request: any = { metadata: {} };
+    const fieldsToRequestDict = (arr: any) => {
+      let fields: any = {};
+      Object.entries(arr).forEach(([k, a]: any) => {
+        fields[a?.name] = a?.value;
       });
-    }
-  };
+      return fields;
+    };
 
-  const confirmDelete = () => {
+    const findChangedFields = (newData: any, oldData: any) => {
+      let changedFields: any = {};
+      Object.entries(newData).forEach(([key, value]) => {
+        if (oldData[key] !== value) {
+          changedFields[key] = value;
+        }
+      });
+      return changedFields;
+    };
+    type IFormMap = [formName: string, fields:any];
+    customer && Object.entries(customer).forEach(([formName, fields]:IFormMap) => {
+      const initialFields = initialCustomer[formName] || [];
+      const newFields = fieldsToRequestDict(fields);
+      const changedFields = findChangedFields(newFields, fieldsToRequestDict(initialFields));
 
-    openModal({
-      confirm: {
-        title: 'Are you sure you want to delete?',
-        statements: [
-          { label: 'Yes', onClick: handleDelete },
-          { label: 'Cancel', onClick: closeModal }
-        ]
+      if (formName === 'contact') {
+        request = { ...request, ...changedFields };
+        // FIRST LEVEL
+      } else if (["address", 'invoice_settings', 'methods'].includes(formName)) {
+        if (Object.keys(changedFields).length > 0) {
+          request[formName] = changedFields;
+        }
+      } else if (formName === 'name') {
+        request.name = fields[0].value;
+      } else {
+        if (!request.metadata[formName]) {
+          request.metadata[formName] = {};
+        }
+        if (Object.keys(changedFields).length > 0) {
+          request.metadata[formName] = changedFields;
+        }
       }
     });
+
+    console.log("[ REQ ]", request);
   };
+
+
 
   if (customer) {
     return (
       <>
         <style jsx>{styles}</style>
-        {/* {JSON.stringify(customerPayload(customer))} */}
         <div className='admin-customer-detail'>
           {readOnlyData && Object.entries(readOnlyData).map(([listName, readOnlyList]: any) => {
             return <div
@@ -82,10 +98,10 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
             ))}
           </div>
           <div className='admin-customer-detail__actions'>
-            <UiButton>Update</UiButton>
+            <UiButton onClick={handleUpdate}>Update</UiButton>
           </div>
           <div style={{ marginLeft: "auto" }}>
-            <UiButton variant='error' onClick={confirmDelete}>Delete</UiButton>
+            <UiButton variant='error' onClick={handleDelete}>Delete</UiButton>
           </div>
         </div>
       </>

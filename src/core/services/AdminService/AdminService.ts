@@ -86,10 +86,14 @@ export default class AdminService
   };
 
   public async createCustomer(customer: any): Promise<any> {
-    if (customer) {
-      const encryptedCustomerData = encryptString(JSON.stringify(customer), ENCRYPTION_KEY);
-      return await this.post<any, any>(`/usage/admin/customer/create`, {data:encryptedCustomerData});
+    try{
+      if (customer) {
+        const encryptedCustomerData = encryptString(JSON.stringify(customer), ENCRYPTION_KEY);
+        return await this.post<any, any>(`/usage/admin/customer/create`, {data:encryptedCustomerData});
+      }
+      if (!customer) throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
+    }catch(e:any){
+      console.error("[ ERROR CREATING CUSTOMER ]", e)
     }
-    if (!customer) throw new ApiError("NO MEMBER DATA PROVIDED", 400, "MS.SI.02");
   };
 }

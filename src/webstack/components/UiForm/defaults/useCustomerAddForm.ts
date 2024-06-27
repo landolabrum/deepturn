@@ -42,8 +42,8 @@ const useCustomerAddForm = () => {
         {
           name: 'clearance',
           label: 'clearance',
-          value: 12,
-          min: 1,
+          value: 1,
+          min: 0,
           max: others.creation,
           type: 'pill',
           required: true

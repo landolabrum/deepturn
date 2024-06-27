@@ -14,15 +14,15 @@
     @extend .d-flex;
     gap: var(--s-4);
     flex-direction: column;
-    padding: var(--s-4) var(--s-4) var(--s-1);
+    width: 100%;
     border-radius: var(--border-radius);
     background-color: var(--gray-90);
-    width: calc(var(--s-4-width) - 2px);
     min-height: 400px;
     border: solid 1px var(--gray-80);
     @media(max-width: 900px) {
         gap: var(--s-9);
-        padding: var(--s-4) var(--s-9) var(--s-1);
+        background-color: #f30 !important;
+        width: var(--s-9-width);
     }
 }
 
@@ -38,6 +38,7 @@
     &--status {
         @extend .d-flex;
         gap: var(--s-9);
+        padding:var(--s-9);
         text-transform: capitalize;
         font-size: var(--s-element);
         --ui-icon-size: var(--s-1);
@@ -45,11 +46,9 @@
         width: max-content;
         border: solid var(--s-9);
         border-radius: var(--border-radius);
-        padding: var(--s-9) var(--s-6);
         @media(max-width: 900px) {
             gap: var(--s-9);
             width: var(--s-9-width);
-            padding: var(--s-4) 0 var(--s-1);
         }
     }
 
@@ -88,6 +87,8 @@
 
     &__contact-form {
         @extend .product-survey-card;
+        width: calc(var(--s-9-width) - 2px);
+        padding: var(--s-1) var(--s-9) var(--s-5);
     }
 
     &__description {
@@ -162,6 +163,7 @@
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: var(--primary-o);
+        width: calc(var(--s-9-width) - 2px);
         .button-text {
             @extend .d-flex;
         }
@@ -188,7 +190,6 @@
         }
         @media(max-width: 900px) {
             line-height: 2;
-            padding:var(--s-element) 0;
             font-size: calc(14vw - var(--s-4));
         }
         @media(min-width: 1500px) {

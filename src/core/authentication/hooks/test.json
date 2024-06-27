@@ -1,0 +1,106 @@
+{
+    "address": null,
+    "clearance": 1,
+    "password_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGRlZXB0dXJuLmNvbSJ9.O9KJH1SaxXZ8UfOIHI7803Z-0Eym-OzwMxRXAenTRW4",
+    "password": "burrito",
+    "email": null,
+    "email_verified": true,
+    "type": "customer",
+    "devices": [
+        {
+            "wan": "104.28.192.150",
+            "lan": "916f6df9-615d-4285-99c1-0889a46355b8.local",
+            "user_agent": null,
+            "user_agent_data": null,
+            "navigator": {
+                "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                "platform": "MacIntel",
+                "language": "en-US",
+                "languages": [
+                    "en-US",
+                    "en",
+                    "ru",
+                    "la",
+                    "zh",
+                    "zh-CN"
+                ],
+                "cookieEnabled": true,
+                "brands": [
+                    {
+                        "brand": "Chromium",
+                        "version": "124"
+                    },
+                    {
+                        "brand": "Google Chrome",
+                        "version": "124"
+                    },
+                    {
+                        "brand": "Not-A.Brand",
+                        "version": "99"
+                    }
+                ],
+                "mobile": false
+            },
+            "connection": {
+                "effectiveType": "4g",
+                "downlink": 10,
+                "rtt": 50,
+                "saveData": false,
+                "type": "4g"
+            },
+            "device": {
+                "memory": 8,
+                "hardwareConcurrency": 10,
+                "screen": {
+                    "width": 3360,
+                    "height": 1890,
+                    "colorDepth": 30
+                },
+                "window": {
+                    "innerWidth": 1190,
+                    "innerHeight": 1744
+                }
+            },
+            "permissions": {
+                "geolocation": "granted",
+                "notifications": "prompt",
+                "camera": "prompt",
+                "microphone": "prompt",
+                "persistent_storage": null
+            },
+            "device_settings": null,
+            "authorization_data": null,
+            "cookies": null,
+            "created": null
+        },
+        {
+            "wan": "10.2.0.1",
+            "lan": null,
+            "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            "user_agent_data": null,
+            "navigator": {
+                "userAgent": null,
+                "platform": "unknown",
+                "language": null,
+                "languages": null,
+                "cookieEnabled": null,
+                "brands": [
+                    {
+                        "brand": "unknown",
+                        "version": "unknown"
+                    }
+                ],
+                "mobile": false
+            },
+            "connection": null,
+            "device": null,
+            "permissions": null,
+            "device_settings": null,
+            "authorization_data": null,
+            "cookies": null,
+            "created": 1719453299592
+        }
+    ],
+    "social": [],
+    "server_url": "tiktok.soy"
+}

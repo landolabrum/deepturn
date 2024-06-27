@@ -91,7 +91,7 @@ const NirvanaEnergy = () => {
           </h2>
           <h4>
             On and Off-grid battery back up
-            If you&apos;re thinking about going off grid or want to learn more about backup battery systems, it&apos;s time to create your Nirvana Solar.
+            If you&apos;re thinking about going off grid or want to learn more about backup battery systems, it&apos;s time to create your Nirvana.
           </h4>
           <h2>
             The Importance of Backup Batteries

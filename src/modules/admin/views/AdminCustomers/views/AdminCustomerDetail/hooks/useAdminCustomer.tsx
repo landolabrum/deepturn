@@ -1,4 +1,4 @@
-import { getService } from "@webstack/common";
+ import { getService } from "@webstack/common";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import { findField } from "@webstack/components/UiForm/functions/formFieldFunctions";
 import { IFormField } from "@webstack/components/UiForm/models/IFormModel";
@@ -8,7 +8,8 @@ import IAdminService from "~/src/core/services/AdminService/IAdminService";
 const useAdminCustomer = (customer_id?: string) => {
   const adminService = getService<IAdminService>('IAdminService');
   const [customer, setState] = useState<any>();
-  const [data, setData]=useState<object | undefined>();
+  const [initialCustomer, setInitialCustomer] = useState<any>();
+  const [data, setData] = useState<object | undefined>();
   const [notification, setNotification] = useNotification();
 
   const getCustomer = async () => {
@@ -33,8 +34,8 @@ const useAdminCustomer = (customer_id?: string) => {
         if (testFirstLevel(value)) {
           handleField(keyToUse, { name: key, value });
         } else if (value?.constructor === Object) {
-          if(key != "data")initForms(value, key);
-          else setData({...data, [keyToUse]:value})
+          if (key != "data") initForms(value, key);
+          else setData({ ...data, [keyToUse]: value });
         } else if (value?.constructor === Array) {
           value.forEach((val: any, listVal: number) => {
             // DEVICES[]
@@ -56,10 +57,10 @@ const useAdminCustomer = (customer_id?: string) => {
     if (customer_id && !customer) {
       try {
         const response = await adminService.getCustomer(customer_id);
-        console.log("[ useAdminCustomer ( Response ) ]", response);
         if (!response?.error) {
           initForms(response);
           setState(context);
+          setInitialCustomer(context);  // Set the initial customer data
         } else {
           setNotification({ active: true, dismissable: true, apiError: response });
           console.error("Couldn't get customer");
@@ -72,7 +73,6 @@ const useAdminCustomer = (customer_id?: string) => {
   };
 
   const setCustomer = ({ form, e }: { form: string, e: any }) => {
-    console.log("[ handleCustomer ]: ", e);
     const { name, value } = e.target;
     const currentForm: IFormField[] = customer[form];
     const fieldToChange = findField(currentForm, name);
@@ -86,14 +86,13 @@ const useAdminCustomer = (customer_id?: string) => {
         [form]: updatedForm
       }));
     }
-    console.log({ currentForm, fieldToChange, field: e, name });
   };
 
   useEffect(() => {
     getCustomer();
   }, [customer_id, customer]);
 
-  return { customer, setCustomer, data };
+  return { customer, setCustomer, data, initialCustomer };
 };
 
 export default useAdminCustomer;

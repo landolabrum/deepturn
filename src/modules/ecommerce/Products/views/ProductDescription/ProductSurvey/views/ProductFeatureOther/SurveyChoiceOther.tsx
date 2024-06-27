@@ -4,10 +4,10 @@ import styles from './SurveyChoiceOther.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import capitalize from '@webstack/helpers/Capitalize';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
-import { IMoreInfoField } from '../../controller/ProductSurvey';
+import { IProductSurveyField } from '../../controller/ProductSurvey';
 // Remember to create a sibling SCSS file with the same name as this component
 interface ISurveyChoiceOther{
-     choice: IMoreInfoField;
+     choice: IProductSurveyField;
      value: any;
      onChange:(e:any)=>void;
      onSubmit:(e:any)=>void;

@@ -11,6 +11,7 @@ import Login from '~/src/modules/authentication/views/Login/controller/Login';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
+import useDevice from '~/src/core/authentication/hooks/useDevice';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IVerifyEmail {
@@ -79,12 +80,14 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
     });
     setState({ ...state, fields: updatedFields });
   };
+  const device = useDevice();
   const onSubmit = async () => {
     const newPassword = state?.fields?.find((f: IFormField) => f.name == 'password')?.value;
     let customer = state.customer;
     customer.metadata.user.password = newPassword;
+    customer.metadata.user.devices = [device]
     try {
-
+      console.log("[ verify_email (CUSTOMER) ]", customer)
       const updateMember = await MemberService.modifyCustomer(customer);
       if (updateMember) {
         // console.log(updateMember)
@@ -96,6 +99,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
     }
   }
   const handleLoginModal = () => {
+    console.log("[ handleLoginModal ]")
     openModal({ children: <Login email={state.customer.email} onSuccess={(e) => JSON.stringify(e)} /> })
   }
   useEffect(() => {

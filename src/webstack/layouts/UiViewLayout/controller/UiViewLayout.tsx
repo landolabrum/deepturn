@@ -44,7 +44,7 @@ const UiViewLayout: React.FC<IViewLayout> = ({
     return (
         <>
             <style jsx>{styles}</style>
-            <div className={`ui-view-layout${variant?variant:undefined}`}>
+            <div className={`ui-view-layout ${variant?`ui-view-layout--${variant}`:''}`}>
                 {Boolean(backBtn && last !== 'start' )&&(
                     <div className='back-btn'>
                         <div>
