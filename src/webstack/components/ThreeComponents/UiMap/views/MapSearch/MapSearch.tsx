@@ -31,7 +31,7 @@ const MapSearch: React.FC<any> = ({handleSearch, searched}:any) => {
         <>
             <style jsx>{styles}</style>
             <div className='map-search'>
-                <UiInput name='address' variant='transparent round' placeholder={searchPlaceholder} value={searched} onChange={handleSearch} />
+                <UiInput  name='address' size='xl' variant='transparent round' placeholder={searchPlaceholder} value={searched} onChange={handleSearch} />
             </div>
         </>
     );

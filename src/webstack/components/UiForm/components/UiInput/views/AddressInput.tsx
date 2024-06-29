@@ -14,9 +14,11 @@ interface IAddressInput {
   inputClasses?: string;
   label?: string;
   error?: string | null;
+  size?: any;
+  placeholder?:string;
 }
 
-const AutocompleteAddressInput = ({ address, setAddress, variant, traits, inputClasses, label, error }: IAddressInput) => {
+const AutocompleteAddressInput = ({ address, placeholder, size, setAddress, variant, traits, inputClasses, label, error }: IAddressInput) => {
   const inputRef = useRef<any>();
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [display, setDisplay] = useState<string | undefined>("");
@@ -47,7 +49,7 @@ const AutocompleteAddressInput = ({ address, setAddress, variant, traits, inputC
   };
 
   const handleDisplay = useCallback(() => {
-    const addressDisplay = address ? 
+    const addressDisplay = address ?
       `${address?.line1 ? address?.line1 + ', ' : ''
       }${address?.line2 ? address?.line2 + ' ' : ''
       }${address?.city ? address?.city + ' ' : ''
@@ -104,9 +106,10 @@ const AutocompleteAddressInput = ({ address, setAddress, variant, traits, inputC
       <style jsx>{styles}</style>
       <style jsx>{aStyles}</style>
       <FormControl
+        size={size}
         error={error}
         label={label}
-        traits={{...traits, variant:"address"}}
+        traits={{ ...traits, variant: "address" }}
         variant={variant}
       >
         <input
@@ -115,7 +118,7 @@ const AutocompleteAddressInput = ({ address, setAddress, variant, traits, inputC
           id="autocomplete-address"
           type="text"
           ref={inputRef}
-          placeholder="Enter address"
+          placeholder={placeholder || "Enter address"} 
           value={display}
           name="address"
           onChange={handleInputChange}

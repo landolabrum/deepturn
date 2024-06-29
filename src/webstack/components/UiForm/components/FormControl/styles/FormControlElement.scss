@@ -141,12 +141,15 @@
     }
 
     &-xl {
-        font-size: var(--s-3);
+        font-size: var(--s-4);
+        --ui-icon-width: var(--s-2);
+        padding: var(--s-7) var(--s-3) !important;
     }
 
     &-xxl {
         font-size: var(--s-2);
         --ui-icon-width: var(--s-1);
+        height: var(--s-xxl);
         // --ui-icon-height: calc(var(--s-element) * 2);
         line-height: 2.3;
     }

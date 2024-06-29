@@ -108,7 +108,7 @@ input, textarea {
 *::placeholder {
   font-style: italic;
   padding: 0;
-  font-size: 16px;
+  font-size: inherit;
   @keyframes fadeIn {
     0%{opacity: 0;}
     100%{opacity: 0;}

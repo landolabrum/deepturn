@@ -101,11 +101,13 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
       {props.name == 'address' && (
         <AutocompleteAddressInput
           label={props.label}
+          placeholder={props.placeholder}
           inputClasses={inputClasses}
           traits={{
             ...props.traits
           }}
           error={props.error}
+          size={size}
           address={value}
           variant={props.variant}
           setAddress={handleChange}

@@ -49,6 +49,12 @@
     // }
   }
 
+  @media (min-width: 1100px) {
+    @media screen and (max-width: calc(1260px - calc(var(--s-4) * 2))) {
+      padding: 0 var(--s-4);
+      width: 0 var(--s-4-width);
+    }
+  }
   @media (max-width: 1100px) {
     justify-content: flex-end;
   }
@@ -184,7 +190,7 @@
       display: none;
 
       &--hide {
-        border: solid 1px #F30;
+        // border: solid 1px #F30;÷
         // display: none;
       }
 
@@ -194,8 +200,10 @@
     }
   }
 
-  @media (max-width: 1100px) {
-    // background-color: transparent;
+  @media (min-width: 1100px) {
+    // background-color: #f30 !important;
+
+
   }
 }
 

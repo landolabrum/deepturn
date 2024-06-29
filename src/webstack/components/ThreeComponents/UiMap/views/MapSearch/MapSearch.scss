@@ -1,3 +1,6 @@
 .map-search{
     min-width: 300px;
+    @media (max-width: 1100px) {
+        min-width: 70vw;
+    }
 }

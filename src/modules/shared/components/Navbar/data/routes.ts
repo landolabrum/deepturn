@@ -37,6 +37,11 @@ export const routes: IRoute[] = [
     hide: true,
   },
   {
+    href:"/location",
+    hide: true,
+    mid: "mb1",
+  },
+  {
     href:"/verify",
     hide: true,
   },
@@ -147,7 +152,8 @@ export const pruneRoutes = (pruneLabels: string[]) => {
       pruned.push(...item.items);
     } else {
       if (item.label === undefined) pruned.push(item);
-      if (item.label && !pruneLabels.includes(item.label)) pruned.push(item);
+      // else if (item.mid === environment.merchant.mid) pruned.push(item);
+      else if (item.label && !pruneLabels.includes(item.label)) pruned.push(item);
     }
   });
   return pruned;

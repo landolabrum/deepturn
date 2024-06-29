@@ -75,7 +75,7 @@
   --box-shadow-sm: 2px 2px 5px rgba(23, 23, 23, 0.5);
   --box-shadow-xl: 0px 4px 6px rgba(23, 23, 23, 0.3),
     0px 2px 4px rgba(64, 64, 64, 0.2), 0px 10px 10px rgba(23, 23, 23, 0.3);
-
+  --s-xxl: 50px;
   --s-1: 32px;
   --s-2: 28px;
   --s-3: 24px;

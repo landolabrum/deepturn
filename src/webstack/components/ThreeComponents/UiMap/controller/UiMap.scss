@@ -55,22 +55,22 @@
 
   &-tools {
     @extend .d-flex;
-    gap: var(--s-9);
+    gap: var(--s-3);
     cursor: pointer;
     color: var(--white);
     --ui-icon-color: var(--white);
+    --ui-icon-size: var(--s-1);
     position: absolute;
     bottom: var(--s-element);
     left: var(--s-9);
     right: var(--s-9);
-    bottom: 0;
+    bottom: var(--s-9);
     padding: var(--s-1);
     --ui-icon-color: var(--gray-30);
     animation-delay: 1s;
     animation: fadein 1s ease-in forwards;
     transition: all 1s ease-in-out;
     height: max-content;
-
   
   }
 }

@@ -3,7 +3,7 @@
  justify-content: center;
  align-items: center;
 }
-.description{
+.location-request{
     @extend .d-flex;
     flex-direction: column;
     gap:var(--s-9);

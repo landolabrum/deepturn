@@ -1,6 +1,6 @@
 // merchants.config.js
 module.exports = {
-    deploy:"nirv1",
+    deploy:"ah1",
     merchants: {
       mb1: {
         mid: "mb1",

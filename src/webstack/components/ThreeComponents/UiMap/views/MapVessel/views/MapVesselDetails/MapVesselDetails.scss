@@ -63,10 +63,14 @@ $walkmanShadow: #808080;
     position: fixed;
     right: 0;
     height: 100vh;
-
     @media(max-width: 1100px) {
         height: unset;
-        width: calc(100% - 20px);
+        // background-color: #f30 !important;
+        min-height: 66vh;
+
+        width: var(--s-9-width);
+        
+        // padding: var(  --s-9);
         right: auto;
         min-width: 110px;
         bottom: var(--s-5);
@@ -101,16 +105,17 @@ $walkmanShadow: #808080;
     padding: var(--s-5) var(--s-9);
     position: relative;
     overflow: hidden;
+    
     border-radius: var(--border-radius);
     overflow-y: auto;
     right: var(--s-9);
-    background-color: var(--yellow-50);
+    background-color: var(--gray-70);
 
     // overflow: visible;
 
     box-shadow: 
-    inset calc(var(--s-12) * -1)  calc(var(--s-12) * -1)  var(--s-11) var(--s-11) var(--red-50),
-    inset 0 0 var(--s-11) var(--s-11) var(--blue-10),
+    inset calc(var(--s-12) * -1)  calc(var(--s-12) * -1)  var(--s-11) var(--s-11) var(--gray-80),
+    inset 0 0 var(--s-11) var(--s-11) var(--gray-70),
     // inset var(--s-12) calc(var(--s-12) * -1) var(--s-9) var(--s-9) var(--yellow-10-o),
     // inset 0 0 var(--s-7) var(--s-9) var(--yellow-70-o),
     // inset -2px -2px var(--s-9) var(--s-7) var(--yellow-70)
@@ -120,7 +125,7 @@ $walkmanShadow: #808080;
         border: none;
         height: calc(100% + var(--s-8));
         width: var(--s-9-width);
-        padding: 0 var(--s-9) var(--s-9);
+        padding:  var(--s-9) var(--s-9);
         flex-direction: column;
         left: auto;
         right: auto;
@@ -154,6 +159,8 @@ $walkmanShadow: #808080;
         @extend .d-flex-content;
         gap: var(--s-4);
         height: 100%;
+
+        min-height: 600px;
         width: var(--s-6-width);
 
         &.dragging {
@@ -167,11 +174,13 @@ $walkmanShadow: #808080;
 
         @media(max-width: 1100px) {
             padding: var(--s-9) 0 var(--s-1);
+            padding-top: var(--s-element);
         }
 
         &--header {
             user-select: none;
             white-space: nowrap;
+
         }
 
         &--body {
