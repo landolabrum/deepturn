@@ -113,7 +113,7 @@ const formDefaultCustomerAdd = useCustomerAddForm()
         <div className='admin-customer-add__title'>
           add customer
         </div>
-        {/* {JSON.stringify(customer)} */}
+        {JSON.stringify(customer)}
         <UiForm
           fields={customer}
           onChange={updateField}

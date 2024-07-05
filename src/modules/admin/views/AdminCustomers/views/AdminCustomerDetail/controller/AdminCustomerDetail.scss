@@ -7,52 +7,88 @@
 .admin-customer-detail {
     @extend .d-flex;
     flex-direction: column;
-    gap: var(--s-9);
-    align-items: flex-start;
-    &__read-only {
-        gap: var(--s-9);
-        @extend .d-flex;
+    gap:var(--s-5);
+    align-items: stretch;
+    width: 100%;
+    &__form{
+     width: 100%;
+    }
+    &__display {
+        // width: calc(var(--s-9-width) + 4px);
         overflow: hidden;
-        justify-content: flex-start;
-        background-color: var(--gray-100);
-
-        &--title,
-        ol {
-            text-transform: capitalize;
-            padding: var(--s-11) var(--s-9);
-        }
-        height: 100%;
-
+        background-color: var(--gray-80-o);
+        border-radius: var(--border-radius);
+        padding:var(--s-7) var(--s-9) var(--s-9);
+        @extend .d-flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap:var(--s-7);
         &--title{
-            height: 100%;
+            flex: 1;
+            min-height: var(--s-element);
+            text-transform: capitalize;
             @extend .d-flex;
+            align-items: flex-start;
+            justify-content: flex-end;
             line-height: 1;
             font-size: var(--s-4);
             color:var(--primary-50);
+            font-size: var(--s-1);
         }
-
-        ol {
-            padding: var(--s-11) var(--s-9);
-        }
-
-        &__actions {
+        .display--list{
+            flex: 1;
             @extend .d-flex;
-            width: 100%;
-            gap: var(--s-9);
+            $pill: var(--s-10);
+            @media(max-width: 900px){
+                $pill: var(--s-11);
+            }
+            gap:var(--border-radius);
 
-            @media(min-width: 900px) {
-                flex-direction: column;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: var(--s-element);
+            align-items: flex-start;
+            &-item{
+                @extend .d-flex;
+                justify-content: flex-start;
+                border-radius: $pill;
+                overflow: hidden;
+                border:solid 1px var(--gray-100);
+                @media(max-width: 900px){
+                    border: unset;
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                &__key, &__value{
+                    width: max-content;
+                    padding:$pill calc($pill * 1.5);
+                }
+                &__key{
+                    background-color:var(--gray-100);
+                    text-transform: uppercase;
+                    color: var(--primary-50);
+                    @media(max-width: 900px){background-color: unset;color:var(--gray-60);}
+                }
+                &__value{
+                    background-color: var(--gray-80);
+                    color:var(--green-30);
+                    font-family: Game;
+                    @media(max-width: 900px){background-color: unset;}
+                }
             }
         }
 
-        justify-content: flex-start !important;
+
+        
     }
 
-    &__collapse-item {
+    &__actions {
+        @extend .d-flex;
         width: 100%;
-        overflow: hidden;
-        // width: var(--s-9-width);
-        padding: var(--s-9) 0;
-        // background-color: var(--gray-80);
+        gap: var(--s-9);
+        
+        @media(min-width: 900px) {
+            flex-direction: column;
+        }
     }
 }

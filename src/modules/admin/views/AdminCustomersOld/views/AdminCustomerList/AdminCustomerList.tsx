@@ -7,10 +7,9 @@ import IAdminService from '~/src/core/services/AdminService/IAdminService';
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 import environment from '~/src/core/environment';
 import { ICustomer } from '~/src/models/CustomerContext';
-import { getUserClearance, useClearance, useUser } from '~/src/core/authentication/hooks/useUser';
+import { getUserClearance, useClearance } from '~/src/core/authentication/hooks/useUser';
 import canViewCustomer from '../../functions/canViewCustomer';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 
 const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: string) => void }) => {
@@ -20,7 +19,8 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
   const adminService = getService<IAdminService>('IAdminService');
 
   const hideColumns = ['extras', 'id'];
-  const user = useUser();  
+  const level = useClearance();
+  
   const getCustomerList = async () => {
     let customerList = await adminService.listCustomers();
     if (customerList?.object === 'list') {
@@ -29,8 +29,10 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
 
       // Use a for loop or reduce function to transform the customer data
       const transformedCustomerList = customerList.map((customer: ICustomer) => {
-        const viewableCustomer = canViewCustomer(customer, user);
-        const notUser = customer.email != user?.email;
+        // if(level >= 10 )
+
+
+        const canViwCustomer = canViewCustomer(customer, level);
         // Create a new dictionary for each customer
         const extras = {
           ...customer.metadata,
@@ -42,7 +44,7 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
           invoice_prefix: customer.invoice_prefix,
           next_invoice_sequence: customer.next_invoice_sequence,
         }
-        if (viewableCustomer) return {
+        if (canViwCustomer) return {
           customer: <AdaptTableCell cell='member' data={{
             id: customer.id,
             name: customer.name,
@@ -53,11 +55,6 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
           balance: customer.balance,
           created: <AdaptTableCell cell='date' data={customer.created} />,
           default_source: <AdaptTableCell cell='check' data={Boolean(customer.default_source)} />,
-          merchant: <>
-          <style jsx>{styles}</style>
-          <div className={`d-flex ${notUser?'':"user"}`}><UiIcon
-          icon={notUser?`${customer?.metadata?.merchant?.name}-logo`:'fa-star'} /></div>
-          </>,
           // delinquent: customer.delinquent,
           tax_exempt: <AdaptTableCell cell='check' data={Boolean(customer.tax_exempt == 'exempt')} />,
           clearance: <AdaptTableCell cell='id' data={keyStringConverter(getUserClearance(customer?.metadata?.user?.clearance)?.user.type,{textTransform:"capitalize"})} />,

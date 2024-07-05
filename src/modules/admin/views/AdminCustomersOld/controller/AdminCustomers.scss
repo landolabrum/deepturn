@@ -60,10 +60,7 @@
         }
         .actions{
             gap: var(--s-9);
-            width: 100%;
             @extend .d-flex;
-            justify-content: flex-end;
-
         }
     }
 }
