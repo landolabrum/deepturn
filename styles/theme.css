@@ -2,13 +2,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
 
 @font-face {
-  font-family: "Game";
+  font-family: Game;
   src: url("/fonts/gamestation/gamestationtext.otf") format("opentype");
   font-style: normal;
 }
 @font-face {
-  font-family: "Eros";
+  font-family: Eros;
   src: url("/fonts/eros/erosyt.ttf") format("opentype");
+  font-style: normal;
+}
+@font-face {
+  font-family: PlexLight;
+  src: url("/fonts/IBMPlexMono/IBMPlexMono-Light.ttf") format("opentype");
   font-style: normal;
 }
 
@@ -20,6 +25,7 @@
     url("/fonts/freight/freight-sans-bold.woff") format("woff");
 }
 
+
 @font-face {
   font-family: FreightSans;
   font-weight: 500;
@@ -28,12 +34,7 @@
     url("/fonts/freight/freight-sans-medium.woff") format("woff");
 }
 
-/* @font-face {
-  font-family: FreightSans;
-  font-weight: 500;
-  font-style: italic;
-  src: url("/fonts/freight/freight-sans-medium-italic.woff2") format("woff2"),url("/fonts/freight/freight-sans-medium-italic.woff") format("woff")
-} */
+
 @font-face {
   font-family: Decimal;
   font-weight: 500;
@@ -45,6 +46,91 @@
 :root {
   --user: #1880cf;
   --marker: #cf0f0f;
+  --primary-10: #e68366;
+  --primary-30: #d97a5d;
+  --primary-50: #cc6f50;
+  --primary-70: #b35944;
+  --primary-90: #994d3a;
+  --primary-o: #cc6f5070;
+
+  --secondary-10: #d6c8b7;
+  --secondary-30: #ccbfae;
+  --secondary-50: #c5b9a8;
+  --secondary-50-o: #c5b9a870;
+  --secondary-70: #ab9d8d;
+  --secondary-90: #917e72;
+  --secondary-o: #c5b9a870;
+
+  --tertiary-10: #d0c1b2;
+  --tertiary-30: #c7b7a8;
+  --tertiary-50: #bfb0a1;
+  --tertiary-70: #a89785;
+  --tertiary-90: #8f7d71;
+  --tertiary-o: #bfb0a170;
+
+ 
+
+  --body: #1d1d1d;
+  --lite: #f0edeb;
+  --dark: #2c0903;
+  --dark-70: #200804;
+  /* --dark: #242c36; */
+  --dark-o: #242c3670;
+  --black: #111111;
+
+  --white: #ffffff;
+  --white-o: #ffffff70;
+
+  --yellow-10: #F9E0B5;
+  --yellow-10-o: #F9E0B550;
+  --yellow-20: #ffdb4d;
+  --yellow-20-o: #ffdb4d50;
+  --yellow-30: #EDCA60;
+  --yellow-30-o: #EDCA6050;
+  --yellow-50: #E3AF1F;
+  --yellow-50-o: #E3AF1F50;
+  --yellow-70: #C4871C;
+  --yellow-70-o: #C4871C50;
+
+  --orange-50: #ff9900;
+  --orange-o: #ff990070;
+
+  --red-10: #ef4444;
+  --red-30: #d93333;
+  --red-50: #dd4400;
+  --red-70: #b22a2a;
+  --red-90: #8b2222;
+  --red-o: #dd440070;
+
+  --green: #44b432;
+  --green-o: #44b43270;
+  --green-10: #22c553;
+  --green-30: #34a853;
+  --green-70: #2d8c3b;
+  --green-90: #257029;
+  
+  --blue-o: #3A7BD5; /* Softer transparent blue */
+  --blue-10: #2B8FDB; /* Light blue with a trustworthy feel */
+  --blue-30: #2277B5; /* Slightly darker light blue */
+  --blue-50: #1A5E92; /* Mid-tone blue */
+  --blue-70: #13487A; /* Darker blue */
+  --blue-90: #031d40; /* Deep, dark blue */
+
+
+  --purple-50: #9b59b6;
+  --purple-10: #d0a1e2;
+  --purple-30: #b97acc;
+  --purple-70: #7d3a98;
+  --purple-90: #5d2975;
+  --purple-50-o: #9b59b670;
+  
+  --pink: #e91e63;
+  --pink-10: #ff80ab;
+  --pink-30: #f06292;
+  --pink-70: #c2185b;
+  --pink-90: #880e4f;
+  --pink-o: #e91e6370;
+
 
   /* COLORS */
   --black: #111111;
@@ -126,9 +212,24 @@
   --border-focus: solid 1px rgba(224, 224, 224, 0.5);
   --header-height: 175px;
 }
-
+@keyframes fadeIn {
+  0%{
+    opacity: 0;
+    filter:blur(var(--s-element));
+  }
+  80%{
+    opacity: 0.6;
+    filter:blur(var(--s-9));
+  }
+  100%{
+    opacity: 1;
+  }
+}
+.a-fade-in{
+  animation: fadeIn 1.5s ease-in forwards;
+}
 .error {
-  color: var(--error);
+  color: var(--red-50);
   font-style: italic;
 }
 

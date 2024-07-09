@@ -6,16 +6,17 @@
   --primary-90: #994d3a;
   --primary-o: #cc6f5070;
 
-  --secondary: #c5b9a8;
   --secondary-10: #d6c8b7;
   --secondary-30: #ccbfae;
+  --secondary-50: #c5b9a8;
+  --secondary-50-o: #c5b9a870;
   --secondary-70: #ab9d8d;
   --secondary-90: #917e72;
   --secondary-o: #c5b9a870;
 
-  --tertiary: #bfb0a1;
   --tertiary-10: #d0c1b2;
   --tertiary-30: #c7b7a8;
+  --tertiary-50: #bfb0a1;
   --tertiary-70: #a89785;
   --tertiary-90: #8f7d71;
   --tertiary-o: #bfb0a170;
