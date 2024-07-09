@@ -29,8 +29,8 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
     if(initialCustomer[formId])initialForm = initialCustomer[formId];
     if(!initialForm){alert('error');return;}
     const changedFields = Object.values(customer[formId]).filter((f:any,key:number)=>{
-      const initialValue = findField(initialCustomer[formId], f.name).value;
-        if(formId !== 'contact' || !initialValue)return;
+      const initialValue:any = findField(initialCustomer[formId], f.name)?.value;
+        if(formId !== 'contact' || initialValue == undefined )return;
        if(f.value !== initialValue)return f
        else if(f.name == 'address' && initialValue?.line1 !== f.value?.line1)return f
     }

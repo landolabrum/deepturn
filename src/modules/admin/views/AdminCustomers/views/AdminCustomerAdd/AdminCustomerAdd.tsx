@@ -57,19 +57,21 @@ const formDefaultCustomerAdd = useCustomerAddForm()
   const adminService = getService<IAdminService>('IAdminService');
   let modalContext = { name: 'error', label: 'Error!', message: "unable to create member" };
   const handleAddCustomer = async (e: any) => {
-    const customerName = `${findField(customer, 'first_name').value} ${findField(customer, 'last_name').value}`;
+    const customerName = `${findField(customer, 'first_name')?.value} ${findField(customer, 'last_name')?.value}`;
     setLoader({ active: true, body: `Creating ${customerName}` });
-    let address = findField(customer, 'address').value;
-    delete address.lng
+    const clearance = Number(findField(customer, 'clearance')?.value) || undefined;
+    const phone = findField(customer, 'phone')?.value && String(findField(customer, 'phone')?.value) || undefined;
+    let address:any = findField(customer, 'address')?.value;
+    delete address?.lng
     delete address.lat
     const customerData:ICustomer = {
       name: customerName,
-      email: findField(customer, 'email').value,
-      phone: findField(customer, 'phone').value,
+      email: String(findField(customer, 'email')?.value),
+      phone,
       address: address,
       metadata: {
         user: {
-          clearance: findField(customer, 'clearance').value,
+          clearance,
           email_verified: false,
         },
         merchant: environment.merchant

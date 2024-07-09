@@ -11,7 +11,8 @@ interface IContactFormProps {
     text?: string;
   }
   onSubmit: (contactData: any) => void;
-  user?: IAuthenticatedUser;
+  user?: any;
+  // user?: IAuthenticatedUser;
   fieldErrors?: any;
   payment?: any;
   title?: string | React.ReactElement | boolean;
@@ -24,13 +25,15 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
 
   const defaultContactFields: IFormField[] = [
     { name: 'name', label:"name", type: 'text', placeholder: 'Herbie Hancock', required: true,
-      value:'larz survey'
+      // value:'larz survey'
     },
     { name: 'email',label: 'email', type: 'email', placeholder: 'your@email.com',  required: true, width,
-      value:'larzrandana@gmail.com'
+      // value:'larzrandana@gmail.com'
     },
     { name: 'phone', value:'1 (435) 200 - 3006', label: 'phone', type: 'tel', placeholder: '1 (000) 000-0000', required: true, width },
-    { name: 'address',label: 'address', type: 'text', placeholder: 'Your Address', required: true, width, value:{"line1":"333 S 200 E","line2":"","city":"Salt Lake City","state":"UT","postal_code":"84111","country":"US",} },
+    { name: 'address',label: 'address', type: 'text', placeholder: 'Your Address', required: true, width, 
+      // value:{"line1":"333 S 200 E","line2":"","city":"Salt Lake City","state":"UT","postal_code":"84111","country":"US",} 
+    },
   ];
 
   const [fields, setFields] = useState<IFormField[]>(defaultContactFields);
