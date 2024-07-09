@@ -7,7 +7,15 @@
     width: 100%;
     @extend .d-flex;
     align-items: flex-start;
+    overflow: hidden;
     flex-direction: column;
+    ul{
+        color:var(--red-30);
+    }
+    strong{
+        text-transform: capitalize;
+
+    }
 &__title{
     font-size: var(--s-1);
     color: var(--gray-40);

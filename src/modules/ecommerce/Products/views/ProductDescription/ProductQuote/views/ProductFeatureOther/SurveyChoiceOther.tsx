@@ -1,19 +1,18 @@
 // Relative Path: ./OtherFeature.tsx
 import React, { useState } from 'react';
-import styles from './SurveyChoiceOther.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import capitalize from '@webstack/helpers/Capitalize';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
-import { IProductSurveyField } from '../../controller/ProductSurvey';
+import { IProductQuoteField } from '../../controller/ProductQuote';
 // Remember to create a sibling SCSS file with the same name as this component
-interface ISurveyChoiceOther{
-     choice: IProductSurveyField;
+interface IQuoteChoiceOther{
+     choice: IProductQuoteField;
      value: any;
      onChange:(e:any)=>void;
      onSubmit:(e:any)=>void;
      title: string
 }
-const SurveyChoiceOther: React.FC<any> = ({ onSubmit, title }: ISurveyChoiceOther) => {
+const QuoteChoiceOther: React.FC<any> = ({ onSubmit, title }: IQuoteChoiceOther) => {
   const initialOther = [
       { name: `name`, label: `Custom ${capitalize(title)} Name`, placeholder: `add your custom ${title}`, required: true, error: undefined },
       { name: `value`, type: 'pill', value: 0, label: 'Estimated Amps', required: true, placeholder: 0, error: undefined },
@@ -46,7 +45,6 @@ const SurveyChoiceOther: React.FC<any> = ({ onSubmit, title }: ISurveyChoiceOthe
   }
   return (
     <>
-      <style jsx>{styles}</style>
       <UiForm
         title={title}
         fields={fields}
@@ -58,4 +56,4 @@ const SurveyChoiceOther: React.FC<any> = ({ onSubmit, title }: ISurveyChoiceOthe
   );
 };
 
-export default SurveyChoiceOther;
+export default QuoteChoiceOther;

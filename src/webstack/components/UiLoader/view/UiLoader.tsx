@@ -13,26 +13,29 @@ interface IUiLoader {
   fontSize?: number | string;
 }
 
-const UiLoader: NextComponentType<NextPageContext, {}, IUiLoader> = ({
-  text: propText,
-  dots = true,
-  height,
-  position,
-  width,
-  fontSize,
-}: IUiLoader) => {
+const UiLoader: NextComponentType<NextPageContext, {}, IUiLoader> = (props) => {
+  const {
+    text: propText,
+    dots = true,
+    height,
+    position,
+    width,
+    fontSize,
+  }: IUiLoader = props;
   const text = !propText && typeof propText != 'string' ? "Loading" : propText;
   const merchantName = environment.merchant.name;
   let loaderStyles:any = {
-    width: width,
-    height: height,
-    position: position,
-    fontSize: fontSize
+    width,
+    height,
+    position,
+    fontSize
   }
+  
+  useEffect(() => {}, [props]);
   return (
     <>
       <style jsx>{styles}</style>
-      <div style={loaderStyles} className="ui-loader">
+      <div style={loaderStyles} className={`ui-loader ${position && `ui-loader__${position} a-fade-in`}`}>
         <div className="ui-loader--content">
           <div className="ui-loader__icon">
             <div className="ui-loader__icon-content">

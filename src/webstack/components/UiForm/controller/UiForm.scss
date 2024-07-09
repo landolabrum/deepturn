@@ -12,7 +12,9 @@
 
 .form {
   @extend .d-flex;
+  overflow: visible !important;
   justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
   height: auto;
   flex-wrap: wrap;
@@ -51,7 +53,9 @@
     margin: 0 0 var(--s-4);
     @extend .d-flex-col;
     align-items: flex-start;
-
+    &.error{
+      color: var(--orange-50) !important;
+    }
   }
 
   .form-field__readonly {

@@ -18,10 +18,9 @@ export const updateField = (fields: IFormField[], name: string, updatedValues: P
 };
 
 // GET FIELD IN FORM
-export const findField = (fields: IFormField[], fieldName:string) => {
-    const _field = fields && Object(fields).filter((field: IFormField)=>field.name == fieldName);
-    return _field[0];
-};
+export const findField = (fields: IFormField[], name: string): IFormField | undefined => {
+    return fields?.find(field => field.name === name);
+  };
 // GET FIELD TYPE
 export const getFieldType = (value: any): string => {
     let fieldType = 'text';

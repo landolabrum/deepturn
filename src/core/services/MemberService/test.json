@@ -1,0 +1,60 @@
+{
+    "status": "updated",
+    "data": {
+        "id": "cus_QPuZfq8iGZmJ1L",
+        "object": "customer",
+        "address": {
+            "city": "Salt Lake City",
+            "country": "US",
+            "line1": "4324 Commercial Way",
+            "line2": "",
+            "postal_code": "84104",
+            "state": "UT"
+        },
+        "balance": 0,
+        "created": 1720157527,
+        "currency": null,
+        "default_source": null,
+        "delinquent": false,
+        "description": null,
+        "discount": null,
+        "email": "larzrandana@gmail.com",
+        "invoice_prefix": "EFE560FD",
+        "invoice_settings": {
+            "custom_fields": null,
+            "default_payment_method": null,
+            "footer": null,
+            "rendering_options": null
+        },
+        "livemode": true,
+        "metadata": {
+            "merchant-0": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAiLCJuYW1lIjoibmlydmFuYS1lbmVyZ3kiLCJtaWQiOiJuaXJ2MSIsInN0cmlwZUlkIjoiYWNjdF8xT1d5MGZFOFhBR1pEZHBLIn0.mBv8JlU1Ywzzx1CPCs10uZvSiFLFDbwacYdyOr571BM",
+            "user-0": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZGRyZXNzIjpudWxsLCJjbGVhcmFuY2UiOjEsInBhc3N3b3JkX3Rva2VuIjoiZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6STFOaUo5LmV5SmxiV0ZwYkNJNklteGhjbnB5WVc1a1lXNWhRR2R0WVdsc0xtTnZiU0o5LnVZemlrZDBkY0RIMjQ1NnlCZkJfSzVULTFiRTk3QUJubnoxZFNyX1ZsYmciLCJwYXNzd29yZCI6bnVsbCwiZW1haWwiOiJsYXJ6cmFuZGFuYUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInR5cGUiOiJjdXN0b21lciIsImRldmljZXMiOlt7IndhbiI6IjEwNC4yOC4xOTIuMTUwIiwibGFuIjoiZjkxYjdlMzEtZGUxZS00MmI1LWJiMzEtYjYwMzYzMTliZjM4LmxvY2F",
+            "user-1": "sIiwibmF2aWdhdG9yIjp7InVzZXJBZ2VudCI6Ik1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwXzE1XzcpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8xMjQuMC4wLjAgU2FmYXJpLzUzNy4zNiIsInBsYXRmb3JtIjoiTWFjSW50ZWwiLCJsYW5ndWFnZSI6ImVuLVVTIiwibGFuZ3VhZ2VzIjpbImVuLVVTIiwiZW4iLCJydSIsImxhIiwiemgiLCJ6aC1DTiJdLCJjb29raWVFbmFibGVkIjp0cnVlLCJicmFuZHMiOlt7ImJyYW5kIjoiQ2hyb21pdW0iLCJ2ZXJzaW9uIjoiMTI0In0seyJicmFuZCI6Ikdvb2dsZSBDaHJvbWUiLCJ2ZXJzaW9uIjoiMTI0In0seyJicmFuZCI6Ik5vdC1BLkJyYW5kIiwidmV",
+            "user-2": "yc2lvbiI6Ijk5In1dLCJtb2JpbGUiOmZhbHNlfSwiY29ubmVjdGlvbiI6eyJlZmZlY3RpdmVUeXBlIjoiNGciLCJkb3dubGluayI6My44LCJydHQiOjUwLCJzYXZlRGF0YSI6ZmFsc2UsInR5cGUiOiI0ZyJ9LCJkZXZpY2UiOnsibWVtb3J5Ijo4LCJoYXJkd2FyZUNvbmN1cnJlbmN5IjoxMCwic2NyZWVuIjp7IndpZHRoIjoyMzM2LCJoZWlnaHQiOjE1MTAsImNvbG9yRGVwdGgiOjMwfSwid2luZG93Ijp7ImlubmVyV2lkdGgiOjk2NiwiaW5uZXJIZWlnaHQiOjIwMTB9fSwicGVybWlzc2lvbnMiOnsiZ2VvbG9jYXRpb24iOiJncmFudGVkIiwibm90aWZpY2F0aW9ucyI6InByb21wdCIsImNhbWVyYSI6InByb21wdCIsIm1pY3JvcGhvbmUiOiJwcm9tcHQiLCJwZXJ",
+            "user-3": "zaXN0ZW50X3N0b3JhZ2UiOm51bGx9LCJkZXZpY2Vfc2V0dGluZ3MiOm51bGwsImF1dGhvcml6YXRpb25fZGF0YSI6bnVsbCwiY29va2llcyI6bnVsbCwiY3JlYXRlZCI6MTcyMDE1NzUyNjczMH0seyJ3YW4iOiIxMC4yLjAuMSIsImxhbiI6bnVsbCwibmF2aWdhdG9yIjp7InVzZXJBZ2VudCI6bnVsbCwicGxhdGZvcm0iOiJ1bmtub3duIiwibGFuZ3VhZ2UiOm51bGwsImxhbmd1YWdlcyI6bnVsbCwiY29va2llRW5hYmxlZCI6bnVsbCwiYnJhbmRzIjpbeyJicmFuZCI6InVua25vd24iLCJ2ZXJzaW9uIjoidW5rbm93biJ9XSwibW9iaWxlIjpmYWxzZX0sImNvbm5lY3Rpb24iOm51bGwsImRldmljZSI6bnVsbCwicGVybWlzc2lvbnMiOm51bGwsImRldmljZV9zZXR",
+            "user-4": "0aW5ncyI6bnVsbCwiYXV0aG9yaXphdGlvbl9kYXRhIjpudWxsLCJjb29raWVzIjpudWxsLCJjcmVhdGVkIjoxNzIwMTU3NTI3MzU1fV0sInNvY2lhbCI6W10sInNlcnZlcl91cmwiOiJ0aWt0b2suc295In0.ahVil35es3GPWsjjB9Dhihu7CpjWgqbugDzbY_RrLDE"
+        },
+        "name": "larz SurveyModify",
+        "next_invoice_sequence": 1,
+        "phone": null,
+        "preferred_locales": [],
+        "shipping": null,
+        "tax_exempt": "none",
+        "test_clock": null
+    },
+    "metadata": {
+        "merchant": {
+            "url": "http://localhost:3000",
+            "name": "nirvana-energy",
+            "mid": "nirv1",
+            "stripeId": null
+        },
+        "user": {
+            "status": "success",
+            "metadata_key_name": "user",
+            "parts": 2
+        },
+        "quote": null
+    }
+}

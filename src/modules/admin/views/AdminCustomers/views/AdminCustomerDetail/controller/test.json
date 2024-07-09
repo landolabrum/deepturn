@@ -1,0 +1,197 @@
+{"response1":{
+    "id": "cus_QQBCYTKRUrkqDq",
+    "object": "customer",
+    "address": {
+        "city": "Salt Lake City",
+        "country": "US",
+        "line1": "4324 Commercial Way",
+        "line2": "",
+        "postal_code": "84104",
+        "state": "UT"
+    },
+    "balance": 0,
+    "created": 1720219378,
+    "currency": null,
+    "default_source": null,
+    "delinquent": false,
+    "description": null,
+    "discount": null,
+    "email": "larzrandana@gmail.com",
+    "invoice_prefix": "146B5370",
+    "invoice_settings": {
+        "custom_fields": null,
+        "default_payment_method": null,
+        "footer": null,
+        "rendering_options": null
+    },
+    "livemode": true,
+    "metadata": {
+        "merchant": {
+            "url": "http://localhost:3000",
+            "name": "nirvana-energy",
+            "mid": "nirv1",
+            "stripeId": "acct_1OWy0fE8XAGZDdpK"
+        },
+        "user": {
+            "address": null,
+            "clearance": 1,
+            "password_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImxhcnpyYW5kYW5hQGdtYWlsLmNvbSJ9.uYzikd0dcDH2456yBfB_K5T-1bE97ABnnz1dSr_Vlbg",
+            "password": null,
+            "email": "larzrandana@gmail.com",
+            "email_verified": false,
+            "type": "customer",
+            "devices": [
+                {
+                    "wan": "104.28.192.150",
+                    "lan": "b1976c03-2bef-4699-96e1-b848dd6f79b2.local",
+                    "navigator": {
+                        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+                        "platform": "MacIntel",
+                        "language": "en-US",
+                        "languages": [
+                            "en-US"
+                        ],
+                        "cookieEnabled": true,
+                        "brands": [
+                            {
+                                "brand": "Not/A)Brand",
+                                "version": "8"
+                            },
+                            {
+                                "brand": "Chromium",
+                                "version": "126"
+                            },
+                            {
+                                "brand": "Google Chrome",
+                                "version": "126"
+                            }
+                        ],
+                        "mobile": false
+                    },
+                    "connection": {
+                        "effectiveType": "4g",
+                        "downlink": 7.3,
+                        "rtt": 50,
+                        "saveData": false,
+                        "type": "4g"
+                    },
+                    "device": {
+                        "memory": 8,
+                        "hardwareConcurrency": 10,
+                        "screen": {
+                            "width": 3360,
+                            "height": 1890,
+                            "colorDepth": 30
+                        },
+                        "window": {
+                            "innerWidth": 1678,
+                            "innerHeight": 1744
+                        }
+                    },
+                    "permissions": {
+                        "geolocation": "prompt",
+                        "notifications": "prompt",
+                        "camera": "prompt",
+                        "microphone": "prompt",
+                        "persistent_storage": null
+                    },
+                    "device_settings": null,
+                    "authorization_data": null,
+                    "cookies": null,
+                    "created": 1720219378460
+                },
+                {
+                    "wan": "10.2.0.1",
+                    "lan": null,
+                    "navigator": {
+                        "userAgent": null,
+                        "platform": "unknown",
+                        "language": null,
+                        "languages": null,
+                        "cookieEnabled": null,
+                        "brands": [
+                            {
+                                "brand": "unknown",
+                                "version": "unknown"
+                            }
+                        ],
+                        "mobile": false
+                    },
+                    "connection": null,
+                    "device": null,
+                    "permissions": null,
+                    "device_settings": null,
+                    "authorization_data": null,
+                    "cookies": null,
+                    "created": 1720219379043
+                }
+            ],
+            "social": [],
+            "server_url": "tiktok.soy"
+        }
+    },
+    "name": "larz survey",
+    "next_invoice_sequence": 1,
+    "phone": null,
+    "preferred_locales": [],
+    "shipping": null,
+    "tax_exempt": "none",
+    "test_clock": null,
+    "methods": {
+        "object": "list",
+        "data": [],
+        "has_more": false,
+        "url": "/v1/payment_methods"
+    }
+},
+"response2":{
+    "id": "cus_QQBCYTKRUrkqDq",
+    "object": "customer",
+    "address": {
+        "city": "Salt Lake City",
+        "country": "US",
+        "line1": "4324 Commercial Way",
+        "line2": "",
+        "postal_code": "84104",
+        "state": "UT"
+    },
+    "balance": 0,
+    "created": 1720219378,
+    "currency": null,
+    "default_source": null,
+    "delinquent": false,
+    "description": null,
+    "discount": null,
+    "email": "larzrandana@gmail.com",
+    "invoice_prefix": "146B5370",
+    "invoice_settings": {
+        "custom_fields": null,
+        "default_payment_method": null,
+        "footer": null,
+        "rendering_options": null
+    },
+    "livemode": true,
+    "metadata": {
+        "merchant": {
+            "url": "http://localhost:3000",
+            "name": "nirvana-energy",
+            "mid": "nirv1",
+            "stripeId": "acct_1OWy0fE8XAGZDdpK"
+        },
+        "user": "Decryption failed"
+    },
+    "name": "larz survey",
+    "next_invoice_sequence": 1,
+    "phone": null,
+    "preferred_locales": [],
+    "shipping": null,
+    "tax_exempt": "none",
+    "test_clock": null,
+    "methods": {
+        "object": "list",
+        "data": [],
+        "has_more": false,
+        "url": "/v1/payment_methods"
+    }
+}
+}

@@ -9,7 +9,7 @@ import ToggleSwitch from '../components/UiToggle/UiToggle';
 import FormControl from '../components/FormControl/FormControl';
 import AddFieldForm from '../views/AddFieldForm/AddFieldForm';
 import AutocompleteAddressInput from '@webstack/components/UiForm/components/UiInput/views/AddressInput';
-import { getFieldType, updateField, findField } from '../functions/formFieldFunctions';
+import { getFieldType } from '../functions/formFieldFunctions';
 
 const UiForm = ({
     variant,
@@ -94,7 +94,7 @@ const UiForm = ({
 
     useEffect(() => {
         handleComplete();
-    }, [fields, disabled, loading]);
+    }, [fields, disabled, loading, title]);
 
     if (!fields) return <div className='error'>No form fields</div>;
 
@@ -105,7 +105,7 @@ const UiForm = ({
             <div className={`form${variant && ` form--${variant}` || ''}`}>
                 {fieldsCanPopulate &&
                     fields.map((field, index) => field.name && field?.readonly && (
-                        <div key={index} className='form-field__readonly' style={field?.width ? { width: `calc(${field.width} - 8px)` } : {}}>
+                        <div key={index} className={`form-field__readonly ${field.error && "error"}`} style={field?.width ? { width: `calc(${field.width} - 8px)` } : {}}>
                             <div className='form-field__readonly--label'>{field?.label}</div>
                             <div className='form-field__readonly--value'>{
                                 typeof field.value !== 'object' && `${field?.value}` || 

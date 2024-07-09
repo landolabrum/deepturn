@@ -1,0 +1,39 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.ui-mark-down{
+  @extend .d-flex;
+  height: inherit;
+  color: inherit;
+  code{
+    text-transform: unset !important;
+    border: solid 1px var(--gray-80);
+    font-size: var(--s-9);
+    background-color: var(--gray-100);
+    padding:auto var(--s-9);
+    border-radius: var(--s-11);
+    color: var(--green-30);
+    font-family: 'Courier New', Courier, monospace;
+    // display: none !important;
+  }
+  @keyframes fadeIn {
+    0%{
+      opacity: 0;
+      filter:blur(var(--s-element));
+    }
+    80%{
+      opacity: 0.6;
+      filter:blur(var(--s-9));
+    }
+    100%{
+      opacity: 1;
+    }
+  }
+  em{
+    // animation: fadeIn 1.2s ease-in forwards;
+    font-weight: 300;
+    font-family: PlexLight;
+  }
+}

@@ -10,6 +10,7 @@ export type IView = {
 
 export interface IViewLayout {
     views?: IView;
+    view?:React.ReactElement | string;
     currentView?: string;
     backBtn?: boolean;
     title?: string;
@@ -23,28 +24,27 @@ const UiViewLayout: React.FC<IViewLayout> = ({
     views,
     currentView,
     onChange,
+    view,
     title,
     actions = false,
     showTitle = false,
     backBtn = false,
     variant
 }) => {
-    useEffect(() => {}, [currentView]);
-    const { view, setView, goBack, last } = useViewState(views, currentView);
+    const { view: _view, setView: handleView, goBack, last } = useViewState(views, currentView);
     const changeView = (newView: string) => {
         if (!newView) return;
-        setView(newView);
+        handleView(newView);
         onChange?.(newView);
     };
 
-
     
-    if (!views || !view || currentView == 'loading') return <UiLoader />;
+    if (!views || !_view ) return <UiLoader position='fixed' />;
     
     return (
         <>
             <style jsx>{styles}</style>
-            <div className={`ui-view-layout ${variant?`ui-view-layout--${variant}`:''}`}>
+            <div className={`ui-view-layout ${variant?`ui-view-layout--${variant}`:''}`}>{currentView == 'loading' && <UiLoader position='fixed' />}
                 {Boolean(backBtn && last !== 'start' )&&(
                     <div className='back-btn'>
                         <div>
@@ -58,7 +58,7 @@ const UiViewLayout: React.FC<IViewLayout> = ({
                     </div>
                 )}
                 <div data-view={currentView} className='ui-view-layout__view'>
-                    {view || <div>View not found</div>}
+                    {view || _view || <div>View not found</div>}
                 </div>
             </div>
         </>

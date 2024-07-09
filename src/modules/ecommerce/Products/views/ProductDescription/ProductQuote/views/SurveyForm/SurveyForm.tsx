@@ -1,41 +1,41 @@
-// Relative Path: ./SurveyForm.tsx
+// Relative Path: ./QuoteForm.tsx
 import React, { useRef, useState, useEffect } from 'react';
 import styles from './SurveyForm.scss';
-import { IProductSurveyField } from '../../controller/ProductSurvey';
+import { IProductQuoteField } from '../../controller/ProductQuote';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
-import SurveyChoiceOther from '../ProductFeatureOther/SurveyChoiceOther';
+import QuoteChoiceOther from '../ProductFeatureOther/SurveyChoiceOther';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 
-interface ISurveyForm {
+interface IQuoteForm {
   title: string;
-  survey: IProductSurveyField[];
-  setSurvey: (e: any) => void;
+  quote: IProductQuoteField[];
+  setQuote: (e: any) => void;
   handleView: (newView: any) => void;
 }
 
-const SurveyForm: React.FC<ISurveyForm> = ({ handleView, title, survey, setSurvey }: ISurveyForm) => {
+const QuoteForm: React.FC<IQuoteForm> = ({ handleView, title, quote, setQuote }: IQuoteForm) => {
   const selectedRef = useRef<any | undefined>();
   const { openModal, closeModal } = useModal();
-  const [form, setForm] = useState<IProductSurveyField[]>([]);
+  const [form, setForm] = useState<IProductQuoteField[]>([]);
 
   useEffect(() => {
-    // Convert survey object to array if necessary
-    const surveyArray:any = Array.isArray(survey) ? survey : Object.values(survey);
+    // Convert quote object to array if necessary
+    const surveyArray:any = Array.isArray(quote) ? quote : Object.values(quote);
     setForm(surveyArray);
-  }, [survey]);
+  }, [quote]);
 
   const selected = form.filter(f => f.selected);
 
   const clearAllSelected = () => setForm(form.map(item => ({ ...item, selected: false })));
 
-  const handleFeature = (choice: IProductSurveyField) => {
+  const handleFeature = (choice: IProductQuoteField) => {
     const addCustom = async (choice: any) => handleFeature(choice);
     const isOther = !Boolean(form.find((f: IFormField) => f.name === choice.name));
     if (choice.name === 'other' && !isOther) {
       return openModal({
-        children: <SurveyChoiceOther
+        children: <QuoteChoiceOther
           title={title}
           choice={choice}
           onSubmit={(e: any) => {
@@ -69,9 +69,9 @@ const SurveyForm: React.FC<ISurveyForm> = ({ handleView, title, survey, setSurve
   return (
     <>
       <style jsx>{styles}</style>
-      <div ref={selectedRef} className='survey-form'>
-        <div className='survey-form__options'>
-          <div className='survey-form__selection selection'>
+      <div ref={selectedRef} className='quote-form'>
+        <div className='quote-form__options'>
+          <div className='quote-form__selection selection'>
             {Boolean(selected.length) ? (
               <>
                 <div className='selection__header'>
@@ -86,7 +86,7 @@ const SurveyForm: React.FC<ISurveyForm> = ({ handleView, title, survey, setSurve
                 </div>
               </>
             ) : (
-              <div className='survey-form__instructions'>
+              <div className='quote-form__instructions'>
                 please Select, {title} to continue.
               </div>
             )}
@@ -105,11 +105,11 @@ const SurveyForm: React.FC<ISurveyForm> = ({ handleView, title, survey, setSurve
               </div>
             ))}
           </AdaptGrid>
-          <div className='survey-form__submit'>
+          <div className='quote-form__submit'>
             <UiButton
               disabled={selected.length === 0}
               onClick={() => {
-                setSurvey(form);
+                setQuote(form);
                 handleView('contact');
               }}
               variant={selected.length ? 'glow' : 'disabled'}
@@ -123,4 +123,4 @@ const SurveyForm: React.FC<ISurveyForm> = ({ handleView, title, survey, setSurve
   );
 };
 
-export default SurveyForm;
+export default QuoteForm;

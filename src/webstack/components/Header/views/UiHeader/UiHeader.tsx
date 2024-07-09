@@ -16,26 +16,25 @@ const UiHeader: React.FC<IUiHeader> = ({ title, subTitle }) => {
     const {width}=useWindow();
     
     const initHeader = async () => {
-        const titleRef:any = head?.querySelector('.header--title');
-        const subRef:any = head?.querySelector('.header--sub-title');
-        const isMobile = width < 1100;
-        const w = {
-            window: width,
-            head: head?.offsetWidth,
-            title: titleRef?.offsetWidth,
-            sub: subRef?.offsetWidth
-        };
+        // const titleRef:any = head?.querySelector('.header--title');
+        // const subRef:any = head?.querySelector('.header--sub-title');
+        // const isMobile = width < 1100;
+        // const w = {
+        //     window: width,
+        //     head: head?.offsetWidth,
+        //     title: titleRef?.offsetWidth,
+        //     sub: subRef?.offsetWidth
+        // };
 
-        if (set == true || !head) return;
-        if(!w?.title || set)return;
-        setSet(true);
-        if(isMobile){
-            const e = {
-                smallTitle: Boolean(w.title > width - mobileNavSize),
-                sm: width - mobileNavSize - w.title,
-            }
-            console.log("[ isMobile ]",{w,e})
-        }
+        // if (set == true || !head) return;
+        // if(!w?.title || set)return;
+        // setSet(true);
+        // if(isMobile){
+        //     const e = {
+        //         smallTitle: Boolean(w.title > width - mobileNavSize),
+        //         sm: width - mobileNavSize - w.title,
+        //     }
+        // }
         // console.log({ow:head?.offsetWidth, width, sub, subWidth: sub?.offsetWidth})
         // head.style.width = `${head.offsetWidth}px`;
         // head.style.minHeight = `${Number(head.offsetHeight / 2)}px`;

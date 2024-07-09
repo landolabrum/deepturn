@@ -331,11 +331,11 @@
     );
 
     &--secondary {
-        background-color: var(--secondary-o);
+        background-color: var(--secondary-50-o);
         color: var(--gray-20);
 
         &:hover {
-            background-color: var(--secondary);
+            background-color: var(--secondary-50);
             color: var(--white);
         }
     }
@@ -418,16 +418,16 @@
 
     @include variant('lite',
         var(--gray-40), var(--gray-70), var(--gray-10),
-        var(--gray-30), var(--gray-70), var(--secondary),
+        var(--gray-30), var(--gray-70), var(--secondary-50),
         var(--gray-40), var(--gray-50), var(--gray-50));
     @include variant('dark',
         var(--dark), var(--primary-50), var(--primary-50),
         var(--gray-80-o), var(--primary-50), var(--primary-50),
         var(--primary-o), var(--gray-100), var(--gray-70));
     @include variant('secondary',
-        var(--secondary-o), var(--gray-20), var(--gray-20),
-        var(--secondary-o), var(--gray-20), var(--gray-20),
-        var(--secondary-o), var(--gray-20), var(--gray-20));
+        var(--secondary-50-o), var(--gray-20), var(--gray-20),
+        var(--secondary-50-o), var(--gray-20), var(--gray-20),
+        var(--secondary-50-o), var(--gray-20), var(--gray-20));
     @include variant('link',
         transparent, var(--blue-60), transparent,
         transparent, var(--blue-10), transparent,
@@ -502,7 +502,7 @@
             font-size: var(--s-3);
             font-weight: bold;
             user-select: none;
-            color: var(--secondary-o);
+            color: var(--red-50);
             opacity: .5;
         }
     }

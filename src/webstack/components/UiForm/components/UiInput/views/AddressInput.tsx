@@ -105,6 +105,7 @@ const AutocompleteAddressInput = ({ address, placeholder, size, setAddress, vari
     <>
       <style jsx>{styles}</style>
       <style jsx>{aStyles}</style>
+      <div className='address-input'>
       <FormControl
         size={size}
         error={error}
@@ -114,7 +115,7 @@ const AutocompleteAddressInput = ({ address, placeholder, size, setAddress, vari
       >
         <input
           data-element='input'
-          className={inputClasses}
+          className={inputClasses+ " address-input"}
           id="autocomplete-address"
           type="text"
           ref={inputRef}
@@ -136,6 +137,7 @@ const AutocompleteAddressInput = ({ address, placeholder, size, setAddress, vari
           />
         </div>
       )}
+      </div>
     </>
   );
 };

@@ -1,2 +1,2 @@
-import ProductSurvey from "~/src/modules/ecommerce/Products/views/ProductDescription/ProductSurvey/controller/ProductSurvey";
-export default ProductSurvey;
+import ProductQuote from "~/src/modules/ecommerce/Products/views/ProductDescription/ProductQuote/controller/ProductQuote";
+export default ProductQuote;

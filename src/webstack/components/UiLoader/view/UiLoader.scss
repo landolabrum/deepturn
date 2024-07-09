@@ -6,10 +6,18 @@
 
 .ui-loader {
   width: 100%;
-  --ui-icon-color: var(--gray-10-o);
+  --ui-icon-color: var(--primary-50);
   color: var(--gray-50);
   @extend .d-flex;
   height: 100%;
+  z-index: 4;
+  &__fixed{
+    height: 100%;
+    z-index: 1001;
+    top: 0;
+    backdrop-filter: blur(2px);
+    left: 0;
+  }
   &--content {
     height: 100%;
     width: 100%;

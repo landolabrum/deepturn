@@ -70,6 +70,7 @@ input, textarea {
 
   // VARIANTS
   &.invalid {
+    text-shadow: 1px 1px #f30;
     background-color: transparent;
     z-index: 2;
     text-decoration: underline dashed;

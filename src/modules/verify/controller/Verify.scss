@@ -14,10 +14,10 @@
 
 
 .verify {
+    min-height: 500px;
 
     // margin-top: var(--s-4);
     // aspect-ratio: 5/4;
-    min-height: 500px;
     @media(max-width:900px) {
         // aspect-ratio: 4/5;
         margin-top: 0;

@@ -53,40 +53,6 @@ export default class MemberService
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<IAuthenticatedUser | undefined>();
   public guestChanged = new EventEmitter<GuestContext | undefined>();
-
-  public async signIn(cust: any): Promise<any> {
-    // console.log({cust})
-    if (!cust.email) {
-      throw new ApiError("Email is required", 400, "MS.SI.01");
-    }
-    if (!cust.metadata.user.password) {
-      throw new ApiError("Password is required", 400, "MS.SI.02");
-    }
-
-    // Encrypt the login data
-    const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
-
-    const encryptedLoginData = encryptString(JSON.stringify(cust), ENCRYPTION_KEY);
-
-    const memberJwt: any = await timeoutPromise(
-      await this.post<{}, any>(
-        "usage/auth/login",
-        { data: encryptedLoginData },
-      ),
-      TIMEOUT // 5 seconds timeout
-    );
-    // console.log("[ signIn ]", memberJwt)
-    if (!memberJwt?.fields) {
-      this.saveMemberToken(memberJwt);
-      this.saveLegacyAuthCookie(memberJwt);
-      return this._getCurrentUser(true)!;
-    }
-    else{
-
-      return memberJwt
-    }
-
-  };
   public async verifyEmail(token: string): Promise<any> {
     if (!token) {
       throw new ApiError("No Token Provided", 400, "MS.SI.02");
@@ -114,11 +80,45 @@ export default class MemberService
       return verifiedMemberResp;
 
     } catch (error) {
-      console.log("[ verifiedMemberResp ]:", error)
+      console.error("[ verifiedMemberResp ]:", error)
 
       return error
     }
   }
+  public async signIn(cust: any): Promise<any> {
+    // console.log({cust})
+    if (!cust.email) {
+      throw new ApiError("Email is required", 400, "MS.SI.01");
+    }
+    if (!cust.metadata.user.password) {
+      throw new ApiError("Password is required", 400, "MS.SI.02");
+    }
+
+    // Encrypt the login data
+    const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
+
+    const encryptedLoginData = encryptString(JSON.stringify(cust), ENCRYPTION_KEY);
+
+    const memberJwt: any = await timeoutPromise(
+      await this.post<{}, any>(
+        "usage/auth/login",
+        { data: encryptedLoginData },
+      ),
+      TIMEOUT // 5 seconds timeout
+    );
+    // console.log("[ signIn ]", memberJwt)
+    if (!memberJwt?.fields) {
+      this.saveMemberToken(memberJwt);
+      this.saveLegacyAuthCookie(memberJwt);
+      return this._getCurrentUser(true)!;
+    }
+    else {
+
+      return memberJwt
+    }
+
+  };
+
 
   public async verifyPassword(token: string): Promise<any> {
     if (!token) {
@@ -311,20 +311,20 @@ export default class MemberService
     if (!props.email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
-    // console.log("[ SIGNUP PROPS ]", props)
-      const encryptedSignUp = encryptString(JSON.stringify(props), ENCRYPTION_KEY);
-      const res = await this.post<{}, any>(
-        "usage/auth/sign-up",
-        {data: encryptedSignUp},
-      );
-      // GUEST TEMP SIGN IN
-      if (res?.status === "guest") {
-        const guestJwt = await res.data;
-        this.saveguestToken(guestJwt);
-        this.saveLegacyguestCookie(guestJwt);
-      }
-      // console.log("[ SIgn Up Response ]: ", {res})
-      return res;
+    console.log("[ SIGNUP PROPS ]", props)
+    const encryptedSignUp = encryptString(JSON.stringify(props), ENCRYPTION_KEY);
+    const res = await this.post<{}, any>(
+      "usage/auth/sign-up",
+      { data: encryptedSignUp },
+    );
+    // GUEST TEMP SIGN IN
+    if (res?.status === "guest") {
+      const guestJwt = await res.data;
+      this.saveguestToken(guestJwt);
+      this.saveLegacyguestCookie(guestJwt);
+    }
+    // console.log("[ SIgn Up Response ]: ", {res})
+    return res;
 
     //   {
     //     "name": "test signup",
@@ -755,7 +755,7 @@ export default class MemberService
   protected appendHeaders(headers: { [key: string]: string }) {
     super.appendHeaders(headers);
     const token = this.getCurrentUserToken();
-    console.log("[ TOKEM ]", token)
+    // console.log("[ TOKEM ]", token)
     if (token) {
       headers["Authorization"] = `Bearer ${token}`;
     }

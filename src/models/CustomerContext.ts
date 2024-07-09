@@ -1,6 +1,6 @@
 export interface ICustomerUser {
   clearance: number;
-  password_token: string;
+  // password_token: string;
   email_verified: boolean;
   password: string;
   type: string;

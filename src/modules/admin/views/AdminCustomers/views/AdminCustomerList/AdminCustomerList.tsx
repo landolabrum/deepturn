@@ -11,6 +11,7 @@ import { getUserClearance, useClearance, useUser } from '~/src/core/authenticati
 import canViewCustomer from '../../functions/canViewCustomer';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import UiButton from '@webstack/components/UiButton/UiButton';
 
 
 const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: string) => void }) => {
@@ -62,7 +63,7 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
           tax_exempt: <AdaptTableCell cell='check' data={Boolean(customer.tax_exempt == 'exempt')} />,
           clearance: <AdaptTableCell cell='id' data={keyStringConverter(getUserClearance(customer?.metadata?.user?.clearance)?.user.type,{textTransform:"capitalize"})} />,
           extras: extras,
-          request: customer.metadata && <AdaptTableCell cell='check' data={Boolean(Object.entries(customer.metadata).find((f: any) => String(f).includes(String(environment.merchant.mid))))} />,
+          quote: customer.metadata && <AdaptTableCell cell='check' data={Boolean(Object.entries(customer.metadata).find((f: any) => String(f).includes(String(environment.merchant.mid))))} />,
         };
       });
 
@@ -136,6 +137,11 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
     <>
       <style jsx>{styles}</style>
       <div className='admin-customer-list'>
+      <div className='d-flex s-w-9 justify-end s-4-bottom'>
+        <div>
+        <UiButton onClick={()=>getCustomerList()}>refresh</UiButton>
+      </div>
+        </div>
         <div className='admin-customer-list__table'>
           <AdapTable
             // page={1}
@@ -152,6 +158,7 @@ const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: stri
             data={customers}
             onRowClick={onSelect}
           />
+          {hasMore && "next"}
         </div>
       </div>
     </>

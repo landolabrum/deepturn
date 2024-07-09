@@ -12,12 +12,12 @@ export type OForm = {
 } | boolean | string;
 
 export type IFormField = {
-    name?: string;
+    name: string;
     error?: string;
     options?: (string | IRoute | number)[] | React.ReactElement[];
     width?: string;
     value?: string | boolean | UserAddress | number;
-    label?: string;
+    label?: any;
     autoComplete?: 'on' | 'off';
     min?: number;
     max?: number;

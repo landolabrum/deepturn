@@ -1,4 +1,3 @@
-// Relative Path: ./VerifyEmail.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './VerifyEmail.scss';
 import { getService } from '@webstack/common';
@@ -10,14 +9,13 @@ import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import Login from '~/src/modules/authentication/views/Login/controller/Login';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import { useUser } from '~/src/core/authentication/hooks/useUser';
 import useDevice from '~/src/core/authentication/hooks/useDevice';
 
-// Remember to create a sibling SCSS file with the same name as this component
 interface IVerifyEmail {
   token?: string;
   onSuccess: (e: any) => void;
 }
+
 interface IVerifyEmailState {
   status?: string;
   detail?: {
@@ -27,32 +25,48 @@ interface IVerifyEmailState {
   message?: string;
   customer?: any;
 }
+
 const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
   const [state, setState] = useState<IVerifyEmailState>({ status: 'verifying_email' });
   const MemberService = getService<IMemberService>("IMemberService");
   const { openModal } = useModal();
+
   const handleVerify = async () => {
     if (!token) {
       setState({ status: 'no_token_present' });
       return;
+    } else if (!state?.status || (state.status && ["418", 418, 400, 'incomplete'].includes(state.status))) {
+      return;
     }
     try {
       const verifiedResponse = await MemberService.verifyEmail(String(token));
-      console.error('[ HANDLE VERIFY ]', verifiedResponse)
-      if (verifiedResponse) setState(verifiedResponse);
+      console.error('[ HANDLE VERIFY ]', verifiedResponse);
+      let responseFields = verifiedResponse?.detail?.fields && Object.values(verifiedResponse?.detail?.fields).map((field: any): IFormField => {
+        field.label = field.name;
+        field.value = field.message;
+        field.error = true;
+        delete field.message;
+        field.readonly = true;
+        return field;
+      });
+      console.log({ responseFields });
+      if (verifiedResponse) setState({
+        ...verifiedResponse,
+        fields: verifiedResponse?.fields || responseFields
+      });
     } catch (e: any) {
-      console.error('[ HANDLE VERIFY ERROR ]', e)
+      console.error('[ HANDLE VERIFY ERROR ]', e);
     }
-  }
+  };
 
   const loadingText = (): string => {
     let context = '';
     const isString = (e: any) => typeof e == 'string';
-    if (isString(state.status)) context = String(state.status)
+    if (isString(state.status)) context = String(state.status);
     else if (isString(state.detail)) context = String(state.detail);
     else if (state.detail?.detail && isString(state.detail?.detail)) context = state.detail.detail;
     return keyStringConverter(context);
-  }
+  };
 
   const onChange = (e: any) => {
     const { name, value } = e.target;
@@ -64,14 +78,11 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
     const updatedFields = stateFields?.map((field: IFormField) => {
       if (field.name === name) {
         const updatedField = { ...field, value };
-        const is_p = name === 'password'
-        const is_c = name === 'confirm_password'
-        if (Boolean(is_c && pw_value !== value && pw_value !== '')
-          || Boolean(is_p && confirm_pw_value !== value && confirm_pw_value !== '')) {
+        const is_p = name === 'password';
+        const is_c = name === 'confirm_password';
+        if ((is_c && pw_value !== value && pw_value !== '') || (is_p && confirm_pw_value !== value && confirm_pw_value !== '')) {
           updatedField.error = 'Not Same as Password';
-        }
-        else if (updatedField.error) {
-
+        } else if (updatedField.error) {
           delete updatedField.error;
         }
         return updatedField;
@@ -80,31 +91,36 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
     });
     setState({ ...state, fields: updatedFields });
   };
+
   const device = useDevice();
+
   const onSubmit = async () => {
     const newPassword = state?.fields?.find((f: IFormField) => f.name == 'password')?.value;
     let customer = state.customer;
     customer.metadata.user.password = newPassword;
-    customer.metadata.user.devices = [device]
+    customer.metadata.user.devices = [device];
     try {
-      console.log("[ verify_email (CUSTOMER) ]", customer)
+      console.log("[ verify_email (CUSTOMER) ]", customer);
       const updateMember = await MemberService.modifyCustomer(customer);
       if (updateMember) {
-        // console.log(updateMember)
+        console.log(updateMember);
         handleLoginModal();
         // onSuccess(updateMember.email);
       }
     } catch (error: any) {
-      alert(JSON.stringify(error))
+      alert(JSON.stringify(error));
     }
-  }
+  };
+
   const handleLoginModal = () => {
-    console.log("[ handleLoginModal ]")
-    openModal({ children: <Login email={state.customer.email} onSuccess={(e) => JSON.stringify(e)} /> })
-  }
+    console.log("[ handleLoginModal ]");
+    openModal({ children: <Login email={state.customer.email} onSuccess={(e) => JSON.stringify(e)} /> });
+  };
+
+  const isForm = state.status && ["418", 418, 'incomplete'].includes(state.status) && state?.fields;
   useEffect(() => {
     handleVerify();
-  }, [token, onSuccess]);
+  }, [state?.status, onSuccess]);
 
   return (
     <>
@@ -118,12 +134,12 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
               dots={state?.status != undefined && ['verifying_email'].includes(state?.status)}
             />
           </div>
-          {state.status && ["418", 'incomplete'].includes(state.status) && state?.fields &&
+          {isForm &&
             <UiForm
-              title={String(state?.detail) || undefined}
+              title={typeof state?.detail == 'string' && state.detail || undefined}
               onChange={onChange}
               fields={state.fields}
-              onSubmit={onSubmit}
+              onSubmit={typeof state?.detail == 'string' && onSubmit || undefined}
             />
           }
           {state.status === 'verification_success' && state.customer.email && <div className='verify-email__content__sign-in'>

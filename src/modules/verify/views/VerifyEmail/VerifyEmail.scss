@@ -5,6 +5,9 @@
 }
 
 .verify-email {
+    @extend .d-flex;
+    flex-direction: column;
+    min-height: inherit;
 
     border-radius:var(--border-radius);
     margin: var(--s-element) 0;

@@ -66,6 +66,7 @@ const Verify = () => {
       if (verifiedResponse) setContext(verifiedResponse);
     } catch (e: any) {
       console.error('[ HANDLE VERIFY ]', e)
+      if(e?.fields)console.log({e:e.fields})
     }
   }
   const views: any = {

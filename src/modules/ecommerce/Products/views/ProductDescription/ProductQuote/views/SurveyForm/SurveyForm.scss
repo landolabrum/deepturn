@@ -4,7 +4,7 @@
     align-items: center;
 }
 
-.survey-form {
+.quote-form {
     position: relative;
     font-size: var(--s-6);
     display: flex;
@@ -132,7 +132,7 @@
     }
 
 
-    .survey-form__options {
+    .quote-form__options {
         border-radius: var(--border-radius);
         background-color: var(--gray-80-o);
         box-shadow: inset var(--box-shadow);
