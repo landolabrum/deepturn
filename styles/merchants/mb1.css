@@ -21,9 +21,7 @@
   --tertiary-90: #8f7d71;
   --tertiary-o: #bfb0a170;
 
- 
-
-  --body: #1d1d1d;
+  --body: #080808;
   --lite: #f0edeb;
   --dark: #2c0903;
   --dark-70: #200804;
@@ -34,16 +32,16 @@
   --white: #ffffff;
   --white-o: #ffffff70;
 
-  --yellow-10: #F9E0B5;
-  --yellow-10-o: #F9E0B550;
+  --yellow-10: #f9e0b5;
+  --yellow-10-o: #f9e0b550;
   --yellow-20: #ffdb4d;
   --yellow-20-o: #ffdb4d50;
-  --yellow-30: #EDCA60;
-  --yellow-30-o: #EDCA6050;
-  --yellow-50: #E3AF1F;
-  --yellow-50-o: #E3AF1F50;
-  --yellow-70: #C4871C;
-  --yellow-70-o: #C4871C50;
+  --yellow-30: #edca60;
+  --yellow-30-o: #edca6050;
+  --yellow-50: #e3af1f;
+  --yellow-50-o: #e3af1f50;
+  --yellow-70: #c4871c;
+  --yellow-70-o: #c4871c50;
 
   --orange-50: #ff9900;
   --orange-o: #ff990070;
@@ -61,14 +59,13 @@
   --green-30: #34a853;
   --green-70: #2d8c3b;
   --green-90: #257029;
-  
-  --blue-o: #3A7BD5; /* Softer transparent blue */
-  --blue-10: #2B8FDB; /* Light blue with a trustworthy feel */
-  --blue-30: #2277B5; /* Slightly darker light blue */
-  --blue-50: #1A5E92; /* Mid-tone blue */
-  --blue-70: #13487A; /* Darker blue */
-  --blue-90: #031d40; /* Deep, dark blue */
 
+  --blue-o: #3a7bd5; /* Softer transparent blue */
+  --blue-10: #2b8fdb; /* Light blue with a trustworthy feel */
+  --blue-30: #2277b5; /* Slightly darker light blue */
+  --blue-50: #1a5e92; /* Mid-tone blue */
+  --blue-70: #13487a; /* Darker blue */
+  --blue-90: #031d40; /* Deep, dark blue */
 
   --purple-50: #9b59b6;
   --purple-10: #d0a1e2;
@@ -76,14 +73,35 @@
   --purple-70: #7d3a98;
   --purple-90: #5d2975;
   --purple-50-o: #9b59b670;
-  
+
   --pink: #e91e63;
   --pink-10: #ff80ab;
   --pink-30: #f06292;
   --pink-70: #c2185b;
   --pink-90: #880e4f;
   --pink-o: #e91e6370;
+
+  --gray-10: #fafafa;
+  --gray-10-o: #fafafa50;
+  --gray-20: #f7f7f7;
+  --gray-20-o: #f7f7f750;
+  --gray-30: #ececec;
+  --gray-30-o: #ececec50;
+  --gray-40: #d8d8d8;
+  --gray-40-o: #d8d8d850;
+  --gray-50: #a8a8a8;
+  --gray-50-o: #a8a8a850;
+  --gray-60: #767676;
+  --gray-60-o: #76767650;
+  --gray-70: #545454;
+  --gray-70-o: #54545450;
+  --gray-80: #212121;
+  --gray-80-o: #21212150;
+  --gray-90: #181818;
+  --gray-90-o: #18181850;
+  --gray-100: #080808;
+  --gray-100-o: #08080850;
 }
-h3{
+h3 {
   font-family: Decimal;
 }

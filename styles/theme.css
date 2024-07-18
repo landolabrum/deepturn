@@ -833,14 +833,15 @@ h6 {
 
 /* DIV */
 div,
-ol {
+ol, td {
   &::-webkit-scrollbar-thumb {
     background-color: var(--primary-50);
-    border-radius: 5px;
+    border-radius: 5px 0 0 5px;
   }
 
   &::-webkit-scrollbar {
     width: 10px;
+    border-radius: 5px 0 0 5px;
     background-color: var(--dark);
   }
 }
