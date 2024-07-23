@@ -256,6 +256,7 @@
     border: var(--border-focus);
   }
 }
+
 .c-success {
   background-color: #00371b;
   border-color: #5fe341;
