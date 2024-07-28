@@ -1,6 +1,27 @@
-.node{
+.d3-node--content {
+  overflow: visible;
+  white-space: nowrap;
+  position: absolute;
+  transform: translateY(calc(-50% - calc(var(--s-11))));
+  top: 0;
+  height: var(--s-11-width);
+  border-radius:var(--s-11);
+  z-index: 2;
+  padding: var(--s-11);
+}
+.d3-node--content:hover {
+  white-space: unset;
+  box-shadow: 
+  inset 1px 1px 1px 1px var(--gray-40),
+  inset 1px 1px 1px 1px var(--gray-90)
+  ;
+  background-color: var(--gray-10);
+}
+.d3-node--circle{
+    z-index: 1;
 }
 .d3-node{
-    background-color: #f30;
-    width: max-content;
+    overflow: visible;
+    width: 10px;
+    height: 10px;
 }
