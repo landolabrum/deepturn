@@ -26,6 +26,11 @@
   fill:var(--green-o);
   color:var(--green-70);
 }
+.d3-node__selected{
+  fill:var(--blue-o);
+  color:var(--blue-10);
+  stroke: var(--primary-10);
+}
 .d3-node__path{
   fill:var(--gray-80);
   color:var(--green-50);
@@ -39,9 +44,9 @@
   width: max-content;
   padding: 0 var(--s-10);
   border-radius: var(--s-11);
+  background-color: var(--gray-50-o);
   border: solid 2px var(--blue-70);
   /* line-height: 1;
-  background-color: var(--gray-50-o);
   height:100%;
   display: flex;
   flex-direction: column;
