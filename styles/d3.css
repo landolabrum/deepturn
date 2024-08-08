@@ -10,7 +10,7 @@
 .d3-links {
   fill: none;
   /* stroke: var(--gray-70-o); */
-  stroke-opacity: 0.4;
+  /* stroke-opacity: 0.4; */
   stroke-width: 2;
 }
 .d3-node__content{
