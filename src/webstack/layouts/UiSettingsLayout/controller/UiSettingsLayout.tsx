@@ -6,6 +6,9 @@ import useClass from '@webstack/hooks/useClass';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import UiHeader from '@webstack/components/Containers/Header/views/UiHeader/UiHeader';
 import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
+import useWindow from '@webstack/hooks/window/useWindow';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
+import styles from "./UiSettingsLayout.scss";
 
 interface ISettingsLayout {
   views: any;
@@ -18,6 +21,8 @@ interface ISettingsLayout {
   customMenu?: any;
   footer?: any;
 }
+
+
 
 const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   views,
@@ -32,18 +37,11 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
 }: ISettingsLayout) => {
   const router = useRouter();
   const [view, setView] = useState<string | undefined>();
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
   const classMaker = (className: string) => {
     let primaryClass = className ? `settings__${className}` : 'settings';
-    return `${primaryClass}${variant ? ` ${primaryClass}--${variant}` : ''}${theme?` ${primaryClass}_${theme}` : '' }`;
-  }
-  const classes = {
-    primary: classMaker(''),
-    content: classMaker('content'),
-    header: classMaker('header'),
-    view: classMaker('view'),
-    nav: classMaker('nav'),
-    navContent: classMaker('nav--content'),
-    footer: classMaker('footer'),
+    return `${primaryClass}${variant ? ` ${primaryClass}--${variant}` : ''}${theme ? ` ${primaryClass}_${theme}` : ''}`;
   };
 
   const handleView = useCallback((view: string) => {
@@ -54,50 +52,69 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     setViewCallback?.(view);
   }, [router, setViewCallback]);
 
-  const titleContent = typeof title == 'string' && keyStringConverter(title) || title;
+  const titleContent = typeof title === 'string' && keyStringConverter(title) || title;
+  const { width } = useWindow();
 
   const firstView = router.query.vid || viewName || Object.keys(views)[0];
   const isView = view && Object.keys(views).includes(view);
-
+const openClass = isNavOpen ? ' open' : ' close';
   useEffect(() => setView(firstView?.toString()), [firstView, isView]);
 
   if (!isView) return (
     <>
       <style jsx>{containerStyles}</style>
-      <div className={`${classes.primary}`}>
+      <div className={`${classMaker('primary')}`}>
         <div className='settings__loader'><UiLoader /></div>
       </div>
     </>
   );
-
+const SideNavTrigger = ({ isOpen, setIsOpen }:any) => {
+  return (
+    <>
+      <style jsx>{styles}</style>
+      <div className="settings__trigger" onClick={() => setIsOpen(!isOpen)}>
+        <div className='settings__trigger--content'>
+          <UiIcon icon={isOpen ? 'fa-chevron-left' : 'fa-chevron-right'} />
+        </div>
+      </div>
+    </>
+  );
+};
   return (
     <>
       <style jsx>{containerStyles}</style>
-      <div id="settings" className={`${classes.primary}`}>
-        <div className={`${classes.header}`}>
-          {!title && title!==undefined && isView && <UiHeader title={titleContent} subTitle={subTitle} /> || title}
+      <div id="settings" className={`${classMaker('primary')}`}>
+        <div className={`${classMaker('header')}`}>
+          {!title && title !== undefined && isView && <UiHeader title={titleContent} subTitle={subTitle} /> || title}
         </div>
-        <div className={classes.content}>
-        {!customMenu &&  <div className={classes.nav}>
-            <div className={classes.navContent}>
-     {         Object.keys(views)?.map((vue) => (
-                <span key={vue} className='s-w-100'>
-                  <UiButton
-                    traits={view === vue ? { afterIcon: 'fa-check' } : {}}
-                    variant={view == vue && "primary"}
-                    onClick={() => handleView(vue)}
-                  >{keyStringConverter(vue)}</UiButton>
-                </span>
-              ))}
-              {customMenu}
+        <div className={classMaker('content')+ ` ${openClass}`}>
+          <div className={classMaker('nav')+ ` ${openClass}`}>
+              {width > 1100 && (
+                <SideNavTrigger isOpen={isNavOpen} setIsOpen={setIsNavOpen} />
+              )}
+            <div className={classMaker('nav--content')+ ` ${openClass}`}>
+
+              <div className={`settings__nav--content ${openClass}`}>
+                {Object.keys(views)?.map((vue) => (
+                  <span key={vue} className='s-w-100'>
+                    <UiButton
+                      traits={view === vue ? { afterIcon: 'fa-check' } : {}}
+                      variant={view == vue && "primary"}
+                      onClick={() => handleView(vue)}
+                    >
+                      {keyStringConverter(vue)}
+                    </UiButton>
+                  </span>
+                ))}
+                {customMenu}
+              </div>
             </div>
           </div>
-            }
-          <div className={classes.view}>
-            <div className={classes.content}>
+          <div className={classMaker('view')+ ` ${openClass}`}>
+            <div className={classMaker('content')+ ` ${isNavOpen ? ' open' : ' close'}`}>
               {views[view]}
             </div>
-            {footer && <div className={classes.footer}>{footer}</div>}
+            {footer && <div className={classMaker('footer')}>{footer}</div>}
           </div>
         </div>
       </div>

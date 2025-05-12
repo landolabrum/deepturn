@@ -10,6 +10,29 @@
     width: var(--s-9-width);
 }
 
+.settings__trigger{
+        position: absolute;
+        top: 50%;
+        right: -10px;
+        z-index: 1000;
+        width: 50px;
+        @extend .d-flex;
+        &--content{
+            --ui-icon-size:var(--s-1);
+            --ui-icon-color:var(--gray-70-o);
+            width:var(--s-9-width);
+            height: var(--s-9-width);
+            padding:Var(--s-9);
+            &:hover{
+                background-color: var(--gray-10-o);
+                --ui-icon-color:var(--primary-50);
+            }
+        };
+        // transform:translate(50%, 50%);
+        // height: 100%;
+        // width: 100%;
+
+    }
 .settings {
 
     @extend .d-flex, .s-9;
@@ -58,6 +81,7 @@
     }
 
     &__nav {
+        position:relative;
         @extend .d-flex;
         justify-content: flex-start;
         align-items: stretch;
@@ -87,7 +111,18 @@
                 
             }
         }
-        
+        &.close{
+            max-width: 60px;
+            padding: 0;
+            background-color: unset;
+            // max-width: 50px;
+
+            transform: translateX(calc(-1 * var(--s-1)));
+        }
+        &.open{
+                width: 100%;
+                transform: translateX(0);
+            }
         &--content {
             padding: var(--s-9);
             width: var(--s-9-width);
@@ -97,7 +132,13 @@
             align-items: flex-start;
             justify-content: flex-start;
             gap: var(--s-11);
-            
+            transform: translateX(-100%);
+            &.open{
+                transform: translateX(0);
+            }
+              &.close{
+            max-width: var(--s-1);
+        }
             @media(max-width:1100px) {
                 padding:0;
                 width:100%;

@@ -4,8 +4,11 @@ const { deploy, merchants } = require('./merchants.config');
 // Directory for the git repository
 const merchant = merchants[deploy];
 const gitDir = `${merchant.mid}.git`;
-const repoUrl = `https://github.com/landolabrum/${merchant.name}.git`; // Replace with your actual repository URL
 
+// Fixing the multi-line URL by concatenating properly
+const repoUrl = `git@github.com:landolabrum/${merchant.name}.git`; // Correct URL format
+
+// Deployment command
 const deployCommand = `
   echo "****** PUBLISHING: ${merchant.url}" &&
   npm run build &&
@@ -18,9 +21,6 @@ const deployCommand = `
   rm -rf ./out && 
   echo "########  [ PUBLISHED: ${merchant.url} ]  ########"
 `;
-// WORKS ON LINUX
-
-// gh-pages -d out -t true --repo ${repoUrl} &&
 
 exec(deployCommand, (err, stdout, stderr) => {
   if (err) {
