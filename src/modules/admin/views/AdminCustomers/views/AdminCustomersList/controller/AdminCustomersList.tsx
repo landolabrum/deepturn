@@ -3,10 +3,10 @@ import styles from './AdminCustomersList.scss'; // Changed to .css import
 import AdminCustomerAdd from '../views/AdminCustomerAdd/AdminCustomerAdd';
 import AdminCustomerList from '../views/AdminCustomerList/AdminCustomerList';
 import AdminCustomerDetails from '../views/AdminCustomerDetail/controller/AdminCustomerDetail';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import IAuthenticatedUser from "~/src/models/ICustomer";
 import { useRouter } from 'next/router';
-import UiHeader from '@webstack/components/Header/views/UiHeader/UiHeader';
+import UiHeader from '@webstack/components/Containers/Header/views/UiHeader/UiHeader';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 
 
@@ -32,7 +32,7 @@ const AdminCustomers: React.FC = () => {
   };
 
 useEffect(() => {}, [query]);
-
+  if(!query?.vid || query?.vid !== 'customers')return<></>;
   return (
     <>
       <style jsx>{styles}</style>

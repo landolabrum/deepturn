@@ -1,0 +1,284 @@
+// Simplified SASS Styles
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+small {
+  color: var(--green-10);
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: var(--s-11);
+  background: rgba(0, 0, 0, 0.56);
+  backdrop-filter: blur(4px), opacity(0.4);
+
+  &::before {
+    color: var(--gray-10);
+    content: 'DEV: ';
+    display: block;
+    width: 100%;
+  }
+}
+
+@keyframes bobble {
+  50% {
+    transform: scale(1.005);
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: var(--gray-50-o);
+    box-shadow:
+      inset 1px 1px 1px 0.5px var(--gray-30),
+      inset 0 0 1px 1px var(--gray-40);
+  }
+}
+
+
+
+
+// LIST LAYOUT
+.product-listing-item__list {
+  @extend .d-flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row-reverse;
+  padding: var(--s-9);
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  position: relative;
+  border: solid 1px var(--gray-60-o);
+  @media(max-width:1100px) {
+    width: var(--s-border-width);
+    padding: 0;
+  }
+  
+  background-color: var(--gray-80-o);
+  
+  &:hover {
+    background-color: var(--gray-50-o);
+    border: solid 1px var(--gray-30);
+
+    .product-listing-item {
+      &__price {
+        opacity: 1;
+      }
+    }
+  }
+
+
+
+  .product-listing-item {
+    &__header {
+      width: auto;
+    }
+
+    &__body {
+      height: 100%;
+      @extend .d-flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    &__info {
+      h3 {
+        color: var(--gray-80);
+        text-transform: capitalize;
+        white-space: nowrap;
+        justify-content: flex-start;
+      }
+
+      p {
+        font-family: Game;
+        color: var(--gray-60);
+        height: 100%;
+      }
+    }
+
+    &__price {
+      // $matrix: var(--s-12);
+      // $nMatrix: calc($matrix * -0.5);
+      opacity: 0;
+      position: absolute;
+      right: var(--s-9);
+      bottom: var(--s-9);
+      transition: all 500ms ease;
+      // box-shadow: 
+      // $matrix $matrix $matrix $matrix var(--gray-70-o),
+      // $nMatrix 0 $matrix $matrix var(--gray-70),
+      // ;
+      // border-radius: var(--border-radius);
+    }
+
+    &__price--item {
+      @extend .d-flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    // LIST IMAGES
+    &__images {
+      position: relative;
+      transition: all 1s ease-in-out;
+      cursor: pointer;
+
+      &--item {
+        &.main {
+          aspect-ratio: 1;
+          width: 150px;
+          border-radius: var(--border-radius);
+          --ui-icon-width: var(--s-1-width);
+          --ui-icon-margin: var(--s-1) var(--s-1) 0 var(--s-1);
+          --ui-icon-height: auto;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &.xl {
+    .product-listing-item__images {
+      position: relative;
+      transition: all 1s ease-in-out;
+      cursor: pointer;
+      &--item {
+        &.main {
+          aspect-ratio: 1;
+          width: 350px;
+        }}}
+  }
+}
+
+// GRID LAYOUT
+.product-listing-item__grid {
+  @extend .d-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-11);
+  border-radius: var(--border-radius);
+  position: relative;
+  overflow: hidden;
+  align-self: stretch;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: inset 1px 1px 1px 0.5px var(--gray-80-o), inset 1px 1px 3px 3px var(--gray-60-o);
+  background-color: var(--gray-70);
+  height: calc(100% - 4px);
+  &:hover {
+    animation: bobble 0.3s forwards;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+    &__images {
+      filter: blur(1.5px);
+      border-bottom: solid 1px transparent;
+    }
+  }
+
+  &:active {
+    cursor: pointer;
+    background-color: var(--primary-70);
+
+    &__images {
+      filter: unset;
+    }
+  }
+
+  .product-listing-item {
+
+    &__header,
+    &__body,
+    &__images {
+      @extend .d-flex;
+      flex-direction: column;
+      width: var(--s-border-width);
+    }
+    flex: 1;
+
+    &__body {
+      // height: 100%;
+      width: var(--s-9-width);
+      padding: 0 var(--s-9) var(--s-9);
+    }
+
+    &__info {
+      @extend .d-flex;
+      flex-direction: column;
+      height: var(--s-9-width);
+      padding: var(--s-9) 0;
+      align-items: flex-start;
+      width: 100%;
+      line-height: 1;
+
+      h3 {
+        color: var(--gray-80);
+        text-transform: capitalize;
+        white-space: nowrap;
+        font-weight: 900;
+      }
+
+      p {
+        font-family: Game;
+        color: var(--gray-60);
+        height: 100%;
+      }
+    }
+
+    &__price {
+      @extend .d-flex;
+      height: 100%;
+      justify-content: flex-end;
+      align-items: flex-end;
+      width: 100%;
+      flex-wrap: wrap;
+      overflow: hidden;
+    }
+
+    &__images {
+      flex-wrap: wrap;
+      align-items: stretch;
+      position: relative;
+      // padding-bottom: var(--s-9);
+      // border-bottom: solid 1px var(--gray-70);
+      transition: all 1s ease-in-out;
+
+      &--item {
+        flex: 1;
+        width: 100%;
+        aspect-ratio: 1;
+        min-width: 300px;
+
+        &.main {
+          max-width: unset;
+          --ui-icon-width: var(--s-1-width);
+          --ui-icon-margin: var(--s-1) var(--s-1) 0 var(--s-1);
+          --ui-icon-height: auto;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    animation: bobble 0.3s forwards;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+
+    &__images {
+      filter: blur(1.5px);
+      // border-bottom: solid 1px transparent;
+    }
+  }
+
+  &:active {
+    cursor: pointer;
+    background-color: var(--primary-70);
+
+    &__images {
+      filter: unset;
+    }
+  }
+
+}

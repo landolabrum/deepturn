@@ -1,0 +1,29 @@
+{
+    "contact": {
+        "name": "Test user",
+        "email": "tes@tes.co",
+        "phone": "1 ( 543 ) 544 - 4444",
+        "address": {
+            "line1": "4324 Commercial Way",
+            "line2": "",
+            "city": "Salt Lake City",
+            "state": "UT",
+            "postal_code": "84104",
+            "country": "US",
+            "lat": 40.7461576,
+            "lng": -111.9942893
+        }
+    },
+    "usage": {
+        "label": "Residential",
+        "value": "residential"
+    },
+    "appliances": [
+        {
+            "refrigerator": 6
+        },
+        {
+            "freezer": 6
+        }
+    ]
+}

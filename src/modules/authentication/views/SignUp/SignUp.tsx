@@ -131,7 +131,7 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
         }
       } catch (e: any) {
         if (e?.detail?.fields) {
-          console.log("[ e.detail.fields ]",e.detail.fields)
+          // console.log("[ e.detail.fields ]",e.detail.fields)
           e.detail.fields.forEach((field: any) => {
             changeField(field.name, 'error', field.message);
           });
@@ -157,7 +157,6 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
   return (
     <>
       <style jsx>{styles}</style>
-
       {!user && <UiForm title={title} fields={fields} onSubmit={handleSubmit} loading={loading} onChange={handleChange} submitText={btnText || 'sign up'} />}
       <div className="authentication__authentication-status">
         {loading?.message}

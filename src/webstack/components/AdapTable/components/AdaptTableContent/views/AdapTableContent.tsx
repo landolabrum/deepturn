@@ -3,10 +3,10 @@ import React, { useEffect, useState, useRef } from "react";
 import contentStyles from "./AdapTableContent.scss";
 import tableStyles from "./AdapTableElements.scss";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import AdapTableAlternateView from "../components/AdapTableAlternateView/AdapTableAlternateView";
 import useScroll from "@webstack/hooks/useScroll";
-import UiButton from "@webstack/components/UiButton/UiButton";
+import UiButton from "@webstack/components/UiForm/views/UiButton/UiButton";
 import { TableOptions } from "@webstack/components/AdapTable/views/AdapTable";
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 import useTable from "../hooks/useTable";
@@ -25,6 +25,7 @@ export interface TableContentProps extends TableFunctionProps {
   variant?: IFormControlVariant;
   onRowClick?: (e: any) => void;
   hideHeader?: boolean;
+  onSelect?: (e:any)=>void;
 }
 export interface TableFunctionProps {
   data?: any;
@@ -42,17 +43,18 @@ type ItemType = {
 export const AdapTableContent = ({
   loading,
   search,
-  data,
+  data: tableData,
   startIndex,
   variant,
   onRowClick,
   hideHeader,
   options,
+  onSelect,
 }: TableContentProps) => {
   const index = options?.index ? options.index + 1 : 0;
 
   const { tableRef, status } = useTable({
-    data,
+    data: tableData,
     variant,
     rowClickable: Boolean(onRowClick),
     options,
@@ -81,7 +83,7 @@ export const AdapTableContent = ({
     if (isResizing && resizeColumnIndex >= 0) {
       const deltaX = e.clientX - resizeStartX;
       const newColumnWidths: any = { ...columnWidths };
-      const currentColumnKey = Object.keys(data[0])[resizeColumnIndex];
+      const currentColumnKey = Object.keys(tableData[0])[resizeColumnIndex];
       const currentColumnWidth = newColumnWidths[currentColumnKey] || 0;
       newColumnWidths[currentColumnKey] = Math.max(currentColumnWidth + deltaX, 30); // Adjust the minimum width as needed
       setColumnWidths(newColumnWidths);
@@ -101,7 +103,7 @@ export const AdapTableContent = ({
         maxWidth = Math.max(maxWidth, row.children[columnIndex].offsetWidth);
       }
     });
-    const newColumnWidths = { ...columnWidths, [Object.keys(data[0])[columnIndex]]: maxWidth + "px" };
+    const newColumnWidths = { ...columnWidths, [Object.keys(tableData[0])[columnIndex]]: maxWidth + "px" };
     setColumnWidths(newColumnWidths);
   };
   useEffect(() => {
@@ -116,16 +118,26 @@ export const AdapTableContent = ({
       window.removeEventListener("mouseup", handleResizeEnd);
     };
   }, [isResizing, handleResize]);
-
   const handleRowClick = (e: any, item: any) => {
     if (!["svg", "path"].includes(e.target.tagName)) {
       onRowClick?.(item);
     }
   };
+  
+  const handleSelect = (item: any) => {
+    onSelect?.(item);
+  };
+  
+
   const internalHiddenKeys = (key: string) => ['image', 'keywords'].includes(key);
   const handleScrollToTop = () => {
     scrollToPosition(undefined, 0, 'top');
   };
+
+  
+  useEffect(() => {
+    // This is where you can log and check for updates
+  }, [tableData]);
   return (
     <>
       <style jsx>{tableStyles}</style>
@@ -140,8 +152,13 @@ export const AdapTableContent = ({
           <thead className={hideHeader && 'hide-header' || ''}>
             <tr >
               {index !== 0 && <th className="index">#</th>}
-              { data?.[0] &&
-                Object.keys(data[0]).map((key, columnIndex) => {
+              {onSelect && (
+                    <th data-key="onSelect" className="edit">
+                      edit
+                    </th>
+                  )}
+              { tableData?.[0] &&
+                Object.keys(tableData[0]).map((key, columnIndex) => {
                   const columnKey = keyStringConverter(key);
                   return (
                     key !== "keywords" &&
@@ -166,8 +183,8 @@ export const AdapTableContent = ({
             </tr>
           </thead>}
           <tbody>
-            { data?.[0] &&
-              data.map((item: ItemType, i_: number) => {
+            { tableData?.[0] &&
+              tableData.map((item: ItemType, i_: number) => {
                 if (item) return <tr
                   className={`${variant ? variant : ""}`}
                   key={startIndex + i_}
@@ -181,10 +198,16 @@ export const AdapTableContent = ({
                       {index + i_}
                     </td>
                   )}
+                  {onSelect && (
+                    <td data-key="onSelect" className="index" onClick={()=>handleSelect(item)}>
+                      {/* {index + i_} */}
+                      <UiIcon icon={item?.selected?'fa-check':'fa-square'} />
+                    </td>
+                  )}
                   {Object.entries(item).map(
                     ([key, value], index) =>
 
-                      !options?.hideColumns?.includes(key) && (
+                      !options?.hideColumns?.includes(key) &&(
                         <td key={index} data-key={keyStringConverter(key)}>
                           {options?.hoverable && (
                             <div className="td-hover"> {AdaptTableCellHover(value)}</div>
@@ -193,12 +216,26 @@ export const AdapTableContent = ({
                             (<div
                               className={`${options?.hoverable && "td-content" || ""
                                 }${key == 'image' && ` td-content--${key}` || ''}`}
-                            >{!['image', 'keywords'].includes(key) ? (
-                              value
+                            >{!['image', 'keywords'].includes(key)  ? (
+                              // BOOLEAN VALUES
+                              // typeof value == 'boolean'?<UiIco icon="fa-checkmark"/> || 
+                               value !== 'true' && value !== 'false' &&  typeof value != "boolean"  ?(
+                                value
+                              ):(
+                                <UiIcon 
+                                color={
+                                  String(value) !== 'false'?'green':'red'
+                                }
+                                
+                                 icon={
+                                    String(value) !== 'false'?"fa-circle-check":"fa-xmark"
+                                 }
+                                />
+                              )
                             ) :
                               (internalHiddenKeys(key) && (
                                 value?.length ?
-                                  (<Image src={value[0]} fill alt={key}  />) :
+                                  (<Image priority src={value[0]} fill alt={key}  />) :
                                   (<UiIcon icon={`${environment.merchant.name}-logo`} />)
                               )
                               )}</div>)

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import useCart from '../../../../cart/hooks/useCart';
 import styles from "./Payment.scss";
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 
 interface IGuestCheckoutProps {
   onSuccess: (paymentIntent: any) => void;

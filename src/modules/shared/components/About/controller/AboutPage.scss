@@ -1,0 +1,41 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.about-page{
+    @extend .d-flex;
+    flex-direction: column;
+    gap:var(--s-9);
+    background-color: #0f3;
+    bottom:0;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    &__header,&__body{
+        @extend .d-flex;
+        // width: 100%;
+        flex-direction: column;
+        padding:var(--s-9);
+        width: var(--s-9-width);
+    }
+    &__header{
+        background-color: #f30;
+        align-items: flex-start;
+        &--title,
+        &--sub-title{
+            @extend .d-flex;
+        }
+        &--title{
+            background-color: #00f;
+            font-size: var(--s-element);
+        }
+        &--sub-title{
+            background-color: #0da;
+        }
+    }
+    &__body{
+        background-color: #0af;
+        height: 100%;
+    }
+}

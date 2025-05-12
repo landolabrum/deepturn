@@ -5,7 +5,7 @@ import iStyles from "./styles/FormControlIcon.scss";
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 import React, { Children, cloneElement, useEffect, useRef, ReactElement as RE } from "react";
 import { IOverlay, useOverlay } from "@webstack/components/Overlay/Overlay";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import UiMarkdown from "@webstack/components/UiMarkDown/UiMarkDown";
 
 type FormIconProps = {

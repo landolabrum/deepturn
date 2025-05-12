@@ -27,10 +27,10 @@ export default class SocialService
         `/usage/social/instagram/authenticate`,
         { data: encryptedLoginData },
       );
-      console.log("[ SOCIAL (IG AUTH) ]", response)
+      // console.log("[ SOCIAL (IG AUTH) ]", response)
       return response;
     } catch (error) {
-      console.log("[ SOCIAL (IG AUTH) EERRR ]", error)
+      console.error("[ SOCIAL (IG AUTH) EERRR ]", error)
       throw error;
     }
   }

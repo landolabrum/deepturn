@@ -1,37 +1,37 @@
-// Relative Path: ./lights.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './Lights.scss';
 import { getService } from '@webstack/common';
 import IHomeService, { ILight } from '~/src/core/services/HomeService/IHomeService';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import UiBar from '@webstack/components/Graphs/UiBar/UiBar';
 import ToggleSwitch from '@webstack/components/UiForm/components/UiToggle/UiToggle';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
-import UiMediaSlider from '@webstack/components/UiMedia/views/UiMediaSlider/UiMediaSlider';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import ColorPicker from '@webstack/components/ColorPicker/ColorPicker';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { calculateHexFromHueSatBri } from '../functions/LightHelpers';
 import { reverseString } from '@webstack/helpers/Strings/reverseString';
-import ColorPicker from '@webstack/components/ColorPicker/ColorPicker';
-import UiKnob from '@webstack/components/UiForm/components/UiKnob/UiKnob';
 
 interface ILightDisplay extends ILight {
   view?: string;
 }
+
 const LightsList = () => {
   const [loader, setLoader] = useLoader();
+  const [group, setGroup] = useState<string[]>([]); // Changed from useState<string[] | undefined>();
+
   const [go, setGo] = useState<any | undefined>(false);
-  // const [group, setGroup] = useState<string[] | undefined>();
   const [currentLight, setCurrentLight] = useState<ILightDisplay | undefined>();
   const [hueData, setHueData] = useState<any>();
-  const [isAll, setIsAll] = useState<boolean | ILightDisplay>(false);
+  const [isAll, setIsAll] = useState<boolean>(false);
   const homeService = getService<IHomeService>('IHomeService');
   const [view, setView] = useState('light');
+
   const updateLight = (changedLight: ILightDisplay, isColor?: boolean) => {
     setHueData(() => hueData.map((light: ILightDisplay) => {
       if (light.id_ == changedLight.id_) {
-        if (isColor) changedLight.view = 'color'
+        if (isColor) changedLight.view = 'color';
         light = changedLight;
       }
       return light;
@@ -42,13 +42,14 @@ const LightsList = () => {
     const updateLightsWithView = hueData.map((light: ILightDisplay) => {
       if (light?.id_ == id) {
         if (light?.view == undefined) {
-          light.view = 'color'
-        } else if (light?.view != undefined) delete light.view
-
+          light.view = 'color';
+        } else if (light?.view != undefined) {
+          delete light.view;
+        }
       }
-      return light
+      return light;
     });
-    setHueData(updateLightsWithView)
+    setHueData(updateLightsWithView);
   }
 
   const onLights = hueData && hueData?.filter((light: ILightDisplay) => light.is_on) || [];
@@ -60,11 +61,9 @@ const LightsList = () => {
     setCurrentLight(nextLight);
     multiHomeService('color', { id: nextLight.id_, hex: color });
   };
-  const [group, setGroup] = useState<string[]>([]); // Changed from useState<string[] | undefined>();
-
 
   const atPoints = onLights && onLights.map((light: ILightDisplay, index: number) => {
-    const newHex = light?.hex ? `#${reverseString(light.hex.substring(1, light.hex.length))}` : '#ff3300'
+    const newHex = light?.hex ? `#${reverseString(light.hex.substring(1, light.hex.length))}` : '#ff3300';
     return {
       time: (index + 1) * 1000,
       value: newHex,
@@ -72,27 +71,18 @@ const LightsList = () => {
       onPoint: handleLightAnimation
     };
   });
+
   const hueList = async (hue_object?: string) => {
     setLoader({ active: true, body: `loading ${hue_object}` });
     try {
       const response = await homeService.hue_list(hue_object);
       setHueData(response);
     } catch (e: any) {
-      console.log('[ FETCH LIGHTS (ERR) ]', JSON.stringify(e))
-    }
-  }
-
-  const addToGroup = (id_: string) => {
-    setGroup(group !== undefined ? [...group, id_] : [id_]);
-  }
-  const removeFromGroup = (id_: string) => {
-    if (group) {
-      setGroup(group.filter((existingId) => existingId !== id_));
+      console.log('[ FETCH LIGHTS (ERR) ]', JSON.stringify(e));
     }
   }
 
   const multiHomeService = async (action: string, data?: any) => {
-    // console.log('[ CHATGPT HELP! ]',JSON.stringify({action, data, group}));
     const handleLoader = (active: boolean, action?: string, name?: string) => {
       setLoader({ active: active, body: `${action}, ${name} ` });
     };
@@ -101,7 +91,6 @@ const LightsList = () => {
 
     const applyAction = async (id_: string) => {
       let response;
-      // Convert string ID to number if your service methods expect numeric IDs
       const numericId = Number(id_);
       switch (action) {
         case 'toggle':
@@ -114,63 +103,64 @@ const LightsList = () => {
           break;
         case 'color':
           if (data?.hex) {
-            console.log("[ data.hex ] ", data.hex, view)
             response = await homeService.lightColor(id_, data.hex, view);
             const calculatedHex = calculateHexFromHueSatBri(response.hue, response.sat, response.bri);
             response = { ...response, hex: calculatedHex, view: 'color' };
           }
           break;
-        // No default action needed as all cases are covered
       }
       if (response) {
         updateLight(response, action === 'color');
       }
     };
 
-    // Perform action on all lights in the group if applicable
-    if (group.length > 0 && ['toggle', 'brightness', 'color'].includes(action)) {
+    if (isAll) {
+      for (const light of hueData) {
+        await applyAction(light.id_);
+      }
+    } else if (group.length > 0 && ['toggle', 'brightness', 'color'].includes(action)) {
       for (const id_ of group) {
         await applyAction(id_);
       }
     } else if (data?.id) {
-      // Perform action on a single light
       await applyAction(data.id);
     }
 
     handleLoader(false, action, data?.name);
   };
 
-
   const getHueList = (hue_object?: string) => {
-
     hueList(hue_object).then(() => {
       setLoader({ active: false });
       hue_object && setView(hue_object);
     });
   }
+
   const oppoView = view === 'light' ? 'group' : 'light';
+
+  const addToGroup = (id_: string) => {
+    setGroup(group !== undefined ? [...group, id_] : [id_]);
+  }
+  const removeFromGroup = (id_: string) => {
+    if (group) {
+      setGroup(group.filter((existingId) => existingId !== id_));
+    }
+  }
   useEffect(() => {
     hueData == undefined && getHueList();
   }, []);
+
   return (
     <>
       <style jsx>{styles}</style>
       <div className='lights'>
-
-        {/* <AdaptGrid xs={2} lg={3} gap={15}>
+        <AdaptGrid xs={2} lg={3} gap={15}>
           <UiButton variant={go && 'primary'} onClick={() => getHueList(oppoView)}>{oppoView}</UiButton>
           <UiButton variant={go && 'primary'} onClick={() => setGo(!go)}>start animation</UiButton>
-          <UiButton variant={go && 'primary'} onClick={() => isAll == false ? setIsAll({ ...onLights[0], id_: 'all-lights' }) : false}>
-            Set All
+          <UiButton variant={go && 'primary'} onClick={() => setIsAll(!isAll)}>
+            {isAll ? 'Unset All' : 'Set All'}
           </UiButton>
         </AdaptGrid>
-        <UiMediaSlider
-          backgroundColors={['#ff3300']}
-          atPoints={atPoints}
-          duration={10000}
-          start={go}
-        /> */}
-        <UiKnob percent={10} />
         {hueData && !isAll && <AdaptGrid xs={1} sm={3} gap={15}>
           {Object.entries(hueData).map(([key, light]: any, index: number) =>
             <div
@@ -178,10 +168,8 @@ const LightsList = () => {
               key={index}
               onDoubleClick={() => {
                 if (group?.includes(light.id_)) {
-                  console.log(`removeFromGroup(${light.id_})`);
                   removeFromGroup(light.id_);
                 } else {
-                  console.log(`addToGroup(${light.id_})`);
                   addToGroup(light.id_);
                 }
               }}>
@@ -220,15 +208,16 @@ const LightsList = () => {
             </div>
           )}
         </AdaptGrid>}
-        {typeof isAll == 'object' && (
+
+        {isAll && (
           <UiBar
             onChange={(value) => {
               if (String(value).length == 0 || !value) return;
-              else if (String(value).startsWith('#')) multiHomeService('color', { id: isAll.id_, hex: value });
-              else multiHomeService('brightness', { id: isAll.id_, bri: value });
+              else if (String(value).startsWith('#')) multiHomeService('color', { id: 'all-lights', hex: value });
+              else multiHomeService('brightness', { id: 'all-lights', bri: value });
             }}
             barCount={5}
-            percentage={isAll?.bri * 100 / 254}
+            percentage={100} // This is an example percentage; adjust based on your logic
           />
         )}
       </div>

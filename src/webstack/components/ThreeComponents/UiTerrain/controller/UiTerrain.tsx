@@ -80,7 +80,7 @@ const UiTerrain = ({
     // Load GLB model
     const loader = new GLTFLoader();
     loader.load(
-      '/assets/threeModels/red_sand_desert_canyon4K.glb',
+      '/merchant/nirv1/3dModels/plots/861RedRock.glb',
       (gltf) => {
         const model = gltf.scene;
         scene.add(model);
@@ -199,7 +199,7 @@ const UiTerrain = ({
     router.pathname,
   ]);
 
-  if (router.pathname !== '/') return <>Sorry, not Index</>;
+  // if (router.pathname !== '/') return <>Sorry, not Index</>;
 
   return (
     <>

@@ -1,7 +1,7 @@
 // Relative Path: ./BannerProduct.tsx
 import React from 'react';
 import styles from './BannerProduct.scss';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { useRouter } from 'next/router';
 
 // Remember to create a sibling SCSS file with the same name as this component

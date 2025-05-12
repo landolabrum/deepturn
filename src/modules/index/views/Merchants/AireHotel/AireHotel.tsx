@@ -4,7 +4,7 @@ import UiMap from '@webstack/components/ThreeComponents/UiMap/controller/UiMap';
 import { IVessel } from '@webstack/components/ThreeComponents/UiMap/models/IMapVessel';
 // import MapVesselDetails from '@webstack/components/ThreeComponents/UiMap/views/MapVessel/views/MapVesselDetails/MapVesselDetails';
 import { useRouter } from 'next/router';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 const AireHotel = () => {
   const { pathname } = useRouter()
   const [currentVessel, setCurrentVessel] = useState<IVessel | false | undefined>();

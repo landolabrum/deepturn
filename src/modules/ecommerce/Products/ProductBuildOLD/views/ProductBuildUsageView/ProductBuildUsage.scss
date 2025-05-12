@@ -1,0 +1,11 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.product-build-usage{
+    @extend .d-flex;
+    flex-direction: column;
+    height: 100%;
+}

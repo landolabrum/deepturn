@@ -6,9 +6,9 @@ import IAdminService from '~/src/core/services/AdminService/IAdminService';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import UiBar from '@webstack/components/Graphs/UiBar/UiBar';
 import { colorPercentage, dateFormat } from '@webstack/helpers/userExperienceFormats';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import { useLoader } from '@webstack/components/Loader/Loader';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 
 // Remember to create a sibling SCSS file with the same name as this component
 

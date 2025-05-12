@@ -8,7 +8,7 @@ import IAuthenticatedUser, { GuestContext } from "~/src/models/ICustomer";
 
 import ApiService, { ApiError, FormFieldsException } from "../ApiService";
 import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, IResetPassword, ISessionData, OResetPassword } from "./IMemberService";
-import { IPaymentMethod } from "~/src/modules/profile/model/IMethod";
+import { IPaymentMethod } from "~/src/modules/user-account/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
 import errorResponse from "../../errors/errorResponse";
 import { ICustomer } from "~/src/models/CustomerContext";
@@ -105,7 +105,7 @@ export default class MemberService
         { data: encryptedLoginData },
         ), TIMEOUT 
       );
-    // console.log("[ signIn ]", memberJwt)
+    console.log("[ signIn ]", {memberJwt})
     if (!memberJwt?.fields) {
       this.saveMemberToken(memberJwt);
       this.saveLegacyAuthCookie(memberJwt);
@@ -275,10 +275,10 @@ export default class MemberService
     )
     return res
   }
-  public async decryptJWT({ token, secret, algorithm }: IDecryptJWT) {
+  public async decryptJWT({ token, secret, algorithm, verify }: IDecryptJWT) {
     if (!token || !secret || !algorithm) throw new ApiError("No Encryption Data Provided", 400, "MS.SI.02");
     const res = await this.post<{}, any>(
-      "api/decrypt-jwt", { token, secret, algorithm }
+      "api/decrypt-jwt", { token, secret, algorithm, verify }
     )
     return res
   }
@@ -306,7 +306,7 @@ export default class MemberService
     if (!props.email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
-    console.log("[ SIGNUP PROPS ]", props)
+    // console.log("[ SIGNUP PROPS ]", props)
     const encryptedSignUp = encryptString(JSON.stringify(props), ENCRYPTION_KEY);
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",
@@ -396,7 +396,7 @@ export default class MemberService
           `api/customer/`,
           { data: encryptedSignUp },
         );
-        console.log("[ MODIFY RES ]",{res})
+        // console.log("[ MODIFY RES ]",{res})
         let memberJwt: any = null;
         if (res && res?.data) memberJwt = res?.data;
         this.saveMemberToken(memberJwt);
@@ -414,13 +414,13 @@ export default class MemberService
 
   public async getPersonalInformation(): Promise<any | null> {
     return this.get<any | null>(
-      "member/profile-info"
+      "member/user-account-info"
     );
   }
   public async getMemberProfileInformation(
     memberId: string
   ): Promise<any | null> {
-    return this.post(`/reports/profile-info/${memberId}`);
+    return this.post(`/reports/user-account-info/${memberId}`);
   }
   private saveLegacyAuthCookie(customJwt: string) {
     if (environment.legacyJwtCookie?.authToken) {
@@ -605,7 +605,7 @@ export default class MemberService
       const expires = parseInt(guestToken.exp as any) * 1000;
       const diff = expires - now;
       if (diff > 0) {
-        alert(1)
+        alert('expired user')
         this._timeout = setTimeout(() => {
           this._getCurrentGuest(true);
         }, diff + 1000) as any;

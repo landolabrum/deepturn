@@ -1,0 +1,100 @@
+{
+    "camera": {
+        "audio": false,
+        "camera_info": {
+            "apartalarmParm": {
+                "heightY": "11",
+                "longX": "18",
+                "startX": "75",
+                "startY": "33",
+                "type": "1"
+            },
+            "audioParm": {
+                "sampleRate": "16000"
+            },
+            "basicInfo": {
+                "firmware": "4.36.13.0416",
+                "hardware": "0.0.0.0",
+                "mac": "D03F27DACAD5",
+                "model": "WYZE_CAKP2JFUS",
+                "type": "camera",
+                "wifidb": "66"
+            },
+            "channelResquestResult": {
+                "audio": "0",
+                "video": "1"
+            },
+            "recordType": {
+                "type": "2"
+            },
+            "sdParm": {
+                "capacity": "251",
+                "detail": "0",
+                "free": "113",
+                "status": "1"
+            },
+            "settingParm": {
+                "logSd": "1",
+                "logUdisk": "1",
+                "nightVision": "3",
+                "osd": "1",
+                "stateVision": "2",
+                "telnet": "2",
+                "tz": "-6"
+            },
+            "uDiskParm": {
+                "capacity": "0",
+                "free": "0",
+                "status": "2"
+            },
+            "videoParm": {
+                "bitRate": "30",
+                "fps": "20",
+                "horizontalFlip": "1",
+                "logo": "2",
+                "resolution": "2",
+                "time": "1",
+                "type": "H264",
+                "verticalFlip": "1"
+            }
+        },
+        "connected": true,
+        "dtls": 1,
+        "enabled": true,
+        "firmware_ver": "4.36.13.0416",
+        "hls_url": "http://10.2.0.4:8888/bitty/",
+        "img_time": 1724282389684,
+        "img_url": "img/bitty.png",
+        "ip": "10.1.10.127",
+        "is_2k": false,
+        "is_battery": false,
+        "mac": "D03F27DACAD5",
+        "model_name": "V3",
+        "motion": false,
+        "motion_ts": 0,
+        "name_uri": "bitty",
+        "nickname": "Bitty",
+        "on_demand": true,
+        "p2p_type": 3,
+        "parent_dtls": 0,
+        "parent_mac": "",
+        "product_model": "WYZE_CAKP2JFUS",
+        "record": false,
+        "req_bitrate": 120,
+        "req_frame_size": 0,
+        "rtmp_url": "rtmp://10.2.0.4:1935/bitty",
+        "rtsp_fw": false,
+        "rtsp_fw_enabled": false,
+        "rtsp_url": "rtsp://10.2.0.4:8554/bitty",
+        "snapshot_url": "snapshot/bitty.png",
+        "start_time": 1724280621.609253,
+        "status": 3,
+        "stream_auth": false,
+        "substream": false,
+        "thumbnail": "https://api.cache.cell-2-us-west-2-1.prod.a.momentohq.com/cache/wyze-thumbnail-service-prod/D03F27DACAD5131723853380_1.jpg?token=eyJraWQiOiJra2tsNTduYmwiLCJhbGciOiJSUzI1NiJ9.eyJjYWNoZSI6Ind5emUtdGh1bWJuYWlsLXNlcnZpY2UtcHJvZCIsIm1ldGhvZCI6WyJnZXQiXSwiZXhwIjoxNzI0MjgxMjIwLCJrZXkiOiJEMDNGMjdEQUNBRDUxMzE3MjM4NTMzODBfMS5qcGcifQ.C9pDP9xWkkoswVMUnMQBLOamu4cy7YAiBg0vcMhcgu-6bYnUZLwt2F1IImsYyU74EiSjUM78YzILGFDaBn6jTzfzp3cD3IAGHHN1r5D8IkrlmrKjdWac9W2eokaqN4yajRuy_kPR7ta7RBMI7zHzE3tVtOgJl8Dnb6EpOlks6in3C3uI7VhuiSQsutcwW5LmilSwnYDCApCnSKTv7rGTvXQZ-pZ-5-22UwURnxrrkidkFm2gOq6VTwAIO7pGa7pt4GFHYAOzGPPjeBjExWPFFU7P79aomBEny_nFlmhBLNSufpSnFZImUhjRlXd-b5D1Fu-6XgdJiCBqwyXC-IWfBg",
+        "thumbnail_url": "thumb/bitty.png",
+        "timezone_name": "America/Denver",
+        "webrtc": true,
+        "webrtc_url": "http://10.2.0.4:8889/bitty"
+    }
+}

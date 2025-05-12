@@ -3,7 +3,9 @@ import { IEnvironment, Merchant } from "./environment.interface";
 import merchants, {deploy} from "~/merchants.config";
 import { MerchantsConfig } from "./environment.interface";
 
-const serverUrl = "https://tiktok.soy";
+// const serverUrl = "https://tiktok.soy";
+const serverUrl:string = String(process.env.NEXT_PUBLIC_DEVELOPEMENT_SERVER?.trim())
+;
 const merchant: Merchant = (merchants as MerchantsConfig).merchants[deploy];
 
 const devEnvironment: IEnvironment = {

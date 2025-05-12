@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ContactForm.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
-import IAuthenticatedUser from "~/src/models/ICustomer";
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import useWindow from '@webstack/hooks/window/useWindow';
@@ -13,22 +12,27 @@ interface IContactFormProps {
   onSubmit: (contactData: any) => void;
   user?: any;
   fieldErrors?: any;
+  onChange?: (e: any) => void;
   payment?: any;
   title?: string | React.ReactElement | boolean;
 }
 
 const ContactForm: React.FC<IContactFormProps> = (props) => {
-  const { onSubmit, user, submit, title = 'contact', fieldErrors } = props;
+  const { onSubmit, user, onChange, submit, title = 'contact', fieldErrors } = props;
   const windowSize = useWindow();
 
-  const getWidth = (): string => windowSize.width >= 900 ? "33%" : "100%";
+  const getWidth = (): string => windowSize.width >= 900 ? "50%" : "100%";
   const width = getWidth();
 
   const defaultContactFields: IFormField[] = [
     { name: 'name', label: "name", type: 'text', placeholder: 'Herbie Hancock', required: true },
     { name: 'email', label: 'email', type: 'email', placeholder: 'your@email.com', required: true, width },
     { name: 'phone', value: '1 (435) 200 - 3006', label: 'phone', type: 'tel', placeholder: '1 (000) 000-0000', required: true, width },
-    { name: 'address', label: 'address', type: 'text', placeholder: 'Your Address', required: true, width },
+    { name: 'line1', label: 'Address Line 1', type: 'text', placeholder: '123 Main St', required: true, width },
+    { name: 'line2', label: 'Address Line 2', type: 'text', placeholder: 'Apt, Suite, etc.', required: false, width },
+    { name: 'city', label: 'City', type: 'text', placeholder: 'Los Angeles', required: true, width },
+    { name: 'state', label: 'State', type: 'text', placeholder: 'CA', required: true, width },
+    { name: 'postal_code', label: 'Postal Code', type: 'text', placeholder: '90001', required: true, width },
   ];
 
   const [fields, setFields] = useState<IFormField[]>(defaultContactFields);
@@ -39,7 +43,7 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
     setDisabled(!isFormComplete);
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let fieldsRef = fields.map((field: IFormField) => {
       if (field.name === name) {
@@ -48,6 +52,7 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
       }
       return field;
     });
+    onChange?.(e);
     setFields(fieldsRef);
     handleDisabled(fieldsRef);
   };
@@ -85,23 +90,56 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
         text += ' *Name must not include numbers*';
         color = errorColor;
       }
+    } else if (field.name === 'postal_code') {
+      if (typeof field.value === 'string' && !/^\d{5}(-\d{4})?$/.test(field.value)) {
+        text += ' *Invalid postal code*';
+        color = errorColor;
+      }
     }
 
     const hasError = findField(fieldErrors, field.name);
     if (fieldErrors && hasError && field.name == text) {
       delete field.error;
     }
-    const context = { ...field, label: { text, color } };
-    return context;
+
+    return { ...field, label: { text, color } };
   };
 
   const handleFormSubmit = () => {
     const formData = fields.reduce((acc: any, field: any) => {
-      acc[field.name] = field.value;
+      if (['line1', 'line2', 'city', 'state', 'postal_code'].includes(field.name)) {
+        acc.address = {
+          ...acc.address,
+          [field.name]: field.value,
+        };
+      } else {
+        acc[field.name] = field.value;
+      }
       return acc;
     }, {});
     onSubmit(formData);
   };
+
+  useEffect(() => {
+    if (user && Array.isArray(user)) {
+      const addressField = user.find(u => u.name === 'address')?.v;
+      const updatedFields = fields.map(field => {
+        const userField = user.find(u => u.name === field.name);
+        if (
+          ['line1', 'line2', 'city', 'state', 'postal_code'].includes(field.name) &&
+          typeof addressField === 'object'
+        ) {
+          field.value = addressField?.[field.name] || '';
+        } else if (userField) {
+          field.value = userField.v;
+        }
+        return field;
+      });
+
+      setFields(updatedFields);
+      handleDisabled(updatedFields);
+    }
+  }, []);
 
   useEffect(() => {
     if (fieldErrors) {
@@ -119,11 +157,13 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
       const newWidth = getWidth();
       setFields(prevFields => prevFields.map(field => ({
         ...field,
-        width: field.name !== 'name' ? newWidth : field.width
+        width: field.name !== 'name'
+          ? (document.getElementsByName(field.name)?.[0]?.offsetWidth > 200 ? "50%" : newWidth)
+          : field.width
       })));
     };
 
-    handleResize(); // Call it once to set initial widths
+    handleResize();
   }, [windowSize.width]);
 
   return (
@@ -143,7 +183,7 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
         <UiForm
           fields={fields}
           disabled={disabled}
-          onChange={onChange}
+          onChange={handleChange}
           onSubmit={handleFormSubmit}
           submitText={submit?.text}
         />

@@ -6,7 +6,7 @@ import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
 import { ICartItem } from '~/src/modules/ecommerce/cart/model/ICartItem';
 import { useRouter } from 'next/router';
 // import useScroll from '@webstack/hooks/useScroll';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 const DEFAULT_PRODUCTS_LEN = 4
 interface Product {
   id: string;

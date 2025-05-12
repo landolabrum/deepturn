@@ -227,7 +227,9 @@ table {
         .td-content {
           position: relative;
           &--image{
+            position: relative;
             @extend .d-flex;
+            max-width: 150px;
             width: var(--s-4-width);
             padding: var(--s-4);
             aspect-ratio: 1;

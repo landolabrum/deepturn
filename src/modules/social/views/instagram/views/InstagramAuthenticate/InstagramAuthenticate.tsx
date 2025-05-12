@@ -6,7 +6,7 @@ import { useFormState } from '@webstack/components/UiForm/functions/useFormState
 import { getService } from '@webstack/common';
 import ISocialService from '~/src/core/services/SocialService/ISocialService';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import { ICustomer } from "~/src/models/ICustomer";
 import { InstagramAuthenticateRequest } from '~/src/core/services/SocialService/ISocialService';
 

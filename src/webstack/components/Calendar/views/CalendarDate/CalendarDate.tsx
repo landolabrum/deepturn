@@ -2,10 +2,10 @@
 import React, { useEffect } from 'react';
 import styles from './CalendarDate.scss';
 import { IDate } from '../../models/IDate';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 import { dateFormat } from '@webstack/helpers/userExperienceFormats';
-import UiButton from '@webstack/components/UiButton/UiButton';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import { dowArray } from '@webstack/helpers/userExperienceFormats';
 import { IEvent } from '../../models/IEvent';
 // Remember to create a sibling SCSS file with the same name as this component

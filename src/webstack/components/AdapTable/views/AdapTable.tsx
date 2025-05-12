@@ -30,6 +30,7 @@ interface TableProps extends TableFunctionProps {
   setPage?: (e: any) => void;
   setLimit?: Dispatch<SetStateAction<number>>;
   style?: { [key: string]: string }
+  onSelect?: (e:any)=>void;
 }
 
 type SortProp = [key: string];
@@ -50,7 +51,8 @@ const AdapTable = ({
   setLimit,
   page,
   setPage,
-  style
+  style,
+  onSelect
 }: TableProps) => {
   const [limit_, setLimit_] = useState<number>(DEFAULT_LIMIT);
   const [visibleData, setVisibleData] = useState<any>([]);
@@ -112,7 +114,7 @@ const AdapTable = ({
     if (limit) {
       setLimit_(limit);
     }
-  }, [data, limit, options]);
+  }, [data, limit, options, ]);
   return (
     <>
       <style jsx>{styles}</style>
@@ -138,6 +140,7 @@ const AdapTable = ({
           search={search}
           startIndex={startIndex}
           variant={variant}
+          onSelect={onSelect}
           options={options}
         />
         {setPage && page && setLimit && totalPages && (

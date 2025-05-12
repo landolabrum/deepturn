@@ -1,6 +1,6 @@
 import IAuthenticatedUser, { GuestContext, UserAddress } from "~/src/models/ICustomer";
 import { EventEmitter } from "@webstack/helpers/EventEmitter";
-import { IPaymentMethod } from "~/src/modules/profile/model/IMethod";
+import { IPaymentMethod } from "~/src/modules/user-account/model/IMethod";
 import { ICustomer } from "~/src/models/CustomerContext";
 export interface IEncryptJWT{
   tokenData: object,
@@ -10,7 +10,8 @@ export interface IEncryptJWT{
 export interface IDecryptJWT{
   token: string,
   secret: string,
-  algorithm:'HS256'
+  algorithm:'HS256',
+  verify?: boolean,
 }
 export interface IEncryptMetadataJWT{
   encryptionData:object;

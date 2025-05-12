@@ -1,6 +1,6 @@
 import styles from "./UiLoader.scss";
 import type { NextComponentType, NextPageContext } from "next";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import React, { useEffect, useRef } from "react";
 import environment from "~/src/core/environment";
 

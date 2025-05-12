@@ -1,5 +1,5 @@
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
-import { useEffect, useMemo, useState } from "react";
+import {  useMemo } from "react";
 import { useUser } from "~/src/core/authentication/hooks/useUser";
 import environment from "~/src/core/environment";
 
@@ -30,6 +30,7 @@ export interface HandleRouteProps {
 // 1 - 5 Customer
 // 6 Tennant
 // 7 + Admin
+const {mid} = environment.merchant;
 const merchantName = environment.merchant?.name || 'deepturn';
 export const routes: IRoute[] = [
   {
@@ -50,6 +51,10 @@ export const routes: IRoute[] = [
     hide: true,
   },
   {
+    href:"/build",
+    hide: true,
+  },
+  {
     label: keyStringConverter(merchantName),
     icon: `${merchantName}-logo`,
     href:"/",
@@ -58,7 +63,7 @@ export const routes: IRoute[] = [
 
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
   // { label: "configure", href: "/configure", icon: "fa-gear", active: true },
-  { label: "products", href: "/product", icon: "fa-tags", active: true },
+  { label: "products", href: "/product", icon: "fa-tags", active: true, hide: true },
   // { label: "portfolio", href: "/portfolio", icon: "fa-tags", active: true },
   {
     label: "Services",
@@ -77,18 +82,20 @@ export const routes: IRoute[] = [
     items: [
       { label: "surveillance",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
       { label: "lights", href: "home?vid=light", icon: "fa-lightbulb-on", active: true},
+      { label: "spotify", href: "home?vid=spotify", icon: "fa-music", active: true},
     ],
   },
   {
-    label: "profile",
+    label: "user-account",
     icon: 'fal-circle-user',
     clearance: 1,
     items: [
       { href: "/admin?vid=customers", label: "admin", clearance: 10},
-      { href: "/profile", label: "profile" , clearance: 1},
+      { href: "/user-account", label: "user-account" , clearance: 1},
       { href: "/authentication/signout", label: "logout", clearance: 1 },
     ],
   },
+  { href: "/3d", label: "3d", hide: true },
   // {
   //   label: "auto",
   //   icon: "fa-engine",
@@ -103,7 +110,7 @@ export const routes: IRoute[] = [
     icon: 'fa-circle-user',
     clearance: 0,
   },
-  { label: "about", href: "/about", icon: "fal-circle-info" , active: true },
+  // { label: "about", href: "/about", icon: "fal-circle-info" , active: true },
   { label: "", href: "/cart", icon: "fal-bag-shopping" },
   { label: "", href: "/checkout", hide: true},
 ];
@@ -128,8 +135,8 @@ export const useClearanceRoutes = () => {
 
     // Your existing sorting logic here
     const sortedAndFilteredRoutes = filterRoutes(routes).sort((a, b) => {
-      // Prioritize 'login', 'profile', and 'cart' to be at the end
-      const lastLabels = ['login', 'profile'];
+      // Prioritize 'login', 'user-account', and 'cart' to be at the end
+      const lastLabels = ['login', 'user-account'];
       const aIndex = a.label && lastLabels.includes(a.label) ? lastLabels.indexOf(a.label) : a.href === '/cart' ? lastLabels.length : -1;
       const bIndex = b.label && lastLabels.includes(b.label) ? lastLabels.indexOf(b.label) : b.href === '/cart' ? lastLabels.length : -1;
 

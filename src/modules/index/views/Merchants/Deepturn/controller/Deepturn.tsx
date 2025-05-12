@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import styles from './Deepturn.scss';
 // import UiMap from '../../../../../webstack/components/ThreeComponents/UiMap/controller/UiMap';
 // import { IVessel } from '@webstack/components/ThreeComponents/UiMap/models/IMapVessel';
-import { Router, useRouter } from 'next/router';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import { useRouter } from 'next/router';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import environment from '~/src/core/environment';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 import { capitalizeAll } from '@webstack/helpers/Capitalize';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import useWindow from '@webstack/hooks/window/useWindow';
-import { encryptString } from '@webstack/helpers/Encryption';
-import { TJSCube } from '@webstack/components/ThreeComponents/TJSCube/controller/TJSCube';
+import MBWaterMark from '../../../MindBurner/views/WaterMark/MBWaterMark';
+import GLBViewer from '@webstack/components/ThreeComponents/ThreeGLB/ThreeGLB';
 
 
 
@@ -18,27 +18,29 @@ import { TJSCube } from '@webstack/components/ThreeComponents/TJSCube/controller
 
 
 
+// const BrowserInteraction = () => {
+//   const { tabInfo } = useTab();
+
+//   return (
+//     <div>
+//       <h1>Current Tab Info</h1>
+//       <p>Tab ID: {tabInfo.tab_id}</p>
+//       <p>Current URL: {tabInfo.url}</p>
+//       <p>Tab is {tabInfo.isCurrent ? 'Active' : 'Inactive'}</p>
+//       <p>Time Spent on Tab: {tabInfo.timeSpent / 1000} seconds</p>
+//       <p>Viewport Size: {tabInfo.viewportWidth} x {tabInfo.viewportHeight}</p>
+//       <p>Scroll Position: X: {tabInfo.scrollPosition.x}, Y: {tabInfo.scrollPosition.y}</p>
+//     </div>
+//   );
+// };
 const Deepturn = () => {
   const router = useRouter();
 
-  const { width } = useWindow();
-  // const [currentVessel, setCurrentVessel] = useState<IVessel | false | undefined>();
-  // const closeVessel = () => currentVessel && setCurrentVessel(false);
   const { pathname } = useRouter()
-  // const vessels: IVessel[] = [
-  //   {
-  //     name: 'Two Story Smart Home',
-  //     lngLat: [-75.1867254, 39.9307048],
-  //     className: "partner",
-  //     images: [
-  //       "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNDAxNzM1NTk1NjgzMjg4Mw%3D%3D/original/e1573119-8f57-4e97-9d4f-9ed4be4de8b4.jpeg?im_w=1200",
-  //       "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNDAxNzM1NTk1NjgzMjg4Mw%3D%3D/original/a6f2bd88-0ef0-455b-8f00-433eee5b13c2.jpeg?im_w=720"
-  //     ],
-  //     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-  //   },
-  // ];
+
   const [loaded, setLoaded] = useState<boolean>(false);
-  const [view, setView] = useState<string>('enter');
+  const [view, setView] = useState<string>('BallView');
+  // const [view, setView] = useState<string>('entityChoice');
   const handleLoad = () => {
     if (!loaded && pathname == '/') setLoaded(true);
   }
@@ -50,7 +52,7 @@ const Deepturn = () => {
     }
     return () => window.removeEventListener('DOMContentLoaded', handleLoad);
 
-  }, []);
+  }, [handleLoad]);
 
   const DeepturnCommercial = () => {
 
@@ -60,32 +62,40 @@ const Deepturn = () => {
     const EntityChoiceMarquee = ({ btnText, serviceType, description, onClick }: { btnText: string, serviceType?: string, description: string, onClick?: (e: any) => void }) => <>
       <style jsx>{styles}</style>
       <div className='business-select--marquee'>
-        <div className='-deepturn__'>Beta</div>
 
+        <div className='beta'>Beta</div>
         <div className='business-select--marquee__title'>
           <UiIcon icon={`${environment.merchant.name}-logo`} /> {capitalizeAll(btnText)}
         </div>
         <div className='business-select--marquee__description'>
           {description}
         </div>
-        <UiButton
-          variant="primary"
-          traits={{
-            beforeIcon: `${environment.merchant.name}-logo`
-          }}
-          size='xxl'
-          onClick={() => {
-            if (serviceType == 'marketing') {
-              router.push(`/services?sid=${serviceType}`)
-            }
-            else if (serviceType == 'campaigns') {
-              setView("coming-soon")
-            }
-          }}
-        // FUTURE USAGE
-        // onClick={()=>setView(btnText)}
-        >visit {capitalizeAll(btnText)}</UiButton>
-      </div></>
+
+        <div className='business-select--marquee__btn'>
+          <div className='business-select--marquee__btn--content'>
+            <UiButton
+              variant="inherit"
+              traits={{
+                // width:"100%",
+                // outline:"solid 1px var(--green-30)",
+                beforeIcon: `${environment.merchant.name}-logo`
+              }}
+              size='xxl'
+              onClick={() => {
+                if (serviceType == 'marketing') {
+                  router.push(`/services?sid=${serviceType}`)
+                }
+                else if (serviceType == 'campaigns') {
+                  setView("coming-soon")
+                }
+              }}
+            // FUTURE USAGE
+            // onClick={()=>setView(btnText)}
+            >visit {capitalizeAll(btnText)}</UiButton>
+          </div>
+        </div>
+      </div>
+    </>
     return <>
       <style jsx>{styles}</style>
 
@@ -103,6 +113,11 @@ const Deepturn = () => {
       </div>
     </>
   }
+  const BallView = () => <GLBViewer
+  // width={width > 1100 ? "400px" : "90vw"}
+  // height={width > 1100 ? "500px" : "90vw"}
+  modelPath='/assets/threeModels/red_sand_desert_canyon1K.glb'
+/>
   const ComingSoon = () => {
     return <>
       <style jsx>{styles}</style>
@@ -127,92 +142,85 @@ const Deepturn = () => {
     </>
   }
 
-
+  const { width, height } = useWindow();
   const views = {
-    enter: <div><UiButton variant='dark' size='xxl' onClick={() => setView('entityChoice')}>&zwnj; &zwnj; &zwnj; enter &zwnj; &zwnj; &zwnj; </UiButton></div>,
+    // "ENTER": <div><UiButton  size='xxl' onClick={() => setView('entityChoice')}>&zwnj; &zwnj; &zwnj; enter &zwnj; &zwnj; &zwnj; </UiButton></div>,
     entityChoice: <DeepturnEntitySelect />,
+    BallView:<BallView/>,
     "coming-soon": <ComingSoon />
   }
-  return (
+  const genLayouts = () => {
+    function getPos(i: number) {
+      const values = [-1, 0, 1,];
+      // return 0
+      return [
+        values[Math.floor(Math.random() * values.length)],
+        values[Math.floor(Math.random() * values.length)],
+        i + 1
+      ]
+    }
+    const layoutViews = ['one', 'two', 'three'];
+    const layouts = layoutViews.map((f, i) => {
+      const position = getPos(i);
+      return {
+        element: (
+          <div key={i} className={f}>
+            {f}: <span>{position.toString()}</span> {/* Avoid direct text */}
+          </div>
+        ),
+        position
+      };
+    });
+
+    return layouts
+  }
+
+  if (width) return (
     <>
       <style jsx>{styles}</style>
-      {/* <div className='dev'>{JSON.stringify(userData, null, 2)}</div> */}
       <div className='deepturn'>
-        <img className='deepturn__bg' src="/assets/backgrounds/contour_bg.gif" />
-        <div className='component--terrain'>
-          <TJSCube
+        {/* <div className='component--terrain'>
+          <ThreeDLayout
+            layers={[
+              {
+                element: <div className='front'>
 
-            icon={{
-              bevel: {
-                bevelEnabled: true,
-                bevelThickness: 5,
-                bevelSegments: 15,
-                bevelSize: 2
+                </div>, position: [0, 0, 90]
               },
-              color: "#303030",
-              // backgroundColor:"#e0e0e0",
-              metalness: 15,
-              // roughness: .51,
-              // opacity: opacity !== 0 && opacity * .1 || .1,
-              // opacity: .7,
-              icon: "deepturn-logo",
-              // texture: "/assets/backgrounds/lava1.jpeg",
-              // bumpMap:"/assets/textures/texture-leaves.jpeg",
-              texture: "/assets/globe-textures/clouds-large.jpg",
-              size: width > 1100 ? { x: 100, y: 100, z: 9 } : { x: 70, y: 70, z: 9 },
-              animate: { rotate: { y: -2, x: 1, speed: .0007 } }
+              {
+                element: <div className='s-w-100 d-flex'>
+                </div>, position: [0, 0, 50]
+              },
+              { element: <div className='middle'>grid</div>, position: [0, 0, 50] },
+              {
+                element: <div className='middle'>
+                  <UiLoader />
+                </div>, position: [0, 0, 50]
+              },
+              { element: <div className='back'>back</div>, position: [0, 0, 30] },
+            ]}
+            settings={{
+              camera: {
+                position: { x: 0, y: 0, z: 100 },
+                focalLength: 50,
+              },
+              scene: {
+              },
             }}
-          // metalness={5}
+            followMouse={{
+              responsiveness: 1,
+              invert: false,
+              disable: { x: false, y: false, z: true },
+            }}
           />
-        </div>
+        </div> */}
+          {/* <BrowserInteraction/> */}
+
         <UiViewLayout variant='anchor' views={views} currentView={view} />
       </div>
+      <MBWaterMark />
     </>
   );
+  return <>...loading</>;
 };
-
 export default Deepturn;
-{/* <div className='component--map'>
-<pre>{JSON.stringify(userData, null, 2)}</pre>
-
-  {/* {userData && Object.entries(userData).map(([k, v]) => <div className='d-flex-col s-w-100 align-start gap-9'>
-    <div >
-      {k}: {typeof v == 'object' ? Object.entries(v).map(([l, b]) => <div className='d-flex-col s-w-100 align-start gap-9'>
-        <div>--> {l}: {JSON.stringify(b)}</div>
-      </div>) : v}
-    </div><br />
-  </div>)} */}
-{/* <TJSCube
-icon={{
-bevel: {
-  bevelEnabled: true,
-  bevelThickness: 5,
-  bevelSegments: 15,
-  bevelSize: 2
-},
-// color:"#e0e0e0"/,
-// backgroundColor:"#e0e0e0",
-// metalness: 10,
-// roughness: .51,
-// opacity: opacity !== 0 && opacity * .1 || .1,
-// opacity: .7,
-icon: "deepturn-logo",
-texture: "/assets/backgrounds/lava1.jpeg",
-// bumpMap:"/assets/textures/texture-leaves.jpeg",
-size: { x: 300, y: 300, z: 9 },
-animate: { rotate: { y: -2, x: 1, speed: .0007 } }
-}}
-// metalness={5}
-/>  */}
-{/*
-<UiMap
-onVesselClick={setCurrentVessel}
-require='both'
-options={{
-rpm: 200,
-}}
-vessels={vessels}
-/>
-<UiTerrain/>
-</div>
- */}

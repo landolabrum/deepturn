@@ -1,64 +1,179 @@
+// UiMedia.tsx
 import { useEffect, useRef, useState } from 'react';
 import styles from './UiMedia.scss';
-import ImageControl, { IImageMediaType, IImageVariant } from '@webstack/components/ImageControl/ImageControl';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import ImageControl, { IImageMediaType, IImageVariant } from '../ImageControl/ImageControl';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
+import useWindow from '@webstack/hooks/window/useWindow';
 
 export interface IMedia {
   src: string;
   alt?: string;
   variant?: IImageVariant;
+  onLoad?: (e: any) => void;
   type?: IImageMediaType;
   loadingText?: string;
-  rotate?: number; // Added rotate prop for rotation degree
+  rotate?: number;
+  autoplay?: boolean;
+  controls?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  poster?: string | React.ReactNode;
+  preload?: 'auto' | 'metadata' | 'none';
+  width?: number;
+  height?: number;
+  playbackSpeed?: number;
 }
 
-const UiMedia: React.FC<IMedia> = ({ src, variant, type, alt, loadingText, rotate }: IMedia) => {
+const UiMedia: React.FC<IMedia> = ({
+  src,
+  variant,
+  type = 'image',
+  alt,
+  loadingText,
+  rotate,
+  onLoad,
+  autoplay,
+  controls,
+  loop,
+  muted,
+  poster,
+  preload = 'auto',
+  width,
+  height,
+  playbackSpeed = 1,
+}) => {
   const [imageControlProps, setImageControlProps] = useState<any>({ variant, type });
-  const [reloadTrigger, setReloadTrigger] = useState(0); // state to trigger reload
-  const imgRef = useRef<any>();
+  const [reloadTrigger, setReloadTrigger] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(!!autoplay);
+  
+  const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null);
+  const window = useWindow();
+
   const handleReload = () => {
-    setImageControlProps({ ...imageControlProps, error: null }); // Reset error state
-    setReloadTrigger(prev => prev + 1); // Increment reload trigger to re-render the image
+    setImageControlProps({ ...imageControlProps, error: null });
+    setReloadTrigger((prev) => prev + 1);
   };
 
-  const RefreshLoadingText = () => {
-    return <>
-        <div style={{color: "#f90"}}>{loadingText}, Failed</div>
-        <div>
-          <UiIcon icon='fa-arrows-rotate' onClick={handleReload} />
-        </div>
+  const RefreshLoadingText = () => (
+    <>
+      <div style={{ color: '#f90' }}>{loadingText}, Failed</div>
+      <div>
+        <UiIcon icon="fa-arrows-rotate" onClick={handleReload} />
+      </div>
     </>
-  }
+  );
+
+  // Called when media is fully loaded
+  const handleLoad = (props: any) => {
+    setIsLoading(false);
+    onLoad?.(imageControlProps);
+  };
 
   const handleError = (event: any) => {
     event.preventDefault();
-    console.log('[ ERROR ]', {event, imageControlProps})
+    setIsLoading(false);
     if (!imageControlProps.error) {
-      setImageControlProps({ ...imageControlProps, error: <RefreshLoadingText />});
+      setImageControlProps({ ...imageControlProps, error: <RefreshLoadingText /> });
     }
   };
 
-  // Apply rotation if the rotate prop is provided
-  const imageStyle = {
-    transform: `rotate(${rotate}deg)`
+  // Toggle video playback
+  const togglePlay = () => {
+    if (type === 'video' && mediaRef.current) {
+      const videoEl = mediaRef.current as HTMLVideoElement;
+      if (videoEl.paused) {
+        setImageControlProps({ ...imageControlProps, isPlaying: true });
+        videoEl.play();
+        setIsPlaying(true);
+      } else {
+        setImageControlProps({ ...imageControlProps, isPlaying: false });
+        videoEl.pause();
+        setIsPlaying(false);
+      }
+    }
   };
 
-  imageControlProps.loadingText = loadingText;
+  // Adjust playback speed
   useEffect(() => {
-    // Effect logic here if needed
-    if(rotate && imgRef?.current){
-      imgRef.current.style.transform = `rotate(${rotate}deg)`
-    }else if(!rotate && imgRef?.current?.style.transform)delete imgRef.current.style
+    if (type === 'video' && mediaRef.current && playbackSpeed) {
+      (mediaRef.current as HTMLVideoElement).playbackRate = playbackSpeed;
+    }
+  }, [playbackSpeed, type]);
 
-  }, [handleError, imageControlProps,handleReload,  imgRef?.current]); // 
+  // Apply rotation or styling
+  useEffect(() => {
+    if (rotate && mediaRef.current) {
+      mediaRef.current.style.transform = `rotate(${rotate}deg)`;
+    } else if (mediaRef.current?.style.transform) {
+      mediaRef.current.style.transform = '';
+    }
 
+    if (height && mediaRef.current) {
+      mediaRef.current.style.height = `${height}px`;
+    }
+
+    if (variant && mediaRef.current) {
+      mediaRef.current.classList.add(`ui-media--${variant}`);
+      if (variant === 'background') {
+        const shadowHeight = window.height - mediaRef.current.offsetHeight;
+        if (shadowHeight < 0) return;
+        mediaRef.current.style.boxShadow = `0 0 ${shadowHeight}px ${shadowHeight * 0.5}px var(--gray-80-o)`;
+      }
+    }
+  }, [rotate, mediaRef, window, variant]);
+const stringPoster:string=typeof poster== 'string' && poster||''
   return (
     <>
       <style jsx>{styles}</style>
-      <ImageControl {...imageControlProps}>
-        {!imageControlProps.error &&
-          <img ref={imgRef} src={src} alt={alt} onError={handleError} key={reloadTrigger} /> // Apply rotation style here
-        }
+      <ImageControl
+        {...imageControlProps}
+        onComplete={handleLoad}
+        // Pass the toggle callback and a flag telling ImageControl to show play/pause
+        onPlayPauseClick={togglePlay}
+        showPlayPause={type === 'video'}
+      >
+        {isLoading && <div className="loading">{loadingText || 'Loading...'}</div>}
+        {!autoplay && !isPlaying &&  poster && <div className="ui-media--poster" onClick={togglePlay}>
+          <div className="ui-media--poster__content">
+          {poster}
+          </div>
+          </div>}
+
+        {/* If no error, render video or image */}
+        {!imageControlProps.error && (
+          type === 'video' ? (
+            <video
+              ref={mediaRef as React.Ref<HTMLVideoElement>}
+              src={src}
+              autoPlay={autoplay}
+              controls={controls}   // might remove if you only want custom controls
+              loop={loop}
+              muted={muted}
+              poster={stringPoster}
+              preload={preload}
+              width={width}
+              height={height}
+              onLoadStart={() => setIsLoading(true)}
+              onCanPlayThrough={handleLoad}
+              onError={handleError}
+              key={reloadTrigger}
+              className="ui-media"
+            >
+              <h1>loading</h1>
+            </video>
+          ) : (
+            <img
+              ref={mediaRef as React.Ref<HTMLImageElement>}
+              src={src}
+              alt={alt}
+              onLoad={handleLoad}
+              onError={handleError}
+              key={reloadTrigger}
+              className="ui-media"
+            />
+          )
+        )}
       </ImageControl>
     </>
   );

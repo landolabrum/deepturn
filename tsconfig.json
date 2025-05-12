@@ -31,6 +31,6 @@
       }
     ]
   },
-  "include": ["typings.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "sass-plugin.ts", "merchants.config.js", "deploy.js"],
+  "include": ["typings.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "sass-plugin.ts", "merchants.config.js", "deploy.js", "*.scss"],
   "exclude": ["node_modules"]
 }

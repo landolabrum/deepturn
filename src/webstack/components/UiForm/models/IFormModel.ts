@@ -1,4 +1,3 @@
-import { IRoute } from "@shared/components/Navbar/data/routes";
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 import { ITraits } from "@webstack/components/UiForm/components/FormControl/FormControl";
 import { UserAddress } from "~/src/models/ICustomer";
@@ -15,7 +14,8 @@ export type IFormField = {
     name: string;
     id?: string;
     error?: string;
-    options?: (string | IRoute | number)[] | React.ReactElement[];
+    options?:any;
+    // options?: (string | IFormField | IRoute | number)[] | React.ReactElement[];
     width?: string;
     value?: string | boolean | UserAddress | number;
     label?: any;
@@ -37,6 +37,9 @@ export type IFormField = {
             message?: string
         };
     }
+    // OPTIONALS
+    checked?: boolean;
+    path?: string | string[];       
 }
 
 export interface IForm {

@@ -14,10 +14,13 @@ const deployCommand = `
   echo "${merchant.url}" >> out/CNAME &&
   git --git-dir=${gitDir} --work-tree=. add -f out/ &&
   git --git-dir=${gitDir} --work-tree=. commit -m "Deploy to gh-pages" &&
-  gh-pages -d out -t true --repo ${repoUrl} &&
+  gh-pages -d out --repo ${repoUrl} &&
   rm -rf ./out && 
   echo "########  [ PUBLISHED: ${merchant.url} ]  ########"
 `;
+// WORKS ON LINUX
+
+// gh-pages -d out -t true --repo ${repoUrl} &&
 
 exec(deployCommand, (err, stdout, stderr) => {
   if (err) {

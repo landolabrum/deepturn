@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import styles from './CartListItemMini.scss';
 import Image from 'next/image';
 import environment from '~/src/core/environment';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import ProductBuyNow from '../../../Products/views/ProductDescription/views/ProductBuyNow/ProductBuyNow';
 import { ITraits } from '@webstack/components/UiForm/components/FormControl/FormControl';

@@ -1,18 +1,18 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import styles from "./Navbar.scss";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import { IRoute, useClearanceRoutes } from "../data/routes";
 import useRoute from "~/src/core/authentication/hooks/useRoute";
-import UiButton from "@webstack/components/UiButton/UiButton";
+import UiButton from "@webstack/components/UiForm/views/UiButton/UiButton";
 import Authentication from "~/src/pages/authentication";
-import { useCartTotal } from "~/src/modules/ecommerce/cart/hooks/useCart";
-import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import { IModalContent, useModal } from "@webstack/components/Containers/modal/contexts/modalContext";
 import UiSelect from "@webstack/components/UiForm/components/UiSelect/UiSelect";
 import MobileNav from "../views/MobileNav/MobileNav";
 import environment from "~/src/core/environment";
 import useNavMobile from "../hooks/useNavBreak";
 import useScroll from "@webstack/hooks/useScroll";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
+import useCart from "~/src/modules/ecommerce/cart/hooks/useCart";
 
 const Navbar = () => {
   const { selectedUser, pathname, explicitRouter } = useRoute();
@@ -75,7 +75,9 @@ const Navbar = () => {
       }
     }
   };
+  const defaultModalProps:IModalContent = {
 
+  };
   const handleTrigger = () => {
     const content = {
       title: (
@@ -100,7 +102,7 @@ const Navbar = () => {
     return selectedUser?.name ? `${selectedUser.name.split(" ")[0]} ${selectedUser.name.split(" ")[1][0]}.` : "";
   }, [selectedUser]);
 
-  const cartTotal = useCartTotal();
+  const {total}=useCart();
 
   const modals: any = {
     login: <Authentication view='sign-up' onClose={closeModal} />,
@@ -109,6 +111,7 @@ const Navbar = () => {
   const navClass = `navbar__container ${isMobile ? 'navbar__container--hide' : ''} ${merchantName}`;
 
   useEffect(() => {
+    // console.log(toggled)
     if (!isModalOpen && toggled) {
       setToggled('');
     }
@@ -117,13 +120,13 @@ const Navbar = () => {
   useEffect(() => {
     if (routes) {
       const newRoutes = routes
-        .filter(r => !(r.href === '/cart' && cartTotal === 0) && r.hide !== true)
+        .filter(r => !(r.href === '/cart' && total === 0) && r.hide !== true)
         .map(r => r);
 
       setCurrentRoutes(newRoutes.reverse());
     }
     toggled != null && setToggled(null);
-  }, [routes, setCurrentRoutes, cartTotal]);
+  }, [routes, setCurrentRoutes, total]);
 
   return (
     <>
@@ -143,7 +146,7 @@ const Navbar = () => {
                 className={`nav__nav-item nav__nav-item--${route.label ? (
                   isBrandRoute(route) ? 'brand' : route.label.toLowerCase()) : (
                   String(route.href).split('/')[1]
-                )}${toggled === route.label ? ' nav__nav-item__active' : ''}${route.label === 'profile' && cartTotal === 0 && ' no-cart' || ''
+                )}${toggled === route.label ? ' nav__nav-item__active' : ''}${route.label === 'user-account' && total === 0 && ' no-cart' || ''
                   }`}
                 onDoubleClick={() => route?.href && handleSelect({ href: route.href })}
               >
@@ -163,19 +166,19 @@ const Navbar = () => {
                   </UiButton>
                 ) : (
                   <UiSelect
-                    openDirection={route?.label === 'profile' && 'left' || undefined}
+                    openDirection={route?.label === 'user-account' && 'left' || undefined}
                     overlay={{ zIndex: 997 }}
                     traits={route?.icon ? { afterIcon: { icon: route.icon } } : undefined}
                     openState={Boolean(toggled && toggled === route.label) ? 'open' : 'closed'}
                     variant={`nav-item${toggled===route?.label ?'--active':''}`}
-                    value={route.label === 'profile' ? displayName : route.label}
+                    value={route.label === 'user-account' ? displayName : route.label}
                     options={route?.items}
                     onSelect={handleSelect}
                     onToggle={() => route.label && handleToggle(route.label)}
                   />
                 ) : (
                   <UiIcon
-                    badge={cartTotal}
+                    badge={total}
                     onClick={() => handleSelect(route)}
                     icon={route?.icon}
                   />

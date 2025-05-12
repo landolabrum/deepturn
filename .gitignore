@@ -43,11 +43,13 @@ yarn-error.log*
 /lib
 /env
 .env
-
+/package-lock.json
 # Git directory (should be ignored, but it's usually redundant)
 .git/
 
 # Ignore large files by file extension
 *.pack
 *.node
+*.git.DS_Store
+.DS_Store
 *.git

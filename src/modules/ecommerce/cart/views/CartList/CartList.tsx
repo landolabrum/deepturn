@@ -1,12 +1,12 @@
 import styles from './CartList.scss';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import React, { useEffect, useState } from 'react';
 import { IProduct } from '~/src/models/Shopping/IProduct';
 import CartListItem from '../CartListItem/CartListItem';
 import useCart from '../../hooks/useCart';
 // import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 // import Image from 'next/image';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import environment from '~/src/core/environment';
 // import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 
@@ -16,7 +16,7 @@ interface ICartTableItem {
     price?: string;
     image?: React.ReactElement;
 }
-const CartList = ({ variant, adjustable }: { variant?: 'mini', adjustable?:boolean }) => {
+const CartList = ({ variant, adjustable }: { variant?: 'mini', adjustable?: boolean }) => {
     const [_cart, setCart] = useState<IProduct[] | ICartTableItem[]>();
     const { cart } = useCart();
     const BrandIcon = () => {
@@ -28,17 +28,21 @@ const CartList = ({ variant, adjustable }: { variant?: 'mini', adjustable?:boole
         </>
     };
     useEffect(() => {
-        if (!_cart && cart) setCart(cart);
-    }, []);
+        if (!_cart && cart) {
+            // console.log("Cart contents:", cart); // Debugging line
+            setCart(cart);
+        }
+    }, [cart]);
+    
     if (_cart) return <>
         <style jsx>{styles}</style>
-        <div 
-            className={`cart-list ${
-                variant&&` cart-list__${variant}`||''}
+        {/* {JSON.stringify(_cart)} */}
+        <div
+            className={`cart-list ${variant && ` cart-list__${variant}` || ''}
                 `}>
             <AdaptGrid xs={1} gap={20}>
                 {_cart.map((item: any, key: number) => (
-                    <div key={key}>
+                    <div key={`${item.id}-${item.price.id}`}>
                         <CartListItem variant={variant} item={item} adjustable={adjustable} />
                     </div>
                 ))

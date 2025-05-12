@@ -1,23 +1,35 @@
-interface StringNumProps {
+type StringNumProps = {
   toFixed?: number;
   removeChar?: string;
   preChar?: string;
   postChar?: string;
-}
-const stringNum = (nStr: undefined | string, { toFixed, removeChar, preChar, postChar }: StringNumProps) => {
+};
+
+const stringNum = (nStr: string | undefined, props: StringNumProps = {}): string => {
+  const { toFixed, removeChar, preChar, postChar } = props;
+
   if (!nStr) return "";
-  let num: string | number = nStr;
-  if (removeChar) num.replaceAll(removeChar, "");
-  num = parseFloat(num);
-  if (toFixed) {
-    num = num.toFixed(toFixed).toString();
-    const split = num.split(".");
-    if (split[1].startsWith("00")) num = split[0];
-  } else {
-    num = num.toString();
+
+  // Remove all non-numeric characters
+  let num: string = nStr.replace(/[^0-9]/g, "");
+
+  // Handle floating-point conversion and formatting
+  if (num) {
+    num = parseFloat(num).toString();
+    if (toFixed !== undefined) {
+      num = parseFloat(num).toFixed(toFixed);
+    }
   }
-  if (preChar) num = preChar + num;
-  if (postChar) num = num + postChar;
+
+  if (preChar) {
+    num = preChar + num;
+  }
+
+  if (postChar) {
+    num = num + postChar;
+  }
+
   return num;
 };
+
 export default stringNum;

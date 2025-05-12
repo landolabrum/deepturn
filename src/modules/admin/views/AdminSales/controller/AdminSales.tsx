@@ -1,7 +1,7 @@
 
 import React from 'react';
 import styles from './AdminSales.scss';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import { NaCell } from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';

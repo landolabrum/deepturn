@@ -1,0 +1,15 @@
+{
+"name":"Benny Hansen",
+"contacts":[
+  { "name":"Vashti",
+   "tel":"+12089368199",
+  "address": {
+    "city": "Murray",
+    "country": "US",
+    "line1": "650 Brittany Drive",
+    "postal_code": "84107",
+    "state": "UT"
+  }
+  }
+]
+}

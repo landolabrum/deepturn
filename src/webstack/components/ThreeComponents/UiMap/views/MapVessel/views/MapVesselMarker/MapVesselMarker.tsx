@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IVessel } from '../../../../models/IMapVessel';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import Image from 'next/image';
 
 interface IMapVessel {

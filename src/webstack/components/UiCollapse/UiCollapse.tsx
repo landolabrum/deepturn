@@ -2,7 +2,7 @@
 // Relative Path: ./UiCollapse.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './UiCollapse.scss';
-import { UiIcon } from '../UiIcon/UiIcon';
+import { UiIcon } from '../UiIcon/controller/UiIcon';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ICollapse {

@@ -1,3 +1,5 @@
+import { Merchant } from "../core/environments/environment.interface";
+
 export interface IBrand {
   brand: string;
   version: string;
@@ -77,16 +79,12 @@ export interface IUserBackend {
 }
 
 export interface IMetadata {
-  merchant?: IMerchant;
+  merchant?: Merchant;
   user?: IUserBackend;
   survey?: IProductSurvey;
 }
 
-export interface IMerchant {
-  url: string;
-  name: string;
-  mid: string;
-}
+
 
 export interface IProductSurvey {
   id: string;

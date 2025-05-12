@@ -1,0 +1,26 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.surveillance-controller{
+    @extend .d-flex;
+    flex-direction: column;
+    
+    gap:var(--s-9);
+    &--joystick,&--coordinates{
+        @extend .d-flex;
+        width: 100%;
+        
+    }
+    &--coordinates{
+        justify-content: flex-start;
+    }
+    &--joystick{
+        // min-width: 265px;
+        background-color: var(--gray-70);
+        padding:var(--s-1) var(--s-9);
+        border-radius: var(--s-1);
+    }
+}

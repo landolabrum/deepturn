@@ -1,0 +1,69 @@
+.adaptgrid {
+  display: grid;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-rows: auto;
+  width: 100%;
+  &.scroll-x {
+    overflow-x: scroll;
+    width:max-content;
+    max-width: 100%;
+    ::-webkit-scrollbar{  
+      display: none;
+    }
+    &:hover, &:focus-within{
+      ::-webkit-scrollbar{  
+        display: unset;
+        padding-top:var(--s-9)
+      }
+    }
+  }
+  &.scroll-y {
+    overflow-y: auto;
+  }
+  &.scrollable {
+    overflow: auto;
+  }
+  &.center {
+    display: flex;
+    justify-content: center;
+  }
+  &.adaptgrid_dynamic-grid {
+    @media (max-width: 900px) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .adaptgrid__grid-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100vw;
+
+    &.adaptgrid_card, &.adaptgrid_card-border {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--gray-90);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow-xl);
+      transition: all 0.3s ease-out;
+
+      &:hover {
+        background-color: var(--gray-80);
+        // // Futuristic lift effect on hover
+        // box-shadow: 
+        //   0 2px 3px var(--secondary-50),
+        //   0 .5px 1px var(--primary-50),
+        //   0 1px 3px var(--secondary-50);
+        // transform: translateY(-1px);
+      }
+    }
+
+    &.adaptgrid_card-border {
+      outline: solid 1px var(--gray-80);
+      border: solid 1px var(--gray-60);
+    }
+  }
+}

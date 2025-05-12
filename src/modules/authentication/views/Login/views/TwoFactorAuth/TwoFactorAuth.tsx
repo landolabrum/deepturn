@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import styles from "./TwoFactorAuth.scss";
  
 type TwoFactorProps = {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UiInput from '../components/UiInput/UiInput';
 import styles from './UiForm.scss';
-import UiButton from '../../UiButton/UiButton';
+import UiButton from '../views/UiButton/UiButton';
 import { IForm, IFormField } from '../models/IFormModel';
 import UiSelect from '../components/UiSelect/UiSelect';
 import UiLoader from '../../UiLoader/view/UiLoader';
@@ -9,14 +9,14 @@ import ToggleSwitch from '../components/UiToggle/UiToggle';
 import FormControl from '../components/FormControl/FormControl';
 import AddFieldForm from '../views/AddFieldForm/AddFieldForm';
 import AutocompleteAddressInput from '@webstack/components/UiForm/components/UiInput/views/AddressInput';
-import { getFieldType } from '../functions/formFieldFunctions';
+import { fieldType } from '../functions/formFieldFunctions';
 
 const UiForm = ({
     variant,
     fields,
     onSubmit,
     onError: onLocalErrors,
-    title, 
+    title,
     submitText,
     submitIcon,
     onChange,
@@ -26,7 +26,7 @@ const UiForm = ({
 }: IForm): React.JSX.Element => {
     const [complete, setComplete] = useState<boolean>(false);
     const [localErrors, setLocalErrors] = useState<any>({});
-    
+
     const handleComplete = () => {
         if (!fields) return;
         fields.forEach((f: any) => f.required && ![undefined, '', null].includes(f.value) && setComplete(true));
@@ -81,7 +81,7 @@ const UiForm = ({
             const target = { target: { name: field.name, value: val() } };
             return onChange(target);
         }
-    
+
         let { name, value } = e.target;
         if (value && String(value).charAt(0) == '0') value = value.slice(1, value.length);
         value = Number(value);
@@ -89,20 +89,13 @@ const UiForm = ({
         if (field?.max !== undefined && value > field.max) value = field.max;
         return handleInputChange({ target: { name, value: String(value) } });
     };
-    
-    
+
+
     const fieldsCanPopulate = Array(fields)?.length;
-    const fieldType = (field:any)=>{
-        const isText = getFieldType(field?.value) == 'text';
-        if(isText && field.type !== 'select' && field.name !== 'address')return 'text';
-        else if(field.name == 'address')return 'address';
-        else if(getFieldType(field?.value) == 'checkbox')return 'checkbox';
-        else if(field?.type == 'select' && field?.options !== undefined)return 'select';
-        else if(field.type == 'pill'|| typeof field.value == 'number')return 'pill';
-        return false;
-    }
+
     useEffect(() => {
-        handleComplete();},[]);
+        handleComplete();
+    }, [onChange]);
     // }, [fields, disabled, loading, title, fieldType]);
 
     if (!fields) return <div className='error'>No form fields</div>;
@@ -118,7 +111,7 @@ const UiForm = ({
                         <div key={index} className={`form-field__readonly ${field.error && "error"}`} style={field?.width ? { width: `calc(${field.width} - 8px)` } : {}}>
                             <div className='form-field__readonly--label'>{field?.label}</div>
                             <div className='form-field__readonly--value'>{
-                                typeof field.value !== 'object' && `${field?.value}` || 
+                                typeof field.value !== 'object' && `${field?.value}` ||
                                 field.value && <div className='object-list'>{Object.entries(field.value).map(([chK, chV]: any) => {
                                     return <span className='object-item' key={chK}>
                                         <span className='object-item--key'>{chK}:</span>
@@ -128,14 +121,16 @@ const UiForm = ({
                             }</div>
                         </div>
                     ))}
-    
+
                 {fieldsCanPopulate && fields.map((field, index) => field.name && !field.readonly && (
                     <div
                         key={index}
                         className={`form-field`}
                         style={typeof field?.width == 'string' ? { width: `calc(${field.width} - 6px)` } : {}}
                     >
-                        { fieldType(field)=='text' && <>
+                        {/* {fieldType(field)} */}
+
+                        {fieldType(field) == 'text' && <>
                             <UiInput
                                 autoComplete={field.autoComplete}
                                 label={field.label}
@@ -153,7 +148,7 @@ const UiForm = ({
                                 onChange={e => handleInputChange(e, field.constraints)}
                             />
                         </>}
-                        {fieldType(field) =='address'&&(
+                        {fieldType(field) == 'address' && (
                             <div className='s-w-100'>
                                 <AutocompleteAddressInput
                                     variant={
@@ -166,17 +161,25 @@ const UiForm = ({
                                 />
                             </div>
                         )}
-                        {fieldType(field) =='checkbox'&& (
-                            <ToggleSwitch 
+                        {fieldType(field) == 'radio' && (
+                            <ToggleSwitch
                                 label={field.label}
                                 name={field.name}
                                 disabled={field?.disabled}
                                 onChange={e => handleInputChange(e, field?.constraints)}
                                 value={Boolean(field?.value)} />
                         )}
-                        {fieldType(field) =='select'&& (
+                        {fieldType(field) == 'checkbox' && (
+                            <ToggleSwitch
+                                label={field.label}
+                                name={field.name}
+                                disabled={field?.disabled}
+                                onChange={e => handleInputChange(e, field?.constraints)}
+                                value={Boolean(field?.value)} />
+                        )}
+                        {fieldType(field) == 'select' && (
                             <UiSelect
-                                variant={field?.variant}
+                                variant={field?.variant || variant}
                                 traits={field.traits}
                                 options={field?.options}
                                 label={field.name}
@@ -184,7 +187,7 @@ const UiForm = ({
                                 onSelect={e => handleInputChange({ target: { name: field.name, value: e } }, field.constraints)}
                             />
                         )}
-                        {fieldType(field) =='pill'&& (
+                        {fieldType(field) == 'pill' && (
                             <FormControl
                                 label={field?.error ? `${field.label} *${field.error}*` : field.label}
                                 variant={field.error && 'invalid' || Boolean(field?.min && field.value == field.min || field.max && field.value == field.max) && 'bump pill' || 'pill'}
@@ -207,7 +210,7 @@ const UiForm = ({
                     </div>
                 ))}
                 {!fieldsCanPopulate && (<UiLoader position='relative' />)}
-    
+
                 {onAddField && <AddFieldForm onAddField={onAddField} />}
                 <div className={`form__submit ${variant && ` form__submit--${variant}` || ''}`}>
                     {onSubmit && <UiButton onClick={handleSubmit} traits={{ afterIcon: submitIcon }} disabled={disabled || !complete} variant={!disabled && complete && 'glow'} type='submit' busy={loading == true} >

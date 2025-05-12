@@ -6,7 +6,7 @@
 .navbar__container {
   z-index: 1000;
   @extend .d-flex;
-  min-height: var(--s-element);
+  min-height: var(--s-nav-height);
 
   @keyframes animateBg {
     0% {
@@ -18,7 +18,7 @@
     }
   }
 
-  // background-color: var(--black);
+  background-color: var(--black);
   width: 100%;
 
   .navbar {
@@ -26,10 +26,10 @@
     width: 100%;
 
     @media (min-width: 1100px) {
-      min-height: var(--s-element);
-      padding: 0;
+      min-height: var(--s-nav-height);
+      padding: var(--s-9);
       margin: 0 auto;
-      inline-size: 1260px;
+      // inline-size: 1260px;
       // inline-size: calc(1260px + calc(var(--s-4) * 2));
     }
 
@@ -53,7 +53,7 @@
     0% {
       filter: brightness(2);
       --ui-icon-color: var(--body);
-      background-color: var(--gray-80-o);
+      // background-color: var(--gray-80-o);
     }
 
 
@@ -77,7 +77,7 @@
     --ui-icon-color: var(--primary-50);
     // padding: var(--s-9);
     aspect-ratio: 1;
-    min-height: var(--s-element);
+    min-height: var(--s-nav-height);
 
     &--o {
       --ui-icon-color: var(--dark-o);
@@ -93,9 +93,10 @@
 
   .nav-bar__nav-items {
     @extend .d-flex;
-    justify-content: flex-start;
+    // justify-content: flex-start;
+    
     gap:var(--s-7);
-    $defaultColor: var(--gray-60);
+    $defaultColor: var(--gray-40);
     $hoverColor: var(--primary-o);
     $focusColor: var(--primary-50);
 
@@ -104,24 +105,28 @@
 
       color: $defaultColor;
       --ui-icon-color: $defaultColor;
-      height: var(--s-element);
+      min-height: var(--s-nav-height);
       &--about { margin-left: auto; }
-      &--profile,
+      &--user-account,
       &--login {
         align-self: flex-end;
         justify-self: flex-end;
         @media(max-width:1100px) { position: inherit; }
       }
       &.no-cart { padding-right: 0; }
+      &--login, &--user-account{
+        margin-left:auto;
+      }
       &--cart {
         cursor: pointer;
-        height: var(--s-element);
+        min-height: var(--s-nav-height);
         width: var(--s-element);
         @extend .d-flex;
         padding: 0 var(--s-9) 0 0;
         --ui-icon-width: 100%;
         --ui-icon-height: var(--s-5);
         --ui-icon-color: var(--gray-50);
+
       }
 
       &:hover {

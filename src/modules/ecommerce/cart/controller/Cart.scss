@@ -27,18 +27,20 @@
 
 .cart {
     @extend .d-flex-col;
-    width: 100%;
+    width: var(--s-9-width);
+    padding:var(--s-9);
     margin-top: var(--s-nav-height);
     z-index: 1;
     gap:var(--s-5);
+    @media(max-width:900px){
+        margin-top: 0;
+    }
     .cart__header {
         gap:var(--s-9);
         @extend .d-flex;
         width: var(--s-border-width);
         align-items: flex-start;
-        justify-content: space-around;
         .cart__header-title {
-            font-size: 22px;
         }
         @media(max-width:900px){
             gap: 7px;

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminCustomerList.scss';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import useAdminCustomers from './hooks/useAdminCustomers';
 
 const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: string) => void }) => {

@@ -9,7 +9,7 @@ export const useGuest = () => {
   const [guestContext, setGuestContext] = useState<IAuthenticatedUser | undefined>();
   const current = memberService.getCurrentGuest();
   useEffect(() => {
-    console.log({current})
+    // console.log({current})
     if(current )setGuestContext(current);
     const subscriptions: Subscription[] = []; 
     subscriptions.push(memberService.guestChanged.subscribe((pc: IAuthenticatedUser | undefined) => { setGuestContext(pc); }));

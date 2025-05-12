@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import EmptyCart from '../views/EmptyCart/EmptyCart';
 import CartList from '../views/CartList/CartList';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import CheckoutButton from '../../Checkout/views/CheckoutButton/CheckoutButton';
 import useCart from '../hooks/useCart';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
@@ -25,10 +25,12 @@ const Cart = ({ variant, traits }: any) => {
   return (
     <>
       <style jsx>{styles}</style>
-      {/* {JSON.stringify(cart)} */}
+      {/* {cart && Object.values(cart)?.map((item:any,idx:number)=><>
+        {console.log({item:item?.price})}
+      </>)} */}
       <div className='cart'>
         <div className='cart__header'>
-          <UiButton variant="dark" href='/product'>Keep Shopping</UiButton>
+          <UiButton variant="link" href='/product'>Keep Shopping</UiButton>
           <div className='cart__header-title'></div>
           {cart && cart.length != 0 && <CheckoutButton cart_items={cart} />}
         </div>

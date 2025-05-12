@@ -15,87 +15,108 @@ interface IAddressInput {
   label?: string;
   error?: string | null;
   size?: any;
-  placeholder?:string;
+  placeholder?: string;
 }
 
-const AutocompleteAddressInput = ({ address, placeholder, size, setAddress, variant, traits, inputClasses, label, error }: IAddressInput) => {
-  const inputRef = useRef<any>();
-  const [suggestions, setSuggestions] = useState<any[]>([]);
-  const [display, setDisplay] = useState<string | undefined>("");
+const AutocompleteAddressInput = ({
+  address,
+  placeholder,
+  size,
+  setAddress,
+  variant,
+  traits,
+  inputClasses,
+  label,
+  error
+}: IAddressInput) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const sessionTokenRef = useRef<any>(null);
+  const autocompleteServiceRef = useRef<any>(null);
 
-  const [autocompleteService, setAutocompleteService] = useState<any>(null);
+  const [googleMaps, setGoogleMaps] = useState<any>(null);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [display, setDisplay] = useState<string>("");
+
   const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GAPI_KEY?.trim() || "";
 
-  const initAutocomplete = async () => {
+  useEffect(() => {
     const loader = new Loader({
       apiKey: GOOGLE_API_KEY,
+      version: "weekly",
       libraries: ['places'],
+      id: "__googleMapsScriptId"
     });
-    const google = await loader.load();
-    const service = new google.maps.places.AutocompleteService();
-    setAutocompleteService(service);
-  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    setDisplay(query);  // Update display state with input value
-    if (query.length > 2 && autocompleteService) {
-      autocompleteService.getPlacePredictions({ input: query }, (predictions: any) => {
-        setSuggestions(predictions || []);
-      });
+    loader.load().then((google) => {
+      setGoogleMaps(google);
+      sessionTokenRef.current = new google.maps.places.AutocompleteSessionToken();
+
+      if (google.maps.places.AutocompleteSuggestionService) {
+        autocompleteServiceRef.current = new google.maps.places.AutocompleteSuggestionService();
+      } else {
+        autocompleteServiceRef.current = new google.maps.places.AutocompleteService();
+      }
+    });
+  }, []);
+
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    setDisplay(input);
+
+    if (input.length > 2 && autocompleteServiceRef.current) {
+      const request = {
+        input,
+        sessionToken: sessionTokenRef.current
+      };
+
+      autocompleteServiceRef.current.getPlacePredictions(
+        request,
+        (predictions: any[]) => {
+          setSuggestions(predictions || []);
+        }
+      );
     } else {
       setSuggestions([]);
     }
   };
 
-  const handleDisplay = useCallback(() => {
-    const addressDisplay = address ?
-      `${address?.line1 ? address?.line1 + ', ' : ''
-      }${address?.line2 ? address?.line2 + ' ' : ''
-      }${address?.city ? address?.city + ' ' : ''
-      }${address?.state ? address?.state + ', ' : ''
-      }${address?.postal_code ? address?.postal_code + ', ' : ''
-      }${address?.country ? address?.country : ''}` : "";
-    setDisplay(addressDisplay);
-  }, [address]);
-
   const handleSuggestionSelect = (option: any) => {
     const placeId = option.value;
-    const loader = new Loader({
-      apiKey: GOOGLE_API_KEY,
-      libraries: ['places'],
-    });
-    loader.load().then((google) => {
-      const placesService = new google.maps.places.PlacesService(document.createElement('div'));
-      placesService.getDetails({ placeId }, (place: any) => {
-        if (place && place.address_components) {
-          const addressComponents = place.address_components.reduce((acc: any, component: any) => {
-            const type = component.types[0];
-            acc[type] = component.short_name;
-            return acc;
-          }, {});
 
-          const formattedAddress = {
-            line1: `${addressComponents.street_number || ''} ${addressComponents.route || ''}`,
-            line2: addressComponents.sublocality || '',
-            city: addressComponents.locality || '',
-            state: addressComponents.administrative_area_level_1 || '',
-            postal_code: addressComponents.postal_code || '',
-            country: addressComponents.country || '',
-            lat: place.geometry?.location?.lat() || 0,
-            lng: place.geometry?.location?.lng() || 0
-          };
-          const addressValue = { target: { name: "address", value: formattedAddress } };
-          setAddress(addressValue);
-          setSuggestions([]);
-        }
-      });
+    const service = new googleMaps.maps.places.PlacesService(document.createElement('div'));
+
+    service.getDetails({ placeId, sessionToken: sessionTokenRef.current }, (place: any) => {
+      if (place && place.address_components) {
+        const addressComponents = place.address_components.reduce((acc: any, component: any) => {
+          const type = component.types[0];
+          acc[type] = component.short_name;
+          return acc;
+        }, {});
+
+        const formattedAddress = {
+          line1: `${addressComponents.street_number || ''} ${addressComponents.route || ''}`.trim(),
+          line2: addressComponents.sublocality || '',
+          city: addressComponents.locality || '',
+          state: addressComponents.administrative_area_level_1 || '',
+          postal_code: addressComponents.postal_code || '',
+          country: addressComponents.country || '',
+          lat: place.geometry?.location?.lat() || 0,
+          lng: place.geometry?.location?.lng() || 0
+        };
+
+        setAddress({ target: { name: "address", value: formattedAddress } });
+        setSuggestions([]);
+        sessionTokenRef.current = new googleMaps.maps.places.AutocompleteSessionToken(); // refresh token
+      }
     });
   };
 
-  useEffect(() => {
-    initAutocomplete();
-  }, []);
+  const handleDisplay = useCallback(() => {
+    const addressDisplay = address
+      ? `${address?.line1 ? address.line1 + ', ' : ''}${address?.line2 ? address.line2 + ' ' : ''}${address?.city ? address.city + ' ' : ''}${address?.state ? address.state + ', ' : ''}${address?.postal_code ? address.postal_code + ', ' : ''}${address?.country ? address.country : ''}`
+      : '';
+    setDisplay(addressDisplay);
+  }, [address]);
 
   useEffect(() => {
     handleDisplay();
@@ -106,37 +127,37 @@ const AutocompleteAddressInput = ({ address, placeholder, size, setAddress, vari
       <style jsx>{styles}</style>
       <style jsx>{aStyles}</style>
       <div className='address-input'>
-      <FormControl
-        size={size}
-        error={error}
-        label={label}
-        traits={{ ...traits, variant: "address" }}
-        variant={variant}
-      >
-        <input
-          data-element='input'
-          className={inputClasses+ " address-input"}
-          id="autocomplete-address"
-          type="text"
-          ref={inputRef}
-          placeholder={placeholder || "Enter address"} 
-          value={display}
-          name="address"
-          onChange={handleInputChange}
-        />
-      </FormControl>
-      {suggestions.length > 0 && (
-        <div className='address-input--suggestions'>
-          <UiMenu
-            options={suggestions.map(suggestion => ({
-              label: suggestion.structured_formatting.main_text,
-              value: suggestion.place_id,
-              secondary: suggestion.structured_formatting.secondary_text
-            }))}
-            onSelect={handleSuggestionSelect}
+        <FormControl
+          size={size}
+          error={error}
+          label={label}
+          traits={{ ...traits, variant: "address" }}
+          variant={variant}
+        >
+          <input
+            data-element='input'
+            className={`${inputClasses || ''} address-input`}
+            id="autocomplete-address"
+            type="text"
+            ref={inputRef}
+            placeholder={placeholder || "Enter address"}
+            value={display}
+            name="address"
+            onChange={handleInputChange}
           />
-        </div>
-      )}
+        </FormControl>
+        {suggestions.length > 0 && (
+          <div className='address-input--suggestions'>
+            <UiMenu
+              options={suggestions.map(suggestion => ({
+                label: suggestion.structured_formatting?.main_text || suggestion.description,
+                value: suggestion.place_id,
+                secondary: suggestion.structured_formatting?.secondary_text || ''
+              }))}
+              onSelect={handleSuggestionSelect}
+            />
+          </div>
+        )}
       </div>
     </>
   );

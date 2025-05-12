@@ -100,107 +100,98 @@ const findLocalIp = (logInfo = true) => new Promise<string[]>((resolve, reject) 
     }
   };
 });
+const fetchWAN = async (): Promise<string> => {
+  try {
+    const res = await fetch('https://api.ipify.org?format=json');
+    const data = await res.json();
+    return data.ip;
+  } catch (err) {
+    console.error('Error fetching WAN IP:', err);
+    return '';
+  }
+};
+
+const getNavigatorData = (): NavigatorData => {
+  const { userAgent, platform, language, languages, cookieEnabled } = navigator;
+  const data: NavigatorData = { userAgent, platform, language, languages, cookieEnabled };
+
+  if ('userAgentData' in navigator) {
+    const { brands, mobile } = navigator.userAgentData as UserAgentData;
+    Object.assign(data, { brands, mobile });
+  }
+
+  return data;
+};
+
+const getConnectionData = async (navigatorData: NavigatorData): Promise<{ connection?: ConnectionData; lan: string }> => {
+  let lan = 'Not connected to Wi-Fi, Ethernet, or cellular network';
+  const netInfo = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+  if (!netInfo) return { lan, connection: undefined };
+
+  const { effectiveType, downlink, rtt, saveData } = netInfo;
+  const connection: ConnectionData = { effectiveType, downlink, rtt, saveData, type: 'unknown' };
+
+  if (effectiveType === 'cellular') {
+    connection.type = navigatorData.mobile ? 'cellular' : 'unknown';
+    connection.carrier = 'Carrier info not available';
+  } else if (['wifi', 'ethernet', '2g', '3g', '4g'].includes(effectiveType)) {
+    connection.type = effectiveType;
+    try {
+      const ips = await findLocalIp(false);
+      lan = ips[0] || lan;
+    } catch (err) {
+      console.error('Error fetching LAN IP:', err);
+    }
+  }
+
+  return { connection, lan };
+};
+
+const getDeviceSpecs = (): DeviceData => ({
+  memory: (navigator as any).deviceMemory || 0,
+  hardwareConcurrency: navigator.hardwareConcurrency || 0,
+  screen: {
+    width: screen.width,
+    height: screen.height,
+    colorDepth: screen.colorDepth,
+  },
+  window: {
+    innerWidth: window.innerWidth,
+    innerHeight: window.innerHeight,
+  },
+});
+
+const getPermissions = async (): Promise<PermissionsData> => {
+  const permissions: PermissionsData = {};
+  if (!navigator.permissions) return permissions;
+
+  try {
+    const names = ['geolocation', 'notifications', 'camera', 'microphone', 'persistent-storage'];
+    for (const name of names) {
+      const status = await navigator.permissions.query({ name } as any);
+      permissions[name] = status.state;
+    }
+  } catch (err) {
+    console.error('Error fetching permissions:', err);
+  }
+
+  return permissions;
+};
 
 const useDevice = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
 
-  const collectData = async () => {
-    const navigatorData: NavigatorData = {
-      userAgent: navigator.userAgent,
-      platform: navigator.platform,
-      language: navigator.language,
-      languages: navigator.languages,
-      cookieEnabled: navigator.cookieEnabled,
-    };
-
-    // Check if userAgentData is available
-    if ((navigator as any).userAgentData) {
-      const { brands, mobile } = (navigator as any).userAgentData as UserAgentData;
-      navigatorData.brands = brands;
-      navigatorData.mobile = mobile;
-    }
-
-    let wan = '';
-    try {
-      const response = await fetch('https://api.ipify.org?format=json');
-      const data = await response.json();
-      wan = data.ip;
-    } catch (error) {
-      console.error('Error fetching public IP (WAN):', error);
-    }
-
-    let lan = 'Not connected to Wi-Fi, Ethernet, or cellular network';
-    let connection: ConnectionData | undefined;
-
-    try {
-      const netInfo = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection || (navigator as any).network;
-      if (netInfo) {
-        const { effectiveType, downlink, rtt, saveData } = netInfo;
-        connection = { effectiveType, downlink, rtt, saveData };
-
-        if (effectiveType === 'cellular') {
-          if (navigatorData.mobile) {
-            connection.type = 'cellular';
-            connection.carrier = 'Carrier info not available';  // Placeholder as browsers don't provide carrier info
-          } else {
-            connection.type = 'unknown';
-          }
-        } else if (effectiveType === 'wifi' || effectiveType === 'ethernet' || effectiveType === '2g' || effectiveType === '3g' || effectiveType === '4g') {
-          connection.type = effectiveType;
-          try {
-            const ips = await findLocalIp(false);
-            lan = ips[0] || lan;
-          } catch (error) {
-            console.error('Error fetching local IP (LAN):', error);
-          }
-        } else {
-          connection.type = 'unknown';
-        }
-      }
-    } catch (error) {
-      console.error('Error determining connection type:', error);
-      lan = 'Failed to determine connection type';
-    }
-
-    const deviceData: DeviceData = {
-      memory: (navigator as any).deviceMemory || 0,
-      hardwareConcurrency: navigator.hardwareConcurrency || 0,
-      screen: {
-        width: window.screen.width,
-        height: window.screen.height,
-        colorDepth: window.screen.colorDepth,
-      },
-      window: {
-        innerWidth: window.innerWidth,
-        innerHeight: window.innerHeight,
-      },
-    };
-
-    // Check browser permissions
-    const permissions: PermissionsData = {};
-    if (navigator.permissions) {
-      try {
-        const permissionNames = ['geolocation', 'notifications', 'camera', 'microphone', 'persistent-storage'];
-        for (const name of permissionNames) {
-          const permissionStatus = await navigator.permissions.query({ name } as any);
-          permissions[name] = permissionStatus.state;
-        }
-      } catch (error) {
-        console.error('Error fetching permissions:', error);
-      }
-    }
-
-    setUserData({
-      navigator: navigatorData,
-      wan,
-      lan,
-      connection,
-      device: deviceData,
-      permissions,
-    });
-  };
-
   useEffect(() => {
+    const collectData = async () => {
+      const navigatorData = getNavigatorData();
+      const wan = await fetchWAN();
+      const { connection, lan } = await getConnectionData(navigatorData);
+      const device = getDeviceSpecs();
+      const permissions = await getPermissions();
+
+      setUserData({ navigator: navigatorData, wan, lan, connection, device, permissions });
+    };
+
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
       collectData();
     } else {
@@ -209,7 +200,6 @@ const useDevice = () => {
     }
   }, []);
 
-  // console.log("[ userData ]", userData);
   return userData;
 };
 

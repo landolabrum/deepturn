@@ -1,0 +1,96 @@
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div {
+  width: var(--ui-icon-width, var(--ui-icon-size, 20px));
+  // width: var(--ui-icon-width, var(--ui-icon-size, 20px));
+  height: var(--ui-icon-height, var(--ui-icon-size, 20px));
+  // height: var(--ui-icon-height, var(--ui-icon-size, 20px));
+  color: var(--ui-icon-color, #666);
+  margin: var(--ui-icon-margin, unset);
+  position: relative;
+  overflow: visible;
+}
+
+div {
+  @extend .d-flex;
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    path{
+      width: var(--ui-icon-width, var(--ui-icon-size, 20px));
+      height: var(--ui-icon-height, var(--ui-icon-size, 20px));
+    }
+    // path {
+    //     stroke-width: var(--icon-stroke-width, auto);
+    // }
+  }
+}
+
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 5px var(--primary-10));
+  }
+
+  // 30% {filter: drop-shadow( 0 0 15px #fff);}
+  100% {
+    filter: drop-shadow(0 0 20px var(--primary-10));
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg)
+  }
+
+  100% {
+    transform: rotate(180deg)
+  }
+}
+
+.spinner {
+  animation: spin .7s forwards infinite ease-in-out;
+}
+
+// @keyframes glow {
+//   0% {
+//     color: var(--gray-50);
+//     --ui-icon-color: #e0e0e0;
+//   }
+//   // 50% {
+//   //   color: var(--gray-40-o);
+//   //   --ui-icon-color: var(--gray-40-o);
+//   // }
+//   100% {
+//      color: var(--gray-40);
+//      --ui-icon-color: #e0e0e050;
+//   }
+// }
+.iconGlow {
+  animation: glow 1.5s infinite ease-in-out alternate;
+  width: inherit;
+  height: inherit;
+  @extend .d-flex;
+  &:hover{
+    animation: glow 1.5s ease-in-out infinite alternate;
+  }
+}
+
+.ui-icon__badge {
+  position: absolute;
+  @extend .d-flex;
+  top: calc(var(--s-9) * -1);
+  right: var(--s-12);
+  background-color: var(--red-50); // Example background color
+  color: white; // Text color
+  border-radius: 50%; // Circular badge
+  font-size: var(--s-8);
+  line-height: 1;
+  width: auto;
+  aspect-ratio: 1;
+  text-align: center; // Center the text inside the badge
+}

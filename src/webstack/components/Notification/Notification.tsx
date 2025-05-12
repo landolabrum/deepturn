@@ -1,9 +1,9 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import styles from "./Notification.scss";
-import { UiIcon } from "../UiIcon/UiIcon";
+import { UiIcon } from "../UiIcon/controller/UiIcon";
 import UiMarkdown from "../UiMarkDown/UiMarkDown";
-import { IConfirm } from "../modal/contexts/modalContext";
-import UiButton from "../UiButton/UiButton";
+import { IConfirm } from "../Containers/modal/contexts/modalContext";
+import UiButton from "../UiForm/views/UiButton/UiButton";
 
 const NO_SCROLL = "no-scroll";
 

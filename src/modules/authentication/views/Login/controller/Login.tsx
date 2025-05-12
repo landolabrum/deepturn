@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Login.scss';
 import LoginView from '../views/LoginView/LoginView';
 import ResetPassword from '../views/ResetPassword/ResetPassword';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { capitalizeAll } from '@webstack/helpers/Capitalize';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';

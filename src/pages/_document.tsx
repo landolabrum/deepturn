@@ -1,6 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import createBuildDate from "@webstack/helpers/createBuildDate";
-
+import ProjectBuildDate from "@webstack/lib/project/BuildDate/ProjectBuildDate";
 export default class MyDocument extends Document {
   render() {
     return (
@@ -13,11 +12,7 @@ export default class MyDocument extends Document {
         <body id="app-body">
           <Main />
           <NextScript />
-          <span style={{ display: 'none' }}>
-            {`☠☠☠☠☠☠☠☠☠☠☠☠☠ Property of MindBurner Corporation © ☠☠☠☠☠☠☠☠☠☠☠☠☠`}
-            {` ☠☠☠☠☠☠☠☠☠☠☠☠☠ Unauthorized use is prohibited ☠☠☠☠☠☠☠☠☠☠☠☠☠`}
-            {`BUILD DATE: ( ${createBuildDate()} )`}
-          </span>
+          <ProjectBuildDate/>
         </body>
       </Html>
     );

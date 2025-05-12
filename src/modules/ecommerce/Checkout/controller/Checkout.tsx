@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Checkout.scss';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import useCart from '../../cart/hooks/useCart';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 
@@ -36,9 +36,9 @@ const Checkout = (): React.JSX.Element => {
             setUser({ email: res.email });
             setView('existing');
         }
-        else {
-            // console.log('[ CHECKOUT (HANDLE SIGNUP)[ERROR] ]', res);
-        }
+        // else {
+        //     // console.log('[ CHECKOUT (HANDLE SIGNUP)[ERROR] ]', res);
+        // }
     }
     const [notification, setNotification] = useNotification();
     type InotificationContext = { data: string, email: string, status: "existing" | "created" | "success" }
@@ -48,7 +48,7 @@ const Checkout = (): React.JSX.Element => {
         if (status) setNotification({
             active: true,
             persistence: 3000,
-            list: [{ name: `email ${status}, sign in to continue` }]
+            list: [{ name: `email ${status}` }]
         });
         // console.log('[ NOTIFICIATION ]', { notification, notificationContent: notificationContext })
     }

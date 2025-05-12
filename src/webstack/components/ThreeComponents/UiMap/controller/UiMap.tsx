@@ -8,7 +8,7 @@ import { IVessel, IVesselActions } from "../models/IMapVessel";
 import useProfile from "~/src/core/authentication/hooks/useProfile";
 import { useRouter } from "next/router";
 import { flyToView } from "../functions/mapControls";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import MapVesselDetails, { IVesselType } from "../views/MapVessel/views/MapVesselDetails/MapVesselDetails";
 import MapSearch from "../views/MapSearch/MapSearch";
 import useMapSearch from "../hooks/useMapSearch";

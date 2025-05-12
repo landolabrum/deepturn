@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import LoginView from "../views/Login/views/LoginView/LoginView";
 import styles from "./Authentication.scss";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import SignUp from "../views/SignUp/SignUp";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { useRouter } from "next/router";
-import UiButton from "@webstack/components/UiButton/UiButton";
+import UiButton from "@webstack/components/UiForm/views/UiButton/UiButton";
 import Link from "next/link";
 import environment from "~/src/core/environment";
-import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import { useModal } from "@webstack/components/Containers/modal/contexts/modalContext";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import { useClearance } from "~/src/core/authentication/hooks/useUser";
 
@@ -68,7 +68,7 @@ const Authentication: React.FC<any> = (props: any) => {
         const adminClearance = useClearance() > 9;
         const onProfileClick = (isAdmin: boolean) => {
           if (isAdmin && adminClearance) router.push('/admin');
-          else router.push('/profile');
+          else router.push('/user-account');
           closeModal();
         }
         return (

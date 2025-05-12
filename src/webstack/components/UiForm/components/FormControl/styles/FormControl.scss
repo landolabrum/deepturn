@@ -32,6 +32,7 @@ $elPad: 14px;
   box-shadow: inherit;
   aspect-ratio: inherit;
   position: inherit;
+
 }
 
 .d-flex {
@@ -113,8 +114,9 @@ $elPad: 14px;
       height: var(--s-2);
       text-indent: var(--s-10);
       text-transform: uppercase;
-      color: var(--gray-50-o);
+      color: var(--gray-50);
       line-height: 2;
+      mix-blend-mode: difference;
       font-weight: bold;
       font-size: var(--s-8);
       letter-spacing: 3px;

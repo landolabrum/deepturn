@@ -61,8 +61,8 @@
   --green-70: #2d8c3b;
   --green-90: #257029;
   
-  --blue-o: #3A7BD5; /* Softer transparent blue */
   --blue-10: #2B8FDB; /* Light blue with a trustworthy feel */
+  --blue-10-o: #2B8FDB70;
   --blue-30: #2277B5; /* Slightly darker light blue */
   --blue-50: #1A5E92; /* Mid-tone blue */
   --blue-70: #13487A; /* Darker blue */

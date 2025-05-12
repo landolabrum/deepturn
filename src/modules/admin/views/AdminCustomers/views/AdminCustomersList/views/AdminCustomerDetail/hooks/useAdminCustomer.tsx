@@ -4,9 +4,12 @@ import { createField, findField } from "@webstack/components/UiForm/functions/fo
 import { IFormField } from "@webstack/components/UiForm/models/IFormModel";
 import { useCallback, useEffect, useState } from "react";
 import IAdminService from "~/src/core/services/AdminService/IAdminService";
-import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import { useModal } from "@webstack/components/Containers/modal/contexts/modalContext";
 import { useRouter } from "next/router";
 import { dateFormat } from "@webstack/helpers/userExperienceFormats";
+
+// Utility function to deep clone objects
+const deepClone = (obj: any) => JSON.parse(JSON.stringify(obj));
 
 const useAdminCustomer = ({ customer_id, level }: { customer_id?: string, level: number }) => {
   const router = useRouter();
@@ -16,16 +19,19 @@ const useAdminCustomer = ({ customer_id, level }: { customer_id?: string, level:
   const [displayFields, setDisplayFields] = useState<any>({});
   const [notification, setNotification] = useNotification();
   const { openModal } = useModal();
+
+  // Refresh state and clear customer data
   const refresh = () => {
     setCustomerState(undefined);
-    // getCustomerList();
   };
+
+  // Fetch customer data if it doesn't exist
   const getCustomer = useCallback(async () => {
     if (!customer_id || customer || initialCustomer) return;
 
     try {
       const response = await adminService.getCustomer(customer_id);
-      console.log({ response });
+      // console.log({ response });
       if (!response?.error) return initForms(response);
       setNotification({ active: true, dismissable: true, apiError: response });
       console.error("Couldn't get customer");
@@ -36,116 +42,110 @@ const useAdminCustomer = ({ customer_id, level }: { customer_id?: string, level:
     }
   }, [customer_id, customer, initialCustomer, adminService, setNotification]);
 
+  // Initialize forms with customer data
   const initForms = (customerResponse: any, context?: any, parent?: string) => {
-    setDisplayFields(customerResponse);
-    setCustomerState(customerResponse);
-    setInitialCustomer(customerResponse);
+    const deepClonedCustomer = deepClone(customerResponse); // Deep clone to avoid reference issues
+    setCustomerState(deepClonedCustomer);
+    setInitialCustomer(deepClone(customerResponse)); // Deep clone initialCustomer for immutability
+    setDisplayFields(deepClonedCustomer);
   };
 
+  // Update a specific field in the customer data
   const updateField = (newField: any) => {
-    const updatedCustomer = { ...customer };
+    // console.log({ newField });
+
+    // Deep clone customer to ensure immutability
+    const updatedCustomer = deepClone(customer);
+
     let fieldToUpdate = updatedCustomer;
 
     // Find the field to update in the customer object
     const fieldPath = newField.id.split('-').slice(1); // Remove 'customer' from the path
-    fieldPath.forEach((pathSegment:any, index:any) => {
+    fieldPath.forEach((pathSegment: any, index: any) => {
       if (index === fieldPath.length - 1) {
-        fieldToUpdate[pathSegment] = newField.value;
+        fieldToUpdate[pathSegment] = newField.value; // Update the specific field
       } else {
-        fieldToUpdate = fieldToUpdate[pathSegment];
+        fieldToUpdate = fieldToUpdate[pathSegment]; // Traverse nested objects
       }
     });
 
-    setCustomerState(updatedCustomer);
+    setCustomerState(updatedCustomer); // Set updated customer state
 
-    // Update ThreeTree component
+    // Update ThreeTree component if the field type is 'select'
     if (newField.type === 'select') {
       newField.options = newField.options.map((option: any) => ({
         ...option,
         selected: false,
       }));
-      newField.options.find((option:any) => option.value === newField.value).selected = true;
+      const selectedOption = newField.options.find((option: any) => option.value === newField.value);
+      if (selectedOption) selectedOption.selected = true;
     }
 
-    setDisplayFields(updatedCustomer);
+    setDisplayFields(updatedCustomer); // Update display fields
   };
 
+  // Function to modify the customer (send update request)
+  const getDifferences = (initialObj: any, updatedObj: any) => {
+    const differences: any = {};
+  
+    const compare = (initial: any, updated: any, path: string[] = []) => {
+      for (const key in updated) {
+        if (typeof updated[key] === "object" && !Array.isArray(updated[key]) && updated[key] !== null) {
+          // Recursively compare objects
+          compare(initial[key] || {}, updated[key], [...path, key]);
+        } else if (updated[key] !== initial[key]) {
+          // If values differ, store the updated value in the differences object
+          const fullPath = [...path, key].join('.');
+          set(differences, fullPath, updated[key]);
+        }
+      }
+    };
+  
+    compare(initialObj, updatedObj);
+    return differences;
+  };
+  
+  // Helper function to set values in the nested differences object based on a path
+  const set = (obj: any, path: string, value: any) => {
+    const keys = path.split('.');
+    keys.reduce((acc: any, key: string, index: number) => {
+      if (index === keys.length - 1) {
+        acc[key] = value;
+      } else {
+        if (!acc[key]) acc[key] = {};
+      }
+      return acc[key];
+    }, obj);
+  };
+  
   const modifyCustomer = async () => {
     const modifyCustomerService = async (request: any) => {
       try {
-        const response = await adminService.updateCustomer(request);
+        const response = await adminService.updateCustomer({id:initialCustomer.id,...request});
         if (response) openModal({ children: JSON.stringify(response) });
       } catch (error: any) {
         console.error({ error });
       }
     };
-
-    let request: any = { metadata: {} };
-
-    Object.entries(customer).forEach(([formName, fields]: any) => {
-      fields.forEach((field: any) => {
-        let fieldName: string = field.name;
-        let fieldValue: any = field.value;
-        if (field?.name === "created") fieldValue = Number(dateFormat(fieldValue, { options: { returnType: "timestamp" } }));
-
-        // Join firstName and lastName
-        if (formName === 'contact' && (fieldName === 'firstName' || fieldName === 'lastName')) {
-          const firstNameField = findField(fields, 'firstName');
-          const lastNameField = findField(fields, 'lastName');
-          if (firstNameField && lastNameField) {
-            request.name = `${firstNameField.value} ${lastNameField.value}`;
-            return;
-          }
-        }
-
-        if (['contact', 'methods', 'address'].includes(formName)) {
-          if (formName === 'contact' && fieldName === 'address') {
-            request[fieldName] = fieldValue;
-          } else {
-            request[fieldName] = fieldValue;
-          }
-        } else {
-          if (!request.metadata[formName]) {
-            if (!formName.includes("-")) {
-              request.metadata[formName] = {};
-            } else {
-              const formNameParts = formName.split("-");
-              formName = formNameParts[0] + "s";
-              if (!request.metadata[formName]) {
-                request.metadata[formName] = [];
-              }
-              if (formNameParts[1]) {
-                if (!request.metadata.user.devices) {
-                  request.metadata.user.devices = [];
-                }
-                Object.entries(fields).map(([index, field]: any) => {
-                  const fpOne = Number(formNameParts[1]);
-                  if (!request.metadata.user.devices?.[fpOne]) {
-                    request.metadata.user.devices[fpOne] = {};
-                  }
-                  if (field?.name === "created") field.value = Number(dateFormat(field.value, { options: { returnType: "timestamp" } }));
-                  request.metadata.user.devices[fpOne][field.name] = field.value;
-                });
-              }
-
-              return;
-            }
-          }
-          request.metadata[formName][fieldName] = fieldValue;
-        }
-      });
-    });
-
-    if (Object.keys(request).length > 1 || Object.keys(request.metadata).some(key => Object.keys(request.metadata[key]).length > 0)) {
-      await modifyCustomerService(request);
-    } else {
-      console.error("[ ADMIN CUS DETAILS (NO REQ) ]");
+  
+    // Get only the differences between the current customer and the initialCustomer
+    const differences = getDifferences(initialCustomer, customer);
+    
+    // If no differences, do not send the request
+    if (Object.keys(differences).length === 0) {
+      console.log("No changes to update");
+      return;
     }
+  
+    console.log({ differences }); // This is the payload with only changed fields
+  
+    // Send the differences as the payload
+    await modifyCustomerService(differences);
   };
 
   useEffect(() => {
-    if (customer == undefined) getCustomer();
-  }, [getCustomer]);
+    if (customer === undefined) getCustomer();
+  }, []);
 
   return {
     customer,
@@ -156,4 +156,5 @@ const useAdminCustomer = ({ customer_id, level }: { customer_id?: string, level:
     refresh,
   };
 };
+
 export default useAdminCustomer;

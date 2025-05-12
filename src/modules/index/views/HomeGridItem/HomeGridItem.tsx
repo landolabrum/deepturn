@@ -1,7 +1,7 @@
 // Relative Path: ./HomeGridItem.tsx
 import React from 'react';
 import styles from './HomeGridItem.scss';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IHomeGridItem {

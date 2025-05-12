@@ -5,8 +5,8 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useLoader } from '@webstack/components/Loader/Loader';
 
 
-export default function AuthQuery() {
-  const router = useRouter();
+export default function useSignOut() {
+  const {query, push} = useRouter();
   const MemberService = getService<IMemberService>('IMemberService');
   const [, setLoader] = useLoader();
 
@@ -16,15 +16,15 @@ export default function AuthQuery() {
       await MemberService.signOut();
       setLoader({ active: true, body: 'Successfully logged out!' });
       setTimeout(() => {
+        push('/');
         setLoader({ active: false });
-        router.push('/');
       }, 2000); // Display the message for 2 seconds before redirecting
     };
 
-    if (router.query.function === 'signout') {
+    if (query.function === 'signout') {
       logoutUser();
     }
-  }, [router, MemberService, setLoader]);
+  }, [query, MemberService, setLoader]);
 
   return <></>;
 }

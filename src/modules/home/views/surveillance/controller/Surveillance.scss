@@ -6,6 +6,15 @@
 .surveillance{
     min-height: 500px;
     width: 100%;
+    @extend .d-flex;
+    flex-direction: column;
+    gap:var(--s-1);
+    justify-content: flex-start;
+
+    &__header{
+        width: 100%;
+        @extend .d-flex;
+    }
 }
 
 .joystick{
@@ -28,4 +37,5 @@
         min-width: 90px;
         background-color: var(--primary-70);
     }
+
 }

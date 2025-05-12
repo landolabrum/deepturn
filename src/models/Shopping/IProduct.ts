@@ -25,6 +25,8 @@ export interface IStripeProduct {
     unit_label?: string;
     updated: number;
     url?: string;
+    selected?: boolean;
+    price_id?:string;
 }
 export interface IProduct extends IStripeProduct {
     price: IPrice

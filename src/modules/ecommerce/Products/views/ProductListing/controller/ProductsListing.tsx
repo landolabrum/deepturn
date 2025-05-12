@@ -1,108 +1,92 @@
 import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import styles from "./ProductsListing.scss";
-import { getService } from "@webstack/common";
-import { dateFormat, numberToUsd } from "@webstack/helpers/userExperienceFormats";
-import { useUser } from '~/src/core/authentication/hooks/useUser';
-import IProductService from "~/src/core/services/ProductService/IProductService";
-import { useLoader } from "@webstack/components/Loader/Loader";
-import environment from "~/src/core/environment";
-import ProductList from "../views/ProductList/ProductList";
-import UiSelect from "@webstack/components/UiForm/components/UiSelect/UiSelect";
+import { useProducts } from "../../../hooks/useProducts";
+import UiSettingsLayout from "@webstack/layouts/UiSettingsLayout/controller/UiSettingsLayout";
+import AdaptGrid from "@webstack/components/Containers/AdaptGrid/AdaptGrid";
+import ProductListingItem from "../views/ProductListingItem/ProductListingItem";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
+import UiButton from "@webstack/components/UiForm/views/UiButton/UiButton";
+import useWindow from "@webstack/hooks/window/useWindow";
 
-interface Filter {
-  [key: string]: {
-    [key: string]: { selected: boolean };
-  };
+
+
+interface IProductListing {
+  hide?: string[] | 'header';
+  variant?: 'full-width' | 'full',
+  scrollX?: boolean;
+  onSelect?:(e:any)=>void;
 }
-
-const ProductsListing: NextPage = () => {
-  const [loader, setLoader] = useLoader();
-  const user = useUser();
-  const [filters, setFilters] = useState<Filter>({ categories: {}, types: {} });
-  const [products, setProducts] = useState<any[]>();
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  const ProductService = getService<IProductService>("IProductService");
-
-  const getSelectedCategories = (filter: any) => {
-    const selectedEntries = Object.entries(filter).filter(([, value]: any) => value.selected);
-    if (selectedEntries.length === 0) return "all";
-    return selectedEntries.map(([key]) => key).join(", ");
+const ProductsListing = ({ hide, variant, onSelect, scrollX }: IProductListing) => {
+  const router = useRouter();
+  const { query, pathname } = router;
+  const { products, loading, hasMore } = useProducts();
+  const [layout, setLayout] = useState<string>(query.layout && String(query.layout) || "grid");
+  const layoutList = ["grid", "list", "gridX"];  
+  const {width}=useWindow();
+  const layouts: any = {
+    grid: { gap: 10,  sm: 1, md: 1, lg: 4, xl: 1, variant: variant },
+    gridX: { gap: 10, sm: 3, md: 3, lg: 4, xl: 5, scroll: "scroll-x" },
+    list: { gap: 10, xs: 1 },
   };
 
-  const updateFilters = (filterKey: keyof Filter, value: string) => {
-    setFilters(prevFilters => ({
-      ...prevFilters,
-      [filterKey]: {
-        ...prevFilters[filterKey],
-        [value]: { selected: !prevFilters[filterKey][value]?.selected }
-      }
-    }));
+  const handleLayoutChange = (newLayout: string) => {
+    if(onSelect)return onSelect(newLayout)
+    setLayout(newLayout);
+    router.push({ pathname, query: { ...query, layout: newLayout } }, undefined, { shallow: true });
   };
+const isHideHeader = hide?.includes('header') && hide == undefined;
 
-  const fetchProducts = async () => {
-    !loader.active && setLoader({ 
-      active: true,
-      body: 'loading products',
-      // animation: true
-     });
-    try {
-      const memberResponse = await ProductService.getProducts();
-      const fetchedProducts: any = memberResponse?.data;
 
-      if (fetchedProducts) {
-        const filteredProducts = fetchedProducts.filter((product: any) => {
-          const { category, hide_price, mid, type } = product.metadata;
-          if (mid !== environment.merchant.mid) return false;
-
-          const categoryMatch = Object.entries(filters.categories).some(([key, val]) => val.selected && key === category);
-          const typeMatch = Object.entries(filters.types).some(([key, val]) => val.selected && key === type);
-
-          return (categoryMatch || Object.keys(filters.categories).length === 0) && (typeMatch || Object.keys(filters.types).length === 0);
-        });
-
-        const formattedProducts = filteredProducts.map((product: any) => ({
-          ...product,
-          created: dateFormat(product.price.created, { isTimestamp: true }),
-        }));
-
-        setHasMore(memberResponse.has_more);
-        setProducts(formattedProducts);
-      }
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    } finally {
-      setLoader({ active: false });
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, [filters]); // Refetch products whenever filters change
+useEffect(() => {if(scrollX)handleLayoutChange("gridX")}, [variant]);
 
   return (
     <>
       <style jsx>{styles}</style>
-      <div className="product-listing">
-        <div className="product-listing__header">
-          <div>
-            <h1>Products</h1>
-          </div>
-          {/* <div className="product-listing__filters">
-            {['categories', 'types'].map(filterKey => (
-              <UiSelect
-                key={filterKey}
-                variant="dark"
-                onSelect={(value) => updateFilters(filterKey as keyof Filter, value)}
-                label={filterKey}
-                options={Object.keys(filters[filterKey])}
-                title={getSelectedCategories(filters[filterKey])}
-                value={getSelectedCategories(filters[filterKey])}
-              />
-            ))}
-          </div> */}
-        </div>
-        <ProductList products={products} />
+      {/* {JSON.stringify({headeer:Boolean(typeof hide == 'string' && hide != 'header'),lay:layouts[layout],variant:variant||0 })} */}
+      <div className="products-listing">
+        <UiSettingsLayout
+          // theme="light"
+          variant={variant}
+          customMenu={!isHideHeader&&true||undefined}
+          title={
+            isHideHeader
+            && (<div className="products-listing__header">
+              <h1>Products ({products?.length || 0})</h1>
+              <div className="products-listing__layout-actions">
+                {layoutList.map((view: string) => (
+                  <div key={view}>
+                    <UiIcon
+                      color={view == layout&&"var(--primary-10)"||undefined}
+                      icon={`fa-${view}`}
+                      onClick={() => handleLayoutChange(view)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>)||undefined
+          }
+          views={{
+            products:
+              <div className='products-listing__body'>
+              <AdaptGrid {...layouts[layout]}>
+                {products?.map((product, key) => (product?.active &&
+                  <div key={key}>
+                    <ProductListingItem key={key} onSelect={onSelect} product={product} layout={layouts[layout]} />
+                  </div>
+                ))}
+              </AdaptGrid>
+              </div>
+          }}
+          footer={
+            hasMore && (
+              <div className="products-listing__footer">
+                <UiButton>Load More</UiButton>
+              </div>
+            )
+          }
+        />
       </div>
     </>
   );

@@ -12,12 +12,14 @@
 
 .form {
   @extend .d-flex;
-  overflow-y: visible;
-  overflow-x: hidden;
+  overflow: visible;
+  // overflow-x: hidden;
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-  height: auto;
+  max-width: 100%;
+  height: max-content;
+  // height: auto;
   flex-wrap: wrap;
   // gap:var(--s-4);
   &--mini {

@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from './AdminDashboard.scss';
 import UiBarGraph from '@webstack/components/Graphs/UiBarGraph/UiBarGraph';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import { NaCell } from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 
 // Remember to create a sibling SCSS file with the same name as this component

@@ -35,7 +35,7 @@ const ColorPicker = ({ hex, onChange }: IColorPicker) => {
   }, []);
 
   const debouncedOnChange = useCallback(
-    debounce((pickedColor) => {
+    debounce((pickedColor:any) => {
       if (onChange) {
         onChange(pickedColor);
       }

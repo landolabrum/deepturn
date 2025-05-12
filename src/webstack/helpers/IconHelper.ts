@@ -1,5 +1,5 @@
 import { UiIconDefinition } from '../types/icons';
-import Icons from '../icons/icons';
+import Icons from '../components/UiIcon/icons/icons';
 
 interface SvgOptions {
   width?: number;

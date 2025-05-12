@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './UiViewLayout.scss';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { useViewState } from '../hooks/useViewState';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 
 export type IView = {
     [key: string]: React.JSX.Element;

@@ -10,10 +10,10 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 import useCustomerAddForm from '@webstack/components/UiForm/defaults/useCustomerAddForm';
 import {ICustomer} from "~/src/models/ICustomer";
 import environment from '~/src/core/environment';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import capitalize from '@webstack/helpers/Capitalize';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { useRouter } from 'next/router';
 
 // Remember to create a sibling SCSS file with the same name as this component
@@ -84,7 +84,7 @@ const formDefaultCustomerAdd = useCustomerAddForm()
     const handleSubmit = async () => {
       try {
         const createCustomerResponse = await adminService.createCustomer(customerData);
-        console.log({createCustomerResponse})
+        // console.log({createCustomerResponse})
        if(createCustomerResponse)return createCustomerResponse;
       } catch (e: any) { console.log('[ Create Customer ERROR ]', e); return e }
     }
@@ -108,7 +108,7 @@ const formDefaultCustomerAdd = useCustomerAddForm()
       </>
     }
     handleSubmit().then((a) => {
-      console.log("[ handleSubmit().then((a) ]",{a})
+      // console.log("[ handleSubmit().then((a) ]",{a})
       openModal({
         title: `${a.status}`,
         children:ModalBody(a)

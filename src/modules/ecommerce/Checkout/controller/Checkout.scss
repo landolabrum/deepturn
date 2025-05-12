@@ -9,11 +9,13 @@
     @extend .d-flex;
     margin: var(--s-nav-height) auto 0;
     height: 100%;
-    width: 100%;
+    width: var(--s-9-width);
+    padding:var(--s-9);
     gap: var(--s-4);
     justify-content: space-between;
     flex-direction: column;
     @media(max-width:1100px) {
+        margin: 0;
         width: var(--s-9-width);
     }
     .checkout__title{
@@ -53,7 +55,8 @@
     }
     gap:var(--s-4);
     height: 100%;
-    width: 100%;
+    width: var(--s-9-width);
+    padding:var(--s-9);
     i{
         width: 100%;
         line-height: 1;

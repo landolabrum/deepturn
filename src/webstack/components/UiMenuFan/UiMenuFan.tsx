@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './UiMenuFan.scss';
-import { UiIcon } from '../UiIcon/UiIcon';
+import { UiIcon } from '../UiIcon/controller/UiIcon';
 
 interface IUiMenuItem {
     icon: string;

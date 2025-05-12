@@ -1,29 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './UiJoyStick.scss'; // Adjust the import according to your actual stylesheet path
-import UiButton from '@webstack/components/UiButton/UiButton';
 
-const UiJoyStick: React.FC = () => {
+interface IUiJoyStickProps {
+  onMove?: (x: number, y: number) => void;
+}
+
+const UiJoyStick: React.FC<IUiJoyStickProps> = ({ onMove }) => {
   const [pos, setPos] = useState<[number, number]>([0, 0]);
   const joystickRef = useRef<any>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
-  const unscrollable = () =>{
-    if(!joystickRef.current)return;
-    let nxt = document.getElementById("__next")?.style;
-    if(nxt && nxt.overflow){
-      nxt = undefined;
-    }
-    if(!nxt)return;
-    nxt.overflow = 'hidden';
-    nxt.height = "100vh";
-  }
-  const getXy = (e:any) =>{
-    const { left, top, width, height } = joystickRef.current.getBoundingClientRect();
-    const [x,y] = [
-      Number((e.clientX - left - width / 2)),
-      Number((e.clientY - top - height / 2))
-    ];
-    return {x,y, left, top, width, height } ;
-  }
+  const debounceTimeout = useRef<any>(null);
+
   useEffect(() => {
     const transition = 500;
 
@@ -47,60 +34,74 @@ const UiJoyStick: React.FC = () => {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      unscrollable();
-      const {x,y, width, height}=getXy(e);
+      const { left, top, width, height } = joystickRef.current.getBoundingClientRect();
+      const x = e.clientX - left - width / 2;
+      const y = e.clientY - top - height / 2;
 
       if (!joystickRef.current || !thumbRef.current) return;
-  
+
       if (x > width / 2 || y > height / 2 || x < -width / 2 || y < -height / 2) {
         return;
-        // smoothTransition([x,y], [0, 0], transition); // Move back to center
       } else {
         setPos([
           Math.max(Math.min(x, width / 2), -width / 2),
           Math.max(Math.min(y, height / 2), -height / 2),
         ]);
+        if (debounceTimeout.current) {
+          clearTimeout(debounceTimeout.current);
+        }
+        debounceTimeout.current = setTimeout(() => {
+          if (onMove) {
+            onMove(x, y);
+          }
+        }, 1000);
       }
     };
 
-    const handleMouseUp = (pos:any) => {
-      unscrollable()
+    const handleMouseUp = () => {
       smoothTransition(pos, [0, 0], transition); // Move back to center
       document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', ()=>handleMouseUp(pos));
+      document.removeEventListener('mouseup', handleMouseUp);
     };
 
-    const handleMouseDown = (e: MouseEvent) => {
+    const handleMouseDown = () => {
       document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', ()=>handleMouseUp(pos));
+      document.addEventListener('mouseup', handleMouseUp);
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      unscrollable()
-
-      if (!joystickRef.current || !thumbRef.current) return;
       const rect = joystickRef.current.getBoundingClientRect();
       const touch = e.touches[0];
       const x = touch.clientX - rect.left - rect.width / 2;
       const y = touch.clientY - rect.top - rect.height / 2;
-      
+
+      if (!joystickRef.current || !thumbRef.current) return;
+
       if (x > rect.width / 2 || y > rect.height / 2 || x < -rect.width / 2 || y < -rect.height / 2) {
-        smoothTransition([x,y], [0, 0], transition); // Move back to center
+        smoothTransition([x, y], [0, 0], transition); // Move back to center
       } else {
         setPos([
           Math.max(Math.min(x, rect.width / 2), -rect.width / 2),
           Math.max(Math.min(y, rect.height / 2), -rect.height / 2),
         ]);
+        if (debounceTimeout.current) {
+          clearTimeout(debounceTimeout.current);
+        }
+        debounceTimeout.current = setTimeout(() => {
+          if (onMove) {
+            onMove(x, y);
+          }
+        }, 1000);
       }
     };
 
     const handleTouchEnd = () => {
-      // smoothTransition(pos, [0, 0], transition); // Move back to center
+      smoothTransition(pos, [0, 0], transition); // Move back to center
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleTouchEnd);
     };
 
-    const handleTouchStart = (e: TouchEvent) => {
+    const handleTouchStart = () => {
       document.addEventListener('touchmove', handleTouchMove);
       document.addEventListener('touchend', handleTouchEnd);
     };
@@ -116,13 +117,11 @@ const UiJoyStick: React.FC = () => {
         thumbRef.current.removeEventListener('touchstart', handleTouchStart as EventListener);
       }
     };
-  }, [ unscrollable,setPos]);
+  }, [pos, onMove]);
 
   return (
     <>
       <style jsx>{styles}</style>
-      {/* <UiButton onClick={unscrollable}>Click</UiButton> */}
-      {/* <div className='dev'>{JSON.stringify({pos})}</div> */}
       <div className='joystick__container'>
         <div ref={joystickRef} className='joystick'>
           <div

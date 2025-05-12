@@ -1,13 +1,13 @@
 // Relative Path: ./Calendar.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './Calendar.scss';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import CalendarDate from '../views/CalendarDate/CalendarDate';
 import { ICalendar } from '../models/ICalendar';
 import { IDate } from '../models/IDate';
 import { dowArray, monthArray } from '@webstack/helpers/userExperienceFormats';
 import UiPill from '@webstack/components/UiForm/components/UiPill/UiPill';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 
 const Calendar: React.FC<ICalendar> = ({
     events = [

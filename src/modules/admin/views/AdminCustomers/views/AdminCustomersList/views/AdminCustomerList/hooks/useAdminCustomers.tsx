@@ -4,7 +4,7 @@ import IAdminService from "~/src/core/services/AdminService/IAdminService";
 import { ICustomer } from "~/src/models/ICustomer";
 import AdaptTableCell from "@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell";
 import styles from './../AdminCustomerList.scss';
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import canViewCustomer from "../../../functions/canViewCustomer";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { getUserClearance, useUser } from "~/src/core/authentication/hooks/useUser";

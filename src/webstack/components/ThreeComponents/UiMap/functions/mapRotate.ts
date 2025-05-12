@@ -52,8 +52,10 @@ function setUpInteractionListeners(map: MapboxMap, rotateFunction: () => void): 
     // });
 
     if (map.getLayer(hoverLayer)) {
-        map.on('mouseenter', hoverLayer, () => map.fire('userhoverstart'));
-        map.on('mouseleave', hoverLayer, () => map.fire('userhoverend'));
+        map.on('mouseenter', hoverLayer, () => map.fire('mouseenter'));
+        // map.on('mouseenter', hoverLayer, () => map.fire('userhoverstart'));
+        // map.on('mouseleave', hoverLayer, () => map.fire('userhoverend'));
+        map.on('mouseleave', hoverLayer, () => map.fire('mouseleave'));
     } else {
         console.warn(`Layer "${hoverLayer}" does not exist`);
     }

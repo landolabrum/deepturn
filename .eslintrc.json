@@ -5,7 +5,7 @@
       2,
       {
         "ignore": [
-          "jsx"
+          "jsx", "object","ambientLight","directionalLight","intensity","position"
         ]
       }
     ]

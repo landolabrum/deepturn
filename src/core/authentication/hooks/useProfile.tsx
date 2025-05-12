@@ -4,7 +4,7 @@ import IAuthenticatedUser from "~/src/models/ICustomer";
 import IMemberService from "../../services/MemberService/IMemberService";
 import useLocation from "@webstack/hooks/user/useLocation";
 import { useRouter } from "next/router";
-import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import { useModal } from "@webstack/components/Containers/modal/contexts/modalContext";
 import Authentication from "~/src/pages/authentication";
 
 // UserAgent context

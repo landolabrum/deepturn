@@ -1,5 +1,5 @@
 import { useCallback, useState, useRef, useEffect } from "react";
-import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import { useModal } from "@webstack/components/Containers/modal/contexts/modalContext";
 
 const useLocation = () => {
   const { openModal, closeModal, isModalOpen } = useModal();

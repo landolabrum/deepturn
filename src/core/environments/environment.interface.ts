@@ -3,12 +3,29 @@
 
 
 // environment.interface.ts
-export interface Merchant {
-  mid: string;
-  name: string;
-  url: string;
-  stripeId: string;
+// export interface Merchant {
+//   mid: string;
+//   name: string;
+//   url: string;
+// }
+export interface MerchantSettingsLayout {
+      layoutStyle?: 'grid' | 'list';
+      size?: 'sm' | 'md' | 'lg' | 'xl'
 }
+export interface MerchantSettings {
+  ecommerce?:{
+    productListing?:MerchantSettingsLayout
+  }
+  about?: any
+}
+export interface Merchant {
+  url: string;
+  name: string;
+  mid: string;
+  stripeId: string;
+  settings?: MerchantSettings;
+}
+
 
 export interface MerchantsConfig {
   merchants: {

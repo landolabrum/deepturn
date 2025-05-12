@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useRef } from "react";
 import styles from './DefaultLayout.scss'; // Changed to .css import
-import Title from "@webstack/components/Title/Title";
+import Title from "@webstack/components/Text/Title/Title";
 import environment from "~/src/core/environment";
 
 interface IProps {

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './MobileNav.scss';
 import { IRoute } from '../../data/routes';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 
 interface IMobileNav {
     routes: IRoute[],

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode, useRef } from "react";
 import styles from "./Loader.scss";
-import { UiIcon } from "../UiIcon/UiIcon";
+import { UiIcon } from "../UiIcon/controller/UiIcon";
 import environment from "~/src/core/environment";
 
 type ILoader = {

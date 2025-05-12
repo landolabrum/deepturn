@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './UiKnob.scss';
 
 type IRangeStyle = {
@@ -15,7 +15,11 @@ interface IKnob {
 }
 
 const UiKnob: React.FC<IKnob> = ({ percent, setPercent, style, label }) => {
-    const handleDrag = (event: React.MouseEvent<HTMLDivElement>) => {
+    const [value,setValue]=useState<number|undefined>()
+    const handleDrag = (event: any) => {
+        const {value}=event.target;
+        
+        setValue(Number(value))
         // Implement dragging logic here to adjust `percent`
     };
 
@@ -25,10 +29,11 @@ const UiKnob: React.FC<IKnob> = ({ percent, setPercent, style, label }) => {
 
     return (<>
     <style jsx>{styles}</style>
+    {value}
         <div className='knob-container'>
-            <div className='knob' style={knobStyle} onMouseDown={handleDrag}>
+            <input className='knob' style={knobStyle} onMouseDown={handleDrag} value={value||percent} onMouseUp={()=>value&&setPercent?.(value)}>
                 {label && <span className='label'>{label}</span>}
-            </div>
+            </input>
         </div>
         </>
     );

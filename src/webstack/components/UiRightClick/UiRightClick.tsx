@@ -1,5 +1,5 @@
 // UiRightClick.tsx
-import { useModal } from '../modal/contexts/modalContext';
+import { useModal } from '../Containers/modal/contexts/modalContext';
 import React, { ReactElement, useState } from 'react';
 import styles from './UiRightClick.scss';
 

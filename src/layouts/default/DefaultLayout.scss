@@ -1,24 +1,31 @@
 main {
   overflow-y: visible;
   position: relative;
-  // margin: var(--s-element) auto 100px;
   margin-left: auto;
   margin-right: auto;
+  height: 100%;
+  width: 100vw;
 
-  // height: calc(100vh - calc(var(--s-4) * 2));
-  @media(min-width: 1260px){
+  @media(min-width: 1260px) {
     margin: 0 auto;
-    // padding: var(--s-1) 0;
     max-width: 1260px;
-    // min-height: calc(100vh - 200px);
     inline-size: var(--s-4-width);
   }
-  @media(max-width: 1100px){
+  @media(max-width: 1100px) {
+    height: 100%;
+    width: var(--s-9-width);
+  }
+  @media(max-width: 1100px) {
+    height: 100%;
+    min-height: calc(100vh - 75px);
     // width: var(--s-border-width);
   }
-  @media(max-width: 900px){
-     height: inherit;
-     min-height: auto;
-    //  min-height: inherit;
-  }
+  min-height: calc(100vh - 75px) ;
+
+  // min-height: 100%;
+  // @media(max-width: 900px){
+  //    height: inherit;
+  //    min-height: auto;
+  //   //  min-height: inherit;
+  // }
 }

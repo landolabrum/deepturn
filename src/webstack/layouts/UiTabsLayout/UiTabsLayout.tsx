@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './UiTabsLayout.scss';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import UiLoader from '../../components/UiLoader/view/UiLoader';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface iTabsLayout {

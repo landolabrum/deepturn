@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./UiBar.scss";
-import { UiIcon } from "../../UiIcon/UiIcon";
+import { UiIcon } from "../../UiIcon/controller/UiIcon";
 import { dateFormat } from "@webstack/helpers/userExperienceFormats";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { debounce } from "lodash";
@@ -30,7 +30,7 @@ const UiBar = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const debouncedOnChange = useRef(
-    debounce((newPercentage) => {
+    debounce((newPercentage:any) => {
       if (onChange) {
         onChange(newPercentage);
       }

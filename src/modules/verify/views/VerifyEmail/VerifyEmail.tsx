@@ -7,8 +7,8 @@ import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import Login from '~/src/modules/authentication/views/Login/controller/Login';
-import UiButton from '@webstack/components/UiButton/UiButton';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 import useDevice from '~/src/core/authentication/hooks/useDevice';
 import { useGuest } from '~/src/core/authentication/hooks/useGuest';
 

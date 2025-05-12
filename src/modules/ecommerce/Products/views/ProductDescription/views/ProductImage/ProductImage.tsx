@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ProductImage.scss';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import environment from '~/src/core/environment';
 
 const ProductImage: React.FC<{ image?: any, options?: any }> = ({ image, options }) => {
@@ -8,7 +8,7 @@ const ProductImage: React.FC<{ image?: any, options?: any }> = ({ image, options
     
     useEffect(() => {
         if(!image)setImageLoadError(true);
-    }, []);
+    }, [image]);
     return (
         <>
             <style jsx>{styles}</style>

@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { IFormControl } from "@webstack/components/UiForm/components/FormControl/FormControl";
 import styles from "./UiMenu.scss";
 import Input from "../UiForm/components/UiInput/UiInput";
-import UiButton from "../UiButton/UiButton";
+import UiButton from "../UiForm/views/UiButton/UiButton";
 
 export type IMenuOption = {
   label: string;
@@ -74,10 +74,16 @@ const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearc
               {filteredOptions?.map((option, index) => (
                 <div
                   key={index}
-                  className={`menu__option ${variant?variant:'flat'} ${option?.active === false ? "disabled" : ""}${selectedOption === option.value || option.selected? ' active' : ''}${size ? ` menu__option-${size}` : ''}`}
+                  className={`menu__option ${variant?variant:'flat'} ${option?.active === false ? "disabled" : ""}${selectedOption === option.value || option.selected || option.active ? ' active' : ''}${size ? ` menu__option-${size}` : ''}`}
                   onClick={() => handleSelect(option)}
                 >
-                  <UiButton variant={variant?variant:'flat'}  size={size} traits={{ beforeIcon: option.icon, afterIcon: selectedOption === option.value ? { icon: 'fa-check' } : '' }}>
+                  <UiButton variant={variant?variant:'flat'}  size={size} 
+                    traits={{
+                      beforeIcon: option.icon,
+                      afterIcon: selectedOption === option.value 
+                        ? { icon: 'fa-check' } : '' 
+                      }}
+                  >
                     <div className='d-flex-col'>
                       <span className="menu__option-secondary">{option.label}</span>
                       {option.secondary && <span className="menu__option-secondary">{option.secondary}</span>}

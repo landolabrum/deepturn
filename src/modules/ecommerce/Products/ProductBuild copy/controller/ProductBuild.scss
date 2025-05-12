@@ -1,0 +1,91 @@
+.d-flex {
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+}
+
+.product-build {
+    @extend .d-flex;
+    align-items: stretch;
+    flex-direction: column;
+    position: relative;
+    min-height: inherit;
+    justify-content: flex-start;
+    font-size: var(--s-1);
+    gap: var(--s-9);
+    overflow: hidden;
+
+    @media(max-width: 1260px) {
+        width: var(--s-9-width);
+        padding: 0 var(--s-9);
+
+    }
+
+    @media(max-width: 900px) {
+        margin: auto;
+        width: var(--s-5-width);
+        padding: 0 var(--s-5);
+    }
+
+    &--header {
+        font-size: var(--s-1);
+        min-height: var(--s-1);
+        margin-top: var(--s-1);
+        color: var(--primary-30);
+    }
+    &__navigation{@extend .d-flex;}
+    &__body {
+        @extend .d-flex;
+        gap: var(--s-9);
+        align-items: flex-start;
+
+        @media(max-width: 900px) {
+            min-height: unset;
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        &--content,
+        &--form {
+            border-radius: var(--border-radius);
+            
+
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        &--form {
+            width: 100%;
+            overflow: visible;
+            background-color: var(--blue-70);
+            padding: var(--s-4) var(--s-9);
+            gap: var(--s-1);
+            align-items: stretch;
+            h1{
+                width: 100%;
+                @extend .d-flex;
+                align-items: flex-start;
+                text-transform: capitalize;
+                font-weight: 100;
+                font-family: Game;
+                color: var(--white);
+            }
+            padding-bottom:var(--s-element);
+            &__content {
+                @extend .d-flex;
+                flex-direction: column;
+                gap: var(--s-1);
+                padding:var(--s-9);
+                height: max-content;
+                background-color: var(--gray-20);
+                border-radius: inherit;
+                color:var(--primary-50)
+            }
+        }
+
+
+    }
+}

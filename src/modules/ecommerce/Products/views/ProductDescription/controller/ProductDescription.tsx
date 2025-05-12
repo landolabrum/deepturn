@@ -1,22 +1,25 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './ProductDescription.scss';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import { useRouter } from 'next/router';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { getService } from '@webstack/common';
 import ProductBuyNow from '../views/ProductBuyNow/ProductBuyNow';
 import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
 import IProductService from '~/src/core/services/ProductService/IProductService';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import Image from 'next/image';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import environment from '~/src/core/environment';
+import GLBViewer from '@webstack/components/ThreeComponents/ThreeGLB/ThreeGLB';
+import ProductImage from '../views/ProductImage/ProductImage';
 
 interface IProductDescription {
   product_id?: string,
   price_id?: string
 }
 const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
+  const {mid}=environment.merchant;
   const router = useRouter();
   const productNonExist = 'product does not exist';
   const product_query_id: string | undefined = router?.query?.id != undefined ? router?.query?.id.toString() : undefined
@@ -69,8 +72,8 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
 
   useEffect(() => {
     fetchProduct(); // Moved fetching into a useEffect to be run on mount and on changes of product_query_id and price_query_id
-  }, [product_id, price_id, product_query_id, price_query_id, fetchProduct]); // Dependencies updated
-
+  }, [fetchProduct]); // Dependencies updated
+  // product_id, price_id, product_query_id, price_query_id, 
   // useEffect(() => {
   // }, [product]); // Dependencies updated
   if (product == null) return (
@@ -89,33 +92,44 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
     <>
       <style jsx>{styles}</style>
       <div className="product-description">
-        <div className="product-description__header">
-          <div>
             <UiButton traits={{ beforeIcon: "fa-chevron-left" }} variant='link' href='/product'>back to shop</UiButton>
-          </div>
+        <div className="product-description__header">
+          <div className='product-description__header-left'>
+            <div className="product-description__header--title">{`buy ${product.name}`}</div>
+            </div>
+          <div className='product-description__header-right'>
+            {product?.offers}
         </div>
+
+        </div>
+        <div className="product-description__body">
         <AdaptGrid
           sm={1}
           md={2}
           gap={15}
         // variant='card'
         >
-          <div className="product-description__img-default" >
-
-            {product.images[0] ? (
-              <Image
-                src={product.images[0]}
-                alt={product.name}
-                fill // Use fill to make the image fill the container
-                style={{ objectFit: 'cover' }} // Adjust object-fit as needed
-                unoptimized={true}
-              />
+          <div className="product-description__images" >
+            {product.images[0] ? (<>
+              <div className='product-description__images--main'>
+              <GLBViewer modelPath={`/merchant/${mid}/3dModels/products/${product.id}.glb`}/>
+              </div>
+              <div className='product-description__images--carousel'>
+              <ProductImage options={{ view: 'slider' }} image={product.images} />
+            </div>
+              </>
             ) : (<div className='img-placeholder'>
             <UiIcon icon={`${environment.merchant.name}-logo`} />
             </div>
             )}
-
-            {/* <ProductImage options={{ view: 'description' }} image={product.images} /> */}
+      
+            {/* // <Image
+            //   src={product.images[0]}
+            //   alt={product.name}
+            //   fill // Use fill to make the image fill the container
+            //   // style={{ objectFit: 'cover' }} // Adjust object-fit as needed
+            //   unoptimized={true}
+            // /> */}
           </div>
           <div className="product-description__info-panel">
             <div className="product-description__info-panel_header">
@@ -124,7 +138,11 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
             <div className="product-description__info-panel_body">
               {product.description}
             </div>
-            <div className='product-description__footer'>
+ 
+          </div>
+        </AdaptGrid>
+        </div>
+        <div className='product-description__footer'>
               {cart && cart?.length >= 1 && (
                 <div className='product-description__go-to-cart'>
                   <UiButton traits={{ afterIcon: 'fal-bag-shopping' }} variant='link' href='/cart'>go to cart</UiButton>
@@ -132,21 +150,13 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
               )}
               <div className='product-description__buy-button'>
                 <ProductBuyNow
+                  goToCart
                   product={product}
                   btnText='select'
                 />
               </div>
             </div>
-          </div>
-        </AdaptGrid>
-
-        {/* {product?.metadata?.type == 'generator' &&
-          <div className='product-description__table'>
-            <h4>Scalable</h4>
-            <AdapTable variant='mini' data={applianceArray} />
-          </div>} */}
       </div>
-
     </>
   );
 };

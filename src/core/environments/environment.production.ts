@@ -3,8 +3,7 @@ import { IEnvironment, Merchant } from "./environment.interface";
 import merchants, {deploy} from "~/merchants.config";
 import { MerchantsConfig } from "./environment.interface";
 
-const serverUrl = "https://tiktok.soy";
-
+const serverUrl:string = String(process.env.NEXT_PUBLIC_PRODUCTION_SERVER?.trim())
 // Cast the merchants object to the appropriate type
 const merchant: Merchant = (merchants as MerchantsConfig).merchants[deploy];
 

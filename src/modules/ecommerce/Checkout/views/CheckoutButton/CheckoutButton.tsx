@@ -1,7 +1,7 @@
 // Relative Path: ./Checkout.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './CheckoutButton.scss';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { calculateCartTotal } from '@webstack/helpers/userExperienceFormats';
 import { useRouter } from 'next/router';
 import Checkout from '~/src/pages/checkout';
@@ -9,7 +9,7 @@ import { ITraits } from '@webstack/components/UiForm/components/FormControl/Form
 import { getService } from '@webstack/common';
 import IMemberService, { ISessionData } from '~/src/core/services/MemberService/IMemberService';
 import { encryptString } from '@webstack/helpers/Encryption';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 import useCart from '../../../cart/hooks/useCart';
 import CookieHelper from '@webstack/helpers/CookieHelper';
 

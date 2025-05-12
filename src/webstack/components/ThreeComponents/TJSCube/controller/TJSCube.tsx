@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useThree,  } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls } from '@react-three/drei';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
@@ -112,7 +112,7 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
         size: 0.1,
       });
 
-      const particleGeometry = new THREE.BufferGeometry();
+      // const particleGeometry = new THREE.BufferGeometry();
       const particles = [];
       for (let i = 0; i < 1000; i++) {
         particles.push(
@@ -121,10 +121,10 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
           (Math.random() - 0.5) * 2 * icon.size.z
         );
       }
-      particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particles, 3));
-      const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
-      scene.add(particleSystem);
-      particlesRef.current = particleSystem;
+      // particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particles, 3));
+      // const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+      // scene.add(particleSystem);
+      // particlesRef.current = particleSystem;
     } else {
       const material = meshRef.current.material as THREE.MeshStandardMaterial;
       if (icon.texture) applyTexture(material, icon.texture);

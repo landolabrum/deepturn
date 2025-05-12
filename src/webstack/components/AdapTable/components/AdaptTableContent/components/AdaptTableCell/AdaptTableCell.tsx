@@ -1,7 +1,7 @@
 import type { NextComponentType, NextPageContext } from "next";
 import styles from "./AdaptTableCell.scss";
 import { useEffect, useState } from "react";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import { dateFormat } from "@webstack/helpers/userExperienceFormats";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 

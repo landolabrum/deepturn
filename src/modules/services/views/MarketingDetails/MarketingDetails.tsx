@@ -1,9 +1,9 @@
 // Relative Path: ./MarketingDetails.tsx
 import React from 'react';
 import styles from './MarketingDetails.scss';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import environment from '~/src/core/environment';
 import { capitalize } from 'lodash';
 

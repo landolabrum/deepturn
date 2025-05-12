@@ -10,7 +10,7 @@ import ProductDescription from '../views/ProductDescription/controller/ProductDe
 const Products: React.FC = () => {
     const router = useRouter(); 
         if(router.query?.id)return <ProductDescription/>;
-        return <ProductsListing/>;
+        return <ProductsListing  variant="full-width"/>;
 
 };
 

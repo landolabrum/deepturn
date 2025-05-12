@@ -4,7 +4,7 @@ import styles from './AdminAccount.scss';
 import IAccount from '~/src/core/services/AdminService/adminModels/iAdminAccounts';
 import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 
 // Remember to create a sibling SCSS file with the same name as this component
 

@@ -4,19 +4,19 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { useRouter } from 'next/router';
 import useClass from '@webstack/hooks/useClass';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import environment from '~/src/core/environment';
-import UiHeader from '@webstack/components/Header/views/UiHeader/UiHeader';
-
+import UiHeader from '@webstack/components/Containers/Header/views/UiHeader/UiHeader';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 
 interface ISettingsLayout {
   views: any;
   setViewCallback?: (e: any) => void;
   variant?: 'full-width' | 'full';
-  title?: string;
+  theme?: 'light';
+  title?: any;
   subTitle?: string;
   viewName?: string;
-  showMenu?: boolean;
+  customMenu?: any;
+  footer?: any;
 }
 
 const UiSettingsLayout: React.FC<ISettingsLayout> = ({
@@ -26,18 +26,24 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   title,
   subTitle,
   viewName,
-  showMenu = false,
+  theme,
+  customMenu,
+  footer,
 }: ISettingsLayout) => {
   const router = useRouter();
   const [view, setView] = useState<string | undefined>();
-  const isFullVariant = variant === 'full-width' || variant === 'full';
+  const classMaker = (className: string) => {
+    let primaryClass = className ? `settings__${className}` : 'settings';
+    return `${primaryClass}${variant ? ` ${primaryClass}--${variant}` : ''}${theme?` ${primaryClass}_${theme}` : '' }`;
+  }
   const classes = {
-    container: useClass({ cls: 'settings', variant: variant }),
-    content: useClass({ cls: 'settings__content', variant: variant }),
-    header: useClass({ cls: 'settings__header', variant: variant }),
-    viewContainer: useClass({ cls: 'settings__view-container', variant: variant }),
-    view: useClass({ cls: 'settings__view', variant: variant }),
-    nav: useClass({ cls: 'settings__nav', variant: variant }),
+    primary: classMaker(''),
+    content: classMaker('content'),
+    header: classMaker('header'),
+    view: classMaker('view'),
+    nav: classMaker('nav'),
+    navContent: classMaker('nav--content'),
+    footer: classMaker('footer'),
   };
 
   const handleView = useCallback((view: string) => {
@@ -48,68 +54,53 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
     setViewCallback?.(view);
   }, [router, setViewCallback]);
 
-  const titleContent = typeof title == 'string' && keyStringConverter(title);
+  const titleContent = typeof title == 'string' && keyStringConverter(title) || title;
 
   const firstView = router.query.vid || viewName || Object.keys(views)[0];
   const isView = view && Object.keys(views).includes(view);
 
   useEffect(() => setView(firstView?.toString()), [firstView, isView]);
-  useEffect(() => {
-    const settingsNav = document.querySelector('.settings-nav--content');
-    if (settingsNav) {
-      const navItems = settingsNav.querySelectorAll('.nav-item');
-      navItems.forEach((item, index) => {
-        (item as HTMLElement).style.animationDelay = `${index * .1}s`; // Adjusted for visibility
-      });
-    }
-  }, [views, view]);
-  if (!isView) return <>
-    <style jsx>{containerStyles}</style>
-    <div className='settings'>
-      <div className='settings__loader'><UiLoader /></div>
-    </div>
-  </>
+
+  if (!isView) return (
+    <>
+      <style jsx>{containerStyles}</style>
+      <div className={`${classes.primary}`}>
+        <div className='settings__loader'><UiLoader /></div>
+      </div>
+    </>
+  );
 
   return (
     <>
       <style jsx>{containerStyles}</style>
-      <table id="settings" className={`${classes.container}`}>
-        <thead>
-          <tr>
-            <th></th>
-            <th >
-              {isView && <UiHeader title={titleContent} subTitle={subTitle} />}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className={classes.nav}>
-              <div className="settings-nav--content">
-                {Object.keys(views)?.map((vue) => (
-                  <div
-                    className={`nav-item ${view === vue ? 'nav-item--selected' : ''}`}
-                    key={vue}
+      <div id="settings" className={`${classes.primary}`}>
+        <div className={`${classes.header}`}>
+          {!title && title!==undefined && isView && <UiHeader title={titleContent} subTitle={subTitle} /> || title}
+        </div>
+        <div className={classes.content}>
+        {!customMenu &&  <div className={classes.nav}>
+            <div className={classes.navContent}>
+     {         Object.keys(views)?.map((vue) => (
+                <span key={vue} className='s-w-100'>
+                  <UiButton
+                    traits={view === vue ? { afterIcon: 'fa-check' } : {}}
+                    variant={view == vue && "primary"}
                     onClick={() => handleView(vue)}
-                  >
-                    {keyStringConverter(vue)} {view === vue && <span className="nav-item--selected-icon"><UiIcon icon="fa-check" /></span>}
-                  </div>
-                ))}
-              </div>
-            </td>
-            <td className='settings-view'>
-              <div className='settings-view--content'>
-
-                {views[view]}
-                <div className='settings-view--logo'>
-                  <UiIcon icon={`${environment.merchant.name}-logo`} />
-                </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
+                  >{keyStringConverter(vue)}</UiButton>
+                </span>
+              ))}
+              {customMenu}
+            </div>
+          </div>
+            }
+          <div className={classes.view}>
+            <div className={classes.content}>
+              {views[view]}
+            </div>
+            {footer && <div className={classes.footer}>{footer}</div>}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

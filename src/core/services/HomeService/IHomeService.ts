@@ -19,8 +19,6 @@ export interface IGroup {
   // Add other properties as needed based on the attributes of a group
 }
 
- 
-
 export interface IHomePostLight {
   id: string;
   name: string;
@@ -43,11 +41,11 @@ interface IHomePutGroupModify {
 }
 
 export interface IHomeService {
-  createGroup(newGroup: IGroup): Promise<IGroup> 
+  createGroup(newGroup: IGroup): Promise<IGroup>;
   modifyGroup(modifiedGroup: IHomePutGroupModify): Promise<IGroup>;
   deleteGroup(group_id: string): Promise<any>;
   listGroups(): Promise<IGroup[]>; // If you want to list all groups
-  hue_list(hue_object?:string): Promise<ILight[]>;
+  hue_list(hue_object?: string): Promise<ILight[]>;
   light({ id, name }: IHomePostLight): Promise<ILight>;
   hue_brightness(id: number, brightness: number, type?: string): Promise<ILight>;
   lightColor(id: any, hex: string, type?: string): Promise<any>;
@@ -55,8 +53,23 @@ export interface IHomeService {
   hue_toggle(id: any, hue_object?: string): Promise<any>;
   lightsOn(): Promise<any>;
   hue_rename(lightRename: IHomePostLightRename): Promise<any>;
-  stream(cameraId: string): Promise<string>;
+  
+  wbInfo(cameraId: string): Promise<string>;
+  wbSnapshot(cameraId: string): Promise<string>;
+  wbListCameras(): Promise<string>;
+  ptzPosition(id: string, x: number, y: number, s?: number): Promise<any>;
+  
   startVehicle(request: any): Promise<any>;
   getVehicles(access: any): Promise<any>;
+  
+  // Spotify control methods
+  spotifyPlay(): Promise<any>;
+  spotifyPause(): Promise<any>;
+  spotifyNextTrack(): Promise<any>;
+  spotifyPreviousTrack(): Promise<any>;
+  setSpotifyVolume(volumePercent: number): Promise<any>;
+  spotifyAuthorize(): Promise<any>;
+  spotifyCallback(): Promise<any>;
+  getSpotifyToken(): Promise<{ access_token: string }>;
 }
 export default IHomeService;

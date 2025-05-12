@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './AdminListDocuments.scss';
 import { getService } from '@webstack/common';
 import IDocumentService from '~/src/core/services/DocumentService/IDocumentService';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { useRouter } from 'next/router';

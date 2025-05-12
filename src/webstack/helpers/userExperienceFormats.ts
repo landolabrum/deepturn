@@ -131,34 +131,39 @@ export function getYearsArray(length: number, asStrings = true): (string | numbe
   const currentYear = new Date().getFullYear();
   return Array.from({ length: length }, (_, i) => asStrings ? (currentYear + i).toString() : currentYear + i);
 }
-
 export function dateFormat(
-  suppliedDate:any,
-  options:any = {
+  suppliedDate: any,
+  options: any = {
     time: false,
-    returnType: "string",
+    returnType: "string", // Change to 'timestamp' when you want a timestamp returned
     format: "MM-DD-YYYY",
     server: false,
     isTimestamp: false
   }
 ) {
-  if (options.isTimestamp === true && typeof suppliedDate === 'number') {
-    // Check if the timestamp is in seconds (Unix timestamp), then convert to milliseconds
+  // Check if the return type should be a timestamp (as a number)
+  if (options.returnType === "timestamp") {
+    if (typeof suppliedDate === "string") {
+      // Convert string date to a Date object
+      suppliedDate = new Date(suppliedDate);
+    }
+
+    // Return the timestamp in milliseconds (use `suppliedDate.getTime()`)
+    return suppliedDate instanceof Date && !isNaN(suppliedDate.getTime())
+      ? suppliedDate.getTime()
+      : null; // Return null for invalid dates
+  }
+
+  // Handle the case where suppliedDate is a timestamp
+  if (options.isTimestamp === true && typeof suppliedDate === "number") {
+    // Convert Unix timestamp (seconds) to milliseconds if needed
     if (suppliedDate.toString().length === 10) {
       suppliedDate *= 1000;
     }
     const date = new Date(suppliedDate);
-    const formattedDate = `${date.toLocaleDateString()} @ ${date.toLocaleTimeString()}`
-    // String(date.getDate()).padStart(2, '0') + "/" +
-    // String(date.getMonth() + 1).padStart(2, '0') + "/" +
-    // date.getFullYear() + " @ " +
-    //   String(date.getHours()).padStart(2, '0') + ":" +
-    //   String(date.getMinutes()).padStart(2, '0') + ":" +
-    //   String(date.getSeconds()).padStart(2, '0');
-  
+    const formattedDate = `${date.toLocaleDateString()} @ ${date.toLocaleTimeString()}`;
     return formattedDate;
-  }
-  else if (options.server) {
+  } else if (options.server) {
     const date = new Date(suppliedDate);
     return `${date.getFullYear()}-${(date.getMonth() + 1)
       .toString()
@@ -191,10 +196,11 @@ export function dateFormat(
       if (dateString.length < 8) return "InvalidCell()";
       return dateString;
     } catch (e) {
-      return "NaCell()";
+      return "n/a";
     }
   }
 }
+
 
 export function colorPercentage(percentage: number, colorReverse?: boolean, background?: { start: string, end: string }) {
   // Extract color components from the background start and end if provided

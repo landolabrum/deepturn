@@ -6,6 +6,7 @@ import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/controller/UiSe
 import Lights from '../views/hue/controller/Lights';
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import capitalize from '@webstack/helpers/Capitalize';
+import Spotify from '../views/spotify/controller/Spotify';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
@@ -24,7 +25,8 @@ const Home: React.FC<any> = ({ vid = undefined }: { vid: string | undefined }) =
   const views = {
     home: <DefaultHome />,
     surveillance: <Surveillance />,
-    light: <Lights />
+    light: <Lights />,
+    spotify: <Spotify/>
   };
   return (
     <>

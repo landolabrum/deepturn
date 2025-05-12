@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './VerifyShare.scss';
 import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 const initial = "broudy";
 const VerifyShare: React.FC = () => {
 
