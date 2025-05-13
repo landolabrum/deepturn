@@ -72,8 +72,8 @@ const SideNavTrigger = ({ isOpen, setIsOpen }:any) => {
   return (
     <>
       <style jsx>{styles}</style>
-      <div className="settings__trigger" onClick={() => setIsOpen(!isOpen)}>
-        <div className='settings__trigger--content'>
+      <div className={`settings__trigger  ${openClass}`} onClick={() => setIsOpen(!isOpen)}>
+        <div className={`settings__trigger--content  ${openClass}`}>
           <UiIcon icon={isOpen ? 'fa-chevron-left' : 'fa-chevron-right'} />
         </div>
       </div>

@@ -4,11 +4,13 @@ import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import environment from '~/src/core/environment';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
+import { useRouter } from 'next/router';
 
 const TermsOfService = ({ onClose }: { onClose: () => void }) => {
     const merchant = environment.merchant;
     const merchantName = keyStringConverter(merchant.name)?.toUpperCase();
-    
+        const router = useRouter();
+
     const MerchantHeader = () => {
         return (
           <>
@@ -85,8 +87,7 @@ const TermsOfService = ({ onClose }: { onClose: () => void }) => {
           <p>© 2025 {merchantName} LLC. All rights reserved.</p>
 
           <div className='s-w-100 d-flex'>
-            <UiButton variant='link' onClick={onClose}>Close</UiButton>
-          </div>
+    <UiButton variant='link' onClick={()=>router.push("/")}>Close</UiButton>          </div>
         </div>
       </div>
     </>

@@ -16,7 +16,8 @@ import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 // import AdminService from '../../../../../core/services/AdminService/AdminService';
 import {getService} from '@webstack/common';
 import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
-import TermsOfService from '../views/TermsOfService';
+import TermsOfService from '../views/TermsOfService/TermsOfService';
+import PrivacyPolicy from '../views/PrivacyPolicy/PrivacyPolicy';
 // const NirvanaEnergyIcon = () => {
 //   const nStyle = `.nirv{
 //       display: flex;
@@ -56,30 +57,31 @@ const NirvanaEnergy = () => {
   };
   const handleModal = (cmd:'terms'|'privacy') =>{
     if(cmd=='terms'){
-      openModal({
-variant: 'fullscreen',
-        // title: 'Terms of Service',
-        children: <>
-        <TermsOfService onClose={console.log}/>
-        </>,
-        footer: <div className='s-w-100 d-flex'>
-          <UiButton variant='link' onClick={() => closeModal()}>Close</UiButton>
-        </div>
-      })
+      push('/terms-and-conditions')
+      // onClick={() => push('/build')}
+//       openModal({
+// variant: 'fullscreen',
+// // title: 'Terms of Service',
+// children: <>
+//         <TermsOfService onClose={console.log}/>
+//         </>,
+//         footer: <div className='s-w-100 d-flex'>
+//           <UiButton variant='link' onClick={() => closeModal()}>Close</UiButton>
+//         </div>
+//       })
     }else if(cmd=='privacy'){
-      openModal({
-        title: 'Privacy Policy',
-        children: <div className='s-w-100 d-flex-col'>
-          <h1>
-          Privacy Policy
-          </h1>
-       Your privacy policy is a legal document that outlines how you collect, use, and protect personal information from your users. It should include details on what data you collect, how it is used, who it is shared with, and how users can access or delete their information. A clear and transparent privacy policy is essential for building trust with your users and complying with data protection laws.
-        </div>,
-        footer: <div className='s-w-100 d-flex'>
-          <UiButton variant='link' onClick={() => closeModal()}>Close</UiButton>
-        </div>  
+       push('/privacy-policy')
+    //   openModal({
+    //     title: 'Privacy Policy',
+    //     variant: 'fullscreen',
+    //     children:<>
+    //     <PrivacyPolicy onClose={console.log}/>
+    //     </>
       
-    })   
+    // })   
+  }
+  else{
+    push("/")
   }
 };
   const CompetitorBrand
@@ -259,9 +261,11 @@ variant: 'fullscreen',
                           <div className='s-w-100 d-flex-col' >
                             ROC: 357597
                           <div className='s-w-100 d-flex' >
-                            <UiButton variant='link' onClick={()=>handleModal('terms')}>terms</UiButton>
                             <UiButton variant='link' 
-                            onClick={()=>handleModal('privacy')}>privacy policy</UiButton>
+                            onClick={()=>handleModal('terms')}
+                            >Terms & Conditions</UiButton>
+                            <UiButton variant='link' 
+                            onClick={()=>handleModal('privacy')}>Privacy Policy</UiButton>
               </div>
               </div>
             </>

@@ -46,8 +46,8 @@ const UiMedia: React.FC<IMedia> = ({
   const [reloadTrigger, setReloadTrigger] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(!!autoplay);
-  
-  const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null);
+
+  const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | HTMLIFrameElement | null>(null);
   const window = useWindow();
 
   const handleReload = () => {
@@ -64,7 +64,6 @@ const UiMedia: React.FC<IMedia> = ({
     </>
   );
 
-  // Called when media is fully loaded
   const handleLoad = (props: any) => {
     setIsLoading(false);
     onLoad?.(imageControlProps);
@@ -78,7 +77,6 @@ const UiMedia: React.FC<IMedia> = ({
     }
   };
 
-  // Toggle video playback
   const togglePlay = () => {
     if (type === 'video' && mediaRef.current) {
       const videoEl = mediaRef.current as HTMLVideoElement;
@@ -94,14 +92,12 @@ const UiMedia: React.FC<IMedia> = ({
     }
   };
 
-  // Adjust playback speed
   useEffect(() => {
     if (type === 'video' && mediaRef.current && playbackSpeed) {
       (mediaRef.current as HTMLVideoElement).playbackRate = playbackSpeed;
     }
   }, [playbackSpeed, type]);
 
-  // Apply rotation or styling
   useEffect(() => {
     if (rotate && mediaRef.current) {
       mediaRef.current.style.transform = `rotate(${rotate}deg)`;
@@ -122,32 +118,32 @@ const UiMedia: React.FC<IMedia> = ({
       }
     }
   }, [rotate, mediaRef, window, variant]);
-const stringPoster:string=typeof poster== 'string' && poster||''
+
+  const stringPoster: string = typeof poster === 'string' && poster || '';
+
   return (
     <>
       <style jsx>{styles}</style>
       <ImageControl
         {...imageControlProps}
         onComplete={handleLoad}
-        // Pass the toggle callback and a flag telling ImageControl to show play/pause
         onPlayPauseClick={togglePlay}
         showPlayPause={type === 'video'}
       >
         {isLoading && <div className="loading">{loadingText || 'Loading...'}</div>}
-        {!autoplay && !isPlaying &&  poster && <div className="ui-media--poster" onClick={togglePlay}>
+        {!autoplay && !isPlaying && poster && <div className="ui-media--poster" onClick={togglePlay}>
           <div className="ui-media--poster__content">
-          {poster}
+            {poster}
           </div>
-          </div>}
+        </div>}
 
-        {/* If no error, render video or image */}
         {!imageControlProps.error && (
           type === 'video' ? (
             <video
               ref={mediaRef as React.Ref<HTMLVideoElement>}
               src={src}
               autoPlay={autoplay}
-              controls={controls}   // might remove if you only want custom controls
+              controls={controls}
               loop={loop}
               muted={muted}
               poster={stringPoster}
@@ -159,9 +155,19 @@ const stringPoster:string=typeof poster== 'string' && poster||''
               onError={handleError}
               key={reloadTrigger}
               className="ui-media"
-            >
-              <h1>loading</h1>
-            </video>
+            />
+          ) : type === 'iframe' ? (
+            <iframe
+              ref={mediaRef as React.Ref<HTMLIFrameElement>}
+              src={src}
+              width={width}
+              height={height}
+              title={alt}
+              onLoad={handleLoad}
+              onError={handleError}
+              key={reloadTrigger}
+              className="ui-media__iframe"
+            />
           ) : (
             <img
               ref={mediaRef as React.Ref<HTMLImageElement>}

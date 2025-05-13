@@ -113,6 +113,8 @@ export const routes: IRoute[] = [
   // { label: "about", href: "/about", icon: "fal-circle-info" , active: true },
   { label: "", href: "/cart", icon: "fal-bag-shopping" },
   { label: "", href: "/checkout", hide: true},
+  { label: "", href: "/privacy-policy", hide: true},
+  { label: "", href: "/terms-of-service", hide: true},
 ];
 export const useClearanceRoutes = () => {
   const authedUser = useUser();

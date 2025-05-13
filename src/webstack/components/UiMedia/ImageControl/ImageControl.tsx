@@ -8,7 +8,7 @@ import { useModal } from '@webstack/components/Containers/modal/contexts/modalCo
 import environment from '~/src/core/environment';
 
 export type IImageVariant = 'center' | 'background' | string;
-export type IImageMediaType = 'image' | 'video';
+export type IImageMediaType = 'image' | 'video' | 'iframe' | 'audio' | 'html' | 'webm' | 'mp4' | 'mkv' | string;
 
 interface IImageControl {
   variant?: IImageVariant;
