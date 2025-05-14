@@ -153,8 +153,7 @@ const NirvanaEnergy = () => {
           {isDesktop ? (<UiMedia playbackSpeed={.7}
             onLoad={handleBackgroundLoad}
             type='video' autoplay muted loop variant='background' src="https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/home.webm" />) : (
-            <UiMedia onLoad={handleBackgroundLoad}
-              variant='background' alt='nirv1-home' src='/merchant/nirv1/backgrounds/havasupai_1x1.png' />
+""
           )}
           {/* </div> */}
           <div className='nirvana-energy__bg-overlay--content'>

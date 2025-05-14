@@ -7,6 +7,7 @@
 }
 
 .remote-access-viewer {
+  z-index: 1;
   @extend .d-flex;
   width: 100%;
   height: 100%;

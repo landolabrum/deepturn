@@ -15,7 +15,7 @@ const RemoteAccessPage: React.FC = () => {
         board: <RemoteVideoBoard />,
         error: <div className="error">Error loading remote access</div>,
        }}
-        currentView="board"  
+        currentView="remoteAccess"  
        />
     </div>
 </>

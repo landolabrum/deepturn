@@ -50,7 +50,6 @@ const group1 = [
                     src={video.src}
                     id={video.id}
                     alt={video.alt}
-                    poster={video.poster}
 
                     autoplay={video.autoplay}
                     controls={video.controls}

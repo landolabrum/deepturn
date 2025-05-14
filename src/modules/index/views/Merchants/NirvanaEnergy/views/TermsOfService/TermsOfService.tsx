@@ -19,7 +19,8 @@ const TermsOfService = ({ onClose }: { onClose: () => void }) => {
                 <h1>{merchantName}</h1>
                 <div className="terms-of-service__content--title">Terms of Service</div>
                 <p className='s-9-width'>{merchantName} is a registered trademark of {merchantName} LLC. All rights reserved.</p>
-                <UiIcon width='100px' icon={merchantName+"-logo"} />
+                <UiIcon icon={merchant.name+"-logo"} />
+                <UiIcon icon={merchant.name+"-logo"} />
             </div>
           </>
         );
@@ -46,7 +47,8 @@ const TermsOfService = ({ onClose }: { onClose: () => void }) => {
           <p><strong>5. User Content</strong><br/>
           If you submit reviews, comments, or other content (&quot;User Content&quot;), you grant {merchantName} a non‑exclusive, royalty‑free, worldwide license to use, display, and distribute that content in connection with the Site and our marketing.</p>
 
-          <p><strong>6. Prohibited Conduct</strong><br/>
+          <p>
+            <strong>6. Prohibited Conduct</strong><br/>
           You agree not to:
             <ul>
               <li>Violate any applicable laws or regulations.</li>

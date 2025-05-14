@@ -20,7 +20,7 @@ interface IImageControl {
   loadingText?: string;
   onComplete?: (e: any) => void;
   isPlaying?: boolean;
-
+controls?: any;
   // New props for play/pause control
   onPlayPauseClick?: () => void;
   showPlayPause?: boolean;
@@ -28,6 +28,7 @@ interface IImageControl {
 
 const ImageControl: React.FC<IImageControl> = ({
   children,
+  controls,
   variant,
   mediaType = 'image',
   refreshInterval = 1000,
@@ -111,7 +112,7 @@ const ImageControl: React.FC<IImageControl> = ({
         </div>
 
         {/* Custom Controls */}
-        <div className="image-control__controls">
+  {controls &&       <div className="image-control__controls">
           {/* Only show play/pause if it's a video */}
           {showPlayPause && (
             <div className="image-control__controls__control">
@@ -121,7 +122,7 @@ const ImageControl: React.FC<IImageControl> = ({
           <div className="image-control__controls__control">
             <UiIcon icon="fa-expand" onClick={handleExpand} />
           </div>
-        </div>
+        </div>}
       </div>
     </>
   );

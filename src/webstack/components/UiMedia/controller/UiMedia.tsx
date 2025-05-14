@@ -126,6 +126,7 @@ const UiMedia: React.FC<IMedia> = ({
       <style jsx>{styles}</style>
       <ImageControl
         {...imageControlProps}
+        mediaType={type}
         onComplete={handleLoad}
         onPlayPauseClick={togglePlay}
         showPlayPause={type === 'video'}
@@ -143,7 +144,7 @@ const UiMedia: React.FC<IMedia> = ({
               ref={mediaRef as React.Ref<HTMLVideoElement>}
               src={src}
               autoPlay={autoplay}
-              controls={controls}
+              controls={false}
               loop={loop}
               muted={muted}
               poster={stringPoster}

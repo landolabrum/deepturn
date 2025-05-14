@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './PrivacyPolicy.scss'; // Consider renaming this to 'PrivacyPolicy.scss' for clarity
+import styles from './PrivacyPolicy.scss';
 import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import environment from '~/src/core/environment';
@@ -17,8 +17,8 @@ const PrivacyPolicy = ({ onClose }: { onClose: () => void }) => {
             <div className="terms-of-service__header">
                 <h1>{merchantName}</h1>
                 <div className="terms-of-service__content--title">Privacy Policy</div>
-                <p className='s-9-width'>{merchantName} is a registered trademark of {merchantName} LLC. All rights reserved.</p>
-                <UiIcon width='100px' icon={merchantName + "-logo"} />
+                <p className="s-9-width">{merchantName} is a registered trademark of {merchantName} LLC. All rights reserved.</p>
+                <UiIcon width="100px" icon={merchantName + '-logo'} />
             </div>
         </>
     );
@@ -31,7 +31,7 @@ const PrivacyPolicy = ({ onClose }: { onClose: () => void }) => {
                     <MerchantHeader />
 
                     <p><strong>1. Who We Are</strong><br />
-                        Nirvana Energy LLC ("Nirvana Energy," "we," "our," or "us") provides renewable-energy products and services throughout the United States. Our headquarters is located at:<br />
+                        Nirvana Energy LLC (&quot;Nirvana Energy,&quot; &quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) provides renewable-energy products and services throughout the United States. Our headquarters is located at:<br />
                         Nirvana Energy LLC<br />
                         1077 S Reber Ave<br />
                         Gilbert, AZ 85296<br />
@@ -41,7 +41,7 @@ const PrivacyPolicy = ({ onClose }: { onClose: () => void }) => {
                     </p>
 
                     <p><strong>2. Scope of This Policy</strong><br />
-                        This Privacy Policy explains how we collect, use, disclose, and protect personal information when you visit nirvanaenergy.net (the "Site"), interact with our services, or otherwise engage with us.
+                        This Privacy Policy explains how we collect, use, disclose, and protect personal information when you visit nirvanaenergy.net (the &quot;Site&quot;), interact with our services, or otherwise engage with us.
                     </p>
 
                     <p><strong>3. Information We Collect</strong></p>
@@ -57,7 +57,7 @@ const PrivacyPolicy = ({ onClose }: { onClose: () => void }) => {
                     <p><strong>4. How We Use Information</strong><br />
                         - Provide, maintain, and improve the Site and our services.<br />
                         - Send transactional messages like confirmations and reminders.<br />
-                        - Send marketing only if you’ve opted in (see Section 8).<br />
+                        - Send marketing only if you&apos;ve opted in (see Section 8).<br />
                         - Detect and prevent fraud and illegal activities.<br />
                         - Comply with laws and carrier regulations.
                     </p>
@@ -65,7 +65,7 @@ const PrivacyPolicy = ({ onClose }: { onClose: () => void }) => {
                     <p><strong>5. Sharing & Disclosure</strong><br />
                         We may share your data with:<br />
                         - Service providers (e.g., hosting, payments, analytics).<br />
-                        - Affiliates within Nirvana Energy’s corporate family.<br />
+                        - Affiliates within Nirvana Energy&apos;s corporate family.<br />
                         - Law enforcement or regulators when required.<br />
                         - Business transferees in a merger or sale.<br /><br />
                         <strong>SMS privacy:</strong> No mobile info is shared with third parties/affiliates for marketing. SMS opt-in/consent data is never shared.
@@ -81,7 +81,7 @@ const PrivacyPolicy = ({ onClose }: { onClose: () => void }) => {
                     </p>
 
                     <p><strong>8. SMS/Text Messaging</strong><br />
-                        By opting in, you consent to receive recurring SMS from Nirvana Energy. Msg frequency varies. Msg & data rates may apply. Text STOP to cancel, HELP for help. Consent not required for purchase.
+                        By opting in, you consent to receive recurring SMS from Nirvana Energy. Msg frequency varies. Msg &amp; data rates may apply. Text STOP to cancel, HELP for help. Consent not required for purchase.
                     </p>
 
                     <p><strong>9. Data Security</strong><br />
@@ -93,7 +93,7 @@ const PrivacyPolicy = ({ onClose }: { onClose: () => void }) => {
                     </p>
 
                     <p><strong>11. Changes to This Policy</strong><br />
-                        We may update this Policy at any time. Updates will be posted with a “Last updated” date.
+                        We may update this Policy at any time. Updates will be posted with a &quot;Last updated&quot; date.
                     </p>
 
                     <p><strong>12. Contact Us</strong><br />
@@ -111,8 +111,8 @@ const PrivacyPolicy = ({ onClose }: { onClose: () => void }) => {
 
                     <p>© 2025 {merchantName} LLC. All rights reserved.</p>
 
-                    <div className='s-w-100 d-flex'>
-                        <UiButton variant='link' onClick={()=>router.push("/")}>Close</UiButton>
+                    <div className="s-w-100 d-flex">
+                        <UiButton variant="link" onClick={() => router.push('/')}>Close</UiButton>
                     </div>
                 </div>
             </div>

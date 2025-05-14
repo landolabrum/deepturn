@@ -13,24 +13,24 @@ export default function RemoteDesktop() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch("/api/remote/session")
-      .then(res => res.text()) // Fetch as plain text to check for HTML errors
-      .then((data) => {
-        // Check if the response contains HTML (error page)
-        if (data.includes("<!DOCTYPE html>")) {
-          setError(true);
-          console.error("Received HTML error page instead of JSON.");
-        } else {
-          const parsedData = JSON.parse(data);
-          const { authToken, connectionId } = parsedData;
+  //   fetch("/api/remote/session")
+  //     .then(res => res.text()) // Fetch as plain text to check for HTML errors
+  //     .then((data) => {
+  //       // Check if the response contains HTML (error page)
+  //       if (data.includes("<!DOCTYPE html>")) {
+  //         setError(true);
+  //         console.error("Received HTML error page instead of JSON.");
+  //       } else {
+  //         const parsedData = JSON.parse(data);
+  //         const { authToken, connectionId } = parsedData;
           
-          // Construct the URL to embed the remote desktop session
-        }
-      })
-      .catch(err => {
-        console.error("Failed to load Guacamole session:", err);
-        setError(true);
-      });
+  //         // Construct the URL to embed the remote desktop session
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.error("Failed to load Guacamole session:", err);
+  //       setError(true);
+  //     });
       const guacUrl = `https://remote.tiktok.soy/vnc.html`;
       setIframeUrl(guacUrl);
   }, []);
@@ -41,10 +41,11 @@ export default function RemoteDesktop() {
         <div className="remote-access-viewer ">
       {iframeUrl  ? (
         <UiMedia 
-        // controls={false}
-          src={iframeUrl}
+        controls={false}
+          src={`https://remote.tiktok.soy/vnc.html`}
           type='iframe'
           variant="background"
+          onLoad={console.log}
           // className="remote-access-viewer__media"
           // allow="clipboard-read; clipboard-write"
           // allowFullScreen
