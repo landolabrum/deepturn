@@ -1,2 +1,2 @@
-import TermsOfService from "~/src/modules/index/views/Merchants/NirvanaEnergy/views/TermsOfService/TermsOfService";
+import TermsOfService from "@webstack/components/PageComponents/TermsOfService/TermsOfService";
 export default TermsOfService;

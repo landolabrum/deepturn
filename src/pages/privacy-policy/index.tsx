@@ -1,2 +1,2 @@
-import PrivacyPolicy from "~/src/modules/index/views/Merchants/NirvanaEnergy/views/PrivacyPolicy/PrivacyPolicy";
+import PrivacyPolicy from "@webstack/components/PageComponents/PrivacyPolicy/PrivacyPolicy";
 export default PrivacyPolicy;

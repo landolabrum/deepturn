@@ -10,9 +10,12 @@ import { getService } from '@webstack/common';
 const BUILDNAME = 'appliances';
 const FORMNUM = `001`;
 
-
-const useProductBuildForm = () => {
-    const buildId: string = `${environment.merchant.mid}-${BUILDNAME}-${FORMNUM}`;
+type IUseProductBuildForm = {
+    buildName?: string;
+    formNum?: string;
+};
+const useProductBuildForm = ({ buildName = BUILDNAME, formNum = FORMNUM }: IUseProductBuildForm = {}) => {
+    const buildId: string = `${environment.merchant.mid}-${buildName}-${formNum}`;
     const { sessionData, setSessionItem, deleteSessionItem } = useSessionStorage();
     const memberService = getService<IMemberService>('IMemberService');
     const [response, setResponse] = useState<any | null>(null);
@@ -195,7 +198,7 @@ const useProductBuildForm = () => {
         }
     }, [sessionData, buildId, clearForm]);
 
-    return { fields, setField, onSubmit, response, clearForm, fieldErrors };
+    return { request, fields, setField, onSubmit, response, clearForm, fieldErrors };
 };
 
 export default useProductBuildForm;

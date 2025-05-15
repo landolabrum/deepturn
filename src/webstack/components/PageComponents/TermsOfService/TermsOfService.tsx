@@ -16,11 +16,16 @@ const TermsOfService = ({ onClose }: { onClose: () => void }) => {
           <>
             <style jsx>{styles}</style>
             <div className="terms-of-service__header">
+              <div>
+
+                <UiIcon icon={merchant.name+"-logo"} />
+              </div>
+              <div>
                 <h1>{merchantName}</h1>
+              </div>
                 <div className="terms-of-service__content--title">Terms of Service</div>
                 <p className='s-9-width'>{merchantName} is a registered trademark of {merchantName} LLC. All rights reserved.</p>
-                <UiIcon icon={merchant.name+"-logo"} />
-                <UiIcon icon={merchant.name+"-logo"} />
+                {/* <UiIcon icon={merchant.name+"-logo"} /> */}
             </div>
           </>
         );

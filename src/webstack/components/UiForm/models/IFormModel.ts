@@ -12,6 +12,7 @@ export type OForm = {
 
 export type IFormField = {
     name: string;
+    msg?:string;
     id?: string;
     error?: string;
     options?:any;

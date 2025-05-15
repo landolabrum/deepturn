@@ -36,7 +36,7 @@ const ProductBuild: React.FC = () => {
   const guest = useGuest();
 const{ width}=useWindow();
   const handleView = (newView?: any) => {
-    console.log({request, fields})
+    // console.log({request, fields})
     const handleReloadScroll = () => {
       setScrollTo("product-build")
     }

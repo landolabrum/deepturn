@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useRef } from "react";
 import styles from './DefaultLayout.scss'; // Changed to .css import
 import Title from "@webstack/components/Text/Title/Title";
 import environment from "~/src/core/environment";
+import JoinForms from "@webstack/components/PageComponents/Join/controller/JoinForms";
 
 interface IProps {
   children: ReactElement;
@@ -11,15 +12,10 @@ const MainLayout = (props: IProps) => {
   const mainRef = useRef<any>();
   const mid = environment.merchant.mid;
 
+
   const styleMerchant = () => {
     if (!mid || !mainRef?.current) return;
-    
-    // // Set margin-top based on header height
-    // const mainRefStyle = mainRef.current.style;
-    // const headerHeight = document.getElementById('header-container')?.offsetHeight;
-    // if (headerHeight) {
-    //   mainRefStyle.marginTop = `${headerHeight}px`;
-    // }
+
 
     // Dynamically load the merchant-specific stylesheet
     const existingTheme = document.querySelector(`link[href*="theme.css"]`);
@@ -42,6 +38,7 @@ const MainLayout = (props: IProps) => {
 
   };
 
+
   useEffect(() => {
     styleMerchant();
     window.addEventListener('resize', styleMerchant);
@@ -54,6 +51,7 @@ const MainLayout = (props: IProps) => {
       <style jsx>{styles}</style>
       <main ref={mainRef}>
         {props.children}
+        <JoinForms/>
       </main>
     </>
   );

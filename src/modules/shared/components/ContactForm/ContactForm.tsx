@@ -15,6 +15,7 @@ interface IContactFormProps {
   onChange?: (e: any) => void;
   payment?: any;
   title?: string | React.ReactElement | boolean;
+  fields?:IFormField[]
 }
 
 const ContactForm: React.FC<IContactFormProps> = (props) => {
@@ -35,7 +36,7 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
     { name: 'postal_code', label: 'Postal Code', type: 'text', placeholder: '90001', required: true, width },
   ];
 
-  const [fields, setFields] = useState<IFormField[]>(defaultContactFields);
+  const [fields, setFields] = useState<IFormField[]>(props?.fields||defaultContactFields);
   const [disabled, setDisabled] = useState<boolean>(true);
 
   const handleDisabled = (updatedFields: IFormField[]) => {
@@ -139,7 +140,7 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
       setFields(updatedFields);
       handleDisabled(updatedFields);
     }
-  }, []);
+  }, [props?.fields]);
 
   useEffect(() => {
     if (fieldErrors) {

@@ -170,12 +170,19 @@ const UiForm = ({
                                 value={Boolean(field?.value)} />
                         )}
                         {fieldType(field) == 'checkbox' && (
-                            <ToggleSwitch
+                            <>
+                              <ToggleSwitch
                                 label={field.label}
                                 name={field.name}
                                 disabled={field?.disabled}
                                 onChange={e => handleInputChange(e, field?.constraints)}
                                 value={Boolean(field?.value)} />
+                                <div className='field-msg'>
+                                {field?.msg}
+
+                                </div>
+                            </>
+                          
                         )}
                         {fieldType(field) == 'select' && (
                             <UiSelect

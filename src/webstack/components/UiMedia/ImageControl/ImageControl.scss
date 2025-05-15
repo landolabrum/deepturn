@@ -1,8 +1,9 @@
-.d-flex{
- display: flex;
- justify-content: center;
- align-items: center;
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .image-control {
     --icon-size: 60px;
     --font-size: var(--s-7);
@@ -15,36 +16,41 @@
     // @media(max-width: 900px){
     // }
 
-    &__play{
+    &__play {
         position: absolute;
         z-index: 3;
         width: 100%;
         height: 100%;
         @extend .d-flex;
         --ui-icon-color: var(--gray-50);
-        cursor: pointer ;
+        cursor: pointer;
     }
-    &--background{
-        width:100%;
-        max-width:100vw;
-        position:fixed;
+
+    &--background {
+        z-index: -1;
+        width: 100%;
+        max-width: 100vw;
+        position: fixed;
         height: auto;
         top: var(--s-nav-height);
         height: calc(100vh - var(--s-nav-height));
         left: 50%;
         transform: translateX(-50%);
-        overflow:hidden;
-          width: 100%;
+        overflow: hidden;
+        width: 100%;
     }
-    &__loading{
+
+    &__loading {
         width: 100%;
         aspect-ratio: 16/9;
-        @media(min-width:1100px){
+
+        @media(min-width:1100px) {
             // aspect-ratio: unset;
             height: 100%;
             width: inherit;
         }
     }
+
     &:hover .image-control__controls {
         bottom: 0;
         opacity: 1;
@@ -57,7 +63,8 @@
         width: 100%;
         height: auto;
         z-index: -1;
-        &__background{
+
+        &__background {
             height: inherit;
             width: inherit;
             // background: url(images/bg.jpg) no-repeat center center fixed; 
@@ -82,9 +89,11 @@
         height: var(--s-element);
         opacity: 0;
         transition: bottom .5s ease, opacity .5s ease;
-        &__control{
+
+        &__control {
             cursor: pointer;
-            &:hover{
+
+            &:hover {
                 --ui-icon-color: var(--primary-50);
             }
         }

@@ -2,9 +2,9 @@ import React from 'react';
 
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import MainLayout from "../layouts/default/DefaultLayout";
+import MainLayout from "../webstack/layouts/default/DefaultLayout";
 import ServiceContainer from "@webstack/components/ServiceContainer/ServiceContainer";
-import styles from "~/src/layouts/default/DefaultLayout.scss"
+import styles from "@webstack/layouts/default/DefaultLayout.scss"; // Changed to .css import
 import { OverlayProvider } from "@webstack/components/Overlay/Overlay";
 import { HeaderProvider } from "@webstack/components/Containers/Header/controller/MainHeader";
 import { NotificationProvider } from "@webstack/components/Notification/Notification";
@@ -24,7 +24,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
       </Head>
       <style jsx>{styles}</style>
       <ServiceContainer />

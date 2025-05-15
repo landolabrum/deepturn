@@ -12,9 +12,24 @@ import { useModal } from "@webstack/components/Containers/modal/contexts/modalCo
 import { useNotification } from "@webstack/components/Notification/Notification";
 import { useClearance } from "~/src/core/authentication/hooks/useUser";
 
+type AuthTextProps = {
+  view?: 'sign-in' | 'sign-up';
+  title?: string;
+  description?: string;
+  buttonText?: string;
+  alternateText?: string;
+  toggleText?: string;
+};
 
+type AuthenticationProps = {
+  view?: string;
+  content?: {
+    'sign-in'?: AuthTextProps;
+    'sign-up'?: AuthTextProps;
+  };
+};
 
-const Authentication: React.FC<any> = (props: any) => {
+const Authentication: React.FC<AuthenticationProps> = (props) => {
   const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
   const [view, setView] = useState<string>(props?.view || "sign-in");
   const [hover, setHover] = useState<boolean>(false);
@@ -24,23 +39,13 @@ const Authentication: React.FC<any> = (props: any) => {
   const [notif, setNotification] = useNotification();
 
   const handleView = () => {
-    switch (view) {
-      case "sign-in":
-        setView("sign-up")
-        break;
-      case "sign-up":
-        setView("sign-in")
-        break;
-      case "customer-created":
-        setView("sign-in")
-        break;
-      case "existing":
-        setView("sign-in")
-        break;
-      default:
-        setView("sign-up")
-    }
-  }
+    setView((prev) =>
+      prev === "sign-in" || prev === "existing" || prev === "customer-created"
+        ? "sign-up"
+        : "sign-in"
+    );
+  };
+
   const handleSignup = (response: any) => {
     const status = response?.status;
     if (!status) {
@@ -48,92 +53,107 @@ const Authentication: React.FC<any> = (props: any) => {
       return;
     }
 
-    let label = "404, an error occured signing up. "
-    switch (status) {
-      case 'created':
-        label = `email: ${response?.email}, successfully created.`
-        break;
-      case 'existing':
-        label = `email: ${response?.email}, exists.`
-        break;
-      default: break;
-    }
-    setNotification({ active: true, list: [{ 'label': label, message: "Please wait a few minutes before logging in" }] });
-    setView('sign-in');
-    setNewCustomerEmail(response.email)
-  }
+    let label = "404, an error occured signing up.";
+    if (status === "created") label = `email: ${response?.email}, successfully created.`;
+    if (status === "existing") label = `email: ${response?.email}, exists.`;
+
+    setNotification({
+      active: true,
+      list: [{ label, message: "Please wait a few minutes before logging in" }],
+    });
+    setView("sign-in");
+    setNewCustomerEmail(response.email);
+  };
+
   const handleSignIn = (user: any) => {
     if (user?.id) {
       const WelcomeModalContent = ({ user, onClose }: any) => {
         const adminClearance = useClearance() > 9;
-        const onProfileClick = (isAdmin: boolean) => {
-          if (isAdmin && adminClearance) router.push('/admin');
-          else router.push('/user-account');
-          closeModal();
-        }
-        return (
 
+        const onProfileClick = (isAdmin: boolean) => {
+          router.push(isAdmin && adminClearance ? "/admin" : "/user-account");
+          closeModal();
+        };
+
+        return (
           <>
             <style jsx>{styles}</style>
-            <div className='authentication__welcome-modal'>
+            <div className="authentication__welcome-modal">
               <h3>Welcome, {user.name}</h3>
               {adminClearance && <UiButton onClick={onProfileClick}>admin</UiButton>}
               <UiButton onClick={onProfileClick}>account</UiButton>
               <UiButton onClick={onClose}>Close</UiButton>
             </div>
           </>
-        )
+        );
       };
 
-      // Usage within a component
       openModal({
-        title: 'User Details',
-        children: <WelcomeModalContent user={user} onClose={closeModal} />
+        title: "User Details",
+        children: <WelcomeModalContent user={user} onClose={closeModal} />,
       });
     }
   };
 
   useEffect(() => {
+    if (query && query.verify && view !== "verify") setView("verify");
+    if (newCustomerEmail !== undefined) setView("sign-in");
+  }, [handleSignup, handleSignIn]);
 
-    if (query && query.verify && view !== 'verify') {
-      setView('verify');
-    }
+  const defaultText = {
+    "sign-in": {
+      title: keyStringConverter("sign-in"),
+      alternateText: "no account?",
+      toggleText: "Sign Up",
+    },
+    "sign-up": {
+      title: keyStringConverter("sign-up"),
+      alternateText: "already have an account?",
+      toggleText: "Login",
+    },
+  };
 
-    if (newCustomerEmail != undefined) setView("sign-in");
-  }, [handleSignup, handleSignIn,])
+  const content = {
+    ...defaultText[view as keyof typeof defaultText],
+    ...props.content?.[view as keyof typeof props.content],
+  };
 
   return (
     <>
       <style jsx>{styles}</style>
-      <div className={`authentication ${view == 'sign-in' ? ' authentication__sign-in' : ''}`}>
-        <div className='authentication__view-header'>
+      <div className={`authentication ${view === "sign-in" ? "authentication__sign-in" : ""}`}>
+        <div className="authentication__view-header">
           <div className="authentication__logo">
             <UiIcon icon={`${environment.merchant.name}-logo`} />
           </div>
-          <div className='authentication__view-name'>
-            {keyStringConverter(view)}
-          </div>
+          <div className="authentication__view-name">{content.title}</div>
         </div>
-        {view.includes("@") && <div className='authentication__email-verify'>
-          An email has been sent to
-          <Link onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={hover ? { color: 'var(--primary' } : undefined} href={`mailto://${view}`}>{' ' + view + ', '}</Link> click the link in the email to continue.
-        </div>}
-        {view == 'sign-in' && <LoginView email={newCustomerEmail} onSuccess={handleSignIn} />}
-        {view == 'sign-up' && <SignUp onSuccess={handleSignup} />}
+
+        {view.includes("@") && (
+          <div className="authentication__email-verify">
+            An email has been sent to
+            <Link
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+              style={hover ? { color: "var(--primary)" } : undefined}
+              href={`mailto://${view}`}
+            >
+              {" " + view + ", "}
+            </Link>
+            click the link in the email to continue.
+          </div>
+        )}
+
+        {view === "sign-in" && <LoginView email={newCustomerEmail} onSuccess={handleSignIn} />}
+        {view === "sign-up" && <SignUp onSuccess={handleSignup} />}
+
         <div className="authentication__view-action">
           <div className="authentication__view-label">
-          <div className="authentication__view-label--text">
-            {view == 'sign-in' && "no account?"}
-            {view == 'sign-up' && "already have an account?"}
-          </div>
+            <div className="authentication__view-label--text">{content.alternateText}</div>
           </div>
 
-          <UiButton
-            onClick={handleView}
-            variant="link"
-          >
-            {view == 'sign-in' && "Sign Up"}
-            {view == 'sign-up' && "Login"}
+          <UiButton onClick={handleView} variant="link">
+            {content.toggleText}
           </UiButton>
         </div>
       </div>

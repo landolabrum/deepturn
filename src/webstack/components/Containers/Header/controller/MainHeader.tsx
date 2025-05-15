@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, createContext, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
-import Navbar from "@shared/components/Navbar/controller/Navbar";
+import Navbar from "@webstack/components/PageComponents/Navbar/controller/Navbar";
 import styles from "./MainHeader.scss";
 import useWindow from "@webstack/hooks/window/useWindow";
 import environment from "~/src/core/environment";

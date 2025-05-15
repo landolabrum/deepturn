@@ -13,6 +13,7 @@ export interface MerchantSettingsLayout {
       size?: 'sm' | 'md' | 'lg' | 'xl'
 }
 export interface MerchantSettings {
+  optIn?:boolean;
   ecommerce?:{
     productListing?:MerchantSettingsLayout
   }

@@ -1,6 +1,6 @@
 // merchants.config.js
 module.exports = {
-    deploy:"mb1",
+    deploy:"nirv1",
     merchants: {
       mb1: {
         mid: "mb1",
@@ -26,18 +26,14 @@ module.exports = {
          }
         }
       },
-      // ah1: {
-      //   mid: "ah1",
-      //   name: "aire-hotel",
-      //   url: "https://airehotel.com",
-      //   stripeId:""
-      // },
+
       nirv1: {
         mid: "nirv1",
         name: "nirvana-energy",
         url: "https://nirvanaenergy.net",
         stripeId:"acct_1OWy0fE8XAGZDdpK",
         settings:{
+          optIn: true,
           about:{ 
             title:'Off-grid specialists' ,
             description:'',

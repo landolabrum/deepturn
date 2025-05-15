@@ -34,8 +34,13 @@ p {
         gap:Var(--s-9);
         width: var(--s-1-width);
         padding: var(--s-1) var(--s-1) 100px;
-     
+        p{
+             font-size:var(--s-7);
+             color:var(--gray-60);
+
+        }
         strong {
+            margin-bottom: var(--s-9);
             color: var(--primary-70);
             font-size: var(--s-4);
         }
@@ -56,7 +61,7 @@ p {
                 flex-direction: column;
                 @extend .d-flex;
                 align-items: flex-start;
-                font-size:var(--s-5);
+                font-size:var(--s-7);
                 color:var(--gray-50);
                 strong {
                     text-indent: var(--s-9);
@@ -73,7 +78,7 @@ p {
             text-indent: var(--s-9);
             width: max-content;
 
-            color:var(--gray-40) &::marker {
+             &::marker {
                 display: none !important;
             }
         }
@@ -82,23 +87,22 @@ p {
     &__header {
         @extend .d-flex;
         flex-direction: column;
+        gap:var(--s-9);
         align-content: center;
         width: 100%;
-        color:var(--white); 
+        --ui-icon-size:var(--s-element);
         // color:var(--primary-10);
+        --ui-icon-color:var(--primary-50); 
+        color:var(--primary-10); 
         p{
-            margin-top:var(--s-1);
             text-align: center;
             font-size: var(--s-6);
-            color: Var(--primary-50);
+            color: Var(--gray-80);
         }
         &--title {
-
             width: max-content;
-
-
         }
 
-        font-size:var(--s-2);
+        font-size:var(--s-3);
     }
 }

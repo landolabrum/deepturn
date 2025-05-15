@@ -3,7 +3,7 @@ import styles from "./DashboardPage.scss";
 import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import { useRouter } from "next/router";
 import AdaptGrid from "@webstack/components/Containers/AdaptGrid/AdaptGrid";
-import { IRoute, useClearanceRoutes, pruneRoutes } from "@shared/components/Navbar/data/routes";
+import { IRoute, useClearanceRoutes, pruneRoutes } from "@webstack/components/PageComponents/Navbar/data/routes";
 import UiLoader from "@webstack/components/UiLoader/view/UiLoader";
 interface IDashboard {
   links?: IRoute[];

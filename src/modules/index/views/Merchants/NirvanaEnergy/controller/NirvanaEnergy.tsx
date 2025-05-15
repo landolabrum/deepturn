@@ -16,8 +16,8 @@ import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 // import AdminService from '../../../../../core/services/AdminService/AdminService';
 import {getService} from '@webstack/common';
 import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
-import TermsOfService from '../views/TermsOfService/TermsOfService';
-import PrivacyPolicy from '../views/PrivacyPolicy/PrivacyPolicy';
+import TermsOfService from '../../../../../../webstack/components/PageComponents/TermsOfService/TermsOfService';
+import PrivacyPolicy from '../../../../../../webstack/components/PageComponents/PrivacyPolicy/PrivacyPolicy';
 // const NirvanaEnergyIcon = () => {
 //   const nStyle = `.nirv{
 //       display: flex;

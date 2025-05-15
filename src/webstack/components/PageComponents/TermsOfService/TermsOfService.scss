@@ -82,23 +82,22 @@ p {
     &__header {
         @extend .d-flex;
         flex-direction: column;
+        gap:var(--s-9);
         align-content: center;
         width: 100%;
-        color:var(--white); 
+        --ui-icon-size:var(--s-element);
         // color:var(--primary-10);
+        --ui-icon-color:var(--primary-50); 
+        color:var(--primary-10); 
         p{
-            margin-top:var(--s-1);
             text-align: center;
             font-size: var(--s-6);
-            color: Var(--primary-50);
+            color: Var(--gray-80);
         }
         &--title {
-
             width: max-content;
-
-
         }
 
-        font-size:var(--s-2);
+        font-size:var(--s-3);
     }
 }

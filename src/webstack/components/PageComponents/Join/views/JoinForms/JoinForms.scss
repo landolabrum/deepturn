@@ -1,0 +1,21 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.join-register{
+    @extend .d-flex;
+    width: 100%;
+    &__content{
+        @extend .d-flex;
+        flex-direction: column;
+        gap:var(--s-9);
+        &--header{
+            
+            font-size: var(--s-1);
+            text-transform: capitalize;
+        }
+        &--body{}
+    }
+}

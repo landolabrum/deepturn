@@ -105,7 +105,7 @@ const Navbar = () => {
   const {total}=useCart();
 
   const modals: any = {
-    login: <Authentication view='sign-up' onClose={closeModal} />,
+    login: <Authentication view='sign-up'  />,
   };
 
   const navClass = `navbar__container ${isMobile ? 'navbar__container--hide' : ''} ${merchantName}`;

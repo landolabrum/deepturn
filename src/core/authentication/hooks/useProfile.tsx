@@ -98,13 +98,14 @@ export const useProfile = ({ require }: UseProfileOptions = {}): ProfileContext 
     setView(initialView);
     openModal({
       title:"sign in ",
-      children: (
-        <Authentication 
+      children: (<>     <Authentication 
           view={initialView} 
-          onClose={closeModal} 
-          onViewChange={setView} 
-          onSignup={handleSignup} 
+          // onClose={closeModal} 
+          // onViewChange={setView} 
+          // onSignup={handleSignup} 
         />
+      </>
+   
       ),
     });
   };
