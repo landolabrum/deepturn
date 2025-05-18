@@ -430,8 +430,10 @@ body {
     position: relative;
   }
 }
+
 *::-webkit-scrollbar {
-  width: var(--s-1);
+  width: var(--s-9);
+  
   background: linear-gradient(
     var(--gray-100),
     var(--gray-90-o),
@@ -439,13 +441,15 @@ body {
   );
   /* border-left: 2px solid #1e1e1e; */
 }
+*::-webkit-scrollbar:hover{
+    width: var(--s-1);
 
+  }
 *::-webkit-scrollbar-thumb {
   background-color: var(--gray-70-o);
   border-radius: 0; 
   box-shadow: inset -1px -1px 0 1px var(--gray-100), inset 4px 0 3px 3px var(--gray-70-o);
   position: relative;
-
   z-index: 1;
 }
 
@@ -453,7 +457,6 @@ body {
   content: "⛏fdsa";
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  color: #ff3300;
   width:50px;
   height:50px;
   font-size: 10px;

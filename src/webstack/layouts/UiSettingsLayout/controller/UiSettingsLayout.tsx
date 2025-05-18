@@ -55,7 +55,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
   const titleContent = typeof title === 'string' && keyStringConverter(title) || title;
   const { width } = useWindow();
 
-  const firstView = router.query.vid || viewName || Object.keys(views)[0];
+  const firstView = router.query.vid != undefined && router.query.vid || viewName || Object.keys(views)[0];
   const isView = view && Object.keys(views).includes(view);
 const openClass = isNavOpen ? ' open' : ' close';
   useEffect(() => setView(firstView?.toString()), [firstView, isView]);

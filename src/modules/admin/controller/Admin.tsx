@@ -14,12 +14,15 @@ import AdminCustomers from '../views/AdminCustomers/views/AdminCustomersList/con
 import environment from '~/src/core/environment';
 import AdminData from '../views/AdminData/controller/AdminData';
 import RemoteAccessPage from '../views/AdminRemote/controller/RemoteAccessPage'; // ✅ New import
+import AdminStream from '../views/AdminStream/controller/AdminStream';
 
 const Admin = () => {
   const initialViews = {
     customers: <AdminCustomers />,
+    stream: <AdminStream />,
     data: <AdminData />,
     products: <AdminProducts />,
+    remote: <RemoteAccessPage />,
     sales: <AdminSales />,
     operations: <h1>Operations</h1>,
     finance: <h1>Finance and Accounting</h1>,
@@ -31,7 +34,6 @@ const Admin = () => {
     legal: <h1>Legal</h1>,
     procurement: <h1>Procurement</h1>,
     strategicPlanning: <h1>Strategic Planning</h1>,
-    remote: <RemoteAccessPage /> // ✅ Add Guacamole viewer here
   };
 
   const [views, setViews] = useState<any>();
@@ -60,10 +62,12 @@ const Admin = () => {
   return (
     <>
       <style jsx>{styles}</style>
+      
       <UiSettingsLayout
-        title="admin"
+        title={<div className='d-flex s-5'>Admin</div>}
         subTitle={`admin: level ${level}`}
         views={views}
+        viewName={Object.keys(initialViews)[0]}
       />
     </>
   );

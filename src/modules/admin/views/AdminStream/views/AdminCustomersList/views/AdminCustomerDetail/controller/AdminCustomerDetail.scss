@@ -1,0 +1,148 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-customer-detail {
+    @extend .d-flex;
+    flex-direction: column;
+    gap: var(--s-5);
+    align-items: stretch;
+    width: 100%;
+    &__header{
+        @extend .d-flex;
+        justify-content: flex-end;
+        margin-left: auto;
+    }
+    &__form {
+        width: 100%;
+    }
+
+    &__display {
+        &--title {
+            flex: 1;
+            min-height: var(--s-element);
+            text-transform: capitalize;
+            @extend .d-flex;
+            align-items: flex-start;
+            gap: var(--s-9);
+            justify-content: flex-end;
+            line-height: 1;
+            --ui-icon-size: var(--s-1);
+            color: var(--primary-50);
+            --ui-icon-color: var(--primary-50);
+            font-size: var(--s-1);
+        }
+
+        .display--list {
+            --ui-icon-width: var(--s-7);
+            --ui-icon-height: var(--s-6);
+            font-size: var(--s-7);
+            flex: 1;
+            @extend .d-flex;
+            flex-wrap: wrap;
+            width: 100%;
+
+            justify-content: flex-start;
+            gap: var(--s-10);
+            min-height: var(--s-element);
+            align-items: flex-start;
+
+            &-item {
+                @extend .d-flex;
+                justify-content: flex-start;
+                border-radius: var(--s-7);
+                overflow: hidden;
+                width: max-content;
+                overflow: hidden;
+                min-height: var(--s-5);
+                border: solid 1px transparent;
+
+                @media(max-width: 900px) {
+                    border: unset;
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                &__key,
+                &__value {
+                    width: max-content;
+                    border: solid 1px transparent;
+                    padding: 0 var(--s-11);
+                    width: var(--s-11-width);
+                }
+
+                &__key {
+                    text-transform: uppercase;
+                    color: var(--gray-70);
+                    font-family: Eros;
+                    @media(max-width: 900px) {
+                        background-color: unset;
+                        color: var(--gray-60);
+                    }
+                }
+
+                &__value {
+                    color: var(--blue-70);
+                    height: 100%;
+
+                    @media(max-width: 900px) {
+                        background-color: unset;
+                    }
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    border: solid 1px var(--blue-70);
+                    background-color: var(--gray-30-o);
+
+                    .display--list-item__key {
+                        color: var(--gray-40);
+                    }
+
+                    .display--list-item__value {
+                        background-color: var(--blue-70);
+                        color: var(--gray-10);
+                        --ui-icon-color: var(--gray-10);
+                    }
+                }
+
+                .valid {
+                    color: var(--green-70);
+                    --ui-icon-color: var(--green-70);
+
+                    &:hover {
+                        color: var(--green-70);
+                        --ui-icon-color: var(--green-70);
+                    }
+                }
+
+                .invalid {
+                    color: var(--red-50);
+                    --ui-icon-color: var(--red-50);
+
+                    &:hover {
+                        .display--list-item__value {
+                            background-color: var(--blue-70);
+                            color: var(--red-50);
+                            --ui-icon-color: var(--red-50);
+                        }
+                    }
+                }
+
+            }
+
+        }
+    }
+
+    &__actions {
+        @extend .d-flex;
+        width: 100%;
+        gap: var(--s-9);
+
+        @media(min-width: 900px) {
+            flex-direction: column;
+        }
+    }
+}

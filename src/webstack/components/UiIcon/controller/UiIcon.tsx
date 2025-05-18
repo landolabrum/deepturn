@@ -125,6 +125,7 @@ export class UiIcon extends React.Component<Props, State> {
           onClick={onClick}
           style={combinedStyles} 
           dangerouslySetInnerHTML={{ __html: innerHtml }} 
+          data-icon={this.props.icon}
         />
       </>
     );
@@ -133,6 +134,7 @@ export class UiIcon extends React.Component<Props, State> {
         <style jsx>{styles}</style>
         <div
           className={classes}
+          data-icon={this.props.icon}
         >
         <div
           onClick={onClick}

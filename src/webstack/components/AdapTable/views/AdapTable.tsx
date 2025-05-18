@@ -18,6 +18,7 @@ export type TableOptions = {
   hoverable?: boolean;
   placeholder?: string;
   position?: string;
+  renderCell?: (key: string, item: any, rowIndex: number) => React.ReactNode;
 };
 interface TableProps extends TableFunctionProps {
   total?: number;
@@ -31,6 +32,7 @@ interface TableProps extends TableFunctionProps {
   setLimit?: Dispatch<SetStateAction<number>>;
   style?: { [key: string]: string }
   onSelect?: (e:any)=>void;
+
 }
 
 type SortProp = [key: string];
@@ -132,6 +134,7 @@ const AdapTable = ({
           />
         )}
         <AdapTableContent
+          renderCell={options?.renderCell}
           hideHeader={hideHeader}
           data={data}
           setSort={(key, isAscend) => sortByKey(key, isAscend)}

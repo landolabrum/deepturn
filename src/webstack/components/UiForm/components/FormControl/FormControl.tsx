@@ -127,10 +127,28 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
     if (!variant) return `${className}${createIconClass()}${createSizeClass()}${isColor()}`;
     return `${createVariantClass()}${createIconClass()}${createSizeClass()}${isColor()}`;
   };
-  const formControlLabel: any = typeof label === 'string' ? (
-    <UiMarkdown text={label} />
-  ) : !isReactElement(label) && label?.text ? (
-    <UiMarkdown text={label.text} color={label.color} />
+  // console.log({label:String(label)})
+  const getLabel = (label:any) =>{
+    let context;
+    if(label && label?.text){
+      context = label.text;
+    }else if(typeof label == 'string'){
+      context = label;
+    }
+    if(context?.[0]=='*'){
+      context = String(context).slice(1);
+      // console.log("]CONT[", context)
+    };
+    if (context && label && typeof label === 'object' && 'text' in label) {
+      return { ...label, text: context };
+    }
+    return context; 
+  };
+  const labelContext = getLabel(label);
+  const formControlLabel: any = typeof labelContext === 'string' ? (
+    <UiMarkdown text={labelContext} />
+  ) : !isReactElement(labelContext) && labelContext?.text ? (
+    <UiMarkdown text={labelContext.text} color={labelContext.color} />
   ) : label;
 
   return (
@@ -141,11 +159,11 @@ const FormControl: NextComponentType<NextPageContext, {}, IFormControl> = ({
         className={propClasses('form-control')}
         ref={ref}
       >
-        {label && (
-          <div className='form-control__header'>
-            <label>{formControlLabel}</label>
-          </div>
-        )}
+    {label && (
+  <div className='form-control__header'>
+    <label>{formControlLabel}</label>
+  </div>
+)}
         <div className={propClasses('form-control__element')}>
           {renderIcon(traits?.beforeIcon, 'before', size, variant)}
           {Children.map(children, (child: any) => cloneElement(child))}

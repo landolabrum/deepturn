@@ -15,7 +15,7 @@ interface IContactFormProps {
   onChange?: (e: any) => void;
   payment?: any;
   title?: string | React.ReactElement | boolean;
-  fields?:IFormField[]
+  fields?: IFormField[]
 }
 
 const ContactForm: React.FC<IContactFormProps> = (props) => {
@@ -35,8 +35,8 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
     { name: 'state', label: 'State', type: 'text', placeholder: 'CA', required: true, width },
     { name: 'postal_code', label: 'Postal Code', type: 'text', placeholder: '90001', required: true, width },
   ];
-
-  const [fields, setFields] = useState<IFormField[]>(props?.fields||defaultContactFields);
+const chosenFields =props?.fields || defaultContactFields;
+  const [fields, setFields] = useState<IFormField[]>(chosenFields);
   const [disabled, setDisabled] = useState<boolean>(true);
 
   const handleDisabled = (updatedFields: IFormField[]) => {
@@ -59,13 +59,20 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
   };
 
   const validateField = (field: IFormField): IFormField => {
-    let text: string = findField(defaultContactFields, field.name)?.name || "* ";
+    let text: string = findField(chosenFields, field.name)?.name  || "* ";
+    if (field.required && typeof text === 'string' && !text.trim().startsWith('*')) {
+      text = `* ${text}`;
+    }
     let color: string | undefined = undefined;
     const errorColor = "var(--orange-50)";
     const hasNumbers = /\d/;
 
     if (field.required && !field.value) {
       color = "var(--gray-50)";
+      if (field.name === 'agree') {
+        text += ' *You must agree to continue*';
+        color = errorColor;
+      }
     } else if (field.name === 'email') {
       const validEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       if (typeof field.value === 'string' && !validEmailRegex.test(field.value)) {
@@ -102,7 +109,6 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
     if (fieldErrors && hasError && field.name == text) {
       delete field.error;
     }
-
     return { ...field, label: { text, color } };
   };
 

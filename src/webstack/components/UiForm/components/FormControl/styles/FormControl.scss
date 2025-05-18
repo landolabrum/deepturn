@@ -121,6 +121,10 @@ $elPad: 14px;
       font-size: var(--s-8);
       letter-spacing: 3px;
 
+
+ li{
+           display: none !important;
+        }
       @media(max-width: 900px) {
         font-size: var(--s-9);
       }

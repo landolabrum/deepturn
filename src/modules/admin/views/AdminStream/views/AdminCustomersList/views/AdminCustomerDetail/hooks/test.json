@@ -1,0 +1,109 @@
+{
+    "request": {
+        "metadata": {
+            "invoice_settings": {
+                "custom_fields": null,
+                "default_payment_method": null,
+                "footer": null,
+                "rendering_options": null
+            },
+            "merchant": {
+                "url": "https://nirvanaenergy.net",
+                "name": "nirvana-energy",
+                "mid": "nirv1",
+                "stripeid": "acct_1OWy0fE8XAGZDdpK"
+            },
+            "quote": {
+                "id": "product-quote",
+                "created": null
+            },
+            "user": {
+                "address": null,
+                "clearance": 1,
+                "password_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGRlZXB0dXJuLmNvbSJ9.O9KJH1SaxXZ8UfOIHI7803Z-0Eym-OzwMxRXAenTRW4",
+                "password": "burrito",
+                "email": "admin@deepturn.com",
+                "email_verified": false,
+                "type": "customer",
+                "server_url": "tiktok.soy",
+                "devices": [
+                    {
+                        "wan": "104.28.192.150",
+                        "lan": "49043604-e833-4b49-bf09-79d3e961392a.local",
+                        "user_agent": null,
+                        "user_agent_data": null,
+                        "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                        "platform": "MacIntel",
+                        "language": "en-US",
+                        "cookieenabled": true,
+                        "mobile": false,
+                        "effectivetype": "4g",
+                        "downlink": 10,
+                        "rtt": 250,
+                        "savedata": false,
+                        "type": "4g",
+                        "memory": 8,
+                        "hardwareconcurrency": 10,
+                        "geolocation": "prompt",
+                        "notifications": "prompt",
+                        "camera": "prompt",
+                        "microphone": "prompt",
+                        "persistent_storage": null,
+                        "device_settings": null,
+                        "authorization_data": null,
+                        "cookies": null,
+                        "created": "6/30/2024 @ 9:17:18 PM"
+                    },
+                    {
+                        "wan": "10.2.0.1",
+                        "lan": null,
+                        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                        "user_agent_data": null,
+                        "useragent": null,
+                        "platform": "unknown",
+                        "language": null,
+                        "languages": null,
+                        "cookieenabled": null,
+                        "mobile": false,
+                        "connection": null,
+                        "device": null,
+                        "permissions": null,
+                        "device_settings": null,
+                        "authorization_data": null,
+                        "cookies": null,
+                        "created": "6/30/2024 @ 9:17:19 PM"
+                    }
+                ]
+            },
+            "devices": []
+        },
+        "id": "cus_QONU4mbWbcU4pr",
+        "object": "list",
+        "address": {
+            "city": "West Valley City",
+            "country": "US",
+            "line1": "4322 S 5400 W",
+            "line2": "",
+            "postal_code": "84120",
+            "state": "UT"
+        },
+        "balance": 0,
+        "created": null,
+        "currency": null,
+        "default_source": null,
+        "delinquent": false,
+        "description": null,
+        "discount": null,
+        "email": "admin@deepturn.com",
+        "invoice_prefix": "552DBB58",
+        "livemode": true,
+        "name": "admin Quote",
+        "next_invoice_sequence": 1,
+        "phone": null,
+        "shipping": null,
+        "tax_exempt": "none",
+        "test_clock": null,
+        "has_more": false,
+        "url": "/v1/payment_methods"
+    }
+}

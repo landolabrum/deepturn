@@ -16,17 +16,6 @@ import Image from "next/image";
 import environment from "~/src/core/environment";
 
 export type TableStateProps = "show" | "hide" | "error" | "loading" | "empty";
-export interface TableContentProps extends TableFunctionProps {
-  loading?: boolean;
-  search?: string | null | undefined;
-  data?: any;
-  startIndex?: any;
-  options?: TableOptions;
-  variant?: IFormControlVariant;
-  onRowClick?: (e: any) => void;
-  hideHeader?: boolean;
-  onSelect?: (e:any)=>void;
-}
 export interface TableFunctionProps {
   data?: any;
   search?: string | null | undefined;
@@ -36,10 +25,21 @@ export interface TableFunctionProps {
   filters?: any;
   setFilter?: (e: any) => void;
 }
-type ItemType = {
-  [key: string]: string;
-};
-
+// [imports remain unchanged]
+export interface TableContentProps extends TableFunctionProps {
+    renderCell?: (key: string, item: any, rowIndex: number) => React.ReactNode;
+  loading?: boolean;
+  search?: string | null | undefined;
+  data?: any;
+  startIndex?: any;
+  options?: TableOptions & {
+    renderCell?: (key: string, item: any, rowIndex: number) => React.ReactNode;
+  };
+  variant?: IFormControlVariant;
+  onRowClick?: (e: any) => void;
+  hideHeader?: boolean;
+  onSelect?: (e:any)=>void;
+}
 export const AdapTableContent = ({
   loading,
   search,
@@ -51,7 +51,7 @@ export const AdapTableContent = ({
   options,
   onSelect,
 }: TableContentProps) => {
-  const index = options?.index ? options.index + 1 : 0;
+    const index = options?.index ? options.index + 1 : 0;
 
   const { tableRef, status } = useTable({
     data: tableData,
@@ -153,10 +153,10 @@ export const AdapTableContent = ({
             <tr >
               {index !== 0 && <th className="index">#</th>}
               {onSelect && (
-                    <th data-key="onSelect" className="edit">
-                      edit
-                    </th>
-                  )}
+                <th data-key="onSelect" className="edit">
+                  edit
+                </th>
+              )}
               { tableData?.[0] &&
                 Object.keys(tableData[0]).map((key, columnIndex) => {
                   const columnKey = keyStringConverter(key);
@@ -167,8 +167,7 @@ export const AdapTableContent = ({
                         key={key}
                         onDoubleClick={() => handleDoubleClick(columnIndex)}
                         style={{ width: columnWidths[key] || "auto" }}
-                        className={`resizeable ${resizeColumnIndex === columnIndex ? "resizing" : ""
-                          }`}
+                        className={`resizeable ${resizeColumnIndex === columnIndex ? "resizing" : ""}`}
                       >
                         <div
                           className={`th-content ${variant ? variant : ""}`}
@@ -184,7 +183,7 @@ export const AdapTableContent = ({
           </thead>}
           <tbody>
             { tableData?.[0] &&
-              tableData.map((item: ItemType, i_: number) => {
+              tableData.map((item: Record<string, any>, i_: number) => {
                 if (item) return <tr
                   className={`${variant ? variant : ""}`}
                   key={startIndex + i_}
@@ -200,52 +199,50 @@ export const AdapTableContent = ({
                   )}
                   {onSelect && (
                     <td data-key="onSelect" className="index" onClick={()=>handleSelect(item)}>
-                      {/* {index + i_} */}
                       <UiIcon icon={item?.selected?'fa-check':'fa-square'} />
                     </td>
                   )}
-                  {Object.entries(item).map(
-                    ([key, value], index) =>
+                  {Object.entries(item).map(([key, value], colIndex) => {
+                    if (options?.hideColumns?.includes(key)) return null;
 
-                      !options?.hideColumns?.includes(key) &&(
-                        <td key={index} data-key={keyStringConverter(key)}>
-                          {options?.hoverable && (
-                            <div className="td-hover"> {AdaptTableCellHover(value)}</div>
-                          )}
-                          {
-                            (<div
-                              className={`${options?.hoverable && "td-content" || ""
-                                }${key == 'image' && ` td-content--${key}` || ''}`}
-                            >{!['image', 'keywords'].includes(key)  ? (
-                              // BOOLEAN VALUES
-                              // typeof value == 'boolean'?<UiIco icon="fa-checkmark"/> || 
-                               value !== 'true' && value !== 'false' &&  typeof value != "boolean"  ?(
-                                value
-                              ):(
-                                <UiIcon 
-                                color={
-                                  String(value) !== 'false'?'green':'red'
-                                }
-                                
-                                 icon={
-                                    String(value) !== 'false'?"fa-circle-check":"fa-xmark"
-                                 }
-                                />
-                              )
-                            ) :
-                              (internalHiddenKeys(key) && (
-                                value?.length ?
-                                  (<Image priority src={value[0]} fill alt={key}  />) :
-                                  (<UiIcon icon={`${environment.merchant.name}-logo`} />)
-                              )
-                              )}</div>)
-                          }
+                    const customCell = options?.renderCell?.(key, item, i_);
+                    if (customCell !== undefined && customCell !== null) {
+                      return (
+                        <td key={colIndex} data-key={keyStringConverter(key)}>
+                          {customCell}
                         </td>
-                      )
-                  )}
+                      );
+                    }
+
+                    return (
+                      <td key={colIndex} data-key={keyStringConverter(key)}>
+                        {options?.hoverable && (
+                          <div className="td-hover"> {AdaptTableCellHover(value)}</div>
+                        )}
+                        <div
+                          className={`${options?.hoverable ? "td-content" : ""
+                            }${key == 'image' ? ` td-content--${key}` : ''}`}
+                        >
+                          {!['image', 'keywords'].includes(key)
+                            ? (value !== 'true' && value !== 'false' && typeof value !== "boolean"
+                              ? value
+                              : (
+                                <UiIcon
+                                  color={String(value) !== 'false' ? 'green' : 'red'}
+                                  icon={String(value) !== 'false' ? "fa-circle-check" : "fa-xmark"}
+                                />
+                              ))
+                            : (internalHiddenKeys(key) && (
+                              value?.length
+                                ? (<Image priority src={value[0]} fill alt={key} />)
+                                : (<UiIcon icon={`${environment.merchant.name}-logo`} />)
+                            ))}
+                        </div>
+                      </td>
+                    );
+                  })}
                 </tr>
-              }
-              )}
+              })}
           </tbody>
         </table>
         {["error", "empty", "loading"].includes(view) && (

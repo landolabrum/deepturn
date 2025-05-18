@@ -179,7 +179,6 @@ const UiForm = ({
                                 value={Boolean(field?.value)} />
                                 <div className='field-msg'>
                                 {field?.msg}
-
                                 </div>
                             </>
                           

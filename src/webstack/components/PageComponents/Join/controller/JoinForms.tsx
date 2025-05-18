@@ -12,25 +12,25 @@ import useScroll from '@webstack/hooks/useScroll';
 const JoinForms: React.FC = () => {
   const isOptIn = environment.merchant.settings?.optIn;
   const { openModal, closeModal, replaceModal, isModalOpen } = useModal();
-  const [currentScrollYPosition,_]=useScroll();
+  const [currentScrollYPosition, _] = useScroll();
   const user = useUser();
   const handleOnBoarding = () => {
 
-    if (isOptIn && isOptIn==true && user == null) {
-        openModal({
-          children: <JoinRegister openModal={openModal} />
-        })
-      }
+    if (!isModalOpen && isOptIn && isOptIn == true && user == null) {
+      openModal({
+        children: <JoinRegister openModal={openModal} />
+      })
+    }
   };
-  const init =()=>{
-    if(currentScrollYPosition>50){
+  const init = () => {
+    if (currentScrollYPosition > 50) {
       handleOnBoarding();
 
       // alert(currentScrollYPosition)
     }
   };
   useEffect(() => {
-init()
+    init()
   }, [currentScrollYPosition])
   return (
     <>
