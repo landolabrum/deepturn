@@ -18,6 +18,7 @@ const JoinForms: React.FC = () => {
 
     if (!isModalOpen && isOptIn && isOptIn == true && user == null) {
       openModal({
+        variant: 'fullscreen',
         children: <JoinRegister openModal={openModal} />
       })
     }

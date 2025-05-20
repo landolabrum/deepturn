@@ -4,6 +4,7 @@ import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import useWindow from '@webstack/hooks/window/useWindow';
+import validateField from '@webstack/components/UiForm/functions/validateField';
 
 interface IContactFormProps {
   submit?: {
@@ -44,12 +45,41 @@ const chosenFields =props?.fields || defaultContactFields;
     setDisabled(!isFormComplete);
   };
 
+
+const errorColor = 'var(--orange-50)';
+
+const validater = (field: any): IFormField => {
+  let text = findField(fields, field.name)?.name || '* ';
+  if (field.required && typeof text === 'string' && !text.trim().startsWith('*')) {
+    text = `* ${text}`;
+  }
+
+  let error: string | null = null;
+  let color: string | undefined;
+
+  if (field.required && !field.value) {
+    error = validateField('required', field.value);
+  } else {
+    error = validateField(field.name, field.value);
+  }
+
+  if (error) {
+    text += ` *${error}*`;
+    color = errorColor;
+  }
+
+  return {
+    ...field,
+    label: { text, color },
+    error,
+  };
+};
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let fieldsRef = fields.map((field: IFormField) => {
       if (field.name === name) {
         field.value = value;
-        return validateField(field);
+        return validater(field);
       }
       return field;
     });
@@ -57,61 +87,6 @@ const chosenFields =props?.fields || defaultContactFields;
     setFields(fieldsRef);
     handleDisabled(fieldsRef);
   };
-
-  const validateField = (field: IFormField): IFormField => {
-    let text: string = findField(chosenFields, field.name)?.name  || "* ";
-    if (field.required && typeof text === 'string' && !text.trim().startsWith('*')) {
-      text = `* ${text}`;
-    }
-    let color: string | undefined = undefined;
-    const errorColor = "var(--orange-50)";
-    const hasNumbers = /\d/;
-
-    if (field.required && !field.value) {
-      color = "var(--gray-50)";
-      if (field.name === 'agree') {
-        text += ' *You must agree to continue*';
-        color = errorColor;
-      }
-    } else if (field.name === 'email') {
-      const validEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-      if (typeof field.value === 'string' && !validEmailRegex.test(field.value)) {
-        text += ' *Invalid email address*';
-        color = errorColor;
-      }
-    } else if (field.name === 'phone') {
-      if (typeof field.value === 'string' && String(field.value).length < 20) {
-        text += ' *not long enough*';
-        color = errorColor;
-      }
-    } else if (field.name === 'name') {
-      if (typeof field.value === 'string' && field.value.length < 3) {
-        text += ' *First Name, too short*';
-        color = errorColor;
-      } else if (typeof field.value === 'string' && !field.value.includes(' ')) {
-        text += ' *Full name must include a space*';
-        color = errorColor;
-      } else if (typeof field.value === 'string' && field.value.includes(' ') && field.value.split(' ')[1].length < 3) {
-        text += ' *Last name, too short*';
-        color = errorColor;
-      } else if (typeof field.value === 'string' && hasNumbers.test(field.value)) {
-        text += ' *Name must not include numbers*';
-        color = errorColor;
-      }
-    } else if (field.name === 'postal_code') {
-      if (typeof field.value === 'string' && !/^\d{5}(-\d{4})?$/.test(field.value)) {
-        text += ' *Invalid postal code*';
-        color = errorColor;
-      }
-    }
-
-    const hasError = findField(fieldErrors, field.name);
-    if (fieldErrors && hasError && field.name == text) {
-      delete field.error;
-    }
-    return { ...field, label: { text, color } };
-  };
-
   const handleFormSubmit = () => {
     const formData = fields.reduce((acc: any, field: any) => {
       if (['line1', 'line2', 'city', 'state', 'postal_code'].includes(field.name)) {

@@ -69,7 +69,25 @@ export const createField = (newField: any): IFormField | undefined => {
         default:
             console.error("[ UNHANDLED OBJ ]", { field, vt: valueType(field) });
             break;
-    }
-
+    } 
+ 
     return field;
+};
+export function formFieldsToDict(
+  fields: IFormField[],
+  keyName: string,
+  valueName: string
+): Record<string, string | number | boolean | null> {
+    let context: Record<string, string | number | boolean | null> = {};
+    Object.entries(fields).map(([f,k]) => {
+        const rKey:any= k.name == keyName&&String(k.value);
+        const rVal= findField(fields, valueName)?.value;
+        if(rKey && rVal) {
+            context = {
+                ...context,
+                [rKey]: rVal
+            };
+        }
+    }).filter(Boolean);
+ return context;
 };

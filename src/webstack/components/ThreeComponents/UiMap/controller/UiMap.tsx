@@ -34,12 +34,14 @@ interface UiMapProps {
     vessels?: IVessel[];
     onVesselClick?: (vessel: IVessel) => void;
     require?: "user" | "location" | "both";
+    variant?: "fullscreen" | "embedded";
 }
 
-const UiMap: React.FC<UiMapProps> = ({ options, vessels, onVesselClick, require, hideHover }) => {
+const UiMap: React.FC<UiMapProps> = ({ options, vessels, onVesselClick, require, hideHover, variant = 'fullscreen' }) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<MapboxMap | null>(null);
-    const initialStyleID = "clw76pwt4003o01q120rh1mkk";
+    const initialStyleID = "cmavthexs01o901rf7qmpf9w7";
+    // const initialStyleID = "clw76pwt4003o01q120rh1mkk";
 
     const [loader, setLoader] = useLoader();
     const profile = useProfile({ require: require });
@@ -180,12 +182,12 @@ const UiMap: React.FC<UiMapProps> = ({ options, vessels, onVesselClick, require,
             zoomLevel
         ), [windowWidth, windowHeight, selectedVessel, zoomLevel]);
 
-    return (
+       return (
         <>
             <style jsx>{styles}</style>
-            <div className='map-container'>
-                <div className='map-content'>
-                    <div className="map" ref={mapContainerRef} onDoubleClick={() => selectedVessel && setSelectedVessel(false)} />
+            <div className={variant === 'fullscreen' ? 'map-container' : 'embedded'}>
+                <div className='map-content' style={variant !== 'fullscreen' ? { height: '100%', width: '100%', position: 'relative' } : undefined}>
+                    <div className="map" ref={mapContainerRef} onDoubleClick={() => selectedVessel && setSelectedVessel(false)} style={variant !== 'fullscreen' ? { height: '100%', width: '100%' } : undefined} />
                     {selectedVessel && (
                         <MapVesselDetails
                             vessel={selectedVessel}

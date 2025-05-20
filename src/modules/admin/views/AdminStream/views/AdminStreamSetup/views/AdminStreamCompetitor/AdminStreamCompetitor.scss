@@ -1,0 +1,12 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.admin-stream-event {
+    @extend .d-flex;
+  flex-direction: column;
+  gap: var(--s-9);
+  padding: var(--s-9);
+  width:var(--s-9-width);
+}

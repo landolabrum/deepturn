@@ -87,7 +87,7 @@ const useAdminCustomer = ({ customer_id, level }: { customer_id?: string, level:
   // Function to modify the customer (send update request)
   const getDifferences = (initialObj: any, updatedObj: any) => {
     const differences: any = {};
-  
+
     const compare = (initial: any, updated: any, path: string[] = []) => {
       for (const key in updated) {
         if (typeof updated[key] === "object" && !Array.isArray(updated[key]) && updated[key] !== null) {
@@ -100,11 +100,11 @@ const useAdminCustomer = ({ customer_id, level }: { customer_id?: string, level:
         }
       }
     };
-  
+
     compare(initialObj, updatedObj);
     return differences;
   };
-  
+
   // Helper function to set values in the nested differences object based on a path
   const set = (obj: any, path: string, value: any) => {
     const keys = path.split('.');
@@ -117,31 +117,34 @@ const useAdminCustomer = ({ customer_id, level }: { customer_id?: string, level:
       return acc[key];
     }, obj);
   };
-  
+
   const modifyCustomer = async () => {
     const modifyCustomerService = async (request: any) => {
       try {
-        const response = await adminService.updateCustomer({id:initialCustomer.id,...request});
+        const response = await adminService.updateCustomer({ id: initialCustomer.id, ...request });
         if (response) openModal({ children: JSON.stringify(response) });
       } catch (error: any) {
         console.error({ error });
       }
     };
-  
-    // Get only the differences between the current customer and the initialCustomer
+
     const differences = getDifferences(initialCustomer, customer);
-    
-    // If no differences, do not send the request
+
+    // ✅ Ensure email is always included
+    if (customer?.email) {
+      differences.email = customer.email;
+    }
+
     if (Object.keys(differences).length === 0) {
       console.log("No changes to update");
       return;
     }
-  
-    console.log({ differences }); // This is the payload with only changed fields
-  
-    // Send the differences as the payload
+
+    console.log({ differences });
+
     await modifyCustomerService(differences);
   };
+
 
   useEffect(() => {
     if (customer === undefined) getCustomer();

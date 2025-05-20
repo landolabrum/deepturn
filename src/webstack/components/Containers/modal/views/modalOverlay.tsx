@@ -3,6 +3,7 @@ import { ModalContext, ModalContextType } from '../contexts/modalContext';
 import styles from "./modalOverlay.scss";
 import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { useRouter } from 'next/router';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 
 const ModalOverlay: React.FC<any> = () => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -46,8 +47,10 @@ const ModalOverlay: React.FC<any> = () => {
                 onMouseLeave={handleMouseLeave}
 
               >
-                <UiButton onClick={closeModal} size='lg' traits={{beforeIcon:'fa-xmark'}}>{hovered?"close":''}
-                </UiButton>
+                {/* <UiButton onClick={closeModal} size='lg' traits={{beforeIcon:'fa-xmark'}} variant='flat'>
+                </UiButton> */}
+                {/* {hovered?"close":''} */}
+                <UiIcon icon={"fa-xmark"} size="lg" onClick={closeModal} />
               </div>
             )}
           </div>

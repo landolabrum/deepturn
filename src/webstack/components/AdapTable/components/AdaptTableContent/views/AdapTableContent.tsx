@@ -209,6 +209,13 @@ export const AdapTableContent = ({
                     if (customCell !== undefined && customCell !== null) {
                       return (
                         <td key={colIndex} data-key={keyStringConverter(key)}>
+                               {options?.hoverable && (
+                          <div className="td-hover"> {AdaptTableCellHover(value)}</div>
+                        )}
+                        <div
+                          className={`${options?.hoverable ? "hoverable" : "td-content"
+                            }${key == 'image' ? ` td-content--${key}` : ''}`}
+                        > </div>
                           {customCell}
                         </td>
                       );
@@ -220,7 +227,7 @@ export const AdapTableContent = ({
                           <div className="td-hover"> {AdaptTableCellHover(value)}</div>
                         )}
                         <div
-                          className={`${options?.hoverable ? "td-content" : ""
+                          className={`${options?.hoverable ? "hoverable" : "td-content"
                             }${key == 'image' ? ` td-content--${key}` : ''}`}
                         >
                           {!['image', 'keywords'].includes(key)

@@ -15,7 +15,6 @@ import useWindow from '@webstack/hooks/window/useWindow';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 import useDevice from '~/src/core/authentication/hooks/useDevice';
 import useSessionStorage from '@webstack/hooks/storage/useSessionStorage';
-import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 
 interface JoinRegisterProps {
   openModal: (config: any) => void;
@@ -85,54 +84,54 @@ const JoinRegister = ({ openModal }: JoinRegisterProps) => {
         merchant: environment.merchant,
       },
     };
-
-    try {
-      const response = await MemberService.signUp(request);
-      if (response?.email) {
-        setNotification({
-          active: true,
-          list: [{ label: 'Sign up successful', message: 'Welcome! You’ve been signed up successfully.' }],
-          dismissable: true
-        });
-      } else if (response?.status === 'existing') {
-        setNotification({
-          active: true,
-          list: [{ label: 'User Exists', message: 'User already exists. You may log in.' }],
-          dismissable: true
-        });
-      } else {
-        console.error('[SIGN UP ERROR]: Unexpected response', response);
-        setNotification({
-          active: true,
-          list: [{ label: 'Unexpected Response', message: 'Unexpected server response. Please try again later.' }],
-          dismissable: true
-        });
-      }
-    } catch (e: any) {
-      if (e?.detail?.fields) {
-        const updated = fields.map((field) => {
-          const err = e.detail.fields.find((f: any) => f.name === field.name);
-          return err ? { ...field, error: err.message } : field;
-        });
-        setSessionItem('joinFields', updated);
-        setNotification({
-          active: true,
-          apiError: {
-            message: 'There was an error with your submission.',
-            status: e?.status || 400,
-            detail: e?.detail || 'Unknown error',
-            error: true
-          }
-        });
-      } else {
-        console.error('[SIGN UP ERROR]:', e);
-        setNotification({
-          active: true,
-          list: [{ label: 'Submission Failed', message: 'Something went wrong. Please try again later.' }],
-          dismissable: true
-        });
-      }
-    }
+    
+    // try {
+    //   const response = await MemberService.signUp(request);
+    //   if (response?.email) {
+    //     setNotification({
+    //       active: true,
+    //       list: [{ label: 'Sign up successful', message: 'Welcome! You’ve been signed up successfully.' }],
+    //       dismissable: true
+    //     });
+    //   } else if (response?.status === 'existing') {
+    //     setNotification({
+    //       active: true,
+    //       list: [{ label: 'User Exists', message: 'User already exists. You may log in.' }],
+    //       dismissable: true
+    //     });
+    //   } else {
+    //     console.error('[SIGN UP ERROR]: Unexpected response', response);
+    //     setNotification({
+    //       active: true,
+    //       list: [{ label: 'Unexpected Response', message: 'Unexpected server response. Please try again later.' }],
+    //       dismissable: true
+    //     });
+    //   }
+    // } catch (e: any) {
+    //   if (e?.detail?.fields) {
+    //     const updated = fields.map((field) => {
+    //       const err = e.detail.fields.find((f: any) => f.name === field.name);
+    //       return err ? { ...field, error: err.message } : field;
+    //     });
+    //     setSessionItem('joinFields', updated);
+    //     setNotification({
+    //       active: true,
+    //       apiError: {
+    //         message: 'There was an error with your submission.',
+    //         status: e?.status || 400,
+    //         detail: e?.detail || 'Unknown error',
+    //         error: true
+    //       }
+    //     });
+    //   } else {
+    //     console.error('[SIGN UP ERROR]:', e);
+    //     setNotification({
+    //       active: true,
+    //       list: [{ label: 'Submission Failed', message: 'Something went wrong. Please try again later.' }],
+    //       dismissable: true
+    //     });
+    //   }
+    // }
   };
 
   const views = useMemo(() => ({
@@ -156,7 +155,7 @@ const JoinRegister = ({ openModal }: JoinRegisterProps) => {
         style={{fontSize:"10px", maxWidth:"400px"}}
         className="debug-json"
       >{JSON.stringify(fields, null, 2)}</pre>
-      <div className="join-register">
+      <div className="join-register s-5">
         <div className="join-register__content">
           <div className="join-register__content--body">
             {fields?.length && (

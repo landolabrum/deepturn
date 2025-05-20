@@ -150,11 +150,12 @@ const NirvanaEnergy = () => {
           style={
             bgOpacity()}>
           {/* <div className='nirvana-energy__bg-overlay--media'> */}
-          {isDesktop ? (<UiMedia playbackSpeed={.7}
+            <UiMedia playbackSpeed={.7}
             onLoad={handleBackgroundLoad}
-            type='video' autoplay muted loop variant='background' src="https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/home.webm" />) : (
-""
-          )}
+            type='video' autoplay muted loop variant='background' src={
+              isDesktop ?"https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/home.webm":"https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/home.gif"
+            } />
+
           {/* </div> */}
           <div className='nirvana-energy__bg-overlay--content'>
             <div className='nirvana-energy__bg-overlay--content__text' >
