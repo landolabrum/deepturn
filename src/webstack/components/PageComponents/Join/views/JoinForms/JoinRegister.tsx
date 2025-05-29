@@ -1,5 +1,5 @@
 // Relative Path: ./JoinRegister.tsx
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import styles from './JoinForms.scss';
 import ContactForm from '@shared/components/ContactForm/ContactForm';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
@@ -14,25 +14,25 @@ import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import useWindow from '@webstack/hooks/window/useWindow';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 import useDevice from '~/src/core/authentication/hooks/useDevice';
-import useSessionStorage from '@webstack/hooks/storage/useSessionStorage';
+import UiHeader from '@webstack/components/Containers/Header/views/UiHeader/UiHeader';
 
 interface JoinRegisterProps {
   openModal: (config: any) => void;
+  closeModal: () => void;
 }
 
-const JoinRegister = ({ openModal }: JoinRegisterProps) => {
+const JoinRegister = ({ openModal, closeModal }: JoinRegisterProps) => {
   const windowSize = useWindow();
   const user = useUser();
   const guest = useGuest();
   const MemberService = getService<IMemberService>('IMemberService');
   const device = useDevice();
   const [notification, setNotification] = useNotification();
-  const { sessionData, setSessionItem } = useSessionStorage();
 
   const width = useMemo(() => (windowSize.width >= 900 ? '50%' : '100%'), [windowSize.width]);
 
-  const initialFields: IFormField[] = useMemo(() => [
-    { name: 'name', label: 'name', type: 'text', placeholder: 'Herbie Hancock', required: true },
+  const fields: IFormField[] = useMemo(() => [
+    { name: 'name', label: 'name', type: 'text', placeholder: 'First Last', required: true },
     { name: 'email', label: 'email', type: 'email', placeholder: 'your@email.com', required: true, width },
     { name: 'phone', value: '1 (435) 200 - 3006', label: 'phone', type: 'tel', placeholder: '1 (000) 000-0000', required: true, width },
     {
@@ -45,28 +45,13 @@ const JoinRegister = ({ openModal }: JoinRegisterProps) => {
     },
   ], [width]);
 
-  const fields: IFormField[] = useMemo(() => {
-    const stored = sessionData?.joinFields;
-    if (!stored) {
-      setSessionItem('joinFields', initialFields);
-      return initialFields;
-    }
-    return stored;
-  }, [sessionData, initialFields]);
-
-  const handleForm = useCallback((e: any) => {
-    const { name, value } = e?.target;
-    const updated = fields.map((field) => field.name === name ? { ...field, value } : field);
-    setSessionItem('joinFields', updated);
-  }, [fields, setSessionItem]);
-
   const handleSubmit = async () => {
-    const values: Record<string, any> = {};
-    fields.forEach(field => {
-      if (field.name && field.name !== 'agree') {
-        values[field.name] = field.value || '';
-      }
-    });
+    const raw = sessionStorage.getItem('joinFields');
+    const parsed = raw ? JSON.parse(raw) : {};
+    const values = Array.isArray(parsed?.value) ? parsed.value.reduce((acc: any, field: any) => {
+      acc[field.name] = field.value;
+      return acc;
+    }, {}) : {};
 
     const [firstName = '', lastName = ''] = (values.name || '').split(' ');
 
@@ -84,54 +69,50 @@ const JoinRegister = ({ openModal }: JoinRegisterProps) => {
         merchant: environment.merchant,
       },
     };
-    
-    // try {
-    //   const response = await MemberService.signUp(request);
-    //   if (response?.email) {
-    //     setNotification({
-    //       active: true,
-    //       list: [{ label: 'Sign up successful', message: 'Welcome! You’ve been signed up successfully.' }],
-    //       dismissable: true
-    //     });
-    //   } else if (response?.status === 'existing') {
-    //     setNotification({
-    //       active: true,
-    //       list: [{ label: 'User Exists', message: 'User already exists. You may log in.' }],
-    //       dismissable: true
-    //     });
-    //   } else {
-    //     console.error('[SIGN UP ERROR]: Unexpected response', response);
-    //     setNotification({
-    //       active: true,
-    //       list: [{ label: 'Unexpected Response', message: 'Unexpected server response. Please try again later.' }],
-    //       dismissable: true
-    //     });
-    //   }
-    // } catch (e: any) {
-    //   if (e?.detail?.fields) {
-    //     const updated = fields.map((field) => {
-    //       const err = e.detail.fields.find((f: any) => f.name === field.name);
-    //       return err ? { ...field, error: err.message } : field;
-    //     });
-    //     setSessionItem('joinFields', updated);
-    //     setNotification({
-    //       active: true,
-    //       apiError: {
-    //         message: 'There was an error with your submission.',
-    //         status: e?.status || 400,
-    //         detail: e?.detail || 'Unknown error',
-    //         error: true
-    //       }
-    //     });
-    //   } else {
-    //     console.error('[SIGN UP ERROR]:', e);
-    //     setNotification({
-    //       active: true,
-    //       list: [{ label: 'Submission Failed', message: 'Something went wrong. Please try again later.' }],
-    //       dismissable: true
-    //     });
-    //   }
-    // }
+
+    try {
+      const response = await MemberService.signUp(request);
+      if (response?.email) {
+        closeModal();
+        setNotification({
+          active: true,
+          list: [{ label: 'Sign up successful', message: 'Welcome! You’ve been signed up successfully.' }],
+          dismissable: true
+        });
+      } else if (response?.status === 'existing') {
+        setNotification({
+          active: true,
+          list: [{ label: 'User Exists', message: 'User already exists. You may log in.' }],
+          dismissable: true
+        });
+      } else {
+        console.error('[SIGN UP ERROR]: Unexpected response', response);
+        setNotification({
+          active: true,
+          list: [{ label: 'Unexpected Response', message: 'Unexpected server response. Please try again later.' }],
+          dismissable: true
+        });
+      }
+    } catch (e: any) {
+      if (e?.detail?.fields) {
+        setNotification({
+          active: true,
+          apiError: {
+            message: 'There was an error with your submission.',
+            status: e?.status || 400,
+            detail: e?.detail || 'Unknown error',
+            error: true
+          }
+        });
+      } else {
+        console.error('[SIGN UP ERROR]:', e);
+        setNotification({
+          active: true,
+          list: [{ label: 'Submission Failed', message: 'Something went wrong. Please try again later.' }],
+          dismissable: true
+        });
+      }
+    }
   };
 
   const views = useMemo(() => ({
@@ -139,22 +120,31 @@ const JoinRegister = ({ openModal }: JoinRegisterProps) => {
       <ContactForm
         submit={{ text: `Join ${keyStringConverter(environment.merchant.name)}` }}
         fieldErrors={undefined}
-        title="Get In Touch"
-        onChange={handleForm}
+        title={<>
+        <UiHeader 
+          title={`Join ${keyStringConverter(environment.merchant.name)}`}
+          // subtitle="Join us and be part of something great!"
+          // icon="fa-solid fa-people-group"
+          // size="large"
+          // width={windowSize.width >= 900 ? '50%' : '100%'}
+          // onClose={closeModal}
+        />
+        {/* <div className='d-flex-col s-w-100 align-start'>
+          <h1 className=''>Join {keyStringConverter(environment.merchant.name)}</h1>
+          <p className=''>Join us and be part of something great!</p>
+        </div> */}
+        </>}
         onSubmit={handleSubmit}
         user={user}
         fields={fields}
+        sessionKey="joinFields"
       />
     ),
-  }), [fields, handleForm, handleSubmit, user]);
+  }), [fields, handleSubmit, user]);
 
   return (
     <>
       <style jsx>{styles}</style>
-      <pre 
-        style={{fontSize:"10px", maxWidth:"400px"}}
-        className="debug-json"
-      >{JSON.stringify(fields, null, 2)}</pre>
       <div className="join-register s-5">
         <div className="join-register__content">
           <div className="join-register__content--body">

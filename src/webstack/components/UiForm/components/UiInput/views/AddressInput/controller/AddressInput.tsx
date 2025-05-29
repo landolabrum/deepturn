@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import styles from '../UiInput.scss';
+import styles from '@webstack/components/UiForm/components/UiInput/UiInput.scss';
 import aStyles from './AddressInput.scss';
 import { Loader } from '@googlemaps/js-api-loader';
 import FormControl, { ITraits } from "@webstack/components/UiForm/components/FormControl/FormControl";

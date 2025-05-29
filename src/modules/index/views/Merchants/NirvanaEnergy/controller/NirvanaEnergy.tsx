@@ -154,10 +154,8 @@ const NirvanaEnergy = () => {
             onLoad={handleBackgroundLoad}
             type='video' autoplay muted loop variant='background' src={
               isDesktop ?"https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/home.webm":"https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/home.gif"
-            } />
-
-          {/* </div> */}
-          <div className='nirvana-energy__bg-overlay--content'>
+            } >
+              <div className='nirvana-energy__bg-overlay--content'>
             <div className='nirvana-energy__bg-overlay--content__text' >
               {bgLoaded &&
                 <div className='d-flex-col s-h-100 s-w-100'>
@@ -187,6 +185,9 @@ const NirvanaEnergy = () => {
               </>
               } view={view} setView={setView} /> */}
           </div>
+            </UiMedia>
+
+          
         </div>
 
         <div className='nirvana-energy__content--first'>

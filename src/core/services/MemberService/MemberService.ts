@@ -105,7 +105,7 @@ export default class MemberService
         { data: encryptedLoginData },
         ), TIMEOUT 
       );
-    console.log("[ signIn ]", {memberJwt})
+    // console.log("[ signIn ]", {memberJwt})
     if (!memberJwt?.fields) {
       this.saveMemberToken(memberJwt);
       this.saveLegacyAuthCookie(memberJwt);

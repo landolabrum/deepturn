@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import { IInput } from "@webstack/models/input";
 import { validateInput } from "./helpers/validateInput";
 import maskInput from "./helpers/maskInput";
-import AutocompleteAddressInput from "./views/AddressInput";
+import AutocompleteAddressInput from "./views/AddressInput/controller/AddressInput";
 import { debounce } from "lodash";
 
 const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) => {
@@ -97,7 +97,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
 
         </FormControl>
       }
-
+      
       {props.name == 'address' && (
         <AutocompleteAddressInput
           label={props.label}

@@ -8,7 +8,7 @@ import UiLoader from '../../UiLoader/view/UiLoader';
 import ToggleSwitch from '../components/UiToggle/UiToggle';
 import FormControl from '../components/FormControl/FormControl';
 import AddFieldForm from '../views/AddFieldForm/AddFieldForm';
-import AutocompleteAddressInput from '@webstack/components/UiForm/components/UiInput/views/AddressInput';
+import AutocompleteAddressInput from '@webstack/components/UiForm/components/UiInput/views/AddressInput/controller/AddressInput';
 import { fieldType } from '../functions/formFieldFunctions';
 
 const UiForm = ({

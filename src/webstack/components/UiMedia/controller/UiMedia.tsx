@@ -22,6 +22,7 @@ export interface IMedia {
   width?: number;
   height?: number;
   playbackSpeed?: number;
+  children?:any;
 }
 
 const UiMedia: React.FC<IMedia> = ({
@@ -41,6 +42,7 @@ const UiMedia: React.FC<IMedia> = ({
   width,
   height,
   playbackSpeed = 1,
+  children
 }) => {
   const [imageControlProps, setImageControlProps] = useState<any>({ variant, type });
   const [reloadTrigger, setReloadTrigger] = useState(0);
@@ -130,6 +132,7 @@ const UiMedia: React.FC<IMedia> = ({
         onComplete={handleLoad}
         onPlayPauseClick={togglePlay}
         showPlayPause={type === 'video'}
+        children={children}
       >
         {isLoading && <div className="loading">{loadingText || 'Loading...'}</div>}
         {!autoplay && !isPlaying && poster && <div className="ui-media--poster" onClick={togglePlay}>
@@ -181,6 +184,7 @@ const UiMedia: React.FC<IMedia> = ({
             />
           )
         )}
+    
       </ImageControl>
     </>
   );

@@ -1,5 +1,4 @@
-img,
-video {
+img {
     width: 100%;
     height: inherit;
     z-index: 1;
@@ -18,16 +17,23 @@ video {
     justify-content: center;
     align-items: center;
 }
-video.ui-media--background{
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
+// video.ui-media--background{
+//     // position: fixed;
+//     // top: 0;
+//     // left: 0;
+//     // z-index: -1;
+// }
 .ui-media {
     min-height: 100%;
     z-index: 2;
-
+&__children{
+    @extend .d-flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 2;
+}
     &__iframe {
         position: absolute;
         top: 0;
@@ -37,26 +43,57 @@ video.ui-media--background{
         width: 100%;
         height: 100%;
     }
+.ui-media--background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+}
+
+// img.ui-media--background {
+//   display: block;
+//   width: 100vw;
+//   height: 100vh;
+//   object-fit: cover;
+//   object-position: center;
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   z-index: -1;
+//   pointer-events: none;
+// }
 
 
+    // &--background {
+    //     position: fixed;
+    //     top:0;
+    //     left: 0;
+    //     z-index: -1;
+    //     width: 100vw;
+    //     max-width: 100vw;
+    //     height: 100vh;
 
-    &--background {
-        width: inherit;
-        height: 100%;
-        // height: inherit;
-        // top: var(--s-nav-height);
-        // @extend .d-flex;
-        // justify-content: flex-start;
-        // min-width: 100%;
-        // /* Set up positioning */
-        // position: fixed;
-        // left: 50%;
-        // transform: translateX(-50%);
-        // @media(max-width:1100px){
-        //     width: auto;
-        // }
+    //         // width: inherit;
+    //     // height: inherit;
+    //     // top: var(--s-nav-height);
+    //     // @extend .d-flex;
+    //     // justify-content: flex-start;
+    //     // min-width: 100%;
+    //     // /* Set up positioning */
+    //     // position: fixed;
+    //     // left: 50%;
+    //     // transform: translateX(-50%);
+    //     // @media(max-width:1100px){
+    //     //     width: auto;
+    //     // }
 
-    }
+    // }
 
     &--poster {
         @extend .d-flex;

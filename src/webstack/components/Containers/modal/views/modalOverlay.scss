@@ -45,18 +45,18 @@
     gap: var(--s-1);
     min-width: 450px;
     max-width: var(--s-6-width);
-    @media(max-height: 900px) {
+    @media(max-height: 1100px) {
         top: var(--s-9);
         // top:var(--s-1);
         bottom:var(--s-9);
     }
-    @media(max-width: 900px) {
+    @media(max-width: 1100px) {
         min-width: unset;
         max-width: var(--s-9-width);
         width: var(--s-9-width);
         margin: 0 auto;
         padding-bottom:var(--s-9);
-        top: calc(var(--s-nav-height) + var(--s-5));
+        top: calc(var(--s-nav-height) + var(--s-5)) !important; // Adjusted for mobile view
         // bottom: var(--s-9);
         // height: max-content;
     }
