@@ -27,6 +27,7 @@ const devEnvironment: IEnvironment = {
     shopping: `${serverUrl}`,
     home: `${serverUrl}`,
     admin: `${serverUrl}`,
+    gpt: `${serverUrl}`,
   },
   firebase: {
     webApiKey: '',

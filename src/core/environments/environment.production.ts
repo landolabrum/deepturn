@@ -24,6 +24,7 @@ const prodEnvironment: IEnvironment = {
     distributor: "",
     shopping: `${serverUrl}`,
     home: `${serverUrl}`,
+    gpt: `${serverUrl}`,
     admin: `${serverUrl}`,
   },
   firebase: {

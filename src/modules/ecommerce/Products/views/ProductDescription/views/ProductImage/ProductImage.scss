@@ -16,14 +16,14 @@ $hite: calc(100% - 20px);
 .d-flex {
     display: flex;
     justify-content: center;
-    align-items: center;
+    calign-items: center;
     margin: 0;
 }
 
 .product-image {
     @extend .d-flex;
     overflow: hidden;
-
+    object-fit: inherit;
     &__description{
         width: 100%;
         --ui-icon-height: 100px;
@@ -37,6 +37,7 @@ $hite: calc(100% - 20px);
     }
   
     .product-image__content {
+        
         @extend .d-flex;
         --ui-icon-width: 50%;
         --ui-icon-height: 50%;

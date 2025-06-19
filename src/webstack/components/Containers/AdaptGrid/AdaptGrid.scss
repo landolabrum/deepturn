@@ -1,3 +1,8 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
 .adaptgrid {
   display: grid;
   grid-column-gap: 0px;
@@ -33,6 +38,18 @@
       display: flex;
       flex-direction: column;
     }
+  }
+  &__loading{
+    width: 100%;
+    min-height: 100vh;
+    @extend .d-flex;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    overflow: hidden;
+
   }
   .adaptgrid__grid-item {
     display: flex;

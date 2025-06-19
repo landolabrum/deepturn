@@ -1,54 +1,56 @@
-// Relative Path: ./Services.tsx
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './Services.scss';
-import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
-import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
-import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
-import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
+import { useProducts } from '~/src/modules/ecommerce/Products/hooks/useProducts';
 import { useRouter } from 'next/router';
-import MarketingDetails from '../views/MarketingDetails/MarketingDetails';
-import MarketingList from '../views/MarketingList/MarketingList';
-
+import ServicesSectionList from '../views/ServicesSectionList/ServicesSectionList';
+import ServicesCarousel from '../views/ServicesCarousel/ServicesCarousel';
+import environment from '~/src/core/environment';
+import keyStringConverter from '@webstack/helpers/keyStringConverter';
+import ServicesGallery from '../views/ServicesGallery/ServicesGallery';
+import ServicesEnergyIcons from '../views/ServicesEnergyIcons/ServicesEnergyIcons';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 
 const Services: React.FC = () => {
-  const [view, _setView] = useState<string | undefined>();
-  const [details, _setDetails] = useState<any | undefined>();
-  const setDetails = (newView: any)=>{
-    // console.log({deetz})
-    Object.keys(views).includes(newView) && _setView(newView)
+  const { products, loading } = useProducts();
+  const router = useRouter();
+  const merchant = environment?.merchant || 'mb1';
+  const handleClick = (productId: string, priceId?: string) => {
+    router.push(`/product?id=${productId}&pri=${priceId}`);
   };
-    
-  const { query } = useRouter();
-  const views = {
-    data: <>
-      data acquisition
-    </>,
-    marketing: <MarketingList setDetails={setDetails}/>,
-    "marketing-details": (
-      <MarketingDetails 
-        setView={setDetails}
-      />
-    ),
-  }
 
-  const sid: string | undefined = query?.sid && String(query.sid);
-  useEffect(() => { if(sid && !view) _setView(sid) }, [query,details!=undefined]);
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='services'>
-        {/* <div className='dev'>
-          {view}
-        </div> */}
-        <UiViewLayout
-          currentView={view}
-          views={views}
-        />
+      <div className="services">
+        <div className="services-header">
+          <UiIcon icon={`${merchant.name}-logo`}/>
+       {keyStringConverter(merchant?.name, { textTransform: 'capitalize' }) || 'na'} Services
+        </div>
+        <div className='services-body'>
+          <div className='services--section'>
+            <div className="services--section-header">
+             
+            </div>
+            <ServicesEnergyIcons/>
+          </div>
+          <div className='services--section'>
+            <div className="services--section-header">
+             Products
+            </div>
+            <ServicesCarousel products={products} />
+          </div>
+          <div className='services--section'>
+            <div className="services--section-header">Install Gallery</div>
+            <ServicesGallery />
+          </div>
+          <div className='services--section'>
+            <div className="services--section-header">
 
-        {view == 'method' && <>
-
-          {/* <UserMethods /> */}
-        </>}
+            </div>
+            <ServicesSectionList
+              products={products} />
+          </div>
+        </div>
       </div>
     </>
   );

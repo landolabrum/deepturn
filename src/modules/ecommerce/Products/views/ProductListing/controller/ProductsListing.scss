@@ -7,11 +7,13 @@
 
 .products-listing {
     @extend .d-flex;
+    align-items: flex-start;
     flex-direction: column;
     height: inherit;
+    padding: var(--s-9);
     color: white;
     gap:var(--s-element);
-    width: 100%;
+    width: var(--s-9-width);
     @media(max-width:900px){
         height: 100%;
     }
@@ -41,7 +43,7 @@
         width: 100%;
         gap:var(--s-9);
         &--item{
-            // --ui-icon-color:var(--gray-80);
+            cursor: pointer;
             transition: all .3s ease-in;
             &:hover{
                 transform: scale(1.1);

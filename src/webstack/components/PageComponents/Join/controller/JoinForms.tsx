@@ -20,7 +20,8 @@ const JoinForms: React.FC = () => {
     const needsOnBoarding = !isModalOpen && isOptIn && isOptIn == true && user == null && guest == null;
     if (needsOnBoarding) {
       openModal({
-        variant: 'fullscreen',
+        dismissable:false,
+        // variant: 'fullscreen',
         children: <JoinRegister openModal={openModal} closeModal={closeModal} />
       })
     }

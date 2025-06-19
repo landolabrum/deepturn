@@ -1,6 +1,6 @@
 img {
     width: 100%;
-    height: inherit;
+    height: auto;
     z-index: 1;
     position: relative;
     .d-flex {
@@ -16,6 +16,10 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+video{
+     width: 100%;
+  height: auto;
 }
 // video.ui-media--background{
 //     // position: fixed;
@@ -33,6 +37,17 @@ img {
     height: 100%;
     overflow: hidden;
     z-index: 2;
+    &.background{
+        position: absolute;
+        width: var(--s-1-width);
+        height: var(--s-1-width);
+        padding:var(--s-1);
+        min-width: 50vw;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        overflow: visible;
+    }
 }
     &__iframe {
         position: absolute;
@@ -43,7 +58,7 @@ img {
         width: 100%;
         height: 100%;
     }
-.ui-media--background {
+&--background {
   position: fixed;
   top: 0;
   left: 0;
@@ -104,9 +119,8 @@ img {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 100%;
+        width:100%;
         height: 100%;
-
         &__content {
             @extend .d-flex;
             width: var(--s-10-width);
@@ -117,7 +131,7 @@ img {
             font-size: var(--s-1);
             mix-blend-mode: color-dodge;
             cursor: pointer;
-
+   
             &:hover {
                 color: var(--white);
                 text-shadow: 0 0 var(--s-3) var(--primary-10);

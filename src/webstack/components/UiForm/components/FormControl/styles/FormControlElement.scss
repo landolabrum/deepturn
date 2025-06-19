@@ -638,8 +638,8 @@
     &--nav-item,
     &--nav-item--active {
         gap: var(--s-9);
-        color: var(--gray-60-o);
-        --ui-icon-color: var(--gray-60-o);
+        color: var(--gray-10);
+        --ui-icon-color: var(--gray-10);
         transition: all .25s ease-in-out;
         padding: 0 var(--s-9);
         border: unset;

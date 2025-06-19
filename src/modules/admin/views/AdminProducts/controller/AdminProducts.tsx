@@ -147,7 +147,6 @@ const AdminProducts: React.FC = () => {
 
   const handleSearchChange = (searchData: string) => {
     setSearchTerm(searchData);
-    handleSearch(searchData);
   };
 
   
@@ -158,85 +157,13 @@ const AdminProducts: React.FC = () => {
     };
   
     // Adding 'mid' as a filter
-    const handleFilterChange = (field: IFormField) => {
-      const filtArr = field.name.split('-');
-      const filterName = filtArr[1] || field.label;
-      const filterParent = filtArr[0];
-      if (!filterName || !products) return;
-  
-      if (filterParent === 'visibility') {
-        let newProducts;
-        if (filterName === 'active') {
-          newProducts = products.filter(product => product.active);
-        } else if (filterName === 'inactive') {
-          newProducts = products.filter(product => !product.active);
-        } else {
-          newProducts = products; // handle 'everything' case
-        }
-        setFilteredProducts(newProducts);
-      } else if (filterParent === 'mid') {
-        if(filterName=='all'){
-          return setFilteredProducts(products)
-        }
-        const newProducts = products.filter((product:any) => product?.mid === filterName);
-        setFilteredProducts(newProducts);
-        console.log({ filterName, newProducts });
-      }
-    };
-  
-    // Get unique 'mid' values for filters
-    const midOptions = getUniqueMids(products||[]).map(mid => ({
-      label: mid,
-      name: `mid-${mid}`,
-    })).concat([{label:'all',name:'mid-all'}]).reverse();
 
   
 
-  const pageContext: any = {
-    list: {
-      actions: ['add', 'edit'],
-      view: (
-        <>
-          <AdapTable
-            onSelect={select ? onSelect : undefined}
-            options={{ tableTitle: 'admin products', hideColumns: ['id', 'selected', 'price_id'] }}
-            data={filteredProducts}
-            filters={
-              {
-                visibility:[
-                  {
-                    label:'everything',
-                    name:'visibility-everything'
-                  },
-                  {
-                    label:'active',
-                    name:'visibility-active'
-                  },
-                  {
-                    label:'inactive',
-                    name:'visibility-inactive'
-                  }
-                ],
-                merchant: midOptions,
-              }
-            } // Define filter options
-            setFilter={handleFilterChange}
-            search={searchTerm}
-            setSearch={handleSearchChange}
-            onRowClick={onRowClick}
-          />
-        </>
-      )
-    },
-    add: {
-      actions: ['list'],
-      view: <AdminProduct />
-    },
-    product: {
-      actions: ['list'],
-      view: <AdminProduct setView={() => setView('list')} product={product} />
-    }
-  };
+
+  
+
+
 
   const ProductService = getService<IProductService>('IProductService');
   const { mid } = environment.merchant;
@@ -301,9 +228,127 @@ const AdminProducts: React.FC = () => {
         break;
     }
   };
+  const [filterState, setFilterState] = useState<{ visibility: string; merchant: string }>({
+  visibility: 'everything',
+  merchant: 'all',
+});
+
+const applyFilters = useCallback(() => {
+  if (!products) return;
+
+  const { visibility, merchant } = filterState;
+  let filtered = [...products];
+
+  // Apply visibility filter
+  if (visibility === 'active') {
+    filtered = filtered.filter(product => product.active);
+  } else if (visibility === 'inactive') {
+    filtered = filtered.filter(product => !product.active);
+  }
+
+  // Apply merchant filter
+  if (merchant !== 'all') {
+    filtered = filtered.filter(product => product?.mid === merchant);
+  }
+
+  setFilteredProducts(filtered);
+}, [products, filterState]);
+
+const handleFilterChange = (field: IFormField) => {
+  const [group, value] = field.name.split('-');
+  setFilterState(prev => {
+    const newState = {
+      ...prev,
+      [group]: value,
+    };
+    return newState;
+  });
+};
+
+useEffect(() => {
+  applyFilters();
+}, [filterState, applyFilters]);
+
+const midOptions = getUniqueMids(products || []).map(mid => ({
+  label: mid,
+  name: `merchant-${mid}`,
+})).concat([{ label: 'all', name: 'merchant-all' }]).reverse();
+
 
   useEffect(() => { getProducts() }, [setProducts]);
+useEffect(() => {
+  if (!products) return;
 
+  const { visibility, merchant } = filterState;
+  let filtered = [...products];
+
+  // Apply filters
+  if (visibility === 'active') {
+    filtered = filtered.filter(product => product.active);
+  } else if (visibility === 'inactive') {
+    filtered = filtered.filter(product => !product.active);
+  }
+
+  if (merchant !== 'all') {
+    filtered = filtered.filter(product => product?.mid === merchant);
+  }
+
+  // Apply search
+  if (searchTerm) {
+    filtered = filtered.filter(product =>
+      Object.values(product).some(value =>
+        typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }
+
+  setFilteredProducts(filtered);
+}, [products, filterState, searchTerm]);
+  const pageContext: any = {
+    list: {
+      actions: ['add', 'edit'],
+      view: (
+        <>
+          <AdapTable
+            onSelect={select ? onSelect : undefined}
+            options={{ tableTitle: 'admin products', hideColumns: ['id', 'selected', 'price_id'] }}
+            data={filteredProducts}
+            filters={
+              {
+                visibility:[
+                  {
+                    label:'everything',
+                    name:'visibility-everything'
+                  },
+                  {
+                    label:'active',
+                    name:'visibility-active'
+                  },
+                  {
+                    label:'inactive',
+                    name:'visibility-inactive'
+                  }
+                ],
+                merchant: midOptions,
+              }
+            } // Define filter options
+            setFilter={handleFilterChange}
+            search={searchTerm}
+            setSearch={handleSearchChange}
+            onRowClick={onRowClick}
+          />
+        </>
+      )
+    },
+    add: {
+      actions: ['list'],
+      view: <AdminProduct />
+    },
+    product: {
+      actions: ['list'],
+      view: <AdminProduct setView={() => setView('list')} product={product} />
+    }
+  };
   if (products) return (
     <>
       <style jsx>{styles}</style>

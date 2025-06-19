@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import styles from "./AdaptGrid.scss";
 import useWindow from "@webstack/hooks/window/useWindow";
+import UiLoader from "@webstack/components/UiLoader/view/UiLoader";
 
 type FindClosestProps = {
   id: string;
@@ -138,7 +139,7 @@ export default function AdaptGrid({
             {children}
           </div>
         )}
-        {!childrenLength && <h1>Nothing to see...</h1>}
+        {/* {!childrenLength && <div className='adapt-grid__loading'><UiLoader /></div>} */}
       </div>
     </>
   );

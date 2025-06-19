@@ -5,6 +5,7 @@ import {
 import {  spinner } from "./html/theme";
 import { emptyCart } from "./html/ecommerce/empty-cart";
 import { brandIcons } from "./categories/brand_icons";
+import { energyIcons } from "./categories/energyIcons";
 import { methodIcons } from "./categories/method_icons";
 import { fontAwesomeLight } from "./categories/fontAwesome/FontAwesomeLight";
 import { fontAwesomeSolid } from "./categories/fontAwesome/FontAwesomeSolid";
@@ -29,6 +30,7 @@ const Icons: UiIconSet = {
   ...fontAwesome,
   ...fontAwesomeLight,
   ...fontAwesomeSolid,
+  ...energyIcons,
   //  THEME
   spinner: { width: 100, height: 100, html: spinner },
   "deepturn-logo":brandIcons.deepturn_logo,

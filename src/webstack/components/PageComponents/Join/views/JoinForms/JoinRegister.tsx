@@ -120,20 +120,12 @@ const JoinRegister = ({ openModal, closeModal }: JoinRegisterProps) => {
       <ContactForm
         submit={{ text: `Join ${keyStringConverter(environment.merchant.name)}` }}
         fieldErrors={undefined}
-        title={<>
+        title={
         <UiHeader 
           title={`Join ${keyStringConverter(environment.merchant.name)}`}
-          // subtitle="Join us and be part of something great!"
-          // icon="fa-solid fa-people-group"
-          // size="large"
-          // width={windowSize.width >= 900 ? '50%' : '100%'}
-          // onClose={closeModal}
-        />
-        {/* <div className='d-flex-col s-w-100 align-start'>
-          <h1 className=''>Join {keyStringConverter(environment.merchant.name)}</h1>
-          <p className=''>Join us and be part of something great!</p>
-        </div> */}
-        </>}
+      
+        />}
+   
         onSubmit={handleSubmit}
         user={user}
         fields={fields}

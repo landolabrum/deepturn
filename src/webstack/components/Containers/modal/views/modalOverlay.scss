@@ -21,7 +21,10 @@
     z-index: 998;
     background: var(--gray-70-o); // Adjusted for semi-transparent overlay
     backdrop-filter: blur(5px);
-
+    &--no-dismiss{
+        backdrop-filter: blur(10px);
+        cursor: default;;
+    }
     &__dragging {
         cursor: url('/icons/fa-hand-back-fist.svg'), auto;
     }
@@ -48,7 +51,7 @@
     @media(max-height: 1100px) {
         top: var(--s-9);
         // top:var(--s-1);
-        bottom:var(--s-9);
+        // bottom:var(--s-9);
     }
     @media(max-width: 1100px) {
         min-width: unset;
@@ -56,7 +59,7 @@
         width: var(--s-9-width);
         margin: 0 auto;
         padding-bottom:var(--s-9);
-        top: calc(var(--s-nav-height) + var(--s-5)) !important; // Adjusted for mobile view
+        // top: calc(var(--s-nav-height) + var(--s-5)) !important; // Adjusted for mobile view
         // bottom: var(--s-9);
         // height: max-content;
     }

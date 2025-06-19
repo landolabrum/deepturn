@@ -1,0 +1,121 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.services-showcase {
+  // width: 100%;
+  width: var(--s-5-width);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  background: var(--gray-70);
+  border-radius: var(--border-radius);
+  padding: var(--s-5);
+
+  &__section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-6);
+    padding: var(--s-9);
+    // background: white;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+
+    &.start {
+      flex-direction: row;
+    }
+
+    &.end {
+      flex-direction: row-reverse;
+    }
+
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: scale(1.01);
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column !important;
+      align-items: center;
+      text-align: center;
+      gap: var(--s-4);
+      padding: var(--s-6);
+    }
+  }
+
+  &__image {
+  flex: 1;
+  max-width: 100%;
+  height: auto;
+  // max-height: 100%;
+  // overflow: hidden;
+  overflow: visible;
+  // @extend .d-flex;
+  --ui-icon-size:100px;
+  // width: 100%;
+    object-fit: contain;
+@extend .d-flex;
+  @media (max-width: 768px) {
+    width: 100%;
+    max-height: 260px;
+  }
+}
+
+
+  &__content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+
+height: 100%;
+
+    @media (max-width: 768px) {
+      background-color: var(--gray-70);
+      align-items: center;
+    }
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--white);
+
+    @media (max-width: 768px) {
+      font-size: 1.6rem;
+    }
+  }
+
+  &__desc {
+    font-size: 1.1rem;
+    color: var(--gray-20);
+    line-height: 1.5;
+    max-width: 640px;
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+
+  &__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--s-1);
+    font-size: 1rem;
+    color: var(--gray-90);
+
+    @media (max-width: 768px) {
+      font-size: 0.95rem;
+    }
+  }
+}

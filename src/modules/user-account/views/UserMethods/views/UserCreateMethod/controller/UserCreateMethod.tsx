@@ -40,7 +40,7 @@ const UserCreateMethod = ({ onSuccess, user, success_url }: IStripePaymentForm) 
     </div>
   </>
   return (<>
-  stripePromise
+  {/* stripePromise */}
     <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
       <CreateMethodStripeForm
         user={user}

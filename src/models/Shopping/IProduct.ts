@@ -2,6 +2,7 @@ import { IPrice } from "./IPrice";
 
 export interface IStripeProduct {
     id: string;
+    mid: string;
     object: 'product';
     active: boolean;
     attributes?: string[];

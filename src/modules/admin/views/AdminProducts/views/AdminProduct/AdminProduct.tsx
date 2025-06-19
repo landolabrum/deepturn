@@ -28,11 +28,11 @@ const AdminProduct: React.FC<IAdminProduct> = ({ product }) => {
 
   const [fields, setFields] = useState<IFormField[]>();
 
-  const initialFields:any = [
+  const initialFields: any = [
     { name: 'name', label: 'Product Name' },
     { name: 'active', label: 'Active', value: false, type: 'checkbox' },
     { name: 'description', label: 'Product Description', type: 'textarea' },
-    { name: 'type', label: 'Typez', options:[{'name':'service',value:'service'}], type:'select', value:'' },
+    { name: 'type', label: 'Typez', options: [{ 'name': 'service', value: 'service' }], type: 'select', value: '' },
     { name: 'unit_amount', label: 'Amount', type: 'tel' },
   ];
 
@@ -47,10 +47,10 @@ const AdminProduct: React.FC<IAdminProduct> = ({ product }) => {
 
   const onSubmit = async () => {
     let request: any = {
-      metadata: { mid:mid == 'mb1'&&fields?findField(fields,'merchant')?.value:mid },
+      metadata: { mid: mid == 'mb1' && fields ? findField(fields, 'merchant')?.value : mid },
       price: {}
     };
-console.log({fields})
+    console.log({ fields })
     fields?.forEach((field: any) => {
       if (field.name.startsWith('metadata.')) {
         const key = field.name.split('.')[1];
@@ -59,16 +59,16 @@ console.log({fields})
         field.value = dateFormat(field.value, { returnType: 'timestamp' });
       } else if (['amount', 'unit_amount'].includes(field.name)) {
         request.price[field.name] = Number(field.value);
-      } else if(field.name == 'price'){
+      } else if (field.name == 'price') {
         request[field.name] = {
-          unit_amount:Number(stringNum(field.value)),
+          unit_amount: Number(stringNum(field.value)),
           price_id: findField(fields, 'price_id')?.value,
         };
-      }else{
+      } else {
         request[field.name] = field.value;
       }
     });
-// console.log({request})
+    // console.log({request})
     if (request) {
       try {
         const response = await adminService.createProduct(request);
@@ -99,27 +99,61 @@ console.log({fields})
     if (!fields) return;
     setFields(updateField(fields, e.target.name, { value: e.target.value }));
   };
-
   const handleFields = () => {
     if (fields) return;
+
     if (!product) {
       setFields(initialFields);
     } else {
-      const newFields = Object.entries(product).map(([name, value]: any) => ({
-        label: name,
-        name,
-        value,
-      }))
-      .filter(field => typeof field.value !== 'object');
+      const newFields: IFormField[] = Object.entries(product)
+        .map(([name, value]: [string, any]): IFormField => ({
+          label: name,
+          name,
+          value: value as string | number | boolean,
+          type: typeof value === 'boolean' ? 'checkbox' : 'text',
+          disabled: name === 'price_id', // disable price_id field
+        }))
+        .filter(field => typeof field.value !== 'object');
 
+      // Ensure description field exists
+      if (!newFields.find(f => f.name === 'description')) {
+        newFields.push({
+          name: 'description',
+          label: 'Product Description',
+          type: 'textarea',
+          value: product.description || '',
+          disabled: false,
+        });
+      }
+
+      // Include `mid` from metadata if available
       if (product.metadata) {
-        const metadataFields = flattenMetadata(product.metadata);
+        const metadataFields: IFormField[] = flattenMetadata(product.metadata).map((field) => ({
+          ...field,
+          value: field.value as string | number | boolean,
+          disabled: field.name === 'metadata.mid', // disable mid field
+        }));
+
+        // If mid isn't already included, explicitly add it
+        if (!metadataFields.find(f => f.name === 'metadata.mid')) {
+          metadataFields.unshift({
+            name: 'metadata.mid',
+            label: 'Merchant ID',
+            value: product.metadata.mid || '',
+            type: 'text',
+            disabled: true,
+          });
+        }
+
         setFields([...newFields, ...metadataFields]);
       } else {
         setFields(newFields);
       }
     }
   };
+
+
+
 
   useEffect(() => {
     handleFields();
@@ -139,9 +173,9 @@ console.log({fields})
         </div>
         <div className='admin-product__footer'>
           <div>
-          <UiButton onClick={() => initiateDelete(product)} variant='error'>
-            Delete
-          </UiButton>
+            <UiButton onClick={() => initiateDelete(product)} variant='error'>
+              Delete
+            </UiButton>
           </div>
         </div>
       </div>

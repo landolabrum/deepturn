@@ -18,7 +18,7 @@ export const useProducts = () => {
   const [loader, setLoader] = useLoader();
   const activeFilter = (products: any) => {
     const filt = products.filter((product: any) => {
-      console.log({name:product.name, product})
+      // console.log({name:product.name, product})
     return  product?.active
     });
     return filt;

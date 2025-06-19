@@ -1,3 +1,5 @@
+
+
 {
   "name": "deepturn",
   "private": true,
@@ -34,6 +36,7 @@
     "next": "^15.0.4",
     "next-i18next": "^11.3.0",
     "next-images": "^1.8.5",
+    "slick-carousel": "^1.8.1",
     "next-transpile-modules": "^10.0.1",
     "react": "^18.2.0",
     "react-cookie": "^8.0.1",
@@ -45,7 +48,6 @@
     "recharts": "^2.12.7",
     "rehype-raw": "^7.0.0",
     "rxjs": "^7.5.5",
-    "slick-carousel": "^1.8.1",
     "styled-jsx": "^5.0.0",
     "three": "^0.164.0",
     "three-conic-polygon-geometry": "^1.6.3",

@@ -30,7 +30,7 @@ export interface HandleRouteProps {
 // 1 - 5 Customer
 // 6 Tennant
 // 7 + Admin
-const {mid} = environment.merchant;
+// const {mid} = environment.merchant;
 const merchantName = environment.merchant?.name || 'deepturn';
 export const routes: IRoute[] = [
   {
@@ -43,10 +43,16 @@ export const routes: IRoute[] = [
     mid: "mb1",
   },
   {
+    href:"/gpt",
+    hide: true,
+    mid: "mb1",
+    clearance: 10,
+  },
+  {
     href:"/verify",
     hide: true,
   },
-  {
+  { 
     href:"/transaction",
     hide: true,
   },
@@ -63,7 +69,7 @@ export const routes: IRoute[] = [
 
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
   // { label: "configure", href: "/configure", icon: "fa-gear", active: true },
-  { label: "products", href: "/product", icon: "fa-tags", active: true, hide: true },
+  { label: "products", href: "/product", icon: "fa-tags", active: true,  },
   // { label: "portfolio", href: "/portfolio", icon: "fa-tags", active: true },
   {
     label: "Services",

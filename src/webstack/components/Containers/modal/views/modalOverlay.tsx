@@ -21,9 +21,12 @@ const ModalOverlay: React.FC<any> = () => {
   };
 
   const classMaker = (c: string): string => {
-    if (!c && !variant) return '';
-    else if (c && variant) return `${c} ${c}__${variant}`;
-    return c;
+    let returnedClass = c;
+    if (!dismissable) returnedClass += ' modal__overlay--no-dismiss';
+
+    else if (!returnedClass && !variant) return '';
+    else if (returnedClass && variant) return `${returnedClass} ${c}__${variant}`;
+    return returnedClass;
   };
   const handleMouseEnter = () => {
     setHovered(true);
@@ -31,12 +34,16 @@ const ModalOverlay: React.FC<any> = () => {
   const handleMouseLeave = () => {
     setHovered(false);
   };
-  
+  const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (dismissable &&e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
   return (
     <>
       <style jsx>{styles}</style>
       {/* {children && <div className='dev'>{JSON.stringify(modalContent)}</div>} */}
-      <div onClick={closeModal} id='modal-main' className={classMaker("modal__overlay")} />
+      <div onClick={handleClose} id='modal-main' className={classMaker("modal__overlay")} />
       {(Boolean(children) || Boolean(confirm)) && (
         <div ref={modalRef} className={classMaker("modal")}>
           <div className={classMaker("modal__header")}>

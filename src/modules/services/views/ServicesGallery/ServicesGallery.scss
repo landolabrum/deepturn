@@ -1,0 +1,46 @@
+.services-gallery {
+    width: 100%;
+  &__title {
+    text-align: center;
+    font-size: 2rem;
+    color: #f2f2f2;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  &__card {
+    background-color: #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    border-bottom: 2px solid #ff6600;
+  }
+
+  &__description {
+    padding: 1rem;
+    color: #d9d9d9;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    font-weight: 400;
+    border-top: 1px solid #333;
+  }
+}

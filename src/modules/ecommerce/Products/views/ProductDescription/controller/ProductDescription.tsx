@@ -16,9 +16,10 @@ import ProductImage from '../views/ProductImage/ProductImage';
 
 interface IProductDescription {
   product_id?: string,
-  price_id?: string
+  price_id?: string,
+  btnText?: string
 }
-const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
+const ProductDescription = ({ product_id, price_id, btnText='select' }: IProductDescription) => {
   const {mid}=environment.merchant;
   const router = useRouter();
   const productNonExist = 'product does not exist';
@@ -152,7 +153,7 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
                 <ProductBuyNow
                   goToCart
                   product={product}
-                  btnText='select'
+                  btnText={btnText}
                 />
               </div>
             </div>

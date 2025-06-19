@@ -132,7 +132,6 @@ const UiMedia: React.FC<IMedia> = ({
         onComplete={handleLoad}
         onPlayPauseClick={togglePlay}
         showPlayPause={type === 'video'}
-        children={children}
       >
         {isLoading && <div className="loading">{loadingText || 'Loading...'}</div>}
         {!autoplay && !isPlaying && poster && <div className="ui-media--poster" onClick={togglePlay}>
@@ -181,10 +180,13 @@ const UiMedia: React.FC<IMedia> = ({
               onError={handleError}
               key={reloadTrigger}
               className="ui-media"
+              width={width}
+              height={height}
             />
           )
         )}
-    
+        {children&&<div className='ui-media__children'>
+          {children}</div>}
       </ImageControl>
     </>
   );

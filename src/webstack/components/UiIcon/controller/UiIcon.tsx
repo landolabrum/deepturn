@@ -20,7 +20,7 @@ interface State {
   iconStyles: { [key: string]: string };
 }
 
-export class UiIcon extends React.Component<Props, State> {
+export class  UiIcon extends React.Component<Props, State> {
   private currentIcon: string | undefined;
   private currentColor: string | undefined;
 
