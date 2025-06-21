@@ -1,0 +1,92 @@
+.d-flex, .custom-404__content--header__location, .custom-404__content--header__title, .custom-404__content--header, .custom-404__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-404 {
+  background: url(/assets/backgrounds/404.gif) no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+  position: fixed;
+  top: 100px;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+.custom-404__container {
+  align-items: flex-start;
+  -webkit-backdrop-filter: blur(7px) brightness(0.5) sepia(100%) invert(90%);
+          backdrop-filter: blur(7px) brightness(0.5) sepia(100%) invert(90%);
+  background-color: var(--gray-50);
+}
+@media (max-width: 900px) {
+  .custom-404__container {
+    justify-content: flex-start;
+  }
+}
+.custom-404__content {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  z-index: 999;
+  width: 100%;
+  padding: var(--s-4);
+}
+@media (max-width: 900px) {
+  .custom-404__content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+}
+.custom-404__content--header {
+  font-family: Play;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--s-3);
+  line-height: 1;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: var(--secondary-50);
+  --ui-icon-color: var(--secondary-50);
+}
+@media (max-width: 900px) {
+  .custom-404__content--header {
+    gap: var(--s-9);
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+.custom-404__content--header__title {
+  font-style: oblique;
+  width: 100%;
+  gap: var(--s-9);
+  justify-content: flex-start;
+  font-size: var(--s-2);
+  --ui-icon-width: var(--s-2);
+  --ui-icon-height: 100%;
+}
+@media (max-width: 900px) {
+  .custom-404__content--header__title {
+    gap: 5px;
+    font-size: var(--s-5);
+    --ui-icon-width: var(--s-5);
+  }
+}
+.custom-404__content--header__location {
+  color: var(--white);
+  border: solid 1px;
+  border-radius: var(--border-radius);
+  padding: var(--s-9) var(--s-4);
+  background-color: var(--secondary-50);
+}
+@media (max-width: 900px) {
+  .custom-404__content--header__location {
+    padding: 4px var(--s-9);
+    font-size: var(--s-9);
+  }
+}/*# sourceMappingURL=Custom404.css.map */

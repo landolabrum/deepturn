@@ -1,0 +1,10 @@
+.address-input {
+  position: relative;
+}
+.address-input--suggestions {
+  position: absolute;
+  width: 100%;
+}
+.address-input--suggestions .menu-container {
+  overflow: visible;
+}/*# sourceMappingURL=AddressInput.css.map */

@@ -1,0 +1,52 @@
+.d-flex, .admin-account__info, .admin-account__header--title, .admin-account__header--contact, .admin-account__header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-key {
+  color: var(--primary-50);
+  position: relative;
+}
+.info-key::after {
+  content: ":";
+}
+
+.info-value {
+  color: var(--gray-10);
+}
+
+.admin-account {
+  width: 100%;
+}
+.admin-account__header {
+  justify-content: space-between;
+  align-items: flex-start;
+  width: auto;
+  padding: var(--s-8) var(--s-4);
+  border: solid 1px var(--gray-70);
+  border-radius: var(--border-radius);
+  background-color: var(--gray-80);
+  gap: var(--s-9);
+}
+@media (max-width: 900px) {
+  .admin-account__header {
+    flex-direction: column;
+  }
+}
+.admin-account__header--title, .admin-account__header--contact {
+  gap: 4px;
+}
+.admin-account__header--title {
+  font-size: var(--s-4);
+  color: var(--gray-50);
+}
+.admin-account__info {
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  white-space: wrap;
+}
+.admin-account__info--line {
+  width: 100%;
+}/*# sourceMappingURL=AdminAccount.css.map */

@@ -1,0 +1,95 @@
+.adaptable-header {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 10px 10px;
+  gap: var(--s-9);
+}
+@media (max-width: 900px) {
+  .adaptable-header {
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}
+@media (max-width: 900px) and (max-width: 450px) {
+  .adaptable-header {
+    padding: 10px 5px;
+  }
+}
+.adaptable-header .adaptable-header__search-input {
+  min-width: 200px;
+}
+@media (max-width: 900px) {
+  .adaptable-header .adaptable-header__search-input {
+    width: 100%;
+  }
+}
+@media (max-width: 450px) {
+  .adaptable-header .adaptable-header__search-input {
+    padding: 0 5px;
+    width: calc(100% - 10px);
+  }
+}
+.adaptable-header .adaptable-header__table-title {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: var(--s-element);
+  gap: 7.5px;
+  text-transform: capitalize;
+}
+@media (max-width: 900px) {
+  .adaptable-header .adaptable-header__table-title {
+    flex-direction: column;
+    height: 100%;
+    padding: var(--s-9);
+    width: var(--s-9-width);
+  }
+}
+.adaptable-header .adaptable-header__table-title .adaptable-header__logo {
+  --ui-icon-width: var(--s-2);
+  --ui-icon-height: var(--s-2);
+  --ui-icon-color: var(--gray-40);
+}
+@media (max-width: 900px) {
+  .adaptable-header .adaptable-header__table-title .adaptable-header__logo {
+    --ui-icon-color: var(--primary);
+    --ui-icon-width: 150px;
+    --ui-icon-height: 150px;
+    height: 200px;
+  }
+}
+.adaptable-header .adaptable-header__table-title .adaptable-header__title {
+  display: flex;
+  font-family: Play;
+  width: 100%;
+  align-items: center;
+  padding: 0;
+  height: inherit;
+  font-size: var(--s-4);
+  font-weight: 500;
+}
+@media (max-width: 900px) {
+  .adaptable-header .adaptable-header__table-title .adaptable-header__title {
+    font-size: var(--s-3);
+    height: 100%;
+    text-transform: uppercase;
+  }
+}
+.adaptable-header .adaptable-header__filters {
+  display: flex;
+  align-items: center;
+  gap: var(--s-9);
+  padding: 0 var(--s-9);
+  background-color: var(--gray-80);
+  border-radius: var(--border-radius);
+  height: var(--s-element);
+}
+@media (max-width: 900px) {
+  .adaptable-header .adaptable-header__filters .adaptable-header__filter {
+    width: 100%;
+  }
+}/*# sourceMappingURL=AdapTableHeader.css.map */

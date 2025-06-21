@@ -1,0 +1,47 @@
+.d-flex, .breadcrumbs .crumb, .breadcrumbs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.breadcrumbs {
+  justify-content: flex-start;
+  line-height: 1;
+  width: var(--s-4-width);
+  font-family: Game;
+}
+@media (max-width: 1100px) {
+  .breadcrumbs {
+    --ui-icon-color: var(--gray-10);
+    color: var(--gray-30);
+  }
+}
+.breadcrumbs .crumb {
+  min-width: var(--s-1);
+  align-items: center;
+  white-space: nowrap;
+  --ui-icon-height:var(--s-7);
+  --ui-icon-width:var(--s-3);
+  text-transform: capitalize;
+  cursor: pointer;
+}
+@media (max-height: 500px) {
+  .breadcrumbs .crumb {
+    align-items: flex-end;
+  }
+}
+.breadcrumbs .crumb:last-child {
+  cursor: default;
+}
+.breadcrumbs .crumb.active {
+  color: white;
+}
+@media (max-width: 1100px) {
+  .breadcrumbs .crumb.active {
+    --ui-icon-color: var(--gray-50);
+    color: var(--gray-10);
+  }
+}
+.breadcrumbs .crumb:hover {
+  color: var(--primary-10);
+}/*# sourceMappingURL=BreadCrumbs.css.map */

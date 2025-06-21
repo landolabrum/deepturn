@@ -1,0 +1,55 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 0;
+  }
+  85% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.td-content {
+  display: flex;
+  align-items: center;
+  min-height: -moz-max-content;
+  min-height: max-content;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.td-hover {
+  flex-direction: column;
+  position: absolute;
+  bottom: 90%;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  border-radius: 5px;
+  background-color: var(--gray-90);
+  width: -moz-max-content;
+  width: max-content;
+  max-width: 80vw;
+  animation: fadeIn 0.5s;
+}
+.td-hover .td-hover-content {
+  padding: 5px 8px 8px;
+}
+.td-hover .td-hover-content .td-hover-key {
+  line-height: 1.5;
+  width: 50%;
+  text-transform: capitalize;
+  color: var(--gray-50);
+}
+.td-hover .td-hover-content .td-hover-key-value {
+  background-color: var(--gray-40);
+  line-height: 1;
+  color: var(--blue-60);
+  padding: 8px;
+  border-radius: 4px;
+  white-space: wrap;
+}/*# sourceMappingURL=AdaptTableCellHover.css.map */

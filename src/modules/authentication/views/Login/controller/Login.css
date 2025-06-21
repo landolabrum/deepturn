@@ -1,0 +1,11 @@
+.d-flex, .login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login {
+  flex-direction: column;
+  width: 100%;
+  gap: var(--s-4);
+}/*# sourceMappingURL=Login.css.map */

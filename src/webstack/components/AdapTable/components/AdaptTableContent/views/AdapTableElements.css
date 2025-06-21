@@ -1,0 +1,330 @@
+.d-flex, table thead tr th .td-content--image,
+table thead tr td .td-content--image,
+table tbody tr th .td-content--image,
+table tbody tr td .td-content--image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 0;
+  }
+  85% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+table {
+  margin-bottom: auto;
+  width: 100%;
+  -webkit-border-horizontal-spacing: 0;
+  -webkit-border-vertical-spacing: 0;
+  border-radius: var(--border-radius);
+  border: solid 1px var(--gray-80);
+}
+@media (max-width: 900px) {
+  table.table-mini {
+    border: none;
+  }
+  table.table-mini tbody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+  }
+}
+table.table-show {
+  display: table;
+}
+table.hide-header {
+  border-radius: var(--border-radius);
+  border: solid 1px transparent;
+  overflow: hidden;
+}
+@media (max-width: 900px) {
+  table thead {
+    display: none;
+  }
+}
+table thead tr {
+  background-color: var(--gray-80-o);
+}
+table thead tr th {
+  text-transform: capitalize;
+}
+table thead tr,
+table tbody tr {
+  height: 50px;
+  width: 100%;
+}
+table thead tr:hover,
+table tbody tr:hover {
+  background-color: var(--gray-80-o);
+}
+table thead tr.mobile-tr,
+table tbody tr.mobile-tr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: -moz-max-content;
+  height: max-content;
+  border-radius: 5px;
+  background-color: var(--gray-80-o);
+  padding: var(--s-10) var(--s-6);
+  width: inherit;
+  gap: var(--s-12);
+  margin: var(--s-4) var(--s-10);
+  min-height: -moz-max-content;
+  min-height: max-content;
+  height: max-content;
+}
+table thead tr.mobile-tr.mini,
+table tbody tr.mobile-tr.mini {
+  margin: 0;
+  padding: 0 8px;
+}
+table thead tr.mobile-tr:hover,
+table tbody tr.mobile-tr:hover {
+  box-shadow: -1px -0.5px 1px 1px var(--gray-60), 2px 2px 4px 3px var(--gray-100);
+  overflow: visible;
+  background-color: var(--gray-80-o);
+}
+@media (max-width: 450px) {
+  table thead tr.mobile-tr,
+  table tbody tr.mobile-tr {
+    max-width: calc(100% - 8px);
+    margin: 5px 10px;
+  }
+}
+@media (max-width: 900px) {
+  table thead tr,
+  table tbody tr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: -moz-max-content;
+    height: max-content;
+    border-radius: 5px;
+    background-color: var(--gray-80-o);
+    padding: var(--s-10) var(--s-6);
+    width: inherit;
+    gap: var(--s-12);
+    margin: var(--s-4) var(--s-10);
+    min-height: -moz-max-content;
+    min-height: max-content;
+    height: max-content;
+  }
+  table thead tr.mini,
+  table tbody tr.mini {
+    margin: 0;
+    padding: 0 8px;
+  }
+  table thead tr:hover,
+  table tbody tr:hover {
+    box-shadow: -1px -0.5px 1px 1px var(--gray-60), 2px 2px 4px 3px var(--gray-100);
+    overflow: visible;
+    background-color: var(--gray-80-o);
+  }
+}
+@media (max-width: 900px) and (max-width: 450px) {
+  table thead tr,
+  table tbody tr {
+    max-width: calc(100% - 8px);
+    margin: 5px 10px;
+  }
+}
+table thead tr.mini,
+table tbody tr.mini {
+  max-width: inherit;
+  cursor: default;
+}
+table thead tr.mini td:last-child,
+table tbody tr.mini td:last-child {
+  text-align: right;
+}
+table thead tr :last-child td,
+table tbody tr :last-child td {
+  border-bottom-color: transparent;
+}
+table thead tr :last-child td :first-child,
+table tbody tr :last-child td :first-child {
+  border-radius: 0 0 0 5px;
+}
+table thead tr :last-child td :last-child,
+table tbody tr :last-child td :last-child {
+  border-radius: 0 0 5px 0;
+}
+table thead tr th,
+table tbody tr th {
+  cursor: col-resize;
+}
+table thead tr th .resizeable,
+table tbody tr th .resizeable {
+  position: relative;
+  overflow: hidden;
+}
+table thead tr th .resizeable .th-content,
+table tbody tr th .resizeable .th-content {
+  padding-right: 20px; /* Space for the resizing handle */
+}
+table thead tr th .resizeable::after,
+table tbody tr th .resizeable::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 10px; /* Width of the resizing handle */
+  background-color: var(--gray-80-o); /* Color of the resizing handle */
+  cursor: col-resize;
+}
+table thead tr th,
+table thead tr td,
+table tbody tr th,
+table tbody tr td {
+  padding: 5px 10px;
+  position: relative;
+  max-width: -moz-max-content;
+  max-width: max-content;
+  border-bottom: solid 1px var(--gray-80);
+}
+@media (min-width: 900px) {
+  table thead tr th .td-content,
+  table thead tr td .td-content,
+  table tbody tr th .td-content,
+  table tbody tr td .td-content {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+table thead tr th:not(:last-child),
+table thead tr td:not(:last-child),
+table tbody tr th:not(:last-child),
+table tbody tr td:not(:last-child) {
+  border-right: solid 1px var(--gray-80);
+}
+table thead tr th.mobile-td,
+table thead tr td.mobile-td,
+table tbody tr th.mobile-td,
+table tbody tr td.mobile-td {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  border-bottom: none;
+  justify-content: space-between;
+  display: flex;
+}
+table thead tr th.mobile-td:not(:last-child),
+table thead tr td.mobile-td:not(:last-child),
+table tbody tr th.mobile-td:not(:last-child),
+table tbody tr td.mobile-td:not(:last-child) {
+  border-right: none;
+}
+@media (max-width: 450px) {
+  table thead tr th.mobile-td,
+  table thead tr td.mobile-td,
+  table tbody tr th.mobile-td,
+  table tbody tr td.mobile-td {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+table thead tr th.mobile-td::before,
+table thead tr td.mobile-td::before,
+table tbody tr th.mobile-td::before,
+table tbody tr td.mobile-td::before {
+  display: flex;
+  text-transform: capitalize;
+  content: attr(data-key);
+  align-items: center;
+  color: var(--gray-50);
+}
+@media (max-width: 900px) {
+  table thead tr th,
+  table thead tr td,
+  table tbody tr th,
+  table tbody tr td {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    border-bottom: none;
+    justify-content: space-between;
+    display: flex;
+  }
+  table thead tr th:not(:last-child),
+  table thead tr td:not(:last-child),
+  table tbody tr th:not(:last-child),
+  table tbody tr td:not(:last-child) {
+    border-right: none;
+  }
+}
+@media (max-width: 900px) and (max-width: 450px) {
+  table thead tr th,
+  table thead tr td,
+  table tbody tr th,
+  table tbody tr td {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+@media (max-width: 900px) {
+  table thead tr th::before,
+  table thead tr td::before,
+  table tbody tr th::before,
+  table tbody tr td::before {
+    display: flex;
+    text-transform: capitalize;
+    content: attr(data-key);
+    align-items: center;
+    color: var(--gray-50);
+  }
+}
+table thead tr th.index,
+table thead tr td.index,
+table tbody tr th.index,
+table tbody tr td.index {
+  min-width: 20px;
+  text-align: center;
+  width: 25px;
+}
+table thead tr th .td-hover,
+table thead tr td .td-hover,
+table tbody tr th .td-hover,
+table tbody tr td .td-hover {
+  display: none;
+}
+table thead tr th .td-content,
+table thead tr td .td-content,
+table tbody tr th .td-content,
+table tbody tr td .td-content {
+  position: relative;
+}
+table thead tr th .td-content--image,
+table thead tr td .td-content--image,
+table tbody tr th .td-content--image,
+table tbody tr td .td-content--image {
+  position: relative;
+  max-width: 150px;
+  width: var(--s-4-width);
+  padding: var(--s-4);
+  aspect-ratio: 1;
+  --ui-icon-color: var(--gray-60-o);
+  --ui-icon-width: var(--s-element);
+  --ui-icon-height: 100%;
+}
+table thead tr th.hoverable:hover .td-hover,
+table thead tr td.hoverable:hover .td-hover,
+table tbody tr th.hoverable:hover .td-hover,
+table tbody tr td.hoverable:hover .td-hover {
+  display: flex;
+}/*# sourceMappingURL=AdapTableElements.css.map */

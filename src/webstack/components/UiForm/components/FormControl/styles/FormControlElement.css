@@ -1,0 +1,563 @@
+.d-flex, .form-control__element--signature::before, .form-control__element--signature, .form-control__element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes bump {
+  0% {
+    transform: rotate(0deg);
+    background-color: var(--gray-70);
+  }
+  30% {
+    transform: rotate(5deg);
+    background-color: var(--red-70);
+  }
+  70% {
+    transform: rotate(-2deg);
+    background-color: var(--gray-70);
+  }
+  100% {
+    transform: rotate(0deg);
+    background-color: var(--red-70);
+  }
+}
+@keyframes glowTxt {
+  0% {
+    text-shadow: 0 0 var(--s-9) var(--primary-50);
+  }
+  100% {
+    text-shadow: 0 0 var(--s-8) var(--primary-50-o);
+  }
+}
+.form-control__element:not(.form-control__element--warning, .form-control__element--nav-item, .form-control__element--nav-item--active, .form-control__element--center, .form-control__element--glow, .form-control__element--checkbox, .form-control__element--primary, .form-control__element--inherit, .form-control__element--dark, .form-control__element--transparent, .form-control__element--lite, .form-control__element--flat, .form-control__element--secondary, .form-control__element--link, .form-control__element--select, .form-control__element--invalid, .form-control__element--input, .form-control__element--textarea, .form-control__element--signature) {
+  --ui-icon-color: var(--gray-40);
+  background-color: var(--gray-70-o);
+}
+.form-control__element:focus-within:not(.form-control__element--warning, .form-control__element--nav-item, .form-control__element--nav-item--active, .form-control__element--center, .form-control__element--glow, .form-control__element--checkbox, .form-control__element--primary, .form-control__element--inherit, .form-control__element--dark, .form-control__element--transparent, .form-control__element--lite, .form-control__element--flat, .form-control__element--secondary, .form-control__element--link, .form-control__element--select, .form-control__element--invalid, .form-control__element--input, .form-control__element--textarea, .form-control__element--signature) {
+  color: var(--gray-40);
+}
+.form-control__element:focus-within:not(.form-control__element--warning, .form-control__element--nav-item, .form-control__element--nav-item--active, .form-control__element--center, .form-control__element--glow, .form-control__element--checkbox, .form-control__element--primary, .form-control__element--inherit, .form-control__element--dark, .form-control__element--transparent, .form-control__element--lite, .form-control__element--flat, .form-control__element--secondary, .form-control__element--link, .form-control__element--select, .form-control__element--invalid, .form-control__element--input, .form-control__element--textarea, .form-control__element--signature) .form-control__icon {
+  --ui-icon-color: var(--gray-40);
+}
+.form-control__element:hover:not(.form-control__element--warning, .form-control__element--nav-item, .form-control__element--nav-item--active, .form-control__element--center, .form-control__element--glow, .form-control__element--checkbox, .form-control__element--primary, .form-control__element--inherit, .form-control__element--dark, .form-control__element--transparent, .form-control__element--lite, .form-control__element--flat, .form-control__element--secondary, .form-control__element--link, .form-control__element--select, .form-control__element--invalid, .form-control__element--input, .form-control__element--textarea, .form-control__element--signature) {
+  transition: all 300ms;
+  --ui-icon-color: var(--gray-50);
+  color: var(--gray-50);
+  background-color: var(--gray-80);
+  border: solid 1px var(--gray-60);
+}
+.b-rad, .form-control__element:not(.form-control__element--signature, .form-control__element--checkbox, .form-control__element--round, .form-control__element--nav-item, .form-control__element--nav-item--active) {
+  border-style: solid;
+  border-width: 1px;
+  border-color: transparent;
+  outline: solid 1px transparent;
+  border-radius: var(--border-radius);
+}
+
+.form-control__element {
+  font-size: var(--font-size);
+  --ui-icon-width: var(--font-size);
+  --ui-icon-height: var(--font-size);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  font-weight: 300;
+  line-height: 1;
+  height: calc(var(--s-element) - 2px);
+  white-space: nowrap;
+  width: auto;
+}
+.form-control__element-xs, .form-control__element-sm, .form-control__element-md, .form-control__element-lg, .form-control__element-xl, .form-control__element-xxl {
+  height: auto;
+  line-height: 1.5;
+}
+.form-control__element-xs {
+  font-size: var(--s-9);
+}
+.form-control__element-sm {
+  font-size: var(--s-7);
+  padding: 0;
+}
+.form-control__element--input.form-control__element-sm {
+  font-size: var(--s-8);
+  height: var(--s-4);
+  padding: 0 var(--s-9);
+}
+.form-control__element--input.form-control__element-sm.form-control__element--flat {
+  padding-right: 0;
+}
+.form-control__element-md {
+  font-size: var(--s-6);
+}
+.form-control__element-lg {
+  font-size: var(--s-4);
+}
+.form-control__element-xl {
+  font-size: var(--s-4);
+  --ui-icon-width: var(--s-2);
+  padding: var(--s-7) var(--s-3) !important;
+}
+.form-control__element-xxl {
+  font-size: var(--s-2);
+  --ui-icon-width: var(--s-1);
+  height: var(--s-xxl);
+  line-height: 2.3;
+}
+.form-control__element .inherit {
+  --ui-icon-color: inherit;
+  --ui-icon-width: inherit;
+  --ui-icon-height: inherit;
+  text-decoration: inherit;
+  color: inherit;
+  background-color: inherit;
+  height: inherit;
+  min-height: inherit;
+  max-height: inherit;
+  width: inherit;
+  min-width: inherit;
+  max-width: inherit;
+  padding: inherit;
+  margin: inherit;
+  display: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+  flex-direction: inherit;
+  gap: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  border: inherit;
+  outline: inherit;
+  border-radius: inherit;
+  box-shadow: inherit;
+  aspect-ratio: inherit;
+  position: inherit;
+}
+.form-control__element:not(.form-control__element--before-icon, .form-control__element--after-icon, .form-control__element--glow) {
+  padding: 0 var(--s-9);
+}
+.form-control__element--before-icon.form-control__element--link {
+  gap: var(--s-9);
+}
+.form-control__element--after-icon--link.form-control__element--link {
+  gap: var(--s-9);
+}
+.form-control__element--after-icon:not(.form-control__element--flat, .form-control__element--center, .form-control__element--nav-item, .form-control__element--nav-item--active) {
+  padding-left: var(--s-9);
+}
+.form-control__element--before-icon:not(.form-control__element--flat, .form-control__element--center) {
+  padding-right: var(--s-9);
+}
+.form-control__element--button {
+  color: inherit;
+  border-style: solid;
+  border-width: 1px;
+  border-color: unset;
+  filter: brightness(0.8);
+  mix-blend-mode: inherit;
+}
+.form-control__element--button:hover, .form-control__element--button:focus {
+  filter: brightness(1);
+}
+.form-control__element--button.form-control__element--flat {
+  width: inherit;
+  gap: var(--s-9);
+}
+.form-control__element--button.form-control__element--flat:first-child {
+  padding: 0;
+}
+.form-control__element--checkbox {
+  width: -moz-max-content;
+  width: max-content;
+  padding: 0;
+  height: var(--s-element);
+}
+.form-control__element--input, .form-control__element--textarea {
+  color: inherit;
+}
+.form-control__element--input::-moz-placeholder, .form-control__element--textarea::-moz-placeholder {
+  color: inherit;
+}
+.form-control__element--input::placeholder, .form-control__element--textarea::placeholder {
+  color: inherit;
+}
+.form-control__element--input:not(.form-control__element--transparent, .form-control__element--flat), .form-control__element--textarea:not(.form-control__element--transparent, .form-control__element--flat) {
+  -webkit-text-fill-color: var(--gray-50);
+  --ui-icon-color: var(--gray-50);
+  background-color: var(--gray-60-o);
+  border: solid 1px var(--gray-50-o);
+  box-shadow: inset 1px 1px 3px 2px var(--gray-80-o);
+}
+.form-control__element--input:not(.form-control__element--input--signature, .form-control__element--textarea--signature), .form-control__element--textarea:not(.form-control__element--input--signature, .form-control__element--textarea--signature) {
+  font-family: "Game", sans-serif;
+  font-style: italic;
+}
+.form-control__element--input:focus-within:not(.form-control__element--nav-item, .form-control__element--nav-item--active, .form-control__element--signature, .form-control__element--transparent, .form-control__element--flat), .form-control__element--textarea:focus-within:not(.form-control__element--nav-item, .form-control__element--nav-item--active, .form-control__element--signature, .form-control__element--transparent, .form-control__element--flat) {
+  border: solid 1px var(--gray-10) !important;
+  --ui-icon-color: var(--gray-10);
+  -webkit-text-fill-color: var(--gray-50);
+  color: var(--gray-10);
+  background-color: var(--gray-70);
+}
+.form-control__element--input:not(.form-control__element--input--signature, .form-control__element--input--dark, .form-control__element--input--disabled, .form-control__element--input--transparent, .form-control__element--textarea--signature, .form-control__element--textarea--dark, .form-control__element--textarea--disabled, .form-control__element--textarea--transparent):hover:not(.form-control__element--input:not(.form-control__element--input--signature, .form-control__element--input--dark, .form-control__element--input--disabled, .form-control__element--input--transparent, .form-control__element--textarea--signature, .form-control__element--textarea--dark, .form-control__element--textarea--disabled, .form-control__element--textarea--transparent):focus-within, .form-control__element--textarea:not(.form-control__element--input--signature, .form-control__element--input--dark, .form-control__element--input--disabled, .form-control__element--input--transparent, .form-control__element--textarea--signature, .form-control__element--textarea--dark, .form-control__element--textarea--disabled, .form-control__element--textarea--transparent):focus-within), .form-control__element--textarea:not(.form-control__element--input--signature, .form-control__element--input--dark, .form-control__element--input--disabled, .form-control__element--input--transparent, .form-control__element--textarea--signature, .form-control__element--textarea--dark, .form-control__element--textarea--disabled, .form-control__element--textarea--transparent):hover:not(.form-control__element--input:not(.form-control__element--input--signature, .form-control__element--input--dark, .form-control__element--input--disabled, .form-control__element--input--transparent, .form-control__element--textarea--signature, .form-control__element--textarea--dark, .form-control__element--textarea--disabled, .form-control__element--textarea--transparent):focus-within, .form-control__element--textarea:not(.form-control__element--input--signature, .form-control__element--input--dark, .form-control__element--input--disabled, .form-control__element--input--transparent, .form-control__element--textarea--signature, .form-control__element--textarea--dark, .form-control__element--textarea--disabled, .form-control__element--textarea--transparent):focus-within) {
+  -webkit-text-fill-color: var(--gray-70);
+  background-color: var(--gray-60);
+  font-weight: 500;
+  color: var(--gray-70);
+  --ui-icon-color: var(--gray-70);
+}
+.form-control__element--input:nth-child(2), .form-control__element--textarea:nth-child(2) {
+  padding-left: var(--s-8);
+}
+.form-control__element--textarea {
+  height: -moz-max-content;
+  height: max-content;
+  max-width: inherit;
+  padding: var(--s-11) 0 0 var(--s-9) !important;
+  width: calc(100% - var(--s-9));
+  min-height: var(--s-element);
+}
+.form-control__element-disabled:hover, .form-control__element--disabled:hover {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  cursor: not-allowed;
+}
+.form-control__element-sm:not(.form-control__element--before-icon), .form-control__element-sm:not(.form-control__element--before-icon) {
+  padding: 0 var(--s-9);
+}
+.form-control__element--flat--after-icon {
+  padding: 0 var(--s-2);
+}
+.form-control__element--flat--after-icon-sm {
+  padding: 0 var(--s-10);
+}
+.form-control__element--input-color {
+  padding: 0;
+  height: 100%;
+  background-color: transparent;
+}
+.form-control__element--round {
+  border-radius: var(--s-1);
+}
+.form-control__element--primary {
+  background-color: var(--primary-90);
+  border: solid 1px var(--primary-10);
+  color: var(--primary-10);
+  --ui-icon-color: $c;
+}
+.form-control__element--primary:hover {
+  background-color: var(--primary-30);
+  border: solid 1px var(--primary-30);
+  color: var(--primary-70);
+  --ui-icon-color: $hC;
+}
+.form-control__element--primary:focus-within {
+  background-color: var(--primary-50);
+  border: solid 1px transparent;
+  color: var(--white);
+  --ui-icon-color: $fC;
+}
+.form-control__element--secondary {
+  background-color: var(--secondary-50-o);
+  color: var(--gray-20);
+}
+.form-control__element--secondary:hover {
+  background-color: var(--secondary-50);
+  color: var(--white);
+}
+.form-control__element--warning {
+  background-color: var(--gray-80);
+  border: solid 1px var(--red-30);
+  color: var(--warning);
+  --ui-icon-color: $c;
+}
+.form-control__element--warning:hover {
+  background-color: var(--red-30);
+  border: solid 1px var(--red-30);
+  color: var(--gray-40);
+  --ui-icon-color: $hC;
+}
+.form-control__element--warning:focus-within {
+  background-color: var(--red-30);
+  border: solid 1px transparent;
+  color: var(--gray-10);
+  --ui-icon-color: $fC;
+}
+.form-control__element--signature {
+  background-color: inherit;
+  border: solid 1px transparent;
+  color: var(--gray-40);
+  --ui-icon-color: $c;
+}
+.form-control__element--signature:hover {
+  background-color: inherit;
+  border: solid 1px transparent;
+  color: var(--gray-50);
+  --ui-icon-color: $hC;
+}
+.form-control__element--signature:focus-within {
+  background-color: inherit;
+  border: solid 1px transparent;
+  color: var(--gray-30);
+  --ui-icon-color: $fC;
+}
+.form-control__element--center {
+  min-width: 150px;
+  padding: 0;
+  justify-content: space-between;
+}
+.form-control__element--fit-text {
+  white-space: unset;
+  justify-content: flex-start;
+  height: auto;
+}
+.form-control__element--inherit {
+  display: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+  width: inherit;
+}
+.form-control__element--signature {
+  position: relative;
+  overflow: visible;
+}
+.form-control__element--signature:hover {
+  border-color: transparent;
+}
+.form-control__element--signature::before {
+  position: absolute;
+  content: "x";
+  left: 0;
+  color: var(--gray-70);
+  font-size: var(--s-5);
+  bottom: calc(var(--s-9) * -1);
+  background-color: inherit;
+  z-index: 1;
+  width: var(--s-1);
+  text-align: center;
+  line-height: 1;
+}
+.form-control__element--signature::after {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  border-top: solid 1px var(--gray-70);
+  width: calc(100% - var(--s-4));
+}
+.form-control__element--signature:hover::before {
+  color: var(--gray-50);
+}
+.form-control__element--signature:hover::after {
+  border-top-color: var(--gray-50);
+}
+.form-control__element--signature:focus-within:not(.form-control__element--signature:hover)::before {
+  color: var(--gray-30);
+}
+.form-control__element--signature:focus-within:not(.form-control__element--signature:hover)::after {
+  border-top-color: var(--gray-30);
+}
+.form-control__element--lite {
+  background-color: var(--gray-40);
+  border: solid 1px var(--gray-10);
+  color: var(--gray-70);
+  --ui-icon-color: $c;
+}
+.form-control__element--lite:hover {
+  background-color: var(--gray-30);
+  border: solid 1px var(--secondary-50);
+  color: var(--gray-70);
+  --ui-icon-color: $hC;
+}
+.form-control__element--lite:focus-within {
+  background-color: var(--gray-40);
+  border: solid 1px var(--gray-50);
+  color: var(--gray-50);
+  --ui-icon-color: $fC;
+}
+.form-control__element--dark {
+  background-color: var(--dark);
+  border: solid 1px var(--primary-50);
+  color: var(--primary-50);
+  --ui-icon-color: $c;
+}
+.form-control__element--dark:hover {
+  background-color: var(--gray-80-o);
+  border: solid 1px var(--primary-50);
+  color: var(--primary-50);
+  --ui-icon-color: $hC;
+}
+.form-control__element--dark:focus-within {
+  background-color: var(--primary-50-o);
+  border: solid 1px var(--gray-70);
+  color: var(--gray-100);
+  --ui-icon-color: $fC;
+}
+.form-control__element--secondary {
+  background-color: var(--secondary-50-o);
+  border: solid 1px var(--gray-20);
+  color: var(--gray-20);
+  --ui-icon-color: $c;
+}
+.form-control__element--secondary:hover {
+  background-color: var(--secondary-50-o);
+  border: solid 1px var(--gray-20);
+  color: var(--gray-20);
+  --ui-icon-color: $hC;
+}
+.form-control__element--secondary:focus-within {
+  background-color: var(--secondary-50-o);
+  border: solid 1px var(--gray-20);
+  color: var(--gray-20);
+  --ui-icon-color: $fC;
+}
+.form-control__element--link {
+  background-color: transparent;
+  border: solid 1px transparent;
+  color: var(--blue-60);
+  --ui-icon-color: $c;
+}
+.form-control__element--link:hover {
+  background-color: transparent;
+  border: solid 1px transparent;
+  color: var(--blue-10);
+  --ui-icon-color: $hC;
+}
+.form-control__element--link:focus-within {
+  background-color: transparent;
+  border: solid 1px transparent;
+  color: var(--blue-10);
+  --ui-icon-color: $fC;
+}
+.form-control__element--glow {
+  color: inherit;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  outline: none;
+  border: none;
+  height: 100%;
+  -webkit-backdrop-filter: blur(var(--s-12));
+          backdrop-filter: blur(var(--s-12));
+}
+.form-control__element--glow:focus, .form-control__element--glow:focus-within {
+  background-color: var(--gray-80);
+}
+.form-control__element--glow:hover:not(:focus, :focus-within) {
+  animation: none;
+  background-color: var(--primary-10);
+  color: var(--gray-10);
+}
+.form-control__element--link {
+  padding: 0;
+  width: -moz-max-content;
+  width: max-content;
+  gap: var(--s-10);
+}
+.form-control__element--link:hover {
+  animation: glowTxt 2s infinite;
+}
+.form-control__element--bump {
+  animation: bump 0.3s;
+}
+.form-control__element--pill {
+  border: solid 1px var(--gray-70);
+  width: -moz-max-content;
+  width: max-content;
+}
+.form-control__element--error {
+  position: relative;
+  color: var(--red-70) !important;
+  --ui-icon-color: var(--red-70) !important;
+}
+.form-control__element--error:not(.form-control__element--error--signature) {
+  border: solid 1px var(--red-70) !important;
+}
+.form-control__element--error--signature {
+  border: solid 1px transparent !important;
+}
+.form-control__element--error--signature .form-control__invalid {
+  color: var(--red-70) !important;
+}
+.form-control__element--error .form-control__invalid {
+  position: absolute;
+  font-family: Play;
+  font-style: italic;
+  animation: bump 0.4s ease-in;
+  right: var(--s-2);
+  font-size: var(--s-3);
+  font-weight: bold;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  color: var(--red-50);
+  opacity: 0.5;
+}
+.form-control__element--select--flat {
+  background-color: var(--gray-70-o);
+  color: inherit;
+  --ui-icon-color: var(--gray-70-o);
+  border: solid 1px transparent;
+}
+.form-control__element--select--flat:hover, .form-control__element--select--flat:focus-within {
+  background-color: var(--gray-70);
+  color: var(--gray-30);
+  --ui-icon-color: var(--gray-70);
+  border: solid 1px var(--gray-90);
+}
+.form-control__element--dark {
+  color: var(--green-10);
+  background: radial-gradient(circle, #130218 70%, #03092c 100%) !important;
+}
+.form-control__element--select:not(.form-control__element--flat, .form-control__element--nav-item, .form-control__element--nav-item--active) {
+  color: var(--gray-90);
+}
+.form-control__element--select:not(.form-control__element--flat, .form-control__element--lite, .form-control__element--nav-item, .form-control__element--nav-item--active) {
+  color: var(--gray-60);
+  --ui-icon-color: var(--gray-60);
+  background-color: var(--gray-90);
+}
+.form-control__element--select:not(.form-control__element--flat, .form-control__element--lite, .form-control__element--nav-item, .form-control__element--nav-item--active):hover {
+  color: var(--gray-40);
+  --ui-icon-color: var(--gray-40);
+}
+.form-control__element--select:not(.form-control__element--flat, .form-control__element--lite, .form-control__element--nav-item, .form-control__element--nav-item--active):focus-within {
+  color: var(--white);
+  --ui-icon-color: var(--white);
+  background-color: var(--gray-70);
+}
+.form-control__element--transparent {
+  background-color: var(--gray-100-o);
+  background-color: transparent;
+  color: var(--orange-50) !important;
+  --ui-icon-color: var(--primary-50);
+}
+.form-control__element--transparent:hover:not(.form-control__element--transparent:focus-within) {
+  -webkit-text-fill-color: var(--gray-50);
+  background-color: var(--gray-80-o);
+  color: var(--gray-50);
+  --ui-icon-color: var(--gray-50);
+}
+.form-control__element--transparent:focus-within {
+  color: var(--gray-50);
+  background-color: var(--gray-90-o);
+}
+.form-control__element--nav-item, .form-control__element--nav-item--active {
+  gap: var(--s-9);
+  color: var(--gray-10);
+  --ui-icon-color: var(--gray-10);
+  transition: all 0.25s ease-in-out;
+  padding: 0 var(--s-9);
+  border: unset;
+}
+.form-control__element--nav-item:hover, .form-control__element--nav-item--active:hover {
+  color: var(--primary-90);
+  --ui-icon-color: var(--primary-90);
+}
+.form-control__element--nav-item:focus-within, .form-control__element--nav-item--active:focus-within {
+  color: var(--primary-50);
+  --ui-icon-color: var(--primary-50);
+  background-color: var(--gray-90);
+}/*# sourceMappingURL=FormControlElement.css.map */

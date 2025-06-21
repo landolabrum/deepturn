@@ -49,6 +49,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
   return (
     <>
       <style jsx>{styles}</style>
+      {/* {JSON.stringify(props)} */}
       {props.name != 'address' &&
         <FormControl
           {...props}
@@ -97,7 +98,7 @@ const UiInput: NextComponentType<NextPageContext, {}, IInput> = (props: IInput) 
 
         </FormControl>
       }
-      
+
       {props.name == 'address' && (
         <AutocompleteAddressInput
           label={props.label}

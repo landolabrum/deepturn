@@ -1,0 +1,17 @@
+.d-flex, .collect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.collect {
+  flex-direction: column;
+  width: 100%;
+  height: var(--s-9-width);
+  min-height: 500px;
+}
+.collect__checkout-button {
+  width: 100%;
+  margin: 10px 0 auto;
+  padding-bottom: var(--s-7);
+}/*# sourceMappingURL=Collect.css.map */

@@ -1,0 +1,31 @@
+.d-flex, .surveillance-item__header--status, .surveillance-item__header, .surveillance-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.surveillance-item {
+  flex-direction: column;
+  align-items: flex-start;
+  width: var(--s-9-width);
+  padding: var(--s-9);
+  gap: var(--s-9);
+  cursor: pointer;
+}
+.surveillance-item__header {
+  width: 100%;
+  justify-content: space-between;
+  gap: var(--s-10);
+  font-size: var(--s-8);
+  color: var(--gray-70);
+}
+.surveillance-item__header--status {
+  gap: var(--s-10);
+}
+.surveillance-item__snapshot {
+  width: 100%;
+}
+
+.surveillence-item__header--title {
+  font-size: var(--s-1);
+}/*# sourceMappingURL=SurveillanceItem.css.map */

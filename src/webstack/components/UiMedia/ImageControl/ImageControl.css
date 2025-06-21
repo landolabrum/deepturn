@@ -1,0 +1,76 @@
+.d-flex, .image-control .image-control__controls, .image-control__play {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-control {
+  --icon-size: 60px;
+  --font-size: var(--s-7);
+  width: inherit;
+  position: relative;
+  background-color: var(--black);
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: inset 0 0 5px var(--gray-90);
+}
+.image-control__play {
+  position: absolute;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  --ui-icon-color: var(--gray-50);
+  cursor: pointer;
+}
+.image-control--background {
+  position: relative;
+  z-index: -2;
+  height: 100vh;
+  overflow: hidden;
+}
+.image-control__loading {
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+@media (min-width: 1100px) {
+  .image-control__loading {
+    height: 100%;
+    width: inherit;
+  }
+}
+.image-control:hover .image-control__controls {
+  bottom: 0;
+  opacity: 1;
+}
+.image-control .image-control__element {
+  position: relative;
+  background-color: #000;
+  display: flex;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+}
+.image-control .image-control__element__background {
+  height: inherit;
+  width: inherit;
+}
+.image-control .image-control__controls {
+  background-color: var(--gray-100);
+  z-index: 2;
+  justify-content: space-between;
+  position: absolute;
+  bottom: -100%;
+  padding: 0 var(--s-9);
+  /* Start hidden below the container */
+  width: calc(100% - var(--s-9) * 2);
+  left: 0;
+  height: var(--s-element);
+  opacity: 0;
+  transition: bottom 0.5s ease, opacity 0.5s ease;
+}
+.image-control .image-control__controls__control {
+  cursor: pointer;
+}
+.image-control .image-control__controls__control:hover {
+  --ui-icon-color: var(--primary-50);
+}/*# sourceMappingURL=ImageControl.css.map */

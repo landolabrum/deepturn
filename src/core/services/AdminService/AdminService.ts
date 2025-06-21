@@ -146,24 +146,28 @@ export default class AdminService
       }
     } else throw new ApiError("No PRODUCT Provided", 400, "MS.SI.02");
   };
-  public async createProduct(productData: any): Promise<any> {
-    if (productData) {
-        console.log({ productData }); // Check productData here
-        try {
-            const newProduct = await this.post<any, any>(
-                `/api/product/`, 
-                { 
-                    name: productData.name, 
-                    active: productData.active, 
-                    description: productData.description,
-                    metadata: productData.metadata,
-                    price: productData.price
-                }
-            );
-            return newProduct;
-        } catch (error: any) {
-            return error;
-        }
-    } else throw new ApiError("No PRODUCT Provided", 400, "MS.SI.02");
+public async createProduct(productData: any): Promise<any> {
+  if (!productData) throw new ApiError("No PRODUCT Provided", 400, "MS.SI.02");
+
+  const { name, active, description, metadata, prices = [] } = productData;
+
+  console.log({ productData }); // Debug log
+
+  try {
+    const newProduct = await this.post<any, any>(
+      `/api/product/`,
+      {
+        name,
+        active,
+        description,
+        metadata,
+        prices // array of price objects
+      }
+    );
+    return newProduct;
+  } catch (error: any) {
+    return error;
+  }
 }
+
 }

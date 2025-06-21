@@ -1,0 +1,146 @@
+.d-flex, .map-tools, .map-content, .map-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+.map-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+@media (max-width: 1100px) {
+  .map-container {
+    flex-direction: column;
+  }
+}
+
+.map-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+@media (max-width: 1100px) {
+  .map-content {
+    flex-direction: column;
+  }
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+}
+.map__vessel-details {
+  display: flex;
+  width: -moz-max-content;
+  width: max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+.map-tools {
+  gap: var(--s-3);
+  cursor: pointer;
+  color: var(--white);
+  --ui-icon-color: var(--gray-30);
+  --ui-icon-size: var(--s-1);
+  position: absolute;
+  bottom: var(--s-9);
+  left: var(--s-9);
+  right: var(--s-9);
+  padding: var(--s-1);
+  animation-delay: 1s;
+  animation: fadein 1s ease-in forwards;
+  transition: all 1s ease-in-out;
+  height: -moz-max-content;
+  height: max-content;
+}
+
+.embedded-map {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #000;
+}
+.embedded-map .map-content {
+  width: 100%;
+  height: 100%;
+}
+.embedded-map .map {
+  width: 100%;
+  height: 100%;
+}
+.embedded-map .map-tools {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ffdb4d;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 8px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  color: #000;
+}
+.embedded-map .map-tools .map-tools--layer {
+  margin-bottom: 10px;
+}
+.embedded-map .map-tools .map-tools--layer .fa-xmark {
+  color: #000;
+  font-size: 24px;
+  cursor: pointer;
+}
+.embedded-map .map-tools .map-tools--layer .fa-xmark:hover {
+  color: #333;
+}
+.embedded-map .map-tools .map-tools--item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffdb4d;
+  border-radius: 5px;
+  margin: 5px 0;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.embedded-map .map-tools .map-tools--item:hover {
+  background-color: #ffc107;
+}
+.embedded-map .map-tools .map-tools--item .fa-icon {
+  color: #000;
+  font-size: 20px;
+  margin-right: 5px;
+}
+.embedded-map .map-tools--search {
+  background-color: #ffdb4d;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: calc(100% - 20px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.embedded-map .map-tools--search:focus {
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.ui-icon {
+  color: #000;
+  font-size: 24px;
+  cursor: pointer;
+}
+.ui-icon:hover {
+  color: #333;
+}/*# sourceMappingURL=UiMap.css.map */

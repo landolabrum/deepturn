@@ -346,7 +346,7 @@ useEffect(() => {
     },
     product: {
       actions: ['list'],
-      view: <AdminProduct setView={() => setView('list')} product={product} />
+      view: <AdminProduct product={product} />
     }
   };
   if (products) return (
@@ -384,4 +384,4 @@ useEffect(() => {
   return <UiLoader />;
 };
 
-export default AdminProducts;
+export default AdminProducts;  

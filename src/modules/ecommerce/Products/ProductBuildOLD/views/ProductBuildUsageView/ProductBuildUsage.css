@@ -1,0 +1,10 @@
+.d-flex, .product-build-usage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-build-usage {
+  flex-direction: column;
+  height: 100%;
+}/*# sourceMappingURL=ProductBuildUsage.css.map */

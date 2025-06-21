@@ -1,0 +1,107 @@
+.d-flex, .verify__default, .verify__error .error--more-info, .verify__error-header, .verify__error, .loadslider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadslider {
+  min-height: 100px;
+  min-width: 100%;
+  background-size: 200% 100%;
+}
+
+.verify {
+  min-height: 500px;
+  color: var(--white);
+}
+@media (max-width: 900px) {
+  .verify {
+    margin-top: 0;
+  }
+}
+.verify--header {
+  color: var(--gray-40);
+  width: var(--s-4-width);
+  max-width: var(--s-4-width);
+  overflow: hidden;
+  padding: var(--s-4) 0;
+  flex-wrap: wrap;
+  text-overflow: ellipsis;
+}
+.verify--header--title {
+  color: var(--gray-50);
+  font-size: var(--s-3);
+}
+.verify__default {
+  border: solid 1px var(--gray-60);
+  box-shadow: var(--box-shadow-xl);
+  color: var(--gray-40);
+  background-color: var(--gray-80);
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.verify__default p {
+  color: var(--gray-50);
+}
+.verify__error {
+  border: solid 1px var(--dark);
+  position: relative;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: var(--gray-70);
+}
+.verify__error h3 {
+  font-family: Orbitron;
+}
+.verify__error-header {
+  justify-content: flex-start;
+  font-size: var(--s-element);
+  gap: var(--s-5);
+  width: 100%;
+}
+.verify__error-header .c-error {
+  line-height: 1;
+  text-transform: capitalize;
+  padding: var(--s-9) var(--s-1);
+  font-size: var(--s-1);
+}
+.verify__error p {
+  background-color: var(--orange-o);
+  display: flex;
+  font-family: Game;
+  border: solid 1px var(--orange-50);
+  justify-content: flex-start;
+  padding: var(--s-4);
+  width: var(--s-4-width);
+  font-size: var(--s-3);
+  color: var(--orange-50);
+  flex: 1;
+  border-radius: var(--border-radius);
+}
+.verify__error .error--more-info {
+  width: 100%;
+  color: var(--gray-60);
+  font-family: Game;
+  text-decoration: underline;
+  font-size: var(--s-8);
+}
+.verify__default, .verify__error {
+  min-height: 50vh;
+  line-height: 1;
+  padding: var(--s-4);
+  flex-direction: column;
+  gap: var(--s-4);
+  border-radius: var(--border-radius);
+}
+@media (max-width: 1260px) {
+  .verify__default, .verify__error {
+    width: var(--s-4-width);
+    margin: var(--s-4);
+  }
+}
+.verify__default h1,
+.verify__default p, .verify__error h1,
+.verify__error p {
+  line-height: 1;
+  margin: 0;
+}/*# sourceMappingURL=Verify.css.map */

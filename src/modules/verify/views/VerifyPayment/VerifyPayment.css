@@ -1,0 +1,48 @@
+.d-flex, .verify-payment--content__contact-form, .verify-payment--header, .verify-payment--content, .verify-payment__token-needed, .verify-payment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card, .verify-payment--content__contact-form, .verify-payment__token-needed {
+  width: var(--s-4-width);
+  border-radius: var(--border-radius);
+  padding: var(--s-4);
+  background-color: var(--gray-90);
+}
+
+.verify-payment {
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--s-4);
+  width: 100%;
+}
+.verify-payment__item {
+  width: 100%;
+}
+.verify-payment__token-needed {
+  flex-direction: column;
+  color: var(--secondary-50);
+  font-size: var(--s-3);
+  height: 100%;
+  min-height: 400px;
+  width: auto;
+}
+.verify-payment--header, .verify-payment--content {
+  justify-content: flex-start;
+}
+.verify-payment--header {
+  text-transform: capitalize;
+  width: 100%;
+  color: var(--gray-40);
+  font-size: var(--s-2);
+}
+.verify-payment--content {
+  flex-direction: column;
+  color: var(--gray-40);
+  gap: var(--s-4);
+  width: 100%;
+}
+.verify-payment--content__contact-form {
+  margin-bottom: var(--s-element);
+}/*# sourceMappingURL=VerifyPayment.css.map */

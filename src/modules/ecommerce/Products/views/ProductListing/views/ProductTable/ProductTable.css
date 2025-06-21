@@ -1,0 +1,29 @@
+.d-flex, .product-table .product-table__product, .product-table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-table {
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+}
+.product-table .product-table__header {
+  width: 100%;
+}
+@media (max-width: 900px) {
+  .product-table .product-table__header .product-table__filters {
+    width: 100%;
+  }
+}
+.product-table .product-table__product {
+  background-color: var(--gray-70);
+  border-radius: 5px;
+  width: calc(100% - 20px);
+  gap: 10px;
+  flex-direction: column;
+  min-height: 100px;
+  cursor: pointer;
+  padding: 10px;
+}/*# sourceMappingURL=ProductTable.css.map */

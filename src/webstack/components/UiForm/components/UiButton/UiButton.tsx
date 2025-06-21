@@ -39,14 +39,15 @@ export const LinkProvider: FC<ILinkProvider> = ({ href, target, children, rel, f
 };
 export interface IButton extends IFormControl {
   onClick?: (e: any) => void;
+  onChange?: (e: any) => void;
   disabled?: boolean;
   busy?: boolean;
   href?: string;
   name?: string;
   target?: string;
-  value?:any;
+  value?: any;
   size?: IFormControlSize;
-  type?: "button" | "submit" | "reset" | 'tel' | 'email'|'checkbox';
+  type?: "button" | "submit" | "reset" | "tel" | "email" | "checkbox" | "file";
   variant?: IFormControlVariant;
 }
 
@@ -74,6 +75,7 @@ const ButtonContext = ({ context }: IButtonContext) => {
           type={_type || undefined}
           className={context?.variant ? context?.variant : ""}
           onClick={handleClick}
+          onChange={context?.onChange}
           disabled={context?.disabled || context?.variant == "disabled"}
         >
           {context?.busy && (

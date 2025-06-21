@@ -1,5 +1,5 @@
 module.exports = {
-  deploy: "nirv1",
+  deploy: "mb1",
   merchants: {
     mb1: {
       mid: "mb1",
@@ -53,7 +53,7 @@ module.exports = {
       url: "https://nirvanaenergy.net",
       stripeId: "acct_1OWy0fE8XAGZDdpK",
       settings: {
-        optIn: true,
+        // optIn: true,
         about: {
           title: 'Off-grid specialists',
           description: '',

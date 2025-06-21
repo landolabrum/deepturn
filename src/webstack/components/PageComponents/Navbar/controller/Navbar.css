@@ -1,0 +1,128 @@
+.d-flex, .navbar__container .nav-bar__nav-items .nav__nav-item--cart, .navbar__container .nav-bar__nav-items, .navbar__container .navbar__trigger, .navbar__container {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__container {
+  z-index: 1000;
+  min-height: var(--s-nav-height);
+  width: 100%;
+}
+@keyframes animateBg {
+  0% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+.navbar__container .navbar {
+  padding: 0 0 var(--s-9);
+  width: 100%;
+}
+@media (min-width: 1100px) {
+  .navbar__container .navbar {
+    min-height: var(--s-nav-height);
+    padding: var(--s-9);
+    margin: 0 auto;
+  }
+}
+@media screen and (min-width: 1100px) and (max-width: calc(1260px - var(--s-4) * 2)) {
+  .navbar__container {
+    padding: 0 var(--s-4);
+    width: 0 var(--s-4-width);
+  }
+}
+@media (max-width: 1100px) {
+  .navbar__container {
+    justify-content: flex-end;
+  }
+}
+@keyframes fade {
+  0% {
+    filter: brightness(2);
+    --ui-icon-color: var(--body);
+  }
+  100% {
+    filter: brightness(1);
+    background-color: var(--primary-o);
+    --ui-icon-color: var(--white);
+  }
+}
+.navbar__container .navbar__trigger {
+  cursor: pointer;
+  --ui-icon-size: var(--s-7);
+  justify-content: center;
+  border-radius: var(--border-radius);
+  display: none;
+  background-color: var(--gray-90);
+  --ui-icon-color: var(--primary-50);
+  aspect-ratio: 1;
+  min-height: var(--s-nav-height);
+}
+.navbar__container .navbar__trigger--o {
+  --ui-icon-color: var(--dark-o);
+  background-color: var(--dark-o);
+  border: solid 1px var(--gray-70-o);
+  filter: blur(1px);
+}
+.navbar__container .navbar__trigger:hover {
+  animation: fade 1s forwards;
+}
+.navbar__container .nav-bar__nav-items {
+  gap: var(--s-7);
+}
+.navbar__container .nav-bar__nav-items .nav__nav-item {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  color: var(--gray-40);
+  --ui-icon-color: $defaultColor;
+  min-height: var(--s-nav-height);
+}
+.navbar__container .nav-bar__nav-items .nav__nav-item--about {
+  margin-left: auto;
+}
+.navbar__container .nav-bar__nav-items .nav__nav-item--user-account, .navbar__container .nav-bar__nav-items .nav__nav-item--login {
+  align-self: flex-end;
+  justify-self: flex-end;
+}
+@media (max-width: 1100px) {
+  .navbar__container .nav-bar__nav-items .nav__nav-item--user-account, .navbar__container .nav-bar__nav-items .nav__nav-item--login {
+    position: inherit;
+  }
+}
+.navbar__container .nav-bar__nav-items .nav__nav-item.no-cart {
+  padding-right: 0;
+}
+.navbar__container .nav-bar__nav-items .nav__nav-item--login, .navbar__container .nav-bar__nav-items .nav__nav-item--user-account {
+  margin-left: auto;
+}
+.navbar__container .nav-bar__nav-items .nav__nav-item--cart {
+  cursor: pointer;
+  min-height: var(--s-nav-height);
+  width: var(--s-element);
+  padding: 0 var(--s-9) 0 0;
+  --ui-icon-width: 100%;
+  --ui-icon-height: var(--s-5);
+  --ui-icon-color: var(--gray-50);
+}
+.navbar__container .nav-bar__nav-items .nav__nav-item:hover {
+  color: var(--primary-o);
+  --ui-icon-color: $hoverColor;
+}
+.navbar__container .nav-bar__nav-items .nav__nav-item__active {
+  --ui-icon-color: $focusColor;
+  color: var(--primary-50);
+}
+
+.navbar__container--hide {
+  width: auto;
+  background-color: transparent;
+}
+.navbar__container--hide .navbar__trigger {
+  display: flex;
+}
+.navbar__container--hide .nav-bar__nav-items {
+  display: none;
+}/*# sourceMappingURL=Navbar.css.map */

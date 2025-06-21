@@ -57,7 +57,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
 
   const firstView = router.query.vid != undefined && router.query.vid || viewName || Object.keys(views)[0];
   const isView = view && Object.keys(views).includes(view);
-const openClass = isNavOpen ? ' open' : ' close';
+  const openClass = isNavOpen ? ' open' : ' close';
   useEffect(() => setView(firstView?.toString()), [firstView, isView]);
 
   if (!isView) return (
@@ -68,18 +68,18 @@ const openClass = isNavOpen ? ' open' : ' close';
       </div>
     </>
   );
-const SideNavTrigger = ({ isOpen, setIsOpen }:any) => {
-  return (
-    <>
-      <style jsx>{styles}</style>
-      <div className={`settings__trigger  ${openClass}`} onClick={() => setIsOpen(!isOpen)}>
-        <div className={`settings__trigger--content  ${openClass}`}>
-          <UiIcon icon={isOpen ? 'fa-chevron-left' : 'fa-chevron-right'} />
+  const SideNavTrigger = ({ isOpen, setIsOpen }: any) => {
+    return (
+      <>
+        <style jsx>{styles}</style>
+        <div className={`settings__trigger  ${openClass}`} onClick={() => setIsOpen(!isOpen)}>
+          <div className={`settings__trigger--content  ${openClass}`}>
+            <UiIcon icon={isOpen ? 'fa-chevron-left' : 'fa-chevron-right'} />
+          </div>
         </div>
-      </div>
-    </>
-  );
-};
+      </>
+    );
+  };
   return (
     <>
       <style jsx>{containerStyles}</style>
@@ -87,31 +87,26 @@ const SideNavTrigger = ({ isOpen, setIsOpen }:any) => {
         <div className={`${classMaker('header')}`}>
           {!title && title !== undefined && isView && <UiHeader title={titleContent} subTitle={subTitle} /> || title}
         </div>
-        <div className={classMaker('content')+ ` ${openClass}`}>
-          <div className={classMaker('nav')+ ` ${openClass}`}>
-              {width > 1100 && (
-                <SideNavTrigger isOpen={isNavOpen} setIsOpen={setIsNavOpen} />
-              )}
-            <div className={classMaker('nav--content')+ ` ${openClass}`}>
-
-              <div className={`settings__nav--content ${openClass}`}>
-                {Object.keys(views)?.map((vue) => (
-                  <span key={vue} className='s-w-100'>
-                    <UiButton
-                      traits={view === vue ? { afterIcon: 'fa-check' } : {}}
-                      variant={view == vue && "primary"}
-                      onClick={() => handleView(vue)}
-                    >
-                      {keyStringConverter(vue)}
-                    </UiButton>
-                  </span>
-                ))}
-                {customMenu}
-              </div>
+        <div className={classMaker('content') + ` ${openClass}`}>
+          <div className={`settings__nav--scroll-wrapper ${openClass}`}>
+            <div className={`settings__nav--content ${openClass}`}>
+              {Object.keys(views)?.map((vue) => (
+                <span key={vue} className='s-w-100'>
+                  <UiButton
+                    traits={view === vue ? { afterIcon: 'fa-check' } : {}}
+                    variant={view == vue && "primary"}
+                    onClick={() => handleView(vue)}
+                  >
+                    {keyStringConverter(vue)}
+                  </UiButton>
+                </span>
+              ))}
+              {customMenu}
             </div>
           </div>
-          <div className={classMaker('view')+ ` ${openClass}`}>
-            <div className={classMaker('content')+ ` ${isNavOpen ? ' open' : ' close'}`}>
+
+          <div className={classMaker('view') + ` ${openClass}`}>
+            <div className={classMaker('content') + ` ${isNavOpen ? ' open' : ' close'}`}>
               {views[view]}
             </div>
             {footer && <div className={classMaker('footer')}>{footer}</div>}

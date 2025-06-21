@@ -1,0 +1,28 @@
+main {
+  overflow-y: visible;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  width: 100vw;
+  min-height: calc(100vh - 75px);
+}
+@media (min-width: 1260px) {
+  main {
+    margin: 0 auto;
+    max-width: 1260px;
+    inline-size: var(--s-4-width);
+  }
+}
+@media (max-width: 1100px) {
+  main {
+    height: 100%;
+    width: var(--s-9-width);
+  }
+}
+@media (max-width: 1100px) {
+  main {
+    height: 100%;
+    min-height: calc(100vh - 75px);
+  }
+}/*# sourceMappingURL=DefaultLayout.css.map */

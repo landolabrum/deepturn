@@ -9,32 +9,26 @@ const ServicesEnergyIcons: React.FC = () => {
       <div className="energy-icons">
         <div className="energy-icons__item">
           <UiIcon icon="solar-panel" />
-          <div className="energy-icons__content">
             <h3>Solar Panel Array</h3>
-            <p>
+            <div className="energy-icons__body">
               Harness the sun with cutting-edge solar panel arrays. Built for efficiency and engineered for rooftops, our photovoltaic solutions reduce grid dependency while increasing energy independence.
-            </p>
           </div>
         </div>
 
         <div className="energy-icons__item">
           <UiIcon icon="diesel-generator" />
-          <div className="energy-icons__content">
             <h3>Diesel Generator</h3>
-            <p>
+            <div className="energy-icons__body">
               Power on demand with rugged diesel generators. Engineered for reliability in remote setups, these systems provide a resilient fallback whenever solar energy or grid power is unavailable.
-            </p>
-          </div>
+            </div>
         </div>
 
         <div className="energy-icons__item">
           <UiIcon icon="battery-box" />
-          <div className="energy-icons__content">
             <h3>Battery Backup Box</h3>
-            <p>
+            <div className="energy-icons__body">
               Store energy smartly with our compact battery backup units—perfect for garages, cabins, or mobile setups. Offers rapid charging, safe discharge, and seamless system integration.
-            </p>
-          </div>
+            </div>
         </div>
       </div>
     </>

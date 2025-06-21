@@ -29,7 +29,7 @@ const Services: React.FC = () => {
         <div className='services-body'>
           <div className='services--section'>
             <div className="services--section-header">
-             
+            
             </div>
             <ServicesEnergyIcons/>
           </div>

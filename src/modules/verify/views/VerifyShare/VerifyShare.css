@@ -1,0 +1,161 @@
+.d-flex, .verify-share .proposal-list .list-item, .verify-share .proposal-list, .verify-share .proposal-content_title, .verify-share .proposal .service-item, .verify-share .proposal-header_subtitle, .verify-share .proposal-header_marquee, .verify-share .proposal-header, .verify-share, .token-wall {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.token-wall {
+  padding: var(--s-4);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: 2004;
+  width: 100%;
+  margin: auto;
+  left: 0;
+}
+.token-wall-content {
+  width: var(--s-4-width);
+  padding: var(--s-4);
+  border-radius: var(--border-radius);
+  max-width: 600px;
+  background-color: var(--gray-80);
+}
+
+.verify-share {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--s-4);
+  border-radius: var(--s-12);
+  font-weight: 500;
+  letter-spacing: 0.2rem;
+}
+.verify-share .proposal-header {
+  width: 100%;
+  margin-bottom: var(--s-2);
+  color: var(--gray-70);
+  font-family: FreightSans;
+  border: solid 1px var(--gray-70);
+  border-radius: var(--border-radius);
+  font-weight: 300;
+  justify-content: space-between;
+  background-color: var(--gray-90);
+  align-items: flex-start;
+}
+@media (max-width: 1100px) {
+  .verify-share .proposal-header {
+    flex-direction: column;
+  }
+}
+.verify-share .proposal-header_marquee {
+  font-family: Play;
+  gap: var(--s-9);
+  font-size: var(--s-element);
+  margin: var(--s-6) 0 var(--s-1);
+  color: var(--gray-10);
+  --ui-icon-color: var(--gray-10);
+  --ui-icon-size: var(--s-element);
+}
+.verify-share .proposal-header_client {
+  font-family: Play;
+  font-size: var(--s-1);
+  padding: var(--s-4);
+  color: var(--white);
+  text-transform: uppercase;
+}
+@media (max-width: 1100px) {
+  .verify-share .proposal-header_client {
+    font-size: var(--s-1);
+    margin-right: 0;
+  }
+}
+.verify-share .proposal-header_title {
+  font-family: Play;
+  font-size: var(--s-1);
+  color: var(--white);
+}
+@media (max-width: 1100px) {
+  .verify-share .proposal-header_title {
+    font-size: var(--s-1);
+  }
+}
+.verify-share .proposal-header_subtitle {
+  font-size: var(--s-5);
+  color: var(--gray-50);
+  text-transform: unset;
+  justify-content: flex-start;
+  gap: var(--s-12);
+}
+@media (max-width: 1100px) {
+  .verify-share .proposal-header_subtitle {
+    font-size: var(--s-5);
+  }
+}
+.verify-share .proposal .service-item {
+  border-radius: var(--border-radius);
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: var(--s-4);
+  padding: var(--s-4);
+  color: var(--gray-40);
+  transition: color 1s ease-in-out;
+}
+@media (max-width: 1100px) {
+  .verify-share .proposal .service-item {
+    padding: var(--s-5) 0 var(--s-1);
+  }
+}
+.verify-share .proposal .service-item:hover {
+  cursor: pointer;
+  color: var(--gray-10);
+}
+.verify-share .proposal-content_title {
+  color: var(--primary-50);
+  width: 100%;
+  font-size: var(--s-2);
+  --ui-icon-size: var(--s-3);
+}
+@media (max-width: 1100px) {
+  .verify-share .proposal-content_title {
+    font-size: var(--s-2);
+    --ui-icon-size: var(--s-2);
+    text-align: center;
+  }
+}
+.verify-share .proposal-content_body {
+  line-height: 1.5;
+  padding: 0 var(--s-4);
+  font-size: var(--s-7);
+  font-family: Arial, Helvetica, sans-serif;
+}
+.verify-share .proposal-list {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-4);
+  border-radius: var(--s-12);
+  font-size: var(--s-4);
+  color: var(--secondary-50);
+  padding: 0 var(--s-4);
+}
+@media (max-width: 1100px) {
+  .verify-share .proposal-list {
+    padding: 0;
+  }
+}
+.verify-share .proposal-list .list-item {
+  border: solid 1px var(--primary-50);
+  border-left: solid 5px var(--primary-50);
+  border-radius: 3px;
+  padding: var(--s-10);
+  flex-direction: column;
+  font-size: var(--s-7);
+  font-family: FreightSans, sans-serif;
+  background-color: var(--gray-90);
+}
+.verify-share .proposal-list .list-item_title {
+  width: 100%;
+  font-weight: bold;
+  font-size: var(--s-5);
+  color: var(--gray-50);
+}/*# sourceMappingURL=VerifyShare.css.map */

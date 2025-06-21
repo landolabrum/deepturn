@@ -1,0 +1,36 @@
+.d-grid, .account {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 5px;
+  grid-row-gap: 0px;
+  gap: 10px;
+}
+
+.account {
+  width: 100%;
+  position: relative;
+}
+@media (max-width: 900px) {
+  .account {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+  }
+}
+.account .account__view {
+  background-color: var(--gray-50);
+  border-radius: var(--border-radius);
+  width: calc(100% - var(--s-6) * 2);
+  padding: var(--s-7);
+}
+.account .account__view .account__view__title {
+  text-transform: uppercase;
+  letter-spacing: var(--s-9);
+  font-weight: 900;
+  font-size: var(--s-1);
+  line-height: 1.5;
+  margin-bottom: var(--s-9);
+  color: var(--gray-20);
+}/*# sourceMappingURL=User.css.map */

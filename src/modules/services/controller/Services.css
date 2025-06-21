@@ -1,0 +1,44 @@
+.d-flex, .services-body .services--section, .services-header .services--section, .services-body, .services-header, .services {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.services {
+  color: var(--gray-90);
+  padding: var(--s-nav-height) 0 0;
+  justify-content: flex-start;
+  left: 0;
+  flex-direction: column;
+  gap: var(--s-element);
+  width: 100%;
+  background: var(--gray-80);
+  height: 100%;
+  min-height: 100vh;
+}
+.services-body, .services-header {
+  width: var(--s-9-width);
+  padding: 0 var(--s-9);
+  color: var(--primary-50);
+  justify-content: flex-start;
+}
+.services-body .services--section, .services-header .services--section {
+  width: 100%;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+.services-body {
+  padding-bottom: 200px;
+  height: 100%;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+.services-header {
+  --ui-icon-color:var(--primary-50);
+  gap: var(--s-9);
+  align-items: flex-end;
+  line-height: 1;
+  --ui-icon-size: var(--s-element);
+  font-size: var(--s-element);
+}/*# sourceMappingURL=Services.css.map */

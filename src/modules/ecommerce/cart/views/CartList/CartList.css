@@ -1,0 +1,41 @@
+.d-flex, .cart-list__brand-icon, .cart-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart-list {
+  width: 100%;
+}
+.cart-list--mini {
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.cart-list__header {
+  text-transform: capitalize;
+}
+.cart-list__brand-icon {
+  width: 90px;
+  height: 90px;
+  --ui-icon-height: 75px;
+  --ui-icon-width: 75px;
+}
+
+.cart-list__collapse-label {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  gap: var(--s-8);
+  --ui-icon-width: var(--s-5);
+  --ui-icon-height: var(--s-5);
+}
+.cart-list__collapse-label .cart-list__collapse-label-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  line-height: 1;
+  font-size: var(--s-7);
+  gap: 2px;
+}/*# sourceMappingURL=CartList.css.map */

@@ -1,0 +1,21 @@
+.d-flex, .surveillance-controller--joystick, .surveillance-controller--coordinates, .surveillance-controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.surveillance-controller {
+  flex-direction: column;
+  gap: var(--s-9);
+}
+.surveillance-controller--joystick, .surveillance-controller--coordinates {
+  width: 100%;
+}
+.surveillance-controller--coordinates {
+  justify-content: flex-start;
+}
+.surveillance-controller--joystick {
+  background-color: var(--gray-70);
+  padding: var(--s-1) var(--s-9);
+  border-radius: var(--s-1);
+}/*# sourceMappingURL=SurveillanceController.css.map */

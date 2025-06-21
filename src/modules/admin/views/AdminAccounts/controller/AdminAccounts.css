@@ -1,0 +1,30 @@
+.d-flex, .admin-accounts__account--line, .admin-accounts__account, .admin-accounts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-accounts {
+  flex-direction: column;
+  width: 100%;
+}
+.admin-accounts__account {
+  width: 100%;
+  flex-direction: column;
+}
+.admin-accounts__account--line {
+  border: solid 1px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: var(--s-border-width);
+  gap: 2px;
+  line-height: 20px;
+  font-size: 16px;
+}
+.admin-accounts__account--line-key {
+  color: var(--primary-50);
+}
+.admin-accounts__account--line-value {
+  color: var(--gray-10);
+  word-break: break-word;
+}/*# sourceMappingURL=AdminAccounts.css.map */

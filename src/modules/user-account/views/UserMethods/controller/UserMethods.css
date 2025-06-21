@@ -1,0 +1,62 @@
+.d-flex, .user-methods .user-methods__existing .user-methods__list, .user-methods .user-methods__existing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.brdr {
+  border: solid 1px var(--gray-80);
+  outline: solid 1px var(--gray-60);
+}
+
+.body {
+  padding: 0 var(--s-4);
+}
+
+.user-methods {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  width: 100%;
+}
+.user-methods .user-methods__existing {
+  align-items: flex-start;
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+  flex-direction: column;
+  gap: var(--s-4);
+  padding: var(--s-4);
+  border-radius: var(--border-radius);
+  border: solid 1px var(--gray-70);
+  background-color: var(--gray-80);
+  height: 100%;
+  transition: all 3s ease-out;
+}
+.user-methods .user-methods__existing--title {
+  width: 100%;
+  font-size: var(--s-3);
+  text-transform: capitalize;
+  color: var(--gray-50);
+}
+.user-methods .user-methods__existing__selected {
+  transition: all 3s ease-out;
+  justify-content: space-between;
+}
+.user-methods .user-methods__existing .existing__select {
+  color: var(--orange-50);
+  text-indent: var(--s-4);
+}
+.user-methods .user-methods__existing .existing__selected {
+  color: var(--white);
+}
+.user-methods .user-methods__existing .existing__select,
+.user-methods .user-methods__existing .existing__selected {
+  width: 100%;
+  font-size: var(--s-3);
+  font-family: Game;
+  border-radius: var(--border-radius);
+}
+.user-methods .user-methods__existing .user-methods__list {
+  width: 100%;
+  flex-direction: column;
+  gap: var(--s-7);
+}/*# sourceMappingURL=UserMethods.css.map */

@@ -1,0 +1,9 @@
+.d-flex, .guest-checkout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.guest-checkout {
+  width: 100%;
+}/*# sourceMappingURL=Collect.css.map */

@@ -1,0 +1,26 @@
+.adapt-container {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--gray-100);
+}
+.adapt-container .adapt-container__content {
+  width: 100%;
+  display: flex;
+  height: inherit;
+  overflow-x: auto;
+}
+.adapt-container .adapt-container__content::-webkit-scrollbar-thumb {
+  background-color: var(--blue-60);
+}
+.adapt-container .adapt-container__content::-webkit-scrollbar {
+  width: 10px;
+  aspect-ratio: 1/1;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.adapt-container .adapt-container__btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  pointer-events: all;
+  touch-action: none;
+}/*# sourceMappingURL=AdaptContainer.css.map */

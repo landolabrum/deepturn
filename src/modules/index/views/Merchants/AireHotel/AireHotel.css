@@ -1,0 +1,23 @@
+.d-flex, .description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.description {
+  flex-direction: column;
+  gap: var(--s-9);
+  padding: var(--s-3) 0;
+}
+.description__request {
+  min-width: 300px;
+  background-color: var(--gray-60);
+  color: var(--gray-100);
+  position: fixed;
+  right: var(--s-1);
+  top: var(--s-9);
+  border-radius: var(--border-radius);
+}
+.description__request:hover {
+  background-color: var(--primary-90);
+}/*# sourceMappingURL=AireHotel.css.map */

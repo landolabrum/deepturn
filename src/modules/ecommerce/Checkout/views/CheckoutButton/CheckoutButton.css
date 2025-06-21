@@ -1,0 +1,15 @@
+.d-flex, .checkout-modal, .checkout-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.checkout-button {
+  justify-content: flex-end;
+}
+
+.checkout-modal {
+  height: 100%;
+  width: 100%;
+}/*# sourceMappingURL=CheckoutButton.css.map */

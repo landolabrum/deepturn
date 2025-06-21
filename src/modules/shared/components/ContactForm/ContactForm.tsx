@@ -30,16 +30,17 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
   const getWidth = (): string => windowSize.width >= 900 ? '50%' : '100%';
   const width = getWidth();
 
-  const defaultContactFields: IFormField[] = [
-    { name: 'name', label: 'name', type: 'text', placeholder: 'Herbie Hancock', required: true },
-    { name: 'email', label: 'email', type: 'email', placeholder: 'your@email.com', required: true, width },
-    { name: 'phone', value: '1 (435) 200 - 3006', label: 'phone', type: 'tel', placeholder: '1 (000) 000-0000', required: true, width },
-    { name: 'line1', label: 'Address Line 1', type: 'text', placeholder: '123 Main St', required: true, width },
-    { name: 'line2', label: 'Address Line 2', type: 'text', placeholder: 'Apt, Suite, etc.', required: false, width },
-    { name: 'city', label: 'City', type: 'text', placeholder: 'Los Angeles', required: true, width },
-    { name: 'state', label: 'State', type: 'text', placeholder: 'CA', required: true, width },
-    { name: 'postal_code', label: 'Postal Code', type: 'text', placeholder: '90001', required: true, width },
-  ];
+const defaultContactFields: IFormField[] = [
+  { name: 'name', label: 'Name', type: 'text', placeholder: 'e.g. Herbie Hancock', required: true },
+  { name: 'email', label: 'Email', type: 'email', placeholder: 'e.g. your@email.com', required: true, width },
+  { name: 'phone', label: 'Phone', type: 'tel', placeholder: 'e.g. 1 (000) 000-0000', required: false, width },
+  { name: 'line1', label: 'Address Line 1', type: 'text', placeholder: 'e.g. 123 Main St', required: true, width },
+  { name: 'line2', label: 'Address Line 2', type: 'text', placeholder: 'e.g. Apt, Suite, etc.', required: false, width },
+  { name: 'city', label: 'City', type: 'text', placeholder: 'e.g. Los Angeles', required: true, width },
+  { name: 'state', label: 'State', type: 'text', placeholder: 'e.g. CA', required: true, width },
+  { name: 'postal_code', label: 'Postal Code', type: 'text', placeholder: 'e.g. 90001', required: true, width },
+];
+
 
   const initialFields = sessionData?.[sessionKey] || propFields || defaultContactFields;
   const [fields, setFields] = useState<IFormField[]>(initialFields);

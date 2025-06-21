@@ -239,7 +239,7 @@ const NirvanaEnergy = () => {
               Off-grid systems are not connected to the utility grid. These systems can be tailored to fit your needs no matter how big or small and using several different power sources.
               </HomeGridItem>
               </AdaptGrid> */}
-              <HomeGridItem title='services' icon='fal-tools'>
+              <HomeGridItem >
                 <div className='nirvana-energy__content--services'>
                 <Services/>
                 </div>

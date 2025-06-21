@@ -1,0 +1,60 @@
+.d-flex, .admin-stream__card-body, .admin-stream__card-header, .admin-stream__card, .admin-stream__table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-stream {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.admin-stream__body, .admin-stream__header {
+  width: 100%;
+}
+.admin-stream__header {
+  font-size: var(--s-1);
+}
+.admin-stream__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-element);
+  width: 100%;
+}
+.admin-stream__table {
+  flex-direction: column;
+  gap: var(--s-9);
+  width: 100%;
+}
+.admin-stream__card {
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  overflow: hidden;
+  min-height: 150px;
+  color: var(--gray-10);
+}
+.admin-stream__card-header {
+  color: var(--primary-50);
+  min-height: var(--s-element);
+  text-transform: capitalize;
+}
+@media (max-width: 1100px) {
+  .admin-stream__card-header {
+    padding: var(--s-9);
+    font-size: var(--s-6);
+  }
+}
+.admin-stream__card-body {
+  height: 100%;
+  font-size: var(--s-element);
+  flex: 1;
+  width: 100%;
+}
+@media (max-width: 1100px) {
+  .admin-stream__card-body {
+    font-size: var(--s-6);
+  }
+}/*# sourceMappingURL=AdminStream.css.map */

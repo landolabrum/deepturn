@@ -1,0 +1,15 @@
+.grid-container {
+  align-content: start;
+  display: grid;
+  height: 100%;
+  aspect-ratio: 1/1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: visible;
+}
+.grid-container .grid-element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}/*# sourceMappingURL=PlaceGrid.css.map */

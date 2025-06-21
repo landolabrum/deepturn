@@ -1,0 +1,30 @@
+.d-flex, .contact-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-form {
+  width: 100%;
+  align-items: flex-start;
+  overflow-y: visible;
+  flex-direction: column;
+}
+.contact-form ul {
+  color: var(--red-30);
+}
+.contact-form strong {
+  text-transform: capitalize;
+}
+.contact-form__title {
+  font-size: var(--s-1);
+  color: var(--gray-40);
+  margin: var(--s-4) 0;
+  text-transform: capitalize;
+}
+.contact-form--action {
+  --ui-icon-color: var(--gray-20);
+}
+.contact-form__payment-form {
+  width: 100%;
+}/*# sourceMappingURL=ContactForm.css.map */

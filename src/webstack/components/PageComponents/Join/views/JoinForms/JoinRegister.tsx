@@ -32,9 +32,9 @@ const JoinRegister = ({ openModal, closeModal }: JoinRegisterProps) => {
   const width = useMemo(() => (windowSize.width >= 900 ? '50%' : '100%'), [windowSize.width]);
 
   const fields: IFormField[] = useMemo(() => [
-    { name: 'name', label: 'name', type: 'text', placeholder: 'First Last', required: true },
-    { name: 'email', label: 'email', type: 'email', placeholder: 'your@email.com', required: true, width },
-    { name: 'phone', value: '1 (435) 200 - 3006', label: 'phone', type: 'tel', placeholder: '1 (000) 000-0000', required: true, width },
+  { name: 'name', label: 'Name', type: 'text', placeholder: 'e.g. Herbie Hancock', required: true },
+  { name: 'email', label: 'Email', type: 'email', placeholder: 'e.g. your@email.com', required: true, width },
+  { name: 'phone', label: 'Phone', type: 'tel', placeholder: 'e.g. 1 (000) 000-0000', required: false, width },
     {
       name: 'agree',
       type: 'checkbox',

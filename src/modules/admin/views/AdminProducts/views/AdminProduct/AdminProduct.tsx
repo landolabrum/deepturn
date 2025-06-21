@@ -1,182 +1,134 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from './AdminProduct.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import environment from '~/src/core/environment';
 import { IProduct } from '~/src/models/Shopping/IProduct';
-import { findField, updateField } from '@webstack/components/UiForm/functions/formFieldFunctions';
-import { dateFormat, numberToUsd } from '@webstack/helpers/userExperienceFormats';
+import { updateField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
 import { useRouter } from 'next/router';
 import useDeleteProduct from '../../hooks/useDeleteProduct';
-import stringNum from '@webstack/helpers/stringNumber';
+import validateField from '@webstack/components/UiForm/functions/validateField';
+import UiUpload from '@webstack/components/UiForm/components/UiUpload/controller/UiUpload'; // Import UiUpload
 
-interface IAdminProduct {
-  product?: IProduct;
-  setView?: (e: any) => void;
-}
-
-const AdminProduct: React.FC<IAdminProduct> = ({ product }) => {
+const AdminProduct: React.FC<{ product?: IProduct }> = ({ product }) => {
   const router = useRouter();
   const mid = environment.merchant.mid;
-  const adminService = getService<IAdminService>("IAdminService");
-  const { deletedProduct, initiateDelete } = useDeleteProduct();
+  const adminService = getService<IAdminService>('IAdminService');
+  const { initiateDelete } = useDeleteProduct();
   const { openModal, closeModal } = useModal();
 
   const [fields, setFields] = useState<IFormField[]>();
+  const timeoutRef = useRef<{ [key: string]: NodeJS.Timeout }>({});
+  const [activeField, setActiveField] = useState<string | null>(null);
 
-  const initialFields: any = [
-    { name: 'name', label: 'Product Name' },
-    { name: 'active', label: 'Active', value: false, type: 'checkbox' },
-    { name: 'description', label: 'Product Description', type: 'textarea' },
-    { name: 'type', label: 'Typez', options: [{ 'name': 'service', value: 'service' }], type: 'select', value: '' },
-    { name: 'unit_amount', label: 'Amount', type: 'tel' },
+  const initialFields: IFormField[] = [
+    { name: 'name', label: 'Product Name', type: 'text', required: true },
+    { name: 'active', label: 'Active', value: true, type: 'checkbox' },
+    { name: 'description', label: 'Description', type: 'textarea' },
+    { name: 'image', label: 'Image URL', type: 'text', placeholder: 'https://...' },
+    { name: 'tax_code', label: 'Tax Code', type: 'select', value: 'txcd_10000000', options: [{ label: 'General - Electronically Supplied Services', value: 'txcd_10000000' }] },
+    { name: 'price_description', label: 'Price Description', type: 'text' },
+    { name: 'lookup_key', label: 'Lookup Key', type: 'text' },
+    { name: 'unit_amount', label: 'Amount (USD)', type: 'tel', required: true },
+    { name: 'include_tax', label: 'Include Tax in Price', type: 'select', value: 'no', options: [{ label: 'Yes', value: 'yes' }, { label: 'No', value: 'no' }] },
+    { name: 'billing_period', label: 'Billing Period', type: 'select', value: 'monthly', options: [{ label: 'Daily', value: 'daily' }, { label: 'Weekly', value: 'weekly' }, { label: 'Monthly', value: 'monthly' }, { label: 'Yearly', value: 'yearly' }] }
   ];
 
-  const flattenMetadata = (metadata: any) => {
-    return Object.entries(metadata).map(([key, value]) => ({
-      name: `metadata.${key}`,
-      label: `Metadata: ${key}`,
-      value,
-      type: 'text',
-    }));
+  useEffect(() => {
+    if (!fields && !product) {
+      setFields(initialFields);
+    }
+  }, [fields, product]);
+
+  const onChange = (e: any) => {
+    const { name, value } = e.target;
+    const val = value?.value || value;
+    const updatedFields = updateField(fields || [], name, { value: val });
+    setFields(updatedFields);
+
+    if (timeoutRef.current[name]) {
+      clearTimeout(timeoutRef.current[name]);
+    }
+
+    timeoutRef.current[name] = setTimeout(() => {
+      const error = validateField('required', val, { label: name });
+      const withError = updateField(updatedFields, name, { error: error ?? undefined });
+      setFields(withError);
+    }, 3000);
+  };
+
+  const handleFileUpload = async (file: File) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await fetch('/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      const imageUrl = data.fileUrl;
+      
+      const updatedFields = updateField(fields || [], 'image', { value: imageUrl });
+      setFields(updatedFields);
+    } catch (error) {
+      console.error('File upload failed', error);
+    }
   };
 
   const onSubmit = async () => {
-    let request: any = {
-      metadata: { mid: mid == 'mb1' && fields ? findField(fields, 'merchant')?.value : mid },
-      price: {}
-    };
-    console.log({ fields })
-    fields?.forEach((field: any) => {
+    const request: any = { metadata: {}, prices: [{}] };
+
+    fields?.forEach(field => {
       if (field.name.startsWith('metadata.')) {
         const key = field.name.split('.')[1];
         request.metadata[key] = field.value;
-      } else if (['created', 'updated'].includes(field.name)) {
-        field.value = dateFormat(field.value, { returnType: 'timestamp' });
-      } else if (['amount', 'unit_amount'].includes(field.name)) {
-        request.price[field.name] = Number(field.value);
-      } else if (field.name == 'price') {
-        request[field.name] = {
-          unit_amount: Number(stringNum(field.value)),
-          price_id: findField(fields, 'price_id')?.value,
-        };
+      } else if (['unit_amount', 'billing_period', 'lookup_key', 'price_description', 'include_tax'].includes(field.name)) {
+        request.prices[0][field.name] = field.name === 'unit_amount'
+          ? Math.round(Number(field.value) * 100)
+          : field.value;
       } else {
         request[field.name] = field.value;
       }
     });
-    // console.log({request})
-    if (request) {
-      try {
-        const response = await adminService.createProduct(request);
-        if (response?.id) {
-          setFields(Object.entries(response).map(([name, value]: any) => ({
-            label: name,
-            name,
-            value,
-          })));
-          openModal({
-            confirm: {
-              title: `Successfully created, ${response.name}`,
-              statements: [
-                { label: response.name, onClick: () => closeModal() },
-                { label: 'Products', href: router.asPath },
-              ]
-            }
-          });
-        }
-        console.log("[ ADD PRODUCT RESP ]", response);
-      } catch (error: any) {
-        console.error("[ ADD PRODUCT Error ]", error);
-      }
-    }
-  };
 
-  const onChange = (e: any) => {
-    if (!fields) return;
-    setFields(updateField(fields, e.target.name, { value: e.target.value }));
-  };
-  const handleFields = () => {
-    if (fields) return;
+    if (!request.metadata.mid) request.metadata.mid = mid;
 
-    if (!product) {
-      setFields(initialFields);
-    } else {
-      const newFields: IFormField[] = Object.entries(product)
-        .map(([name, value]: [string, any]): IFormField => ({
-          label: name,
-          name,
-          value: value as string | number | boolean,
-          type: typeof value === 'boolean' ? 'checkbox' : 'text',
-          disabled: name === 'price_id', // disable price_id field
-        }))
-        .filter(field => typeof field.value !== 'object');
-
-      // Ensure description field exists
-      if (!newFields.find(f => f.name === 'description')) {
-        newFields.push({
-          name: 'description',
-          label: 'Product Description',
-          type: 'textarea',
-          value: product.description || '',
-          disabled: false,
+    try {
+      const response = await adminService.createProduct(request);
+      if (response?.id) {
+        openModal({
+          confirm: {
+            title: `Successfully created: ${response.name}`,
+            statements: [
+              { label: 'View Product', onClick: () => closeModal() },
+              { label: 'Back to Products', href: router.asPath }
+            ]
+          }
         });
       }
-
-      // Include `mid` from metadata if available
-      if (product.metadata) {
-        const metadataFields: IFormField[] = flattenMetadata(product.metadata).map((field) => ({
-          ...field,
-          value: field.value as string | number | boolean,
-          disabled: field.name === 'metadata.mid', // disable mid field
-        }));
-
-        // If mid isn't already included, explicitly add it
-        if (!metadataFields.find(f => f.name === 'metadata.mid')) {
-          metadataFields.unshift({
-            name: 'metadata.mid',
-            label: 'Merchant ID',
-            value: product.metadata.mid || '',
-            type: 'text',
-            disabled: true,
-          });
-        }
-
-        setFields([...newFields, ...metadataFields]);
-      } else {
-        setFields(newFields);
-      }
+    } catch (error) {
+      console.error('[CREATE PRODUCT ERROR]', error);
     }
   };
-
-
-
-
-  useEffect(() => {
-    handleFields();
-  }, []);
 
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='admin-product'>
-        <div className='admin-product__content'>
-          <UiForm
-            fields={fields}
-            onChange={onChange}
-            onSubmit={onSubmit}
-            disabled={false}
-          />
+      <div className="admin-product">
+        <div className="admin-product__content">
+          {/* UiUpload component to upload the product image */}
+          <UiUpload title="Upload Image" onFileUpload={handleFileUpload} />
+          <UiForm fields={fields} onChange={onChange} onSubmit={onSubmit} />
         </div>
-        <div className='admin-product__footer'>
-          <div>
-            <UiButton onClick={() => initiateDelete(product)} variant='error'>
-              Delete
-            </UiButton>
-          </div>
+        <div className="admin-product__footer">
+          <UiButton onClick={() => initiateDelete(product)} variant="error">
+            Delete
+          </UiButton>
         </div>
       </div>
     </>

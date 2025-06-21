@@ -22,7 +22,7 @@
   @media (min-width: 1100px) {
     &.close {
       right: -100px;
-      position:absolute;
+      position: absolute;
       top: 0;
       background-color: var(--gray-90-o);
       border-radius: var(--border-radius);
@@ -30,6 +30,7 @@
   }
 
   &--content {
+
     --ui-icon-size: var(--s-1);
     --ui-icon-color: var(--gray-70-o);
     width: var(--s-9-width);
@@ -97,6 +98,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     min-width: min-content;
+
     &_light {
       color: var(--gray-70);
       background-color: var(--gray-40);
@@ -137,8 +139,9 @@
       padding: var(--s-9);
       width: var(--s-9-width);
       height: 100%;
-      overflow-y: auto; // ✅ Ensures scrolling
-      overflow-x: hidden;
+      overflow-x: auto;
+      white-space: nowrap;
+
 
       @media (min-width: 1100px) {
         &.open {
@@ -160,9 +163,10 @@
         width: 100%;
         height: max-content;
         flex-direction: row;
-        overflow-x: auto;
-        overflow-y: visible; // ✅ Allow vertical content to grow if needed
+        overflow-x: auto; // ✅ Enables horizontal scrolling
+        overflow-y: visible; // ✅ Allows vertical growth when needed
       }
+
     }
   }
 
@@ -200,12 +204,14 @@
   gap: var(--s-9);
 
   height: 100%;
+
   .settings__content {
     position: relative;
     @extend .d-flex;
     flex-direction: column;
     overflow-y: auto;
     align-items: flex-start;
+
     @media (max-width: 1100px) {
       height: max-content;
     }

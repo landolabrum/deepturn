@@ -1,0 +1,30 @@
+.d-flex, .product-build-checklist {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-build-checklist {
+  align-items: flex-start;
+  width: var(--s-9-width);
+  flex-direction: column;
+  overflow: hidden;
+  flex-wrap: wrap;
+  gap: var(--s-9);
+  background-color: var(--gray-50);
+  border-radius: var(--border-radius);
+  padding: var(--s-11) var(--s-9);
+  color: var(--gray-60);
+  z-index: 1;
+}
+.product-build-checklist__items {
+  z-index: 2;
+  padding: var(--s-9);
+  width: inherit;
+  border-radius: var(--border-radius);
+  color: var(--primary-70);
+  background-color: var(--gray-30);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-11);
+}/*# sourceMappingURL=ProductBuildCheckList.css.map */

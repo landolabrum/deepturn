@@ -1,0 +1,15 @@
+.d-flex, .x-insurance {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.x-insurance {
+  flex-direction: column;
+  min-width: 100%;
+  min-height: 100%;
+}
+.x-insurance--stl {
+  min-height: 50vh;
+  min-width: 80vw;
+}/*# sourceMappingURL=XInsurance.css.map */

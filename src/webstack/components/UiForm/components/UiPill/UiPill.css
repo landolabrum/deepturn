@@ -1,0 +1,9 @@
+.ui-pill {
+  width: -moz-max-content;
+  width: max-content;
+}
+.ui-pill.ui-pill-responsive {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}/*# sourceMappingURL=UiPill.css.map */

@@ -1,0 +1,100 @@
+.d-flex, .tabs .tabs__view, .tabs__content .tabs__tabs .tabs-layout__tab, .tabs__content .tabs__tabs, .tabs__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tabs {
+  height: inherit;
+  background-color: var(--gray-90);
+  border-radius: var(--border-radius);
+  border: solid 1px var(--gray-70);
+  overflow: hidden;
+}
+@media (max-width: 900px) {
+  .tabs {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+.tabs__content {
+  flex-direction: column;
+  align-items: stretch;
+  height: inherit;
+  width: 100%;
+}
+.tabs__content .tabs__tabs {
+  border-bottom: solid 1px var(--gray-70);
+  background-color: var(--gray-80);
+  --ui-icon-color: transparent;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+}
+.tabs__content .tabs__tabs .active, .tabs__content .tabs__tabs .tabs-layout__tab__active, .tabs__content .tabs__tabs .tabs-layout__tab:hover {
+  background-color: var(--gray-60);
+  --ui-icon-color: var(--gray-60);
+}
+.tabs__content .tabs__tabs .tabs-layout__tab {
+  position: relative;
+  text-transform: capitalize;
+  width: 100%;
+  height: var(--s-element);
+}
+.tabs__content .tabs__tabs .tabs-layout__tab:hover {
+  z-index: 2;
+  cursor: pointer;
+}
+.tabs__content .tabs__tabs .tabs-layout__tab--icon {
+  width: var(--s-element);
+  position: absolute;
+  --ui-icon-width: var(--s-element);
+  --ui-icon-height: var(--s-element);
+  right: unset;
+  left: unset;
+}
+.tabs__content .tabs__tabs .tabs-layout__tab--icon:first-child {
+  right: calc(var(--s-element) * -1);
+}
+.tabs__content .tabs__tabs .tabs-layout__tab--icon:last-child {
+  transform: rotate(180deg);
+  left: calc(var(--s-element) * -1);
+}
+.tabs__content .tabs__tabs .tabs-layout__tab__active {
+  position: relative;
+  z-index: 2;
+}
+.tabs .tabs__actions {
+  background-color: var(--dark);
+  border-right: inset 1px var(--primary-50);
+  width: 400px;
+}
+@media (max-width: 900px) {
+  .tabs .tabs__actions {
+    padding: var(--s-4);
+    width: var(--s-4-width);
+  }
+}
+.tabs .tabs__view {
+  padding: var(--s-4);
+  width: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: inherit;
+}
+@media (max-width: 900px) {
+  .tabs .tabs__view {
+    border-left: solid 5px var(--gray-100);
+    height: -moz-max-content;
+    height: max-content;
+    overflow: visible;
+    width: inherit;
+  }
+}
+.tabs .tabs__view .tabs__view__title {
+  font-size: var(--s-1);
+  line-height: 2.5;
+  text-transform: capitalize;
+  color: var(--gray-70);
+}/*# sourceMappingURL=UiTabsLayout.css.map */

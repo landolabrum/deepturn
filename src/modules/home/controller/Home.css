@@ -1,0 +1,20 @@
+.d-flex, .home__default {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home__default {
+  width: var(--s-4-width);
+  padding: var(--s-4);
+}
+.home__default--title {
+  color: var(--gray-30);
+  font-size: var(--s-3);
+}
+
+.home {
+  width: 100%;
+  height: -moz-max-content;
+  height: max-content;
+}/*# sourceMappingURL=Home.css.map */
