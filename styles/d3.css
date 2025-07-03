@@ -14,16 +14,20 @@
 
 .d3-svg{
   overflow: visible;
-  background-color: var(--black);
+  background-color: inherit;
 }
 .d3-links {
-  fill: none;
-  stroke: var(--gray-80-o);
+  mix-blend-mode: difference;
+  /* mix-blend-mode: screen; */
+  /* fill: none; */
+  /* stroke:black; */
+  stroke: var(--green-10);
+  /* fill: var(--green-10); */
   /* stroke-opacity: 0.4; */
-  stroke-width: 2;
+  stroke-width: 1;
 }
 .d3-node__content{
-  fill:var(--green-o);
+  fill:var(--green);
   color:var(--green-70);
 }
 .d3-node__selected{
@@ -79,9 +83,8 @@ filter: brightness(2)
 
 .d3-node--circle {
   z-index: 1;
-  stroke-opacity: 0.4;
+  /* stroke-opacity: 0.4; */
   stroke-width: 4;
-  r: 5px;
   cursor: pointer;
 }
 
@@ -108,3 +111,16 @@ filter: brightness(2)
   background-color: var(--gray-30);
 }
 
+.animated-link {
+  /* stroke-linecap: round; */
+   /* stroke: #888; */
+}
+.link-particle {
+  pointer-events: none;
+  opacity: 1;
+  /* width:var(--s-11); */
+  /* aspect-ratio: 1; */
+  filter: drop-shadow(1px 1px 1px var(--primary-70)); 
+  transform: translate(-100,-100);
+  /* fill:var(--primary-30); */
+}

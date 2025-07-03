@@ -404,26 +404,6 @@ html {
   overflow-x: hidden;
 }
 
-body {
-  font-family: "Play", sans-serif;
-  margin: 0;
-  background: var(--body);
-  color: var(--gray-40);
-  font-size: var(--s-5);
-  font-weight: 300;
-
-  -webkit-overflow-scrolling: touch;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  #__next {
-
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    min-height: 100vh;
-  }
-}
 
 @media (min-height: 400px) {
   body {
