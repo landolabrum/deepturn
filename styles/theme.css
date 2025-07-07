@@ -305,6 +305,38 @@
   color: var(--red-50);
   font-style: italic;
 }
+.glass {
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.02)
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 6px 24px rgba(0, 0, 0, 0.2);
+
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(
+      ellipse at top left,
+      rgba(255, 255, 255, 0.12),
+      transparent 60%
+    );
+    opacity: 0.6;
+    mix-blend-mode: overlay;
+  }
+}
+
 
 .card {
   cursor: pointer;
