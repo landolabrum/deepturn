@@ -279,25 +279,73 @@
   transition: all 1s ease-in-out;
   overflow: hidden; /* Ensures the animation stays within bounds */
 }
-/* 
+@keyframes sunglass-text-wipe {
+  0% {
+    color: var(--sunglass-color-1, var(--green-50));
+    --ui-icon-color: var(--sunglass-color-1, var(--green-50));
+    box-shadow: -0.5px -1px 1.5px 1px var(--sunglass-shadow-1, var(--green-70));
+    opacity: 0.8;
+    filter: blur(3.2px);
+    transform: scale(1.1);
+  }
+  65% {
+    color: var(--sunglass-color-2, var(--green-10));
+    --ui-icon-color: var(--sunglass-color-2, var(--green-10));
+    box-shadow: -0.5px -1px 1.5px 1px var(--sunglass-shadow-2, var(--green-30));
+    opacity: 0.8;
+    filter: blur(2px);
+  }
+  70% {
+    color: var(--sunglass-color-3, var(--green-30));
+    --ui-icon-color: var(--sunglass-color-3, var(--green-30));
+    box-shadow: 0 0 1px 1.5px var(--sunglass-shadow-3, var(--green-10));
+    filter: blur(0);
+  }
+  100% {
+    color: var(--sunglass-color-4, var(--green-30));
+    --ui-icon-color: var(--sunglass-color-4, var(--green-10));
+    box-shadow: 1px 1px 1px 1px var(--sunglass-shadow-4, var(--gray-90-o));
+    filter: blur(0);
+  }
+}
 
-.a-light-wipe:hover::before {
-  z-index: -1;
-  content: '';
+@keyframes sunglass-light-wipe {
+  from {
+    width: var(--sunglass-wipe-width, 3em);
+    left: -100%;
+    color: var(--sunglass-color-2, var(--green-10));
+    --ui-icon-color: var(--sunglass-color-2, var(--green-10));
+  }
+  to {
+    width: calc(var(--sunglass-wipe-width, 3em) * 2);
+    left: calc(100% + var(--sunglass-wipe-width, 3em) * 2 + 1px);
+  }
+}
+
+.sunglass-text {
+  animation: sunglass-text-wipe 0.3s ease-out forwards;
+}
+
+.sunglass-wipe::before {
+  content: "";
   position: absolute;
   top: 0;
-  left: -100%; /* Start outside the text bounds */
-  /* height: 100%;
-  width: 70px;
+  left: -100%;
+  width: var(--sunglass-wipe-width, 3em);
+  height: 100%;
   background: linear-gradient(
     120deg,
-    var(--primary-30) 0%,
-    var(--primary-10) 50%,
-    var(--primary-10) 100%
+    var(--sunglass-color-2, var(--green-10)) 0%,
+    var(--sunglass-color-3, var(--green-30)) 50%,
+    var(--sunglass-color-1, var(--green-70)) 100%
   );
   transform: skewX(-25deg);
-  animation: light-wipe 1.2s ease-in-out forwards;
-} */
+  z-index: 0;
+
+  animation: sunglass-light-wipe 1s ease-in-out forwards;
+  /* 👇 remove this */
+  /* animation-delay: 1s; */
+}
 
 
 

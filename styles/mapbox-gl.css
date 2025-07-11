@@ -878,9 +878,9 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   z-index: 3;
   user-select: all;
   overflow: hidden;
-  bottom: 0;
-  left: 0;
-  transform: translateX(-50%);
+  top: -100%;
+  left: calc(100% + 10px);
+  /* transform: translateX(-50%); */
   min-width: 350px;
   border-radius: var(--border-radius);
   box-shadow: 2px 3px 15px 4px var(--black);
@@ -892,7 +892,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 
 .vsl-mrkr--hover {
   filter: brightness(1.33);
-  /* display: flex; */
+  display: flex;
 }
 
 .vsl-mrkr--content:hover {
@@ -907,6 +907,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 .vsl-mrkr--content {
   width: var(--s-9-width);
   padding: var(--s-9);
+  min-height: var(--s-1);
 }
 
 .vsl-mrkr--content-header {
