@@ -29,7 +29,13 @@
   --tertiary-90: #8f7d71;
   --tertiary-o: #bfb0a170;
 
-  --body: #d2d2d2;
+  --body: radial-gradient(
+    circle,
+    /* var(--black) 0%, */
+    /* var(--white) 11%, */
+    var(--gray-100) 17%,
+    var(--black) 100%);
+  /* --body: #d2d2d2; */
   --lite: #f0edeb;
   --dark: #2c0903;
   --dark-70: #200804;
