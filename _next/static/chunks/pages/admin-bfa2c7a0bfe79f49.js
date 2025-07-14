@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[6309],{51565:(_,e,n)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/admin",function(){return n(99763)}])},99763:(_,e,n)=>{"use strict";n.r(e),n.d(e,{default:()=>u});let u=n(36230).A}},_=>{var e=e=>_(_.s=e);_.O(0,[3602,2366,347,2115,5740,7475,9846,8820,9999,501,6230,636,6593,8792],()=>e(51565)),_N_E=_.O()}]);
