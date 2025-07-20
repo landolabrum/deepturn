@@ -665,7 +665,9 @@ body {
   padding: var(--s-12);
   width: var(--s-12-width);
 }
-
+.s-maxW--maxC{
+  max-width: max-content;
+}
 .d-flex-col {
   display: flex;
   flex-direction: column;
