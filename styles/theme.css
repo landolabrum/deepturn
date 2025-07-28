@@ -77,7 +77,8 @@
   --tertiary-o: #bfb0a170;
 
 
-  --body: #1d1d1d;
+  --body: #e0e0e0;
+  --color: #202020;
   --lite: #f0edeb;
   --dark: #2c0903;
   --dark-70: #200804;
@@ -486,7 +487,7 @@ body {
   font-family: var(--font-family,"Play"), sans-serif;
   margin: 0;
   background: var(--body);
-  color: var(--gray-40);
+  color: var(--color);
   font-size: var(--s-5);
   font-weight: 300;
 
