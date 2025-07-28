@@ -1,10 +1,10 @@
 :root {
-  --primary-10: #d8c5b3;
-  --primary-30: #d4bda6;
-  --primary-50: #8c7a6b;
-  --primary-70: #594d43;
-  --primary-90: #5b4f45;
-  --primary-o: #8c7a6b70;
+  --primary-10: #e6f5d8;  
+  --primary-30: #b8e68a;  
+  --primary-50: #c6e67a;  /* Strong, confident green (main brand color) */
+  --primary-70: #4da52e;  /* Slightly deeper for contrast */
+  --primary-90: #2d7a1a;  /* Darker for professionalism */
+  --primary-o: #6cc24a70; /* 70% opacity version */
 
   --secondary: #c5b9a8;
   --secondary-10: #d6c8b7;
@@ -23,7 +23,7 @@
  
 
   /* --body: #2d2d2d; */
-  --body: #1a2228;
+  --body: #e0e0e0;
   --lite: #f0edeb;
   --dark: #242c36;
   --dark-o: #242c3670;
@@ -84,4 +84,7 @@
 }
 h3{
   font-family: Decimal;
+}
+body{
+  color:black
 }
