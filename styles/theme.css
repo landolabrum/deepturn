@@ -686,7 +686,7 @@ body {
 }
 
 .align-start {
-  align-items: flex-start;
+  align-items: flex-start !important;
 }
 
 /* @media(max-width:900px){} */
