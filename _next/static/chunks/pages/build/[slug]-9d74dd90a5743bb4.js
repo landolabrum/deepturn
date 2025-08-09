@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[3312],{27557:(_,u,e)=>{"use strict";e.r(u),e.d(u,{default:()=>s});let s=e(60900).A},67140:(_,u,e)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/build/[slug]",function(){return e(27557)}])}},_=>{_.O(0,[900,636,6593,8792],()=>_(_.s=67140)),_N_E=_.O()}]);
