@@ -1459,8 +1459,8 @@ a:-webkit-any-link {
 .close-btn {
   z-index: 1;
   position: absolute;
-  right: var(--s-9);
-  top: var(--s-9);
+  right: var(--s-10);
+  top: var(--s-10);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1480,6 +1480,7 @@ a:-webkit-any-link {
 
 .close-btn:hover {
   opacity: 1;
-  --ui-icon-color: var(--primary-50);
-  background-color: var(--primary-o);
+  --ui-icon-color: var(--primary-90);
+  background-color: var(--primary-30);
+  box-shadow: -1px -1px 1px var(--gray-90), 1px 1px 2px 1px var(--primary-90);
 }
