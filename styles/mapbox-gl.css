@@ -905,7 +905,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 }
 
 .vsl-mrkr--content {
-  width: var(--s-9-width);
+  width: var(--s-9-w);
   padding: var(--s-9);
   min-height: var(--s-1);
 }
