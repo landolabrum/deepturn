@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[4544],{17180:(_,e,u)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/overlay/[slug]",function(){return u(94549)}])},94549:(_,e,u)=>{"use strict";u.r(e),u.d(e,{default:()=>s});let s=u(94899).A}},_=>{_.O(0,[4899,636,6593,8792],()=>_(_.s=17180)),_N_E=_.O()}]);
