@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[4254],{1675:(_,u,e)=>{"use strict";e.r(u),e.d(u,{default:()=>s});let s=e(85236).A},94056:(_,u,e)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/god/[slug]",function(){return e(1675)}])}},_=>{_.O(0,[9531,9846,5982,5236,636,6593,8792],()=>_(_.s=94056)),_N_E=_.O()}]);

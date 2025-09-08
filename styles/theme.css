@@ -337,45 +337,56 @@
     mix-blend-mode: overlay;
   }
 }
-
-
 .card {
   cursor: pointer;
   color: var(--gray-50);
   --ui-icon-color: var(--gray-50);
-  background-color: var(--gray-80-o);
-  border: var(--border);
+
+  /* Gradient background */
+  background: linear-gradient(
+    135deg,
+    var(--gray-90) 0%,
+    var(--gray-80) 100%
+  );
+
   border-radius: var(--border-radius);
+  border: 1px solid var(--gray-70);
+
+  /* smooth transitions */
+  transition:
+    color 0.4s ease,
+    border-color 0.4s ease,
+    background 0.6s ease;
 
   &:hover {
     color: var(--gray-30);
     --ui-icon-color: var(--gray-30);
-    background-color: var(--gray-80);
-    border: var(--border-hover);
+    background: linear-gradient(
+      135deg,
+      var(--gray-80) 0%,
+      var(--gray-70) 100%
+    );
+    border-color: var(--primary-50);
   }
 
   &:focus,
   &:focus-within,
   &:target,
   &:active {
-    background-color: var(--gray-60);
-    border: var(--border-focus);
+    background: linear-gradient(
+      135deg,
+      var(--gray-70) 0%,
+      var(--gray-60) 100%
+    );
+    border-color: var(--primary-60);
+    outline: none;
   }
 }
 
-.c-success {
-  background-color: #00371b;
-  border-color: #5fe341;
-  border: solid 1px;
-  color: #5fe341;
-  --ui-icon-color: #5fe341;
-}
-
-.c-error {
-  background-color: #370002;
-  border-color: #e34150;
-  color: #e34150;
-  --ui-icon-color: #e34150;
+.card.flat {
+  border: none;
+  border-radius: 0;
+  transition: background 0.6s ease, color 0.4s ease;
 }
 
 /* GOOGLE ADDRESS STYLES */

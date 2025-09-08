@@ -1245,6 +1245,21 @@ a:-webkit-any-link {
   border-style: outset;
   border-color: var(--gray-50-o) var(--gray-100-o) var(--gray-90-o) var(--gray-20-o);
 }
+.c-primary-10{
+  color:var(--primary-10)
+}
+.c-primary-30{
+  color:var(--primary-30)
+}
+.c-primary-50{
+  color:var(--primary-50)
+}
+.c-primary-70{
+  color:var(--primary-70)
+}
+.c-primary-90{
+  color:var(--primary-90)
+}
 
 .gray-10 {
   color: var(--gray-10);
