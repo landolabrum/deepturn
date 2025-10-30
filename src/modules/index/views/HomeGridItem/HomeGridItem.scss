@@ -1,45 +1,72 @@
-.d-flex{
- display: flex;
- justify-content: center;
- align-items: center;
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .home-grid-item {
-    justify-content: flex-start;
+  @extend .d-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: var(--gray-30);
+  border-radius: var(--border-radius);
+  gap: var(--s-4);
+  overflow: hidden;
+  width: var(--s-9-w);
+  padding: var(--s-1) var(--s-9);
+@media(max-width:1100px){
+margin-bottom: var(--s-9);
+
+}
+  &__header {
     @extend .d-flex;
-    border-radius: var(--border-radius);
-    gap: var(--s-4);
     flex-direction: column;
-    background-color: var(--gray-90-o);
-    overflow: hidden;
-    padding: var(--s-element) var(--s-4);
-    width:var(--s-4-width);
-    
-    &__header{
-        width: 100%;
-        @extend .d-flex;
-        flex-direction: column;
-        gap:var(--s-4);
+    gap: var(--s-4);
+    width: 100%;
+  }
+
+  &__title {
+    color: var(--primary-70);
+    font-size: var(--s-2);
+
+    font-style: italic;
+    text-transform: capitalize;
+    width: 100%;
+
+    @media(max-width:1100px) {
+      font-size: var(--s-5);
     }
-    &__title {
-        height: 100%;
-        color: var(--primary-50);
-        font-size: var(--s-3);
-        text-transform: capitalize;
+  }
+
+  &__body {
+    color: var(--gray-50);
+    width: 100%;
+    line-height: 1.5;
+  }
+
+  &__icon {
+    @extend .d-flex;
+    height: 90px;
+    --ui-icon-width: 90px;
+    --ui-icon-height: 120px;
+    --ui-icon-color: var(--blue-30);
+    margin-bottom: var(--s-2);
+    @media(max-width:1100px){
+          --ui-icon-width: var(--s-element);
+    --ui-icon-height: var(--s-element);
+     height: max-content;
     }
-    &__body {
-        color: var(--gray-50);
-    }
-    &__icon {
-        @extend .d-flex;
-        height: 90px;
-        --ui-icon-width: 90px;
-        --ui-icon-height: 90px;
-        --ui-icon-color: var(--primary-o);
-    }
-    
-    &__center {
-        text-align: center;
-        font-size: var(--s-5);
-        line-height: 1.5;
-    }
+  }
+
+  &__center {
+    text-align: center;
+    line-height: 1.5;
+    width: 100%;
+  }
+
+  font-size: var(--s-4);
+
+  @media(max-width:1100px) {
+    font-size: var(--s-7);
+  }
 }

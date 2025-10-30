@@ -1,0 +1,16 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.admin-finance{
+    @extend .d-flex;
+    width: 100%;
+    &__header,&__content{
+        @extend .d-flex;
+        width: 100%;
+    }
+        &__header{}
+        &__content{}
+
+}

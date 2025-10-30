@@ -66,7 +66,7 @@ export default interface IMemberService {
 
   verifyEmail(token: string):Promise<any>;
   verifyPassword(token: string):Promise<any>;
-  signIn(cust: any): Promise<any>;
+  signIn(cust: any): Promise<any|any>;
   signUp({
     name,
     email,

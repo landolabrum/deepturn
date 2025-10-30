@@ -12,10 +12,11 @@ interface TableHeaderProps extends TableFunctionProps {
   title?: string;
   search?: any;
   loading?: boolean;
-  traits?: TableOptions;
+  tableHeaderTraits?: TableOptions;
 }
+
 export default function AdapTableHeader({
-  traits,
+  tableHeaderTraits: tableHeaderTraits,
   search,
   setSearch,
   loading,
@@ -24,47 +25,50 @@ export default function AdapTableHeader({
 }: TableHeaderProps) {
   const busy = loading && search !== "";
 
-
-  if (!traits?.hide?.includes("header") && traits?.tableTitle) return <>
-    <style jsx>{styles}</style>
-    <div className='adaptable-header'>
-      <div className='adaptable-header__table-title'>
-        <div className='adaptable-header__logo'>
-          <UiIcon icon={`${environment.merchant.name}-logo`} />
-        </div>
-        <div className='adaptable-header__title'>{traits?.tableTitle}</div>
-      </div>
-      {filters && <div className="adaptable-header__filters">
-        {
-          Object.entries(filters).map(([key, value]: any, index) => {
-
-            return <div key={index} className="adaptable-header__filter">
-              <UiSelect
-                variant="right"
-                size='md'
-                title={{ text: search !== "" ? search : keyStringConverter(key,{textTransform:'capitalize'}) }}
-                options={value}
-                onSelect={setFilter}
-              />
-            </div>
-          })
-        }
-      </div>
-      }
-      {setSearch &&
-        <div className="adaptable-header__search-input">
-          <UiInput
-          name="search"
-          variant={busy ?"icon-blue":""}
-          placeholder={`${traits?.placeholder?traits.placeholder:"Search"}`}
-          traits={{beforeIcon:busy ? "spinner":"fa-magnifying-glass"}}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+  if (!tableHeaderTraits?.hide?.includes("header") && tableHeaderTraits?.tableTitle) return (
+    <>
+      <style jsx>{styles}</style>
+      <div className='adaptable-header'>
+        <div className='adaptable-header__table-title'>
+          <div className='adaptable-header__logo'>
+            <UiIcon icon={`${environment.merchant.name}-logo`} />
+          </div>
+          <div className='adaptable-header__title'>{tableHeaderTraits?.tableTitle}</div>
         </div>
 
-      }
-    </div>
-  </>
+        {filters && (
+          <div className="adaptable-header__filters">
+            {Object.entries(filters).map(([key, value]: any, index) => {
+              return (
+                <div key={index} className="adaptable-header__filter">
+                  <UiSelect
+                    variant="right"
+                    size='md'
+                    title={search !== "" ? search : String(keyStringConverter(key, { textTransform: 'capitalize' }))}  // Ensure it's a string
+                    options={value}
+                    onSelect={setFilter}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {setSearch && (
+          <div className="adaptable-header__search-input">
+            <UiInput
+              name="search"
+              variant={busy ? "icon-blue" : ""}
+              placeholder={`${tableHeaderTraits?.placeholder ? tableHeaderTraits.placeholder : "Search"}`}
+              traits={{ beforeIcon: busy ? "spinner" : "fa-magnifying-glass" }}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        )}
+      </div>
+    </>
+  );
+
   return <></>;
 }

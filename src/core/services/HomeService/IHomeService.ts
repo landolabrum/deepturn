@@ -38,9 +38,55 @@ interface IHomePutGroupModify {
   group_id: string;
   group_name?: string;
   lights?: string[];
+}export type GpsSource = "ic2" | "tcp" | "udp";
+
+export interface IGpsFix {
+  lat: number;
+  lon: number;
+  timestamp: string;      // ISO8601 Z
+  speed_mps?: number;
+  alt_m?: number;
 }
 
+export interface IGpsStatus {
+  udp_ports: number[];
+  tcp_ports: number[];
+  udp_latest: Record<string, IGpsFix>;
+  tcp_latest: Record<string, IGpsFix>;
+  ic2_cached_devices: number[];
+  fresh_secs: number;
+}
+
+
 export interface IHomeService {
+
+   gpsLive(params?: {
+    source?: "ic2" | "tcp" | "udp";
+    device_id?: number;
+    port?: number;
+    event_id?: number;
+    team_id?: number;
+    label?: string;
+    save?: boolean;
+  }): Promise<IGpsFix>;
+// IHomeService.gpsLiveForTeam signature
+gpsLiveForTeam(eventId: number, teamId: number, cfg: {
+  source: 'ic2'|'udp'|'tcp';
+  device_id?: number;
+  port?: number;
+  label?: string;
+  save?: boolean;
+  // optional overrides:
+  org_id?: string;
+  group_id?: string;
+  client_id?: string;
+  client_secret?: string;
+}): Promise<any>
+
+
+  gpsStatus(): Promise<IGpsStatus>;
+
+
   createGroup(newGroup: IGroup): Promise<IGroup>;
   modifyGroup(modifiedGroup: IHomePutGroupModify): Promise<IGroup>;
   deleteGroup(group_id: string): Promise<any>;

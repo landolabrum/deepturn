@@ -1,0 +1,21 @@
+/* OverlayPage.scss */
+
+.canopy-page {
+  &.is-fullscreen {
+    position: fixed;
+    inset: 0;
+    aspect-ratio: 16/9;
+    z-index: 10100;
+    overflow: hidden;
+    width: var(--s-border-w);
+    // border: solid 1px red;
+  }
+
+  &.is-inline {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;   /* keep 1920x1080 canvas in previews */
+    overflow: hidden;
+  }
+}
+/* hide Next.js dev overlay badge */

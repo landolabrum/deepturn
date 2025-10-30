@@ -91,17 +91,17 @@ const CameraController: FC<{ settings: Settings; followMouse?: FollowMouse }> = 
       );
     }
   });
-
+const pos:any = settings?.camera?.position ? [
+        settings.camera.position.x,
+        settings.camera.position.y,
+        settings.camera.position.z,
+      ]:[1,1,1]
   return (
     <PerspectiveCamera
       ref={cameraRef}
       makeDefault
-      position={[
-        settings.camera.position.x,
-        settings.camera.position.y,
-        settings.camera.position.z,
-      ]}
-      fov={settings.camera.focalLength}
+      position={pos}
+      fov={settings?.camera?.focalLength||1}
     />
   );
 };

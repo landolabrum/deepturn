@@ -5,7 +5,7 @@ import Image from 'next/image';
 import environment from '~/src/core/environment';
 import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
-import ProductBuyNow from '../../../Products/views/ProductDescription/views/ProductBuyNow/ProductBuyNow';
+import ProductBuyNow from '../../../Services/views/ServiceDescription/views/ProductBuyNow/ProductBuyNow';
 import { ITraits } from '@webstack/components/UiForm/components/FormControl/FormControl';
 
 // Remember to create a sibling SCSS file with the same name as this component

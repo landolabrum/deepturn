@@ -26,8 +26,8 @@
 
     &--header {
         color: var(--gray-40);
-        width: var(--s-4-width);
-        max-width: var(--s-4-width);
+        width: var(--s-4-w);
+        max-width: var(--s-4-w);
         overflow: hidden;
         padding: var(--s-4) 0;
         flex-wrap: wrap;
@@ -84,7 +84,7 @@
             border:solid 1px var(--orange-50);
             justify-content: flex-start;
             padding:var(--s-4);
-            width: var(--s-4-width);
+            width: var(--s-4-w);
             font-size: var(--s-3);
             color: var(--orange-50);
             flex:1;
@@ -115,7 +115,7 @@
 
 
         @media(max-width:1260px) {
-            width: var(--s-4-width);
+            width: var(--s-4-w);
             margin: var(--s-4);
         }
 

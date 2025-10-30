@@ -60,7 +60,7 @@ const UserCurrentMethod: React.FC<IUserCurrentMethod> = (
             return isRemoved();
             // handleClick(isRemoved() ? 8 : 7);
         } catch (e: any) {
-            console.log('[ SET DEFAULT METHOD ( ERROR ) ]', e);
+            console.error('[ SET DEFAULT METHOD ( ERROR ) ]', e);
         }
     }
 

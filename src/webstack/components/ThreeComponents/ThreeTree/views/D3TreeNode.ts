@@ -2,7 +2,7 @@ export const d3NodeHasChildren = (threeNode: any) => threeNode?.children || thre
 
 const D3TreeNode = (m: any, FONT_SIZE: number, title: string) => {
     const createLink = async (m: any) => {
-        await m.append('circle').attr('class', 'd3-node--circle');
+        await m.append('circle').attr("r",FONT_SIZE/2).attr('class', 'd3-node--circle');
         return m;
     };
 

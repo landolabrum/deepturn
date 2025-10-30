@@ -13,7 +13,7 @@
   // background-color: var(--gray-100);
   // box-shadow:  -1px 0 2px 2px var(--gray-90),
   ;
-  color: var(--gray-30);
+  color: var(--gray-20);
   left: 0;
   right: 0;
   display: flex;
@@ -29,11 +29,16 @@
       opacity: 1;
     }
   }
+    &.nirvana-energy--index{
+position: absolute;
+  top: 0;
+  left: 0;
+  }
   @media(max-width: 1099px) {
     flex-direction: row-reverse;
     background-color: transparent;
     height: max-content;
-    width: var(--s-9-width);
+    width: var(--s-9-w);
     padding: var(--s-9);
     border-bottom: unset;
     box-shadow: unset;
@@ -87,7 +92,7 @@
     }
     @media(min-width: 1260px) {
       max-width: calc(1260px - calc(var(--s-9) * 2));
-      inline-size: var(--s-9-width);
+      inline-size: var(--s-9-w);
     }
     
     @media(max-width:1260px) {
@@ -115,8 +120,8 @@
       .header-title {
         @extend .d-flex;
         justify-content: flex-start;
-        color: var(--gray-40-o);
-        --ui-icon-color: var(--gray-40-o);
+        color: var(--gray-20-o);
+        --ui-icon-color: var(--gray-20-o);
         --ui-icon-height: auto;
         --ui-icon-width: 100%;
         font-weight: 700;

@@ -14,33 +14,36 @@ export default class ProductService extends ApiService implements IProductServic
     super(environment.serviceEndpoints.social);
     this.MemberService = getService<IMemberService>('IMemberService');
   }
-  public async getProducts( request: any): Promise<any> {
-    const products = await this.get<any>(`/api/products`, request);
-      if(products){
-        const parseToken = (token: string): any=> {
-          const segments = token.split('.');
-          if (segments.length !== 3) {
-            // console.error('Invalid JWT: does not contain 3 segments');
-            return null;
-          }
-      
-          const encodedPayload = segments[1].replace(/-/g, '+').replace(/_/g, '/');
-      
-          try {
-            const decodedPayload = window.atob(encodedPayload);
-            return JSON.parse(decodedPayload);
-          } catch (error) {
-            console.error('Error decoding JWT payload', error, '[MemberService.ts]');
-            // For production, consider removing the alert and handling the error more gracefully
-            // alert('Error decoding JWT payload: ' + JSON.stringify(error));
-            return null;
-          }
-        }
-        const decrypted = parseToken(products);
-        return decrypted;
+public async getProducts(request: Record<string, any>): Promise<any> {
+  const queryParams = new URLSearchParams(request).toString();
+  const url = `/api/products${queryParams ? `?${queryParams}` : ''}`;
+
+  // console.log("request URL:", url);
+
+  const products = await this.get<any>(url);
+
+  if (products) {
+    const parseToken = (token: string): any => {
+      const segments = token.split('.');
+      if (segments.length !== 3) return null;
+
+      const encodedPayload = segments[1].replace(/-/g, '+').replace(/_/g, '/');
+      try {
+        const decodedPayload = window.atob(encodedPayload);
+        return JSON.parse(decodedPayload);
+      } catch (error) {
+        console.error('Error decoding JWT payload', error, '[MemberService.ts]');
+        return null;
       }
-      return {error:true}
-  };
+    };
+
+    const decrypted = parseToken(products);
+    return decrypted;
+  }
+
+  return { error: true };
+}
+
 
   public async getProduct({ id, pri }: IGetProduct): Promise<any> {
     if (pri) {

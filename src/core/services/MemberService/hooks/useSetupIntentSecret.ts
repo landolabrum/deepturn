@@ -21,7 +21,9 @@ const useSetupIntentSecret = (user?: SetupIntentSecretRequest) => {
     };
     useEffect(() => {
         fetchClientSecret();
-    },[user, setClientSecret]);
+    // },[user, setClientSecret]);
+        },[fetchClientSecret]);
+
   return clientSecret;
 };
 

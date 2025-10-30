@@ -1,0 +1,9 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.prev-teams {
+    overflow-y: scroll;
+    max-height: 500px;
+}

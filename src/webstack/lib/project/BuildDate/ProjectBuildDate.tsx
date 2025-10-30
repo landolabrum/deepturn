@@ -4,6 +4,7 @@ import environment from "~/src/core/environment";
 export default function ProjectBuildDate() {
   const name = environment.merchant.name;
   const about = environment.merchant.settings?.about;
+console.log({about})
 
   return (
     <>

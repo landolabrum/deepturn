@@ -1,40 +1,35 @@
 // src/functions/handleResize.ts
 import { MutableRefObject } from "react";
-import mapboxgl from "mapbox-gl";
 import { IVessel } from "../models/IMapVessel";
 import { flyToView } from "./mapControls";
 
 const handleResize = (
-    mapContainerRef: MutableRefObject<HTMLDivElement | null>,
-    mapRef: MutableRefObject<mapboxgl.Map | null>,
-    windowWidth: number,
-    windowHeight: number,
-    isVesselVisible: boolean,
-    newSize: any,
-    setVesselVisibility: (value: IVessel | false | null) => void,
-    selectedVessel: any,
-    zoomLevel: number,
+  mapContainerRef: MutableRefObject<HTMLDivElement | null>,
+  mapRef: MutableRefObject<mapboxgl.Map | null>,
+  isVesselVisible: boolean,
+  delta: number,
+  setVesselVisibility: (v: false | IVessel | null) => void,
+  selectedVessel?: IVessel | null
 ) => {
-    if (!mapContainerRef.current) return;
-    const map = mapRef.current;
-    const isDesktop = windowWidth >= 1100;
-    const hasVessel = isVesselVisible !== false;
-    let mapStyles = mapContainerRef.current.style
-    if (newSize < 100) {
-        setVesselVisibility(false);
-    } else if (hasVessel) {
+  if (!mapContainerRef.current) return;
+  const map = mapRef.current;
+  if (!map) return;
 
-        flyToView(map,{ 
-            lngLat: selectedVessel.lngLat,
-            zoom: 15,
-            offset: isDesktop?{ x: newSize * 0.5, y: 0 }:{ y: newSize * 0.5, x: 0 }, 
-            direction: isDesktop?'right':'down'
-        });
+  if (!isVesselVisible || !selectedVessel?.lngLat) {
+    setVesselVisibility(false);
+    map.resize();
+    return;
+  }
 
-        if (mapRef.current) {
-            mapRef.current.resize();
-        }
-    }
+  const direction = delta < 1 ? "up" : "down";
+  flyToView(map, {
+    lngLat: selectedVessel.lngLat,
+    zoom: 15,
+    offset: { y: Math.abs(delta * 0.9), x: 0 },
+    direction,
+  });
+
+  map.resize();
 };
 
 export default handleResize;

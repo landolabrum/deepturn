@@ -1,16 +1,22 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { IFormControlVariant } from '@webstack/components/AdapTable/models/IVariant';
 
+// modalContext.tsx (types only — keep the rest the same)
 export type IConfirm = {
   title?: string | React.ReactElement;
   statements?: {
-    label?: string,
-    onClick?: (e: any) => void,
-    href?: string,
-    variant?: IFormControlVariant
+    label?: string;
+    onClick?: (e: any) => void;
+    href?: string;
+    variant?: IFormControlVariant;
+    /** NEW: keep modal open when false (default true) */
+    closeOnClick?: boolean;
+    /** NEW: replace the current modal with this content */
+    replace?: IModalContent;
   }[] | undefined;
   body?: any;
 } | undefined;
+
 
 export interface IModal {
   title?: string | ReactNode;

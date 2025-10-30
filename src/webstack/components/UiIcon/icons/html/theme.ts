@@ -1,3 +1,4 @@
+
 export const themeReceipt = `<svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52" fill="none">
 <g filter="url(#filter0_d_1232_69156)">
 <circle cx="26" cy="24" r="22" fill="white"/>

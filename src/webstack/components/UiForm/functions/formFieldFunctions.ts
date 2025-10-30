@@ -16,22 +16,31 @@ export const findField = (fields: IFormField[], name: string): IFormField | unde
 
 // GET FIELD TYPE
 
+// src/webstack/components/UiForm/functions/formFieldFunctions.ts
 export const fieldType = (field: any) => {
-    const fieldTypeFromValue = (value: any): string => {
-        if (typeof value === 'boolean') return 'checkbox';
-        if (typeof value === 'number') return 'tel';
-        if (typeof value === 'string' && (value === 'true' || value === 'false')) return 'checkbox';
-        return 'text';
-    };
-    const isText = fieldTypeFromValue(field?.value) == 'text';
-    if (field.type == 'radio' && field?.options) return 'radio';
-    if (field.type == 'checkbox') return 'checkbox';
-    else if (isText && field.type !== 'select' && field.name !== 'address') return 'text';
-    else if (field.name == 'address') return 'address';
-    else if (field?.type == 'select' && field?.options !== undefined) return 'select';
-    else if (field.type == 'pill' || typeof field.value == 'number') return 'pill';
-    return false;
-}
+  const t = String(field?.type ?? '').toLowerCase();
+
+  // 1) Explicit types take precedence
+  if (t === 'button')       return 'button';
+  if (t === 'address')      return 'address';     // ← ensures AddressInput renders (works with data.address too)
+  if (t === 'multi-select') return 'multi-select';
+  if (t === 'select' && field?.options) return 'select';
+  if (t === 'radio'  && field?.options) return 'radio';
+  if (t === 'checkbox')     return 'checkbox';
+  if (t === 'file')         return 'file';
+  if (t === 'pill')         return 'pill';
+
+  // 2) Implicit fallback (only when no explicit type specified)
+  const v = field?.value;
+  if (typeof v === 'boolean') return 'checkbox';
+  if (typeof v === 'number')  return 'pill';      // your numeric stepper UX
+  if (typeof v === 'string' && (v === 'true' || v === 'false')) return 'checkbox';
+
+  // 3) Default
+  return 'text';
+};
+
+
 // CREATE FIELD
 export const createField = (newField: any): IFormField | undefined => {
     const currencyFields = ['balance', 'unit_amount'];

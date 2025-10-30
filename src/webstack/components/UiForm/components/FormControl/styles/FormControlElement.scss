@@ -1,661 +1,549 @@
-.d-flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* =========================================================
+   formControlElements.scss (refactor)
+   - Centralized tokens at top
+   - Variants no longer overridden by input/textarea skins
+   - Leaner, readable, themeable
+   ========================================================= */
+
+/* ====== THEME TOKENS (override here when needed) ====== */
+/* Base sizing */
+$fc-font-size:           var(--font-size, var(--s-5));
+$fc-elem-height:         var(--s-element);
+$fc-radius:              var(--border-radius);
+
+/* Icon sizing (derived from font size unless overridden) */
+$fc-icon-w:              $fc-font-size;
+$fc-icon-h:              $fc-font-size;
+
+/* Neutral / default state */
+$fc-color:               var(--gray-50);
+$fc-icon-color:          var(--gray-50);
+$fc-bg:                  var(--gray-20-o);
+$fc-border:              var(--gray-50-o);
+$fc-shadow-inset:        inset 1px 1px 3px 2px var(--gray-80-o);
+
+/* Hover state */
+$fc-hover-color:         var(--gray-60);
+$fc-hover-icon:          var(--gray-60);
+$fc-hover-bg:            var(--gray-50);
+$fc-hover-border:        var(--gray-50);
+
+/* Focus-within state */
+$fc-focus-color:         var(--gray-80);
+$fc-focus-icon:          var(--gray-80);
+$fc-focus-bg:            var(--gray-10);
+$fc-focus-border:        var(--gray-100);
+
+/* Muted/disabled */
+$fc-muted-color:         var(--gray-60);
+$fc-muted-bg:            var(--gray-70);
+$fc-muted-outline:       var(--gray-60);
+
+/* Semantic */
+$fc-error-bg:            transparent;
+$fc-error-color:         var(--gray-70);
+$fc-error-border:        var(--red-70);
+$fc-invalid-color:       var(--red-50);
+
+/* Brand accents (passthrough to global CSS vars) */
+$fc-primary-10:          var(--primary-10);
+$fc-primary-30:          var(--primary-30);
+$fc-primary-50:          var(--primary-50);
+$fc-primary-70:          var(--gray-10);
+$fc-primary-90:          var(--primary-90);
+
+$fc-secondary-50:        var(--secondary-50);
+$fc-secondary-50o:       var(--secondary-50-o);
+
+$fc-blue-10:             var(--blue-10);
+$fc-blue-60:             var(--blue-60);
+
+/* Grays quick refs */
+$g10: var(--gray-10);   $g30: var(--gray-30);   $g40: var(--gray-40);
+$g50: var(--gray-50);   $g60: var(--gray-60);   $elementBG: var(--gray-30);
+$g80: var(--gray-80);   $g90: var(--gray-90);
+
+/* A small helper list of variant classes for :not() guards */
+$variant-guards: '.form-control__element--primary, .form-control__element--secondary, .form-control__element--success, .form-control__element--warning, .form-control__element--error, .form-control__element--signature .form-control__element--ghost, .form-control__element--pill';
+
+/* ====== MIXINS & HELPERS ====== */
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+@mixin focus-skin($bg, $c, $bc) {
+  background-color: $bg;
+  color: $c;
+  --ui-icon-color: #{$c};
+  border: solid 1px $bc;
+}
 
+@mixin hover-skin($bg, $c, $bc) {
+  background-color: $bg;
+  color: $c;
+  --ui-icon-color: #{$c};
+  border: solid 1px $bc;
+}
+
+@mixin size-variant($fs, $iconW: $fs, $iconH: $fs, $h: auto) {
+  font-size: $fs;
+  --ui-icon-width: #{$iconW};
+  --ui-icon-height: #{$iconH};
+  height: $h;
+  line-height: 1.5;
+}
+
+@mixin variant(
+  $name,
+  $bg, $c, $bc,
+  $hBg, $hC, $hBc,
+  $fBg, $fC, $fBc
+) {
+  &--#{$name} {
+    background-color: $bg;
+    border: solid 1px $bc;
+    color: $c;
+    --ui-icon-color: #{$c};
+
+    &:hover { @include hover-skin($hBg, $hC, $hBc); }
+    &:focus-within { @include focus-skin($fBg, $fC, $fBc); }
+  }
+}
+
+/* ====== KEYFRAMES ====== */
 @keyframes bump {
-    0% {
-        transform: rotate(0deg);
-        background-color: var(--gray-70);
-    }
-
-    30% {
-        transform: rotate(5deg);
-        background-color: var(--red-70);
-    }
-
-    70% {
-        transform: rotate(-2deg);
-        background-color: var(--gray-70);
-    }
-
-    100% {
-        transform: rotate(0deg);
-        background-color: var(--red-70);
-    }
+  0%   { transform: rotate(0deg);   background-color: $elementBG; }
+  30%  { transform: rotate(5deg);   background-color: var(--red-70); }
+  70%  { transform: rotate(-2deg);  background-color: $elementBG; }
+  100% { transform: rotate(0deg);   background-color: var(--red-70); }
 }
-
 
 @keyframes glowTxt {
-    0% {
-        text-shadow: 0 0 var(--s-9) var(--primary-50);
-    }
-
-    100% {
-        text-shadow: 0 0 var(--s-8) var(--primary-50-o);
-    }
+  0%   { text-shadow: 0 0 var(--s-9)  $fc-primary-50; }
+  100% { text-shadow: 0 0 var(--s-8)  var(--primary-50-o); }
 }
 
-// Helpers
+/* ====== UTILITIES ====== */
+.d-flex { @include flex-center; }
+.icon-click { cursor: pointer; }
+
 %element-color {
-    --ui-icon-color: var(--gray-40);
-    background-color: var(--gray-70-o);
+  --ui-icon-color: #{$g80};
+  background-color: #{$elementBG};
+  transition: all 300ms;
+ color: $g80;
+  &:focus-within {
+    color: var(--gray-100);
+    background-color: var(--white);
+    .form-control__icon { --ui-icon-color: #{$g40}; }
+  }
+  &:hover { @include hover-skin($g80, $g30, $g60); }
 
-    &:focus-within {
-        color: var(--gray-40);
-
-        .form-control__icon {
-            --ui-icon-color: var(--gray-40);
-        }
-    }
-
+  &-disabled {
+    filter: brightness(.7) blur(2px);
     &:hover {
-        transition: all 300ms;
-        --ui-icon-color: var(--gray-50);
-        color: var(--gray-50);
-        background-color: var(--gray-80);
-        border: solid 1px var(--gray-60);
+      color: $fc-muted-color;
+      --ui-icon-color: #{$fc-muted-color};
+      background-color: $fc-muted-bg;
+      outline: solid 1px $fc-muted-outline;
     }
-
-    &-disabled {
-        filter: brightness(.7) blur(2px);
-
-        &:hover {
-            color: var(--gray-60);
-            --ui-icon-color: var(--gray-60);
-            background-color: var(--gray-70);
-            outline: solid 1px var(--gray-60);
-        }
-    }
+  }
 }
-
-
 
 .b-rad {
-    border-style: solid;
-    border-width: 1px;
-    border-color: transparent;
-    outline: solid 1px transparent;
-    border-radius: var(--border-radius);
+  border: 1px solid transparent;
+  outline: 1px solid transparent;
+  border-radius: $fc-radius;
 }
 
-// FORM CONTROL ELEMENT
-// FORM CONTROL ELEMENT
-
+/* ====== FORM CONTROL ELEMENT ====== */
 .form-control__element {
-    // color: var(--gray-50);
-    font-size: var(--font-size);
-    --ui-icon-width: var(--font-size);
-    --ui-icon-height: var(--font-size);
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    font-weight: 300;
-    @extend .d-flex;
-    line-height: 1;
-    height: calc(var(--s-element) - 2px);
-    white-space: nowrap;
-    width: auto;
+  font-size: $fc-font-size;
+  --ui-icon-width: #{$fc-icon-w};
+  --ui-icon-height: #{$fc-icon-h};
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  font-weight: 300;
+  @include flex-center;
+  line-height: 1;
+  height: calc(#{$fc-elem-height} - 2px);
+  white-space: nowrap;
+  width: auto;
 
-    // SIZES
-    &-xs,
-    &-sm,
-    &-md,
-    &-lg,
-    &-xl,
-    &-xxl {
-        height: auto;
-        // width: max-content !important;
-        line-height: 1.5;
-    }
+  /* Size variants */
+  &-xs, &-sm, &-md, &-lg, &-xl, &-xxl { height: auto; line-height: 1.5; }
+  &-xs  { @include size-variant(var(--s-9)); }
+  &-sm  {
+    @include size-variant(var(--s-7));
+    padding: 0;
+    border-radius: 0 !important;
+    width: max-content;
+  }
+  &--input.form-control__element-sm { font-size: var(--s-8); height: var(--s-4); }
+  &-md  { @include size-variant(var(--s-6)); }
+  &-lg  { @include size-variant(var(--s-4)); }
+  &-xl  { @include size-variant(var(--s-4), var(--s-2), var(--s-2)); padding: var(--s-7) var(--s-3) !important; }
+  &-xxl { @include size-variant(var(--s-2), var(--s-1), var(--s-1), var(--s-xxl)); line-height: 2.3; }
 
-    &-xs {
-        font-size: var(--s-9);
-    }
+  /* Apply helpers (default skin) */
+  &:not(
+    &--blocky,
+    &--warning, &--nav-item, &--nav-item--active, &--center, &--glow, &--checkbox,
+    &--primary, &--inherit, &--dark, &--transparent, &--lite, &--flat, &--secondary,
+    &--link, &--select, &--invalid, &--input, &--textarea, &--signature, &--file, &--success, &--ghost, &--pill
+  ) { @extend %element-color; }
 
-    &-sm {
-        font-size: var(--s-7);
-        padding: 0;
-    }
+  &:not(&--signature, &--checkbox, &--round, &--nav-item, &--file) { @extend .b-rad; }
 
-    &--input {
+  /* Icon spacing */
+  &--before-icon.form-control__element--link,
+  &--after-icon--link.form-control__element--link { gap: var(--s-9);  }
+  &--after-icon:not(&--flat, &--center, &--nav-item, &--nav-item--active, &--file, &--button) { padding-left: var(--s-9); }
+  &--before-icon:not(&--flat, &--center) { padding-right: var(--s-9); }
 
-        &.form-control__element-sm {
-            font-size: var(--s-8);
-            height: var(--s-4);
-            padding: 0 var(--s-9);
+  /* ELEMENT TYPES */
+  &--button {
+    color: inherit;
+    border: 1px solid currentColor;
+    filter: brightness(.8);
+    mix-blend-mode: inherit;
+    overflow: visible;
+    padding: 0 var(--s-9);
+    &:hover, &:focus { filter: brightness(1); }
+  }
+  &--button.form-control__element--flat {
+    width: inherit; gap: var(--s-9);
+    &:first-child { padding: 0; }
+  }
 
-            &.form-control__element--flat {
-                padding-right: 0;
-            }
-        }
-    }
+  &--checkbox { width: max-content; padding: 0; height: $fc-elem-height; }
 
+  /* -------- INPUTS / TEXTAREAS (guard against variants) -------- */
+  &--input,
+  &--textarea {
+    color: inherit;
 
-    &-md {
-        font-size: var(--s-6);
-    }
+    &::placeholder { color: inherit; }
 
-    &-lg {
-        font-size: var(--s-4);
-    }
-
-    &-xl {
-        font-size: var(--s-4);
-        --ui-icon-width: var(--s-2);
-        padding: var(--s-7) var(--s-3) !important;
-    }
-
-    &-xxl {
-        font-size: var(--s-2);
-        --ui-icon-width: var(--s-1);
-        height: var(--s-xxl);
-        // --ui-icon-height: calc(var(--s-element) * 2);
-        line-height: 2.3;
-    }
-
-    // PSUEDO's
-    // FORM CONTROL ELEMENTS - APPLY HELPERS
-    .inherit {
-        // Inherits properties from the parent
-        --ui-icon-color: inherit;
-        --ui-icon-width: inherit;
-        --ui-icon-height: inherit;
-        text-decoration: inherit;
-        color: inherit;
-        background-color: inherit;
-        height: inherit;
-        min-height: inherit;
-        max-height: inherit;
-        width: inherit;
-        min-width: inherit;
-        max-width: inherit;
-        padding: inherit;
-        margin: inherit;
-        display: inherit;
-        justify-content: inherit;
-        align-items: inherit;
-        flex-direction: inherit;
-        gap: inherit;
-        font-size: inherit;
-        font-weight: inherit;
-        font-family: inherit;
-        border: inherit;
-        outline: inherit;
-        border-radius: inherit;
-        box-shadow: inherit;
-        aspect-ratio: inherit;
-        position: inherit;
-      
-      }
-
-    &:not(&--warning, &--nav-item, &--nav-item--active, &--center, &--glow, &--checkbox, &--primary, &--inherit, &--dark, &--transparent, &--lite, &--flat, &--secondary, &--link, &--select, &--invalid, &--input, &--textarea, &--signature) {
-        @extend %element-color;
-    }
-
-    &:not(&--signature, &--checkbox, &--round, &--nav-item, &--nav-item--active) {
-        @extend .b-rad;
-    }
-
-    // HANDLE ICONS
-    &:not(&--before-icon, &--after-icon, &--glow) {
-        padding: 0 var(--s-9);
-    }
-
-    // HANDLE ICONS
-    &--before-icon {
-        &.form-control__element--link {
-            gap: var(--s-9);
-        }
-    }
-
-    &--after-icon--link {
-        &.form-control__element--link {
-            gap: var(--s-9);
-        }
-    }
-
-    &--after-icon:not(&--flat, &--center, &--nav-item, &--nav-item--active) {
-        padding-left: var(--s-9);
-    }
-
-    &--before-icon:not(&--flat, &--center) {
-        padding-right: var(--s-9);
-    }
-
-
-
-    // ELEMENTS
-    &--button {
-        color: inherit;
-        border-style: solid;
-        border-width: 1px;
-        border-color: unset;
-        filter: brightness(.8);
-        mix-blend-mode: inherit;
-        &:hover,
-        &:focus {
-            filter: brightness(1);
-        }
-    }
-
-    &--button.form-control__element--flat {
-        width: inherit;
-        gap: var(--s-9);
-
-        &:first-child {
-            padding: 0;
-        }
-    }
-
-
-    &--checkbox {
-        width: max-content;
-        padding: 0;
-        height: var(--s-element);
-    }
-
-    &--input,
-    &--textarea {
-        color: inherit;
-
-        &::placeholder {
-            color: inherit
-        }
-
-        &:not(.form-control__element--transparent, .form-control__element--flat) {
-            -webkit-text-fill-color: var(--gray-50);
-            --ui-icon-color: var(--gray-50);
-            background-color: var(--gray-60-o);
-            border: solid 1px var(--gray-50-o);
-            box-shadow: inset 1px 1px 3px 2px var(--gray-80-o);
-        }
-
-        &:not(&--signature) {
-            font-family: 'Game', sans-serif;
-            font-style: italic;
-        }
-
-        &:focus-within {
-            &:not(.form-control__element--nav-item, .form-control__element--nav-item--active, .form-control__element--signature, .form-control__element--transparent, .form-control__element--flat) {
-                border: solid 1px var(--gray-10) !important;
-                --ui-icon-color: var(--gray-10);
-                -webkit-text-fill-color: var(--gray-50);
-                color: var(--gray-10);
-                background-color: var(--gray-70);
-            }
-        }
-
-        &:not(&--signature, &--dark, &--disabled, &--transparent) {
-            &:hover:not(&:focus-within) {
-                -webkit-text-fill-color: var(--gray-70);
-                // border-radius:0 0  var(--border-radius) var(--border-radius);
-                background-color: var(--gray-60);
-                font-weight: 500;
-                color: var(--gray-70);
-                --ui-icon-color: var(--gray-70);
-            }
-        }
-
-        &:nth-child(2) {
-            padding-left: var(--s-8);
-        }
-    }
-
-
-    &--textarea {
-        height: max-content;
-        max-width: inherit;
-        padding: var(--s-11) 0 0 var(--s-9) !important;
-        width:calc(100% - var(--s-9));
-        min-height: var(--s-element);
-    }
-
-    &-disabled,
-    &--disabled {
-        &:hover {
-            user-select: none;
-            cursor: not-allowed;
-        }
-    }
-
-    &-sm:not(.form-control__element--before-icon),
-    &-sm:not(.form-control__element--before-icon) {
-        padding: 0 var(--s-9);
-    }
-
-    &--flat {
-        &--after-icon {
-            padding: 0 var(--s-2);
-
-            &-sm {
-                padding: 0 var(--s-10);
-            }
-        }
-    }
-
-    &--input-color {
-        padding: 0;
-        height: 100%;
-        background-color: transparent;
-    }
-
-
-    // FORM CONTROL ELEMENTS - VARIANT DEFINITIONS
-    &--round {
-        border-radius: var(--s-1);
-    }
-
-    @mixin variant($name,
-        $bg, $c, $bc,
-        $hBg, $hC, $hBc,
-        $fBg, $fC, $fBc,
+    /* Don't repaint if any variant class is present */
+    &:not(
+      .form-control__element--transparent,
+      .form-control__element--flat,
+      .form-control__element--file,
+      .form-control__element--nav-item,
+      .form-control__element--primary,
+      .form-control__element--secondary,
+      .form-control__element--warning,
+      .form-control__element--error,
+      .form-control__element--signature,
+      .form-control__element--ghost
     ) {
-        &--#{$name} {
-            background-color: $bg;
-            border: solid 1px $bc;
-            color: $c;
-            --ui-icon-color: $c;
-
-            &:hover {
-                background-color: $hBg;
-                border: solid 1px $hBc;
-                color: $hC;
-                --ui-icon-color: $hC;
-            }
-
-            &:focus-within {
-                background-color: $fBg;
-                border: solid 1px $fBc;
-                color: $fC;
-                --ui-icon-color: $fC;
-            }
-        }
+      -webkit-text-fill-color: $fc-color;
+      --ui-icon-color: #{$fc-icon-color};
+      background-color: $fc-bg;
+      border: solid 1px $fc-border;
+      box-shadow: $fc-shadow-inset;
     }
 
-
-    @include variant('primary',
-        var(--primary-90), var(--primary-10), var(--primary-10),
-        var(--primary-30), var(--primary-70), var(--primary-30),
-        var(--primary-50), var(--white), transparent,
-    );
-
-    &--secondary {
-        background-color: var(--secondary-50-o);
-        color: var(--gray-20);
-
-        &:hover {
-            background-color: var(--secondary-50);
-            color: var(--white);
-        }
+    &:not(&--signature, .form-control__element--nav-item, .form-control__element--file) {
+      font-family: 'Game', sans-serif;
+      font-style: italic;
     }
 
-    @include variant('warning',
-        var(--gray-80), var(--warning), var(--red-30),
-        var(--red-30), var(--gray-40), var(--red-30),
-        var(--red-30), var(--gray-10), transparent,
-    );
-    @include variant('signature',
-        inherit, var(--gray-40), transparent,
-        inherit, var(--gray-50), transparent,
-        inherit, var(--gray-30), transparent,
-    );
-
-    &--center {
-        min-width: 150px;
-        padding: 0;
-        justify-content: space-between;
+    &:focus-within {
+      &:not(
+        .form-control__element--nav-item,
+        .form-control__element--nav-item--active,
+        .form-control__element--signature,
+        .form-control__element--transparent,
+        .form-control__element--flat,
+        .form-control__element--file,
+        .form-control__element--primary,
+        .form-control__element--secondary,
+        .form-control__element--warning,
+        .form-control__element--success,
+        .form-control__element--error,
+        .form-control__element--ghost
+      ) {
+        @include focus-skin($fc-focus-bg, $fc-focus-color, $fc-focus-border);
+        -webkit-text-fill-color: $fc-color;
+      }
     }
 
-    &--fit-text {
-        white-space: unset;
-        justify-content: flex-start;
-        height: auto;
+    &:not(&--signature, &--dark, &--disabled, &--transparent, .form-control__element--file) {
+      &:hover:not(&:focus-within) {
+        -webkit-text-fill-color: $fc-hover-color;
+        background-color: $fc-hover-bg;
+        font-weight: 500;
+        color: $fc-hover-color;
+        --ui-icon-color: #{$fc-hover-icon};
+      }
     }
-    &--inherit{
-        display: inherit;
-        justify-content: inherit;
-        align-items: inherit;
-        width: inherit;
+
+    &:nth-child(2) { padding:var(--s-12) var(--s-8); }
+  }
+
+  &--textarea {
+    height: max-content;
+    max-width: inherit;
+    padding: var(--s-11) 0 0 var(--s-9) !important;
+    width: calc(100% - var(--s-9));
+    min-height: $fc-elem-height;
+  }
+
+  &-disabled,
+  &--disabled { &:hover { user-select: none; cursor: not-allowed; } }
+
+  &-sm:not(.form-control__element--before-icon, .form-control__element--after-icon) { padding: 0 var(--s-9); }
+
+  &--flat {
+    &--after-icon {
+      padding: 0 var(--s-2);
+      &-sm { padding: 0 var(--s-10); }
     }
+  }
+
+  &--input-color { padding: 0; height: 100%; background-color: transparent; }
+
+  /* -------- VARIANTS -------- */
+  &--round { border-radius: var(--s-1); }
+  &--rank  { width: max-content !important; }
+@include variant('blocky',
+    unset, var(--gray-10), var(--gray-10),
+    var(--blue-90), var(--blue-30), var(--blue-50),
+    var(--gray-70), var(--gray-50), transparent
+  );
+  @include variant('primary',
+    $fc-primary-50, var(--gray-10), $fc-primary-10,
+    var(--primary-50), $fc-primary-70, var(--primary-50),
+    var(--primary-50), var(--white), transparent
+  );
+    @include variant('secondary',
+    var(--secondary-90), var(--secondary-10), var(--secondary-10),
+    var(--secondary-30), var(--secondary-70), var(--secondary-30),
+    var(--secondary-50), var(--white), transparent
+  );
+    @include variant('success',
+    var(--green-70),  var(--green-10),  var(--green-10),
+    var(--green-70),  var(--gray-10),  var(--green-10),
+    var(--green-50),  var(--white),  var(--gray-10),
+  );
+   @include variant('pill',
+    var(--gray-70),  var(--gray-10),  var(--gray-10),
+    var(--gray-60),  var(--gray-10),  var(--gray-10),
+    var(--gray-90),  var(--white),  var(--gray-10),
+  );
+
+   @include variant('ghost',
+    var(--dark),  var(--blue-10),  var(--purple-10),
+    var(--blue-90),  var(--gray-10),  var(--green-10),
+    var(--white),  var(--black),  var(--purple-10),
+  );
+// @keyframes vslIconPulse {
+//   0% {
+//     transform: scale(1.2);
+//     -moz-box-shadow: 0 0 0 0 var(--vsl-hover-lite);
+//     box-shadow: 0 0 0 0 var(--vsl-hover-lite);
+//   }
+//   70% {
+//     transform: scale(0.8);
+//     -moz-box-shadow: 0 0 var(--s-11) var(--s-6)  var(--vsl-hover-dark);
+//     box-shadow: 0 0  (--s-11) var(--s-6) var(--vsl-hover-dark);
+//   }
+//   100% {
+//     transform: scale(1);
+//     -moz-box-shadow: 0 0 0 0 var(--vsl-hover-dark);
+//     box-shadow: 0 0 0 0 var(--vsl-hover-dark);
+//   }
+// }
+
+
+  @include variant('warning',
+    $g80, var(--red-90), var(--red-30),
+    var(--red-30), $g40, var(--red-30),
+    var(--red-30), $g10, transparent
+  );
+
+  @include variant('signature',
+    inherit, $g40, transparent,
+    inherit, $g50, transparent,
+    inherit, $g30, transparent
+  );
+
+  &--center { min-width: 150px; padding: 0; justify-content: space-between; }
+  &--fit-text { white-space: unset; justify-content: flex-start; height: auto; }
+
+  &--inherit {
+    display: inherit; justify-content: inherit; align-items: inherit;
+    width: inherit; height: inherit; min-height: inherit; max-height: inherit;
+    padding: inherit; margin: inherit; flex-direction: inherit; gap: inherit;
+    font-size: inherit !important; font-weight: inherit; font-family: inherit;
+    color: inherit; text-decoration: inherit; background-color: inherit;
+    border: inherit; outline: inherit; border-radius: inherit; box-shadow: inherit;
+    aspect-ratio: inherit; position: inherit;
+  }
+
+  /* Glow / link / pill */
+  &--glow {
+    color: inherit; overflow: hidden; position: absolute; left: autofer; width: inherit;
+    height: 100%;
+    outline: none; border: none; height: 100%; backdrop-filter: blur(var(--s-12));
+    width: var(--s-9-w);
+
+  }
+  &--glow:focus,
+  &--glow:focus-within { background-color: $g80; }
+  &--glow:hover:not(:focus, :focus-within) { background-color: $fc-primary-50; color: $g10; --ui-icon-color: $g10; }
+
+  &--link {
+    color:var(--blue-10);
+    --ui-icon-color:var(--blue-10);
+    padding: 0; width: max-content; gap: var(--s-10);
+    &:hover { animation: glowTxt 2s infinite; }
+  }
+
+  &--bump { animation: bump .3s; }
+
+  &--pill { width: max-content; }
+
+  /* INVALID/ERROR */
+  &--error {
+    position: relative;
+    background-color: $fc-error-bg !important;
+    -webkit-text-fill-color: $fc-error-color !important;
+    opacity: 1 !important;
+    --ui-icon-color: #{$fc-error-color} !important;
+    color: $fc-error-color !important;
+
+    &:not(&--signature) { border: solid 1px $fc-error-border !important; }
 
     &--signature {
-        @extend .d-flex;
-        position: relative;
-        overflow: visible;
-
-        &:hover {
-            border-color: transparent;
-        }
-
-        &::before {
-            @extend .d-flex;
-            position: absolute;
-            content: "x";
-            left: 0;
-            color: var(--gray-70);
-            font-size: var(--s-5);
-            bottom: calc(var(--s-9) * -1);
-            background-color: inherit;
-            z-index: 1;
-            width: var(--s-1);
-            text-align: center;
-            line-height: 1;
-        }
-
-        &::after {
-            position: absolute;
-            content: '';
-            bottom: 0;
-            border-top: solid 1px var(--gray-70);
-            width: calc(100% - var(--s-4));
-        }
-
-        &:hover {
-            &::before {
-                color: var(--gray-50);
-            }
-
-            &::after {
-                border-top-color: var(--gray-50);
-            }
-        }
-
-        &:focus-within:not(&:hover) {
-            &::before {
-                color: var(--gray-30);
-            }
-
-            &::after {
-                border-top-color: var(--gray-30);
-            }
-        }
+      border: 1px solid transparent !important;
+      .form-control__invalid { color: $fc-error-border !important; }
     }
 
-    @include variant('lite',
-        var(--gray-40), var(--gray-70), var(--gray-10),
-        var(--gray-30), var(--gray-70), var(--secondary-50),
-        var(--gray-40), var(--gray-50), var(--gray-50));
-    @include variant('dark',
-        var(--dark), var(--primary-50), var(--primary-50),
-        var(--gray-80-o), var(--primary-50), var(--primary-50),
-        var(--primary-50-o), var(--gray-100), var(--gray-70));
-    @include variant('secondary',
-        var(--secondary-50-o), var(--gray-20), var(--gray-20),
-        var(--secondary-50-o), var(--gray-20), var(--gray-20),
-        var(--secondary-50-o), var(--gray-20), var(--gray-20));
-    @include variant('link',
-        transparent, var(--blue-60), transparent,
-        transparent, var(--blue-10), transparent,
-        transparent, var(--blue-10), transparent);
-
-    &--glow {
-        color: inherit;
-        overflow: hidden;
-        position: absolute;
-        left: 0;
-        width: 100%;
-
-        // mix-blend-mode: color-dodge;
-        outline: none;
-        border: none;
-        height: 100%;
-        backdrop-filter: blur(var(--s-12));
+    .form-control__invalid {
+      position: absolute; right: var(--s-2);
+      font-family: Play; font-style: italic; font-weight: bold;
+      animation: bump .4s ease-in; font-size: var(--s-3);
+      user-select: none; color: $fc-invalid-color; opacity: .5;
     }
+  }
 
-    &--glow:focus,
-    &--glow:focus-within {
-        background-color: var(--gray-80);
+  /* SELECT STYLES */
+  &--select {
+    &--flat {
+      background-color: var(--gray-70-o);
+      color: inherit;
+      --ui-icon-color: var(--gray-70-o);
+      border: solid 1px transparent;
+
+      &:hover,
+      &:focus-within {
+        background-color: $elementBG;
+        color: $g30;
+        --ui-icon-color: #{$elementBG};
+        border: solid 1px $g90;
+      }
     }
+  }
 
-    &--glow:hover:not(:focus, :focus-within) {
-        animation: none;
-        background-color: var(--primary-10);
-        color: var(--gray-10);
+  &--dark {
+    color: var(--green-10);
+    background: radial-gradient(circle, #130218 70%, #03092c 100%) !important;
+  }
+
+  &--select:not(&--flat, &--nav-item, &--nav-item--active) { color: $g90; }
+  &--select:not(&--flat, &--lite, &--nav-item, &--nav-item--active) {
+    color: $g60; --ui-icon-color: #{$g60}; background-color: $g10;
+
+    &:hover { color: $g40; --ui-icon-color: #{$g40}; }
+    &:focus-within { color: var(--white); --ui-icon-color: var(--white); background-color: $elementBG; }
+  }
+
+  &--transparent {
+    background-color: transparent;
+    color: var(--orange-50) !important;
+    --ui-icon-color: #{$fc-primary-50};
+
+    &:hover:not(&:focus-within) {
+      -webkit-text-fill-color: $g50;
+      background-color: var(--gray-80-o);
+      color: $g50; --ui-icon-color: #{$g50};
     }
+    &:focus-within { color: $g50; background-color: var(--gray-90-o); }
+  }
 
-    &--link {
-        padding: 0;
-        width: max-content;
-        gap: var(--s-10);
+  /* --- NEW: blocky variant (polyline-clipped edges) --- */
+  &--blocky {
+    /* control the corner cut size via CSS var; falls back to 12px */
+    --fc-blocky-cut: var(--s-9, 12px);
+    clip-path: polygon(
+      0 0,
+      calc(100% - var(--fc-blocky-cut)) 0,
+      100% var(--fc-blocky-cut),
+      100% 100%,
+      var(--fc-blocky-cut) 100%,
+      0 calc(100% - var(--fc-blocky-cut))
+    );
+    border-radius: 0 !important; /* clip-path defines the silhouette */
+    /* keep base element colors and interactions; only change shape */
+  }
 
-        &:hover {
-            animation: glowTxt 2s infinite;
-        }
-    }
+  /* NAV ITEMS */
+  &--nav-item,
+  &--nav-item--active {
+    gap: var(--s-9);
+    color: $g10;
+    --ui-icon-color: #{$g10};
+    transition: all .25s ease-in-out;
+    padding: 0 var(--s-9);
+    border: unset;
+    background-color: transparent !important;
 
-    &--bump {
-        animation: bump .3s;
-    }
+    &:hover { color: $fc-primary-90; --ui-icon-color: #{$fc-primary-90}; }
+    &:focus-within { color: $fc-primary-50; --ui-icon-color: #{$fc-primary-50}; background-color: $g90; }
+  }
 
-    &--pill {
-        border: solid 1px var(--gray-70);
-        width: max-content;
-    }
+  &--file { position: absolute; opacity: 0; }
+}
 
-    // FORM CONTROL ELEMENTS - INVALID DEFINITIONS
-    &--error {
-        position: relative;
-        color: var(--red-70) !important;
-        --ui-icon-color: var(--red-70) !important;
+/* ====== SPECIFICITY BUMPS (after inputs) ======
+   Ensures variants still win if globals paint inputs later. */
+.form-control__element.form-control__element--warning   {
+  background-color: $g80; border: solid 1px var(--red-30); color: var(--warning);
+  --ui-icon-color: var(--warning);
+  &:hover { @include hover-skin(var(--red-30), $g40, var(--red-30)); }
+  &:focus-within { @include focus-skin(var(--red-30), $g10, transparent); }
+}
+// .form-control__element.form-control__element--error     { /* handled by --error block */ }
 
-        &:not(&--signature) {
-            border: solid 1px var(--red-70) !important;
-        }
+/* Keep separate so it can be extended independently when needed */
+.form-control__element--inherit {
+  --ui-icon-color: unset;
+  --ui-icon-width: unset;
+  --ui-icon-height: unset;
+  text-decoration: inherit;
+  color: inherit;
+  background-color: inherit;
+  height: inherit; min-height: inherit; max-height: inherit;
+  width: inherit; min-width: inherit; max-width: inherit;
+  padding: inherit; margin: inherit;
+  display: inherit; justify-content: inherit; align-items: inherit;
+  flex-direction: inherit; gap: inherit;
+  font-size: inherit !important; font-weight: inherit; font-family: inherit;
+  border: inherit; outline: inherit; border-radius: inherit; box-shadow: inherit;
+  aspect-ratio: inherit; position: inherit;
+}
 
-        &--signature {
-            border: solid 1px transparent !important;
-
-            .form-control__invalid {
-                color: var(--red-70) !important;
-
-            }
-        }
-
-        .form-control__invalid {
-            position: absolute;
-            font-family: Play;
-            font-style: italic;
-            animation: bump .4s ease-in;
-            right: var(--s-2);
-            font-size: var(--s-3);
-            font-weight: bold;
-            user-select: none;
-            color: var(--red-50);
-            opacity: .5;
-        }
-    }
-
-    &--select {
-        &--flat {
-            background-color: var(--gray-70-o);
-            // color: var(--gray-70-o);
-            color: inherit;
-            --ui-icon-color: var(--gray-70-o);
-            border: solid 1px transparent;
-
-            &:hover,
-            &:focus-within {
-                background-color: var(--gray-70);
-                color: var(--gray-30);
-                --ui-icon-color: var(--gray-70);
-                border: solid 1px var(--gray-90);
-            }
-        }
-    }
-
-    &--dark {
-        color: var(--green-10);
-        background: radial-gradient(circle, #130218 70%, #03092c 100%, ) !important;
-    }
-
-    // FORM CONTROL ELEMENTS - ELEM TYPES
-    &--select:not(&--flat, &--nav-item, &--nav-item--active) {
-        color: var(--gray-90);
-    }
-
-    &--select:not(&--flat, &--lite, &--nav-item, &--nav-item--active) {
-        color: var(--gray-60);
-        --ui-icon-color: var(--gray-60);
-        background-color: var(--gray-90);
-
-
-        &:hover {
-            color: var(--gray-40);
-            --ui-icon-color: var(--gray-40);
-        }
-
-        &:focus-within {
-            color: var(--white);
-            --ui-icon-color: var(--white);
-            background-color: var(--gray-70);
-        }
-    }
-
-    &--transparent {
-
-        background-color: var(--gray-100-o);
-        background-color: transparent;
-        color: var(--orange-50) !important;
-        --ui-icon-color: var(--primary-50);
-
-        &:hover:not(&:focus-within) {
-            -webkit-text-fill-color: var(--gray-50);
-            // border-radius:0 0  var(--border-radius) var(--border-radius);
-            background-color: var(--gray-80-o);
-            color: var(--gray-50);
-            --ui-icon-color: var(--gray-50);
-        }
-
-        &:focus-within {
-            color: var(--gray-50);
-            background-color: var(--gray-90-o);
-        }
-    }
-
-    &--nav-item,
-    &--nav-item--active {
-        gap: var(--s-9);
-        color: var(--gray-10);
-        --ui-icon-color: var(--gray-10);
-        transition: all .25s ease-in-out;
-        padding: 0 var(--s-9);
-        border: unset;
-
-        &:hover {
-            color: var(--primary-90);
-            --ui-icon-color: var(--primary-90);
-        }
-
-        &:focus-within {
-            color: var(--primary-50);
-            --ui-icon-color: var(--primary-50);
-            background-color: var(--gray-90);
-            // border-color:var(--primary-90);
-            // border-style: solid;
-            // border-width: 0 1px 0 1px;
-        }
-    }
+/* A11y utility */
+.visually-hidden {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+  width: 0; height: 0;
+  pointer-events: none;
 }

@@ -25,8 +25,14 @@ export const useViewState = (views?: any, initialKey?: string | number) => {
     };
 
     useEffect(() => {
-        if (initialKey && views?.[initialKey] && history[history.length - 1] !== initialKey)setView(initialKey);
-    }, [views, initialKey, ]);
+        if (!initialKey || !views?.[initialKey]) return;
+        const keyAsString = String(initialKey);
+        if (history[history.length - 1] !== keyAsString) {
+            // Inline the logic to avoid depending on setView in deps
+            setViewState(views[keyAsString]);
+            setHistory((prevHistory) => [...prevHistory, keyAsString]);
+        }
+    }, [views, initialKey, history]);
 
     return { view, setView, last: history[history.length - 1], goBack };
 };

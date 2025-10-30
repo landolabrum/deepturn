@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import AdaptGrid from "@webstack/components/Containers/AdaptGrid/AdaptGrid";
 import { IRoute, useClearanceRoutes, pruneRoutes } from "@webstack/components/PageComponents/Navbar/data/routes";
 import UiLoader from "@webstack/components/UiLoader/view/UiLoader";
+import UiHeader from "@webstack/components/Containers/Header/views/UiHeader/UiHeader";
+import environment from "~/src/core/environment";
 interface IDashboard {
   links?: IRoute[];
 }
@@ -23,14 +25,19 @@ export const DashboardPage: React.FC<IDashboard> = ({ links }: IDashboard) => {
     <>
       <style jsx>{styles}</style>
       <div className="dashboard">
-      {access && <AdaptGrid xs={2} md={4} gap={10}>
+              <div className="dashboard__header">
+                <UiHeader 
+                  title={environment.merchant.name}
+                />
+</div>
+      {access && <AdaptGrid xs={2} md={4} gap={10} variant="card">
           {Object.entries(links || access).map(([key, link]) => {
             return (
               <div
                 key={key}
                 data-testid={`dashboard-page-internal-link-${link.label} `}
-                onClick={() => link?.active && handleClick(link)}
-                className='dashboard__dashboard-item'
+                onClick={() => link?.active !== false && handleClick(link)}
+                className={`dashboard__dashboard-item`}
               >
                 <UiIcon icon={link.altIcon ? link.altIcon : link.icon} /> {link?.altLabel ? link.altLabel : link.label}
               </div>

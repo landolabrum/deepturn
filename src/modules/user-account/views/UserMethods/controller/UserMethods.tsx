@@ -10,6 +10,7 @@ import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import Loader, { useLoader } from '@webstack/components/Loader/Loader';
 import UserCreateMethod from '../views/UserCreateMethod/controller/UserCreateMethod';
 import IAuthenticatedUser from "~/src/models/ICustomer";
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 
 
 
@@ -19,12 +20,14 @@ interface IUserMethods {
   user?: IAuthenticatedUser;
   selected?: string;
   onSelect?: (method?: IMethod) => void;
+  title?:any;
   onSuccess?: (e: any) => void;
 }
-const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onSelect, onSuccess }: IUserMethods) => {
+const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onSelect, onSuccess, title }: IUserMethods) => {
   const [loader, setLoader] = useLoader();
   const [label, setLabel] = useState<any>('payment methods');
   const [methods, setMethods] = useState<IMethod[]>([]);
+  const [add, setAdd] = useState<boolean>(true);
   const [selectedUser, setUser] = useState<IAuthenticatedUser | undefined>();
 
   const MemberService = getService<IMemberService>("IMemberService");
@@ -69,6 +72,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
     setLoader({ active: false });
   }
   const userHasCards = Boolean(Object.entries(methods).filter(([_, m]:any)=>m?.card)?.length);
+  useEffect(() => {if(userHasCards)setAdd(false)},[userHasCards]);
   useEffect(() => {
   initUserMethods();
   }, [selectedUser]);
@@ -76,7 +80,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
     <>
       <style jsx>{styles}</style>
       <div className='user-methods'>
-        <h1>Payment Method</h1>
+        {title||<h1>Payment Method</h1>}
         {userHasCards &&
           <div
             className={`user-methods__existing ${canSelect ? ' user-methods__existing__selected' : ''}`}
@@ -84,6 +88,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
             {onSelect && <div className={`${!selected ? 'existing__select' : 'existing__selected'}`}>
               {selected ?
                 <UserCurrentMethods
+                  open={open}
                   user={selectedUser}
                   methods={[selected]}
                   onDeleteSuccess={handleDelete}
@@ -99,6 +104,7 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
                   current methods
                 </div>
                 <UserCurrentMethods
+                  open={open}
                   user={selectedUser}
                   methods={methods}
                   onDeleteSuccess={handleDelete}
@@ -110,7 +116,10 @@ const UserMethods: React.FC<any> = ({ user, open, customerMethods, selected, onS
             }
           </div>
         }
-          <UserCreateMethod user={selectedUser} onSuccess={handleCreated} />
+
+        {add?
+          <UserCreateMethod user={selectedUser} onSuccess={handleCreated} />:<UiButton onClick={()=>setAdd(!add)} variant="link" traits={{afterIcon:"fas-plus"}}>add payment method</UiButton>
+        }
       </div>
     </>
   );

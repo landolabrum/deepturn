@@ -1,5 +1,11 @@
-// ImageControl.tsx
-import React, { Children, cloneElement, useEffect, useRef, useState, isValidElement } from 'react';
+import React, {
+  Children,
+  cloneElement,
+  useEffect,
+  useRef,
+  useState,
+  isValidElement
+} from 'react';
 import styles from './ImageControl.scss';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import useClass from '@webstack/hooks/useClass';
@@ -8,21 +14,32 @@ import { useModal } from '@webstack/components/Containers/modal/contexts/modalCo
 import environment from '~/src/core/environment';
 
 export type IImageVariant = 'center' | 'background' | string;
-export type IImageMediaType = 'image' | 'video' | 'iframe' | 'audio' | 'html' | 'webm' | 'mp4' | 'mkv' | string;
+export type IImageMediaType =
+  | 'image'
+  | 'video'
+  | 'iframe'
+  | 'audio'
+  | 'html'
+  | 'webm'
+  | 'mp4'
+  | 'mkv'
+  | string;
 
 interface IImageControl {
   variant?: IImageVariant;
   mediaType?: IImageMediaType;
   children?: React.ReactNode;
   refreshInterval?: number;
+  maxRetries?: number;
   error?: string | React.ReactElement;
   fixedLoad?: boolean;
   loadingText?: string;
   onComplete?: (e: any) => void;
   isPlaying?: boolean;
-controls?: any;
-  // New props for play/pause control
+  controls?: any;
   onPlayPauseClick?: () => void;
+    onClick?: (e?:any) => void;
+
   showPlayPause?: boolean;
 }
 
@@ -31,17 +48,20 @@ const ImageControl: React.FC<IImageControl> = ({
   controls,
   variant,
   mediaType = 'image',
-  refreshInterval = 1000,
+  refreshInterval = 5000,
+  maxRetries = 5,
   error,
   loadingText,
   fixedLoad = false,
   onComplete,
   onPlayPauseClick,
   showPlayPause,
-  isPlaying
+  isPlaying,
+  onClick
 }) => {
   const childRef = useRef<HTMLDivElement | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [retryCount, setRetryCount] = useState<number>(0);
   const clzz: string = useClass({ cls: 'image-control__element', type: mediaType, variant });
   const { openModal, closeModal, isModalOpen } = useModal();
 
@@ -54,6 +74,7 @@ const ImageControl: React.FC<IImageControl> = ({
             variant={variant}
             mediaType={mediaType}
             refreshInterval={refreshInterval}
+            maxRetries={maxRetries}
             error={error}
           >
             {children}
@@ -67,62 +88,76 @@ const ImageControl: React.FC<IImageControl> = ({
   };
 
   useEffect(() => {
-    // Once we detect a valid size, we consider the media loaded
     const mediaHeight = childRef?.current?.offsetHeight;
     if (childRef.current && !loading) {
       onComplete?.({ src: Boolean(mediaHeight && mediaHeight > 10), loading });
     }
-  }, [childRef.current, loading, onComplete]);
+  }, []);
 
   useEffect(() => {
-    // Poll to see if the child has a size > 0
     const interval = setInterval(() => {
       const mediaHeight = childRef?.current?.offsetHeight;
       const mediaWidth = childRef?.current?.offsetWidth;
-      const imageSrc = Boolean(mediaHeight && mediaHeight > 30) || Boolean(mediaWidth && mediaWidth > 10);
+      const isVisible =
+        (mediaType === 'iframe' && mediaHeight && mediaHeight > 100) ||
+        (mediaHeight && mediaHeight > 30) ||
+        (mediaWidth && mediaWidth > 10);
 
-      if (childRef.current && imageSrc && loading === true) {
+      if (childRef.current && isVisible && loading === true) {
         setLoading(false);
       } else {
-        if (error && !loading) setLoading(true);
+        // Only retry if we haven't reached maxRetries
+        if (loading && retryCount < maxRetries) {
+          setRetryCount((prev) => prev + 1);
+        } else if (retryCount >= maxRetries && loading) {
+          setLoading(false); // fallback to hide loader
+        }
       }
     }, refreshInterval);
 
     return () => clearInterval(interval);
-  }, [refreshInterval, setLoading, error, loading]);
+  }, [isPlaying]);
 
   return (
     <>
       <style jsx>{styles}</style>
-      <div  className={`image-control${loading ? ' image-control__loading' : ''}${variant ? ` image-control--${variant}` : ''}`}>
+      <div
+      onClick={onClick}
+        className={`image-control${loading ? " image-control__loading" : ""}${
+          variant ? ` image-control--${variant}` : ""
+        } ${mediaType}`}
+      >
         {loading && (
           <UiLoader
-            position={!fixedLoad ? 'relative' : undefined}
-            text={typeof error === 'string' ? error : loadingText}
-            dots={['string', 'object'].includes(typeof error) ? false : undefined}
+            position={!fixedLoad ? "relative" : undefined}
+            text={typeof error === "string" ? error : loadingText}
+            dots={["string", "object"].includes(typeof error) ? false : undefined}
           />
         )}
         <div id="image-control__element" className={clzz} ref={childRef}>
-        {!isPlaying && variant != 'background' && (
-          <div className='image-control__play' onClick={onPlayPauseClick}>
-          <UiIcon width={100} height={100} icon={`${environment.merchant.name}-logo`} />
-          </div>
-        )}
+          {!isPlaying || variant !== "background" && (mediaType === "video" || mediaType === "iframe") && (
+            <div className="image-control__play" onClick={onPlayPauseClick}>
+              <UiIcon width={100} height={100} icon={`${environment.merchant.name}-logo`} />
+            </div>
+          )}
+
           {Children.map(children, (child) => (isValidElement(child) ? cloneElement(child) : child))}
         </div>
 
-        {/* Custom Controls */}
-  {controls &&       <div className="image-control__controls">
-          {/* Only show play/pause if it's a video */}
-          {showPlayPause && (
+        {error && typeof error !== "string" && <div className="image-control__error">{error}</div>}
+
+        {controls && (
+          <div className="image-control__controls">
+            {showPlayPause && (
+              <div className="image-control__controls__control">
+                <UiIcon icon="fa-play-pause" onClick={onPlayPauseClick} />
+              </div>
+            )}
             <div className="image-control__controls__control">
-              <UiIcon icon="fa-play-pause" onClick={onPlayPauseClick} />
+              <UiIcon icon="fa-expand" onClick={handleExpand} />
             </div>
-          )}
-          <div className="image-control__controls__control">
-            <UiIcon icon="fa-expand" onClick={handleExpand} />
           </div>
-        </div>}
+        )}
       </div>
     </>
   );

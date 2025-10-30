@@ -104,7 +104,10 @@
     &__modal {
         gap: var(--s-4);
     }
-
+    &--today{
+        background-color: var(--primary-50-o);
+        
+    }
 
     &:hover {
         border: solid 1px var(--gray-60);

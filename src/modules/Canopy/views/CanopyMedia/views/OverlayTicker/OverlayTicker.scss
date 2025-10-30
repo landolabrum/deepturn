@@ -1,0 +1,162 @@
+/* ================================
+   ./OverlayTicker.scss  (UPDATED)
+   Theme: matches Scoreboard & L3
+   - Translucent panel w/ blur
+   - Transparent cut corners (clip-path)
+   - Subtle inner glow & divider polish
+   - Preserves measurements/animations
+   ================================ */
+
+.overlay-ticker {
+  /* Typography & sizing (JS can override) */
+  --font-size: 2.15rem;
+  --row-width: 800px;              /* set by JS */
+  --track-width: calc(var(--row-width) * 2);
+  --duration: 20s;
+
+  /* Spacing */
+  --bar-h: calc(var(--font-size) * 2.2);
+  --baseline-nudge: 0.0em;
+  --item-gap: calc(var(--font-size) * 1.25);
+
+  /* Theme tokens (mirror scoreboard / L3) */
+  --panel-bg: #e0e0e098;
+             /* translucent light panel */
+  --panel-blur: 14px;
+  --panel-border: var(--gray-10);
+  --text: var(--gray-100);
+  --divider-opacity: 1;
+  --matrix: 16px;                  /* notch size for corners */
+
+  position: relative;
+  bottom: 16px;
+  width: 100%;
+  block-size: var(--bar-h);
+  z-index: 9999;
+  overflow: hidden;
+
+  /* Type */
+  font-family: LineBeam, Decimal, system-ui, sans-serif;
+  font-style: italic;
+  font-size: var(--font-size);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 300;
+  color: var(--text);
+  text-shadow: 0 1px 1px var(--gray-10);
+
+  /* Panel (match scoreboard/l3 look) */
+  display: grid;
+  place-items: center;
+  background: var(--panel-bg);
+  border: 2px solid var(--panel-border);
+  backdrop-filter: blur(var(--panel-blur));
+  /* Transparent cut corners: top-left & bottom-right */
+  clip-path: polygon(
+    var(--matrix) 0,
+    100% 0,
+    100% calc(100% - var(--matrix)),
+    calc(100% - var(--matrix)) 100%,
+    0 100%,
+    0 var(--matrix)
+  );
+
+  /* gentle inner glow band */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(120% 70% at 50% 10%, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 60%);
+    mix-blend-mode: screen;
+  }
+}
+
+/* Keep a single line everywhere */
+.overlay-ticker__track,
+.overlay-ticker__row,
+.overlay-ticker__item,
+.overlay-ticker__text,
+.ui-markdown {
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+/* Track holds: [row][clone] and slides by one row width */
+.overlay-ticker__track {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  inline-size: var(--track-width);
+  height: 100%;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0);
+  animation: ticker-ltr var(--duration) linear infinite;
+}
+.overlay-ticker--rtl .overlay-ticker__track { animation-name: ticker-rtl; }
+
+.overlay-ticker--pause-on-hover:hover .overlay-ticker__track {
+  animation-play-state: paused;
+}
+
+/* One measured row */
+.overlay-ticker__row {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  inline-size: var(--row-width);
+  height: 100%;
+  gap: var(--item-gap);
+  padding-inline: 0;     /* no seam padding */
+}
+
+/* Clone row must be identical width/gaps */
+.overlay-ticker__row--clone {
+  inline-size: var(--row-width);
+  gap: var(--item-gap);
+}
+
+/* Items */
+.overlay-ticker__item {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  padding-inline: calc(var(--item-gap) * 0.25);
+  position: relative;
+  flex: 0 0 auto;
+}
+
+/* Divider AFTER every item gives constant spacing */
+.overlay-ticker__item::after {
+  content: '';
+  display: inline-block;
+  inline-size: 1px;
+  block-size: 55%;
+  margin-inline-start: calc(var(--item-gap) * 0.25);
+  background: currentColor;
+  opacity: var(--divider-opacity);
+  transform: translateY(15%);
+}
+
+/* Avoid a divider at very beginning of the whole track */
+.overlay-ticker__row:first-child .overlay-ticker__item:first-child::before { content: none; }
+
+.overlay-ticker__text { display: block; transform: translateY(var(--baseline-nudge)); }
+.ui-markdown { display: inline-block; line-height: 1; }
+
+/* Motion: slide exactly ONE measured row width */
+@keyframes ticker-ltr {
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(calc(-1 * var(--row-width)), 0, 0); }
+}
+@keyframes ticker-rtl {
+  from { transform: translate3d(calc(-1 * var(--row-width)), 0, 0); }
+  to   { transform: translate3d(0,0,0); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .overlay-ticker__track { animation: none !important; transform: none !important; }
+}

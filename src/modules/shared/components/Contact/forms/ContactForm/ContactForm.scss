@@ -1,0 +1,36 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.contact-form {
+    width: 100%;
+    @extend .d-flex;
+    align-items: flex-start;
+    overflow-y: visible;
+    // overflow-x: hidden;
+    flex-direction: column;
+    mix-blend-mode: darken;
+    ul{
+        color:var(--red-30);
+    }
+    strong{
+        text-transform: capitalize;
+
+    }
+&__title{
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    width: 100%;
+    @extend .d-flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--s-9);
+}
+    &--action {
+        --ui-icon-color: var(--gray-20);
+    }
+    &__payment-form{
+        width: 100%;
+    }
+}

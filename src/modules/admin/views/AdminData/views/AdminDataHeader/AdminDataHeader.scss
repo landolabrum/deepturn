@@ -9,12 +9,12 @@ flex-direction: column ;
 width: 100%;
 gap:var(--s-1);
 background-color: var(--gray-80);
-width: var(--s-9-width);
+width: var(--s-9-w);
 padding:var(--s-9);
 border-radius: var(--border-radius);//
 &__actions{
     @extend .d-flex;
-    width: var(--s-9-width);
+    width: var(--s-9-w);
     padding:var(--s-9);
     gap: var(--s-2);
     background-color: var(--gray-90);

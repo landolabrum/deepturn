@@ -41,7 +41,7 @@
   @media (min-width: 1100px) {
     @media screen and (max-width: calc(1260px - calc(var(--s-4) * 2))) {
       padding: 0 var(--s-4);
-      width: 0 var(--s-4-width);
+      width: 0 var(--s-4-w);
     }
   }
 
@@ -106,15 +106,16 @@
       color: $defaultColor;
       --ui-icon-color: $defaultColor;
       min-height: var(--s-nav-height);
+      border-radius: var(--border-radius);
       &--about { margin-left: auto; }
-      &--user-account,
+      &--profile,
       &--login {
         align-self: flex-end;
         justify-self: flex-end;
         @media(max-width:1100px) { position: inherit; }
       }
       &.no-cart { padding-right: 0; }
-      &--login, &--user-account{
+      &--login, &--profile{
         margin-left:auto;
       }
       &--cart {

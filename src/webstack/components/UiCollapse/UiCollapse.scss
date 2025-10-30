@@ -101,7 +101,6 @@ $wid: calc(100%);
     height: $button_height;
     min-height: $button_height;
     background-color: var(--gray-90);
-
     @media(max-width:900px) {
         padding: 0;
     }
@@ -209,6 +208,7 @@ $wid: calc(100%);
     width: calc(100% - var(--s-4));
     height: auto;
     padding: var(--s-4) 0;
+    
     &__open {
         animation: openBody 1s forwards;
     }

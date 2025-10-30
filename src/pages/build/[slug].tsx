@@ -1,4 +1,3 @@
 
-import ProductBuild from "~/src/modules/ecommerce/Products/components/ProductBuild/controller/ProductBuild";
-
+import ProductBuild from "~/src/modules/ecommerce/Services/views/ServiceRequestForm/controller/ProductBuild";
 export default ProductBuild;

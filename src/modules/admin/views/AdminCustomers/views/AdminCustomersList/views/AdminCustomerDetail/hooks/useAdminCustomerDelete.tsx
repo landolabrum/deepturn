@@ -51,7 +51,7 @@ const useAdminCustomerDelete = (customer_id?: string | string[]) => {
               statements: [
                 {
                   label: "customers",
-                  onClick: () => router.push(router.pathname, { query: { vid: "customers", cid:"list" } }),
+                  onClick: () => router.push(router.pathname, { query: { vid: "customers" } },{shallow:false}),
                 },
               ],
             },

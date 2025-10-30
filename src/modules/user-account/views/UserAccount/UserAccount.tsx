@@ -5,8 +5,6 @@ import IAuthenticatedUser from "~/src/models/ICustomer";
 import AdaptTableCell from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
 import UserModify from '../UserModify/UserModify';
 import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
-import ContactForm from '@shared/components/ContactForm/ContactForm';
-import MemberService from '~/src/core/services/MemberService/MemberService';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 

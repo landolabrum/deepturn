@@ -182,11 +182,11 @@
             // background-color: var(--dark);
 
             // background-color: var(--gray-80-o);
-            width: calc(var(--s-4-width) - var(--s-4) * 2);
+            width: calc(var(--s-4-w) - var(--s-4) * 2);
             margin: 0;
 
             &--title {
-                width: var(--s-4-width);
+                width: var(--s-4-w);
                 padding: var(--s-9) var(--s-1);
             }
         }

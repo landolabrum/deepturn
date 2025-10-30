@@ -10,12 +10,14 @@ const addVessels = (
     vessels?: IVessel[],
     hideHover?: boolean
 ): void => {
-    if (!vessels) return;
+    if (!vessels||!map) return;
     vessels.forEach(vessel => {
         const el = document.createElement('div');
         const root = createRoot(el);
         root.render(MapVesselMarker({ vessel, ...actions, hideHover }));
-        if (vessel.lngLat) {
+        console.log({map, vessel,})
+        if (vessel?.lngLat && typeof vessel.lngLat?.[0]=='number'&&el) {
+            // console.log(el, vessel.lngLat,map);
             new mapboxgl.Marker(el)
                 .setLngLat(vessel.lngLat)
                 .addTo(map);

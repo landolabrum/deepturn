@@ -13,6 +13,7 @@ import Collect from '../views/Collect/controller/Collect';
 import CartList from '../../cart/views/CartList/CartList';
 import { useNotification } from '@webstack/components/Notification/Notification';
 import UiViewLayout, { IView } from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 
 const Checkout = (): React.JSX.Element => {
   const user = useUser();
@@ -59,28 +60,23 @@ const Checkout = (): React.JSX.Element => {
   };
 
   const views: IView = {
-    'sign-up': (
-      <SignUp
-        title="Contact info"
-        hasPassword={false}
-        btnText="Continue"
-        onSuccess={handleSignUp}
-      />
+    "sign-up": (
+      <div className="d-flex-col g-8 s-4">
+        <SignUp title="Contact info" hasPassword={false} btnText="Continue" onSuccess={handleSignUp} />
+        <UiButton variant="link" onClick={() => setView("login")}>
+          login
+        </UiButton>
+      </div>
     ),
-    login: (
-      <Login
-        email={existingEmail}
-        onSuccess={handleLogin}
-      />
-    ),
-    collect: <Collect user={user || guest} cart_items={_cart} />
+    login: <Login email={existingEmail} onSuccess={handleLogin} />,
+    collect: <Collect user={user || guest} cart_items={_cart} />,
   };
 
   const handleUser = () => {
-    if (user) {
+    if (user||guest) {
       setView('collect');
-    } else {
-      setView('sign-up');
+    } else if (view !== "sign-up") {
+      setView("sign-up");
     }
   };
 
@@ -110,10 +106,10 @@ const Checkout = (): React.JSX.Element => {
             <UiViewLayout views={views} currentView={view} />
           </div>
         </div>
-        <div className="dev">
+        {/* <div className="dev">
           {view}
           {JSON.stringify({ user })}
-        </div>
+        </div> */}
       </div>
     </>
   );

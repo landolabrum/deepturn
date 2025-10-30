@@ -1,26 +1,44 @@
-.ui-text-balance {
-    display: flex;
-    justify-content: flex-start; // Align to the right
-    align-items: flex-start; // Align text to the top
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-    
-    &__content {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start; // Ensure text is aligned to the right
-    //   text-align: right;
-      width: 100%;
-      @media(max-width: 1100px){
-        align-items: center;
-        height: 100%;
-      }
-    }
-  
-    &__text {
-      white-space: nowrap;
-    }
+.ui-text-balance__line {
+  text-transform: uppercase;
+  font-weight: 900;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 1.1;
+  font-size: clamp(1.5rem, calc(100vw / var(--char-count)), 6rem);
+  width: 100%;
+  color:inherit;
+  background-color: transparent;
+  // 3D shadow block: simulate depth using --line-index
+  // text-shadow:
+  // -.7px -.7px  var(--white),
+  // 1px 1px .2px var(--primary-90),
+  //   ;
+    // 3px 3px 1.5px var(--primary-90);
+    // 4px 4px 1.9px var(--primary-70);
+    // 5px 5px 2.5px var(--primary-90);
+
+  // // Extend the shadow dynamically
+  // @for $i from 6 through 20 {
+  //   &[style*="--line-index: #{$i}"] {
+  //     text-shadow:
+  //       1px 1px 0 rgba(0, 0, 0, 0.8),
+  //       2px 2px 0 rgba(0, 0, 0, 0.75),
+  //       3px 3px 0 rgba(0, 0, 0, 0.7),
+  //       4px 4px 0 rgba(0, 0, 0, 0.65),
+  //       5px 5px 0 rgba(0, 0, 0, 0.6),
+  //       #{repeat-shadow($i)};
+  //   }
+  // }
+  .ui-text-balance__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  &[data-direction='row'] {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0; /* single line anyway */
   }
-  
+}
+
+}

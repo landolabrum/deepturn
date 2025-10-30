@@ -6,7 +6,7 @@
 
 .home__default{
     @extend .d-flex;
-    width: var(--s-4-width);
+    width: var(--s-4-w);
     padding: var(--s-4);
     &--title{
         color: var(--gray-30);

@@ -15,12 +15,10 @@ const MobileNav: React.FC<IMobileNav> = ({ routes, handleClick, onBack }): React
             <style jsx>{styles}</style>
             <div className='navbar__mobile'>
                 {onBack && <div className='navbar__mobile--actions'>
-                    <div>
                         <UiButton
                             variant='inherit'
                             traits={{ beforeIcon: 'fa-chevron-left' }}
                             onClick={onBack}>back</UiButton>
-                    </div>
                 </div>}
                 <div className='navbar__mobile--content'>
                     {[...routes].map((route: IRoute, key: number) => {

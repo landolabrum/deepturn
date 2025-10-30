@@ -20,14 +20,15 @@ $overBreakPoint: 1350px;
     overflow: hidden;
   }
   @media(max-width:900px){
-    background-color: var(--gray-90);
+    background:inherit;
+    background-color: inherit;
     
   }
-  background-color: var(--gray-90);
   font-size: 14px;
   &.adaptable-mini{
     font-size: 16px;
     background-color: transparent;
-    color: var(--gray-30);
+    // color: var(--td-color, --gray-30);
+    // --ui-icon-color: var(--td-color, --gray-30);
   }
 }

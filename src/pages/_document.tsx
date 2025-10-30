@@ -5,9 +5,9 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="stylesheet" href="./styles/global.css" />
-          <link rel="stylesheet" href="./styles/d3.css" />
-          <link rel="stylesheet" href="./styles/mapbox-gl.css" />
+          <link rel="stylesheet" href="/styles/global.css" />
+          <link rel="stylesheet" href="/styles/d3.css" />
+          <link rel="stylesheet" href="/styles/mapbox.css" />
         </Head>
         <body id="app-body">
           <Main />

@@ -1,0 +1,296 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+
+
+
+
+.product-description {
+    width: 100%;
+    height: max-content;
+    overflow: hidden;
+    text-wrap: wrap;
+    // @extend .d-flex;
+    // flex-direction: column;
+}
+
+.products {
+
+    // position:absolute;
+    // top:$hiteMatrix;
+    left: 0;
+    top: var(--s-nav-height);
+    right: 0;
+    @extend .d-flex;
+    flex-direction: column;
+    width: var(--s-1-w);
+    padding: var(--s-1);
+    min-height: var(--s-1-w);
+    justify-content: space-between;
+    // padding:0 var(--s-9);
+    --ui-icon-color: var(--primary-10);
+    --ui-icon-width: var(--s-1);
+// background-color: #f33;
+  background-color: var(--white);
+    max-width: 1260px;
+    margin: auto;
+    @media(max-width: 1100px) {
+        --ui-icon-size: 100px;
+        max-width: unset;
+        margin: unset;
+        gap: var(--s-element);
+        padding: 0;
+        width: 100%;
+    }
+
+    p {
+        margin: var(--s-element) 0;
+        text-transform: capitalize;
+    }
+
+    overflow-y:auto;
+    overflow-x: hidden;
+
+    @media(max-width: 1100px) {
+        --ui-icon-size: 100px;
+
+        p {
+            font-size: var(--s-3)
+        }
+    }
+
+    &--description {
+        --ui-icon-size: 100px;
+
+        p {
+            font-size: var(--s-3)
+        }
+
+        min-height: max-content;
+    }
+
+    &__content {
+        position: relative;
+        @extend .d-flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        flex: 1;
+        gap: var(--s-1);
+        overflow: hidden;
+        width: 100%;
+        padding-bottom: var(--s-nav-height);
+
+        @media(max-width:1100px) {
+            max-width: var(--s-9-w);
+            padding: var(--s-9);
+        }
+    }
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+
+}
+
+.products-listing {
+    height: max-content;
+    @extend .d-flex;
+    justify-content: stretch;
+    flex-direction: column;
+    border-radius: var(--border-radius);
+    // gap: var(--s-9);
+    width: 100%;
+    @media(max-width:1100px) {
+        height: 100%;
+        width: 100%;
+
+        padding: 0;
+    }
+
+    &__item-container {
+        height: 100%;
+        // height: max-content;
+        width: 100%;
+    }
+
+
+
+    &__no-products {
+        background-color: var(--gray-90);
+        opacity: 0;
+        animation: forwards fadeIn 3s ease-in;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        // width: 100%;
+        overflow: hidden;
+        min-width: 100vw;
+        min-height: 100vh;
+        display: flex;
+        justify-content: stretch;
+        align-items: stretch;
+        // z-index: -1;
+
+        .return-btn {
+            height: 100%;
+            @extend .d-flex;
+            flex-direction: column;
+            gap: var(--s-element);
+            background-color: var(--primary-90);
+            width: var(--s-1-w);
+            max-width: 450px;
+            padding: var(--s-1);
+            --ui-icon-color: var(--primary-30);
+            overflow: visible;
+            border: solid var(--s-9);
+            color: var(--primary-50);
+
+            &--content {
+                min-width: max-content;
+                text-transform: capitalize;
+                --ui-icon-width: 6.5rem;
+                --ui-icon-height: 8.5rem;
+                @extend .d-flex;
+                flex-direction: column;
+                font-size: 2rem;
+            }
+
+            &--text {
+                cursor: pointer;
+                @extend .d-flex;
+                color: var(--white);
+                height: 100%;
+                min-height: 100px;
+                width: 100%;
+                font-size: var(--s-1);
+            }
+        }
+    }
+
+    &__body {
+        position: relative;
+        height: max-content;
+        @extend.d-flex;
+        width: 100%;
+        // min-height: 100%;
+        align-items: flex-start;
+        justify-content: stretch;
+        overflow-x: auto;
+        overflow-y: hidden;
+        min-height: calc(var(--s-page-height) - 200px);
+
+        @media(max-width: 1100px) {
+            padding: unset;
+            overflow: hidden;
+        }
+
+
+    }
+
+    &__products {
+        @extend .d-flex;
+        @media (min-width:1100px) {
+            width: inherit;
+            flex-direction: row;
+            height: inherit;
+        }
+    }
+
+    &__header {
+        color: var(--primary-90);
+        @extend .d-flex;
+        align-items: flex-start;
+        gap: var(--s-4);
+        flex-direction: column;
+        width: var(--s-9-w);
+        padding: var(--s-9);
+        font-size: var(--s-4);
+
+        @media(max-width: 1100px) {
+            width: 100%;
+            padding: 0;
+
+            h1 {
+                font-size: var(--s-3);
+                line-height: 2;
+            }
+        }
+    }
+
+    &__footer {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        @extend .d-flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        width: var(--s-10-w);
+        padding: var(--s-10);
+        color: var(--gray-30);
+    }
+
+    &__layout-actions {
+        @extend .d-flex;
+
+        justify-content: flex-end;
+        width: 100%;
+        gap: var(--s-9);
+
+        &--item {
+            cursor: pointer;
+            transition: all .3s ease-in;
+            --ui-icon-size: var(--s-6);
+
+            &:hover {
+                transform: scale(1.1);
+                --ui-icon-color: var(--primary-50);
+            }
+        }
+    }
+
+    &__filters {
+        width: 100%;
+        @media(max-width:1100px) {
+            min-width: unset;
+            // height: 100%;
+        }
+    }
+
+}
+
+// VARIANTs
+.products {
+
+
+    &--view {
+border-radius: var(--border-radius);
+        .products-listing__body {
+            @extend .d-flex;
+            overflow: hidden;
+            min-height: 450px;
+        }
+
+        position: relative;
+
+    }
+}

@@ -4,9 +4,10 @@ import merchants, {deploy} from "~/merchants.config";
 import { MerchantsConfig } from "./environment.interface";
 
 // const serverUrl = "https://tiktok.soy";
-const serverUrl:string = String(process.env.NEXT_PUBLIC_DEVELOPEMENT_SERVER?.trim())
-;
-const merchant: Merchant = (merchants as MerchantsConfig).merchants[deploy];
+const serverUrl:string = String(process.env.NEXT_PUBLIC_DEVELOPEMENT_SERVER?.trim());
+const fileServerBaseUrl = process.env.NEXT_PUBLIC_FILESERVER_BASE_URL&&String(process.env.NEXT_PUBLIC_FILESERVER_BASE_URL?.trim()) || serverUrl;
+let merchant: Merchant = (merchants as MerchantsConfig).merchants[deploy];
+merchant.dir = fileServerBaseUrl + merchant.mid;
 
 const devEnvironment: IEnvironment = {
   useMockApi: false,
@@ -22,6 +23,8 @@ const devEnvironment: IEnvironment = {
   },
   serviceEndpoints: {
     membership: `${serverUrl}`,
+    data: `${serverUrl}`,
+
     social: `${serverUrl}`,
     distributor: "",
     shopping: `${serverUrl}`,

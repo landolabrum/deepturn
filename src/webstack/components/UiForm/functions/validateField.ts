@@ -49,11 +49,13 @@ export default function validateField(
         : `${label}: * Phone number not long enough`;
 
     case 'name':
-      if (str.length < 3) return `${label}: * First Name is too short`;
+
+      const minNameLen=1;
+      if (str.length < minNameLen) return `${label}: * First Name is too short`;
       if (!str.includes(' ')) return `${label}: * Full name must include a space`;
       if (/\d/.test(str)) return `${label}: * Name must not include numbers`;
       const [first, last] = str.split(' ');
-      if (!last || last.length < 3) return `${label}: * Last Name is too short`;
+      if (!last || last.length < minNameLen) return `${label}: * Last Name is too short`;
       return null;
 
     case 'postal_code':

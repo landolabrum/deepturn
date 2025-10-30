@@ -10,8 +10,9 @@
   gap: var(--s-4);
 }
 .field-msg{
-  font-size: var(--s-9);
+  font-size: var(--s-8);
   font-family: PlexLight;
+  color:var(--black)
 }
 .form {
   @extend .d-flex;
@@ -19,15 +20,21 @@
   // overflow-x: hidden;
   justify-content: space-between;
   align-items: flex-start;
+  position: relative;
   width: 100%;
   max-width: 100%;
   height: max-content;
+
   // height: auto;
   flex-wrap: wrap;
   // gap:var(--s-4);
+  &--xs{
+    padding:0;
+
+  }
   &--mini {
     padding: var(--s-8) var(--s-4);
-    width: var(--s-4-width);
+    width: var(--s-4-w);
     gap: var(--s-10);
 
     &__submit {
@@ -40,7 +47,7 @@
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     padding: var(--s-4);
-    width: var(--s-4-width);
+    width: var(--s-4-w);
   }
 
   &__title {
@@ -62,6 +69,13 @@
     &.error{
       color: var(--orange-50) !important;
     }
+    &--xs{
+      margin:0;
+    }
+     &--sm{
+      margin:0 0 var(--s-11);
+    }
+   
   }
 
   .form-field__readonly {
@@ -166,4 +180,15 @@ input {
   &:focus {
     color: inherit;
   }
+}
+/* Hide the number input spinner for Webkit browsers (Chrome, Safari) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide the number input spinner for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

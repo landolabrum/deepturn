@@ -1,0 +1,48 @@
+main {
+  overflow-y: visible;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  width: 100vw;
+
+  @media(min-width: 1260px) {
+    margin: 0 auto;
+    // max-width: 1260px;
+    inline-size: var(--s-4-w);
+  }
+
+  @media(max-width: 1100px) {
+    height: 100%;
+    width: var(--s-9-w);
+  }
+
+  @media(max-width: 1100px) {
+    height: 100%;
+    min-height: calc(100vh - 75px);
+    width: var(--s-border-width);
+  }
+
+  min-height: calc(100vh - 75px);
+
+
+}
+.main-fixed{
+  position:fixed;
+  width: 100vw;
+  inline-size: unset;
+  margin:0;
+  left:0;
+  right:0;
+  top:0;
+  max-width: 100vw;
+  height: 100%;
+  overflow-y: auto;
+}
+main.has-scrollbar-y {
+  // width: calc(100vw - 16px);
+}
+
+main.has-scrollbar-y.hover {
+  width: calc(100vw - 45px);
+}

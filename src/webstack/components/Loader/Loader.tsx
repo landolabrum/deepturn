@@ -8,7 +8,7 @@ type ILoader = {
   backgroundColor?: string;
   iconSize?: string | number;
   onClick?: () => void;
-  body?: ReactNode;
+  body?: ReactNode| string;
   children?: ReactNode;
   persistence?: number;
   animation?: {
@@ -132,7 +132,7 @@ const Loader: React.FC = () => {
             <NoChildrenLoader {...context} />
             <div className="loader__content--body">
               {context?.children}
-              {LoaderState.body || (!context?.children && "loading")}
+              {LoaderState.body || (!context?.children && "Solving the World's toughest problems...")}
             </div>
           </div>
         </div>

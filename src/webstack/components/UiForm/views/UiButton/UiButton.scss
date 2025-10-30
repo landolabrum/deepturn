@@ -6,6 +6,9 @@
     color: transparent;
     text-shadow: 0 0 2px var(--gray-60);
   }
+  50%{
+    filter:brightness(1.5)
+  }
   100%{
     color: inherit;
     text-shadow: none;
@@ -100,9 +103,9 @@ button {
     cursor:not-allowed !important;
     animation: disable 1s forwards;
   }
-  &:not(disabled){
-    animation: abled 1s forwards;
-  }
+  // &:not(disabled){
+  //   animation: abled 1s forwards;
+  // }
 }
 .ui-button__link {
   color: inherit;

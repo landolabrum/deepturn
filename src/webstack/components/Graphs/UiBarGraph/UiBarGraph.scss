@@ -31,7 +31,8 @@
     overflow: hidden;
     height: 100%;
     flex-direction: column;
-    background-color: var(--gray-90);
+    mix-blend-mode:color-dodge;
+    // background-color: var(--gray-90);
 
     &:hover {
         &::-webkit-scrollbar-thumb {
@@ -50,7 +51,7 @@
     }
 
     &__header {
-        width: var(--s-4-width);
+        width: var(--s-4-w);
         min-height: var(--s-element);
         @extend .d-flex;
         justify-content: flex-start;
@@ -72,11 +73,11 @@
     height: 100%;
 
     &__container {
-        background-color: var(--black);
+        // background-color: var(--black);
         box-shadow: inset 0 -10px 15px 10px var(--gray-70-o);
         overflow-x: hidden;
         width: 100%;
-        height: var(--s-9-width);
+        height: var(--s-9-w);
 
         &--content {
             height: 100%;

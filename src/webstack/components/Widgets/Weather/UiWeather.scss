@@ -1,0 +1,89 @@
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ui-weather {
+    // position: absolute;
+
+    // right: var(--s-11);
+    // top: var(--s-11);
+    @extend .d-flex;
+    justify-content: flex-start;
+    width: max-content;
+    gap: var(--s-9);
+    white-space: nowrap;
+    flex-direction: column;
+    min-width: 200px;
+    // max-width: 250px;
+    // opacity: .1;
+    padding-bottom: 200px;
+   
+    cursor: pointer;
+    border-radius: var(--s-11);
+    text-shadow:var(--s-12) var(--s-12) var(--s-11) var(--primary-10);
+    overflow-y:visible;
+    // position: relative;
+    @media(max-width:1100px) {
+        max-width: calc(100vw - 200px);
+    }
+
+    &__header {
+        &__title {
+            // padding:var(--s-11) var(--s-9);
+            // border-radius: var(--s-11);
+            color: var(--primary-30);
+            --ui-icon-color: var(--primary-30);
+            @extend .d-flex;
+            gap: var(--s-9);
+            --ui-icon-size: var(--s-3);
+            padding:var(--s-11);
+        }
+    }
+
+    overflow-y: auto;
+    transition: all 1s ease;
+    &__content {
+        overflow: hidden;
+        height: 0;
+
+        // min-height: max-content;
+        // min-width: 400px;
+        &__item {
+            padding: 0 var(--s-9);
+            width: var(--s-9-w);
+            justify-content: space-between;
+            @extend .d-flex;
+            gap: var(--s-9);
+
+            &__label,
+            &__value {}
+
+            &__label {
+
+                text-transform: capitalize;
+                font-family: Decimal;
+                font-size: var(--s-8);
+
+            }
+
+            &__value {}
+        }
+
+    }
+
+     &:hover,&:focus,&:target{ 
+        //         &__content{
+        //     min-height: unset;
+        // }
+         .ui-weather__content{
+        height: var(--s-9-w);
+        padding: var(--s-9);
+            
+        }
+        background: var(--gray-20-o);
+        backdrop-filter:blur(.8px);
+    }
+    min-width: max-content;
+}

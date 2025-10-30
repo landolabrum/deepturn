@@ -1,3 +1,3 @@
-import Products from "~/src/modules/ecommerce/Products/controller/Products";
+import Products from "~/src/modules/ecommerce/Services/controller/Services";
 
 export default Products;

@@ -1,3 +1,4 @@
+
 .d-flex {
   display: flex;
   justify-content: center;
@@ -19,8 +20,11 @@ div {
   @extend .d-flex;
   svg {
     display: block;
+    text-shadow: 1px 1px 1px 1px #f30;
     width: 100%;
     height: 100%;
+      -webkit-filter: drop-shadow( var(--ui-icon-shadow));
+  filter: drop-shadow( var(--ui-icon-shadow));
     path{
       width: var(--ui-icon-width, var(--ui-icon-size, 20px));
       height: var(--ui-icon-height, var(--ui-icon-size, 20px));
@@ -83,8 +87,12 @@ div {
 .ui-icon__badge {
   position: absolute;
   @extend .d-flex;
-  top: calc(var(--s-9) * -1);
-  right: var(--s-12);
+  top:var(--badge-top,  calc(var(--s-9) * -1));
+  bottom:var(--badge-bottom,  unset);
+
+  left:var(--badge-left,  unset);
+  right: var(--badge-right, var(--s-12));
+
   background-color: var(--red-50); // Example background color
   color: white; // Text color
   border-radius: 50%; // Circular badge

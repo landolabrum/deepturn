@@ -1,8 +1,10 @@
+import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
+
 export const flyToView = (
     map: any,
-    props: { lngLat?: number[], zoom?: number, offset?: { x: number, y: number }, direction?: 'up' | 'down' | 'left' | 'right' }
+    props: { lngLat?: number[], zoom?: number, offset?: { x: number, y: number },duration?:number, direction?: 'up' | 'down' | 'left' | 'right' }
 ) => {
-    const { lngLat = [0, 0], zoom = 9, offset = { x: 0, y: 0 }, direction } = props;
+    const { lngLat = [0, 0], zoom = 9, offset = { x: 0, y: 0 }, direction,duration = 1000 } = props;
     if (!map) return;
 
     let offsetLngLat = [...lngLat];
@@ -34,10 +36,17 @@ export const flyToView = (
         point.y += y;
         offsetLngLat = map.unproject(point).toArray();
     }
-
-    map.flyTo({
-        center: offsetLngLat,
+    let destination:any = {
         zoom: zoom,
         essential: true,
-    });
+        duration:duration
+    };
+    if(offsetLngLat?.[0]!==0){
+
+        destination.center= offsetLngLat
+
+    //    return console.log("[GITITI]",Object.keys(map))
+    }
+// console.log("[FLY TO ]",destination)
+    map.flyTo(destination);
 };

@@ -1,0 +1,223 @@
+/* Twitch.scss
+   Styles for the Social/Twitch views
+   Dark UI, compact spacing, responsive layout
+*/
+
+/* Theme tokens */
+$bg: #0e0e0f;
+$panel: #151516;
+$muted: #8a8f98;
+$border: #242428;
+$border-2: #1c1c20;
+$accent: #ee4b2b; /* twitch actions use app buttons; this is just accents */
+$ok: #21d07a;
+$bad: #ff5252;
+$warning: #ffb020;
+$text: #e5e7eb;
+$text-dim: #b6bac2;
+$shadow: 0 8px 24px rgba(0,0,0,0.3);
+
+$radius: 12px;
+$radius-sm: 8px;
+$gap: 12px;
+$gap-lg: 18px;
+$pad: 14px;
+$pad-lg: 18px;
+
+/* Root container used by the page */
+.instagram {
+  --twitch-scrollbar-size: 10px;
+  color: $text;
+  background: $bg;
+  min-height: 560px;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Keep page content centered */
+  &--view {
+    background: $panel;
+    border: 1px solid $border;
+    border-radius: $radius;
+    padding: clamp(14px, 2.2vw, 22px);
+    box-shadow: $shadow;
+    max-width: 920px;
+    margin: 16px auto;
+  }
+
+  &__tandc {
+    text-align: center;
+    color: $muted;
+    opacity: 0.6;
+    font-size: 12px;
+    margin: 10px 0 26px;
+    user-select: none;
+  }
+}
+
+/* Generic error text block */
+.error {
+  margin-top: 8px;
+  color: $bad;
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid rgba($bad, 0.4);
+  background: rgba($bad, 0.06);
+  border-radius: $radius-sm;
+  white-space: pre-wrap;
+}
+
+/* “Panel” that hosts status + connect UIs */
+.ig-status {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $gap-lg;
+
+  &__row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: $gap;
+    align-items: center;
+
+    @media (max-width: 720px) {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+
+  &__label {
+    color: $text-dim;
+    font-size: 13px;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+
+  &__value {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .ui-input {
+      /* if your global input exists this will just “enhance” it */
+      width: 100%;
+      min-height: 38px;
+      padding: 8px 10px;
+      background: #0c0c0d;
+      color: $text;
+      border: 1px solid $border;
+      border-radius: $radius-sm;
+      outline: none;
+
+      &:focus {
+        border-color: #3a3a44;
+        box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.15);
+      }
+
+      &::placeholder {
+        color: $muted;
+      }
+    }
+
+    code {
+      padding: 2px 6px;
+      background: #0c0c0d;
+      border: 1px solid $border-2;
+      border-radius: 6px;
+      color: $text-dim;
+      font-size: 12px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-top: 2px;
+    border-top: 1px dashed $border-2;
+    margin-top: 2px;
+  }
+
+  /* Chat section inside status view */
+  &__chat {
+    border-top: 1px solid $border-2;
+    padding-top: $pad;
+  }
+}
+
+/* Small status pill */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.2px;
+  border: 1px solid $border;
+
+  &.ok {
+    color: $ok;
+    background: rgba($ok, 0.08);
+    border-color: rgba($ok, 0.35);
+  }
+
+  &.bad {
+    color: $bad;
+    background: rgba($bad, 0.08);
+    border-color: rgba($bad, 0.35);
+  }
+
+  &.warn {
+    color: $warning;
+    background: rgba($warning, 0.1);
+    border-color: rgba($warning, 0.35);
+  }
+}
+
+/* Scroll area (chat) – consistent scrollbar look in WebKit */
+.ig-status__chat > div[style] {
+  /* Targets the inner scroll box rendered inline in TSX */
+  scrollbar-width: thin;
+  scrollbar-color: #333 #0e0e10;
+
+  &::-webkit-scrollbar {
+    height: var(--twitch-scrollbar-size);
+    width: var(--twitch-scrollbar-size);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #2a2a2f;
+    border-radius: 12px;
+    border: 2px solid #0e0e10;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #34343a;
+  }
+  &::-webkit-scrollbar-track {
+    background: #0e0e10;
+    border-radius: 12px;
+  }
+}
+
+/* Utility: dim description text */
+.note {
+  color: $muted;
+  font-size: 12px;
+}
+
+/* Optional: tighten shadcn/ui buttons if you use them here */
+button.ui-btn,
+button[class*="UiButton"] {
+  border-radius: $radius-sm;
+}
+
+/* Make links inside the panel subtle but visible */
+a {
+  color: #9ab4ff;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

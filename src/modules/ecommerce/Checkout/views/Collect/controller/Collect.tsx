@@ -21,6 +21,7 @@ const Collect = ({ user, cart_items }: ICollect) => {
   };
   if (user && user.id) return (<>
     <style jsx>{styles}</style>
+  
     <div className='collect'>
       {method && user && cart_items && (
         <div className='collect__checkout-button'>
@@ -33,6 +34,7 @@ const Collect = ({ user, cart_items }: ICollect) => {
         </div>
       )}
       {user && <UserMethods
+      title={<h3 className='s-3'>Your Payment Methods</h3>}
         open={false}
         user={user}
         selected={method}

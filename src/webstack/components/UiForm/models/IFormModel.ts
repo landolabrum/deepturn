@@ -1,5 +1,5 @@
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
-import { ITraits } from "@webstack/components/UiForm/components/FormControl/FormControl";
+import { IFormControlSize, ITraits } from "@webstack/components/UiForm/components/FormControl/FormControl";
 import { UserAddress } from "~/src/models/ICustomer";
 
 export type IFormMinMax = {
@@ -12,15 +12,22 @@ export type OForm = {
 
 export type IFormField = {
     name: string;
+    multiple?: any;
+    onClick?: any;
+    maxFiles?: number;
     msg?:string;
     id?: string;
+    active?: boolean;
     error?: string;
     options?:any;
     // options?: (string | IFormField | IRoute | number)[] | React.ReactElement[];
     width?: string;
-    value?: string | boolean | UserAddress | number;
+    value?: string | boolean | UserAddress | number | File | File[] | string[] | number[];
+  
+    input?: string | boolean | UserAddress | number;
     label?: any;
     autoComplete?: 'on' | 'off';
+    step?: number;
     min?: number;
     max?: number;
     placeholder?: string;
@@ -57,4 +64,5 @@ export interface IForm {
     onSubmit?: (e: any) => void;
     onError?: (e: any) => void;
     collapse?: boolean;
+    size?:IFormControlSize;
 }

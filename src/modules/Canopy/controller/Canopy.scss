@@ -1,0 +1,246 @@
+/* ===========================
+   Canopy.scss
+   =========================== */
+
+/* lock page to viewport */
+html,
+body,
+#__next {
+  height: 100%;
+  overflow: hidden;
+  /* no page scroll */
+}
+
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notice {
+  position: fixed;
+  top: 0;
+  @extend .d-flex;
+  width: 100%;
+  background-color: var(--red-90);
+  left: 0;
+  right: 0;
+  font-size: var(--s-6);
+  opacity: 0.7;
+  line-height: 1;
+  height: var(--s-5);
+  z-index: 1000;
+
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+}
+
+/* Root container – fixed-height layout: header + content */
+.canopy {
+  /* layout */
+  display: grid;
+  grid-template-rows: auto 1fr;
+  /* header + content */
+  min-height: 100vh;
+  /* fill viewport */
+  overflow: hidden;
+  /* prevent page spill */
+  padding: var(--s-3) 0 150px;
+  /* width & box model */
+  position: relative;
+  box-sizing: border-box;
+  // width: 100%;
+  /* animated background */
+  // background: linear-gradient(196deg, var(--black), var(--gray-90));
+  background-size: 240% 240%;
+  animation: gradient-animation 21s ease infinite;
+
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  //   gap: var(--s-5);
+  //   inline-size: unset;
+  //   width: 100%;
+  //   padding: 0;
+  //   margin: unset;
+  //   max-width: unset;
+  // }
+
+  /* ===== Header ===== */
+  &__header {
+    @extend .d-flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+
+    &--title,
+    &--event {
+      @extend .d-flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    &--title {
+      justify-content: flex-start;
+      font-size: var(--s-element);
+      color: var(--primary-90);
+      font-weight: 400;
+      line-height: 1;
+      font-family: Gear6;
+      letter-spacing: 2px;
+      gap: var(--s-9);
+      flex-direction: row;
+      --ui-icon-size: var(--s-nav-height);
+
+      @media (max-width: 1100px) {
+        flex-direction: column;
+        font-size: var(--s-1);
+      }
+
+      div {
+        margin: 0;
+        padding: var(--s-11) var(--s-9);
+        background: var(--primary-90);
+
+        line-height: 1;
+        font-size: 66%;
+        color: var(--gray-80);
+
+      }
+    }
+
+    &--event {
+      align-items: flex-end;
+
+      // @media (max-width:1100px) {
+      //   align-items: stretch;
+      //   width: 100%;
+      // }
+    }
+  }
+
+  /* ===== Content Row (the 1fr area) ===== */
+  &__content {
+    @extend .d-flex;
+    align-items: stretch;
+    justify-content: stretch;
+    /* critical: allow shrinking inside the 1fr row */
+    min-height: 0;
+    width: var(--s-9-w);
+    padding: var(--s-9);
+    flex-direction: row;
+
+    @media (max-width: 1100px) {
+      gap: var(--s-9);
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+    }
+
+    /* Left NAV column */
+    .canopy--nav {
+      @extend .d-flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      position: relative;
+      min-width: max-content;
+      /* participate in the no-scroll chain */
+      min-height: 0;
+      overflow: hidden;
+
+      // @media (min-width:1100px) {
+      max-height: 100%;
+      overscroll-behavior: contain;
+      // }
+
+      @media (max-width:1099px) {
+        width: 100%;
+        overflow: visible;
+        padding: 0;
+        margin: 0;
+        left: 0;
+        position: absolute;
+      }
+    }
+
+    /* Right VIEW area */
+
+    .canopy--view {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 0;
+      /* was max-content; allow shrink */
+      overflow: hidden;
+      /* child manages its own overflow */
+      width: 100%;
+
+      @media (max-width:1099px) {
+        margin-top: calc(var(--s-nav-height) + var(--s-9));
+      }
+
+      // > * + * {
+      //   margin-top: var(--s-1);
+      // }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__content {
+      transition: none;
+    }
+  }
+}
+
+/* ===== Overlay add panel ===== */
+.canopy-add-overlay {
+  @extend .d-flex;
+  padding: var(--s-10);
+
+  /* full height of its parent, never causing scroll */
+  height: 100%;
+  min-height: 0;
+  /* replaces 100vh to respect parent chain */
+  flex-direction: column;
+  position: relative;
+  gap: var(--s-1);
+  overflow: hidden;
+
+  aspect-ratio: 1;
+  flex-direction: row;
+  align-items: flex-start;
+
+  &--list {
+    @extend .d-flex;
+    flex-wrap: wrap;
+    gap: var(--s-9);
+    min-height: 0;
+    /* was max-content; avoid growth */
+    position: relative;
+    overflow: hidden;
+  }
+}
+
+/* Full-cover hint */
+.form__hint {
+  @extend .d-flex;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}

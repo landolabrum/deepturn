@@ -1,0 +1,22 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.onboard{
+    @extend .d-flex;
+    
+    // min-height:500px;
+    &__content{
+        @extend .d-flex;
+        flex-direction: column;
+        gap:var(--s-9);
+        &--header{
+            
+            font-size: var(--s-1);
+            text-transform: capitalize;
+        }
+        &--body{}
+    }
+}

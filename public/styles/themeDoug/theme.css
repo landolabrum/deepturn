@@ -189,25 +189,25 @@
   --s-11: 5px;
   --s-12: 2px;
 
-  --s-1-width: calc(100% - calc(var(--s-1) * 2));
-  --s-2-width: calc(100% - calc(var(--s-2) * 2));
-  --s-3-width: calc(100% - calc(var(--s-3) * 2));
-  --s-4-width: calc(100% - calc(var(--s-4) * 2));
-  --s-5-width: calc(100% - calc(var(--s-5) * 2));
-  --s-6-width: calc(100% - calc(var(--s-6) * 2));
-  --s-7-width: calc(100% - calc(var(--s-7) * 2));
-  --s-8-width: calc(100% - calc(var(--s-8) * 2));
-  --s-9-width: calc(100% - calc(var(--s-9) * 2));
-  --s-10-width: calc(100% - calc(var(--s-10) * 2));
-  --s-12-width: calc(100% - calc(var(--s-12) * 2));
+  --s-1-w: calc(100% - calc(var(--s-1) * 2));
+  --s-2-w: calc(100% - calc(var(--s-2) * 2));
+  --s-3-w: calc(100% - calc(var(--s-3) * 2));
+  --s-4-w: calc(100% - calc(var(--s-4) * 2));
+  --s-5-w: calc(100% - calc(var(--s-5) * 2));
+  --s-6-w: calc(100% - calc(var(--s-6) * 2));
+  --s-7-w: calc(100% - calc(var(--s-7) * 2));
+  --s-8-w: calc(100% - calc(var(--s-8) * 2));
+  --s-9-w: calc(100% - calc(var(--s-9) * 2));
+  --s-10-w: calc(100% - calc(var(--s-10) * 2));
+  --s-12-w: calc(100% - calc(var(--s-12) * 2));
 
   --s-border-width: calc(100% - 2px);
-  --s-border-padding-width: calc(var(--s-4-width) - 2px);
-  --s-9-width: calc(100% - calc(var(--s-9) * 2));
+  --s-border-padding-width: calc(var(--s-4-w) - 2px);
+  --s-9-w: calc(100% - calc(var(--s-9) * 2));
   --s-4-sm: calc(--s-4 * 2);
   --s-element-width: calc(100% - calc(var(var(--s-element))));
   --s-nav-height: 45px;
-  --s-nav-height-neg: calc(100vh - var(--s-nav-height));;
+  --s-page-height: calc(100vh - var(--s-nav-height));;
 
   /* PAGE BREAKS */
   --breakpoint-xs: 600px;
@@ -404,26 +404,6 @@ html {
   overflow-x: hidden;
 }
 
-body {
-  font-family: "Play", sans-serif;
-  margin: 0;
-  background: var(--body);
-  color: var(--gray-40);
-  font-size: var(--s-5);
-  font-weight: 300;
-
-  -webkit-overflow-scrolling: touch;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  #__next {
-
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    min-height: 100vh;
-  }
-}
 
 @media (min-height: 400px) {
   body {
@@ -502,62 +482,62 @@ body {
 
 .s-1 {
   padding: var(--s-1);
-  width: var(--s-1-width);
+  width: var(--s-1-w);
 }
 
 .s-2 {
   padding: var(--s-2);
-  width: var(--s-2-width);
+  width: var(--s-2-w);
 }
 
 .s-3 {
   padding: var(--s-3);
-  width: var(--s-3-width);
+  width: var(--s-3-w);
 }
 
 .s-4 {
   padding: var(--s-4);
-  width: var(--s-4-width);
+  width: var(--s-4-w);
 }
 
 .s-5 {
   padding: var(--s-5);
-  width: var(--s-5-width);
+  width: var(--s-5-w);
 }
 
 .s-6 {
   padding: var(--s-6);
-  width: var(--s-6-width);
+  width: var(--s-6-w);
 }
 
 .s-7 {
   padding: var(--s-7);
-  width: var(--s-7-width);
+  width: var(--s-7-w);
 }
 
 .s-8 {
   padding: var(--s-8);
-  width: var(--s-8-width);
+  width: var(--s-8-w);
 }
 
 .s-9 {
   padding: var(--s-9);
-  width: var(--s-9-width);
+  width: var(--s-9-w);
 }
 
 .s-10 {
   padding: var(--s-10);
-  width: var(--s-10-width);
+  width: var(--s-10-w);
 }
 
 .s-11 {
   padding: var(--s-11);
-  width: var(--s-11-width);
+  width: var(--s-11-w);
 }
 
 .s-12 {
   padding: var(--s-12);
-  width: var(--s-12-width);
+  width: var(--s-12-w);
 }
 
 .d-flex-col {
@@ -739,7 +719,7 @@ body {
 }
 
 .s-4-width {
-  width: var(--s-4-width);
+  width: var(--s-4-w);
 }
 
 .s-4-width-50 {
@@ -748,7 +728,7 @@ body {
 
 .s-sm-padding-width {
   @media (max-width: 900px) {
-    width: var(--s-4-width);
+    width: var(--s-4-w);
   }
 }
 
@@ -760,7 +740,7 @@ body {
 
 .s-md-padding-width {
   @media (max-width: 1100px) {
-    width: var(--s-4-width);
+    width: var(--s-4-w);
   }
 }
 
@@ -772,7 +752,7 @@ body {
 
 .s-lg-padding-width {
   @media (min-width: 1100px) {
-    width: var(--s-4-width);
+    width: var(--s-4-w);
   }
 }
 
@@ -1264,6 +1244,21 @@ a:-webkit-any-link {
   border-width: 4px;
   border-style: outset;
   border-color: var(--gray-50-o) var(--gray-100-o) var(--gray-90-o) var(--gray-20-o);
+}
+.c-primary-10{
+  color:var(--primary-10)
+}
+.c-primary-30{
+  color:var(--primary-30)
+}
+.c-primary-50{
+  color:var(--primary-50)
+}
+.c-primary-70{
+  color:var(--primary-70)
+}
+.c-primary-90{
+  color:var(--primary-90)
 }
 
 .gray-10 {

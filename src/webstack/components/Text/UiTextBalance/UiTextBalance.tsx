@@ -1,90 +1,62 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import styles from './UiTextBalance.scss';
-import useWindow from '@webstack/hooks/window/useWindow';
+import { useRouter } from 'next/router';
 
 interface UiTextBalanceProps {
-  text: string;
-  animate?: 'keyboard' | string;
+  text?: string | null; // Allow undefined/null for safety
+  direction?: 'col' | 'row';
 }
 
-const UiTextBalance: React.FC<UiTextBalanceProps> = ({ text, animate = 'keyboard' }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scales, setScales] = useState<number[]>([]);
-  const [displayedText, setDisplayedText] = useState<string>('');
-  const { width } = useWindow();
+const UiTextBalance: React.FC<UiTextBalanceProps> = ({ text = '', direction = 'col' }) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+
+  // Always work with a trimmed string
+  const safeText = typeof text === 'string' ? text.trim() : '';
+
+  const words = useMemo(() => safeText.split(/\s+/), [safeText]);
+  const rowCharCount = useMemo(() => safeText.length, [safeText]);
 
   useEffect(() => {
-    if (containerRef.current) {
-      const container = containerRef.current;
-      const words = text.split(' ');
-      const containerWidth = container.offsetWidth;
-      const containerHeight = container.offsetHeight;
+    const el = contentRef.current;
+    if (!el) return;
 
-      const newScales: number[] = [];
-      const testDiv = document.createElement('div');
-      testDiv.style.position = 'absolute';
-      testDiv.style.visibility = 'hidden';
-      testDiv.style.whiteSpace = 'nowrap';
-      testDiv.style.fontWeight = 'bold';
-      testDiv.style.textTransform = 'uppercase';
-      document.body.appendChild(testDiv);
+    const setVar = () => el.style.setProperty('--cw', `${el.clientWidth}px`);
+    setVar();
 
-      words.forEach((word) => {
-        let fontSize = 10;
-        testDiv.style.fontSize = `${fontSize}px`;
-        testDiv.innerText = word;
+    const ro = new ResizeObserver(setVar);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
-        while (
-          testDiv.offsetWidth < containerWidth * 0.9 &&
-          testDiv.offsetHeight < containerHeight / words.length 
-        ) {
-          fontSize += 1;
-          testDiv.style.fontSize = `${fontSize}px`;
-        }
-
-        fontSize -= 1;
-        newScales.push(fontSize);
-      });
-
-      setScales(newScales);
-      document.body.removeChild(testDiv);
-    }
-  }, [text, width]);
-
-  useEffect(() => {
-    if (animate === 'keyboard') {
-      setDisplayedText('');
-      let currentIndex = 0;
-      const typingInterval = setInterval(() => {
-
-        setDisplayedText((prev) => prev + text.charAt(currentIndex - 1));
-        currentIndex++;
-        if (currentIndex === text.length) {
-          clearInterval(typingInterval);
-        }
-      }, 50);
-      return () => clearInterval(typingInterval);
-    } else {
-      setDisplayedText(text);
-    }
-  }, [text]);
+  if (!safeText) return null;
 
   return (
     <>
       <style jsx>{styles}</style>
-      <div ref={containerRef} className="ui-text-balance">
-        <div className="ui-text-balance__content">
-          {displayedText.split(' ').map((word, index) => (
+      <div className="ui-text-balance" data-direction={direction}>
+        <div ref={contentRef} className="ui-text-balance__content" data-direction={direction}>
+          {direction === 'row' ? (
             <div
-              key={index}
-              className="ui-text-balance__text"
-              style={{
-                fontSize: scales[index] ? `${scales[index]}px` : '10px',
-              }}
+              className="ui-text-balance__line ui-text-balance__line--row"
+              style={{ ['--char-count' as any]: rowCharCount, ['--line-index' as any]: 1 }}
             >
-              {word}
+              {safeText}
             </div>
-          ))}
+          ) : (
+            words.map((word, index) => (
+              <div
+                key={`${word}-${index}`}
+                className="ui-text-balance__line"
+                style={{
+                  ['--char-count' as any]: word.length || 1,
+                  ['--line-index' as any]: index + 1,
+                }}
+              >
+                {word}
+              </div>
+            ))
+          )}
         </div>
       </div>
     </>

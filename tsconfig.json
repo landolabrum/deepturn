@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es2015",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -17,12 +21,27 @@
     "incremental": true,
     "experimentalDecorators": true,
     "paths": {
-      "@ui/*": ["src/modules/ui/*"],
-      "@webstack/*": ["src/webstack/*"],
-      "@shared/*": ["src/modules/shared/*"],
-      "~/*": ["./*"],
-      "@/*": ["./src/*"],
-      "*": ["*"] // Treat all paths as case-insensitive
+      "@ui/*": [
+        "src/modules/ui/*"
+      ],
+      "@webstack/*": [
+        "src/webstack/*"
+      ],
+      "@shared/*": [
+        "src/modules/shared/*"
+      ],
+      "@Canopy/*": [
+        "src/modules/Canopy/*"
+      ],
+      "~/*": [
+        "./*"
+      ],
+      "@/*": [
+        "./src/*"
+      ],
+      "*": [
+        "*"
+      ] // Treat all paths as case-insensitive
     },
     "types": [],
     "plugins": [
@@ -31,6 +50,17 @@
       }
     ]
   },
-  "include": ["typings.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "sass-plugin.ts", "merchants.config.js", "deploy.js", "*.scss"],
-  "exclude": ["node_modules"]
+  "include": [
+    "typings.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "sass-plugin.ts",
+    "merchants.config.js",
+    "deploy.js",
+    "*.scss"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

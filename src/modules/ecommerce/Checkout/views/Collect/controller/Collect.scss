@@ -5,13 +5,13 @@
 }
 .collect{
     @extend .d-flex;
+    align-items: flex-start;
     flex-direction: column;
     width: 100%;
-    height: var(--s-9-width);
-    min-height: 500px;
+    height: var(--s-9-w);
     &__checkout-button{
         width: 100%;
-        margin: 10px 0 auto;
+        margin: 10px 0 var(--s-1);
         // height: var(--s-element);
         padding-bottom: var(--s-7);
     }

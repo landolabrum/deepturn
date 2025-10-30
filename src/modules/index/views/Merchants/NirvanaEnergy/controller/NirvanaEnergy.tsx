@@ -1,262 +1,224 @@
 // Relative Path: ./MbOne.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import styles from "./NirvanaEnergy.scss";
 import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import HomeGridItem from '../../../HomeGridItem/HomeGridItem';
-import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
-// import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import { upperCase } from 'lodash';
 import UiMedia from '@webstack/components/UiMedia/controller/UiMedia';
 import useScroll from '@webstack/hooks/useScroll';
 import useWindow from '@webstack/hooks/window/useWindow';
 import { useRouter } from 'next/router';
-import GLBViewer from '@webstack/components/ThreeComponents/ThreeGLB/ThreeGLB';
-import UiTextBalance from '@webstack/components/Text/UiTextBalance/UiTextBalance';
 import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
-// import AdminService from '../../../../../core/services/AdminService/AdminService';
 import { getService } from '@webstack/common';
+import FullPageBackground from '@webstack/components/Text/FullPageBackground/FullPageBackground';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
+import ServicesPage from '~/src/pages/services';
 import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
-import TermsOfService from '../../../../../../webstack/components/PageComponents/TermsOfService/TermsOfService';
-import PrivacyPolicy from '../../../../../../webstack/components/PageComponents/PrivacyPolicy/PrivacyPolicy';
-import Services from '~/src/pages/services';
-// const NirvanaEnergyIcon = () => {
-//   const nStyle = `.nirv{
-//       display: flex;
-//       color: var(--blue-10);
-//       --ui-icon-color: var(--blue-10);
-//       gap: var(--s-9);
-//       font-size: var(--s-5);
-//   }`;
-//   return <>
-//     <style jsx>{nStyle}</style><style jsx>{styles}</style>
-//     <div className='nirv'>
-//       <div className='nirv--icon'>
-//         <UiIcon icon={`nirvana-energy-logo`} />
-//       </div>
-//       Nirvana Energy
-//     </div>
-//   </>
-// }
+import ContactUs from '@shared/components/Contact/forms/ContactUs/ContactUs';
 
-// Remember to create a sibling SCSS file with the same name as this component
 const NirvanaEnergy = () => {
-
-  const { openModal, closeModal, replaceModal } = useModal();
-  const { width, height } = useWindow();
+  const { width } = useWindow();
   const { push } = useRouter();
   const [currentScrollYPosition] = useScroll();
-  const [view, setView] = useState('start');
-  const [bgLoaded, setBgLoaded] = useState(false);
+  const [view] = useState<'start' | 'other'>('start');
+
+  const firstContentRef = useRef<HTMLDivElement | null>(null);
+  const [isSnapping, setIsSnapping] = useState(false);
+  const { openModal } = useModal();
 
   const outputValue = (powerInKW: number) => {
     const volts = 240;
-    const powerFactor = 1;
-    const ampStr = String((powerInKW * 1000) / (volts * powerFactor)).split('.');
+    const ampStr = String((powerInKW * 1000) / volts).split('.');
     const addAmp = Number(String(ampStr[1])[0]) > 5;
     const amps = addAmp ? Number(ampStr[0]) + 2 : ampStr[0];
     return `${powerInKW} kW = ${amps} Amps`;
   };
-  const handleModal = (cmd: 'terms' | 'privacy') => {
-    if (cmd == 'terms') {
-      push('/terms-and-conditions')
-      // onClick={() => push('/build')}
-      //       openModal({
-      // variant: 'fullscreen',
-      // // title: 'Terms of Service',
-      // children: <>
-      //         <TermsOfService onClose={console.log}/>
-      //         </>,
-      //         footer: <div className='s-w-100 d-flex'>
-      //           <UiButton variant='link' onClick={() => closeModal()}>Close</UiButton>
-      //         </div>
-      //       })
-    } else if (cmd == 'privacy') {
-      push('/privacy-policy')
-      //   openModal({
-      //     title: 'Privacy Policy',
-      //     variant: 'fullscreen',
-      //     children:<>
-      //     <PrivacyPolicy onClose={console.log}/>
-      //     </>
 
-      // })   
-    }
-    else {
-      push("/")
-    }
+  const handleModal = (cmd: 'terms' | 'privacy' | 'contact') => {
+    if (cmd === 'terms') push('/terms-and-conditions');
+    else if (cmd === 'privacy') push('/privacy-policy');
+    else if (cmd === 'contact') openModal({ children: <ContactUs /> });
+    else push('/');
   };
-  const CompetitorBrand
-    = ({ competitor }: { competitor: string }) => {
-      return <>
-        <style jsx>{styles}</style>
-        <div className='nirvana-energy__competitor'>
-          {upperCase(competitor)}
-        </div>
-      </>
-    }
+
+  const CompetitorBrand = ({ competitor }: { competitor: string }) => (
+    <>
+      <style jsx>{styles}</style>
+      <div className='nirvana-energy__competitor'>{upperCase(competitor)}</div>
+    </>
+  );
+
   const tableData = [
-    {
-      "Solar Panels": "High-efficiency panels designed for durability and maximum sunlight capture",
-    },
-    {
-      "Battery-Backup": "Maintain uninterrupted power with intelligent, 24/7 battery storage",
-    },
-    {
-      "Generators": "Rugged and dependable backup power for emergencies and off-grid use",
-    },
-    {
-      "Solar Farm": "Scale your energy production with a custom-designed commercial solar array",
-    },
-    {
-      "DIY Consulting": "Expert guidance to help you design and install your own solar system",
-    },
+    { "Solar Panels": "High-efficiency panels designed for durability and maximum sunlight capture" },
+    { "Battery-Backup": "Maintain uninterrupted power with intelligent, 24/7 battery storage" },
+    { "Generators": "Rugged and dependable backup power for emergencies and off-grid use" },
+    { "Solar Farm": "Scale your energy production with a custom-designed commercial solar array" },
+    { "DIY Consulting": "Expert guidance to help you design and install your own solar system" },
   ];
 
-  const scrollFadeMatrix = -currentScrollYPosition * .002 + 1;
+  const scrollFadeMatrix = -currentScrollYPosition * 0.002 + 1;
   const isScrolled = scrollFadeMatrix < 0;
-  const bgOpacity = (): any => {
-    if (isScrolled) return { opacity: 0, visibility: 'hidden' };
-    return currentScrollYPosition > 10 ? {
-      opacity: scrollFadeMatrix,
-      visibility: 'visible'
-    } : {}
-  }
-  const service: any = getService("IAdminService");
-  const listThreas = async () => {
-    try {
-      const response = await service.listThreats();
-      console.log({ response })
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const baseBgStyle: React.CSSProperties = isScrolled
+    ? { opacity: 0, visibility: 'hidden' }
+    : currentScrollYPosition > 10
+      ? { opacity: scrollFadeMatrix, visibility: 'visible' }
+      : {};
+
+  const mergedBgStyle: React.CSSProperties = {
+    ...baseBgStyle,
+    opacity: Math.min(
+      baseBgStyle.opacity === undefined ? 1 : Number(baseBgStyle.opacity),
+      isSnapping ? 0.15 : 1
+    ),
+  };
+
   useEffect(() => {
-    listThreas()
+    const service: any = getService("IAdminService");
+    service?.listThreats?.().catch(console.error);
   }, []);
+
   const isDesktop = width > 1100;
-  const handleBackgroundLoad = () => {
-    setBgLoaded(true);
+
+  const snapToFirst = useCallback(() => {
+    const el = firstContentRef.current;
+    if (!el) return;
+    setIsSnapping(true);
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const t = setTimeout(() => setIsSnapping(false), 750);
+    return () => clearTimeout(t);
+  }, []);
+  const gridProps = {
+    sm: 2,
+    md: 2,
+    size: 50,
+    gap: 10,
+    icons: ['fa-solar-panel', 'fa-plug', 'fa-car-batttery', 'fa-truck-fast']
   }
-
-
   return (
-    < >
+    <>
       <style jsx>{styles}</style>
-      <div
-        id='nirvana-index'
-        className='nirvana-energy'
-      >
-        <div className='nirvana-energy__bg-overlay'
-          onClick={() => push('/build')}
-          style={
-            bgOpacity()}>
-          {/* <div className='nirvana-energy__bg-overlay--media'> */}
-          <UiMedia playbackSpeed={.7}
-            onLoad={handleBackgroundLoad}
-            type='video' autoplay muted loop variant='background' src={"https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/home.webm"
-            } >
-            <div className='nirvana-energy__bg-overlay--content'>
-              <div className='nirvana-energy__bg-overlay--content__text' >
-                {bgLoaded &&
-                  <div className='nirvana-energy__bg-overlay--content__text__inner'>
-                    <UiTextBalance text="CALCULATE YOUR NEEDS" />
-                    <UiButton size='xxl' variant='glow'>Click here</UiButton>
-                  </div>
-                }
-              </div>
-              {view == 'start' &&
-                <div className='nirvana-energy__bg-overlay--content__glb' >
-                  <GLBViewer
-                    controls={false}
-                    // width={width > 1100 ? "var(--s-9-width)" : `100%`} 
-                    // height={width > 1100 ? "var(--s-9-width)" : "100%"}
-                    modelPath='/merchant/nirv1/3dModels/products/MetalBox.glb'
-                  />
-                </div>}
+      <div id="nirvana-index" className="nirvana-energy">
+        {/* Hero background (click to snap down) */}
+        <div
+          className={`nirvana-energy__bg-overlay ${isSnapping ? "is-snapping" : ""}`}
+          onClick={snapToFirst}
+          style={mergedBgStyle}
+          role="button"
+          aria-label="Scroll to content"
+        >
+          <FullPageBackground
+            btn={{
+              text: (<div
+                className='nirvana-energy__bg-overlay--content'
+              // style={{fontSize:"3.4rem", fontWeight:700, lineHeight:1.2, textAlign:"center", textTransform:"uppercase"}}
+              >
+                Build your Nirvana
+                <div>
+                  <AdaptGrid xs={gridProps.sm} md={gridProps.md} gap={gridProps.gap} >
 
-              {/* <ProductQuote
-              id='product-quote'
-              startButton={<>
-              <div className='configure-btn__model'>
-              </div>
-              <div className='configure-btn__text a-light-wipe'>
-              configure your back up system.
-              </div>
-              </>
-              } view={view} setView={setView} /> */}
-            </div>
-          </UiMedia>
-
-          {/* </div> */}
-
-        </div>
-
-        <div className='nirvana-energy__content--first'>
-          <div className='nirvana-energy__content--title'>
-            Protect your future, create your Nirvana.
-          </div>
-          <div className='nirvana-energy__content--label'>
-            On and Off-grid battery back up
-            If you&apos;re thinking about going off grid or want to learn more about backup battery systems, it&apos;s time to create your Nirvana.
-          </div>
-          <UiMedia type='video'
-            poster={<>
-              <img
-                alt='nirv1-home'
-                className="d-flex s-w-100"
-                src="/merchant/nirv1/videos/nirv1_index1-poster.png" />
-            </>}
-            src="/merchant/nirv1/videos/nirv1_index1.mp4" />
-        </div>
-        <div className='nirvana-energy__content'>
-
-
-          {view == 'start' && <>
-            <div className='nirvana-energy__content--title'>
-              The Importance of Backup Batteries
-            </div>
-            <AdaptGrid sm={1} md={3} margin='0 0 45px' gap={15}>
-              <HomeGridItem icon='fal-cloud-bolt-sun' title='power outages' >
-                With backup batteries, you can be sure your home will have
-                power even during outages.
-                Most batteries will only back up what is stored when the grid goes down. Be sure to get our system that refills the battery if the grid stays down.
-              </HomeGridItem>
-              <HomeGridItem icon='fa-globe' title='environmental concerns' >
-                Using solar battery backup systems helps reduce your carbon footprint. The less you rely on the grid, the more you do for our planet.
-              </HomeGridItem>
-              <HomeGridItem icon='fal-circle-dollar' title='cost savings' >
-                Solar battery backup systems can help you save money on electricity bills in the long run.
-                The 30% Federal Tax credit applies to battery storage that is connected to a PV
-              </HomeGridItem>
-            </AdaptGrid>
-            {/* </div> */}
-            {/* <h3>On-grid vs Off-grid Solar Battery Backup Systems</h3>
-            <AdaptGrid sm={1} md={2} margin='0 0' gapX={10}>
-              <HomeGridItem title='on-grid'>
-              On-grid systems are connected to the utility grid and can sell excess energy back to the power competitor or store excess energy depending on how the system is
-              </HomeGridItem>
-              <HomeGridItem title='environmental concerns' >
-              Off-grid systems are not connected to the utility grid. These systems can be tailored to fit your needs no matter how big or small and using several different power sources.
-              </HomeGridItem>
-              </AdaptGrid> */}
-              <HomeGridItem >
-                <div className='nirvana-energy__content--services'>
-                <Services/>
+                    {gridProps.icons.map((icon, index) => (
+                      <div key={index} className="nirvana-energy__bg-overlay-grid-item">
+                        <UiIcon icon={icon}   />
+                      </div>
+                    ))}
+                  </AdaptGrid>
                 </div>
-              </HomeGridItem>
+                <div
+                  className="start-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
 
-            <div className='s-w-100 d-flex-col' >
-              ROC: 357597
-              <div className='s-w-100 d-flex' >
-                <UiButton variant='link'
-                  onClick={() => handleModal('terms')}
-                >Terms & Conditions</UiButton>
-                <UiButton variant='link'
-                  onClick={() => handleModal('privacy')}>Privacy Policy</UiButton>
+                    push("/build");
+                  }}
+                >
+                  <div className="start-btn--text">start here</div>
+
+                </div>
               </div>
+              ),
+            }}
+            media={{
+              url: "https://tiktok.soy/files/srv/nirv1/broll/nirv1-home.webp",
+              type: "image",
+              // playbackSpeed: 0.8,
+            }}
+          // text={{
+          //   content: "",
+          //   // textAlign: "center",
+          //   // textTransform: "uppercase",
+          // }}
+          />
+
+          {width > 1100 && (
+
+            <div className="nirvana-energy__content--cta">
+              <UiButton variant="glow" traits={{ afterIcon: "fa-chevron-down" }}>
+                more
+              </UiButton>
             </div>
-          </>
-          }
+
+          )}
+
+
+        </div>
+        {/* Main content */}
+        <div className="nirvana-energy__content">
+          <div ref={firstContentRef} className="nirvana-energy__content--first">
+            <div className="nirvana-energy__content--title">Protect your future, create your Nirvana.</div>
+            <div className="nirvana-energy__content--label">
+              On and Off-grid battery back up If you&apos;re thinking about going off grid or want to learn more about
+              backup battery systems, it&apos;s time to create your Nirvana.
+            </div>
+
+            <UiMedia
+              type="video"
+              controls
+              muted={isDesktop}
+              autoplay={isDesktop}
+              poster={<img alt="nirv1-home" className="d-flex s-w-100" src="/merchant/nirv1/videos/nirv1_index1-poster.png" />}
+              src="/merchant/nirv1/videos/nirv1_index1.mp4"
+            />
+
+            {view === "start" && (
+              <>
+                <div id="Nirvana Energy Services" className='nirvana-energy__content--services'>
+                  <ServicesPage variant="view" />
+                </div>
+                <div className="nirvana-energy__content--title">The Importance of Backup Batteries</div>
+                <AdaptGrid sm={1} md={3} margin={isDesktop ? `0 0 45px` : undefined} gap={15}>
+                  <HomeGridItem icon="fal-cloud-bolt-sun" title="power outages">
+                    With backup batteries, you can be sure your home will have power even during outages...
+                  </HomeGridItem>
+                  <HomeGridItem icon="fa-globe" title="environmental concerns">
+                    Using solar battery backup systems helps reduce your carbon footprint...
+                  </HomeGridItem>
+                  <HomeGridItem icon="fal-circle-dollar" title="cost savings">
+                    Solar battery backup systems can help you save money in the long run...
+                  </HomeGridItem>
+                </AdaptGrid>
+
+                <h3>On-grid vs Off-grid Solar Battery Backup Systems</h3>
+                <AdaptGrid sm={1} md={2} margin="0 0" gapX={10}>
+                  <HomeGridItem title="on-grid">
+                    On-grid systems are connected to the utility grid...
+                  </HomeGridItem>
+                  <HomeGridItem title="environmental concerns">
+                    Off-grid systems are not connected to the utility grid...
+                  </HomeGridItem>
+                </AdaptGrid>
+                <div className="d-flex-col s-1">
+                  ROC: 357597
+                  <div className="s-w-100 d-flex  s-w-9 g-9">
+                    <UiButton variant="link" onClick={() => handleModal("terms")}>Terms & Conditions</UiButton>
+                    {`  |  `}
+                    <UiButton variant="link" onClick={() => handleModal("privacy")}>Privacy Policy</UiButton>
+                    {`  |  `}
+                    <UiButton variant="link" onClick={() => handleModal("contact")}>Contact Us</UiButton>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </>

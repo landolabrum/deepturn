@@ -91,7 +91,7 @@ const Calendar: React.FC<ICalendar> = ({
                         <UiPill
                             variant='center dark'
                             amount={`${monthArray[mmYY.mm - 1]}, ${mmYY.yy}`}
-                            setAmount={console.log}
+                            setAmount={()=>undefined}
                             traits={{
                                 beforeIcon: {
                                     icon: "fas-minus",

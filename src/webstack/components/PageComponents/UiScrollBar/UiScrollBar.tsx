@@ -11,6 +11,7 @@ const UiScrollBar = ({ children }: UiScrollBarProps) => {
   useEffect(() => {
     const handleScroll = () => {
       const y = scrollRef.current?.scrollTop || 0;
+      alert()
       document.body.setAttribute("data-scroll-position", String(y));
     };
 

@@ -8,6 +8,7 @@ interface IToggle {
   label?: string;
   value?: boolean | 'true' | 'false';
   onChange?: (checked: any) => void;
+  
 }
 
 const ToggleSwitch = ({ value, onChange, name, label, disabled }: IToggle) => {

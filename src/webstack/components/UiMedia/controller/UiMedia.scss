@@ -1,141 +1,182 @@
-img {
-    width: 100%;
-    height: auto;
-    z-index: 1;
-    position: relative;
-    .d-flex {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    @extend .d-flex;
-}
-
 .d-flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-video{
-     width: 100%;
+
+img {
+  width: 100%;
   height: auto;
+  z-index: 1;
+  position: relative;
+
+  @extend .d-flex;
 }
-// video.ui-media--background{
-//     // position: fixed;
-//     // top: 0;
-//     // left: 0;
-//     // z-index: -1;
-// }
+
+video {
+  width: 100%;
+  height: auto;
+  @extend .d-flex;
+}
+
+
+
 .ui-media {
-    min-height: 100%;
-    z-index: 2;
-&__children{
+  min-height: 100%;
+  z-index: 2;
+
+  &--carousel {
+    height: 100%;
+    width: auto;
+    display: block;
+  }
+
+  &__error {
+    @extend .d-flex;
+    height: 100%;
+    width: 100%;
+    aspect-ratio: 1;
+    color: var(--red-50);
+    --ui-icon-color: var(--red-50);
+    gap: var(--s-9);
+    cursor: pointer;
+  }
+
+  &__children {
     @extend .d-flex;
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    z-index: 2;
-    &.background{
-        position: absolute;
-        width: var(--s-1-width);
-        height: var(--s-1-width);
-        padding:var(--s-1);
-        min-width: 50vw;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        overflow: visible;
+    z-index: 2111;
+
+    &.background {
+      position: absolute;
+      width: var(--s-1-w);
+      height: var(--s-1-w);
+      padding: var(--s-1);
+      min-width: 50vw;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      overflow: visible;
     }
-}
-    &__iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        width: 100%;
-        height: 100%;
+
+    &--knockout {
+      visibility: hidden;
+      bottom: var(--s-9);
+      right: var(--s-8);
+      position: absolute;
+      width: max-content;
+      overflow: hidden;
+      height: max-content;
     }
-&--background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  object-position: center;
-  z-index: -1;
-  pointer-events: none;
-  user-select: none;
-}
+  }
 
-// img.ui-media--background {
-//   display: block;
-//   width: 100vw;
-//   height: 100vh;
-//   object-fit: cover;
-//   object-position: center;
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   z-index: -1;
-//   pointer-events: none;
-// }
+  transition:all .3s ease-in;
 
+  .rect {
+    user-select: none;
+    pointer-events: none;
+    fill: var(--gray-60);
+  }
 
-    // &--background {
-    //     position: fixed;
-    //     top:0;
-    //     left: 0;
-    //     z-index: -1;
-    //     width: 100vw;
-    //     max-width: 100vw;
-    //     height: 100vh;
-
-    //         // width: inherit;
-    //     // height: inherit;
-    //     // top: var(--s-nav-height);
-    //     // @extend .d-flex;
-    //     // justify-content: flex-start;
-    //     // min-width: 100%;
-    //     // /* Set up positioning */
-    //     // position: fixed;
-    //     // left: 50%;
-    //     // transform: translateX(-50%);
-    //     // @media(max-width:1100px){
-    //     //     width: auto;
-    //     // }
-
-    // }
-
-    &--poster {
-        @extend .d-flex;
-        z-index: 3;
-        background: var(--gray-90-o);
-        // -webkit-background-size: cover;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width:100%;
-        height: 100%;
-        &__content {
-            @extend .d-flex;
-            width: var(--s-10-width);
-            height: var(--s-10-width);
-            text-align: center;
-            color: var(--primary-10);
-            text-shadow: 0 0 10px var(--primary-50);
-            font-size: var(--s-1);
-            mix-blend-mode: color-dodge;
-            cursor: pointer;
-   
-            &:hover {
-                color: var(--white);
-                text-shadow: 0 0 var(--s-3) var(--primary-10);
-            }
-        }
+  &:hover {
+    .rect {
+      fill: var(--gray-90);
     }
+  }
+
+  &__children--knockout {
+    visibility: visible;
+  }
+
+  &__iframe-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 300px; // 👈 ensures iframe can render
+    aspect-ratio: 16 / 9; // optional for responsive design
+    background: var(--gray-95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .ui-media__error {
+      color: red;
+      font-size: 0.875rem;
+      text-align: center;
+      z-index: 5;
+      height: 100%;
+    }
+
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--gray-20);
+      z-index: 4;
+    }
+
+    .ui-media__error {
+      color: red;
+      font-size: 0.875rem;
+      text-align: center;
+      margin-top: 1rem;
+      z-index: 5;
+    }
+  }
+
+  &__iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    visibility: visible;
+    z-index: 1;
+  }
+
+  &--background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+    // pointer-events: none;
+    // user-select: none;
+  }
+
+  &--poster {
+    @extend .d-flex;
+    z-index: 3;
+    background: var(--gray-90-o);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: max-content;
+
+    &__content {
+      @extend .d-flex;
+      text-align: center;
+      height: 100%;
+      width: 100%;
+      color: var(--primary-10);
+      text-shadow: 0 0 10px var(--primary-50);
+      overflow: hidden;
+      font-size: var(--s-1);
+      cursor: pointer;
+
+      &:hover {
+        color: var(--white);
+        text-shadow: 0 0 var(--s-3) var(--primary-10);
+      }
+    }
+  }
 }

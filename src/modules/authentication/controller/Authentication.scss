@@ -31,32 +31,31 @@ a {
     }
   }
 }
-
-.authentication {
-  position: relative;
-
-  min-height: 350px;
-  z-index: 1;
-  @extend .d-flex-col;
-  gap: var(--s-4);
-
-  @media(max-width: 900px) {
-    min-width: unset;
-    padding: var(--s-4) 0 0;
-  }
-
-  &__welcome-modal {
+  .authentication__welcome-modal {
     width: 100%;
     @extend .d-flex-col;
     align-items: flex-start;
-    gap:var
-    h1 {
+    gap:var(--s-9);
+    h3 {
       line-height: 2;
       margin-bottom: var(--s-1);
     }
 
     gap:var(--s-9);
   }
+.authentication {
+  position: relative;
+background: inherit;
+  min-height: 350px;
+  z-index: 1;
+  @extend .d-flex-col;
+  gap: var(--s-4);
+  @media(max-width: 900px) {
+    min-width: unset;
+    padding: var(--s-4) 0 0;
+  }
+
+
 
   &__email-verify {
     font-size: var(--s-5);
@@ -93,7 +92,7 @@ a {
 
   // .authentication__view-label--strike {
   //   position: absolute;
-  //   width: var(--s-9-width);
+  //   width: var(--s-9-w);
   //   left: var(--s-9);
   //   right: var(--s-9);
   //   border-radius: var(--border-radius);
@@ -111,19 +110,22 @@ a {
     font-family: Decimal;
     user-select: none;
     text-shadow: 1px 1.5px 0 var(--black);
-    width: var(--s-9-width);
+    width: var(--s-9-w);
     // text-transform: uppercase;
     font-size: var(--s-5);
     letter-spacing: 4px;
     height: var(--s-element);
     @extend .d-flex;
     position: relative;
+    
     z-index: 2;
+    background: inherit;
+
     @extend .d-flex;
     &--text{
       padding: var(--s-8);
       z-index: 3;
-      background-color: var(--gray-100);
+      background: inherit;
     }
     &:before{
       z-index: 1;
@@ -142,7 +144,7 @@ a {
   }
 
   .authentication__view-action {
-    background-color: inherit;
+    background: inherit;
     @extend .d-flex-col;
     white-space: nowrap;
     text-align: center;

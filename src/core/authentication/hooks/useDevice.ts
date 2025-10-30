@@ -81,22 +81,21 @@ const findLocalIp = (logInfo = true) => new Promise<string[]>((resolve, reject) 
     }
 
     if (logInfo) {
-      console.log('candidate:', parts[0].split(':')[1]);
-      console.log('component:', ['rtp', 'rtpc'][parseInt(parts[1]) - 1]);
-      console.log('protocol:', parts[2]);
-      console.log('priority:', parts[3]);
-      console.log('ip:', ip);
-      console.log('port:', parts[5]);
-      console.log('type:', parts[7]);
+      // console.log('candidate:', parts[0].split(':')[1]);
+      // console.log('component:', ['rtp', 'rtpc'][parseInt(parts[1]) - 1]);
+      // console.log('protocol:', parts[2]);
+      // console.log('priority:', parts[3]);
+      // console.log('ip:', ip);
+      // console.log('port:', parts[5]);
+      // console.log('type:', parts[7]);
 
       if (parts.length > 8) {
-        console.log('attributes:');
+        // console.log('attributes:');
         for (let i = 8; i < parts.length; i += 2) {
-          console.log(`> ${parts[i]}: ${parts[i + 1]}`);
+          // console.log(`> ${parts[i]}: ${parts[i + 1]}`);
         }
       }
 
-      console.log();
     }
   };
 });

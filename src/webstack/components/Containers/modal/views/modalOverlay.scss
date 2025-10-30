@@ -1,284 +1,310 @@
+/* =========================
+   Modal Colors & Tokens
+   ========================= */
+$overlay-bg: var(--gray-80-o); // dim backdrop
+$overlay-blur: 5px;
+$overlay-blur-locked: 10px;
+
+$modal-bg-top: var(--gray-50);
+$modal-bg-bottom: var(--gray-40);
+$modal-border: var(--gray-100);
+$modal-outline: var(--gray-40-o);
+
+$content-text: var(--dark);
+$content-scrollbar: var(--blue-60);
+
+$body-bg-top: var(--gray-40);
+$body-bg-bottom: var(--gray-30);
+$body-text: var(--gray-100);
+
+$brand-strong: var(--primary-30-o);
+$brand-stronger: var(--primary-30);
+$brand-strongest: var(--primary-10);
+
+/* =========================
+   Utilities
+   ========================= */
 .d-flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Changed from flex-start to center */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .p-fix {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
 }
 
+/* =========================
+   Overlay
+   ========================= */
 .modal__overlay {
-    @extend .d-flex;
-    @extend .p-fix;
-    cursor: pointer;
-    overflow: hidden;
-    z-index: 998;
-    background: var(--gray-70-o); // Adjusted for semi-transparent overlay
-    backdrop-filter: blur(5px);
-    &--no-dismiss{
-        backdrop-filter: blur(10px);
-        cursor: default;;
-    }
-    &__dragging {
-        cursor: url('/icons/fa-hand-back-fist.svg'), auto;
-    }
+  @extend .d-flex;
+  @extend .p-fix;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 998;
+  background: $overlay-bg;
+  backdrop-filter: blur($overlay-blur);
+
+  &--no-dismiss {
+    cursor: default;
+    backdrop-filter: blur($overlay-blur-locked);
+  }
+
+  &__dragging {
+    cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+  }
 }
 
+/* =========================
+   Modal Shell
+   ========================= */
 .modal {
-    position: fixed; // Use fixed to keep it relative to the viewport
-    z-index: 1000;
-    font-family: Game;
-    top: 200px;
-    left: 50%; // Center horizontally
-    transform: translateX(-50%); // Adjust position to truly center the modal
-    display: flex;
-    overflow-x:hidden;
+  position: fixed; // relative to viewport
+  z-index: 1000;
+  font-family: Game;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background: linear-gradient($modal-bg-top, $modal-bg-bottom);
+  border: 1px solid $modal-border;
+  outline: 1px solid $modal-outline;
+  border-radius: var(--s-7);
+  max-width: var(--s-6-w);
+
+  @media (max-height: 1100px) {
+    top: var(--s-9);
+  }
+
+  @media (max-width: 1100px) {
+    width: var(--s-9-w);
+    max-width: var(--s-9-w);
+    min-width: unset;
+    margin: 0 auto;
+  }
+
+  &__popup {
+    overflow: hidden;
+
+    @media (max-width: 1100px) {
+      max-height: 90vh;
+    }
+
+    @keyframes popup {
+      0% {
+        min-width: 0px;
+      }
+
+      100% {
+        min-width: 450px;
+      }
+    }
+  }
+
+  &__fullscreen {
+    top: 0;
+    bottom: 0;
+    width: 100vw;
+    max-width: 100vw;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    gap: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  &__dragging {
+    cursor: url('/icons/fa-hand-back-fist.svg'), auto;
+    filter: blur(3px);
+  }
+
+  /* =========================
+     Content
+     ========================= */
+  &__content {
+    @extend .d-flex;
     flex-direction: column;
-    background: linear-gradient(var(--dark),var(--gray-100));
-    border: solid 1px var(--gray-80-o);
-    outline: solid 1px var(--gray-70-o);
-    box-shadow: 2px 4px 15px 5px var(--dark);
-    border-radius: var(--s-7);
-    gap: var(--s-1);
-    min-width: 450px;
-    max-width: var(--s-6-width);
-    @media(max-height: 1100px) {
-        top: var(--s-9);
-        // top:var(--s-1);
-        // bottom:var(--s-9);
+    flex: 1 1 auto;
+    position: relative;
+
+    padding: var(--s-10) 0 var(--s-4);
+    gap: var(--s-5);
+    color: $content-text;
+    height: max-content;
+
+    backdrop-filter: blur(2px);
+    transition: all 1s;
+
+    &:hover {
+      transition: all 1s;
     }
-    @media(max-width: 1100px) {
-        min-width: unset;
-        max-width: var(--s-9-width);
-        width: var(--s-9-width);
-        margin: 0 auto;
-        padding-bottom:var(--s-9);
-        // top: calc(var(--s-nav-height) + var(--s-5)) !important; // Adjusted for mobile view
-        // bottom: var(--s-9);
-        // height: max-content;
-    }
+
     &__popup {
-        width: var(--s-4-width);
-        @keyframes popup{
-            0% { min-width: 0px; }
-            100% { min-width: 450px; }
-        }
+      height: 100%;
+      // max-height: 90vh;
     }
+
+    /* scrollbars */
+    &::-webkit-scrollbar {
+      width: 10px;
+      aspect-ratio: 1/1;
+      background-color: #00000033;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $content-scrollbar;
+      border-radius: 5px;
+    }
+
+    @media (max-width: 900px) {
+      justify-content: flex-start;
+      min-width: unset;
+    }
+
     &__fullscreen {
-        top: 0;
-        max-width: 100vw;
-        bottom: 0;
-        border: none;
-        outline: none;
-        border-radius: unset;
-        gap:0;
-        box-shadow: unset;
-        width: 100vw;
-        padding: 0;
-        // background: unset;
-        // @media(max-width:900px){
-        //     top: 90px;
-        // }
+      width: 100%;
+      padding: 0;
+      margin: 0;
 
-      
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  /* =========================
+     Header
+     ========================= */
+  &__header {
+    @extend .d-flex;
+    position: relative;
+    width: var(--s-9-w);
+    height: 100%;
+    gap: var(--s-4);
+    padding: var(--s-10) var(--s-9) var(--s-7);
+    backdrop-filter: blur(5px);
+    cursor: default;
+    overflow: visible;
+
+    @media (max-width: 1100px) {
+      flex-direction: column-reverse;
+      align-items: flex-end;
+      min-height: var(--s-element);
     }
 
-    &__dragging {
-        cursor: url('/icons/fa-hand-back-fist.svg'), auto;
-        filter: blur(3px);
+    .close-btn {
+      opacity: 0;
     }
 
-    &__content {
-        
-        overflow: hidden;
-        padding: var(--s-10) 0 var(--s-4);
-        margin: auto 0;
-        backdrop-filter: blur(5px);
-        color: var(--gray-30);
-        // height: 100%;
-        height: max-content;
-        justify-content: flex-start;
-        transition: all 1s;
-        position: relative;
+    .modal-overlay__title {
+      @extend .d-flex;
+      font-family: Play;
+      font-size: var(--s-1);
+      text-transform: capitalize;
+      color: $brand-strong;
+      height: 100%;
+      --ui-icon-color: #{$brand-strong};
+
+      @media (max-width: 1100px) {
+        width: 100%;
+        font-size: var(--s-2);
+      }
+    }
+
+    &__fullscreen {
+      z-index: 2;
+      background: none;
+      margin: 0;
+      min-height: var(--s-element);
+      border-radius: var(--border-radius);
+      padding: 0;
+    }
+  }
+
+  /* =========================
+     Body
+     ========================= */
+  &__body {
+    @extend .d-flex;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--s-4);
+
+    font-family: FreightSans;
+    font-weight: 500;
+    color: $body-text;
+    background: linear-gradient($body-bg-top, $body-bg-bottom);
+    padding: var(--s-4);
+    padding-top: 20px;
+    box-sizing: border-box;
+
+    @media (max-width: 900px) {
+      align-items: center;
+      padding: var(--s-9);
+    }
+
+    &__fullscreen {
+      position: relative;
+      width: 100%;
+      height: max-content;
+      margin-bottom: 0;
+      padding: 0;
+      background: transparent;
+    }
+
+    &__popup {
+      overflow-y: auto;
+      overflow-x: hidden;
+      min-height: 100%;
+    }
+
+    &__body {
+      overflow-y: auto;
+      max-height: 70vh;
+      padding-top: var(--s-6);
+      margin: 0;
+    }
+
+    .modal-overlay__confirm {
+      @extend .d-flex;
+      flex-direction: column;
+      gap: var(--s-6);
+      width: 100%;
+
+      &--header,
+      .header {
         @extend .d-flex;
         flex-direction: column;
-        gap: var(--s-5);
-        &__popup {
-            margin: 0;
-            @media(max-width: 1100px) {
-                height: 100%;
-            }
-        }
-        
-        &:hover {
-            transition: all 1s;
-        }
-        
-        &::-webkit-scrollbar-thumb {
-            background-color: var(--blue-60);
-            border-radius: 5px;
-        }
-        
-        &::-webkit-scrollbar {
-            width: 10px;
-            aspect-ratio: 1/1;
-            background-color: #00000033;
-        }
-        
-        @media(max-width: 900px) {
-            justify-content: flex-start;
-            min-width: unset;
-        }
+        align-items: flex-start;
+        width: 100%;
+        margin: auto 0 var(--s-4);
+        color: $brand-strongest;
+        font-size: var(--s-7);
 
-        &__fullscreen {
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            &:hover {
-                background-color: #ffffff00;
-            }
+        .header--title {
+          font-size: var(--s-6);
+          color: $brand-stronger;
+          font-weight: bold;
         }
+      }
+
+      &-col {
+        flex-direction: column;
+      }
+
+      &-btn {
+        width: 100%;
+      }
     }
-
-    &__header {
-        @extend .d-flex;
-        justify-content: space-between;
-        backdrop-filter: blur(5px);
-        padding: var(--s-8) var(--s-9) 0 var(--s-4);
-        gap: var(--s-4);
-        position: relative;
-        @media(max-width: 1100px) {
-            position: relative;
-            flex-direction: column-reverse;
-            align-items: flex-end;
-            height: max-content;
-        }
-
-        cursor: default;
-        &:hover,
-        &:focus,
-        &:focus-within,
-        &:visited,
-        &:active {
-            cursor: pointer;
-            --ui-icon-color: var(--primary-50);
-        }
-        .close-btn{
-            margin:var(--s-9);
-            @media(max-width: 1100px) {
-                position: relative;
-            }
-        }
-        .modal-overlay__title {
-            font-size: var(--s-1);
-            text-transform: capitalize;
-            font-family: Play;
-            letter-spacing: var(--s-12);
-            @extend .d-flex;
-            color: var(--primary-50);
-            @media(max-width: 1100px) {
-                width: 100%;
-
-                font-size: var(--s-2);
-            }
-        
-        }
-     
-        &__fullscreen {
-            z-index: 2;
-            background: unset;
-            margin: 0;
-            min-height: var(--s-element);
-            border-radius: var(--border-radius);
-            padding:0;
-            // top: var(--s-9);
-        }
-    }
-        
-        &__body {
-            position: relative;
-            @extend .d-flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: flex-start;
-            gap: var(--s-4);
-            font-family: FreightSans;
-            font-weight: 500;
-            height: 100%;
-            
-            background: linear-gradient(var(--gray-90), var(--gray-100));
-            // background-color: #f30 !important;
-            color: var(--gray-50);
-            padding: var(--s-4);
-            // overflow-y: auto; 
-            
-            overflow: hidden; 
-            // max-height: 80vh; // Set a maximum height for the modal body
-            padding-top: 20px; // Increase padding top for alignment
-            box-sizing: border-box; // Ensure box-sizing is border-box
-    
-            @media(max-width: 900px) {
-                align-items: center;
-                height: max-content;
-                padding: var(--s-9);
-            }
-            @media(max-height: 900px) {
-                overflow: visible;
-            }
-            &__fullscreen {
-                // z-index: 1;
-                margin-bottom: 0;
-                padding: 0;
-                padding-top: 0;
-                width: 100%;
-                background: transparent;
-
-            }
-          
-            &__popup {
-                border-radius: var(--border-radius);
-                height: max-content;
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
-    
-            .modal-overlay__confirm {
-                font-family: Play;
-                @extend .d-flex;
-                gap: var(--s-6);
-                border-radius: var(--border-radius);
-                overflow: hidden;
-                flex-direction: column;
-                width: 100%;
-    
-                &--header, .header {
-                    @extend .d-flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    margin: auto 0 var(--s-4);
-                    width: 100%;
-                    color: var(--gray-60);
-                    font-size: var(--s-7);
-    
-                    .header--title {
-                        font-size: var(--s-6);
-                        color: var(--gray-50);
-                        font-weight: bold;
-                    }
-                }
-    
-                &-col {
-                    flex-direction: column;
-                }
-                &-btn {
-                    width: 100%;
-                }
-            }
-        }
-    }
+  }
+}

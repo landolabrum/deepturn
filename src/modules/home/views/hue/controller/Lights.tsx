@@ -78,7 +78,7 @@ const LightsList = () => {
       const response = await homeService.hue_list(hue_object);
       setHueData(response);
     } catch (e: any) {
-      console.log('[ FETCH LIGHTS (ERR) ]', JSON.stringify(e));
+      console.error("[ FETCH LIGHTS (ERR) ]", JSON.stringify(e));
     }
   }
 

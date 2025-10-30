@@ -1,0 +1,249 @@
+/* =====================
+   Lower Thirds (UPDATED to match Scoreboard theme)
+   - Theme-aligned gradient
+   - Transparent cut corners (top-left & bottom-right)
+   - Image-left / Image-right variants fixed
+   ===================== */
+
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.l3 {
+  /* ---- theme tokens (mirror scoreboard) ---- */
+  --clr1: var(--gray-50);
+  --clr2: var(--gray-60);
+  --clr3: var(--gray-80);
+  --bg: linear-gradient(180deg, var(--clr1) 50%, var(--clr2) 100%);
+
+  --border-radius: var(--s-11); /* used by inner image */
+  --pad: var(--s-3);
+  --gap: var(--s-4);
+  --chip-gap: var(--s-3);
+
+  /* notch size mirrors scoreboard’s --matrix math */
+  --matrix:calc(var(--pad) * 2);
+
+  @extend .d-flex;
+  flex-direction: column;
+  gap: var(--gap);
+
+  /* default box */
+  max-width: var(--s-9-w);
+  width: max-content;
+  min-width: max-content;
+
+  padding: calc(var(--pad) * 1.1) var(--pad);
+  background: #e0e0e099;
+  backdrop-filter: blur(4px);
+  border: solid 2px var(--gray-10);
+
+  /* transparent cut corners like the scoreboard */
+  clip-path: polygon(
+    var(--matrix) 0,
+    100% 0,
+    100% calc(100% - var(--matrix)),
+    calc(100% - var(--matrix)) 100%,
+    0 100%,
+    0 var(--matrix)
+  );
+
+  border-radius: 0;
+  color: var(--primary-90);
+  overflow: visible;
+  font-family: "Decimal", system-ui, sans-serif;
+  text-shadow: 0 1px 15px var(--primary-10);
+
+  /* empty state */
+  &__empty {
+    text-transform: uppercase;
+    font-family: "Courier New", Courier, monospace;
+    @extend .d-flex;
+    aspect-ratio: 5 / 4;
+    color: var(--orange-50);
+    border: 1px solid currentColor;
+    width: 200px;
+    letter-spacing: 2px;
+    background: transparent;
+    clip-path: polygon(
+      var(--matrix) 0,
+      100% 0,
+      100% calc(100% - var(--matrix)),
+      calc(100% - var(--matrix)) 100%,
+      0 100%,
+      0 var(--matrix)
+    );
+  }
+
+  /* content column (title/desc/items) */
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  &__title,
+  &__desc {
+    text-align: center;
+    max-width: 80ch;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: clamp(24px, 3.8vw, 64px);
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+          text-shadow: -4px -2px 1.5px var(--gray-80), 1px 1px 1px var(--gray-10);
+
+  }
+
+  &__desc {
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--gray-10);
+    text-shadow: 2px 2px 3px var(--gray-70) ;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--chip-gap);
+    margin-top: var(--gap);
+  }
+
+  &__item {
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e8ecf2;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.15) inset;
+  }
+
+  /* ---------- Variants ---------- */
+
+  /* Default */
+  &.l3--default {
+    flex-direction: column;
+    text-align: center;
+    .l3__image {
+      height: 100px;
+    }
+    .l3__title {
+      font-size: clamp(24px, 3.8vw, 64px);
+    }
+    .l3__desc {
+      font-size: clamp(16px, 2vw, 32px);
+    }
+  }
+
+  /* Fullscreen (transparent shell, no notches so it can span edge-to-edge) */
+  &.l3--fullscreen {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    min-width: 0;
+    background: transparent;
+    clip-path: none;
+    border-radius: unset;
+    padding: 0;
+
+    .l3__title {
+      font-size: clamp(36px, 6vw, 96px);
+      text-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    }
+
+    .l3__desc {
+      font-size: clamp(18px, 2.6vw, 40px);
+      color: #e5e9ef;
+      text-shadow: 0 4px 18px var(--primary-10);
+    }
+  }
+
+  /* Title Left, Image Right */
+  &.l3--image-left {
+    flex-direction: row;
+    gap: var(--s-5);
+    justify-content: flex-start;
+    align-items: stretch; /* stretch both columns to same row height */
+    padding: var(--s-1);
+    .l3__content {
+      align-items: flex-start;
+      text-align: left;
+      flex: 1 1 80%;
+      order: 1;
+    }
+
+    .l3__title {
+      text-align: center;
+      width: 100%;
+    }
+    .l3__desc {
+      text-align: center;
+      font-size: var(--s-1);
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .l3__image {
+      order: 0;
+      height: 100%;
+      align-self: stretch; /* fill row height */
+    }
+  }
+
+  /* Title Right, Image Left */
+  &.l3--image-right {
+    flex-direction: row;
+    gap: var(--s-5);
+    justify-content: flex-start;
+    align-items: stretch; /* stretch both columns to same row height */
+
+    .l3__content {
+      align-items: flex-end;
+      text-align: right;
+      flex: 1 1 70%;
+      order: 0;
+    }
+
+    .l3__title {
+      text-align: right;
+    }
+    .l3__desc {
+      text-align: right;
+    }
+
+    .l3__image {
+      order: 1;
+      margin-right: var(--s-3);
+      flex: 0 0 30%;
+      max-width: 30%;
+      align-self: stretch; /* fill row height */
+      min-height: 100px; /* required minimum */
+    }
+  }
+}
+
+/* Image styling carries the softer card feel used elsewhere */
+.l3__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    border-radius: var(--border-radius);
+    max-width: 100%;
+    height: 100%; /* match container height */
+    min-height: 100px; /* ensure min image height */
+    object-fit: contain; /* preserve aspect ratio without cropping */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+}

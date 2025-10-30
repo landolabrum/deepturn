@@ -4,9 +4,9 @@ $elPad: 14px;
 
 .inherit {
   // Inherits properties from the parent
-  --ui-icon-color: inherit;
-  --ui-icon-width: inherit;
-  --ui-icon-height: inherit;
+  --ui-icon-color: unset;
+  --ui-icon-width: unset;
+  --ui-icon-height: unset;
   text-decoration: inherit;
   color: inherit;
   background-color: inherit;
@@ -29,10 +29,11 @@ $elPad: 14px;
   border: inherit;
   outline: inherit;
   border-radius: inherit;
-  box-shadow: inherit;
   aspect-ratio: inherit;
   position: inherit;
-
+  box-shadow: none;
+  text-shadow: none;
+  text-transform: inherit;
 }
 
 .d-flex {
@@ -50,7 +51,9 @@ $elPad: 14px;
   text-transform: capitalize;
   height: max-content;
   justify-content: space-around;
-
+  &--file{
+    display: none;
+  }
   // &--input, &--textara{
   // &:hover:not( &:focus-within) {
   //     // border-radius: var(--border-radius);
@@ -96,6 +99,15 @@ $elPad: 14px;
     }
   }
   $mtrx: 4px;
+  &--file{
+    height: max-content;
+    justify-content: flex-end;
+display: none;
+  }
+  &--button{
+    width: 100%;
+    padding:0;
+  }
   &--glow {
     animation: glow 1.5s infinite ease-in;
     height: calc(var(--s-element) - 2px);
@@ -108,17 +120,20 @@ $elPad: 14px;
   .form-control__header {
     @extend .d-flex;
     justify-content: space-between;
-    min-height: var(--s-4);
+    // min-height: var(--s-4);
 
     label {
-      height: var(--s-2);
+
+      font-style: italic;
+      font-family: Decimal;
+      height: var(--s-4);
       text-indent: var(--s-10);
       text-transform: uppercase;
-      color: var(--gray-50);
+      color: var(--gray-70);
       line-height: 2;
       mix-blend-mode: difference;
       font-weight: bold;
-      font-size: var(--s-8);
+      font-size: var(--s-9);
       letter-spacing: 3px;
 
 
@@ -179,5 +194,8 @@ $elPad: 14px;
       }
     }
   }
-
+&--fit-text{
+  width: max-content;
+  white-space: nowrap;
+}
 }

@@ -9,7 +9,7 @@ import validateField from '@webstack/components/UiForm/functions/validateField';
 const PhoneInput: React.FC<IInput> = (props) => {
     const value = props.value;
     const isValidPhone = validateField(value, 'phone');
-    console.log('[PhoneInput] value:', value, 'isValidPhone:', isValidPhone);
+    // console.log('[PhoneInput] value:', value, 'isValidPhone:', isValidPhone);
 const stringValue = typeof value === 'string' ? value : value?.toString();
 
   return (

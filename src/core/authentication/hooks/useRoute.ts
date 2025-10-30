@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useClearance, useUser } from './useUser';
 import { IRoute, useClearanceRoutes } from '@webstack/components/PageComponents/Navbar/data/routes';
 import IAuthenticatedUser from "~/src/models/ICustomer";
@@ -11,73 +11,86 @@ interface ORoute{
   routeTitle?:string | false;
 };
 
-
 const useRoute = (): ORoute => {
   const user = useUser();
   const [selectedUser, setUser] = useState<IAuthenticatedUser | undefined>();
   const router = useRouter();
   const clearanceRoutes = useClearanceRoutes();
   const level = useClearance();
-  const handleRouteTitle = () => String(router.pathname)?.length && router.pathname.split('/')[1] || false;
-  const routeTitle = handleRouteTitle();
 
+  // Guard to prevent multiple navigations inside one render loop
+  const navLockRef = useRef(false);
 
-  const renderTriggers = [user, selectedUser, setUser, clearanceRoutes, level];
+  const routeLabel = clearanceRoutes?.find(r => r?.href === router.pathname)?.label || false;
+  const routeTitle = routeLabel || (router.pathname?.split('/')[1] || false);
 
   const explicitRouter = (route: IRoute) => {
     if (route?.href) router.push(route.href, undefined, { shallow: false });
   };
+
   const implicitRouter = useCallback(() => {
+    if (!router.isReady || navLockRef.current) return;
 
     if (user && !selectedUser) setUser(user);
-    if (clearanceRoutes) {
-      const matchingRoute = clearanceRoutes.find(clearRoute => {
-        const routePathWithoutQuery = clearRoute?.href;
-        if (routePathWithoutQuery === router.pathname) {
-          return true;
-        }
-        else if (
-          (
-            Boolean(clearRoute.clearance && clearRoute.clearance >= level) ||
-            Boolean(!clearRoute.clearance)
-          )) {
-          return false;
-        }
-        else if (clearRoute?.items) {
-          return clearRoute.items.some(item => {
-            const itemPathWithoutQuery = item?.href.split('?')[0];
-            return itemPathWithoutQuery === router.pathname;
-          });
-        }
-        return false;
-      });
-      if (matchingRoute) {
-        const hrefIsString:boolean = typeof matchingRoute?.href === 'string';
-        const notCurrent = matchingRoute?.href && !router.asPath.includes(matchingRoute?.href) || 'current-route';
-        const canNavigate = Boolean( typeof hrefIsString === 'boolean' && typeof notCurrent === 'boolean');
-        const emailVerified = Boolean(router.pathname == '/verify' && router?.query?.vid == 'email' && user);
-        if(emailVerified)router.push('/user-account');
-        if(canNavigate){
-          router.push(String(matchingRoute.href), undefined, { shallow: true });
-        }
-      } else if (router.asPath !== '/authentication/signout') {
-        let currentPath: string = router.asPath;
-        if (currentPath.includes('/404?')) {
-          // STOPS LOOPED 404 Results
-          router.push('/');
-        } else {
-          router.push(`/404?loc=${currentPath}`);
-        }
+
+    if (!clearanceRoutes || !Array.isArray(clearanceRoutes)) return;
+
+    // Find a route that matches the current pathname (no query)
+    const matchingRoute = clearanceRoutes.find(clearRoute => {
+      const href = clearRoute?.href;
+      if (href && href === router.pathname) return true;
+
+      if (clearRoute?.items) {
+        return clearRoute.items.some(item => (item?.href?.split('?')[0] || '') === router.pathname);
       }
+      return false;
+    });
+
+    if (matchingRoute) {
+      const hrefIsString = typeof matchingRoute.href === 'string';
+      const notCurrent = hrefIsString ? (router.asPath.split('?')[0] !== matchingRoute.href) : false;
+
+      // real boolean check — only navigate if different
+      const canNavigate = Boolean(hrefIsString && notCurrent);
+
+      // One-off email verify -> profile
+      const emailVerified = (router.pathname === '/verify' && router?.query?.vid === 'email' && !!user);
+      if (emailVerified) {
+        navLockRef.current = true;
+        router.replace('/profile');
+        return;
+      }
+
+      if (canNavigate) {
+        navLockRef.current = true;
+        router.replace(String(matchingRoute.href), undefined, { shallow: true });
+        return;
+      }
+      return; // already at matchingRoute
     }
-  }, [...renderTriggers]); 
-  const pathname: string = router.pathname;
+
+    // No matching route found
+    // Do NOT keep appending 404 params. Only redirect once, and never from the 404 page itself.
+    const path = router.asPath || '/';
+    const on404 = router.pathname === '/404' || path.startsWith('/404');
+
+    if (!on404) {
+      navLockRef.current = true;
+      const loc = encodeURIComponent(path);
+      // replace to avoid history spam, mask query to pretty /404
+      router.replace(`/404?loc=${loc}`, '/404', { shallow: true });
+    }
+  }, [router.isReady, router.pathname, router.asPath, router.query?.vid, user, selectedUser, clearanceRoutes, level]);
+
+  useEffect(() => {
+    navLockRef.current = false; // allow next navigation round AFTER a render cycle
+  });
+
   useEffect(() => {
     implicitRouter();
-  }, [ implicitRouter  ]); // Added routeTitle to dependencies array
-  
+  }, [implicitRouter]);
 
-  return { selectedUser, pathname, explicitRouter, routeTitle};
+  return { selectedUser, pathname: router.pathname, explicitRouter, routeTitle };
 };
 
 export default useRoute;

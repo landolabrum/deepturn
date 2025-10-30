@@ -6,6 +6,7 @@
 .ui-mark-down{
   @extend .d-flex;
   height: inherit;
+  white-space: inherit;
   color: inherit;
   code{
     text-transform: unset !important;
@@ -15,7 +16,9 @@
     padding:auto var(--s-9);
     border-radius: var(--s-11);
     color: var(--green-30);
-    font-family: 'Courier New', Courier, monospace;
+
+    font-family: inherit;
+    // font-family: 'Courier New', Courier, monospace;
     // display: none !important;
   }
   @keyframes fadeIn {
@@ -36,4 +39,48 @@
     font-weight: 300;
     font-family: PlexLight;
   }
+}
+.overlay-ticker {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  white-space: nowrap; /* ✅ ensure no wrapping inside root */
+}
+
+.overlay-ticker__track {
+  display: flex;
+  flex-wrap: nowrap; /* ✅ force one row only */
+  align-items: center;
+  will-change: transform;
+  inline-size: calc(var(--row-width) * 2);
+  height: 100%;
+  animation: ticker-ltr var(--duration) linear infinite;
+}
+
+.overlay-ticker__row {
+  display: inline-flex;
+  flex-wrap: nowrap; /* ✅ ensure all items stay inline */
+  align-items: center;
+  white-space: nowrap; /* ✅ prevent items from breaking */
+  inline-size: var(--row-width);
+  height: 100%;
+  gap: var(--item-gap);
+  padding-inline-end: calc(var(--font-size) * 2);
+}
+
+.overlay-ticker__item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap; /* ✅ keep the content inline */
+  height: 100%;
+  padding-inline: calc(var(--item-gap) * 0.25);
+  position: relative;
+  flex: 0 0 auto; /* ✅ don’t shrink */
+}
+
+.overlay-ticker__text,
+.ui-markdown {
+  white-space: nowrap; /* ✅ markdown text inline */
+  display: inline-block;
+  line-height: 1;
 }

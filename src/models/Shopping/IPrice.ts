@@ -17,6 +17,7 @@ export interface IStripePrice {
         usage_type: 'licensed' | 'metered';
     };
     tax_behavior?: 'exclusive' | 'inclusive' | 'unspecified';
+    tax_rate?: string;
     tiers_mode?: 'graduated' | 'volume';
     transform_quantity?: {
         divide_by: number;

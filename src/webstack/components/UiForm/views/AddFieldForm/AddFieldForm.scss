@@ -7,6 +7,10 @@
     width: 100%;
 }
 .add-field {
+    // width: 100%;
+    padding:var(--s-9);
+    width: var(--s-9-w);
+    max-width: max-content;
     @extend .d-flex;
     align-items: flex-start;
 }

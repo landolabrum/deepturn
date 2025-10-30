@@ -133,7 +133,7 @@ const UserDocs = ({ user, previewPdf }: IDocuments) => {
       );
       setDocs(newDocs);
     } catch (e: any) {
-      console.log('[ DOCS ERROR ]', e);
+      console.error('[ DOCS ERROR ]', e);
     }
     setLoader({ active: false });
   }

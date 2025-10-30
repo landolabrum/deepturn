@@ -15,9 +15,9 @@ const UserSelectMethod: React.FC<IUserSelectMethods> = ({user, methods}:IUserSel
         const methodIds = methods.map((m,v)=>(m.id));
         const defaults = [user?.invoice_settings?.default_payment_method, user?.default_source];
         const hasDefault = defaults.filter(d => d !== null);
-        if(hasDefault?.length){
-            console.log(hasDefault)
-        }
+        // if(hasDefault?.length){
+        //     console.log(hasDefault)
+        // }
         // console.log('methodIds: ', user?.default_source, user?.invoice_settings)
         // console.log('methodIds: ', methodIds)
     }

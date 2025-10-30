@@ -19,6 +19,7 @@
     &--actions {
         @extend .d-flex;
         justify-content: flex-start;
+        width: 100%;
     }
     
     &--content {

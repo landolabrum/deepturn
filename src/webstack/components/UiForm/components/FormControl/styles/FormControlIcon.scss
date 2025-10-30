@@ -18,13 +18,12 @@
 }
 
 .form-control-icon {
-
   @extend .d-flex;
   --ui-icon-color: inherit;
   --ui-icon-size: inherit;
   --ui-icon-width: inherit;
   --ui-icon-height: inherit;
-  padding: 0 var(--s-9) 0 var(--s-10);
+  padding: 0 .2rem;
   &-nav-item {
     justify-content: flex-end;
     position: relative;
@@ -33,9 +32,11 @@
       position: relative;
     }
   }
+
   &-flat{ padding: 0; }
   &-link {
     width: var(--s-5);
+    
     @media(max-width:1100px) {
       position: relative;
     }

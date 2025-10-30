@@ -1,0 +1,122 @@
+{
+    "email": "lando@deepturn.com",
+    "id": "cus_ScbLiMXD2DI4CO",
+    "object": "customer",
+    "address": null,
+    "balance": 0,
+    "created": 1751683686,
+    "currency": null,
+    "default_source": null,
+    "delinquent": false,
+    "description": null,
+    "discount": null,
+    "invoice_prefix": "X7ERVI3Z",
+    "invoice_settings": {
+        "custom_fields": null,
+        "default_payment_method": null,
+        "footer": null,
+        "rendering_options": null
+    },
+    "livemode": false,
+    "name": "Lando Labrum",
+    "next_invoice_sequence": 1,
+    "phone": null,
+    "preferred_locales": [],
+    "shipping": null,
+    "tax_exempt": "none",
+    "test_clock": null,
+    "methods": {
+        "object": "list",
+        "data": [],
+        "has_more": false,
+        "url": "/v1/payment_methods"
+    },
+    "exp": null,
+    "iat": null,
+    "metadata": {
+        "merchant": {
+            "url": "http://localhost:3000",
+            "name": "deepturn",
+            "mid": "mb1",
+            "stripeId": "acct_1G38IXIodeKZRLDV"
+        },
+        "user": {
+            "address": null,
+            "clearance": 1,
+            "password_token": null,
+            "password": null,
+            "email": "lando@deepturn.com",
+            "email_verified": false,
+            "type": "customer",
+            "devices": [
+                {
+                    "wan": "198.8.79.43",
+                    "lan": "f8850c01-4681-4d74-94c8-847642b32cc9.local",
+                    "navigator": {
+                        "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+                        "platform": "Linux x86_64",
+                        "language": "en-US",
+                        "languages": [
+                            "en-US",
+                            "en",
+                            "ru",
+                            "la",
+                            "zh",
+                            "zh-CN"
+                        ],
+                        "cookieEnabled": true,
+                        "brands": [
+                            {
+                                "brand": "Not)A;Brand",
+                                "version": "8"
+                            },
+                            {
+                                "brand": "Chromium",
+                                "version": "138"
+                            },
+                            {
+                                "brand": "Google Chrome",
+                                "version": "138"
+                            }
+                        ],
+                        "mobile": false
+                    },
+                    "connection": {
+                        "effectiveType": "4g",
+                        "downlink": 10,
+                        "rtt": 50,
+                        "saveData": false,
+                        "type": "4g"
+                    },
+                    "device": {
+                        "memory": 8,
+                        "hardwareConcurrency": 24,
+                        "screen": {
+                            "width": 2702,
+                            "height": 1520,
+                            "colorDepth": 24
+                        },
+                        "window": {
+                            "innerWidth": 1148,
+                            "innerHeight": 1384
+                        }
+                    },
+                    "permissions": {
+                        "geolocation": "prompt",
+                        "notifications": "prompt",
+                        "camera": "prompt",
+                        "microphone": "prompt",
+                        "persistent_storage": null
+                    },
+                    "device_settings": null,
+                    "authorization_data": null,
+                    "cookies": null,
+                    "created": 1751683685908
+                }
+            ],
+            "social": [],
+            "server_url": "tiktok.soy"
+        },
+        "forms": null
+    }
+}

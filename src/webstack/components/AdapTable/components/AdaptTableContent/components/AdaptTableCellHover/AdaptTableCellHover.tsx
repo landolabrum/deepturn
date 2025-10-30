@@ -51,7 +51,7 @@ export default function AdaptTableCellHover(value: any) {
         </div>
       </>
     );
-  else if (typeof value === "object" && value.props?.data) {
+  else if (typeof value === "object" && Boolean(value?.props && value.props?.data)) {
     return orderedList(Object(value.props.data));
   }
   return <></>;

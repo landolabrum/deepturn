@@ -1,0 +1,59 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.ui-multi-select {
+  @extend .d-flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  align-items: center;
+  width: 100%;
+
+  &__tags {
+    white-space: nowrap;
+    @extend .d-flex;
+    font-size: var(--s-7);
+    gap: var(--s-9);
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+       position: relative;
+
+  }
+
+  &__tag {
+    @extend .d-flex;
+    border-radius: var(--border-radius);
+    width: max-content;
+    box-shadow: var(--box-shadow);
+    padding: var(--s-12) var(--s-9);
+    justify-content: space-between;
+    border-radius: var(--border-radius);
+    color: var(--white);
+    --ui-icon-color: var(--white);
+    gap: var(--s-11);
+    text-transform: capitalize;
+    max-width: 140px;
+
+    /* ellipsis requirements */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    position:relative;
+    cursor: pointer;
+    // &:hover{
+    //   position: absolute;
+    //   top: 0;
+    // }
+    /* ensure the inner text actually truncates */
+    & > div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+  }
+}

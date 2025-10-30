@@ -90,8 +90,8 @@ const CreateMethodStripeForm = ({ onSuccess, user, shippable, success_url="/chec
                 <div className='account-create-method__content'>
                     <div id="payment-element" />
                     <div className='account-create-method__submit'>
-                        <UiButton type="submit" variant={hasPayElem?'link':'disabled'}>
-                            Add Payment Method
+                        <UiButton type="submit" size='sm' traits={{afterIcon:"fa-credit-card-front",padding:'10px'}} variant={hasPayElem?'link':'disabled link'}>
+                            Submit Payment Info
                         </UiButton>
                     </div>
                 </div>

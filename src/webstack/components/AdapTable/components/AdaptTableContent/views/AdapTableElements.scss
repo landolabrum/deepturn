@@ -1,30 +1,39 @@
 // Define variables for repeated values
-$borderColor: var(--gray-80);
-$hoverColor: var(--gray-80-o);
-$headerColor: var(--gray-80-o);
-.d-flex{
- display: flex;
- justify-content: center;
- align-items: center;
+$borderColor: inherit;
+$hoverColor: var(--gray-10);
+$hoverBgColor: var(--gray-30-o);
+$headerColor: var(--gray-20-o);
+
+.d-flex {
+  display: flex;
+  font-family: Decimal;
+  //  justify-content: center;
+  //  align-items: center;
 }
+
 $xs: 450px;
 $sm: 900px;
 $defaultPadding: 5px 10px;
 $bRad: 5px;
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
   }
+
   70% {
     opacity: 0;
   }
+
   85% {
     opacity: 0.3;
   }
+
   100% {
     opacity: 1;
   }
 }
+
 @mixin mobileTr($bRad: 5px) {
   display: flex;
   flex-direction: column;
@@ -39,20 +48,23 @@ $bRad: 5px;
   margin: var(--s-4) var(--s-10);
   min-height: max-content;
   height: max-content;
-
   &.mini {
     margin: 0;
-    padding: 0 8px;
+    padding: 0;
+    
   }
+
   &:hover {
-  box-shadow: 
-  // inset 0 0  1px 2px var(--primary-60),
-  -1px -0.5px 1px 1px var(--gray-60),
-  2px 2px 4px 3px var(--gray-100), 
-  ;
+    box-shadow:
+      // inset 0 0  1px 2px var(--primary-60),
+      -1px -0.5px 1px 1px var(--gray-30),
+      2px 2px 4px 3px var(--gray-100),
+    ;
     overflow: visible;
-    background-color: $hoverColor;
+    color: $hoverColor;
+    background-color: $hoverBgColor;
   }
+
   @media (max-width: $xs) {
     max-width: calc(100% - 8px);
     margin: 5px 10px;
@@ -64,15 +76,19 @@ $bRad: 5px;
   max-width: 100%;
   padding: $defaultPadding;
   border-bottom: none;
+
   &:not(:last-child) {
     border-right: none;
   }
+
   justify-content: space-between;
   display: flex;
+
   @media (max-width: $xs) {
     flex-direction: column;
     gap: 10px;
   }
+
   &::before {
     display: flex;
     text-transform: capitalize;
@@ -82,38 +98,60 @@ $bRad: 5px;
   }
 
 }
+
 table {
   margin-bottom: auto;
   width: 100%;
-  -webkit-border-horizontal-spacing:0;
-  -webkit-border-vertical-spacing:0;
+  -webkit-border-horizontal-spacing: 0;
+  -webkit-border-vertical-spacing: 0;
   border-radius: var(--border-radius);
   border: solid 1px $borderColor;
-  &.table-mini{
-    @media(max-width: 900px){
-    border: none;
-    tbody{
+
+  &.table-mini {
+    @media(max-width: 900px) {
+      border: none;
+
+      tbody {
         display: flex;
         flex-direction: column;
         gap: var(--s-5);
       }
     }
   }
-  &.table-show{
+
+  &.table-vertical {
+    border: none;
+
+    tbody {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-5);
+    }
+
+    tr {
+      @include mobileTr();
+    }
+  }
+
+  &.table-show {
     display: table;
   }
-  &.hide-header{
+
+  &.hide-header {
     border-radius: var(--border-radius);
     border: solid 1px transparent;
     overflow: hidden;
   }
+
   thead {
-  
+
     @media (max-width: 900px) {
       display: none;
     }
+
     tr {
       background-color: $headerColor;
+
       th {
         text-transform: capitalize;
       }
@@ -126,9 +164,10 @@ table {
     tr {
       height: 50px;
       width: 100%;
-      
+color:inherit;
       &:hover {
-        background-color: $hoverColor;
+        background-color: $hoverBgColor;
+        color: $hoverColor;
       }
 
       &.mobile-tr {
@@ -139,14 +178,6 @@ table {
         @include mobileTr();
       }
 
-      &.mini {
-
-        max-width: inherit;
-        cursor: default;
-        td:last-child {
-          text-align: right;
-        }
-      }
 
       :last-child {
         td {
@@ -161,36 +192,43 @@ table {
           }
         }
       }
+
       th {
         cursor: col-resize;
+
         .resizeable {
           position: relative;
           overflow: hidden;
         }
-        
+
         .resizeable .th-content {
-          padding-right: 20px; /* Space for the resizing handle */
+          padding-right: 20px;
+          /* Space for the resizing handle */
         }
-        
-   
-        
+
+
+
         .resizeable::after {
           content: "";
           position: absolute;
           top: 0;
           right: 0;
           bottom: 0;
-          width: 10px; /* Width of the resizing handle */
-          background-color: $headerColor; /* Color of the resizing handle */
+          width: 10px;
+          /* Width of the resizing handle */
+          background-color: $headerColor;
+          /* Color of the resizing handle */
           cursor: col-resize;
         }
-        
+
       }
+
       th,
       td {
         padding: $defaultPadding;
         position: relative;
         max-width: max-content;
+
         @media (min-width: 900px) {
           .td-content {
             overflow-x: hidden;
@@ -220,60 +258,56 @@ table {
           width: 25px;
         }
 
-        
+
         .td-hover {
           display: none;
         }
+
         .td-content {
+          @extend .d-flex;
+          justify-content: flex-start;
           position: relative;
-          &--image{
+
+          &--image {
             position: relative;
             @extend .d-flex;
             max-width: 150px;
-            width: var(--s-4-width);
+            width: var(--s-4-w);
             padding: var(--s-4);
             aspect-ratio: 1;
-            --ui-icon-color: var(--gray-60-o);
+            --ui-icon-color: var(--ui-icon-color, --gray-30-o);
             --ui-icon-width: var(--s-element);
             --ui-icon-height: 100%;
           }
         }
+
         &.hoverable {
+
           // pointer-events: none;
-            &:hover {
-              .td-hover {
-                display: flex;
+          &:hover {
+            .td-hover {
+              display: flex;
             }
           }
         }
 
-        
+
+      }
+
+      &.mini {
+        height: auto;
+        max-width: inherit;
+        cursor: default;
+
+        td:last-child {
+          .td-content {
+            justify-content: flex-end;
+            --ui-icon-width: var(--s-1);
+          }
+        }
+
       }
     }
-    // &.table-mini {
-    //   border:none;
-    //   tbody{
-    //     @extend .d-flex;
-    //     flex-direction: column;
-    //     gap:var(--s-7);
-    //     width: 100%;
-    //   }
-    //   tr {
-    //     background-color: unset;
-    //     td,
-    //     th {
-    //       display: none;
-    //       border-right: none;
-    //       &:last-child {
-    //         .th-content.mini,
-    //         .td-content {
-    //           display: flex;
-    //           justify-content: flex-end;
-       
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+
   }
 }

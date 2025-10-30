@@ -14,11 +14,17 @@
         @extend .d-flex;
         justify-content: flex-end;
         margin-left: auto;
-    }
-    &__form {
         width: 100%;
-    }
 
+     
+    }
+    &__tree{
+        min-height: max-content;
+        height:100%;
+        position: relative;
+        overflow: hidden;
+
+    }
     &__display {
         &--title {
             flex: 1;
@@ -70,7 +76,7 @@
                     width: max-content;
                     border: solid 1px transparent;
                     padding: 0 var(--s-11);
-                    width: var(--s-11-width);
+                    width: var(--s-11-w);
                 }
 
                 &__key {

@@ -1,24 +1,41 @@
-// Relative Path: ./XInsurance.tsx
-import React from 'react';
+
+import React, { useEffect, useMemo, useState } from 'react';
 import styles from './XInsurance.scss';
-import ThreeSTL from '@webstack/components/ThreeComponents/ThreeSTL/controller/THREESTL';
-import useWindow from '@webstack/hooks/window/useWindow';
+import FullPageBackground from '@webstack/components/Text/FullPageBackground/FullPageBackground';
 
-// Remember to create a sibling SCSS file with the same name as this component
+const XInsurance: React.FC = () => {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const m = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    const handler = () => setReduced(!!m?.matches);
+    handler();
+    m?.addEventListener?.('change', handler);
+    return () => m?.removeEventListener?.('change', handler);
+  }, []);
 
-const XInsurance = () => {
-  const {width, height} = useWindow();
+  const media = useMemo(
+    () =>
+      reduced
+        ? { type: 'video' as const, url: 'https://tiktok.soy/files/srv/xi1/backgrounds/md500-HD.webm', playbackSpeed: 1.0, loop: true }
+        : { type: 'video' as const, url: 'https://tiktok.soy/files/srv/xi1/backgrounds/md500-HD.webm', playbackSpeed: 0.5, loop: true },
+    [reduced]
+  );
+
+  const mediaKey = `${media.url}:${media.playbackSpeed}`;
+
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='x-insurance'>
-      <div className='x-insurance--stl'>
-        <ThreeSTL
-          cameraPosition={[0, -275, 20]}
-          file="/merchant/xi1/logo.stl"
-          />
-        {/* Add your components here */}
-      </div>
+      <div className="xinsurance">
+        {/* fixed, behind everything */}
+        <div className="xinsurance__bg">
+          <FullPageBackground key={mediaKey} media={media} />
+        </div>
+
+        {/* put your page content here */}
+        <div className="xinsurance__content">
+          {/* …CTA / sections if needed… */}
+        </div>
       </div>
     </>
   );

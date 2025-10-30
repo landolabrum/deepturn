@@ -14,7 +14,7 @@ const AdminAccount = ({ accountId }: { accountId: string }) => {
     const getAccount = async () => {
         try {
             setaccount(await adminService.getAccount(accountId));
-        } catch (e: any) { console.log('[ AdminAccount.getAccount()<ERROR> ]', e) }
+        } catch (e: any) { console.error("[ AdminAccount.getAccount()<ERROR> ]", e); }
     }
 
     useEffect(() => {
@@ -31,8 +31,8 @@ const AdminAccount = ({ accountId }: { accountId: string }) => {
                     <div className='admin-account__header--contact'>
                         {account?.email && <UiButton size='sm' href={`mailto://${account.email}`}>
                             {account.email}</UiButton>}
-                        {account?.business_profile.support_phone && <UiButton type='tel' size='sm' href={`mailto://${account.email}`}>
-                            {account.business_profile.support_phone}</UiButton>}
+                        {account?.business_profile?.support_phone && <UiButton size='sm' href={`mailto://${account.email}`}>
+                            {account.business_profile?.support_phone}</UiButton>}
 
                     </div>
                 </div>

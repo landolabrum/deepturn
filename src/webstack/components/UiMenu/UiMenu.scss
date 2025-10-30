@@ -82,7 +82,7 @@ $el_gap: 7px;
   //     background-color: var(--gray-90);
   //   }
   //   .menu__option {
-  //     width: var(--s-10-width);
+  //     width: var(--s-10-w);
   //     padding:0 var(--s-10);
   //     transition: all .4s ease-out;
   //     &:hover {
@@ -94,14 +94,12 @@ $el_gap: 7px;
 
 
   &.menu__flat {
-    width: 100%;
     overflow: hidden;
     min-width: 200px;
     color: var(--gray-60);
     .menu__option {
-      &:hover {
-        background-color: var(--gray-70);
-      }
+      width: var(--s-10-w);
+      padding:var(--s-12) var(--s-10);
 
       &.active {
         color: var(--white);
@@ -147,9 +145,13 @@ $el_gap: 7px;
     }
 
     &.active {
-      background-color: var(--primary-50);
+      background-color: var(--blue-50);
       color: var(--gray-30);
       --ui-icon-color: var(--gray-30);
+      &.dark{
+        background-color: unset;
+        
+      }
     }
 
     &.disabled {

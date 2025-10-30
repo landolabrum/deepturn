@@ -6,7 +6,11 @@
 .admin-accounts {
     @extend .d-flex;
     flex-direction: column;
-    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap:var(--s-9);
+    width: var(--s-9-w);
+    overflow: hidden;
     &__account {
         width: 100%;
         @extend .d-flex;

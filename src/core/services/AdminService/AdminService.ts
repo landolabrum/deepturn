@@ -14,6 +14,79 @@ export default class AdminService
   constructor() {
     super(environment.serviceEndpoints.membership);
   }
+
+
+    public async deleteProduct(productId: string, price_id?:string): Promise<any> {
+    // console.log("[DELETE PRODUCT]", productId, price_id);
+    if (productId) {
+      try {
+        const customer = await this.get<any>(`/api/product/delete?id=${price_id?`${productId}&price_id=${price_id}`:productId}`);
+        return customer;
+      } catch (error: any) {
+        return error;
+      }
+    } else throw new ApiError("No PRODUCT Provided", 400, "MS.SI.02");
+  };
+public async createProduct(productData: any): Promise<any> {
+  if (!productData) throw new ApiError("No PRODUCT Provided", 400, "MS.SI.02");
+
+  const {
+    id,
+    name,
+    active,
+    description,
+    metadata = {},
+    price,
+    imageFiles = [],
+    imageFilenames = [],
+    merchant_id,
+    marketing_features
+  } = productData;
+
+  const formData = new FormData();
+  const fld = (k: string, v: any, cond = true) => cond && formData.append(k, v);
+
+  // ✅ Only append id when it's a real value
+  const validId =
+    id != null &&
+    String(id).trim() !== "" &&
+    id !== "undefined" &&
+    id !== "null";
+
+  fld("id", id, validId);
+  fld("name", name);
+  fld("active", String(Boolean(active)));         // normalize
+  fld("description", description || "");
+  fld("merchant_id", merchant_id);
+  fld("metadata", JSON.stringify(metadata || {}));
+  fld("marketing_features", JSON.stringify(marketing_features), Array.isArray(marketing_features));
+  fld("price", JSON.stringify(price));            // you already send cents upstream
+
+  for (const file of imageFiles) {
+    if (file instanceof File) fld("imageFiles", file);
+  }
+
+  fld("filenames", JSON.stringify(imageFilenames), Array.isArray(imageFilenames) && imageFilenames.length > 0);
+
+  try {
+    return await this.post<FormData, any>("/api/product/", formData);
+  } catch (error: any) {
+    const detail =
+      error?.response?.data?.detail ||
+      error?.detail ||
+      (typeof error === "string" ? error : "Unexpected error");
+
+    const message =
+      error?.response?.data?.message ||
+      error?.message ||
+      "Product creation failed";
+
+    const status = error?.response?.status || 400;
+
+    throw { message, detail, status, error: true };
+  }
+}
+
   public async setupRemoteAccess(): Promise<IRemoteAccessResponse> {
     try {
       const response = await this.post<any, any>(`/api/remote-access/setup`, {});
@@ -26,8 +99,11 @@ export default class AdminService
   // THREATS
   public async listThreats(): Promise<any> {
     try {
-      const threats = await this.get<any>(`/api/security/`);
-      return threats;
+      // TODO NOT LIST THREATS, SUPPOSED TO LOG THEIR STUFF
+      // const threats = await this.get<any>(`/api/security/threats`);
+      // console.log("Threats", threats);
+      // return threats
+      return ;
     } catch (error: any) {
       return error;
     }
@@ -126,16 +202,7 @@ export default class AdminService
       }
     } else throw new ApiError("No PriceID Provided", 400, "MS.SI.02");
   };
-  public async deleteProduct(productId: string, price_id?:string): Promise<any> {
-    if (productId) {
-      try {
-        const customer = await this.get<any>(`/api/product/delete?id=${price_id?`${productId}&price_id=${price_id}`:productId}`);
-        return customer;
-      } catch (error: any) {
-        return error;
-      }
-    } else throw new ApiError("No PRODUCT Provided", 400, "MS.SI.02");
-  };
+
   public async deletePrice(priceId: string): Promise<any> {
     if (priceId) {
       try {
@@ -146,28 +213,10 @@ export default class AdminService
       }
     } else throw new ApiError("No PRODUCT Provided", 400, "MS.SI.02");
   };
-public async createProduct(productData: any): Promise<any> {
-  if (!productData) throw new ApiError("No PRODUCT Provided", 400, "MS.SI.02");
 
-  const { name, active, description, metadata, prices = [] } = productData;
 
-  console.log({ productData }); // Debug log
 
-  try {
-    const newProduct = await this.post<any, any>(
-      `/api/product/`,
-      {
-        name,
-        active,
-        description,
-        metadata,
-        prices // array of price objects
-      }
-    );
-    return newProduct;
-  } catch (error: any) {
-    return error;
-  }
-}
+
+
 
 }

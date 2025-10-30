@@ -1,387 +1,343 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import styles from './AdminProducts.scss';
-import { getService } from '@webstack/common';
-import IProductService, { IGetProduct } from '~/src/core/services/ProductService/IProductService';
 import { dateFormat, numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 import AdminProduct from '../views/AdminProduct/AdminProduct';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
-import { IProduct } from '~/src/models/Shopping/IProduct';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { useAdminLevel } from '~/src/core/authentication/hooks/useUser';
-import environment from '~/src/core/environment';
 import useDeleteProduct from '../hooks/useDeleteProduct';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
+import { useProducts } from '~/src/modules/ecommerce/Services/hooks/useProducts';
+import environment from '~/src/core/environment';
+
+type Action = { label: string; icon?: string };
 
 const AdminProducts: React.FC = () => {
-  const MID_LEVEL = 10;
-  const { openModal, closeModal } = useModal();
-
-  const [products, setProducts] = useState<IProduct[] | undefined>();
-  const [modified, setModified] = useState<any[] | undefined>();
-  const [product, setProduct] = useState<IProduct>();
-  const [responseExtras, setExtras] = useState<object | undefined>();
-  const [select, setSelect] = useState<boolean>(false);
-  const [view, setView] = useState<string>('list');
-  const selected = select && products?.filter(p => p?.selected)?.length;
+  const { openModal } = useModal();
   const { user } = useAdminLevel();
-  const [loader, setLoader] = useLoader();
-  const searchTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [filteredProducts, setFilteredProducts] = useState<IProduct[] | undefined>(products);
 
-  const onRowClick = (product: IProduct) => {
-    if (!product.id) return;
-    setProduct(product);
-    setView('product');
-  };
+  const [view, setView] = useState<'list' | 'add' | 'product'>('list');
+  const [product, setProduct] = useState<any>();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [select, setSelect] = useState(false);
+  const [responseExtras, setExtras] = useState<Record<string, any>>();
+  const [, setLoader] = useLoader();
+  const [modified, setModified] = useState<any[]>();
+  const [filterState, setFilterState] = useState({ visibility: 'active', merchant: 'all' });
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const handleDeselect = () => {
-    const deselected = products?.map((product: IProduct) => {
-      if (product?.selected == true) {
-        delete product.selected;
-      }
-      return product;
-    });
-    setProducts(deselected);
-    setSelect(false);
-  };
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  const { deletedProduct, initiateDelete } = useDeleteProduct();
+  const { products, loading, liveMode, hasMore, error, fetchProducts, total } = useProducts({
+    showAll: true,
+    serverRefresh: true,
+    limit: 10
+  });
 
-  const confirmDelete = () => {
-    const toDelete = filteredProducts
-      ?.filter((product) => product?.selected)
-      ?.map((product: any) => ({
-        ...product,
-        label: product.name,
-        status: 'incomplete',
-      })) ?? [];
-
-    setModified(toDelete);
-
-    const confirmDeleteModal = {
-      title: `Delete ${selected} Products?`,
-      statements: [
-        {
-          label: 'Delete',
-          onClick: async () => {
-            setLoader({ active: true, body: `Deleting products...` });
-
-            for (let i = 0; i < toDelete.length; i++) {
-              try {
-                const currentProduct = toDelete[i];
-                await initiateDelete(currentProduct);
-                toDelete[i].status = deletedProduct ? 'complete' : 'error';
-              } catch (error) {
-                toDelete[i].status = 'error';
-                console.error(`Error deleting product ${toDelete[i].id}:`, error);
-              }
-            }
-
-            setLoader({ active: false });
-
-            openModal({
-              title: 'Delete Completed',
-              children: (
-                <ol>
-                  {toDelete?.map((p) => (
-                    <li key={p.id}>
-                      {p.name} - {p.status}
-                    </li>
-                  ))}
-                </ol>
-              ),
-            });
-          },
-        },
-        { label: 'Cancel', onClick: handleDeselect, closeModal },
-      ],
-      body: (
-        <ol>
-          {toDelete?.map((p) => (
-            <li key={p.id}>
-              {p.name} - {p.id}
-            </li>
-          ))}
-        </ol>
-      ),
-    };
-
-    openModal({ confirm: confirmDeleteModal });
-  };
-
-  const onSelect = (product: IProduct) => {
-    if (!product.id) return;
-    const updated = filteredProducts?.map((item: any) => {
-      if (item.name == product.name && item.price_id == product.price_id) {
-        item.selected = !item?.selected;
-      }
-      return item;
-    });
-
-    setFilteredProducts(updated);
-  };
-
-  const handleSearch = useCallback(
-    (searchTerm: string) => {
-      clearTimeout(searchTimeout.current);
-
-      searchTimeout.current = setTimeout(() => {
-        if (!searchTerm) {
-          setFilteredProducts(products);
-        } else {
-          const filtered = products?.filter(product => {
-            return Object.values(product).some(value =>
-              typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-          });
-          setFilteredProducts(filtered);
-        }
-      }, 1500);
-    },
-    [products]
+  // NEW: track last refresh time (ms since epoch)
+  const [lastRefreshedAt, setLastRefreshedAt] = useState<number | null>(null);
+  const lastRefreshLabel = useMemo(
+    () => (lastRefreshedAt ? dateFormat(lastRefreshedAt, { isTimestamp: true }) : '—'),
+    [lastRefreshedAt]
   );
 
-  const handleSearchChange = (searchData: string) => {
-    setSearchTerm(searchData);
+  // Table rows formatted from products
+  const [baseRows, setBaseRows] = useState<any[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+
+  const selected = useMemo(() => {
+    if (!select || !filteredProducts) return [];
+    return filteredProducts.filter((p) => p.selected);
+  }, [select, filteredProducts]);
+
+  const { initiateDelete } = useDeleteProduct();
+
+  const handleSearch = useCallback((term: string) => {
+    if (searchTimeout.current) clearTimeout(searchTimeout.current);
+    searchTimeout.current = setTimeout(() => setSearchTerm(term), 300);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (searchTimeout.current) clearTimeout(searchTimeout.current);
+    };
+  }, []);
+
+  const handleFilterChange = (field: IFormField) => {
+    const [group, value] = field.name.split('-');
+    setFilterState((prev) => ({ ...prev, [group]: value }));
   };
 
-  
-    // Function to dynamically extract unique 'mid' values from products
-    const getUniqueMids = (products:any[]) => {
-      const mids = products?.map((product:any) => product.mid).filter(mid => mid); // Filter out undefined 'mid'
-      return Array.from(new Set(mids)); // Remove duplicates
-    };
-  
-    // Adding 'mid' as a filter
+  const getUniqueMids = (list: any[]) => [...new Set(list.map((p) => p.mid).filter(Boolean))];
 
-  
+  const applyFilters = useCallback(() => {
+    if (!baseRows) return;
 
+    let filtered = [...baseRows];
 
-  
+    // visibility
+    if (filterState.visibility === 'active') {
+      filtered = filtered.filter((p) => p.active !== false);
+    } else if (filterState.visibility === 'inactive') {
+      filtered = filtered.filter((p) => p.active === false);
+    }
 
+    // merchant
+    if (filterState.merchant !== 'all') {
+      filtered = filtered.filter((p) => p.mid === filterState.merchant);
+    }
 
+    // search
+    if (searchTerm) {
+      const q = searchTerm.toLowerCase();
+      filtered = filtered.filter((p) =>
+        Object.values(p).some((v) => typeof v === 'string' && v.toLowerCase().includes(q)),
+      );
+    }
 
-  const ProductService = getService<IProductService>('IProductService');
-  const { mid } = environment.merchant;
+    setFilteredProducts(filtered);
+  }, [baseRows, filterState, searchTerm]);
 
-  async function getProducts() {
-    if (products || Boolean(products && view === 'list')) return;
-    try {
-      const productsResponse = await ProductService.getProducts();
-      setExtras({
-        total: productsResponse.data?.length,
-        livemode: productsResponse?.data[0]?.livemode,
-        has_more: productsResponse.has_more
-      });
+  useEffect(() => {
+    applyFilters();
+  }, [filterState, searchTerm, applyFilters]);
 
-      const formattedProducts = productsResponse?.data.map((field: any) => {
+  // Build baseRows when products change (only for list view)
+  useEffect(() => {
+    if (!products || products.length === 0 || view !== 'list') return;
+
+    const rows = products
+      .map((field: any) => {
         const notActive = field.active === false;
-        const notAllowed = Boolean(field.metadata.mid !== mid && user.type !== 'admin-3');
-        if (notAllowed && notActive) return;
-        let context: any = {
+        const fieldMid = field?.metadata?.mid;
+        const notAllowed = fieldMid !== environment.merchant.mid && user.type !== 'admin-3';
+        if (notAllowed && notActive) return null;
+
+        const ctx: any = {
           id: field.id,
           image: field.images,
           name: field.name,
           type: field.type,
-          price_id: field.price.id,
-          price: numberToUsd(field.price.unit_amount),
+          price_id: field.price?.id,
+          price: numberToUsd(field.price?.unit_amount),
           livemode: JSON.stringify(field.livemode),
-          timeline: (
-            <div className='heiarchy'>
-              <div className='heiarchy-item'>
-                <div>created</div>
-                <div>{dateFormat(field.created, { isTimestamp: true })}</div>
-              </div>
-              <div className='heiarchy-item'>
-                <div>updated</div>
-                <div>{dateFormat(field.updated, { isTimestamp: true })}</div>
-              </div>
-            </div>
-          ),
+          created: dateFormat(field.created, { isTimestamp: true }),
+          updated: dateFormat(field.updated, { isTimestamp: true }),
         };
+
         if (user.type === 'admin-3') {
-          context.mid = field.metadata.mid;
-          context.active = field.active;
+          ctx.mid = fieldMid;
+          ctx.active = field.active;
         }
-        return context;
-      });
-      setProducts(formattedProducts.filter((y: any) => y));
-      setFilteredProducts(formattedProducts.filter((y: any) => y));
-    } catch (e: any) {
-      console.log('[ ADMIN PRODUCTS ( ERROR ) ]', e);
-    } finally {
-      setView('list');
-    }
-  }
 
-  const handleAction = (actionName: string) => {
-    switch (actionName) {
-      case 'edit':
-        setSelect(!select);
-        break;
-      default:
-        setView(actionName);
-        break;
+        return ctx;
+      })
+      .filter(Boolean);
+
+    setBaseRows(rows);
+    setExtras({ total, livemode: liveMode, has_more: hasMore });
+
+    // NEW: initialize lastRefreshedAt on first successful hydration
+    if (lastRefreshedAt === null) {
+      setLastRefreshedAt(Date.now());
     }
+  }, [products, liveMode, hasMore, total, view, user.type, lastRefreshedAt]);
+
+  useEffect(() => {
+    if (view === 'list') applyFilters();
+  }, [baseRows, view, applyFilters]);
+
+  const onRowClick = (row: any) => {
+    if (!row?.id) return;
+    const full = products?.find((p: any) => p.id === row.id);
+    if (!full) return;
+    setProduct(full);
+    setView('product');
   };
-  const [filterState, setFilterState] = useState<{ visibility: string; merchant: string }>({
-  visibility: 'everything',
-  merchant: 'all',
-});
 
-const applyFilters = useCallback(() => {
-  if (!products) return;
-
-  const { visibility, merchant } = filterState;
-  let filtered = [...products];
-
-  // Apply visibility filter
-  if (visibility === 'active') {
-    filtered = filtered.filter(product => product.active);
-  } else if (visibility === 'inactive') {
-    filtered = filtered.filter(product => !product.active);
-  }
-
-  // Apply merchant filter
-  if (merchant !== 'all') {
-    filtered = filtered.filter(product => product?.mid === merchant);
-  }
-
-  setFilteredProducts(filtered);
-}, [products, filterState]);
-
-const handleFilterChange = (field: IFormField) => {
-  const [group, value] = field.name.split('-');
-  setFilterState(prev => {
-    const newState = {
-      ...prev,
-      [group]: value,
-    };
-    return newState;
-  });
-};
-
-useEffect(() => {
-  applyFilters();
-}, [filterState, applyFilters]);
-
-const midOptions = getUniqueMids(products || []).map(mid => ({
-  label: mid,
-  name: `merchant-${mid}`,
-})).concat([{ label: 'all', name: 'merchant-all' }]).reverse();
-
-
-  useEffect(() => { getProducts() }, [setProducts]);
-useEffect(() => {
-  if (!products) return;
-
-  const { visibility, merchant } = filterState;
-  let filtered = [...products];
-
-  // Apply filters
-  if (visibility === 'active') {
-    filtered = filtered.filter(product => product.active);
-  } else if (visibility === 'inactive') {
-    filtered = filtered.filter(product => !product.active);
-  }
-
-  if (merchant !== 'all') {
-    filtered = filtered.filter(product => product?.mid === merchant);
-  }
-
-  // Apply search
-  if (searchTerm) {
-    filtered = filtered.filter(product =>
-      Object.values(product).some(value =>
-        typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+  const onSelect = (row: any) => {
+    if (!row?.id) return;
+    setFilteredProducts((prev) =>
+      prev?.map((item) =>
+        item.id === row.id && item.price_id === row.price_id
+          ? { ...item, selected: !item.selected }
+          : item,
+      ),
     );
-  }
+  };
 
-  setFilteredProducts(filtered);
-}, [products, filterState, searchTerm]);
-  const pageContext: any = {
+  const handleDeselect = () => {
+    setFilteredProducts((prev) => prev?.map((p) => ({ ...p, selected: undefined })));
+    setSelect(false);
+  };
+
+  const handleRefresh = useCallback(async () => {
+    try {
+      setIsRefreshing(true);
+      await fetchProducts({ bypassCache: true }); // forces network fetch
+      setLastRefreshedAt(Date.now());             // NEW: stamp after successful refresh
+    } catch (e) {
+      console.error('Refresh failed:', e);
+    } finally {
+      setIsRefreshing(false);
+    }
+  }, [fetchProducts]);
+
+  const confirmDelete = () => {
+    const toDelete =
+      filteredProducts?.filter((p) => p.selected).map((p) => ({ ...p, label: p.name, status: 'incomplete' })) ?? [];
+    setModified(toDelete);
+
+    openModal({
+      confirm: {
+        title: `Delete ${toDelete.length} Products?`,
+        statements: [
+          {
+            label: 'Delete',
+            onClick: async () => {
+              setLoader({ active: true, children: 'Deleting products...' });
+              for (const p of toDelete) {
+                try {
+                  await initiateDelete(p);
+                  p.status = 'complete';
+                } catch {
+                  p.status = 'error';
+                }
+              }
+              setLoader({ active: false });
+              openModal({
+                title: 'Delete Completed',
+                children: <ol>{toDelete.map((p) => <li key={p.id}>{p.name} - {p.status}</li>)}</ol>,
+                confirm: {
+                  statements: [{ label: 'back to products', onClick: handleDeselect }],
+                },
+              });
+            },
+          },
+          { label: 'Cancel', onClick: handleDeselect },
+        ],
+        body: <ol>{toDelete.map((p) => <li key={p.id}>{p.name} - {p.id}</li>)}</ol>,
+      },
+    });
+  };
+
+  const handleAction = (action: string) => {
+    if (action === 'edit') return setSelect((s) => !s);
+    if (action === 'refresh') return void handleRefresh();
+    setView(action as any);
+  };
+
+  const midOptions = useMemo(
+    () =>
+      getUniqueMids(products || [])
+        .map((mid) => ({ label: mid, name: `merchant-${mid}` }))
+        .concat([{ label: 'all', name: 'merchant-all' }])
+        .reverse(),
+    [products]
+  );
+
+  const pageContext: Record<typeof view, { actions: Action[]; view: React.ReactNode }> = {
     list: {
-      actions: ['add', 'edit'],
+      actions: [
+        { label: 'add', icon: 'fas-plus' },
+        { label: 'edit', icon: 'fa-pen-to-square' },
+        { label: 'refresh', icon: isRefreshing ? 'spinner' : 'fa-rotate' },
+      ],
       view: (
-        <>
+        <div className="d-flex-col justify-end align-end g-9 s-w-100">
           <AdapTable
             onSelect={select ? onSelect : undefined}
             options={{ tableTitle: 'admin products', hideColumns: ['id', 'selected', 'price_id'] }}
             data={filteredProducts}
-            filters={
-              {
-                visibility:[
-                  {
-                    label:'everything',
-                    name:'visibility-everything'
-                  },
-                  {
-                    label:'active',
-                    name:'visibility-active'
-                  },
-                  {
-                    label:'inactive',
-                    name:'visibility-inactive'
-                  }
-                ],
-                merchant: midOptions,
-              }
-            } // Define filter options
+            filters={{
+              visibility: [
+                { label: 'everything', name: 'visibility-everything' },
+                { label: 'active', name: 'visibility-active' },
+                { label: 'inactive', name: 'visibility-inactive' },
+              ],
+              merchant: midOptions,
+            }}
             setFilter={handleFilterChange}
             search={searchTerm}
-            setSearch={handleSearchChange}
+            setSearch={handleSearch}
             onRowClick={onRowClick}
           />
-        </>
-      )
+        </div>
+      ),
     },
     add: {
-      actions: ['list'],
-      view: <AdminProduct />
+      actions: [{ label: 'list', icon: 'fa-list' }],
+      view: <AdminProduct products={products} />,
     },
     product: {
-      actions: ['list'],
-      view: <AdminProduct product={product} />
-    }
+      actions: [
+        { label: 'list', icon: 'fa-list' },
+        { label: 'add', icon: 'fas-plus' },
+        { label: 'refresh', icon: isRefreshing ? 'spinner' : 'fa-rotate' },
+      ],
+      view: <AdminProduct product={product} />,
+    },
   };
-  if (products) return (
+
+  if (loading) return <UiLoader />;
+
+  return (
     <>
       <style jsx>{styles}</style>
-      <div className='admin-products'>
-        <div className='admin-products__header'>
-          <div className='admin-products__header--left'>
-            <div className='heiarchy'>
-              {responseExtras && Object.entries(responseExtras)?.map(([k, v]) => (
-                <div key={k} className='heiarchy__item'>
-                  <div className='heiarchy-key'>{k}</div>
-                  <div className='heiarchy-value'>{v?.toString()}</div>
-                </div>
-              ))}
+      <div className="admin-products">
+        <div className="admin-products__header">
+          <div className="admin-products__header--left">
+            <div className="admin-products__view">{view}</div>
+            <div className="heiarchy">
+              {responseExtras &&
+                Object.entries(responseExtras).map(([k, v]) => (
+                  <div key={k} className="heiarchy__item">
+                    <div className="heiarchy-key">{k}</div>
+                    <div className="heiarchy-value">{String(v)}</div>
+                  </div>
+                ))}
+              {/* NEW: last refresh display */}
+              <div className="heiarchy__item">
+                <div className="heiarchy-key">last_refresh</div>
+                <div className="heiarchy-value">{lastRefreshLabel}</div>
+              </div>
             </div>
           </div>
-          <div className='admin-products__header--right'>
-            {
-              pageContext[view].actions.map(
-                (action: string) => (
-                  <div key={action}><UiButton onClick={() => handleAction(action)}>{action}</UiButton></div>
-                ))
-            }
-            {selected != false && <div>
-              <UiButton label='coming soon' onClick={confirmDelete} variant='primary'>{selected} items</UiButton> 
-            </div> || ''} 
-          </div> 
-        </div> 
-        {pageContext[view].view} 
-      </div> 
+
+          <div className="admin-products__header--right">
+            {pageContext[view].actions.map((action) => {
+              const label = typeof action.label === 'string' ? action.label : 'action';
+              const isRefreshBtn = label === 'refresh';
+              return (
+                <div key={label}>
+                  <UiButton
+                    onClick={() => handleAction(label)}
+                    disabled={isRefreshBtn && isRefreshing}
+                    traits={{ afterIcon: action.icon || undefined }}
+                  >
+                    {label}
+                  </UiButton>
+                </div>
+              );
+            })}
+
+            {selected.length > 0 && (
+              <div>
+                <UiButton onClick={confirmDelete} variant="error">
+                  {selected.length} {selected.length === 1 ? 'Item' : 'Items'}
+                </UiButton>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {pageContext[view].view}
+      </div>
     </>
   );
-
-  return <UiLoader />;
 };
 
-export default AdminProducts;  
+export default AdminProducts;

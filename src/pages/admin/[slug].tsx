@@ -1,2 +1,2 @@
-import Admin from "~/src/modules/admin/controller/Admin";
-export default Admin;
+import AdminOne from "~/src/modules/admin/controller/AdminTen/AdminTen";
+export default AdminOne;

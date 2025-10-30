@@ -4,7 +4,7 @@ import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import IProductService from '~/src/core/services/ProductService/IProductService';
 import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
-import ContactForm from '@shared/components/ContactForm/ContactForm';
+import ContactForm from '@shared/components/Contact/forms/ContactForm/ContactForm';
 import CartList from '~/src/modules/ecommerce/cart/views/CartList/CartList';
 
 interface IVerifyPayment {
@@ -21,9 +21,9 @@ const VerifyPayment: React.FC<IVerifyPayment> = ({ token }) => {
     const ProductService = getService<IProductService>('IProductService');
     const [_cart, setCart]=useState<ICartItem | undefined>();
     const isTokenComplete = () => {
-        console.log("[ ITEM ]", {
-            tokenData
-        })
+        // console.log("[ ITEM ]", {
+        //     tokenData
+        // })
         if (!tokenData || !tokenData.items) {
             setTokenData({ error: "Token is invalid" });
             return false;

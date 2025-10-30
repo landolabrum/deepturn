@@ -1,12 +1,9 @@
-import React, { Suspense, useRef, useEffect, useState } from 'react';
+import React, { Suspense, useRef, useEffect, useState, useMemo } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
-import { Environment, PerspectiveCamera, useGLTF } from '@react-three/drei';
+import { Environment, PerspectiveCamera, useGLTF, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
-import styles from "./ThreeGLB.scss";
-import { useRouter } from 'next/router';
-import { OrbitControls } from '@react-three/drei';
-import ThreeGLBControls from './views/ThreeGLBControls';
+import styles from './ThreeGLB.scss';
 
 interface GLBViewerProps {
   modelPath: string;
@@ -16,134 +13,131 @@ interface GLBViewerProps {
   width?: number | string;
   height?: number | string;
   animate?: boolean;
-  controls?: boolean; // 👈 NEW
+  controls?: boolean;
+  envPreset?: React.ComponentProps<typeof Environment>['preset'];
 }
 
+useGLTF.preload('/merchant/nirv1/3dModels/products/MetalBox.glb');
 
+function fitCameraToObject(camera: THREE.PerspectiveCamera, obj: THREE.Object3D, fovDeg: number) {
+  const box = new THREE.Box3().setFromObject(obj);
+  const size = new THREE.Vector3();
+  const center = new THREE.Vector3();
+  box.getSize(size);
+  box.getCenter(center);
 
-const Model = ({ gltf, containerSize, fov, animate }: any) => {
-  const modelRef = useRef<THREE.Group>(null);
+  // Re-center model at origin for stable controls
+  obj.position.sub(center);
+
+  const radius = 0.5 * Math.max(size.x, size.y, size.z);
+  const fov = (fovDeg * Math.PI) / 180;
+  const dist = radius / Math.sin(fov / 2); // generous fit
+
+  camera.position.set(0, 0, dist);
+  camera.near = Math.max(0.01, dist - radius * 4);
+  camera.far = dist + radius * 8;
+  camera.lookAt(0, 0, 0);
+  camera.updateProjectionMatrix();
+
+  return { dist, radius };
+}
+
+const Model: React.FC<{ gltf: any; fov: number; animate?: boolean }> = ({ gltf, fov, animate }) => {
+  const ref = useRef<THREE.Group>(null);
   const { camera } = useThree();
 
   useEffect(() => {
-    if (modelRef.current && camera) {
-      const box = new THREE.Box3().setFromObject(modelRef.current);
-      const center = new THREE.Vector3();
-      const size = new THREE.Vector3();
-      box.getCenter(center);
-      box.getSize(size);
+    if (!ref.current) return;
+    const { dist } = fitCameraToObject(camera as THREE.PerspectiveCamera, ref.current, fov);
 
-      modelRef.current.position.sub(center);
-
-      const maxDimension = Math.max(size.x, size.y, size.z);
-      const wd = (containerSize?.width && !isNaN(parseFloat(containerSize.width))) ? containerSize.width : 1;
-      const ht = (containerSize?.height && !isNaN(parseFloat(containerSize.height))) ? containerSize.height : 1;
-      const aspectRatio = wd / ht;
-      camera.updateProjectionMatrix();
-
-      const cameraDistance = maxDimension / (2 * Math.tan((fov * Math.PI) / 180 / 2));
-      camera.position.set(-cameraDistance, -cameraDistance, cameraDistance + size.z);
-
-      if (animate) {
-        gsap.to(camera.position, {
-          x: 0,
-          y: 0,
-          z: cameraDistance + size.z,
-          duration: 1.5,
-          ease: 'power2.inOut',
-          onUpdate: () => {
-            camera.lookAt(0, 0, 0);
-            camera.updateProjectionMatrix();
-          },
-        });
-      } else {
-        camera.position.set(0, 0, cameraDistance + size.z);
-        camera.lookAt(0, 0, 0);
-        camera.updateProjectionMatrix();
-      }
+    if (animate) {
+      const start = { x: -dist * 0.6, y: -dist * 0.4, z: dist * 1.1 };
+      camera.position.set(start.x, start.y, start.z);
+      gsap.to(camera.position, {
+        x: 0, y: 0, z: dist,
+        duration: 1.2,
+        ease: 'power2.inOut',
+        onUpdate: () => camera.lookAt(0, 0, 0),
+      });
     }
-    // if(!currentPage)setCurrentPage(window.location?.pathname);
-    // console.log({currentPage});
-  }, [gltf, camera, containerSize, animate]);
+  }, [gltf, camera, fov, animate]);
 
-  return (
-    <primitive
-      object={gltf.scene}
-      // object={gltf.scene}
-      ref={modelRef}
-      scale={1}
-      position={[0, 0, 0]}
-    // rotation={[0, 0, 0]}
-    />
-  );
+  return <primitive ref={ref} object={gltf.scene} />;
 };
 
 const GLBViewer: React.FC<GLBViewerProps> = ({
-  width = "100%",
-  height = "100%",
+  width = '100%',
+  height = '100%',
   modelPath,
   wireframe = false,
-  wireframeColor = '#000000',
-  fov = 100,
-  animate,
-  controls
+  wireframeColor = '#000',
+  fov = 55,
+  animate = true,
+  controls = true,
+  envPreset = 'city',
 }) => {
-
   const containerRef = useRef<HTMLDivElement>(null);
-  const [containerSize, setContainerSize] = useState<any>({ width, height });
-  const [currentPage, setCurrentPage] = useState<any>();
-  const [modelExists, setModelExists] = useState(true);
-  const [currentModelPath, setCurrentModelPath] = useState(modelPath);
-  const gltf = useGLTF(currentModelPath);
+  const [currentPath, setCurrentPath] = useState(modelPath);
+  const [exists, setExists] = useState(true);
 
-  const updateContainerSize = () => {
-    if (containerRef.current) {
-      const { offsetWidth, offsetHeight } = containerRef.current;
-      setContainerSize({ width: offsetWidth, height: offsetHeight });
-    }
-  };
-
+  // Validate path once
   useEffect(() => {
-    updateContainerSize();
-    window.addEventListener('resize', updateContainerSize);
-    return () => window.removeEventListener('resize', updateContainerSize);
-  }, []);
-
-  const checkModelPath = async (path: string) => {
-    try {
-      const response = await fetch(path, { method: 'HEAD' });
-      if (!response.ok) {
-        throw new Error('Model not found');
+    (async () => {
+      try {
+        const res = await fetch(modelPath, { method: 'HEAD' });
+        if (!res.ok) throw new Error();
+        setExists(true);
+        setCurrentPath(modelPath);
+      } catch {
+        setExists(false);
+        setCurrentPath('/merchant/nirv1/3dModels/products/MetalBox.glb');
       }
-      setModelExists(true);
-      setCurrentModelPath(path);
-    } catch (error) {
-      setModelExists(false);
-      setCurrentModelPath('/code/frontend/deepturn/public/merchant/nirv1/3dModels/products/MetalBox.glb');
-    }
-  };
+    })();
+  }, [modelPath]);
 
+  const gltf = useGLTF(currentPath);
+
+  // Optional runtime wireframe toggle (will traverse once)
   useEffect(() => {
-    checkModelPath(modelPath);
-  }, []);
-
-  const modelProps = { gltf, containerSize, fov, animate, }
+    if (!gltf?.scene) return;
+    gltf.scene.traverse(obj => {
+      const mesh = obj as THREE.Mesh;
+      if (mesh.isMesh && mesh.material) {
+        const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+        materials.forEach((m: THREE.Material) => {
+          const mat = m as THREE.MeshStandardMaterial;
+          if (!mat) return;
+          mat.wireframe = wireframe;
+          if (wireframe && 'color' in mat) (mat as THREE.MeshStandardMaterial).color = new THREE.Color(wireframeColor);
+          mat.needsUpdate = true;
+        });
+      }
+    });
+  }, [gltf, wireframe, wireframeColor]);
 
   return (
-    <div ref={containerRef} style={{ width, height }}>
+    <div ref={containerRef} style={{ width, height, position: 'relative' }}>
       <style jsx>{styles}</style>
-      {modelExists ? (
-        <Canvas>
+      {exists ? (
+        <Canvas
+          gl={{ antialias: true, alpha: true }}
+          style={{ background: 'transparent' }}
+          dpr={[1, 2]}
+          shadows
+          onCreated={({ gl, scene }) => {
+            gl.setClearColor(0x000000, 0);                   // transparent canvas
+            gl.outputColorSpace = THREE.SRGBColorSpace;      // correct color
+            gl.toneMapping = THREE.ACESFilmicToneMapping;    // nicer PBR response
+            scene.environmentIntensity = 1.0 as any;
+          }}
+        >
           <Suspense fallback={null}>
-            <PerspectiveCamera makeDefault fov={fov} position={[0, 0, 5]} />
-            <ambientLight intensity={0.5} />
-            <Environment preset="sunset" />
-            <ThreeGLBControls controls={controls} />
-
-            <Model {...modelProps} />
+            <PerspectiveCamera makeDefault fov={fov} position={[0, 0, 3]} />
+            <Environment preset={envPreset} />
+            {controls && <OrbitControls enableDamping dampingFactor={0.08} />}
+            <Model gltf={gltf} fov={fov} animate={animate} />
           </Suspense>
         </Canvas>
-
       ) : (
         <div>No GLB model found</div>
       )}

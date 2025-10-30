@@ -1,0 +1,70 @@
+/* AdminLiveStreamOverlays.scss */
+
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== Overlay panel ===== */
+.canopy-overlay-controls {
+  @extend .d-flex;
+  flex-direction: column;
+
+  /* Fill parent exactly; never create page scroll */
+  height: 100%;
+  justify-content: flex-start;
+  width: auto;
+  /* Layout/appearance */
+  // border: 1px solid var(--gray-70);
+  // background: linear-gradient(var(--gray-80), var(--gray-100));
+  align-items: stretch;
+  border-radius: var(--border-radius);
+  position: relative;
+  /* No internal scroll in any breakpoint */
+
+  @media (min-width: 1260px) {
+    align-items: flex-start;
+  }
+&--actions{
+    @extend .d-flex;
+    justify-content: flex-end;
+    text-transform: capitalize;
+    gap: var(--s-5);
+    .action{
+      @extend .d-flex;
+      gap: var(--s-9);
+      width: max-content;
+      &-active{
+        color:var(--)
+      }
+    }
+}
+  /* ===== list area ===== */
+  &--list {
+    @extend .d-flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    // gap: var(--s-9);
+    position: relative;
+
+    /* critical: allow it to shrink inside the fixed-height panel */
+    min-height: 0;
+    width: 100%;
+    overflow: hidden;
+  }
+
+
+}
+
+/* Full-cover hint inside the panel */
+.form__hint {
+  @extend .d-flex;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}

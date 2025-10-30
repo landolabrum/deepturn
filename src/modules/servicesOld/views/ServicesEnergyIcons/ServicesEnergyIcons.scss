@@ -1,0 +1,46 @@
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.energy-icons {
+  display: flex;
+  gap: var(--s-5);
+  --ui-icon-color: var(--primary-50);
+  --ui-icon-size: var(--s-element);
+
+  @media(max-width:900px){
+    flex-direction: column;
+    align-items: center;
+  }
+  max-width: 100%;
+    @media(max-width: 900px) {
+    // max-width: 100vw;
+    }
+        padding: var(--s-4);
+    width:var(--s-4-w);
+  &__item {
+    // max-width: 80%;  
+    @extend .d-flex;
+    justify-content: flex-start;
+    border-radius: var(--border-radius);
+    gap: var(--s-4);
+    flex-direction: column;
+    background-color: var(--gray-90);
+      
+
+  }
+  &__body{
+    @extend .d-flex;
+    align-items: flex-start;
+    text-align: left;
+    @media(max-width:900px){
+    padding-bottom:var(--s-1);
+
+      text-align: center;
+  }
+  }
+
+
+}

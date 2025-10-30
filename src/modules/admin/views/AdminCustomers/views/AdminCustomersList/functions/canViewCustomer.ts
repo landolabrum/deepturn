@@ -1,15 +1,31 @@
 import environment from "~/src/core/environment";
-import { ICustomer } from "~/src/models/CustomerContext";
-import IAuthenticatedUser from "~/src/models/ICustomer";
+import type { ICustomer } from "~/src/models/CustomerContext";
+import type IAuthenticatedUser from "~/src/models/ICustomer";
 
-const canViewCustomer =(customer:ICustomer, user?:IAuthenticatedUser)=>{
-    const{mid}=environment.merchant;
-    const level = user?.metadata?.user?.clearance;
-    if(!customer || !level)return;
-    const cust_mid = customer?.metadata?.merchant?.mid
-    const is_merchant_admin = level >= 10 && cust_mid === mid;
-    const is_data_admin = level >= 12;
-    const isUser = user.email == customer.email;
-    return is_data_admin || is_merchant_admin || isUser;
-}
+/**
+ * Returns a strict boolean (never undefined). Keeps logic simple:
+ * - Data admin (>=12) sees all
+ * - Merchant admin (>=10) sees their own mid
+ * - A user may see themself (email match)
+ */
+const canViewCustomer = (
+  customer: ICustomer,
+  user?: IAuthenticatedUser
+): boolean => {
+  if (!customer) return false;
+
+  const { mid } = environment.merchant;
+  const level = Number(user?.metadata?.user?.clearance ?? 0);
+
+  const custMid = customer?.metadata?.merchant?.mid;
+  const isDataAdmin = level >= 12;
+  const isMerchantAdmin = level >= 10 && custMid === mid;
+  const isSelf =
+    Boolean(user?.email) &&
+    Boolean((customer as any)?.email) &&
+    user!.email === (customer as any).email;
+
+  return isDataAdmin || isMerchantAdmin || isSelf;
+};
+
 export default canViewCustomer;

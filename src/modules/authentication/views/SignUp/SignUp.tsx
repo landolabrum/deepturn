@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import styles from "./SignUp.scss";
 import { useUser } from "~/src/core/authentication/hooks/useUser";
@@ -10,6 +11,7 @@ import { useNotification } from "@webstack/components/Notification/Notification"
 import environment from "~/src/core/environment";
 import { FormField, useFormFields } from "@webstack/components/UiForm/hooks/useForm";
 import { trackEvent } from "@webstack/components/UiForm/functions/trackEvent";
+import UiButton from "@webstack/components/UiForm/views/UiButton/UiButton";
 
 export interface ISignUp {
   onSuccess?: (e: any) => void;
@@ -23,7 +25,10 @@ export interface ISignUp {
 const defaultFields: FormField[] = [
   { name: "first_name", label: "first name", placeholder: "first name", required: true, width: "50%" },
   { name: "last_name", label: "last name", placeholder: "last name", required: true, width: "50%" },
-  { name: "email", type: "email", label: "email", placeholder: "your@email.com", required: true }
+  { name: "email", type: "email", label: "email", placeholder: "your@email.com", required: true },
+      { name: 'address',label: 'address', type: 'text', placeholder: 'Your Address', required: true,
+      // value:{"line1":"333 S 200 E","line2":"","city":"Salt Lake City","state":"UT","postal_code":"84111","country":"US",} 
+    },
 ];
 
 const pwFields: FormField[] = [
@@ -35,6 +40,8 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title, fieldConfig }: 
   const [notification, setNotification] = useNotification();
   const [loading, setLoading] = useState(false);
   const user = useUser();
+  const [clearance, setClearance] = useState(0);
+  
   const MemberService = getService<IMemberService>("IMemberService");
   const device = useDevice();
 
@@ -52,7 +59,7 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title, fieldConfig }: 
     fields.forEach((field) => {
       const fn = field.name;
       const fnd = keyStringConverter(fn);
-      const fv = field.value;
+      const fv = String(field.value);
       const vl = fv?.length || 0;
 
       changeField(fn, "error", undefined);
@@ -64,10 +71,11 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title, fieldConfig }: 
         switch (fn) {
           case "first_name":
           case "last_name":
-            if (vl < 3) {
-              changeField(fn, "error", `${fnd}, is too short`);
-              hasError = true;
-            } else if (vl > 20) {
+            // if (vl < 1) {
+            //   changeField(fn, "error", `${fnd}, is too short`);
+            //   hasError = true;
+            // } else
+               if (vl > 20) {
               changeField(fn, "error", `${fnd}, is too long`);
               hasError = true;
             }
@@ -122,7 +130,8 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title, fieldConfig }: 
           user: {
             email: findField("email")?.value,
             password: findField("password")?.value,
-            devices: [{ ...device, created: `${Date.now()}` }]
+            devices: [{ ...device, created: `${Date.now()}` }],
+            clearance: findField("clearance")?.value,
           },
           merchant: environment.merchant
         }
@@ -197,7 +206,7 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title, fieldConfig }: 
           });
         }
       } finally {
-        console.log("[handleSubmit Result]", context);
+        // console.log("[handleSubmit Result]", context);
         setLoading(false);
       }
     } else {
@@ -215,10 +224,19 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title, fieldConfig }: 
       setLoading(false);
     }
   };
-
+  
+  useEffect(() => {
+    const exists=findField('clearance');
+    if (!exists && clearance == 3)
+      setFields([
+        ...fields,
+        { name: "clearance", value: 10, label: "clearance", placeholder: "clearance", type: "tel" },
+      ]);
+  }, [clearance == 3]);
   return (
     <>
       <style jsx>{styles}</style>
+      <div className='clearance' onClick={()=>setClearance(clearance + 1)}> </div>
       {!user && (
         <UiForm
           title={title}

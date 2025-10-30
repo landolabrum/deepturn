@@ -140,7 +140,7 @@ const useAdminCustomer = ({ customer_id, level }: { customer_id?: string, level:
       return;
     }
 
-    console.log({ differences });
+    // console.log({ differences });
 
     await modifyCustomerService(differences);
   };

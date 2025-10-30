@@ -52,8 +52,12 @@ $fontSize: 1.2rem;
     gap: 6px;
   }
   &.adapt-table-alt-view-mini {
-    width: inherit;
-    height: 290px;
+    width: 100%;
+    height: auto;
+    min-width: inherit;
+    // height: 290px;
+    min-height: inherit;
+    aspect-ratio: 16/9;
     margin: 16px 0 0;
     .title {
       font-size: calc($fontSize * 1);

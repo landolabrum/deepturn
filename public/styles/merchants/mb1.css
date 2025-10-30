@@ -1,10 +1,16 @@
 :root {
   --primary-10: #e68366;
+  --primary-10-o: #e6836670;
   --primary-30: #d97a5d;
+  --primary-30-o: #d97a5d70;
   --primary-50: #cc6f50;
+  --primary-50-o: #cc6f5070;
   --primary-70: #b35944;
+  --primary-70-o: #b3594470;
   --primary-90: #994d3a;
+  --primary-90-o: #994d3a70;
   --primary-o: #cc6f5070;
+
 
   --secondary-10: #d6c8b7;
   --secondary-30: #ccbfae;
@@ -23,7 +29,13 @@
   --tertiary-90: #8f7d71;
   --tertiary-o: #bfb0a170;
 
-  --body: #e0e0e0;
+  --body: radial-gradient(
+    circle,
+    /* var(--black) 0%, */
+    /* var(--white) 11%, */
+    var(--gray-40) 17%,
+    var(--gray-20) 100%);
+  /* --body: #d2d2d2; */
   --lite: #f0edeb;
   --dark: #2c0903;
   --dark-70: #200804;
@@ -62,12 +74,18 @@
   --green-70: #2d8c3b;
   --green-90: #257029;
 
-  --blue-o: #3a7bd5; /* Softer transparent blue */
-  --blue-10: #2b8fdb; /* Light blue with a trustworthy feel */
-  --blue-30: #2277b5; /* Slightly darker light blue */
-  --blue-50: #1a5e92; /* Mid-tone blue */
-  --blue-70: #13487a; /* Darker blue */
-  --blue-90: #031d40; /* Deep, dark blue */
+  --blue-o: #3a7bd5;
+  /* Softer transparent blue */
+  --blue-10: #2b8fdb;
+  /* Light blue with a trustworthy feel */
+  --blue-30: #2277b5;
+  /* Slightly darker light blue */
+  --blue-50: #1a5e92;
+  /* Mid-tone blue */
+  --blue-70: #13487a;
+  /* Darker blue */
+  --blue-90: #031d40;
+  /* Deep, dark blue */
 
   --purple-50: #9b59b6;
   --purple-10: #d0a1e2;
@@ -104,6 +122,7 @@
   --gray-100: #080808;
   --gray-100-o: #08080850;
 }
+
 h3 {
   font-family: Decimal;
 }

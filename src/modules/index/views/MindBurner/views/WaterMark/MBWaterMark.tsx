@@ -6,7 +6,6 @@ import styles from './MBWaterMark.scss';
 
 const MBWaterMark: React.FC = () => {
 
-  useEffect(() => { () => console.log('hi') }, []);
   return (
     <>
       <style jsx>{styles}</style>

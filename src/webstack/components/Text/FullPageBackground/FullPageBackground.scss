@@ -1,0 +1,30 @@
+/* Make the background section fill the viewport */
+.clip-text-video {
+  position: fixed;      /* sits behind the page */
+  inset: 0;             /* top/right/bottom/left = 0 */
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  z-index: 0;           /* your page content should be above this */
+}
+
+/* Media fills the box and crops as needed */
+.clip-text-video__video,
+.clip-text-video__image,
+.clip-text-video__youtube {
+  position: absolute;
+  inset: 0;
+  min-width: 100vw;
+  width: auto;
+  height: 100vh;
+  overflow: hidden;
+  object-fit: cover;    /* <-- key: no letterboxing */
+  border: 0;
+  pointer-events: none; /* keeps clicks for your content */
+}
+
+/* Ensure your page content is above the fixed background */
+.xinsurance, .nirvana-energy, .page-root {
+  position: relative;
+  z-index: 1;
+}

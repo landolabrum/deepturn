@@ -145,7 +145,13 @@ $el_gap: 7px;
       }
     }
   }
+  .dark{
+
+    background-color: none;
+    box-shadow: none;
+  }
 }
+
 
 .select.up .select__options {
   bottom: 100%;

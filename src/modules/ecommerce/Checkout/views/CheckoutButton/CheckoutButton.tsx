@@ -36,7 +36,7 @@ const CheckoutButton: React.FC<ICheckoutButton> = (props) => {
         if (collect && sessionData) {
             try {
                 const checkoutResponse = await MemberService.processTransaction(sessionData);
-                const hasTransaction = CookieHelper.getCookie('transaction-token');
+                const hasTransaction = localStorage.getItem('transaction-token');
                 if(hasTransaction)router.push('/transaction');
                 else setError("No Transaction Cookie")
             } catch (error: any) {

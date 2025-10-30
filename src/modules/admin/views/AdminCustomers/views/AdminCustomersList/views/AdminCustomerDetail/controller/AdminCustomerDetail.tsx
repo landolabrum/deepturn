@@ -11,6 +11,8 @@ import useAdminCustomerDelete from '../hooks/useAdminCustomerDelete';
 import ThreeTree from '@webstack/components/ThreeComponents/ThreeTree/controller/ThreeTree';
 import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 import useWindow from '@webstack/hooks/window/useWindow';
+import keyStringConverter from '@webstack/helpers/keyStringConverter';
+import AdminCustomerDetailsForms from '../views/AdminCustomerDetailsForms/AdminCustomerDetailsForms';
   
 const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, setView: (e: any) => void }) => {
   const { openModal, closeModal,isModalOpen } = useModal();
@@ -29,7 +31,7 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
   } = useAdminCustomer({ customer_id, level });
 
   const customerName = customer?.contact && findField(customer.contact, 'name')?.value || '';
-
+ 
   const handleFields = useCallback((e: any) => {
     const updated = { ...field, value: e.target?.value };
     // console.log({ updated });
@@ -69,30 +71,42 @@ const handleModify = () =>{
     if (width < 1100 && field && !isModalOpen) {
       handleModal();
     }
-  }, []);
-
+    // console.log({customer})
+  }, [width,customer]);
+ const customerWithChildren = (customer:any)=>{
+    return {...customer, children:<h1>test:{customer.name}
+    </h1>}
+  }
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='admin-customer-detail'>
-        <div className='admin-customer-detail__header'>
-          <UiButton busy={customer == undefined} onClick={refresh}>refresh</UiButton>
+      <div className="admin-customer-detail">
+        <div className="admin-customer-detail__header">
+          <AdminCustomerDetailsForms customer={customer} refresh={refresh}/>
+          <UiButton busy={customer == undefined} onClick={refresh}>
+            refresh
+          </UiButton>
         </div>
-        {field && width > 1100 ? <UiForm fields={[field]} onChange={handleFields} /> : ''}
-        {customer && <ThreeTree
-          onClick={(newField) => handleField(newField)}
-          data={customer}
-          selectedData={field}
-          title={'customer'}
-        />}
+        {field && width > 1100 ? <UiForm fields={[field]} onChange={handleFields} /> : ""}
+        {customer && (
+          <div className="admin-customer-detail__tree">
+            <ThreeTree
+              onClick={(newField) => handleField(newField)}
+              data={customer}
+              selectedData={field}
+              title={"customer"}
+              // variant='radial'
+            />
+          </div>
+        )}
         {customer == undefined && <UiLoader />}
         {customer == false && <h1>No Customer: ${router.query.cid}</h1>}
       </div>
-      <div className='admin-customer-detail__actions'>
+      <div className="admin-customer-detail__actions">
         <UiButton onClick={handleModify}>Update {customerName}</UiButton>
       </div>
       <div style={{ marginLeft: "auto" }}>
-        <UiButton variant='error' onClick={() => deleteCustomers()}>
+        <UiButton variant="error" onClick={() => deleteCustomers()}>
           Delete {customerName}
         </UiButton>
       </div>

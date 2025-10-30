@@ -1,147 +1,139 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styles from './Verify.scss';
 import { useRouter } from 'next/router';
-// import VerifyEmail from '../views/VerifyEmail/VerifyEmail';
-// import LoginView from '../../authentication/views/Login/views/LoginView/LoginView';
-// import VerifyAccount from '../views/VerifyAccount/VerifyAccount';
-// import VerifyPayment from '../views/VerifyPayment/VerifyPayment';
-// import VerifyPassword from '../views/VerifyPassword/VerifyPassword';
-// import VerifyShare from '../views/VerifyShare/VerifyShare';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { getService } from '@webstack/common';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import VerifyEmail from '../views/VerifyEmail/VerifyEmail';
-import UiDev from '@webstack/components/UiDev/UiDev';
+
 const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
-interface IVerifyErrorView {
-  view?: string;
-  name?: string;
-  message?: string;
-}
-const DefaultVerifyView = () => {
-  return (
-    <>
-      <style jsx>{styles}</style>
-      <div className='verify__default'>
-        <h1>Verify</h1>
-        <p>Here is where you will verify a token in which you should have received via a specified contact method.</p>
+type VerifyContext =
+  | null
+  | {
+      view?: string;
+      code?: number;
+      error?: boolean;
+      message?: string;
+      status?: string;
+      [k: string]: any;
+    };
+
+const DefaultVerifyView: React.FC = () => (
+  <>
+    <style jsx>{styles}</style>
+    <div className="verify__default">
+      <h1>Verify</h1>
+      <p>Enter via a verification link that includes a token.</p>
+    </div>
+  </>
+);
+
+const VerifyErrorView: React.FC<{ view?: string; name?: string; message?: string }> = (props) => (
+  <>
+    <style jsx>{styles}</style>
+    <div className="verify__error" id={props.view}>
+      <h3>¡Error!</h3>
+      <div className="verify__error-header">
+        Verify: <span className="c-error">{props?.name && keyStringConverter(props?.name)}</span>
       </div>
-    </>
-  );
-};
-const VerifyErrorView = (props: IVerifyErrorView) => {
-  return (
-    <>
-      <style jsx>{styles}</style>
-      <div className='verify__error' id={props.view}>
-        <h3>¡Error!</h3>
-        <div className='verify__error-header'>Verify: <span className="c-error">{props?.name && keyStringConverter(props?.name)}</span>
-        </div>
-        <p className=''>{props?.message}</p>
-        <span className='error--more-info'>If you think you are seeing this message as an error, please contact your admin.</span>
-      </div>
-    </>
-  );
-};
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQmVubnkgSGFuc2VuIiwic2VjdXJpdHkiOnsidHlwZSI6ImdwcyIsIm1vZGVsIjoiYWlydGFnIn0sImNvbnRhY3RzIjpbeyJuYW1lIjoiVmFzaHRpIiwidGVsIjoiKzEyMDg5MzY4MTk5IiwiYWRkcmVzcyI6eyJjaXR5IjoiY2l0eSIsImNvdW50cnkiOiJVUyIsImxpbmUxIjoibGluZSAxIiwibGluZTIiOiJsaW5lIDIiLCJwb3N0YWxfY29kZSI6IjkwMjEwIiwic3RhdGUiOiJDQSJ9fV19.sTZD6PkNzJa606xCkkhvnt2lwHNfGVfMjt8-n4d3duM
-const Verify = () => {
-  const { pathname, query } = useRouter();
-  const [view, setView] = useState('');
-  const [context, setContext] = useState<any>('');
-  // const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
-  // const [token, setToken] = useState<string | undefined>();
-  const MemberService = getService<IMemberService>("IMemberService");
+      <p>{props?.message}</p>
+      <span className="error--more-info">
+        If you think you are seeing this in error, please contact your admin.
+      </span>
+    </div>
+  </>
+);
 
-  const vid = query?.vid;
-  const token = query?.token && String(query.token);
+const Verify: React.FC = () => {
+  const router = useRouter();
+  const MemberService = getService<IMemberService>('IMemberService');
 
-  const handleVerify = async () => {
-    if (!token) {
-      setContext({ status: 'no_token_present' });
-      return;
-    }
+  const [ctx, setCtx] = useState<VerifyContext>(null);
+  const [loading, setLoading] = useState(false);
 
-    try {
-      const verifiedResponse = await MemberService.verifyEmail(String(token));
-      // console.error('[ HANDLE VERIFY ]', verifiedResponse)
-      if (verifiedResponse) setContext(verifiedResponse);
-    } catch (e: any) {
-      console.error('[ HANDLE VERIFY ]', e)
-      if(e?.fields)console.log({e:e.fields})
-    }
-  }
-  const views: any = {
-    'no-view-id': VerifyErrorView({ ...context, name: context?.view }),
-    'no-token': VerifyErrorView({ ...context, name: context?.view }),
-    email: <VerifyEmail token={token} 
-      onSuccess={console.log}
-    // onSuccess={(v: string) => setNewCustomerEmail(v)}
-     />,
-  }
-  //   'sign-in': <LoginView email={newCustomerEmail} />,
-  //   email: <VerifyEmail token={token} onSuccess={(v: string) => setNewCustomerEmail(v)} />,
-  //   password: <VerifyPassword token={token} onSuccess={(v: string) => setNewCustomerEmail(v)} />,
-  //   account: <VerifyAccount />,
-  //   payment: <VerifyPayment token={token} />,
-  //   share: <VerifyShare />,
-  // };
-  const intLayout =async  () => {
-    const queryTypes = [typeof vid, typeof token];
-    const meetsQuerys = queryTypes.filter(a=>'string').length == 2;
-    if(meetsQuerys)return vid;
-    // if (typeof query.token == 'string') setToken(query.token);
-  };
-  const initView = async (view?:string|string[])=>{
-    if(context)return;
-    else if(!vid && !token)return;
-    if(!view && !vid)setContext({
-      view: 'no-view-id',
-      code: 404,
-      error: true,
-      message: 'No View'
-    });
-    else if( !token)setContext({
-      view: 'no-token',
-      code: 404,
-      error: true,
-      message: 'No Token Type Specified'
-    });
-    const handleVerify = async () => {
-      if(!ENCRYPTION_KEY)return;
-      if (!token) {
-          setContext({ ...context,status: 'no_token_present' });
-          return;
-      }
-      const verifiedResponse = await MemberService.decryptJWT({
-          token: token,
-          secret: ENCRYPTION_KEY,
-          algorithm: 'HS256',
-          verify:false
-      });
-      console.log({verifiedResponse})
-      if (verifiedResponse) setContext(verifiedResponse);
-  }
-  await handleVerify()
-    // setContext({view:view});
-  }
+  const { vid, token } = useMemo(() => {
+    if (!router.isReady) return { vid: undefined, token: undefined };
+    const q = router.query;
+    return {
+      vid: typeof q?.vid === 'string' ? q.vid : undefined,
+      token: typeof q?.token === 'string' ? q.token : undefined,
+    };
+  }, [router.isReady, router.query]);
+
   useEffect(() => {
-    
-    intLayout().then((a)=>initView(a));
-    // console.log('initview:',view)
+    if (!router.isReady) return;
+    setLoading(true);
 
-    // if (newCustomerEmail) {
-    //   setView('sign-in');
-    // } 
-  }, [intLayout]);
+    (async () => {
+      if (!vid) {
+        setCtx({ view: 'no-view-id', code: 404, error: true, message: 'No verification type (vid) in the URL.' });
+        setLoading(false);
+        return;
+      }
+      if (!token) {
+        setCtx({ view: 'no-token', code: 400, error: true, message: 'No token present in the URL.' });
+        setLoading(false);
+        return;
+      }
+
+      try {
+        if (vid === 'email') {
+          if (!ENCRYPTION_KEY) {
+            setCtx({ view: 'no-encryption-key', code: 500, error: true, message: 'Missing NEXT_PUBLIC_ENCRYPTION.' });
+            return;
+          }
+          const verified = await MemberService.decryptJWT({
+            token,
+            secret: ENCRYPTION_KEY,
+            algorithm: 'HS256',
+            verify: false,
+          });
+          setCtx({ view: 'email', ...verified, token });
+          return;
+        }
+
+        setCtx({ view: 'no-view-id', code: 404, error: true, message: `Unknown verification type: "${vid}"` });
+      } catch (e: any) {
+        setCtx({ view: 'verify-error', code: 500, error: true, message: e?.message || 'Verification failed.' });
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [router.isReady, vid, token, MemberService]);
+
+  const viewNode = useMemo(() => {
+    if (loading) {
+      return (
+        <div className="verify__loading">
+          <span>Verifying…</span>
+        </div>
+      );
+    }
+    if (!ctx) return <DefaultVerifyView />;
+
+    const views: Record<string, React.ReactNode> = {
+      'no-view-id': <VerifyErrorView view="no-view-id" name={ctx.view} message={ctx.message} />,
+      'no-token': <VerifyErrorView view="no-token" name={ctx.view} message={ctx.message} />,
+      'no-encryption-key': <VerifyErrorView view="no-encryption-key" name={ctx.view} message={ctx.message} />,
+      'verify-error': <VerifyErrorView view="verify-error" name={ctx.view} message={ctx.message} />,
+      email: (
+        <VerifyEmail
+          token={ctx.token || token}
+          onSuccess={() => {
+            // could toast or route if you want
+          }}
+        />
+      ),
+    };
+
+    return views[ctx.view || ''] ?? <DefaultVerifyView />;
+  }, [ctx, loading, token]);
 
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='verify'>
-        <UiDev data={{token,view,context}}/>
-        {views[context?.view]}
-      </div>
+      <div className="verify">{viewNode}</div>
     </>
   );
 };

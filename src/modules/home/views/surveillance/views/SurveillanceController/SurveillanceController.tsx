@@ -3,9 +3,7 @@ import styles from "./SurveillanceController.scss";
 import UiJoyStick from '@webstack/components/UiForm/components/UiJoyStick/UiJoyStick';
 import IHomeService from '~/src/core/services/HomeService/IHomeService';
 import { getService } from '@webstack/common';
-import UiDev from '@webstack/components/UiDev/UiDev';
 import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
-import UiPill from '@webstack/components/UiForm/components/UiPill/UiPill';
 
 interface ISurveillanceControlsProps {
   cameraId: string;

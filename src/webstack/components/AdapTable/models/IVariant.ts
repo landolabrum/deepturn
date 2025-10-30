@@ -38,6 +38,7 @@ export type IFormControlBaseVariant =
   | "primary"
   | "round"
   | "secondary"
+  | "rank"
   | "signature";
 
 export type IOverlayBaseVariant =

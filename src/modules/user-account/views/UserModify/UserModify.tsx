@@ -71,7 +71,7 @@ const UserModify = ({ user, open = false }: any) => {
       ...address,
       metadata: metadata,
     }
-    console.log('[ request ]',request)
+    // console.log('[ request ]',request)
     try{
       const response = await MemberService.modifyCustomer(user.id);
       if(response.object == 'customer')setNotification({

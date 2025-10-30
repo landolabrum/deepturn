@@ -20,7 +20,9 @@ export interface MerchantSettings {
   // [key:string]?: any; // Removed to improve type safety
 }
 export interface Merchant {
-  url: string;
+  url?: string;
+  dir?: string;
+  display?:string;
   name: string;
   mid: string;
   stripeId: string;
@@ -52,6 +54,7 @@ export interface IEnvironment {
     distributor: string;
     shopping: string;
     home: string;
+    data: string;
     admin: string;
   };
   firebase: {

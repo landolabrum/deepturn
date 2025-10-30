@@ -1,35 +1,33 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./UiSelect.scss";
-import UiMenu, { IMenuOption } from "../../../UiMenu/UiMenu";
+import UiMenu from "../../../UiMenu/UiMenu";
 import UiInput from "../UiInput/UiInput";
 import { capitalize } from "lodash";
 import { useModal } from "../../../Containers/modal/contexts/modalContext";
 import { ITraits } from "@webstack/components/UiForm/components/FormControl/FormControl";
 import { IFormControlVariant } from "../../../AdapTable/models/IVariant";
-import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 
-type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string } | string | React.ReactElement;
-
+type TitleProps =any;
 export interface ISelect {
   label?: string;
-  options?: any[],
+  options?: any[];
   onSelect?: (value: any) => void;
   openDirection?: "up" | "down" | "left" | "right";
   onToggle?: (isOpen: boolean) => void;
   title?: TitleProps;
   openState?: string;
   search?: boolean;
-  setSearch?: (value: string) => void;
   overlay?: boolean | { zIndex: number };
   value?: string;
   traits?: ITraits;
   variant?: IFormControlVariant;
   size?: any;
   clearable?: boolean;
+  input?: boolean;
 }
 
 const UiSelect: React.FC<ISelect> = ({
-  options = [], // Ensure options is an array by default
+  options = [],
   size,
   onSelect,
   openDirection = "down",
@@ -41,122 +39,227 @@ const UiSelect: React.FC<ISelect> = ({
   label,
   traits,
   search,
-  setSearch,
   overlay,
-  clearable
+  clearable,
+  input
 }) => {
-  const [isOpen, setIsOpen] = useState<string>("closed");
-  const [title_, setTitle] = useState<string | number>("");
+  const [isOpen, setIsOpen] = useState<"open" | "closed">("closed");
+  const [title_, setTitle] = useState<any | number>("");
   const { isModalOpen, openModal, closeModal } = useModal();
-  const hasOptions = Boolean(Array.isArray(options) && options?.every((element: any) => element !== undefined)); // Check if options is an array
+
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [customInput, setCustomInput] = useState<string>("");
 
-  const anySelected = () => {
-    const currentlySelected = options.filter((option: any) => {
-      return option?.active;
-    });
-    return Boolean(currentlySelected?.length > 0);
-  };
+  // Inline search (owned by UiSelect)
+  const [searchValue, setSearchValue] = useState<string>("");
 
-  const isMobileNavOpen = Boolean(isOpen === 'open');
-  const handleSelect = (value: any) => {
-    setSelectedOption(value);
-    onSelect && onSelect(value);
-    variant !== 'disabled' && setIsOpen("closed");
-  };
+  // ✅ Container ref for focusing without UiInput refs
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const handleOpen = () => {
-    if (hasOptions) setIsOpen(isOpen === "closed" ? "open" : "closed");
-    if (overlay) {
-      if (isOpen === 'closed') typeof overlay === "object" && overlay?.zIndex ? openModal({ zIndex: overlay?.zIndex }) : openModal(null);
-      else closeModal();
+  // Add user-provided custom option in input mode
+  const normalizedOptions = useMemo(() => {
+    if (!Array.isArray(options)) return [];
+    const newOptions = [...options];
+    if (input && customInput && !options.some(opt => opt?.value === customInput)) {
+      newOptions.push({ label: customInput, value: customInput });
     }
+    return newOptions;
+  }, [options, input, customInput]);
+
+  // Filter options by label/name/value based on searchValue (only when open+search enabled)
+  const filteredOptions = useMemo(() => {
+    if (isOpen !== "open" || !search || !searchValue.trim()) return normalizedOptions;
+    const q = searchValue.trim().toLowerCase();
+    const hay = (o: any) =>
+      [o?.name, o?.label, o?.value]
+        .filter(Boolean)
+        .map((v: any) => String(v).toLowerCase())
+        .join(" ");
+    return normalizedOptions.filter(o => hay(o).includes(q));
+  }, [normalizedOptions, isOpen, search, searchValue]);
+
+  const hasOptions = filteredOptions.length > 0;
+  const isMenuOpen = isOpen === "open";
+
+  const anySelected = useCallback(
+    () => normalizedOptions.some(option => option?.active),
+    [normalizedOptions]
+  );
+
+  const applySelect = (selected: any) => {
+    const selectedValue = selected?.value ?? selected;
+    if (input) {
+      setCustomInput(selectedValue);
+      onSelect?.({ label: selectedValue, value: selectedValue });
+    } else {
+      setSelectedOption(selectedValue);
+      onSelect?.(selected);
+    }
+    setIsOpen("closed");
+  };
+
+  const openMenu = (focusSearch = false) => {
+    if (variant === "disabled" || !options?.length) return;
+    setIsOpen("open");
+    if (overlay) {
+      typeof overlay === "object" && overlay?.zIndex
+        ? openModal({ zIndex: overlay.zIndex })
+        : openModal(null);
+    }
+    if (focusSearch && search) {
+      // ✅ focus the native input after render without UiInput refs
+      requestAnimationFrame(() => {
+        const el = containerRef.current?.querySelector<HTMLInputElement>(
+          'input, textarea, [contenteditable="true"]'
+        );
+        el?.focus();
+        (el as any)?.select?.();
+      });
+    }
+  };
+
+  const closeMenu = () => {
+    setIsOpen("closed");
+    if (overlay) closeModal();
+    if (search) setSearchValue("");
+  };
+
+  const handleControlClick = () => {
+    if (isMenuOpen) closeMenu();
+    else openMenu(true); // clicking current value → open + focus inline search
   };
 
   const isTitleObject = (
     title?: TitleProps
-  ): title is { text?: string | number; preIcon?: string; postIcon?: string } => {
-    return typeof title === "object" && !React.isValidElement(title);
-  };
+  ): title is { text?: string | number; beforeIcon?: string; postIcon?: string } =>
+    typeof title === "object" && !React.isValidElement(title);
 
-  const postIconHandler = (title: any, variant: any) => {
-    if (variant?.includes('nav-item')) {
-      if (!isMobileNavOpen) return traits?.afterIcon;
-      else return "fa-xmark";
-    }
-    if (isMobileNavOpen) {
-      return "fa-xmark";
-    } else {
-      return `fa-chevron-${openDirection}`;
-    }
+  const postIconHandler = (t: any, v: any) => {
+    if (v?.includes?.("nav-item")) return !isMenuOpen ? t?.afterIcon : { icon: "fa-xmark", onClick: clearAndClose };
+    return isMenuOpen ? { icon: "fa-xmark", onClick: clearAndClose } : `fa-chevron-${openDirection}`;
   };
 
   const handleClear = useCallback(() => {
     if (!onSelect) return;
-    options.forEach((option: IMenuOption) => {
-      if (option.active) {
-        onSelect({ ...option, active: false });
-      }
+    normalizedOptions.forEach((option: any) => {
+      if (option.active) onSelect({ ...option, active: false });
     });
-  }, [options]);
-
+    if (input) setCustomInput("");
+  }, [normalizedOptions, input, onSelect]);
+  const clearAndClose = (e: any) => {
+    e.stopPropagation();
+    closeMenu();
+  }
   useEffect(() => {
-    if (openState !== undefined) {
-      setIsOpen(openState);
-    }
+    if (openState !== undefined) setIsOpen(openState as any);
   }, [openState]);
 
   useEffect(() => {
     if (title_ !== title) {
       if (typeof title === "string") setTitle(title);
-      if (typeof title === "object" && "text" in title && title.text !== undefined) setTitle(title.text);
+      if (typeof title === "object" && "text" in title && title.text !== undefined) {
+        setTitle(title.text);
+      }
     }
-  }, [title, onSelect]);
+  }, [title, title_]);
 
   useEffect(() => {
-    if (isMobileNavOpen && onToggle) onToggle(isMobileNavOpen);
+    if (isMenuOpen && onToggle) onToggle(isMenuOpen);
   }, [isModalOpen]);
+
+  const onSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Escape") {
+      clearAndClose(e)
+    }
+  };
 
   return (
     <>
       <style jsx>{styles}</style>
-
       <div
-        className={`select ${openDirection} ${size ? ` select-${size}` : ''}`}
+        ref={containerRef}            // ✅ container ref
+        className={`select ${openDirection} ${size ? ` select-${size}` : ""}`}
         style={traits?.width ? { width: `${traits.width}px` } : {}}
-        onClick={handleOpen}
+        data-element="ui-select"
       >
-        <UiInput
-          data-element='select'
-          type="button"
-          label={label}
-          size={size}
-          variant={hasOptions && variant !== 'disabled' ? variant : "select__disabled"}
-          value={typeof value === 'string' ? capitalize(value) : title_ || selectedOption || "Select"}
-          traits={{
-            beforeIcon: isTitleObject(title) && title.preIcon ? title.preIcon : undefined,
-            afterIcon: postIconHandler(traits, variant)
-          }}
-        />
+        {/* Control area */}
+        {isMenuOpen && search ? (
+          <UiInput
+            data-element="select"
+            type="text"
+            label={label}
+            size={size}
+            variant={hasOptions && variant !== "disabled" ? variant : "select__disabled"}
+            value={searchValue}
+            onChange={e => setSearchValue(e.target.value)}
+            onKeyDown={onSearchKeyDown}
+            // ❌ no ref here; focusing handled via containerRef + querySelector
+            traits={{
+              beforeIcon: traits?.beforeIcon || isTitleObject(title) && title.beforeIcon && title ? title?.beforeIcon : undefined,
+              afterIcon: postIconHandler(traits, variant),
+            }}
+          />
+        ) : (
+          <UiInput
+            data-element="select"
+            type={input ? "text" : "button"}
+            label={label}
+            size={size}
+            onClick={handleControlClick}
+            onChange={e => input && setCustomInput(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === "Enter") {
+                if (input && customInput) {
+                  onSelect?.({ label: customInput, value: customInput });
+                  setIsOpen("closed");
+                } else {
+                  openMenu(true);
+                }
+              }
+            }}
+            onBlur={() => {
+              if (input && customInput) {
+                onSelect?.({ label: customInput, value: customInput });
+              }
+            }}
+            variant={variant !== "disabled" ? variant : "select__disabled"}
+            value={
+              input
+                ? customInput || value || ""
+                : typeof value === "string"
+                  ? capitalize(value)
+                  : title_ || selectedOption || "Select"
+            }
+            traits={{
+              beforeIcon: traits?.beforeIcon ||undefined,
+              afterIcon: postIconHandler(traits, variant),
+            }}
+          />
+        )}
 
-        {isMobileNavOpen && variant !== 'disabled' && (
+        {/* Dropdown */}
+        {isMenuOpen && variant !== "disabled" && (
           <div
-            className={`select__options ${openDirection} ${variant ? " " + variant : ""}`}>
+            className={`select__options ${openDirection} ${variant ? " " + variant : ""}`}
+            onClick={e => e.stopPropagation()}
+          >
             {clearable && anySelected() && (
-              <div className='select__clear' onClick={handleClear}>
-                {/* <UiIcon icon="fa-xmark" /> */}
-              </div>
+              <div className="select__clear" onClick={handleClear} />
             )}
+
             <UiMenu
               size={size}
               traits={traits}
-              search={search}
-              setSearch={setSearch}
-              options={options}
-              onSelect={handleSelect}
-              variant={hasOptions ? variant : "disabled"}
-              value={value}
+              options={filteredOptions}
+              onSelect={applySelect}
+              variant={filteredOptions.length && variant || undefined}
+              value={input ? customInput : value}
+              onClose={closeMenu}
             />
+
+            {search && !filteredOptions.length && (
+              <div className="select__no-results">No matches</div>
+            )}
           </div>
         )}
       </div>

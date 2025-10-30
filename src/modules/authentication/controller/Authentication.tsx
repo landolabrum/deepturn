@@ -7,10 +7,10 @@ import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import { useRouter } from "next/router";
 import UiButton from "@webstack/components/UiForm/views/UiButton/UiButton";
 import Link from "next/link";
-import environment from "~/src/core/environment";
 import { useModal } from "@webstack/components/Containers/modal/contexts/modalContext";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import { useClearance } from "~/src/core/authentication/hooks/useUser";
+import environment from "~/src/core/environment";
 
 type AuthTextProps = {
   view?: 'sign-in' | 'sign-up';
@@ -24,36 +24,25 @@ type AuthTextProps = {
 type AuthenticationProps = {
   view?: string;
   content?: {
-    'sign-in'?: AuthTextProps;
-    'sign-up'?: AuthTextProps;
+    [key: string]: AuthTextProps;
   };
 };
 
-const Authentication: React.FC<AuthenticationProps> = (props) => {
+const Authentication: React.FC<AuthenticationProps> = ({ view = "sign-in", content }) => {
   const [newCustomerEmail, setNewCustomerEmail] = useState<string | undefined>();
-  const [view, setView] = useState<string>(props?.view || "sign-in");
   const [hover, setHover] = useState<boolean>(false);
+  const [viewState, setView] = useState<string>(view); // Ensure this is initialized properly
   const router = useRouter();
-  const query = router.query;
   const { openModal, closeModal } = useModal();
   const [notif, setNotification] = useNotification();
 
-  const handleView = () => {
-    setView((prev) =>
-      prev === "sign-in" || prev === "existing" || prev === "customer-created"
-        ? "sign-up"
-        : "sign-in"
-    );
+  const handleViewToggle = () => {
+    setView((prev: string) => (prev === "sign-in" ? "sign-up" : "sign-in"));
   };
 
   const handleSignup = (response: any) => {
     const status = response?.status;
-    if (!status) {
-      alert("dev, handle this! 212");
-      return;
-    }
-
-    let label = "404, an error occured signing up.";
+    let label = "404, an error occurred signing up.";
     if (status === "created") label = `email: ${response?.email}, successfully created.`;
     if (status === "existing") label = `email: ${response?.email}, exists.`;
 
@@ -68,19 +57,21 @@ const Authentication: React.FC<AuthenticationProps> = (props) => {
   const handleSignIn = (user: any) => {
     if (user?.id) {
       const WelcomeModalContent = ({ user, onClose }: any) => {
-        const adminClearance = useClearance() > 9;
-
+        // const adminClearance = useClearance() > 9;
+        const clearance = useClearance();
+        const admin1 = clearance > 9;
         const onProfileClick = (isAdmin: boolean) => {
-          router.push(isAdmin && adminClearance ? "/admin" : "/user-account");
+          router.push(isAdmin && admin1 ? "/admin" : "/profile");
           closeModal();
         };
 
         return (
-          <>
-            <style jsx>{styles}</style>
+          <><style jsx>{styles}</style>
             <div className="authentication__welcome-modal">
               <h3>Welcome, {user.name}</h3>
-              {adminClearance && <UiButton onClick={onProfileClick}>admin</UiButton>}
+              {clearance >= 12 && <UiButton href="/god">god</UiButton>}
+                            {admin1 && <UiButton onClick={onProfileClick}>admin</UiButton>}
+
               <UiButton onClick={onProfileClick}>account</UiButton>
               <UiButton onClick={onClose}>Close</UiButton>
             </div>
@@ -90,17 +81,19 @@ const Authentication: React.FC<AuthenticationProps> = (props) => {
 
       openModal({
         title: "User Details",
+        variant: "popup",
         children: <WelcomeModalContent user={user} onClose={closeModal} />,
       });
     }
   };
 
   useEffect(() => {
-    if (query && query.verify && view !== "verify") setView("verify");
-    if (newCustomerEmail !== undefined) setView("sign-in");
-  }, [handleSignup, handleSignIn]);
+    const { query } = router;
+    if (query?.verify && viewState !== "verify") setView("verify");
+    if (newCustomerEmail) setView("sign-in");
+  }, [newCustomerEmail, router.query]);
 
-  const defaultText = {
+  const defaultText: { [key: string]: AuthTextProps } = {
     "sign-in": {
       title: keyStringConverter("sign-in"),
       alternateText: "no account?",
@@ -113,47 +106,46 @@ const Authentication: React.FC<AuthenticationProps> = (props) => {
     },
   };
 
-  const content = {
-    ...defaultText[view as keyof typeof defaultText],
-    ...props.content?.[view as keyof typeof props.content],
+  const contentProps = {
+    ...defaultText[viewState],
+    ...content?.[viewState],
   };
 
   return (
     <>
       <style jsx>{styles}</style>
-      <div className={`authentication ${view === "sign-in" ? "authentication__sign-in" : ""}`}>
+      <div className={`authentication ${viewState === "sign-in" ? "authentication__sign-in" : ""}`}>
         <div className="authentication__view-header">
-          <div className="authentication__logo">
-            <UiIcon icon={`${environment.merchant.name}-logo`} />
-          </div>
-          <div className="authentication__view-name">{content.title}</div>
+          {/* <div className="authentication__logo">
+          </div> */}
+          <div className="authentication__view-name">{contentProps.title}</div>
         </div>
 
-        {view.includes("@") && (
+        {viewState.includes("@") && (
           <div className="authentication__email-verify">
             An email has been sent to
             <Link
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
               style={hover ? { color: "var(--primary)" } : undefined}
-              href={`mailto://${view}`}
+              href={`mailto://${viewState}`}
             >
-              {" " + view + ", "}
+              {" " + viewState + ", "}
             </Link>
             click the link in the email to continue.
           </div>
         )}
 
-        {view === "sign-in" && <LoginView email={newCustomerEmail} onSuccess={handleSignIn} />}
-        {view === "sign-up" && <SignUp onSuccess={handleSignup} />}
+        {viewState === "sign-in" && <LoginView email={newCustomerEmail} onSuccess={handleSignIn} />}
+        {viewState === "sign-up" && <SignUp onSuccess={handleSignup} />}
 
         <div className="authentication__view-action">
           <div className="authentication__view-label">
-            <div className="authentication__view-label--text">{content.alternateText}</div>
+            <div className="authentication__view-label--text">{contentProps.alternateText}</div>
           </div>
 
-          <UiButton onClick={handleView} variant="link">
-            {content.toggleText}
+          <UiButton onClick={handleViewToggle} variant="link">
+            {contentProps.toggleText}
           </UiButton>
         </div>
       </div>

@@ -1,0 +1,56 @@
+/* UiMediaOverlay.scss */
+
+.ui-media-overlay {
+  overflow: hidden;
+  max-width: 1920px !important;
+  max-height: 1080px !important;
+  &[data-fullscreen="true"] {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: transparent;
+  }
+
+  /* Inline/preview: fill width and keep a true 16:9 area */
+  &[data-fullscreen="false"] {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--overlay-key, #00ff00);
+  }
+
+  &__surface {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: top left;
+    will-change: transform;
+  }
+
+  &__item {
+    position: absolute;
+  }
+
+  /* Ticker must span the whole surface width */
+  &__item--ticker {
+    left: 0 !important;
+    width: 1920px;
+  }
+
+  &__empty {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: var(--s-1);
+    font-weight: 900;
+    color:var(--red-50);
+    font-family: Decimal;
+    text-transform: uppercase;
+    border:solid var(--s-9) var(--red-50);
+    pointer-events: none;
+  }
+}

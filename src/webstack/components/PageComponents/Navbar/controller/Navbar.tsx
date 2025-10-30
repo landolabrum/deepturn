@@ -13,6 +13,7 @@ import useNavMobile from "../hooks/useNavBreak";
 import useScroll from "@webstack/hooks/useScroll";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import useCart from "~/src/modules/ecommerce/cart/hooks/useCart";
+import ContactUs from "@shared/components/Contact/forms/ContactUs/ContactUs";
 
 const Navbar = () => {
   const { selectedUser, pathname, explicitRouter } = useRoute();
@@ -28,28 +29,47 @@ const Navbar = () => {
 
   const handleMobileClick = (selectedRoute: IRoute) => {
     if (isModalOpen) {
-      replaceModal(
-        selectedRoute.href && !selectedRoute.items ? (
-          explicitRouter(selectedRoute)
-        ) : selectedRoute.modal ? (
-          modals[selectedRoute.modal]
-        ) : (
-          <MobileNav routes={selectedRoute.items || []} handleClick={handleMobileClick} onBack={handleBackButtonClick} />
-        )
-      );
+      handleModalNavigation(selectedRoute);
     } else {
-      if (selectedRoute.href && !selectedRoute.items) {
-        explicitRouter(selectedRoute);
-        closeModal();
-      } else if (selectedRoute.modal) {
-        openModal({ children: modals[selectedRoute.modal] });
-      } else if (selectedRoute.items) {
-        replaceModal({ children: <MobileNav routes={selectedRoute.items || []} handleClick={handleMobileClick} onBack={handleBackButtonClick} /> });
-      }
+      handleRouteNavigation(selectedRoute);
+    }
+  };
+  const handleModal = ({children,variant,title}:{title?:any,children:any, variant?:'popup'|'fullscreen'}) =>{
+    const brandTitle= 
+        <>
+          <h1 onClick={() => handleMobileClick({ href: '/' })}>
+            {merchantName&&<UiIcon icon={`${merchantName}-logo`} />}
+            {merchantName && keyStringConverter(environment.merchant.name)}
+          </h1>
+        </>;
+
+    let context = { variant:variant&&variant||'popup',children: children, title:title||brandTitle };
+     isModalOpen ? replaceModal(context) : openModal(context);
+  }
+  const handleModalNavigation = (selectedRoute: IRoute) => {
+    if (selectedRoute.href && !selectedRoute.items) {
+      explicitRouter(selectedRoute);
+    } else if (selectedRoute.modal && modals[selectedRoute.modal]) {
+      handleModal( modals[selectedRoute.modal])
+    } else {
+      replaceModal({
+        children: <MobileNav routes={selectedRoute.items || []} handleClick={handleMobileClick} onBack={handleBackButtonClick} />,
+      });
     }
   };
 
-  const merchantName = String(environment.merchant.name);
+  const handleRouteNavigation = (selectedRoute: IRoute) => {
+    if (selectedRoute.href && !selectedRoute.items) {
+      explicitRouter(selectedRoute);
+      closeModal();
+    } else if (selectedRoute.modal && modals[selectedRoute.modal]) {
+       handleModal(modals[selectedRoute.modal]);
+    } else if (selectedRoute.items) {
+      handleModal({ children: <MobileNav routes={selectedRoute.items || []} handleClick={handleMobileClick} onBack={handleBackButtonClick} /> });
+    }
+  };
+
+  const merchantName = keyStringConverter(environment.merchant.name,{dashed:false});
   const isBrandRoute = (route: IRoute) => route.label === keyStringConverter(merchantName);
 
   const handleBackButtonClick = () => {
@@ -67,51 +87,34 @@ const Navbar = () => {
     if (_route?.href) {
       explicitRouter(_route);
       setToggled(_route.label || null);
-    } else if (_route?.modal) {
-      if (!isModalOpen) {
-        openModal({ children: modals[_route.modal] });
-      } else {
-        replaceModal({ children: modals[_route.modal] });
-      }
-    }
+    } else if (_route?.modal)handleModal({...modals[_route.modal]});
   };
-  const defaultModalProps:IModalContent = {
 
-  };
+  const defaultModalProps: IModalContent = {};
+
   const handleTrigger = () => {
     const content = {
-      title: (
-        <>
-          <h1 onClick={() => handleMobileClick({ href: '/' })}>
-            <UiIcon icon={`${environment.merchant.name}-logo`} />
-            {environment.merchant.name && keyStringConverter(environment.merchant.name)}
-          </h1>
-        </>
-      ),
-      children: <MobileNav routes={currentRoutes} handleClick={handleMobileClick} />
+
+      children: <MobileNav routes={currentRoutes} handleClick={handleMobileClick} />,
     };
 
-    if (isModalOpen) {
-      replaceModal(content);
-    } else {
-      openModal(content);
-    }
+    handleModal(content);
   };
 
   const displayName = useMemo(() => {
     return selectedUser?.name ? `${selectedUser.name.split(" ")[0]} ${selectedUser.name.split(" ")[1][0]}.` : "";
   }, [selectedUser]);
 
-  const {total}=useCart();
+  const { total } = useCart();
 
   const modals: any = {
-    login: <Authentication view='sign-up'  />,
+    login: { title: "authentication", children: <Authentication view="sign-up" /> },
+    contact: { title: `contact ${merchantName}`, children: <ContactUs /> },
   };
 
   const navClass = `navbar__container ${isMobile ? 'navbar__container--hide' : ''} ${merchantName}`;
 
   useEffect(() => {
-    // console.log(toggled)
     if (!isModalOpen && toggled) {
       setToggled('');
     }
@@ -132,7 +135,7 @@ const Navbar = () => {
     <>
       <style jsx>{styles}</style>
       <nav id="nav-bar" className={navClass}>
-        <div className='navbar' ref={navRef}>
+        <div className="navbar" ref={navRef}>
           <div className={`navbar__trigger${scroll > 90 ? ' navbar__trigger--o' : ''}`}>
             <UiIcon
               icon={isModalOpen ? 'fa-xmark' : 'fa-bars'}
@@ -146,7 +149,7 @@ const Navbar = () => {
                 className={`nav__nav-item nav__nav-item--${route.label ? (
                   isBrandRoute(route) ? 'brand' : route.label.toLowerCase()) : (
                   String(route.href).split('/')[1]
-                )}${toggled === route.label ? ' nav__nav-item__active' : ''}${route.label === 'user-account' && total === 0 && ' no-cart' || ''
+                )}${toggled === route.label ? ' nav__nav-item__active' : ''}${route.label === 'profile' && total === 0 && ' no-cart' || ''
                   }`}
                 onDoubleClick={() => route?.href && handleSelect({ href: route.href })}
               >
@@ -159,19 +162,19 @@ const Navbar = () => {
                         afterIcon: { icon: route.icon }
                       }
                     ) : undefined}
-                    variant='nav-item'
+                    variant="nav-item"
                     onClick={() => handleSelect(route)}
                   >
-                    {route.label}
+                    {route.label!==merchantName?route.label:environment?.merchant?.display ||merchantName}
                   </UiButton>
                 ) : (
                   <UiSelect
-                    openDirection={route?.label === 'user-account' && 'left' || undefined}
+                    openDirection={route?.label === 'profile' && 'left' || undefined}
                     overlay={{ zIndex: 997 }}
                     traits={route?.icon ? { afterIcon: { icon: route.icon } } : undefined}
                     openState={Boolean(toggled && toggled === route.label) ? 'open' : 'closed'}
-                    variant={`nav-item${toggled===route?.label ?'--active':''}`}
-                    value={route.label === 'user-account' ? displayName : route.label}
+                    variant={`nav-item${toggled === route?.label ? '--active' : ''}`}
+                    value={route.label === 'profile' ? displayName :  route.label}
                     options={route?.items}
                     onSelect={handleSelect}
                     onToggle={() => route.label && handleToggle(route.label)}

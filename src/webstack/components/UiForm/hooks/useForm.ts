@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 export interface FormField {
   name: string;
   label?: string;
-  value?: string;
+  value?: string|number|boolean;
   error?: string;
   placeholder?: string;
   type?: string;

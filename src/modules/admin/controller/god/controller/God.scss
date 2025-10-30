@@ -1,0 +1,19 @@
+.d-flex{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.god{
+    width: 100%;
+    overflow: hidden;
+    @extend .d-flex;
+
+    flex-direction: column;
+    gap:var(--s-1);
+    &__header, &__content{
+        width: 100%;
+        @extend .d-flex;
+    }
+    &__header{}
+    &__content{}
+}

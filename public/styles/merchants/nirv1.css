@@ -1,10 +1,20 @@
 :root {
-  --primary-10: #d8c5b3;
-  --primary-30: #d4bda6;
-  --primary-50: #8c7a6b;
-  --primary-70: #594d43;
-  --primary-90: #5b4f45;
-  --primary-o: #8c7a6b70;
+/* Solid colors */
+--primary-10: #cfff40;  /* vibrant lime – light accents */
+--primary-30: #bff230;  /* bright chartreuse – secondary UI */
+--primary-50: #76b900;  /* rich green – brand primary */
+--primary-70: #3f8500;  /* deep green – buttons, emphasis */
+--primary-90: #265600;  /* dark forest – backgrounds */
+
+/* 50% opacity versions – maintain transparency */
+--primary-10-o: #cfff4080;
+--primary-30-o: #bff23080;
+--primary-50-o: #76b90080;
+--primary-70-o: #3f850080;
+--primary-90-o: #26560080;
+
+  /* (Optional) keep your generic overlay */
+  --primary-o: #9d8d2b70;
 
   --secondary: #c5b9a8;
   --secondary-10: #d6c8b7;
@@ -22,7 +32,8 @@
 
  
 
-  --body: #2d2d2d;
+  /* --body: #2d2d2d; */
+  --body: #f3f3f0;
   --lite: #f0edeb;
   --dark: #242c36;
   --dark-o: #242c3670;
@@ -83,4 +94,7 @@
 }
 h3{
   font-family: Decimal;
+}
+body{
+  color:black
 }

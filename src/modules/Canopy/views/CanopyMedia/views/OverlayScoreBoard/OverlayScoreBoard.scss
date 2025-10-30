@@ -1,0 +1,481 @@
+/* =====================
+   OverlayScoreBoard.scss (TABLE • FULL • THEME-VARS)
+   - Shared column widths via <table> (no JS)
+   - Right column (ID/score) = widest cell
+   - Easy theming via custom properties for:
+     • font-sizes  • paddings  • colors
+   - Matches original 3-column layout (place | name | id/score)
+   - Keeps header + cut corners + podium effects
+   ===================== */
+
+/* ---------- utility ---------- */
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ---------- animations ---------- */
+@keyframes scoreBump {
+  0% {
+    transform: scale(1);
+    text-shadow: none;
+  }
+  40% {
+    transform: scale(1.34);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: none;
+  }
+}
+
+@keyframes leaderFlash {
+  0% {
+    opacity: 0;
+    filter: saturate(1) brightness(1);
+  }
+  25% {
+    opacity: 0.95;
+    filter: saturate(1.35) brightness(1.8);
+  }
+  60% {
+    opacity: 0.55;
+    filter: saturate(1.15) brightness(1.3);
+  }
+  100% {
+    opacity: 0;
+    filter: saturate(1) brightness(1);
+  }
+}
+
+@keyframes lightUp {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(3); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes sbHeaderIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sbRowDropIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .scoreboard {
+    --reorder-duration: 0ms;
+  }
+
+  .scoreboard__tr.is-leader .scoreboard__cell--place,
+  .scoreboard__tr.is-podium-2 .scoreboard__cell--place,
+  .scoreboard__tr.is-podium-3 .scoreboard__cell--place,
+  .scoreboard__cell--id.is-score-bump,
+  .scoreboard__cell--score.is-score-bump,
+  .scoreboard__tr.is-leader-flash::before,
+  .scoreboard__header,
+  .scoreboard__tr {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---------- wrapper ---------- */
+.scoreboard-wrap {
+  display: contents;
+
+  &[data-fullscreen="true"] {
+    display: contents;
+  }
+}
+
+/* ---------- board ---------- */
+.scoreboard {
+  // letter-spacing: 2px;
+  /* ===== THEME TOKENS (edit these) ===== */
+  /* Colors */
+  
+  --color-header: var(--gray-90);
+  --color-name: var(--gray-80);
+  --color-place: var(--gray-40);
+  --color-id-text: var(--gray-10);
+  --color-id-shadow: var(--primary-10);
+  --id-bg-top: var(--black);
+  --id-bg-bottom: var(--gray-90);
+  
+  --clr1: var(--gray-40);
+  --clr2: var(--gray-60);
+  --clr3: var(--gray-80);
+  /* Typography */
+  --fs-header-title: var(--title-font-size, 2.7rem);
+  --fs-header-sub: 1.25rem;
+  --fs-row: 1.3rem;
+  --fw-name: 900; /* Team name weight */
+  --letterspacing-id: 5px;
+
+  /* Spacing / sizing */
+  --row-h: 40px;
+  --pill-w: 70px;
+  --name-max-w: max-width; /* configurable max width for name column */
+  --gap: 1px; /* row gap (visual) */
+  --pad-x: var(--s-9); /* inner name cell padding-inline */
+  --pad-header-x: var(--s-7);
+  --pad-header-y: var(--s-10);
+  --pad-cell-x: var(--s-4); /* default cell x-padding */
+  --pad-id-x: 0; /* ID/score cell x-padding */
+
+  /* Effects / misc */
+  --bg: linear-gradient(180deg, var(--clr1), var(--clr2));
+  --matrix: calc(var(--row-h) * 0.5); /* notch size */
+  --reorder-duration: 400ms;
+  --reorder-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --intro-delay: 3s;
+
+  /* ===== Layout ===== */
+  overflow: visible;
+  position: relative;
+  box-sizing: border-box;
+  width: auto;
+  // background: var(--bg);
+  backdrop-filter: blur(4.5px);
+  
+  
+  /* ---------- header ---------- */
+  &__header {
+    border-radius: 0 var(--s-11) 0 0;
+    clip-path: polygon(
+      var(--matrix) 0,
+      100% 0,
+      100% calc(100% - var(--matrix)),
+      calc(100% - var(--matrix)) 100%,
+      0 100%,
+      0 var(--matrix)
+      );
+      // position: absolute;
+      // right: 0;
+      // top:0;
+      font-family: Play;
+      font-weight: 500;
+      min-height: var(--s-nav-height);
+      background:var(--gray-40);
+      width: max-content;
+      min-width: max-content;
+      display: flex;
+      gap:var(--s-11);
+      align-items: stretch;
+      padding: var(--s-10) var(--s-4);
+      margin: 0;
+      line-height: 1;
+      // gap: var(--s-11);
+      color: var(--color-header);
+      // font-weight: 900;
+      // font-family: Decimal;
+      animation: sbHeaderIn 2700ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+    
+    &__brand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      --ui-icon-height: 100%;
+      --ui-icon-width: var(--pill-w);
+    }
+    
+    
+    &__titleWrap {
+      display: flex;
+      flex-direction: column;
+      margin:0;
+      letter-spacing: 0.02em;
+    }
+    
+    &__titleText {
+      width: 100%;
+      @extend .d-flex;
+      text-transform: uppercase;
+      font-size: var(--fs-header-title);
+      // text-shadow: 1px 2px 1px var(--white);
+      white-space: nowrap;
+    }
+    
+    &__subTitleText {
+      font-weight: 400;
+      font-size: var(--fs-header-sub);
+      text-shadow: 1px 2px 4px var(--primary-10);
+      white-space: nowrap;
+      font-family: Decimal;
+      font-weight: 500;
+      line-height: 1.2;
+      font-style: italic;
+    }
+    
+    /* ---------- table (rows) ---------- */
+    &__tableWrap {
+      width: max-content;
+      // width: 100%;
+      border-radius: 0 0 0 var(--s-11);
+      border: solid var(--s-11) var(--gray-40);
+      border-width: 0 2px 2px 2px;
+      background-color: var(--gray-40);
+      // overflow: hidden;
+      // overflow: visible;
+        clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - var(--matrix)),
+      calc(100% - var(--matrix)) 100%,
+      0 100%,
+      0 var(--matrix)
+      );
+    }
+    
+    &__table {
+      border-collapse: separate;
+      border-spacing: 0 var(--gap); /* visual gap between rows like grid gap */
+      table-layout: auto; /* auto = columns sized by widest cell */
+      font-size: var(--fs-row);
+    }
+    
+    /* Column sizing: place = fixed; name = flexible; id = content-sized */
+    // .col-place { width: var(--pill-w); }
+    /* Name column: cap and truncate via token */
+  .col-name {
+    width: var(--name-max-w);
+    max-width: var(--name-max-w);
+  }
+
+  .col-id {
+    width: 0; /* grows only to content (widest ID/score) */
+  }
+
+  &__tr {
+    background: var(--gray-40-o);
+    height: var(--row-h);
+    position: relative;
+
+    &:nth-child(even) {
+      background: var(--gray-70-o);
+    }
+
+    /* decorative right fade strip to match original */
+    &::after {
+      z-index: -1;
+      content: "";
+      position: absolute;
+      inset: 0 0 0 auto;
+      width: 50%;
+      pointer-events: none;
+      background: linear-gradient(to left, var(--gray-100) 0%, transparent 100%);
+      mask-image: linear-gradient(
+        45deg,
+        var(--gray-100) 2px,
+        var(--gray-90) 4px,
+        transparent 3px,
+        transparent 1px
+      );
+      mask-repeat: repeat;
+      mask-size: 5px 3px;
+    }
+
+    &.is-leader {
+      border-color: rgba(var(--gray-100), 0.45);
+      animation: lightUp 1s ease forwards;
+    }
+
+    &.is-podium-2 {
+      border-color: rgba(var(--gray-90), 0.35);
+    }
+
+    &.is-podium-3 {
+      border-color: rgba(var(--gray-80), 0.35);
+    }
+
+    &.is-leader-flash::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        60% 60% at 50% 50%,
+        rgba(255, 241, 107, 0.65) 0%,
+        rgba(255, 241, 107, 0) 70%
+      );
+      mix-blend-mode: screen;
+      animation: leaderFlash 900ms ease-out;
+    }
+  }
+
+  /* Optional intro stagger - JS controls animation; keep rows hidden only */
+  &.is-mounted &__tr.is-intro {
+    opacity: 0;
+    animation: none;
+  }
+
+  /* When JS intro is active, disable header CSS animation to avoid double-anim */
+  &[data-intro="true"] &__header { animation: none !important; }
+
+  /* ---------- cells ---------- */
+  &__cell {
+    height: var(--row-h);
+    padding: 0 var(--pad-cell-x);
+    vertical-align: middle;
+    white-space: nowrap; /* critical: make auto layout respect content widths */
+  }
+
+  &__cell--place {
+    font-family: Papaya;
+    text-align: center;
+
+    
+    font-weight: 500;
+    @extend .d-flex;
+    text-shadow: 1px 1px 1px var(--primary-10);
+    background: var(--gray-90-o);
+    color: var(--color-place);
+  }
+
+  .scoreboard__tr.is-leader &__cell--place {
+    background: var(--primary-90);
+    color: var(--white);
+  }
+
+  .scoreboard__tr.is-podium-2 &__cell--place {
+    background: var(--gray-70);
+    color: var(--gray-20);
+  }
+
+  .scoreboard__tr.is-podium-3 &__cell--place {
+    background: var(--gray-80-o);
+    color: var(--gray-30);
+  }
+
+  /* Name cell: capped by token and ellipsized */
+  &__cell--name {
+    
+    border-left: solid 1px var(--gray-30);
+    padding-inline: var(--pad-x);
+    color: var(--color-name);
+    font-weight: var(--fw-name);
+    width: var(--name-max-w);
+  }
+
+  &__cell--name .name-txt {
+    display: block;
+    width: var(--name-max-w);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Right column (ID/score) — content-sized, consistent column width, dark bg */
+  &__cell--id {
+    font-weight: 500;
+    @extend .d-flex;
+    padding: 0 var(--pad-id-x); /* requested padding via token */
+    letter-spacing: var(--letterspacing-id);
+    
+    background: linear-gradient(180deg, var(--id-bg-top), var(--id-bg-bottom));
+    color: var(--color-id-text);
+    // text-shadow: 1px 1px 4px var(--color-id-shadow);
+    text-align: center;
+    transform-origin: center; /* stabilize score bump scaling */
+    span{
+      transform:scaleX(66%);
+      font-size: 2rem;
+    }
+  }
+
+  &__cell--id.is-score-bump,
+  &__cell--score.is-score-bump {
+    will-change: transform, text-shadow;
+    animation: scoreBump 420ms ease-out;
+  }
+
+  /* ---------- density ---------- */
+  &[data-density="compact"] {
+    --row-h: 40px;
+    --pill-w: 40px;
+    --fs-row: 1.45rem; /* shrink via tokens */
+  }
+
+  /* ---------- variants ---------- */
+  &[data-variant="fullscreen"] {
+    --dist: 12rem;
+    margin: var(--dist);
+    width: calc(100% - var(--dist) * 2);
+    height: calc(100% - var(--dist) * 2);
+
+    /* scale headline + rows using the same tokens */
+    .scoreboard__titleText {
+      font-size: calc(var(--fs-header-title) * 1.14);
+      letter-spacing: 0.06em;
+    }
+
+    .scoreboard__subTitleText {
+      font-size: calc(var(--fs-header-sub) * 1.1);
+    }
+
+    .scoreboard__table {
+      width: 100%;
+      font-size: calc(var(--fs-row) * 1.325);
+    }
+
+    .scoreboard__cell {
+      height: 56px;
+    }
+  }
+
+  &[data-variant="image-left"] {
+    .scoreboard__header {
+      flex-direction: row;
+      align-items: center;
+    }
+    .scoreboard__brand { order: 0; }
+    .scoreboard__titleWrap { order: 1; }
+  }
+
+  &[data-variant="image-right"] {
+    .scoreboard__header {
+      flex-direction: row;
+      align-items: center;
+    }
+    .scoreboard__brand { order: 1; }
+    .scoreboard__titleWrap {
+      order: 0;
+      text-align: right;
+    }
+    .scoreboard__titleText,
+    .scoreboard__subTitleText {
+      align-self: flex-end;
+    }
+  }
+
+  &[data-variant="compact"] {
+    --row-h: 40px;
+    --pill-w: 38px;
+    .scoreboard__titleText { font-size: 1.4rem; }
+    .scoreboard__subTitleText { font-size: 0.9rem; }
+  }
+}
+
+/* ---------- misc ---------- */
+.crew-pair {
+  white-space: nowrap;
+}

@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 import styles from './AdminCustomerList.scss';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
-import useAdminCustomers from './hooks/useAdminCustomers';
+import { ICustomer } from '~/src/models/ICustomer';
 
-const AdminCustomerList: React.FC<any> = ({ onSelect }: { onSelect: (props: string) => void }) => {
-  
-const {customers, refresh, hasMore}=useAdminCustomers()
-
+const AdminCustomerList: React.FC<any> = ({ customers, refresh, hasMore, onSelect }: { 
+  customers:ICustomer[], refresh:(e:any)=>void, hasMore:boolean,
+  onSelect: (props: string) => void
+ }) => {
   return (
     <>
       <style jsx>{styles}</style>
@@ -43,6 +43,14 @@ const {customers, refresh, hasMore}=useAdminCustomers()
 };
 
 export default AdminCustomerList;
+
+
+
+
+
+
+
+
 
 // const getLocalIPs = (callback) => {
   //   const ipDuplicates = {};

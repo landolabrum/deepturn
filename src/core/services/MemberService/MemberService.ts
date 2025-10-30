@@ -53,6 +53,34 @@ export default class MemberService
   private _timeout: number | undefined;
   public userChanged = new EventEmitter<IAuthenticatedUser | undefined>();
   public guestChanged = new EventEmitter<GuestContext | undefined>();
+    async signOut(): Promise<string> {
+    if (!this.getCurrentUserToken) return "No User";
+    this.updateUserContext(undefined, undefined);
+    this.deleteMemberToken();
+    this.deleteLegacyCookie();
+    return "Success";
+  }
+  async signOutguest(): Promise<string> {
+    if (!this.getCurrentGuestToken) return "No User";
+    this.updateguestContext(undefined, undefined);
+    this.deleteguestToken();
+    this.deleteLegacyguestCookie();
+    return "Success";
+  }
+  private deleteLegacyCookie() {
+    const props: { [key: string]: string } = {};
+    const jwtCookie = environment.legacyJwtCookie;
+    props.path = "/";
+    if (jwtCookie.domain) props.domain = jwtCookie.domain;
+    CookieHelper.deleteCookie(jwtCookie.authToken)
+  }
+  private deleteLegacyguestCookie() {
+    const props: { [key: string]: string } = {};
+    const jwtCookie = environment.legacyJwtCookie;
+    props.path = "/";
+    if (jwtCookie.domain) props.domain = jwtCookie.domain;
+    CookieHelper.setCookie(jwtCookie.guestToken, "", props);
+  }
   public async verifyEmail(token: string): Promise<any> {
     if (!token) {
       throw new ApiError("No Token Provided", 400, "MS.SI.02");
@@ -65,18 +93,9 @@ export default class MemberService
         this.get<any>(`/usage/auth/verify-email?token=${encodedToken}`),
         TIMEOUT // 5 seconds timeout
       );
-      // console.log("[verifiedMemberResp  ]",verifiedMemberResp)
-      // Check if the response is an ApiError
       if (verifiedMemberResp instanceof ApiError) {
         throw verifiedMemberResp;
       }
-      // if (verifiedMemberResp?.data) {
-      //   this.saveMemberToken(verifiedMemberResp.data);
-      //   this.saveLegacyAuthCookie(verifiedMemberResp.data);
-      //   return this._getCurrentUser(true)!;
-      // }
-      // console.log("[ verifiedMemberResp ]:",verifiedMemberResp)
-
       return verifiedMemberResp;
 
     } catch (error) {
@@ -85,8 +104,7 @@ export default class MemberService
       return error
     }
   }
-  public async signIn(cust: any): Promise<any> {
-    // console.log({cust})
+  public async signIn(cust: any): Promise<any|any> {
     if (!cust.email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
@@ -98,20 +116,22 @@ export default class MemberService
     const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
     const encryptedLoginData = encryptString(JSON.stringify(cust), ENCRYPTION_KEY);
-
-    const memberJwt: any = await timeoutPromise(
-      await this.post<{}, any>(
+    try{
+         const memberJwt:any = await this.post<{}, any>(
         "usage/auth/login",
         { data: encryptedLoginData },
-        ), TIMEOUT 
       );
-    // console.log("[ signIn ]", {memberJwt})
-    if (!memberJwt?.fields) {
+  
+    if (!memberJwt?.detail?.fields) {
       this.saveMemberToken(memberJwt);
       this.saveLegacyAuthCookie(memberJwt);
       return this._getCurrentUser(true)!;
     }
     return memberJwt
+    }catch(e:any){
+      return e
+    }
+ 
   };
 
 
@@ -303,6 +323,7 @@ export default class MemberService
   public async signUp(
     props: any
   ): Promise<IAuthenticatedUser> {
+    // console.log("[ SIGNUP ]", props);
     if (!props.email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
@@ -320,46 +341,6 @@ export default class MemberService
     }
     // console.log("[ SIgn Up Response ]: ", {res})
     return res;
-
-    //   {
-    //     "name": "test signup",
-    //     "email": "lando@deepturn.com",
-    //     "metadata": {
-    //         "user": {
-    //             "email": "lando@deepturn.com",
-    //             "device": {
-    //                 "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-    //                 "user_agent_data": {
-    //                     "brands": [
-    //                         {
-    //                             "brand": "Chromium",
-    //                             "version": "124"
-    //                         },
-    //                         {
-    //                             "brand": "Google Chrome",
-    //                             "version": "124"
-    //                         },
-    //                         {
-    //                             "brand": "Not-A.Brand",
-    //                             "version": "99"
-    //                         }
-    //                     ],
-    //                     "mobile": false,
-    //                     "platform": "macOS"
-    //                 },
-    //                 "wan": "71.199.63.98",
-    //                 "created": "1718919471323"
-    //             },
-    //             "password": "1Wasatch!"
-    //         },
-    //         "merchant": {
-    //             "mid": "mb1",
-    //             "name": "deepturn",
-    //             "url": "http://localhost:3000",
-    //             "stripeId": "acct_1G38IXIodeKZRLDV"
-    //         }
-    //     }
-    // }
 
   }
   public async getMethods(customerId?: string): Promise<any> {
@@ -414,13 +395,13 @@ export default class MemberService
 
   public async getPersonalInformation(): Promise<any | null> {
     return this.get<any | null>(
-      "member/user-account-info"
+      "member/profile-info"
     );
   }
   public async getMemberProfileInformation(
     memberId: string
   ): Promise<any | null> {
-    return this.post(`/reports/user-account-info/${memberId}`);
+    return this.post(`/reports/profile-info/${memberId}`);
   }
   private saveLegacyAuthCookie(customJwt: string) {
     if (environment.legacyJwtCookie?.authToken) {
@@ -635,35 +616,7 @@ export default class MemberService
   private get isBrowser(): boolean {
     return typeof window === "object";
   }
-  async signOut(): Promise<string> {
-    if (!this.getCurrentUserToken) return "No User";
-    this.updateUserContext(undefined, undefined);
-    this.deleteMemberToken();
-    this.deleteLegacyCookie();
-    return "Success";
-  }
-  async signOutguest(): Promise<string> {
-    if (!this.getCurrentGuestToken) return "No User";
-    this.updateguestContext(undefined, undefined);
-    this.deleteguestToken();
-    this.deleteLegacyguestCookie();
-    return "Success";
-  }
-  private deleteLegacyCookie() {
-    const props: { [key: string]: string } = {};
-    const jwtCookie = environment.legacyJwtCookie;
-    props.path = "/";
-    if (jwtCookie.domain) props.domain = jwtCookie.domain;
-    CookieHelper.deleteCookie(jwtCookie.authToken)
-    // CookieHelper.setCookie(jwtCookie.authToken, "poo", props);
-  }
-  private deleteLegacyguestCookie() {
-    const props: { [key: string]: string } = {};
-    const jwtCookie = environment.legacyJwtCookie;
-    props.path = "/";
-    if (jwtCookie.domain) props.domain = jwtCookie.domain;
-    CookieHelper.setCookie(jwtCookie.guestToken, "", props);
-  }
+
   private parseToken(jwt: string): MemberToken | null {
     const segments = jwt.split('.');
     if (segments.length !== 3) {
@@ -683,22 +636,6 @@ export default class MemberService
       return null;
     }
   }
-
-  // private parseMemberToken(jwt: string): MemberToken | null {
-  //   const a = jwt.split(".");
-  //   if (a.length != 3) {
-  //     return null;
-  //   }
-  //   const encodedBody = a[1];
-  //   try {
-  //     return JSON.parse(window.atob(encodedBody)) as MemberToken;;
-  //   } catch (error) {
-  //     let e: any = error;
-  //     if (typeof error == 'object') e.loc = '[ MemberService.ts ]';
-  //     alert(JSON.stringify(error))
-  //   }
-  //   return null;
-  // }
 
   private deleteguestToken() {
     if (this.isBrowser) {

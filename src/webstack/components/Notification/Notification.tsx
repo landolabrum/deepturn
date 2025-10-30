@@ -1,3 +1,4 @@
+
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import styles from "./Notification.scss";
 import { UiIcon } from "../UiIcon/controller/UiIcon";
@@ -58,12 +59,17 @@ const Notification: React.FC = () => {
   const [context, setContext] = useContext(INotificationContext);
   const [notification, setNotification] = useState<INotification | null>(null);
   const [show, setShow] = useState<boolean>(true);
+  const persistence = context?.persistence ?? 0;
 
   const handleClose = () => {
-    setShow(false);
-    setTimeout(() => {
+    if (context?.persistence && context?.persistence > 0) {
+      setShow(false);
+      setTimeout(() => {
+        setContext({ ...context, active: false });
+      }, 300);
+    } else {
       setContext({ ...context, active: false });
-    }, context?.persistence || 2000);
+    }
   };
 
   const handleBodyScroll = useCallback(() => {
@@ -73,13 +79,23 @@ const Notification: React.FC = () => {
     }
   }, [context]);
 
-  const handleNotification = () => {
+  const handleNotification = useCallback(() => {
     if (context?.dismissable === undefined) context.dismissable = true;
-    if (context?.persistence) {
-      setTimeout(() => handleClose(), context.persistence);
-    }
     setNotification(context);
-  };
+    setShow(true);
+  }, [context]);
+
+  useEffect(() => {
+    handleNotification();
+    handleBodyScroll();
+
+    let timeout: NodeJS.Timeout;
+    if (context?.persistence && context?.persistence > 0) {
+      timeout = setTimeout(() => handleClose(), context.persistence);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [handleNotification, handleBodyScroll]);
 
   const apiErrors = notification?.apiError;
   const list = notification?.list;
@@ -87,11 +103,6 @@ const Notification: React.FC = () => {
   const handleClick = (e: any) => {
     context?.onClick && context.onClick(e);
   };
-
-  useEffect(() => {
-    handleNotification();
-    handleBodyScroll();
-  }, [handleNotification]);
 
   const renderApiErrorDetail = () => {
     if (!apiErrors?.detail) return null;
@@ -138,7 +149,7 @@ const Notification: React.FC = () => {
         id="app-notification"
         style={notification?.zIndex ? { zIndex: `${notification.zIndex}` } : {}}
         onClick={handleClick}
-        className={`notification ${!show ? "notification-hide" : ""}`}
+        className={`notification ${!show ? "notification-hide" : ""} ${persistence === 0 ? "notification-static" : ""}`}
       >
         <div className="notification__content">
           {notification.dismissable && (
@@ -176,22 +187,21 @@ const Notification: React.FC = () => {
             </div>
           )}
 
-          {list && (
+          {list && list.length > 0 && (
             <div className="notification__list">
-              {Object.entries(list).map(([_, value], index) => (
-                <a
+              {list.map((item, index) => (
+                <div
                   key={index}
                   className="notification__list-item"
-                  href={value.href}
-                  onClick={value.onClick}
+                  onClick={item.onClick}
                 >
                   <div className="notification__list-item__label">
-                    <UiMarkdown text={String(value.label ?? value.name ?? "")} />
+                    <UiMarkdown text={String(item.label ?? item.name ?? "")} />
                   </div>
                   <div>
-                    <UiMarkdown text={String(value.message ?? "")} />
+                    <UiMarkdown text={String(item.message ?? "")} />
                   </div>
-                </a>
+                </div>
               ))}
             </div>
           )}

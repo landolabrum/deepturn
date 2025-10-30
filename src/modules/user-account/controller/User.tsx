@@ -9,9 +9,9 @@ import UserSubscriptions from "../views/UserSubscriptions/controller/UserSubscri
 import UserDocs from "../views/UserDocs/controller/UserDocs";
 import UserAccount from "../views/UserAccount/UserAccount";
 
-interface Props {}
+interface Props { }
 
-const User: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
+const User: NextComponentType<NextPageContext, {}, Props> = ({ }: Props) => {
   const user = useUser();
   const level = useClearance();
   const [current, setCurrent] = useState('profile');
@@ -39,11 +39,11 @@ const User: NextComponentType<NextPageContext, {}, Props> = ({}: Props) => {
         <UiSettingsLayout
           viewName="profile"
           title={current}
-          customMenu={current !== 'profile'}
-          setViewCallback={(v) => setCurrent(v)}
+          customMenu={current !== "profile"}
+          setViewCallback={(v) => setCurrent(v ?? "profile")}
           views={views}
         />
-      )}
+      ) || null}
     </>
   );
 };

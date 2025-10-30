@@ -1,0 +1,73 @@
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-live-stream-controls {
+  width: 100%;
+  overflow-y: visible;
+  overflow-x: hidden;
+  position: relative;
+
+  &__section {
+    @extend .d-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-11);
+    width: var(--s-11-w);
+    padding: var(--s-11);
+    // background: linear-gradient(var(--gray-70-o), var(--gray-90));
+
+    &--title {
+      color: var(--primary-90);
+      font-size: var(--s-5);
+      font-style: italic;
+    }
+  }
+}
+
+// Animation for clicking actions (e.g., gear icon)
+.ui-ticker__icon {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+    background-color: var(--highlight-color);
+  }
+
+  &.clicked {
+    animation: clickAnimation 0.3s ease;
+  }
+}
+
+@keyframes clickAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Adding smooth transitions for the scores and other elements
+.ui-ticker__value {
+  transition: background 0.3s ease;
+}
+
+.ui-ticker__value:hover {
+  background: linear-gradient(var(--gray-70-o), var(--gray-80-o), var(--gray-80-o), var(--gray-70-o));
+}
+
+// Animation for the rows (when dragged or clicked)
+.row-hover {
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: var(--highlight-color);
+  }
+}

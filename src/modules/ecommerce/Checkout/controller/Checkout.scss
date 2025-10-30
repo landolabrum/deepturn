@@ -9,14 +9,14 @@
     @extend .d-flex;
     margin: var(--s-nav-height) auto 0;
     height: 100%;
-    width: var(--s-9-width);
+    width: var(--s-9-w);
     padding:var(--s-9);
     gap: var(--s-4);
     justify-content: space-between;
     flex-direction: column;
     @media(max-width:1100px) {
         margin: 0;
-        width: var(--s-9-width);
+        width: var(--s-9-w);
     }
     .checkout__title{
         line-height: 2;
@@ -37,7 +37,7 @@
     }
     &__view{
         flex:2;
-        width: var(--s-4-width);
+        width: var(--s-4-w);
         padding: var(--s-4);
         background-color: var(--gray-90);
         border: solid 1px var(--gray-80);
@@ -55,7 +55,7 @@
     }
     gap:var(--s-4);
     height: 100%;
-    width: var(--s-9-width);
+    width: var(--s-9-w);
     padding:var(--s-9);
     i{
         width: 100%;

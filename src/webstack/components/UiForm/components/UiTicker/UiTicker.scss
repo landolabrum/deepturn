@@ -1,0 +1,78 @@
+/* Root container */
+.ui-ticker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  /* Feel free to swap for your design tokens */
+  background-color: var(--gray-10, transparent);
+  width: auto;
+}
+
+/* Primary value (holds UiInput) */
+.ui-ticker__value {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  height: var(--s-element, 32px);
+
+  /* Helpful default for the input width if traits.width is not set */
+  .ui-input,
+  input {
+    width: 80px;
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+/* Optional icon buttons (commented in TSX) */
+.ui-ticker__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--s-element, 32px);
+  height: var(--s-element, 32px);
+  border-radius: 8px;
+  transition: transform 0.3s ease-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  /* If your design system exposes gradients/tokens, plug them in here */
+  &--minus {
+    background: linear-gradient(var(--gray-80, #222), var(--gray-70, #333));
+  }
+  &--plus {
+    background: linear-gradient(var(--gray-80, #222), var(--gray-70, #333));
+  }
+}
+
+/* Variant hook (matches className = ui-ticker-{variant}) */
+.ui-ticker-flat {
+  /* Example: “flat” removes background & shadows */
+  background: transparent;
+
+  .ui-ticker__icon {
+    background: none;
+  }
+}
+
+/* Make sure it scales well on small screens */
+.ui-ticker-responsive {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 900px) {
+    width: auto;
+  }
+}
+
+/* Dark / light helpers if you use CSS variables for themes */
+@media (prefers-color-scheme: dark) {
+  .ui-ticker {
+    background-color: var(--gray-10, transparent);
+  }
+}

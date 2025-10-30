@@ -1,145 +1,220 @@
+/* Base layout utils */
 .d-flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-@keyframes text-wipe {
-    0%{
-        color:var(--green-50);
-        --ui-icon-color:var(--green-50);
-        box-shadow: -.5px -1px 1.5px 1px var(--green-70);
-        opacity: .8;
-        filter: blur(3.2px);
-        transform:scale(1.1)
-    }
-    65%{
-        color:var(--green-10);
-        --ui-icon-color:var(--green-10);
-        box-shadow: -.5px -1px 1.5px 1px var(--green-30);
-        opacity: .8;
-        filter: blur(2px)
-    }
-    70%{
-        color:var(--green-30);
-        --ui-icon-color:var(--green-30);
-        box-shadow: 0 0 1px 1.5px var(--green-10);
-        filter: blur(0)
-    }
-    100%{
-        color:var(--green-30);
-        --ui-icon-color:var(--green-10);
-        box-shadow: 1px 1px 1px 1px var(--gray-90-o);
-        filter: blur(0)
-    }
-}
-@keyframes light-wipe {
-    from {
-        width: 70px;
-        left: -100%;
-        color:var(--green-10);
-        --ui-icon-color:var(--green-10);
-    }
 
-    to {
+/* ------------------------------------------------------------------ */
+/* Button Group                                                        */
+/* ------------------------------------------------------------------ */
 
-        width: 150px;
-        left: calc(100% + 151px);
-    }
-}
 .btn-group {
-    @extend .d-flex;
-    flex-direction: column;
-    gap: var(--s-1);
-    width: 100%;
+  @extend .d-flex;
+  flex-direction: column;
+  width: 100%;
+  height: max-content;
+
+  /* Default theming tokens (overridden by variants) */
+  --bg: transparent;
+  --fg: inherit;
+
+  /* Item-level tokens */
+  --item-bg: transparent;
+  --item-fg: inherit;
+  --item-border: transparent;
+
+  /* Header/content use group tokens */
+  &--header {
+    color: var(--fg, var(--gray-30));
+    &__title {
+      font-size: var(--s-3);
+      height: var(--s-1);
+      line-height: 1;
+      white-space: nowrap;
+      margin: 0;
+      text-transform: capitalize;
+      width: 100%;
+    }
+  }
+
+  &--content {
+    top: 0;
+    width: var(--s-9-w);
+    padding: var(--s-5) var(--s-9);
+    bottom: 0;
     height: max-content;
-    &__item {
-        color: var(--gray-30);
-        position: relative;
-        // &:nth-child(2){
-        //     justify-content: flex-end;
-        // }
-        background: var(--gray-50-o);
-        overflow: hidden;
-        transition: all 1.2s ease ease-out;
+    overflow: hidden;
+    @media (max-width: 900px) {
+      max-width: 90vw;
+      padding: var(--s-9) var(--s-11);
+      width:100%;
+      margin: 0;
+    }
+  }
 
-        @extend .d-flex;
-        width: 100%;
-        justify-content: space-between;
-        height: 100%;
-        border-radius: var(--s-8);
-        transition: all 1.2s ease ease-out;
-        &.active {
-            &:hover{
+  /* Item base */
+  &__item {
+    position: relative;
+    overflow: hidden;
+    transition: all 1.2s ease-out;
+    @extend .d-flex;
+    width: 100%;
+    justify-content: space-between;
+    height: 100%;
+    border-radius: var(--s-8);
 
-                // background:var(--gray-90);
-                &::before {
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    left: -100%;
-                    width: 50px;
-                    height: 100%;
-                    background: linear-gradient(120deg,
-                    var(--green-10) 0%,
-                    var(--green-30) 50%,
-                    var(--green-70) 100%);
-                    transform: skewX(-25deg);
-                    z-index: 0;
-                    animation-delay: 1s;
-                    animation: light-wipe 1s ease-in-out forwards;
-                }
-                animation: text-wipe .3s ease-out forwards;
-            }
-            border-radius: var(--border-radius);
-            background-color: var(--primary-70-o);
-            color: var(--green-10);
-            --ui-icon-color: var(--green-10);
+    /* consume item tokens */
+    background-color: var(--item-bg);
+    color: var(--item-fg);
+    border: 1px solid var(--item-border);
+
+    &.inactive {
+      color: var(--gray-60);
+      background-color: var(--gray-80-o);
+      border-radius: var(--border-radius);
+
+      &:hover {
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 50px;
+          height: 100%;
+          transform: skewX(-25deg);
+          z-index: 0;
         }
-        &.inactive {
-            transition: all 1.7s ease ease-out;
-
-            border-radius: var(--border-radius);
-            background-color: var(--gray-70);
-            color: var(--gray-40);
-
-            --ui-icon-color: var(--gray-10);
-        }
-
+      }
     }
 
-    &--header {
-        width: var(--s-9-width);
-        padding: var(--s-9);
-
-        &__title {
-            // @media (max-width:900px) {
-            //     background-color: #00f;
-            // }
-            font-size: var(--s-3);
-            height: var(--s-1);
-            line-height: 1;
-            white-space: nowrap;
-            margin: 0;
-            color: var(--gray-20);
-            text-transform: capitalize;
-            width: 100%;
-        }
+    &.active {
+      transition: all 1.7s ease-out;
+      border-radius: var(--border-radius);
     }
+  }
+}
 
-    &--content {
-        top: 0;
-        width: 100%;
-        bottom: 0;
-        // position:absolute;
-        margin: auto;
-        height: max-content;
+/* ------------------------------------------------------------------ */
+/* Variants: set tokens at the group level                            */
+/* ------------------------------------------------------------------ */
 
-        // width:var(--s-9-width);
-        // border: solid 1px var(--gray-70);
-        // border-radius: var(--border-radius);
-        @media(max-width:900px) {
-            max-width: 90vw;
-            // min-width: var(--s-9-width);
-        }
+.btn-group--default {
+  --bg: transparent;
+  --fg: inherit;
+
+  --item-bg: var(--gray-90-o);
+  --item-fg: var(--gray-10);
+  --item-border: var(--gray-80);
+}
+
+.btn-group--green {
+  --bg: var(--green-95-o);
+  --fg: var(--green-10);
+
+  --item-bg: var(--green-90-o);
+  --item-fg: var(--green-5);
+  --item-border: var(--green-70);
+}
+
+.btn-group--secondary {
+  --bg: var(--secondary-95-o);
+  --fg: var(--secondary-10);
+
+  --item-bg: var(--secondary-90-o);
+  --item-fg: var(--secondary-5);
+  --item-border: var(--secondary-70);
+}
+
+.btn-group--success {
+  --bg: var(--green-95-o);
+  --fg: var(--green-10);
+
+  --item-bg: var(--green-90-o);
+  --item-fg: var(--green-5);
+  --item-border: var(--green-70);
+}
+
+.btn-group--warning {
+  --bg: var(--yellow-95-o);
+  --fg: var(--yellow-10);
+
+  --item-bg: var(--yellow-90-o);
+  --item-fg: var(--yellow-5);
+  --item-border: var(--yellow-70);
+}
+
+.btn-group--danger {
+  --bg: var(--red-95-o);
+  --fg: var(--red-10);
+
+  --item-bg: var(--red-90-o);
+  --item-fg: var(--red-5);
+  --item-border: var(--red-70);
+}
+
+/* ------------------------------------------------------------------ */
+/* Per-item variant overrides                                         */
+/* ------------------------------------------------------------------ */
+/* Each item may override the group tokens by setting its own.        */
+
+.btn-group__item--default {
+  --item-bg: var(--gray-90-o);
+  --item-fg: var(--gray-10);
+  --item-border: var(--gray-80);
+}
+
+.btn-group__item--green {
+  --item-bg: var(--green-90-o);
+  --item-fg: var(--green-5);
+  --item-border: var(--green-70);
+}
+
+.btn-group__item--secondary {
+  --item-bg: var(--secondary-90-o);
+  --item-fg: var(--secondary-5);
+  --item-border: var(--secondary-70);
+}
+
+.btn-group__item--success {
+  --item-bg: var(--green-90-o);
+  --item-fg: var(--green-5);
+  --item-border: var(--green-70);
+}
+
+.btn-group__item--warning {
+  --item-bg: var(--yellow-90-o);
+  --item-fg: var(--yellow-5);
+  --item-border: var(--yellow-70);
+}
+
+.btn-group__item--danger {
+  --item-bg: var(--red-90-o);
+  --item-fg: var(--red-5);
+  --item-border: var(--red-70);
+}
+
+/* Explicit “inherit” item: keep things transparent/inherited */
+.btn-group__item--inherit {
+  --item-bg: transparent;
+  --item-fg: inherit;
+  --item-border: transparent;
+}
+.btn-group{
+  flex-wrap: wrap;
+
+  &--bundle,  &__bundle {
+    &-row{
+      @extend .d-flex;
+      gap:var(--s-11);
+      justify-content: flex-start;
+      flex-wrap: wrap;
     }
+  .btn-group__item{
+    border: solid 1px;
+    padding:var(--s-11);
+    width: max-content;
+    height: var(--s-5);
+  }
+}
 }

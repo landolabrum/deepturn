@@ -1,4 +1,3 @@
-// Relative Path: ./Transaction.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './Transaction.scss';
 import { getService } from '@webstack/common';
@@ -6,226 +5,178 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import CookieHelper from '@webstack/helpers/CookieHelper';
 import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { dateFormat, numberToUsd } from '@webstack/helpers/userExperienceFormats';
-import IAuthenticatedUser from "~/src/models/ICustomer";
 import { useUser } from '~/src/core/authentication/hooks/useUser';
 import { useGuest } from '~/src/core/authentication/hooks/useGuest';
 import CreatePDF from '@webstack/components/CreatePDF/controller/CreatePDF';
 
-// Remember to create a sibling SCSS file with the same name as this component
 const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
 const Transaction: React.FC = () => {
   const user = useUser();
-const pdfRef:any = useRef();
-  const MemberService = getService<IMemberService>('IMemberService');
-  const [selectedUser, setUser] = useState<IAuthenticatedUser | { email: string } | undefined>();
-  const [transaction, setTransaction] = useState<any>();
   const guest = useGuest();
+  const pdfRef: any = useRef();
+  const MemberService = getService<IMemberService>('IMemberService');
+  const [selectedUser, setUser] = useState<any>();
+  const [transaction, setTransaction] = useState<any>();
 
   const loadTransaction = () => {
     if (transaction) return;
-    setTransaction({
-      "total": 4267,
-      "data": {
-        "id": "pi_3Q6RUlIodeKZRLDV0xQs6B8o",
-        "object": "payment_intent",
-        "amount": 4267,
-        "amount_capturable": 0,
-        "amount_details": {
-          "tip": {}
-        },
-        "amount_received": 4267,
-        "application": null,
-        "application_fee_amount": null,
-        "automatic_payment_methods": null,
-        "canceled_at": null,
-        "cancellation_reason": null,
-        "capture_method": "automatic",
-        "client_secret": "pi_3Q6RUlIodeKZRLDV0xQs6B8o_secret_fgWOUF6KxodHNMskELB7Qda1O",
-        "confirmation_method": "manual",
-        "created": 1728109779,
-        "currency": "usd",
-        "customer": "cus_QyOExvcMNKsyAi",
-        "description": null,
-        "invoice": null,
-        "last_payment_error": null,
-        "latest_charge": "ch_3Q6RUlIodeKZRLDV0tFGoP4Z",
-        "livemode": false,
-        "metadata": {},
-        "next_action": null,
-        "on_behalf_of": null,
-        "payment_method": "pm_1Q6RUEIodeKZRLDVsXAcz42z",
-        "payment_method_configuration_details": null,
-        "payment_method_options": {
-          "card": {
-            "installments": null,
-            "mandate_options": null,
-            "network": null,
-            "request_three_d_secure": "automatic"
-          }
-        },
-        "payment_method_types": [
-          "card"
-        ],
-        "processing": null,
-        "receipt_email": null,
-        "review": null,
-        "setup_future_usage": null,
-        "shipping": null,
-        "source": null,
-        "statement_descriptor": null,
-        "statement_descriptor_suffix": null,
-        "status": "succeeded",
-        "transfer_data": null,
-        "transfer_group": null
-      },
-      "cart_items": [
-        {
-          "id": "prod_OjLRt77tfxiSJ2",
-          "object": "product",
-          "active": true,
-          "attributes": [],
-          "created": 1696040249,
-          "default_price": "price_1NvskHIodeKZRLDVcmvDIz43",
-          "description": "Subscription 1 Description 1.",
-          "features": [],
-          "images": [
-            "https://files.stripe.com/links/MDB8YWNjdF8xRzM4SVhJb2RlS1pSTERWfGZsX3Rlc3RfS01ORlBVUzVIeW1CZ004MU1ZeWxnd20400PhULWtTH"
-          ],
-          "livemode": false,
-          "marketing_features": [],
-          "metadata": {
-            "category": "subscription",
-            "mid": "mb1",
-            "type": "service"
-          },
-          "name": "Subscription 1",
-          "package_dimensions": null,
-          "shippable": null,
-          "statement_descriptor": null,
-          "tax_code": "txcd_99999999",
-          "type": "service",
-          "unit_label": null,
-          "updated": 1723690560,
-          "url": null,
-          "price": {
-            "id": "price_1PnBebIodeKZRLDVWrNEdBkx",
-            "object": "price",
-            "active": true,
-            "billing_scheme": "per_unit",
-            "created": 1723520653,
-            "currency": "usd",
-            "custom_unit_amount": null,
-            "livemode": false,
-            "lookup_key": null,
-            "metadata": {},
-            "nickname": "price description example",
-            "product": "prod_OjLRt77tfxiSJ2",
-            "recurring": {
-              "aggregate_usage": null,
-              "interval": "month",
-              "interval_count": 1,
-              "meter": null,
-              "trial_period_days": null,
-              "usage_type": "licensed"
-            },
-            "tax_behavior": "exclusive",
-            "tiers_mode": null,
-            "transform_quantity": null,
-            "type": "recurring",
-            "unit_amount": 4267,
-            "unit_amount_decimal": "4267",
-            "qty": 1
+    const token = localStorage.getItem('transaction-token');
+
+    const decryptToken = async (token: string) => {
+      if (!token) return;
+
+      try {
+        const response = await MemberService.decryptJWT({
+          token,
+          secret: String(ENCRYPTION_KEY),
+          algorithm: 'HS256',
+        });
+
+        if (response?.decoded) {
+          setTransaction(response.decoded);
+
+          // Only delete cart if transaction has no known error
+          if (!response.decoded?.error) {
+            CookieHelper.deleteCookie('cart');
           }
         }
-      ]
-    })
-    // const hasTransaction = CookieHelper.getCookie('transaction-token');
-    // const decryptToken = async (token: string) => {
-    //   if (token) {
-    //     try {
-    //       const response = await MemberService.decryptJWT({
-    //         token: token,
-    //         secret: String(ENCRYPTION_KEY),
-    //         algorithm: 'HS256'
-    //       });
-    //       if (response?.decoded) {
-    //         // console.log('[ JWT DECODE (SUCCESS) ]', response.decoded);
-    //         setTransaction(response.decoded);
-    //       }
-    //     } catch (error: any) {
-    //       setTransaction({ error: error?.detail?.detail });
-    //       console.error('[ JWT DECODE (ERROR) ]', error?.detail?.detail);
-    //     }
-    //   }
-    // };
-    // if (hasTransaction) {
-    //   CookieHelper.deleteCookie('cart');
-    //   decryptToken(hasTransaction);
-    // }
-  }
-  const handleUser = () => {
-    if (selectedUser) return;
-    if (user || guest) setUser(user || guest);
+      } catch (error: any) {
+        const detail = error?.detail?.detail || 'Unable to decode transaction token.';
+        setTransaction({ error: detail });
+        console.error('[JWT Decode Error]', detail);
+      }
+    };
+
+    if (token) {
+      decryptToken(token);
+    }
   };
-  useEffect(() => {
-    handleUser();
-  }, [handleUser, user]);
+
+  const handleUser = () => {
+    if (selectedUser || !transaction?.user) return;
+
+    const tUser = transaction.user;
+    const metadataUser = tUser?.metadata?.user ?? {};
+
+    const fullUser = {
+      email: tUser?.email || metadataUser?.email,
+      name: tUser?.name || metadataUser?.name,
+      type: metadataUser?.type,
+      clearance: metadataUser?.clearance,
+      devices: metadataUser?.devices,
+      social: metadataUser?.social,
+      server_url: metadataUser?.server_url,
+      merchant: tUser?.metadata?.merchant,
+    };
+
+    setUser(fullUser);
+  };
+
   useEffect(() => {
     loadTransaction();
-  }, [setTransaction, pdfRef?.current]);
+  }, []);
+
+  useEffect(() => {
+    if (transaction && !selectedUser) handleUser();
+  }, [transaction]);
+
+  const showError = transaction?.error;
+
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='transaction'>
-        {transaction?.total !== undefined && <div className='transaction__header'>
-          <div className='transaction__title'>
-            <div className='transaction__title--status'>Purchase Success</div>
+      <div className="transaction">
+        {transaction?.total !== undefined && (
+          <div className="transaction__header">
+            <div className="transaction__title">
+              <div className="transaction__title--status">Purchase Success</div>
+            </div>
+            {pdfRef?.current && (
+              <CreatePDF pdfRef={pdfRef} downloadable name={transaction.data?.id} />
+            )}
           </div>
-          {pdfRef?.current && <CreatePDF pdfRef={pdfRef} downloadable name={transaction.data.id}/>}
-        </div>}
-        <div className='transaction__content' ref={pdfRef}>
-        {transaction?.data?.id && 
-        <div className='transaction__content--header'>
-        <div className='transaction__content--header-title'>
-          <div className='transaction--pi'>
-            <div>PURCHASE ID</div>
-            <div>{transaction.data.id}</div>
-          </div>
-          </div>
-          </div>}
-          {transaction?.data?.created && <div className='transaction--date'><div>Purchased</div><div>{dateFormat(transaction.data.created, { isTimestamp: true })}</div></div>}
-          {selectedUser && <div className='transaction--email'><div>Email</div><div>{selectedUser?.email}</div></div>} 
-          {transaction?.cart_items && <>
-            <div className='transaction--list'>
-              {Array(transaction?.cart_items).map(
-                ([field, value]: any) => {
-                  return <div className='transaction__item' key={field.name}>
-                    <div className='transaction__item-identity'>
-                      <div className='identity-name'>{field.name}</div>
-                      <div className='identity-id'>{field.id}</div>
-                    </div>
-                    <div className='transaction__item-description'>
-                      {field.description}
-                    </div>
-                    <div className='transaction__item-amount'>
-                      {numberToUsd(field.price?.unit_amount)}
-                    </div>
+        )}
+
+        <div className="transaction__content" ref={pdfRef}>
+          {transaction?.data?.id && (
+            <div className="transaction__content--header">
+              <div className="transaction__content--header-title">
+                <div className="transaction--pi">
+                  <div>PURCHASE ID</div>
+                  <div>{transaction.data.id}</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {transaction?.data?.created && (
+            <div className="transaction--date">
+              <div>Purchased</div>
+              <div>{dateFormat(transaction.data.created, { isTimestamp: true })}</div>
+            </div>
+          )}
+
+          {selectedUser?.email && (
+            <div className="transaction--email">
+              <div>Email</div>
+              <div>{selectedUser.email}</div>
+            </div>
+          )}
+          {selectedUser?.name && (
+            <div className="transaction--name">
+              <div>Name</div>
+              <div>{selectedUser.name}</div>
+            </div>
+          )}
+          {selectedUser?.type && (
+            <div className="transaction--type">
+              <div>User Type</div>
+              <div>{selectedUser.type}</div>
+            </div>
+          )}
+          {selectedUser?.clearance !== undefined && (
+            <div className="transaction--clearance">
+              <div>Clearance</div>
+              <div>{selectedUser.clearance}</div>
+            </div>
+          )}
+
+          {transaction?.cart_items?.length > 0 && (
+            <div className="transaction--list">
+              {transaction.cart_items.map((item: any, index: number) => (
+                <div className="transaction__item" key={index}>
+                  <div className="transaction__item-identity">
+                    <div className="identity-name">{item.name}</div>
+                    <div className="identity-id">{item.id}</div>
                   </div>
-                })}
-            <div className='transaction--total'><div>total</div> <div>{numberToUsd(transaction.total)}</div></div>
+                  <div className="transaction__item-description">{item.description}</div>
+                  <div className="transaction__item-amount">
+                    {numberToUsd(item?.price?.unit_amount)}
+                  </div>
+                </div>
+              ))}
+              <div className="transaction--total">
+                <div>Total</div>
+                <div>{numberToUsd(transaction.total)}</div>
+              </div>
             </div>
-          </>
-          }
-          {transaction?.error?.includes("Your card was declined.") && <div className='card transaction__error declined'>
-            <div className='transaction__title'>
-              Your card was declined
+          )}
+
+          {showError && (
+            <div className="card transaction__error declined">
+              <div className="transaction__title">
+                {showError.includes("card was declined")
+                  ? "Your card was declined"
+                  : showError}
+              </div>
+              <UiButton href="/cart">Return to Cart</UiButton>
             </div>
-            <UiButton href="/cart">return to cart</UiButton>
-          </div>}
+          )}
+
+          {!transaction && <pre className="debug">No transaction loaded</pre>}
         </div>
       </div>
-      {/* {JSON.stringify(transaction)} */}
     </>
   );
 };

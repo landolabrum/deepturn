@@ -103,9 +103,9 @@ button {
     cursor:not-allowed !important;
     animation: disable 1s forwards;
   }
-  &:not(disabled){
-    animation: abled 1s forwards;
-  }
+  // &:not(disabled){
+  //   animation: abled 1s forwards;
+  // }
 }
 .ui-button__link {
   color: inherit;
