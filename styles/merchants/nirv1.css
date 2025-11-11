@@ -1,10 +1,20 @@
 :root {
-  --primary-10: #e6f5d8;  
-  --primary-30: #b8e68a;  
-  --primary-50: #c6e67a;  /* Strong, confident green (main brand color) */
-  --primary-70: #4da52e;  /* Slightly deeper for contrast */
-  --primary-90: #2d7a1a;  /* Darker for professionalism */
-  --primary-o: #6cc24a70; /* 70% opacity version */
+/* Solid colors */
+--primary-10: #cfff40;  /* vibrant lime – light accents */
+--primary-30: #bff230;  /* bright chartreuse – secondary UI */
+--primary-50: #76b900;  /* rich green – brand primary */
+--primary-70: #3f8500;  /* deep green – buttons, emphasis */
+--primary-90: #265600;  /* dark forest – backgrounds */
+
+/* 50% opacity versions – maintain transparency */
+--primary-10-o: #cfff4080;
+--primary-30-o: #bff23080;
+--primary-50-o: #76b90080;
+--primary-70-o: #3f850080;
+--primary-90-o: #26560080;
+
+  /* (Optional) keep your generic overlay */
+  --primary-o: #9d8d2b70;
 
   --secondary: #c5b9a8;
   --secondary-10: #d6c8b7;
@@ -23,7 +33,7 @@
  
 
   /* --body: #2d2d2d; */
-  --body: #e0e0e0;
+  --body: #f3f3f0;
   --lite: #f0edeb;
   --dark: #242c36;
   --dark-o: #242c3670;

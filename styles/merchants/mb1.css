@@ -1,33 +1,42 @@
 :root {
-  --primary-10: #e68366;
-  --primary-10-o: #e6836670;
-  --primary-30: #d97a5d;
-  --primary-30-o: #d97a5d70;
-  --primary-50: #cc6f50;
-  --primary-50-o: #cc6f5070;
-  --primary-70: #b35944;
-  --primary-70-o: #b3594470;
-  --primary-90: #994d3a;
-  --primary-90-o: #994d3a70;
-  --primary-o: #cc6f5070;
+/* === PRIMARY (Base: #CC6F50) === */
+--primary-10: #f3bfae;
+--primary-10-o: #f3bfae70;
+--primary-30: #e69574;
+--primary-30-o: #e6957470;
+--primary-50: #cc6f50; /* base */
+--primary-50-o: #cc6f5070;
+--primary-70: #a9573f;
+--primary-70-o: #a9573f70;
+--primary-90: #7a3d2b;
+--primary-90-o: #7a3d2b70;
+--primary-o: #cc6f5070;
 
+/* === SECONDARY (Base: #C5B9A8) === */
+--secondary-10: #efeae2;
+--secondary-10-o: #efeae270;
+--secondary-30: #d9cfc0;
+--secondary-30-o: #d9cfc070;
+--secondary-50: #c5b9a8; /* base */
+--secondary-50-o: #c5b9a870;
+--secondary-70: #a09284;
+--secondary-70-o: #a0928470;
+--secondary-90: #75685d;
+--secondary-90-o: #75685d70;
+--secondary-o: #c5b9a870;
 
-  --secondary-10: #d6c8b7;
-  --secondary-30: #ccbfae;
-  --secondary-50: #c5b9a8;
-  --secondary-50-o: #c5b9a870;
-  --secondary-60: #aea495;
-  --secondary-60-o: #aea49570;
-  --secondary-70: #ab9d8d;
-  --secondary-90: #917e72;
-  --secondary-o: #c5b9a870;
-
-  --tertiary-10: #d0c1b2;
-  --tertiary-30: #c7b7a8;
-  --tertiary-50: #bfb0a1;
-  --tertiary-70: #a89785;
-  --tertiary-90: #8f7d71;
-  --tertiary-o: #bfb0a170;
+/* === TERTIARY (Base: #BFB0A1) === */
+--tertiary-10: #e8ddd3;
+--tertiary-10-o: #e8ddd370;
+--tertiary-30: #d4c3b6;
+--tertiary-30-o: #d4c3b670;
+--tertiary-50: #bfb0a1; /* base */
+--tertiary-50-o: #bfb0a170;
+--tertiary-70: #9c8e80;
+--tertiary-70-o: #9c8e8070;
+--tertiary-90: #75685f;
+--tertiary-90-o: #75685f70;
+--tertiary-o: #bfb0a170;
 
   --body: radial-gradient(
     circle,

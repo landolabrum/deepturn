@@ -211,7 +211,7 @@ html {
 body {
   font-family: var(--font-family,"Play"), sans-serif;
   margin: 0;
-  /* background: var(--body); */
+  background: var(--body);
   color: var(--color);
   font-size: var(--s-5);
   font-weight: 300;
@@ -248,7 +248,6 @@ body {
 }
 *::-webkit-scrollbar:hover{
     width: var(--s-1);
-
   }
 *::-webkit-scrollbar-thumb {
   background-color: var(--gray-70-o);
@@ -1084,7 +1083,8 @@ a:-webkit-any-link {
   position: fixed;
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 15px 15px 70px;
+  max-width: 1260px;
   background-color: #00000070;
   color: #0f9;
   border-radius: 5px;

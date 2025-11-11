@@ -1,12 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Play:wght@300;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+/* @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap'); */
 
 @font-face {
   font-family: Game;
   src: url("/fonts/gamestation/gamestationtext.otf") format("opentype");
   font-style: normal;
 }
-
+@font-face {
+  font-family: Papaya;
+  src: url("/fonts/papaya/sbb-papaya.otf") format("opentype");
+  font-style: normal;
+}
+@font-face {
+  font-family: Gear6;
+  src: url("/fonts/gear6/Gear6_Clean.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: Gear6;
+  src: url("/fonts/gear6/Gear6_Whitegrad.otf") format("opentype");
+  font-weight: 300;
+}
 @font-face {
   font-family: Nabla;
   src: url("/fonts/Nabla/Nabla-Regular.ttf") format("opentype");
@@ -20,11 +36,17 @@
 }
 
 @font-face {
+
   font-family: PlexLight;
   src: url("/fonts/IBMPlexMono/IBMPlexMono-Light.ttf") format("opentype");
   font-style: normal;
 }
 
+@font-face {
+  font-family: Linebeam;
+  src: url("/fonts/LinearBeam/Linebeam.ttf") format("opentype");
+  font-style: normal;
+}
 @font-face {
   font-family: FreightSans;
   font-weight: 700;
@@ -42,24 +64,107 @@
     url("/fonts/freight/freight-sans-medium.woff") format("woff");
 }
 
-
+/* ===== AvantGarde Family ===== */
+/* Book / Normal (400) */
 @font-face {
-  font-family: Decimal;
-  font-weight: 500;
+  font-family: "AvantGarde";
+  src:
+    url("/fonts/AvantGarde/fonnts.com-AVGARDN_2.ttf") format("truetype");
   font-style: normal;
-  src: url("/fonts/decimal/Decimal-Book-Pro_Web.woff2") format("woff2"),
-    url("/fonts/decimal/Decimal-Book-Pro_Web.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
 }
+
+/* Medium (500) */
+@font-face {
+  font-family: "AvantGarde";
+  src:
+    url("/fonts/AvantGarde/fonnts.com-AVGARDM_2.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+/* Medium Italic (500 italic) */
+@font-face {
+  font-family: "AvantGarde";
+  src:
+    url("/fonts/AvantGarde/fonnts.com-AVGARDMI_2.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+}
+
+/* Demi/Bold (700) */
+@font-face {
+  font-family: "AvantGarde";
+  src:
+    url("/fonts/AvantGarde/fonnts.com-AVGARDD_2.ttf") format("truetype"),
+    url("/fonts/AvantGarde/fonnts.com-AVGARDD2.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Demi/Bold Italic (700 italic) */
+@font-face {
+  font-family: "AvantGarde";
+  src:
+    url("/fonts/AvantGarde/fonnts.com-AVGARDDO_2.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Bold (900) */
+@font-face {
+  font-family: "AvantGarde";
+  src: url("/fonts/AvantGarde/AvantGardeBold.otf") format("opentype");
+  font-weight: 900;
+}
+
+/* ===== Decimal Core (for body/UI) ===== */
+/* Light (300) */
+@font-face {
+  font-family: "Decimal";
+  src: url("/fonts/Decimal/Decimal-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Book (400) */
+@font-face {
+  font-family: "Decimal";
+  src:
+    url("/fonts/Decimal/Decimal-Book.woff2") format("woff2"),
+    url("/fonts/Decimal/Decimal-Book.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* ===== Decimal TD (display cut, opt-in only) ===== */
+@font-face {
+  font-family: "Decimal TD";
+  src: url("/fonts/Decimal/Decimal-Medium-TD.woff") format("woff");
+  font-weight: 500;           /* use only when explicitly requested */
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Decimal";
+  src:
+    url("/fonts/Decimal/Decimal-Medium-TD.woff")  format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 
 :root {
   --user: #1880cf;
   --marker: #cf0f0f;
-  /* --primary-10: #e68366;
-  --primary-30: #d97a5d;
-  --primary-50: #cc6f50;
-  --primary-50-o: #cc6f5070;
-  --primary-70: #b35944;
-  --primary-90: #994d3a; */
 
   --secondary-10: #d6c8b7;
   --secondary-30: #ccbfae;
@@ -72,62 +177,93 @@
   --tertiary-10: #d0c1b2;
   --tertiary-30: #c7b7a8;
   --tertiary-50: #bfb0a1;
+  --tertiary-50-o: #bfb0a170;
   --tertiary-70: #a89785;
+  --tertiary-70-o: #a8978570;
   --tertiary-90: #8f7d71;
+  --tertiary-90-o: #8f7d7170;
   --tertiary-o: #bfb0a170;
-
 
   --body: transparent;
   --color: #615f5f;
   --lite: #f0edeb;
   --dark: #2c0903;
   --dark-70: #200804;
-  /* --dark: #242c36; */
   --dark-o: #242c3670;
   --black: #111111;
 
   --white: #ffffff;
   --white-o: #ffffff70;
 
-  --yellow-10: #F9E0B5;
-  --yellow-10-o: #F9E0B550;
+  /* ===== Yellow (with -o variants) ===== */
+  --yellow-10: #f9e0b5;
+  --yellow-10-o: #f9e0b570;
   --yellow-20: #ffdb4d;
-  --yellow-20-o: #ffdb4d50;
-  --yellow-30: #EDCA60;
-  --yellow-30-o: #EDCA6050;
-  --yellow-50: #E3AF1F;
-  --yellow-50-o: #E3AF1F50;
-  --yellow-70: #C4871C;
-  --yellow-70-o: #C4871C50;
+  --yellow-20-o: #ffdb4d70;
+  --yellow-30: #edca60;
+  --yellow-30-o: #edca6070;
+  --yellow-50: #e3af1f;
+  --yellow-50-o: #e3af1f70;
+  --yellow-70: #c4871c;
+  --yellow-70-o: #c4871c70;
+  --yellow-90: #9a6b14;
+  --yellow-90-o: #9a6b1470;
 
+  /* ===== Orange (with -o variants) ===== */
+  --orange-10: #ffe4cc;
+  --orange-10-o: #ffe4cc70;
+  --orange-20: #ffc999;
+  --orange-20-o: #ffc99970;
+  --orange-30: #ffb266;
+  --orange-30-o: #ffb26670;
   --orange-50: #ff9900;
-  --orange-o: #ff990070;
   --orange-50-o: #ff990070;
+  --orange-70: #cc7a00;
+  --orange-70-o: #cc7a0070;
+  --orange-90: #995c00;
+  --orange-90-o: #995c0070;
+  --orange-o: #ff990070;
+
 
   --red-10: #ef4444;
+  --red-10-o: #ef444470;
   --red-30: #d93333;
+  --red-30-o: #d9333370;
   --red-50: #dd4400;
+  --red-50-o: #dd440070;
   --red-70: #b22a2a;
+  --red-70-o: #b22a2a70;
   --red-90: #8b2222;
+  --red-90-o: #8b222270;
   --red-o: #dd440070;
 
   --green: #44b432;
   --green-o: #44b43270;
   --green-10: #22c553;
-  --green-20-o: #22c55350;
+  --green-10-o: #22c55370;
+  --green-20: #34d06b;
+  --green-20-o: #34d06b70;
   --green-30: #34a853;
+  --green-30-o: #34a85370;
   --green-70: #2d8c3b;
+  --green-70-o: #2d8c3b70;
   --green-90: #257029;
+  --green-90-o: #25702970;
 
-  --blue-10-o: #2B8FDB70;
-  --blue-10: #2B8FDB;
-  --blue-30: #2277B5;
-  --blue-50: #1A5E92;
+  --blue-10: #2b8fdb;
+  --blue-10-o: #2b8fdb70;
+  --blue-30: #2277b5;
+  --blue-30-o: #2277b570;
+  --blue-50: #1a5e92;
+  --blue-50-o: #1a5e9270;
   --blue-60: #18527f;
-  --blue-70: #13487A;
+  --blue-60-o: #18527f70;
+  --blue-70: #13487a;
+  --blue-70-o: #13487a70;
   --blue-90: #031d40;
+  --blue-90-o: #031d4070;
   --blue-100: #121e2f;
-
+  --blue-100-o: #121e2f70;
 
   --purple-10: #d0a1e2;
   --purple-10-o: #d0a1e270;
@@ -141,36 +277,37 @@
   --purple-90-o: #5d297570;
 
   --pink: #e91e63;
-  --pink-10: #ff80ab;
-  --pink-30: #f06292;
-  --pink-70: #c2185b;
-  --pink-90: #880e4f;
   --pink-o: #e91e6370;
+  --pink-10: #ff80ab;
+  --pink-10-o: #ff80ab70;
+  --pink-30: #f06292;
+  --pink-30-o: #f0629270;
+  --pink-70: #c2185b;
+  --pink-70-o: #c2185b70;
+  --pink-90: #880e4f;
+  --pink-90-o: #880e4f70;
 
-
-  /* COLORS */
-  --black: #111111;
+  /* Grays */
   --gray-10: #f8f8f8;
-  --gray-10-o: #f8f8f850;
+  --gray-10-o: #f8f8f870;
   --gray-20: #f5f5f5;
-  --gray-20-o: #f5f5f550;
+  --gray-20-o: #f5f5f570;
   --gray-30: #e0e0e0;
-  --gray-30-o: #e0e0e050;
+  --gray-30-o: #e0e0e070;
   --gray-40: #d4d4d4;
-  --gray-40-o: #d4d4d450;
+  --gray-40-o: #d4d4d470;
   --gray-50: #a3a3a3;
-  --gray-50-o: #a3a3a350;
+  --gray-50-o: #a3a3a370;
   --gray-60: #737373;
-  --gray-60-o: #73737350;
+  --gray-60-o: #73737370;
   --gray-70: #525252;
-  --gray-70-o: #52525250;
+  --gray-70-o: #52525270;
   --gray-80: #404040;
-  --gray-80-o: #40404050;
+  --gray-80-o: #40404070;
   --gray-90: #262626;
-  --gray-90-o: #26262650;
+  --gray-90-o: #26262670;
   --gray-100: #171717;
-  --gray-100-o: #17171750;
-
+  --gray-100-o: #17171770;
 
   --box-shadow: -0.06rem -0.07rem 0  var(--gray-30),
         0.1rem 0.1rem 0.1rem 0.1rem var(--gray-100);
@@ -178,8 +315,35 @@
   --box-shadow-sm: 2px 2px 5px rgba(23, 23, 23, 0.5);
   --box-shadow-xl: 0px 4px 6px rgba(23, 23, 23, 0.3),
     0px 2px 4px rgba(64, 64, 64, 0.2), 0px 10px 10px rgba(23, 23, 23, 0.3);
-  
+
+
+
+
+      /* scale tokens */
+  --scale-unit: var(--s-1);
+  --scale-radius: calc(var(--scale-unit) * 2.25);
+  --scale-elev: calc(var(--scale-unit) * 9);
+  --scale-spread: calc(var(--scale-unit) * 3.5);
+  --scale-bevel: max(2px, calc(var(--scale-unit) * .45));
+  --scale-rim: max(1px, calc(var(--scale-unit) * .2));
+  --scale-contact: calc(var(--scale-unit) * .75);
+
+  /* light direction (top-left) */
+  --light-x: -0.75;  /* -1..1 */
+  --light-y: -0.65;
+
+  /* grayscale surface */
+  --surface-hi: var(--gray-90);
+  --surface-lo: var(--gray-100);
+  --shadow-drop: var(--black);
+  --shadow-lift: var(--gray-70-o);
+  --inner-hi: var(--gray-70-o);
+  --inner-lo: var(--gray-100-o);
+
+  /* text/icon */
+  --surface-fg: var(--gray-40);
 }
+
 
 
 @keyframes fadeIn {
@@ -197,6 +361,7 @@
     opacity: 1;
   }
 }
+
 
 .a-fade-in {
   animation: fadeIn 1.5s ease-in forwards;
@@ -338,56 +503,106 @@
   }
 }
 .card {
-  cursor: pointer;
-  color: var(--gray-50);
-  --ui-icon-color: var(--gray-50);
+  /* INHERIT FIRST, THEN FALL BACK (compact drivers) */
+  --u:           var(--component-unit, var(--scale-unit, 1rem));         /* master unit */
+  --size:        var(--component-size, var(--scale-size, 1));            /* 0.75–1–1.25 */
+  --elev-level:  var(--component-elev-level, var(--scale-elev-level, 1));/* 0–3 */
 
-  /* Gradient background */
-  background: linear-gradient(
-    135deg,
-    var(--gray-90) 0%,
-    var(--gray-80) 100%
-  );
+  /* Optional: single light angle/intensity -> vector (lx, ly) */
+  --light-angle: var(--component-light-angle, var(--light-angle, 35deg));
+  --light-power: var(--component-light-power, var(--light-power, 1));
+  /* Project simple 2D vector from angle (cos/sin approximations via gradients aren’t native;
+     keep lx/ly overridable while offering sane defaults) */
+  --lx: var(--component-lx, var(--light-x, 0.6));
+  --ly: var(--component-ly, var(--light-y, 0.8));
 
-  border-radius: var(--border-radius);
-  border: 1px solid var(--gray-70);
+  /* Surface + color (unchanged; still override-friendly) */
+  --base-hi: var(--component-surface-hi, var(--surface-hi, #2a2a2a));
+  --base-lo: var(--component-surface-lo, var(--surface-lo, #1e1e1e));
+  --fg:      var(--component-fg,         var(--surface-fg, #e8e8e8));
+  --drop:    var(--component-drop,       var(--shadow-drop, rgba(0,0,0,.45)));
+  --lift:    var(--component-lift,       var(--shadow-lift, rgba(0,0,0,.35)));
+  --innerH:  var(--component-inner-hi,   var(--inner-hi, rgba(255,255,255,.10)));
+  --innerL:  var(--component-inner-lo,   var(--inner-lo, rgba(0,0,0,.18)));
 
-  /* smooth transitions */
-  transition:
-    color 0.4s ease,
-    border-color 0.4s ease,
-    background 0.6s ease;
+  /* ===== Derived sizing (intertwined) =====
+     Everything hangs off --u, --size, and --elev-level */
+  --pad-x:   calc(var(--u) * clamp(.8, var(--size), 1.4));
+  --pad-y:   calc(var(--u) * clamp(.6, var(--size) * .9, 1.2));
+  --radius:  calc(var(--u) * clamp(.6, var(--size) * .9, 1.2));
+  --bevel:   calc(var(--u) * (.18 + (.10 * var(--size))));
+  --elev:    calc(var(--u) * ( .8 + (.9 * var(--elev-level))));          /* level 0–3 */
+  --spread:  calc(var(--elev) * .45);
+  --contact: calc(var(--u) * (.30 + (.20 * var(--elev-level))));
+  --rim:     calc(var(--bevel) * .6);
 
-  &:hover {
-    color: var(--gray-30);
-    --ui-icon-color: var(--gray-30);
-    background: linear-gradient(
-      135deg,
-      var(--gray-80) 0%,
-      var(--gray-70) 100%
-    );
-    border-color: var(--primary-50);
+  /* ===== Layout: fill parent ===== */
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 100%;              /* parent must define height; otherwise use .card--auto */
+  min-width: 0;
+  min-height: 0;
+  align-self: stretch;
+  justify-self: stretch;
+  overflow: hidden;
+
+  color: var(--fg);
+  --ui-icon-color: var(--fg);
+  position: relative;
+  padding: var(--pad-y) var(--pad-x);
+  border-radius: var(--radius);
+  border: 1px solid var(--gray-80, #303030);
+  background: linear-gradient(145deg, var(--base-hi), var(--base-lo));
+
+  box-shadow:
+    0 calc(var(--contact)) calc(var(--contact) * 1.8) calc(var(--contact) * -0.25) var(--drop),
+    calc(var(--u) * (0.8 * (var(--lx) * -1) * var(--light-power)))
+    calc(var(--u) * (1.0 * (var(--ly) * -1) * var(--light-power)))
+    var(--elev) var(--spread) rgba(0,0,0,.30),
+    calc(var(--u) * (0.8 * var(--lx) * var(--light-power)))
+    calc(var(--u) * (0.8 * var(--ly) * var(--light-power)))
+    calc(var(--elev) * 0.55) calc(var(--spread) * 0.3) var(--lift),
+    inset var(--bevel) var(--bevel) calc(var(--bevel) * 1.6) var(--innerH),
+    inset calc(var(--bevel) * -1) calc(var(--bevel) * -1) calc(var(--bevel) * 1.2) var(--innerL);
+
+  &::before,
+  &::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; }
+  &::before {
+    background:
+      radial-gradient(120% 120% at 0% 0%,     rgba(255,255,255,.10), transparent 60%) top left,
+      radial-gradient(120% 120% at 100% 100%, rgba(0,0,0,.20),        transparent 60%) bottom right,
+      linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.10));
+    background-repeat:no-repeat; background-size:100% 100%;
+    outline: var(--rim) solid rgba(255,255,255,.02);
+    mix-blend-mode: soft-light;
+  }
+  &::after {
+    background: linear-gradient(180deg, rgba(255,255,255,.07) 0%, rgba(0,0,0,.12) 100%);
+    mix-blend-mode: soft-light;
   }
 
-  &:focus,
-  &:focus-within,
-  &:target,
-  &:active {
-    background: linear-gradient(
-      135deg,
-      var(--gray-70) 0%,
-      var(--gray-60) 100%
-    );
-    border-color: var(--primary-60);
-    outline: none;
-  }
+  transition: box-shadow .24s ease, background .24s ease, border-color .2s ease, color .2s ease;
+  @media (prefers-reduced-motion: reduce){ transition:none; }
 }
 
-.card.flat {
-  border: none;
-  border-radius: 0;
-  transition: background 0.6s ease, color 0.4s ease;
+/* Auto-height when parent doesn’t supply height */
+.card--auto {
+  height: auto;
+  align-self: auto;
+  justify-self: auto;
 }
+
+/* Convenience size/elevation shorthands (set one var, everything follows) */
+.card[data-size="sm"] { --size: .85; }
+.card[data-size="md"] { --size: 1; }
+.card[data-size="lg"] { --size: 1.2; }
+
+.card[data-elev="0"] { --elev-level: 0; }
+.card[data-elev="1"] { --elev-level: 1; }
+.card[data-elev="2"] { --elev-level: 2; }
+.card[data-elev="3"] { --elev-level: 3; }
+
 
 /* GOOGLE ADDRESS STYLES */
 
