@@ -1,3 +1,4 @@
+
 /* SIZING ROOT */
 :root{
   --s-xxl: 50px;
@@ -1015,7 +1016,7 @@ nav {
 }
 
 .header {
-  --header-primary-bg: var(--gray-100);
+  --header-primary-bg: unset;
   --header-primary-border: solid 1px var(--gray-80);
   --header-primary: var(--gray-30);
   --header-width: var(--full-width);
