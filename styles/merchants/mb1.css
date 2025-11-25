@@ -43,8 +43,8 @@
     circle,
     /* var(--black) 0%, */
     /* var(--white) 11%, */
-    var(--gray-40) 17%,
-    var(--gray-20) 100%);
+    var(--gray-90) 17%,
+    var(--black) 100%);
   /* --body: #d2d2d2; */
   --lite: #f0edeb;
   --dark: #2c0903;
