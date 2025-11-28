@@ -872,7 +872,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 }
 
 .vsl-mrkr {
-  display: none;
+  /* display: none; */
   position: absolute;
   z-index: 3;
   user-select: all;
@@ -884,15 +884,17 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   white-space: nowrap;
   /* transform: translateX(-50%); */
 
+  background-color: var(--gray-80);
 }
 
 .vsl-mrkr--hover {
   filter: brightness(1.33);
   display: flex;
+  z-index: 1000 !important;
+  background-color: var(--gray-80);
 }
 
 .vsl-mrkr--content:hover {
-  background-color: var(--gray-80);
 }
 
 .vsl-mrkr--content-image {
