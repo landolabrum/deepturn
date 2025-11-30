@@ -848,7 +848,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 .vsl-icon:hover {
   animation: vslIconPulse 2s infinite;
   animation-play-state: running;
-  color: var(--dark);
+  color: var(--primary-10);
   --ui-icon-color: var(--blue-50);
   background-color: var(--primary-10);
   box-shadow: 0 0 0 var(--primary-50);
@@ -882,20 +882,15 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   font-family:Decimal;
   color:var(--primary-50);
   white-space: nowrap;
-  /* transform: translateX(-50%); */
-
-  background-color: var(--gray-80);
+  transform: translateX(-50%);
+  overflow: hidden;
 }
 
 .vsl-mrkr--hover {
   filter: brightness(1.33);
   display: flex;
-  z-index: 1000 !important;
-  background-color: var(--gray-80);
 }
 
-.vsl-mrkr--content:hover {
-}
 
 .vsl-mrkr--content-image {
   opacity: 1;
@@ -903,9 +898,15 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 }
 
 .vsl-mrkr--content {
+  background-color: var(--gray-10-o);
   width: var(--s-9-w);
   padding: var(--s-9);
-  min-height: var(--s-1);
+  height: var(--s-1);
+}
+.vsl-mrkr--content:hover {
+  background-color: var(--gray-90);
+  height: max-content;
+  z-index: 4;
 }
 
 .vsl-mrkr--content-header {
