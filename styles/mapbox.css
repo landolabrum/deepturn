@@ -899,9 +899,9 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 
 .vsl-mrkr--content {
   background-color: var(--gray-10-o);
-  width: var(--s-9-w);
-  padding: var(--s-9);
-  height: var(--s-1);
+  width: max-content;
+  /* padding: var(--s-9); */
+  /* height: var(--s-1); */
 }
 .vsl-mrkr--content:hover {
   background-color: var(--gray-90);
