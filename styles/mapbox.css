@@ -877,17 +877,20 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   z-index: 3;
   user-select: all;
   overflow: visible;
-  top: -100%;
-  left: calc(100% + 10px);
+  top: 0;
+  /* left: calc(100% + 10px); */
   font-family:Decimal;
   color:var(--primary-50);
   white-space: nowrap;
-  transform: translateX(-50%);
+  left: calc(100% + var(--s-7));
+  height: 100%;
+  /* transform: translateY(50%); */
   overflow: hidden;
 }
 
 .vsl-mrkr--hover {
   filter: brightness(1.33);
+  height: max-content ;
   display: flex;
 }
 
@@ -901,8 +904,6 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   background-color: var(--gray-10-o);
   width: max-content;
   /* padding: var(--s-9); */
-  height: 0;
-  transition: all 0.3s ease-in-out;
 }
 .vsl-mrkr--content:hover {
   background-color: var(--gray-90);
