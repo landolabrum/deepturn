@@ -147,7 +147,6 @@
 @font-face {
   font-family: "Decimal TD";
   src: url("/fonts/Decimal/Decimal-Medium-TD.woff") format("woff");
-  font-weight: 500;           /* use only when explicitly requested */
   font-style: normal;
   font-display: swap;
 }
