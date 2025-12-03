@@ -798,23 +798,10 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   display: inline-block;
   --ui-icon-size: var(--s-1);
   filter: brightness(0.77);
-  width: var(--s-1);
+  width: max-content;
 }
 
-@-webkit-keyframes vslIconPulse {
-  0% {
-    -webkit-transform: scale(1.2);
-    -webkit-box-shadow: 0 0 0 0 var(--vsl-hover-lite);
-  }
-  70% {
-    -webkit-transform: scale(0.8);
-    -webkit-box-shadow: 0 0 var(--s-11) var(--s-6) var(--vsl-hover-dark);
-  }
-  100% {
-    -webkit-transform: scale(1);
-    -webkit-box-shadow: 0 0 0 0 var(--vsl-hover-dark);
-  }
-}
+
 
 @keyframes vslIconPulse {
   0% {
@@ -836,13 +823,13 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 
 .vsl-icon {
   border-radius: var(--s-1);
-  width: var(--s-element);
   aspect-ratio: 1;
   display: flex;
   background-color: transparent;
   justify-content: center;
   align-items: center;
   animation-play-state: paused;
+  padding:var(--s-9);
 }
 
 .vsl-icon:hover {
@@ -882,7 +869,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   font-family:Decimal;
   color:var(--primary-50);
   white-space: nowrap;
-  left: calc(100% + var(--s-7));
+  left: 100%;
   height: 100%;
   /* transform: translateY(50%); */
   overflow: hidden;
@@ -908,7 +895,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 .vsl-mrkr--content:hover {
   background-color: var(--gray-90);
   height: max-content;
-  z-index: 4;
+  z-index: 1000;
 }
 
 .vsl-mrkr--content-header {
