@@ -777,30 +777,43 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 }
 
 .guardian__marker-mrkr--main .vsl-icon {
-  --ui-icon-color: var(--green-30);
-  border-color: rgba(114, 255, 154, 0.7);
-  box-shadow: 0 10px 24px rgba(45, 200, 133, 0.3);
+  --ui-icon-color: var(--blue-40);
+  border-color: rgba(93, 141, 255, 0.7);
+  box-shadow: 0 10px 24px rgba(43, 113, 255, 0.35);
 }
 
 .guardian__marker-mrkr--main.guardian__marker-mrkr--tracking .vsl-icon {
+  --ui-icon-color: var(--green-30);
   border-color: var(--green-30);
   box-shadow: 0 12px 30px rgba(45, 200, 133, 0.45);
 }
 
-.guardian__marker-mrkr--main .vsl-icon::after {
+.guardian__marker-mrkr--tracking .vsl-icon {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+.guardian__marker-mrkr--main.guardian__marker-mrkr--tracking .vsl-icon::after {
+  opacity: 1;
   content: "";
   position: absolute;
   inset: -6px;
   border-radius: 50%;
   border: 2px solid rgba(127, 255, 190, 0.5);
-  opacity: 0;
   animation: mapboxgl-user-location-dot-pulse 2.8s infinite;
   pointer-events: none;
   z-index: 1;
 }
 
-.guardian__marker-mrkr--main.guardian__marker-mrkr--tracking .vsl-icon::after {
+.guardian__marker-mrkr--tracking .vsl-icon::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(190, 190, 190, 0.4);
   opacity: 1;
+  animation: mapboxgl-user-location-dot-pulse 2.9s infinite;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .vsl-mrkr {
