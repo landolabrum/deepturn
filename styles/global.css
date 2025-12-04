@@ -85,7 +85,16 @@
   --header-height: 175px;
 }
 
-
+.desktop-only {
+  @media (max-width: 1100px) {
+    display: none !important;
+  }
+}
+.mobile-only {
+  @media (min-width: 1101px) {
+    display: none !important;
+  }
+}   
 
 /* Padding all */
 .s-xxl-p { padding: var(--s-xxl); }
