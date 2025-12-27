@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[6309],{23682:(_,e,n)=>{"use strict";n.r(e),n.d(e,{default:()=>u});let u=n(81277).A},51565:(_,e,n)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/admin",function(){return n(23682)}])}},_=>{_.O(0,[2366,347,4155,140,4284,4415,5119,9266,816,981,3658,636,6593,8792],()=>_(_.s=51565)),_N_E=_.O()}]);
