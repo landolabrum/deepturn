@@ -189,6 +189,7 @@
   --color: #615f5f;
   --lite: #f0edeb;
   --dark: #2c0903;
+  --dark-linear-gradient: linear-gradient(170deg, rgba(15, 13, 23, 0.96), rgba(19, 19, 24,.96));
   --dark-70: #200804;
   --dark-o: #242c3670;
   --black: #111111;
