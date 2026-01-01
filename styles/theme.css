@@ -117,6 +117,22 @@
   font-weight: 700;
   font-display: swap;
 }
+/* Demi/Bold Italic (700 italic) */
+@font-face {
+  font-family: "JerseyM54";
+  src: url("/fonts/JerseyM54/JerseyM54.ttf") format("truetype");
+  /* font-style: italic; */
+  /* font-weight: 700; */
+  font-display: swap;
+}
+@font-face {
+  font-family: "AvantGarde";
+  src:
+    url("/fonts/AvantGarde/fonnts.com-AVGARDDO_2.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}
 
 /* Bold (900) */
 @font-face {
