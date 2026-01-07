@@ -462,7 +462,7 @@ body {
 }
 
 .align-end {
-  align-items: flex-end;
+  align-items: flex-end !important;
 }
 
 .overflow-hidden {
@@ -1091,16 +1091,18 @@ a:-webkit-any-link {
 }
 
 .dev {
-  position: fixed;
+  /* position: fixed; */
   display: flex;
   flex-direction: column;
-  padding: 15px 15px 70px;
-  max-width: 1260px;
+  justify-content: inherit;
+  align-items: inherit;
+  /* padding: 15px 15px 70px; */
+  /* max-width: 1260px; */
   background-color: #00000070;
   color: #0f9;
   border-radius: 5px;
   bottom: 0;
-  max-width: calc(100vw - 30px);
+  /* max-width: calc(100vw - 30px); */
   left: 0;
   z-index: 2000;
   overflow-wrap: break-word;

@@ -234,12 +234,12 @@
     opacity: 0;
     filter: blur(var(--s-element));
   }
-  
+
   80% {
     opacity: 0.6;
     filter: blur(var(--s-9));
   }
-  
+
   100% {
     opacity: 1;
   }
@@ -598,7 +598,7 @@ html {
 }
 
 .align-end {
-  align-items: flex-end;
+  align-items: flex-end !important;
 }
 
 .overflow-hidden {
@@ -1224,16 +1224,15 @@ a:-webkit-any-link {
 }
 
 .dev {
-  position: fixed;
+  /* position: fixed; */
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 5px;
   background-color: #00000070;
   color: #0f9;
-  border-radius: 5px;
-  bottom: 0;
-  max-width: calc(100vw - 30px);
-  left: 0;
+  border-radius: 2px;
+  /* bottom: 0; */
+  /* left: 0; */
   z-index: 2000;
   overflow-wrap: break-word;
 }
