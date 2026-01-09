@@ -89,61 +89,138 @@
   --white: #ffffff;
   --white-o: #ffffff70;
 
-  --yellow-10: #F9E0B5;
-  --yellow-10-o: #F9E0B550;
-  --yellow-20: #ffdb4d;
-  --yellow-20-o: #ffdb4d50;
-  --yellow-30: #EDCA60;
-  --yellow-30-o: #EDCA6050;
-  --yellow-50: #E3AF1F;
-  --yellow-50-o: #E3AF1F50;
-  --yellow-70: #C4871C;
-  --yellow-70-o: #C4871C50;
+  --yellow-10: #fff6db;
+  --yellow-10-o: #fff6db70;
+  --yellow-20: #ffeab2;
+  --yellow-20-o: #ffeab270;
+  --yellow-30: #ffdd80;
+  --yellow-30-o: #ffdd8070;
+  --yellow-40: #ffd24d;
+  --yellow-40-o: #ffd24d70;
+  --yellow-50: #ffc72c;
+  --yellow-50-o: #ffc72c70;
+  --yellow-60: #e6b027;
+  --yellow-60-o: #e6b02770;
+  --yellow-70: #cc9922;
+  --yellow-70-o: #cc992270;
+  --yellow-80: #b3831d;
+  --yellow-80-o: #b3831d70;
+  --yellow-90: #8f6516;
+  --yellow-90-o: #8f651670;
 
-  --orange-50: #ff9900;
-  --orange-o: #ff990070;
+  --orange-10: #ffe5d6;
+  --orange-10-o: #ffe5d670;
+  --orange-20: #ffc8ad;
+  --orange-20-o: #ffc8ad70;
+  --orange-30: #ffac83;
+  --orange-30-o: #ffac8370;
+  --orange-40: #ff915a;
+  --orange-40-o: #ff915a70;
+  --orange-50: #ff6a13;
+  --orange-50-o: #ff6a1370;
+  --orange-60: #e65f11;
+  --orange-60-o: #e65f1170;
+  --orange-70: #cc540f;
+  --orange-70-o: #cc540f70;
+  --orange-80: #b2490d;
+  --orange-80-o: #b2490d70;
+  --orange-90: #8f3f0a;
+  --orange-90-o: #8f3f0a70;
 
-  --red-10: #ef4444;
-  --red-30: #d93333;
-  --red-50: #dd4400;
-  --red-70: #b22a2a;
-  --red-90: #8b2222;
-  --red-o: #dd440070;
+  --red-10: #f9d7dd;
+  --red-10-o: #f9d7dd70;
+  --red-20: #f2a9b5;
+  --red-20-o: #f2a9b570;
+  --red-30: #eb7a8c;
+  --red-30-o: #eb7a8c70;
+  --red-40: #e44c64;
+  --red-40-o: #e44c6470;
+  --red-50: #c8102e;
+  --red-50-o: #c8102e70;
+  --red-60: #b20e29;
+  --red-60-o: #b20e2970;
+  --red-70: #9c0d23;
+  --red-70-o: #9c0d2370;
+  --red-80: #860b1e;
+  --red-80-o: #860b1e70;
+  --red-90: #6b0918;
+  --red-90-o: #6b091870;
 
-  --green: #44b432;
-  --green-o: #44b43270;
-  --green-10: #22c553;
-  --green-20-o: #22c55350;
-  --green-30: #34a853;
-  --green-70: #2d8c3b;
-  --green-90: #257029;
+  --green-10: #d9f2e4;
+  --green-10-o: #d9f2e470;
+  --green-20: #a8e4c5;
+  --green-20-o: #a8e4c570;
+  --green-30: #7ad7a7;
+  --green-30-o: #7ad7a770;
+  --green-40: #45c97e;
+  --green-40-o: #45c97e70;
+  --green-50: #009639;
+  --green-50-o: #00963970;
+  --green-60: #008533;
+  --green-60-o: #00853370;
+  --green-70: #00742d;
+  --green-70-o: #00742d70;
+  --green-80: #006227;
+  --green-80-o: #00622770;
+  --green-90: #004d1f;
+  --green-90-o: #004d1f70;
 
-  --blue-10-o: #2B8FDB70;
-  --blue-10: #2B8FDB;
-  --blue-30: #2277B5;
-  --blue-50: #1A5E92;
-  --blue-60: #18527f;
-  --blue-70: #13487A;
-  --blue-90: #031d40;
+  --blue-10: #d6e8f8;
+  --blue-10-o: #d6e8f870;
+  --blue-20: #a8cef4;
+  --blue-20-o: #a8cef470;
+  --blue-30: #79b5ee;
+  --blue-30-o: #79b5ee70;
+  --blue-40: #4b9be7;
+  --blue-40-o: #4b9be770;
+  --blue-50: #0072ce;
+  --blue-50-o: #0072ce70;
+  --blue-60: #0067b9;
+  --blue-60-o: #0067b970;
+  --blue-70: #005ba3;
+  --blue-70-o: #005ba370;
+  --blue-80: #004e8c;
+  --blue-80-o: #004e8c70;
+  --blue-90: #00396a;
+  --blue-90-o: #00396a70;
 
+  --purple-10: #e3dcf0;
+  --purple-10-o: #e3dcf070;
+  --purple-20: #c1b2db;
+  --purple-20-o: #c1b2db70;
+  --purple-30: #9f89c6;
+  --purple-30-o: #9f89c670;
+  --purple-40: #7d60b1;
+  --purple-40-o: #7d60b170;
+  --purple-50: #2e1a47;
+  --purple-50-o: #2e1a4770;
+  --purple-60: #28173e;
+  --purple-60-o: #28173e70;
+  --purple-70: #221435;
+  --purple-70-o: #22143570;
+  --purple-80: #1b102b;
+  --purple-80-o: #1b102b70;
+  --purple-90: #150c22;
+  --purple-90-o: #150c2270;
 
-  --purple-10: #d0a1e2;
-  --purple-10-o: #d0a1e270;
-  --purple-30: #b97acc;
-  --purple-30-o: #b97acc70;
-  --purple-50: #9b59b6;
-  --purple-50-o: #9b59b670;
-  --purple-70: #7d3a98;
-  --purple-70-o: #7d3a9870;
-  --purple-90: #5d2975;
-  --purple-90-o: #5d297570;
-
-  --pink: #e91e63;
-  --pink-10: #ff80ab;
-  --pink-30: #f06292;
-  --pink-70: #c2185b;
-  --pink-90: #880e4f;
-  --pink-o: #e91e6370;
+  --pink-10: #ffd7ec;
+  --pink-10-o: #ffd7ec70;
+  --pink-20: #ffadd9;
+  --pink-20-o: #ffadd970;
+  --pink-30: #ff84c6;
+  --pink-30-o: #ff84c670;
+  --pink-40: #ff5ab3;
+  --pink-40-o: #ff5ab370;
+  --pink-50: #ed008c;
+  --pink-50-o: #ed008c70;
+  --pink-60: #d5007e;
+  --pink-60-o: #d5007e70;
+  --pink-70: #bd0070;
+  --pink-70-o: #bd007070;
+  --pink-80: #a50062;
+  --pink-80-o: #a5006270;
+  --pink-90: #85004f;
+  --pink-90-o: #85004f70;
 
 
   /* COLORS */
@@ -207,7 +284,8 @@
   --s-4-sm: calc(--s-4 * 2);
   --s-element-width: calc(100% - calc(var(var(--s-element))));
   --s-nav-height: 45px;
-  --s-page-height: calc(100vh - var(--s-nav-height));;
+  --s-page-height: calc(100vh - var(--s-nav-height));
+  ;
 
   /* PAGE BREAKS */
   --breakpoint-xs: 600px;
@@ -248,6 +326,7 @@
 .a-fade-in {
   animation: fadeIn 1.5s ease-in forwards;
 }
+
 @keyframes light-wipe {
   from {
     width: 70px;
@@ -259,11 +338,13 @@
     left: calc(100% + 151px);
   }
 }
+
 @keyframes light-wipe {
   from {
     width: 70px;
     left: -100%;
   }
+
   to {
     width: 150px;
     left: calc(100% + 151px);
@@ -273,30 +354,33 @@
 .a-light-wipe {
   position: relative;
   display: inline-block;
-  color: inherit; /* Make text transparent to see the background */
-  -webkit-background-clip: text; /* Clips the background to the text */
+  color: inherit;
+  /* Make text transparent to see the background */
+  -webkit-background-clip: text;
+  /* Clips the background to the text */
   background-clip: text;
   transition: all 1s ease-in-out;
-  overflow: hidden; /* Ensures the animation stays within bounds */
+  overflow: hidden;
+  /* Ensures the animation stays within bounds */
 }
 
 .a-light-wipe:hover {
   /* transform: translate(10px, 10px) skewX(10deg) skewY(10deg) rotate(10deg); */
 }
+
 .a-light-wipe:hover::before {
   z-index: -1;
   content: '';
   position: absolute;
   top: 0;
-  left: -100%; /* Start outside the text bounds */
+  left: -100%;
+  /* Start outside the text bounds */
   height: 100%;
   width: 70px;
-  background: linear-gradient(
-    120deg,
-    var(--primary-30) 0%,
-    var(--primary-10) 50%,
-    var(--primary-10) 100%
-  );
+  background: linear-gradient(120deg,
+      var(--primary-30) 0%,
+      var(--primary-10) 50%,
+      var(--primary-10) 100%);
   transform: skewX(-25deg);
   animation: light-wipe 1.2s ease-in-out forwards;
 }
@@ -1244,20 +1328,25 @@ a:-webkit-any-link {
   border-style: outset;
   border-color: var(--gray-50-o) var(--gray-100-o) var(--gray-90-o) var(--gray-20-o);
 }
-.c-primary-10{
-  color:var(--primary-10)
+
+.c-primary-10 {
+  color: var(--primary-10)
 }
-.c-primary-30{
-  color:var(--primary-30)
+
+.c-primary-30 {
+  color: var(--primary-30)
 }
-.c-primary-50{
-  color:var(--primary-50)
+
+.c-primary-50 {
+  color: var(--primary-50)
 }
-.c-primary-70{
-  color:var(--primary-70)
+
+.c-primary-70 {
+  color: var(--primary-70)
 }
-.c-primary-90{
-  color:var(--primary-90)
+
+.c-primary-90 {
+  color: var(--primary-90)
 }
 
 .gray-10 {
