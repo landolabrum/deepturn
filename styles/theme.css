@@ -364,7 +364,10 @@
 }
 
 
-
+small{
+  position:relative;
+  width: max-content;
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -704,4 +707,19 @@
   --ui-icon-color: var(--primary-90);
   background-color: var(--primary-30);
   box-shadow: -1px -1px 1px var(--gray-90), 1px 1px 2px 1px var(--primary-90);
+}
+.badge {
+  position: absolute;
+  font-family: 'Courier New', Courier, monospace;
+  text-transform: uppercase;
+  font-size: var(--s-7);
+  top: -10px;
+  right: -10px;
+  line-height: 1;
+  background: var(--orange-70);
+  color: var(--gray-50);
+  padding: 3px 6px;
+  border-radius: 10px;
+  pointer-events: none;
+  user-select: none;
 }
