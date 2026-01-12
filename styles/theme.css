@@ -5,6 +5,25 @@
   display: none !important;
 }
 @font-face {
+  font-family: Chintzy;
+  src: url("/fonts/Chintzy/chintzy.ttf") format("opentype");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: Chintzy;
+  src: url("/fonts/Chintzy/chintzys.ttf") format("opentype");
+  font-style: normal;
+  font-weight: Bold;
+}
+
+@font-face {
+  font-family: RetroPixel;
+  src: url("/fonts/RetroPixel/RetroPixel.otf") format("opentype");
+  font-style: normal;
+}
+
+@font-face {
   font-family: Game;
   src: url("/fonts/gamestation/gamestationtext.otf") format("opentype");
   font-style: normal;
