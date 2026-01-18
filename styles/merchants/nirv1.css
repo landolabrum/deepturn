@@ -30,10 +30,10 @@
   --tertiary-90: #8f7d71;
   --tertiary-o: #bfb0a170;
 
- 
+
 
   /* --body: #2d2d2d; */
-  --body: #f3f3f0;
+  --body: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%);
   --lite: #f0edeb;
   --dark: #242c36;
   --dark-o: #242c3670;
@@ -69,7 +69,7 @@
   --green-30: #34a853;
   --green-70: #2d8c3b;
   --green-90: #257029;
-  
+
   --blue-o: #3A7BD5; /* Softer transparent blue */
   --blue-10: #2B8FDB; /* Light blue with a trustworthy feel */
   --blue-30: #2277B5; /* Slightly darker light blue */
@@ -84,7 +84,7 @@
   --purple-70: #7d3a98;
   --purple-90: #5d2975;
   --purple-50-o: #9b59b670;
-  
+
   --pink: #e91e63;
   --pink-10: #ff80ab;
   --pink-30: #f06292;
