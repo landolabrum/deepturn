@@ -33,7 +33,7 @@
 
 
   /* --body: #2d2d2d; */
-  --body: linear-gradient(180deg, #555353 0%, #494949 100%);
+  --body: linear-gradient(180deg, rgba(250, 245, 245, 0.08) 0%, rgba(121, 119, 119, .081) 100%);
   --lite: #f0edeb;
   --dark: #242c36;
   --dark-o: #242c3670;
@@ -96,5 +96,6 @@ h3{
   font-family: Decimal;
 }
 body{
-  color:black
+  color:black;
+  background: var(--body);
 }
