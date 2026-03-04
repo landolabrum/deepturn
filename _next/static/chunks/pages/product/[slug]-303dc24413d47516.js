@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[2711],{13705:(_,u,e)=>{"use strict";e.r(u),e.d(u,{default:()=>s});let s=e(57633).A},76234:(_,u,e)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/product/[slug]",function(){return e(13705)}])}},_=>{_.O(0,[624,8175,7633,636,6593,8792],()=>_(_.s=76234)),_N_E=_.O()}]);
