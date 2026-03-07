@@ -431,7 +431,7 @@ body {
   margin: 0;
   /* background: var(--body); */
   color: var(--color);
-  font-size: var(--s-5);
+  font-size: clamp(14px, 1.5vw, 18px);
   font-weight: 300;
 
   -webkit-overflow-scrolling: touch;
