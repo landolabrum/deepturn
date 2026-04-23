@@ -498,6 +498,16 @@ body {
   display: none;
 }
 
+@media (max-width: 800px) {
+  *::-webkit-scrollbar {
+    width: var(--s-1);
+  }
+
+  *::-webkit-scrollbar:hover {
+    width: var(--s-1);
+  }
+}
+
 .p-fix {
   position: fixed;
 }
