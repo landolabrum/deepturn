@@ -26,6 +26,7 @@
 --secondary-90-o: #75685d70;
 --secondary-o: #c5b9a870;
 
+
 /* === TERTIARY (Base: #BFB0A1) === */
 --tertiary-10: #e8ddd3;
 --tertiary-10-o: #e8ddd370;
@@ -137,6 +138,10 @@
   --gray-90-o: #18181850;
   --gray-100: #080808;
   --gray-100-o: #08080850;
+
+
+
+  --ui-menu--background: var(--linear-gradient);
 }
 
 h3 {
