@@ -21,8 +21,8 @@
   /* mix-blend-mode: screen; */
   /* fill: none; */
   /* stroke:black; */
-  stroke: var(--green-10);
-  /* fill: var(--green-10); */
+  stroke: var(--blue-10);
+  fill: var(--blue-10);
   /* stroke-opacity: 0.4; */
   stroke-width: 1;
 }
@@ -47,6 +47,8 @@
 }
 .d3-node--key {
   white-space: nowrap;
+
+  position: relative;
   text-overflow: ellipsis;
   max-width: 100px;
   display: block;
@@ -54,8 +56,8 @@
   width: max-content;
   padding: 0 var(--s-10);
   border-radius: var(--s-11);
-
-  background-color: var(--gray-50-o);
+  line-height: 1.2;
+  background-color: var(--gray-80);
   border: solid 2px var(--blue-70);
   /* line-height: 1;
   height:100%;
@@ -88,7 +90,9 @@ filter: brightness(2)
   cursor: pointer;
 }
 
-
+.zoom-group{
+min-width: 100%;
+}
 .d3-node--value {
   opacity: 0;
   transition: opacity 1s; /* Add transition for smooth opacity change */
@@ -120,7 +124,7 @@ filter: brightness(2)
   opacity: 1;
   /* width:var(--s-11); */
   /* aspect-ratio: 1; */
-  filter: drop-shadow(1px 1px 1px var(--primary-70)); 
+  filter: drop-shadow(1px 1px 1px var(--primary-70));
   transform: translate(-100,-100);
   /* fill:var(--primary-30); */
 }
