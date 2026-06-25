@@ -1,4 +1,5 @@
 :root {
+
 /* Solid colors */
 --primary-10: #cfff40;  /* vibrant lime – light accents */
 --primary-30: #bff230;  /* bright chartreuse – secondary UI */
@@ -92,6 +93,14 @@
   --pink-70: #c2185b;
   --pink-90: #880e4f;
   --pink-o: #e91e6370;
+
+
+
+  --nav-item-color: var(--gray-80);
+    --nav-item-color--hover: var(--gray-10);
+    --nav-item-backgroundColor--hover: var(--gray-80);
+    --ui-menu--background: var(--primary-50);
+    --ui-menu--border: var(--primary-50);
 }
 h3{
   font-family: Decimal;
