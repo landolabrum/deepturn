@@ -20,9 +20,9 @@
   --tertiary-90: #8f7d71;
   --tertiary-o: #bfb0a170;
 
- 
 
-  --body: #1d1d1d;
+
+  --body-1: #1d1d1d;
   --lite: #f0edeb;
   --dark: #2c0903;
   --dark-70: #200804;
@@ -60,13 +60,18 @@
   --green-30: #34a853;
   --green-70: #2d8c3b;
   --green-90: #257029;
-  
-  --blue-10: #2B8FDB; /* Light blue with a trustworthy feel */
+
+  --blue-10: #2B8FDB;
+  /* Light blue with a trustworthy feel */
   --blue-10-o: #2B8FDB70;
-  --blue-30: #2277B5; /* Slightly darker light blue */
-  --blue-50: #1A5E92; /* Mid-tone blue */
-  --blue-70: #13487A; /* Darker blue */
-  --blue-90: #031d40; /* Deep, dark blue */
+  --blue-30: #2277B5;
+  /* Slightly darker light blue */
+  --blue-50: #1A5E92;
+  /* Mid-tone blue */
+  --blue-70: #13487A;
+  /* Darker blue */
+  --blue-90: #031d40;
+  /* Deep, dark blue */
 
 
   --purple-50: #9b59b6;
@@ -75,7 +80,7 @@
   --purple-70: #7d3a98;
   --purple-90: #5d2975;
   --purple-50-o: #9b59b670;
-  
+
   --pink: #e91e63;
   --pink-10: #ff80ab;
   --pink-30: #f06292;
@@ -83,6 +88,7 @@
   --pink-90: #880e4f;
   --pink-o: #e91e6370;
 }
-h3{
+
+h3 {
   font-family: Decimal;
 }

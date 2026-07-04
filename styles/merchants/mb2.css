@@ -1,7 +1,6 @@
-
 :root {
-/* === PRIMARY (Base: #CC6F50) === */
---primary-10: #CFE6DA;
+  /* === PRIMARY (Base: #CC6F50) === */
+  --primary-10: #CFE6DA;
   --primary-10-o: #CFE6DA70;
 
   --primary-30: #7FB39A;
@@ -21,45 +20,45 @@
   /* optional alias */
   --primary-o: #05472A70;
 
-/* === SECONDARY (Base: #C5B9A8) === */
---secondary-10: #efeae2;
---secondary-10-o: #efeae270;
---secondary-30: #d9cfc0;
---secondary-30-o: #d9cfc070;
---secondary-50: #c5b9a8; /* base */
---secondary-50-o: #c5b9a870;
---secondary-70: #a09284;
---secondary-70-o: #a0928470;
---secondary-90: #75685d;
---secondary-90-o: #75685d70;
---secondary-o: #c5b9a870;
+  /* === SECONDARY (Base: #C5B9A8) === */
+  --secondary-10: #efeae2;
+  --secondary-10-o: #efeae270;
+  --secondary-30: #d9cfc0;
+  --secondary-30-o: #d9cfc070;
+  --secondary-50: #c5b9a8;
+  /* base */
+  --secondary-50-o: #c5b9a870;
+  --secondary-70: #a09284;
+  --secondary-70-o: #a0928470;
+  --secondary-90: #75685d;
+  --secondary-90-o: #75685d70;
+  --secondary-o: #c5b9a870;
 
-/* === TERTIARY (Base: #BFB0A1) === */
---tertiary-10: #e8ddd3;
---tertiary-10-o: #e8ddd370;
---tertiary-30: #d4c3b6;
---tertiary-30-o: #d4c3b670;
---tertiary-50: #bfb0a1; /* base */
---tertiary-50-o: #bfb0a170;
---tertiary-70: #9c8e80;
---tertiary-70-o: #9c8e8070;
---tertiary-90: #75685f;
---tertiary-90-o: #75685f70;
---tertiary-o: #bfb0a170;
+  /* === TERTIARY (Base: #BFB0A1) === */
+  --tertiary-10: #e8ddd3;
+  --tertiary-10-o: #e8ddd370;
+  --tertiary-30: #d4c3b6;
+  --tertiary-30-o: #d4c3b670;
+  --tertiary-50: #bfb0a1;
+  /* base */
+  --tertiary-50-o: #bfb0a170;
+  --tertiary-70: #9c8e80;
+  --tertiary-70-o: #9c8e8070;
+  --tertiary-90: #75685f;
+  --tertiary-90-o: #75685f70;
+  --tertiary-o: #bfb0a170;
 
-  --body: radial-gradient(
-    circle,
-    /* var(--black) 0%, */
-    /* var(--white) 11%, */
-    var(--gray-10) 17%,
-    var(--gray-20) 100%);
-  --body-2: radial-gradient(
-    circle,
-    /* var(--black) 0%, */
-    /* var(--white) 11%, */
-    var(--gray-30) 17%,
-    var(--gray-40) 100%);
-  /* --body: #d2d2d2; */
+  --body-1: radial-gradient(circle,
+      /* var(--black) 0%, */
+      /* var(--white) 11%, */
+      var(--gray-10) 17%,
+      var(--gray-20) 100%);
+  --body-2: radial-gradient(circle,
+      /* var(--black) 0%, */
+      /* var(--white) 11%, */
+      var(--gray-30) 17%,
+      var(--gray-40) 100%);
+  /* --body-1: #d2d2d2; */
   --lite: #f0edeb;
   --dark: #2c0903;
   --dark-70: #200804;
@@ -143,11 +142,11 @@
   --gray-80-o: #21212150;
   --gray-90: #181818;
   --gray-90-o: #18181850;
---gray-100: #080808;
+  --gray-100: #080808;
   --gray-100-o: #08080850;
---nav-item-color: var(--gray-80);
---nav-item-color--hover: var(--gray-70);
---nav-item-backgroundColor--hover:var(--gray-10);
+  --nav-item-color: var(--gray-80);
+  --nav-item-color--hover: var(--gray-70);
+  --nav-item-backgroundColor--hover: var(--gray-10);
   --ui-menu--background: var(--primary-50);
   --ui-menu--border: var(--primary-50);
 }
@@ -155,9 +154,15 @@
 h3 {
   font-family: Decimal;
 }
-body{
-  background:var(--body);
+
+body {
+  background: var(--body-1);
 }
-.select, .input, .form-control, .input-date-range, button {
+
+.select,
+.input,
+.form-control,
+.input-date-range,
+button {
   color: white;
 }
