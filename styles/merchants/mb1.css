@@ -48,8 +48,7 @@
       var(--gray-100) 17%,
       var(--black) 100%);
   --body-2: radial-gradient(circle,
-      var(--gray-50) 0%,
-      var(--white) 11%,
+      var(--gray-80) 0%,
       var(--gray-90) 17%,
       var(--gray-80) 100%);
   /* --body-1: #d2d2d2; */
