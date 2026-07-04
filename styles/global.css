@@ -501,11 +501,11 @@ body {
 
 @media (max-width: 800px) {
   *::-webkit-scrollbar {
-    width: var(--s-1);
+    width: var(--s-11);
   }
 
   *::-webkit-scrollbar:hover {
-    width: var(--s-1);
+    width: var(--s-8);
   }
 }
 
