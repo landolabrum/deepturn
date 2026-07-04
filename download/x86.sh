@@ -31,7 +31,7 @@ esac
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/mb-install.XXXXXX")"
 trap 'rm -rf "$TMP"' EXIT
 echo "Fetching the MindBurn bundle…"
-curl -fsSL -H "Authorization: Bearer $TOKEN" \
+curl -fsSL --retry 3 --retry-delay 3 --retry-all-errors -H "Authorization: Bearer $TOKEN" \
   -o "$TMP/bundle.tgz" -D "$TMP/headers" \
   "$API/download/bundle/$CLASS.tar.gz"
 BUILD_REF="$(sed -n 's/^[Xx]-[Mm][Bb]-[Bb]uild-[Rr]ef: *//p' "$TMP/headers" | tr -d '\r\n')"
