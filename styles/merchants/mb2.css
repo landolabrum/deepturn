@@ -48,17 +48,17 @@
   --tertiary-90-o: #75685f70;
   --tertiary-o: #bfb0a170;
 
-  --body-1: radial-gradient(circle,
+  --bg-primary: radial-gradient(circle,
       /* var(--black) 0%, */
       /* var(--white) 11%, */
       var(--gray-10) 17%,
       var(--gray-20) 100%);
-  --body-2: radial-gradient(circle,
+  --bg-secondary: radial-gradient(circle,
       /* var(--black) 0%, */
       /* var(--white) 11%, */
       var(--gray-30) 17%,
       var(--gray-40) 100%);
-  /* --body-1: #d2d2d2; */
+  /* --bg-primary: #d2d2d2; */
   --lite: #f0edeb;
   --dark: #2c0903;
   --dark-70: #200804;
@@ -156,7 +156,7 @@ h3 {
 }
 
 body {
-  background: var(--body-1);
+  background: var(--bg-primary);
 }
 
 .select,

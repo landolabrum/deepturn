@@ -80,7 +80,7 @@
 
   /* PAGE BREAKS */
   --breakpoint-xs: 600px;
-  --breakpoint-sm: 1100px;
+  --breakpoint-sm: 900px;
   --breakpoint-md: 1100px;
   --breakpoint-lg: 1400px;
   --breakpoint-xl: 1600px;
@@ -429,7 +429,7 @@ html {
 body {
   font-family: var(--font-family, "Play"), sans-serif;
   margin: 0;
-  /* background: var(--body-1); */
+  /* background: var(--bg-primary); */
   color: var(--color);
   font-size: clamp(14px, 1.5vw, 18px);
   font-weight: 300;

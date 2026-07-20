@@ -232,7 +232,7 @@
   --tertiary-90-o: #8f7d7170;
   --tertiary-o: #bfb0a170;
 
-  --body-1: transparent;
+  --bg-primary: transparent;
   --color: #615f5f;
   --lite: #f0edeb;
   --dark: #2c0903;
@@ -585,12 +585,12 @@ small {
   --ly: var(--component-ly, var(--light-y, 0.8));
 
   /* Surface + color (unchanged; still override-friendly) */
-  --base-hi: var(--component-surface-hi, var(--surface-hi, var(--body-1)));
-  --base-lo: var(--component-surface-lo, var(--surface-lo, var(--body-2)));
+  --base-hi: var(--component-surface-hi, var(--surface-hi, var(--bg-primary)));
+  --base-lo: var(--component-surface-lo, var(--surface-lo, var(--bg-secondary)));
   --fg: var(--component-fg, var(--surface-fg, #e8e8e8));
   --drop: var(--component-drop, var(--shadow-drop, rgba(0, 0, 0, .45)));
   --lift: var(--component-lift, var(--shadow-lift, rgba(0, 0, 0, .35)));
-  --innerH: var(--component-inner-hi, var(--inner-hi, var(--body-1)));
+  --innerH: var(--component-inner-hi, var(--inner-hi, var(--bg-primary)));
   --innerL: var(--component-inner-lo, var(--inner-lo, rgba(0, 0, 0, .18)));
 
   /* ===== Derived sizing (intertwined) =====
@@ -623,7 +623,7 @@ small {
   padding: var(--pad-y) var(--pad-x);
   border-radius: var(--radius);
   border: 1px solid var(--gray-80, #303030);
-  background: linear-gradient(145deg, var(--body-1), var(--body-2));
+  background: linear-gradient(145deg, var(--bg-primary), var(--bg-secondary));
 
   box-shadow:
     0 calc(var(--contact)) calc(var(--contact) * 1.8) calc(var(--contact) * -0.25) var(--drop),
@@ -643,8 +643,8 @@ small {
 
   &::before {
     background:
-      radial-gradient(120% 120% at 0% 0%, var(--body-1), transparent 60%) top left,
-      radial-gradient(120% 120% at 100% 100%, var(--body-2), transparent 60%) bottom right,
+      radial-gradient(120% 120% at 0% 0%, var(--bg-primary), transparent 60%) top left,
+      radial-gradient(120% 120% at 100% 100%, var(--bg-secondary), transparent 60%) bottom right,
       linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(0, 0, 0, .10));
     background-repeat: no-repeat;
     background-size: 100% 100%;
