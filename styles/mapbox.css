@@ -770,7 +770,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   --ui-icon-color: rgba(52, 61, 78, 0.7);
   transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease, opacity 150ms ease;
   position: relative;
-  z-index: 2;
+  z-index: 1;
   opacity: 0.8;
 }
 
@@ -1019,7 +1019,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   display: flex;
   align-items: center;
   position: absolute;
-  
+
   left: calc(100% + 6px);
   top: 50%;
   transform: translateY(-50%);
@@ -1040,7 +1040,6 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
     opacity 220ms ease,
     padding-inline 220ms ease,
     transform 220ms ease;
-  z-index: 10;
 }
 
 /* Direct-child (>) reveal: a cluster's :hover must not open every member card. */
