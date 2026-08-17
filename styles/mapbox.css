@@ -774,7 +774,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   opacity: 0.8;
 }
 
-.vsl:hover .vsl-icon {
+.vsl:hover > .vsl-icon {
   border-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
 }
@@ -835,24 +835,30 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   background: rgba(7, 7, 10, 0.85);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   gap: 10px;
+  /* Collapsed card keeps max-content min-width, so it must not capture pointer
+     events or a neighbor's invisible card intercepts clicks near a cluster. */
+  pointer-events: none;
   transition:
     max-width 220ms ease,
     opacity 220ms ease,
     padding-inline 220ms ease;
 }
 
-.vsl:hover .vsl-mrkr,
-.vsl:focus-within .vsl-mrkr {
+/* Direct-child (>) so a cluster ancestor's :hover doesn't reveal every member
+   card nested inside it — only the specifically-hovered .vsl opens its own. */
+.vsl:hover > .vsl-mrkr,
+.vsl:focus-within > .vsl-mrkr {
   opacity: 1;
   max-width: clamp(200px, 38vw, 360px);
   padding-inline: 12px;
+  pointer-events: auto;
 }
 
-.vsl:focus-within .vsl-mrkr {
+.vsl:focus-within > .vsl-mrkr {
   box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45);
 }
 
-.vsl:focus-within .guardian__marker-hover-body {
+.vsl:focus-within > .vsl-mrkr .guardian__marker-hover-body {
   max-height: 400px;
   opacity: 1;
 }
@@ -1003,8 +1009,8 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
 }
 
-.vsl:hover .vsl-icon,
-.vsl:focus-within .vsl-icon {
+.vsl:hover > .vsl-icon,
+.vsl:focus-within > .vsl-icon {
   border-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
 }
@@ -1013,6 +1019,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   display: flex;
   align-items: center;
   position: absolute;
+  
   left: calc(100% + 6px);
   top: 50%;
   transform: translateY(-50%);
@@ -1026,6 +1033,8 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   padding-inline: 0;
   gap: 0.4rem;
   min-width: max-content;
+  /* Collapsed card must not intercept clicks (see block above). */
+  pointer-events: none;
   transition:
     max-width 220ms ease,
     opacity 220ms ease,
@@ -1034,16 +1043,30 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   z-index: 10;
 }
 
-.vsl:hover .vsl-mrkr,
-.vsl:focus-within .vsl-mrkr {
+/* Direct-child (>) reveal: a cluster's :hover must not open every member card. */
+.vsl:hover > .vsl-mrkr,
+.vsl:focus-within > .vsl-mrkr {
   opacity: 1;
   max-width: clamp(200px, 36vw, 380px);
   padding-inline: 0.9rem;
   transform: translate(-4px, -50%);
+  pointer-events: auto;
 }
 
-.vsl:focus-within .vsl-mrkr {
+.vsl:focus-within > .vsl-mrkr {
   box-shadow: 0 26px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Right-edge markers open their card to the LEFT of the icon (flip class added
+   on hover by MapVesselMarker) so it stays fully visible on-screen. */
+.vsl-mrkr--flip {
+  left: auto;
+  right: calc(100% + 6px);
+}
+
+.vsl:hover > .vsl-mrkr--flip,
+.vsl:focus-within > .vsl-mrkr--flip {
+  transform: translate(4px, -50%);
 }
 
 .vsl-mrkr--content {
@@ -1084,8 +1107,8 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   transition: max-height 220ms ease, opacity 220ms ease;
 }
 
-.vsl:hover .guardian__marker-hover-body,
-.vsl:focus-within .guardian__marker-hover-body {
+.vsl:hover > .vsl-mrkr .guardian__marker-hover-body,
+.vsl:focus-within > .vsl-mrkr .guardian__marker-hover-body {
   max-height: 400px;
   opacity: 1;
 }

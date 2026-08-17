@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[9548],{47791:(n,t,_)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/authentication",function(){return _(55515)}])},55515:(n,t,_)=>{"use strict";_.r(t),_.d(t,{default:()=>a});var e=_(89671),u=_(37876);let a=function(){return(0,u.jsx)(e.A,{variant:"page"})}}},n=>{n.O(0,[636,6593,8792],()=>n(n.s=47791)),_N_E=n.O()}]);

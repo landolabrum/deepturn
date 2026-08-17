@@ -362,18 +362,29 @@
   --gray-100: #171717;
   --gray-100-o: #17171770;
 
-  --box-shadow: -0.06rem -0.07rem 0 var(--gray-90),
+  --box-shadow-10: -0.06rem -0.07rem 0 var(--gray-20),
+    0.1rem 0.1rem 0.1rem 0.1rem var(--gray-10);
+
+  --box-shadow-30: -0.06rem -0.07rem 0 var(--gray-40),
+    0.1rem 0.1rem 0.1rem 0.1rem var(--gray-30);
+  --box-shadow-50: -0.06rem -0.07rem 0 var(--gray-60),
+    0.1rem 0.1rem 0.1rem 0.1rem var(--gray-50);
+  --box-shadow-70: -0.06rem -0.07rem 0 var(--gray-80),
+    0.1rem 0.1rem 0.1rem 0.1rem var(--gray-70);
+  --box-shadow-90: -0.06rem -0.07rem 0 var(--gray-90),
     0.1rem 0.1rem 0.1rem 0.1rem var(--gray-100);
-  --box-shadow-inset: inset 2px 2px 10px rgba(23, 23, 23, 0.5);
-  --box-shadow-sm: 2px 2px 5px rgba(23, 23, 23, 0.5);
-  --box-shadow-xl: 0px 4px 6px rgba(23, 23, 23, 0.3),
+  --box-shadow-90: -0.06rem -0.07rem 0 var(--gray-90),
+    0.1rem 0.1rem 0.1rem 0.1rem var(--gray-100);
+  --box-shadow-90-inset: inset 2px 2px 10px rgba(23, 23, 23, 0.5);
+  --box-shadow-90-sm: 2px 2px 5px rgba(23, 23, 23, 0.5);
+  --box-shadow-90-xl: 0px 4px 6px rgba(23, 23, 23, 0.3),
     0px 2px 4px rgba(64, 64, 64, 0.2), 0px 10px 10px rgba(23, 23, 23, 0.3);
 
 
 
 
   /* scale tokens */
-  --scale-unit: var(--s-1);
+  --scale-unit: var(--s-5);
   --scale-radius: calc(var(--scale-unit) * 2.25);
   --scale-elev: calc(var(--scale-unit) * 9);
   --scale-spread: calc(var(--scale-unit) * 3.5);
@@ -713,7 +724,7 @@ small {
   background-color: var(--gray-70);
   border: 1px solid var(--gray-50);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow); */
+  box-shadow: var(--box-shadow-90); */
 
   &::after {
     display: none;

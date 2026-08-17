@@ -1293,7 +1293,7 @@ button {
   --input-secondary-bg: var(--gray-80);
   --input-focus-bg: var(--gray-60);
   --input-option-hover: var(--gray-40);
-  --input-box-shadow: var(--box-shadow);
+  --input-box-shadow: var(--box-shadow-90);
   --input-border-radius: calc(var(--border-radius) * 0.66);
   --select-option-selected: var(--blue-50);
   --select-option-selected-bg: #c8def0;
