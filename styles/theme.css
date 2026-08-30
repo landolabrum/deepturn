@@ -96,7 +96,7 @@
 /* ===== AvantGarde Family ===== */
 /* Book / Normal (400) */
 @font-face {
-  font-family: "AvantGarde";
+  font-family: AvantGarde;
   src:
     url("/fonts/AvantGarde/fonnts.com-AVGARDN_2.ttf") format("truetype");
   font-style: normal;
@@ -106,7 +106,7 @@
 
 /* Medium (500) */
 @font-face {
-  font-family: "AvantGarde";
+  font-family: AvantGarde;
   src:
     url("/fonts/AvantGarde/fonnts.com-AVGARDM_2.ttf") format("truetype");
   font-style: normal;
@@ -116,7 +116,7 @@
 
 /* Medium Italic (500 italic) */
 @font-face {
-  font-family: "AvantGarde";
+  font-family: AvantGarde;
   src:
     url("/fonts/AvantGarde/fonnts.com-AVGARDMI_2.ttf") format("truetype");
   font-style: italic;
@@ -126,7 +126,7 @@
 
 /* Demi/Bold (700) */
 @font-face {
-  font-family: "AvantGarde";
+  font-family: AvantGarde;
   src:
     url("/fonts/AvantGarde/fonnts.com-AVGARDD_2.ttf") format("truetype"),
     url("/fonts/AvantGarde/fonnts.com-AVGARDD2.otf") format("opentype");
@@ -137,7 +137,7 @@
 
 /* Demi/Bold Italic (700 italic) */
 @font-face {
-  font-family: "AvantGarde";
+  font-family: AvantGarde;
   src:
     url("/fonts/AvantGarde/fonnts.com-AVGARDDO_2.ttf") format("truetype");
   font-style: italic;
@@ -155,7 +155,7 @@
 }
 
 @font-face {
-  font-family: "AvantGarde";
+  font-family: AvantGarde;
   src:
     url("/fonts/AvantGarde/fonnts.com-AVGARDDO_2.ttf") format("truetype");
   font-style: italic;
@@ -165,7 +165,7 @@
 
 /* Bold (900) */
 @font-face {
-  font-family: "AvantGarde";
+  font-family: AvantGarde;
   src: url("/fonts/AvantGarde/AvantGardeBold.otf") format("opentype");
   font-weight: 900;
 }
@@ -236,8 +236,19 @@
   --color: #615f5f;
   --lite: #f0edeb;
   --dark: #2c0903;
-  --linear-gradient: linear-gradient(170deg, rgba(36, 36, 36, 0.96), rgba(20, 20, 20, 0.96));
-  --dark-linear-gradient: linear-gradient(170deg, rgba(15, 13, 23, 0.96), rgba(19, 19, 24, .96));
+
+
+  --linear-gradient-10: linear-gradient(170deg, rgba(230, 230, 230, 0.96), rgba(210, 210, 210, 0.96));
+  --linear-gradient-20: linear-gradient(170deg, rgba(200, 200, 200, 0.96), rgba(180, 180, 180, 0.96));
+  --linear-gradient-30: linear-gradient(170deg, rgba(170, 170, 170, 0.96), rgba(150, 150, 150, 0.96));
+  --linear-gradient-40: linear-gradient(170deg, rgba(140, 140, 140, 0.96), rgba(120, 120, 120, 0.96));
+  --linear-gradient-50: linear-gradient(170deg, rgba(110, 110, 110, 0.96), rgba(90, 90, 90, 0.96));
+  --linear-gradient-60: linear-gradient(170deg, rgba(80, 80, 80, 0.96), rgba(60, 60, 60, 0.96));
+  --linear-gradient-70: linear-gradient(170deg, rgba(50, 50, 50, 0.96), rgba(30, 30, 30, 0.96));
+  --linear-gradient-80: linear-gradient(170deg, rgba(36, 36, 36, 0.96), rgba(26, 26, 26, 0.96));
+  --linear-gradient-90: linear-gradient(170deg, rgba(24, 24, 22, 0.96), rgba(23, 23, 23, .96));
+
+
   --dark-70: #200804;
   --dark-o: #242c3670;
   --black: #111111;

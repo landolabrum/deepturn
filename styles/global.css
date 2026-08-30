@@ -76,7 +76,7 @@
   --s-4-sm: calc(--s-4 * 2);
   --s-element-width: calc(100% - calc(var(var(--s-element))));
   --s-nav-height: 45px;
-  --s-page-height: calc(100vh - var(--s-nav-height));
+  --s-page-height: calc(100vh - var(--s-nav-height) - var(--s-4));
 
   /* PAGE BREAKS */
   --breakpoint-xs: 600px;
