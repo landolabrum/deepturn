@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[4470],{5632:(_,s,e)=>{"use strict";e.r(s),e.d(s,{default:()=>u});let u=e(82240).A},83324:(_,s,e)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/systems-admin/[...slug]",function(){return e(5632)}])}},_=>{_.O(0,[3602,4415,9601,1309,9449,746,7698,2240,636,6593,8792],()=>_(_.s=83324)),_N_E=_.O()}]);
