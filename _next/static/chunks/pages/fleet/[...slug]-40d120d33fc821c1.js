@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[8402],{3780:(_,e,u)=>{"use strict";u.r(e),u.d(e,{default:()=>s});let s=u(55406).A},39572:(_,e,u)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/fleet/[...slug]",function(){return u(3780)}])}},_=>{_.O(0,[3602,4415,9601,1309,9449,746,7698,5406,636,6593,8792],()=>_(_.s=39572)),_N_E=_.O()}]);
