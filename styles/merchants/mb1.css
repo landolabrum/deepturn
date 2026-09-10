@@ -11,7 +11,7 @@
   --primary-70-o: #a9573f70;
   --primary-90: #7a3d2b;
   --primary-90-o: #7a3d2b70;
-  --primary-o: #cc6f5070;
+  --primary-50-o: #cc6f5070;
 
   /* === SECONDARY (Base: #C5B9A8) === */
   --secondary-10: #efeae2;
@@ -136,7 +136,8 @@
   --gray-100-o: #08080850;
 
 
-
+    --nav-item-color: var(--primary-70);
+    --nav-item-color--hover: var(--primary-50);
   --ui-menu--background: var(--linear-gradient-80);
 }
 

@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
+
+:root {
+  /* === PRIMARY — Pink (#FFA9F9) === */
+  --primary-10: #ffe6fd;
+  --primary-10-o: #ffe6fd70;
+  --primary-30: #ffcffa;
+  --primary-30-o: #ffcffa70;
+  --primary-50: #ffa9f9;
+  /* base */
+  --primary-50-o: #ffa9f970;
+  --primary-70: #d98fd3;
+  --primary-70-o: #d98fd370;
+  --primary-90: #b374ad;
+  --primary-90-o: #b374ad70;
+  --primary-50-o: #ffa9f970;
+
+
+  /* === SECONDARY — Butter (#FFF7AD) === */
+  --secondary-10: #fffce5;
+  --secondary-10-o: #fffce570;
+  --secondary-30: #fff9d0;
+  --secondary-30-o: #fff9d070;
+  --secondary-50: #fff7ad;
+  /* base */
+  --secondary-50-o: #fff7ad70;
+  --secondary-70: #d9d18a;
+  --secondary-70-o: #d9d18a70;
+  --secondary-90: #b3aa65;
+  --secondary-90-o: #b3aa6570;
+  --secondary-o: #fff7ad70;
+
+
+  /* === TERTIARY — Ink (#180C04) === */
+  --tertiary-10: #e7e3e0;
+  --tertiary-10-o: #e7e3e070;
+  --tertiary-30: #b8b0aa;
+  --tertiary-30-o: #b8b0aa70;
+  --tertiary-50: #180c04;
+  /* base */
+  --tertiary-50-o: #180c0470;
+  --tertiary-70: #100803;
+  --tertiary-70-o: #10080370;
+  --tertiary-90: #080402;
+  --tertiary-90-o: #08040270;
+  --tertiary-o: #180c0470;
+
+
+  /* === ACCENT — Peach (#FFDBC7) === */
+  --accent-10: #fff1e8;
+  --accent-10-o: #fff1e870;
+  --accent-30: #ffe6d8;
+  --accent-30-o: #ffe6d870;
+  --accent-50: #ffdbc7;
+  /* base */
+  --accent-50-o: #ffdbc770;
+  --accent-70: #d9b39d;
+  --accent-70-o: #d9b39d70;
+  --accent-90: #b38b75;
+  --accent-90-o: #b38b7570;
+  --accent-o: #ffdbc770;
+
+
+  /* === BACKGROUNDS === */
+  --bg-primary: radial-gradient(circle,
+      var(--gray-10),
+      var(--white));
+
+  --bg-secondary: radial-gradient(circle,
+      var(--gray-80) 0%,
+      var(--gray-90) 17%,
+      var(--gray-80) 100%);
+  /* --bg-primary: #d2d2d2; */
+  --lite: #f0edeb;
+  --dark: #14032c;
+  --dark-70: #200804;
+  /* --dark: #242c36; */
+  --dark-o: #242c3670;
+  --black: #111111;
+
+  --white: #ffffff;
+  --white-o: #ffffff70;
+
+  --yellow-10: #f9e0b5;
+  --yellow-10-o: #f9e0b550;
+  --yellow-20: #ffdb4d;
+  --yellow-20-o: #ffdb4d50;
+  --yellow-30: #edca60;
+  --yellow-30-o: #edca6050;
+  --yellow-50: #e3af1f;
+  --yellow-50-o: #e3af1f50;
+  --yellow-70: #c4871c;
+  --yellow-70-o: #c4871c50;
+
+  --orange-50: #ff9900;
+  --orange-o: #ff990070;
+
+  --red-10: #ef4444;
+  --red-30: #d93333;
+  --red-50: #dd4400;
+  --red-70: #b22a2a;
+  --red-90: #8b2222;
+  --red-o: #dd440070;
+
+  --green: #44b432;
+  --green-o: #44b43270;
+  --green-10: #22c553;
+  --green-30: #34a853;
+  --green-70: #2d8c3b;
+  --green-90: #257029;
+
+  --blue-o: #3a7bd5;
+  /* Softer transparent blue */
+  --blue-10: #2b8fdb;
+  /* Light blue with a trustworthy feel */
+  --blue-30: #2277b5;
+  /* Slightly darker light blue */
+  --blue-50: #1a5e92;
+  /* Mid-tone blue */
+  --blue-70: #13487a;
+  /* Darker blue */
+  --blue-90: #031d40;
+  /* Deep, dark blue */
+
+  --purple-50: #9b59b6;
+  --purple-10: #d0a1e2;
+  --purple-30: #b97acc;
+  --purple-70: #7d3a98;
+  --purple-90: #5d2975;
+  --purple-50-o: #9b59b670;
+
+  --pink: #e91e63;
+  --pink-10: #ff80ab;
+  --pink-30: #f06292;
+  --pink-70: #c2185b;
+  --pink-90: #880e4f;
+  --pink-o: #e91e6370;
+
+  --gray-10: #fafafa;
+  --gray-10-o: #fafafa50;
+  --gray-20: #f7f7f7;
+  --gray-20-o: #f7f7f750;
+  --gray-30: #ececec;
+  --gray-30-o: #ececec50;
+  --gray-40: #d8d8d8;
+  --gray-40-o: #d8d8d850;
+  --gray-50: #a8a8a8;
+  --gray-50-o: #a8a8a850;
+  --gray-60: #767676;
+  --gray-60-o: #76767650;
+  --gray-70: #545454;
+  --gray-70-o: #54545450;
+  --gray-80: #212121;
+  --gray-80-o: #21212150;
+  --gray-90: #181818;
+  --gray-90-o: #18181850;
+  --gray-100: #080808;
+  --gray-100-o: #08080850;
+
+
+
+  --ui-menu--background: var(--linear-gradient-80);
+  --nav-item-color: var(--primary-80);
+  --nav-item-color--hover: var(--primary-50);
+}
+
+/* h3 {
+    font-family: Decimal;
+} */
+
+body {
+  background: var(--bg-primary);
+  color: var(--gray-10);
+  --ui-icon-color: var(--white);
+  text-shadow: 1px 1px 2px var(--primary-10-o);
+
+  font-family: Montserrat;
+}
+

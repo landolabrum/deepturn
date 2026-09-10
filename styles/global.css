@@ -38,6 +38,7 @@
   --s-8-w: calc(100% - calc(var(--s-8) * 2));
   --s-9-w: calc(100% - calc(var(--s-9) * 2));
   --s-10-w: calc(100% - calc(var(--s-10) * 2));
+  --s-11-w: calc(100% - calc(var(--s-11) * 2));
   --s-12-w: calc(100% - calc(var(--s-12) * 2));
 
   /* Padding shorthand variables */
@@ -430,7 +431,7 @@ body {
   font-family: var(--font-family, "Play"), sans-serif;
   margin: 0;
   /* background: var(--bg-primary); */
-  color: var(--color);
+  /* color: var(--color); */
   font-size: clamp(14px, 1.5vw, 18px);
   font-weight: 300;
 
@@ -954,7 +955,7 @@ h2 {
 h3 {
   gap: var(--s-9);
   font-size: var(--s-3);
-  color: var(--color, var(--gray-50));
+  color: var(--color, var(--gray-30));
 }
 
 h4 {
