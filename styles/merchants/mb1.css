@@ -146,6 +146,7 @@ h3 {
 }
 
 body {
+  color: var(--gray-10);
   background: var(--bg-primary);
 }
 
