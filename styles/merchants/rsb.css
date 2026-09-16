@@ -1,76 +1,79 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
-
+@import url('https: //fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+  font-family: RoseBud;
+  src: url("/fonts/RoseBud/rosebud.regular.ttf") format("opentype");
+  font-style: normal;
+  font-weight: normal;
+}
 :root {
-  /* === PRIMARY — Pink (#FFA9F9) === */
-  --primary-10: #ffe6fd;
-  --primary-10-o: #ffe6fd70;
-  --primary-30: #ffcffa;
-  --primary-30-o: #ffcffa70;
-  --primary-50: #ffa9f9;
+  /* === PRIMARY — Pink (#ECC3E3) === */
+  --primary-10: #fbf0f8;
+  --primary-10-o: #fbf0f870;
+  --primary-30: #f5dcef;
+  --primary-30-o: #f5dcef70;
+  --primary-50: #ecc3e3;
   /* base */
-  --primary-50-o: #ffa9f970;
-  --primary-70: #d98fd3;
-  --primary-70-o: #d98fd370;
-  --primary-90: #b374ad;
-  --primary-90-o: #b374ad70;
-  --primary-50-o: #ffa9f970;
+  --primary-50-o: #ecc3e370;
+  --primary-70: #cfa3c7;
+  --primary-70-o: #cfa3c770;
+  --primary-90: #a9849f;
+  --primary-90-o: #a9849f70;
+  --primary-o: #ecc3e370;
 
 
-  /* === SECONDARY — Butter (#FFF7AD) === */
-  --secondary-10: #fffce5;
-  --secondary-10-o: #fffce570;
-  --secondary-30: #fff9d0;
-  --secondary-30-o: #fff9d070;
-  --secondary-50: #fff7ad;
+  /* === SECONDARY — Butter (#F5EEC4) === */
+  --secondary-10: #fefcee;
+  --secondary-10-o: #fefcee70;
+  --secondary-30: #fbf6dc;
+  --secondary-30-o: #fbf6dc70;
+  --secondary-50: #f5eec4;
   /* base */
-  --secondary-50-o: #fff7ad70;
-  --secondary-70: #d9d18a;
-  --secondary-70-o: #d9d18a70;
-  --secondary-90: #b3aa65;
-  --secondary-90-o: #b3aa6570;
-  --secondary-o: #fff7ad70;
+  --secondary-50-o: #f5eec470;
+  --secondary-70: #d8d0a6;
+  --secondary-70-o: #d8d0a670;
+  --secondary-90: #b0a984;
+  --secondary-90-o: #b0a98470;
+  --secondary-o: #f5eec470;
 
 
-  /* === TERTIARY — Ink (#180C04) === */
-  --tertiary-10: #e7e3e0;
-  --tertiary-10-o: #e7e3e070;
-  --tertiary-30: #b8b0aa;
-  --tertiary-30-o: #b8b0aa70;
-  --tertiary-50: #180c04;
+  /* === TERTIARY — Ink (#3B322D) === */
+  --tertiary-10: #efebe8;
+  --tertiary-10-o: #efebe870;
+  --tertiary-30: #c9c1bb;
+  --tertiary-30-o: #c9c1bb70;
+  --tertiary-50: #3b322d;
   /* base */
-  --tertiary-50-o: #180c0470;
-  --tertiary-70: #100803;
-  --tertiary-70-o: #10080370;
-  --tertiary-90: #080402;
-  --tertiary-90-o: #08040270;
-  --tertiary-o: #180c0470;
+  --tertiary-50-o: #3b322d70;
+  --tertiary-70: #2c2521;
+  --tertiary-70-o: #2c252170;
+  --tertiary-90: #1e1916;
+  --tertiary-90-o: #1e191670;
+  --tertiary-o: #3b322d70;
 
 
-  /* === ACCENT — Peach (#FFDBC7) === */
-  --accent-10: #fff1e8;
-  --accent-10-o: #fff1e870;
-  --accent-30: #ffe6d8;
-  --accent-30-o: #ffe6d870;
-  --accent-50: #ffdbc7;
+  /* === ACCENT — Peach (#F5D9C8) === */
+  --accent-10: #fdf4ee;
+  --accent-10-o: #fdf4ee70;
+  --accent-30: #fae7dc;
+  --accent-30-o: #fae7dc70;
+  --accent-50: #f5d9c8;
   /* base */
-  --accent-50-o: #ffdbc770;
-  --accent-70: #d9b39d;
-  --accent-70-o: #d9b39d70;
-  --accent-90: #b38b75;
-  --accent-90-o: #b38b7570;
-  --accent-o: #ffdbc770;
+  --accent-50-o: #f5d9c870;
+  --accent-70: #d6b8a6;
+  --accent-70-o: #d6b8a670;
+  --accent-90: #ad9383;
+  --accent-90-o: #ad938370;
+  --accent-o: #f5d9c870;
 
 
   /* === BACKGROUNDS === */
-  --bg-primary: radial-gradient(circle,
-      var(--gray-10),
-      var(--white));
-
-  --bg-secondary: radial-gradient(circle,
-      var(--gray-80) 0%,
-      var(--gray-90) 17%,
-      var(--gray-80) 100%);
+  --bg-primary: #FBF7F4;
+  /* --bg-primary: radial-gradient(circle,
+        var(--primary-10),
+        #FBF7F4); */
+  --bg-secondary: var(--secondary-10);
+  --bg-tertiary: var(--tertiary-10);
   /* --bg-primary: #d2d2d2; */
   --lite: #f0edeb;
   --dark: #14032c;
@@ -159,8 +162,8 @@
   --gray-100-o: #08080850;
 
 
-
-  --ui-menu--background: var(--linear-gradient-80);
+/* LITE */
+  --ui-menu--background: var(--bg-secondary);
   --nav-item-color: var(--primary-80);
   --nav-item-color--hover: var(--primary-50);
 }
@@ -170,11 +173,12 @@
 } */
 
 body {
+  /* LITE */
   background: var(--bg-primary);
-  color: var(--gray-10);
-  --ui-icon-color: var(--white);
-  text-shadow: 1px 1px 2px var(--primary-10-o);
-
-  font-family: Montserrat;
+  color: var(--gray-70);
+  --ui-icon-color: var(--gray-10);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
 }
+
 

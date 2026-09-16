@@ -939,7 +939,7 @@ h6 {
 }
 
 h1 {
-  gap: var(--s-8);
+  /* gap: var(--s-8); */
   font-size: var(--s-1);
   --ui-icon-size: var(--s-1);
   color: inherit;
@@ -1459,4 +1459,13 @@ a:-webkit-any-link {
 
 .z-3 {
   z-index: 3 !important;
+}
+/* UiIcon animated gradient — global so `--ui-icon-animation` (and its default in
+   UiIcon.scss) can reference it; styled-jsx scopes local keyframes names away. */
+@keyframes ui-icon-gradient-shift {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 100% 20%; }
+  50% { background-position: 80% 100%; }
+  75% { background-position: 10% 80%; }
+  100% { background-position: 0% 50%; }
 }

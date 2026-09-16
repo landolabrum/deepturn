@@ -487,33 +487,33 @@ small {
 
 @keyframes sunglass-text-wipe {
   0% {
-    color: var(--sunglass-color-1, var(--green-50));
-    --ui-icon-color: var(--sunglass-color-1, var(--green-50));
-    box-shadow: -0.5px -1px 1.5px 1px var(--sunglass-shadow-1, var(--green-70));
+    color: var(--sunglass-color-1, var(--primary-50));
+    --ui-icon-color: var(--sunglass-color-1, var(--primary-50));
+    /* box-shadow: -0.5px -1px 1.5px 1px var(--sunglass-shadow-1, var(--primary-70)); */
     opacity: 0.8;
     filter: blur(3.2px);
     transform: scale(1.1);
   }
 
   65% {
-    color: var(--sunglass-color-2, var(--green-10));
-    --ui-icon-color: var(--sunglass-color-2, var(--green-10));
-    box-shadow: -0.5px -1px 1.5px 1px var(--sunglass-shadow-2, var(--green-30));
+    color: var(--sunglass-color-2, var(--primary-10));
+    --ui-icon-color: var(--sunglass-color-2, var(--primary-10));
+    /* box-shadow: -0.5px -1px 1.5px 1px var(--sunglass-shadow-2, var(--primary-30)); */
     opacity: 0.8;
     filter: blur(2px);
   }
 
   70% {
-    color: var(--sunglass-color-3, var(--green-30));
-    --ui-icon-color: var(--sunglass-color-3, var(--green-30));
-    box-shadow: 0 0 1px 1.5px var(--sunglass-shadow-3, var(--green-10));
+    color: var(--sunglass-color-3, var(--primary-30));
+    --ui-icon-color: var(--sunglass-color-3, var(--primary-30));
+    /* box-shadow: 0 0 1px 1.5px var(--sunglass-shadow-3, var(--primary-10)); */
     filter: blur(0);
   }
 
   100% {
-    color: var(--sunglass-color-4, var(--green-30));
-    --ui-icon-color: var(--sunglass-color-4, var(--green-10));
-    box-shadow: 1px 1px 1px 1px var(--sunglass-shadow-4, var(--gray-90-o));
+    color: var(--sunglass-color-4, var(--primary-30));
+    --ui-icon-color: var(--sunglass-color-4, var(--primary-10));
+    /* box-shadow: 1px 1px 1px 1px var(--sunglass-shadow-4, var(--gray-90-o)); */
     filter: blur(0);
   }
 }
@@ -522,8 +522,8 @@ small {
   from {
     width: var(--sunglass-wipe-width, 3em);
     left: -100%;
-    color: var(--sunglass-color-2, var(--green-10));
-    --ui-icon-color: var(--sunglass-color-2, var(--green-10));
+    color: var(--sunglass-color-2, var(--primary-10));
+    --ui-icon-color: var(--sunglass-color-2, var(--primary-10));
   }
 
   to {
@@ -544,9 +544,9 @@ small {
   width: var(--sunglass-wipe-width, 3em);
   height: 100%;
   background: linear-gradient(120deg,
-      var(--sunglass-color-2, var(--green-10)) 0%,
-      var(--sunglass-color-3, var(--green-30)) 50%,
-      var(--sunglass-color-1, var(--green-70)) 100%);
+      var(--sunglass-color-2, var(--primary-10)) 0%,
+      var(--sunglass-color-3, var(--primary-30)) 50%,
+      var(--sunglass-color-1, var(--primary-70)) 100%);
   transform: skewX(-25deg);
   z-index: 0;
 
