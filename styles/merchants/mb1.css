@@ -48,7 +48,10 @@
       var(--gray-70) 0%,
       var(--gray-50) 17%,
       var(--gray-60) 100%);
-  /* --bg-primary: #d2d2d2; */
+        --bg-tertiary: radial-gradient(circle,
+              var(--tertiary-70) 0%,
+              var(--tertiary-50) 17%,
+              var(--tertiary-60) 100%);
   --lite: #f0edeb;
   --dark: #14032c;
   --dark-70: #200804;
@@ -135,10 +138,12 @@
   --gray-100: #080808;
   --gray-100-o: #08080850;
 
-  --nav-item-color--active: var(--primary-10);
-  --nav-item-color: var(--primary-70);
+  --nav-item-color--active: var(--primary-50);
+  --nav-item-color: var(--primary-90);
   --nav-item-color--hover: var(--primary-50);
   --ui-menu--background: var(--linear-gradient-80);
+
+    /* -webkit-text-fill-color: var(--gray-70); */
 }
 
 h3 {

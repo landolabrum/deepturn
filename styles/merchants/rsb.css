@@ -164,9 +164,10 @@
 
 /* LITE */
   --ui-menu--background: var(--bg-secondary);
-  --nav-item-color--active:var(--primary-10);
-  --nav-item-color: var(--primary-80);
+  --nav-item-color--active:var(--primary-50);
+  --nav-item-color: var(--primary-70);
   --nav-item-color--hover: var(--primary-50);
+    /* -webkit-text-fill-color: var(--primary-90); */
 }
 
 /* h3 {
@@ -176,8 +177,7 @@
 body {
   /* LITE */
   background: var(--bg-primary);
-  color: var(--gray-70);
-  --ui-icon-color: var(--gray-10);
+  color: var(--gray-80);
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
 }
