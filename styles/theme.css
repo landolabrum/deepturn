@@ -646,7 +646,7 @@ small {
   padding: var(--pad-y) var(--pad-x);
   border-radius: var(--radius);
   border: 1px solid var(--gray-80, #303030);
-  background: linear-gradient(145deg, var(--bg-primary), var(--bg-secondary));
+  background: linear-gradient(145deg, var(--bg-secondary), var(--bg-secondary));
 
   box-shadow:
     0 calc(var(--contact)) calc(var(--contact) * 1.8) calc(var(--contact) * -0.25) var(--drop),

@@ -164,6 +164,7 @@
 
 /* LITE */
   --ui-menu--background: var(--bg-secondary);
+  --nav-item-color--active:var(--primary-10);
   --nav-item-color: var(--primary-80);
   --nav-item-color--hover: var(--primary-50);
 }
