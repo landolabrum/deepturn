@@ -143,7 +143,7 @@
   --nav-item-color--hover: var(--primary-50);
   --ui-menu--background: var(--linear-gradient-80);
 
-    /* -webkit-text-fill-color: var(--gray-70); */
+    -webkit-text-fill-color: var(--gray-30);
 }
 
 h3 {
@@ -154,7 +154,11 @@ body {
   color: var(--gray-10);
   background: var(--bg-primary);
 }
-
+body {
+  /* LITE */
+  font-family: "Play", sans-serif;
+  font-weight: 400;
+}
 /*
 .select,
 .input,
