@@ -7,19 +7,19 @@
   display: none !important;
 }
 
-@font-face {
+/* @font-face {
   font-family: Chintzy;
   src: url("/fonts/Chintzy/chintzy.ttf") format("opentype");
   font-style: normal;
   font-weight: normal;
-}
-
+} */
+/*
 @font-face {
   font-family: Chintzy;
   src: url("/fonts/Chintzy/chintzys.ttf") format("opentype");
   font-style: normal;
   font-weight: Bold;
-}
+} */
 
 @font-face {
   font-family: RetroPixel;
@@ -824,4 +824,7 @@ small {
   border-radius: 10px;
   pointer-events: none;
   user-select: none;
+}
+input{
+  text-transform: unset;
 }

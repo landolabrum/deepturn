@@ -765,9 +765,9 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   align-items: center;
   justify-content: center;
   font-size: 12px;
-  color: rgba(44, 51, 64, 0.9);
+  /* color: rgba(44, 51, 64, 0.9); */
   --ui-icon-size: 12px;
-  --ui-icon-color: rgba(52, 61, 78, 0.7);
+  /* --ui-icon-color: rgba(52, 61, 78, 0.7); */
   transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease, opacity 150ms ease;
   position: relative;
   z-index: 1;
@@ -1004,7 +1004,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  color: #1f1f1f;
+  /* color: #1f1f1f; */
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
   transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
 }
