@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[5092],{36671:(_,s,e)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/systems/[...slug]",function(){return e(88346)}])},88346:(_,s,e)=>{"use strict";e.r(s),e.d(s,{default:()=>u});let u=e(39232).A}},_=>{_.O(0,[3602,4415,8323,9601,1309,1555,4716,6143,9232,636,6593,8792],()=>_(_.s=36671)),_N_E=_.O()}]);
