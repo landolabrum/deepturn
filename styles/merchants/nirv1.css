@@ -106,7 +106,7 @@
   --pink-o: #e91e6370;
 
 
-
+  --nav-item-color--active: var(--primary-50);
   --nav-item-color: var(--gray-80);
   --nav-item-color--hover: var(--gray-10);
   --nav-item-backgroundColor--hover: var(--gray-80);
