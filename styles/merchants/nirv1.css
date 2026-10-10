@@ -110,16 +110,16 @@
   --nav-item-color: var(--gray-80);
   --nav-item-color--hover: var(--gray-10);
   --nav-item-backgroundColor--hover: var(--gray-80);
-  --ui-menu--background: var(--primary-50);
+  --ui-menu--background: var(--gray-20);
   --ui-menu--border: var(--primary-50);
 }
-
+/* 
 h3 {
   font-family: Decimal;
-}
+} */
 
 body {
-  color: var(--gray-20);
+  color: var(--gray-80);
   --ui-icon-color: var(--gray-20);
   background: var(--bg-primary);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
